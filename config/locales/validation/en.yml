@@ -453,11 +453,9 @@ en:
       rules:
         site_contact_first_name:
           missing: Enter first name
-          format?: Enter a valid first name
           max_size?: First name must be 60 characters or fewer
         site_contact_last_name:
           missing: Enter last name
-          format?: Enter a valid last name
           max_size?: Last name must be 60 characters or fewer
         site_contact_email:
           missing: Enter email address
