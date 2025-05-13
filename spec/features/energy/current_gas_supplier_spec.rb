@@ -22,13 +22,16 @@ describe "Current Gas supplier", :js do
     expect(page).to have_text("Please select current gas supplier")
     expect(page).to have_text("Please enter gas current contract end date")
 
-    choose "Scottish Power"
+    fill_in_valid_supplier_and_date("31", "12", "2035") # This date is out of range
+    expect(page).to have_text("Please enter a date within the range of - 1 and + 5 years of the current date")
 
-    fill_in "Day", with: "10"
-    fill_in "Month", with: "5"
-    fill_in "Year", with: "2025"
+    fill_in_valid_supplier_and_date("32", "01", "2025") # This date is invalid date
+    expect(page).to have_text("Please enter a valid gas current contract end date")
 
-    click_button "Save and continue"
-    # TODO: Add a check for the redirect to the next page
+    fill_in_valid_supplier_and_date("29", "02", "2025") # This date is invalid date non-leap year
+    expect(page).to have_text("Please enter a valid gas current contract end date")
+
+    fill_in_valid_supplier_and_date("31", "12", "2025")
+    expect(page).not_to have_text("Current gas supplier")
   end
 end

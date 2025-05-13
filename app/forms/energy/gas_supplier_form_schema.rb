@@ -12,7 +12,7 @@ class Energy::GasSupplierFormSchema < ::Support::Schema
   end
 
   rule(:gas_current_contract_end_date) do
-    key.failure(:missing) if value.values.all?(&:blank?)
+    key.failure(:missing) if value.values.any?(&:blank?)
   end
 
   rule(:gas_current_contract_end_date) do
@@ -27,6 +27,8 @@ class Energy::GasSupplierFormSchema < ::Support::Schema
       else
         key.failure(:invalid_date)
       end
+    else
+      key.failure(:invalid_date)
     end
   end
 
