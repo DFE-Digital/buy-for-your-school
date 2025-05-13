@@ -8,7 +8,7 @@
       <% if supplier == :other %>
         <%= form.govuk_radio_divider %>
         <%= form.govuk_radio_button :electric_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") } do %>
-          <%= form.govuk_text_field :electric_current_supplier_other, label: { text: I18n.t("energy.current_contract.other_electric_supplier") } %>
+          <%= form.govuk_text_field :electric_current_supplier_other, width: "one-third", label: { text: I18n.t("energy.current_contract.other_electric_supplier") } %>
         <% end %>
       <% else %>
         <%= form.govuk_radio_button :electric_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") } %>
@@ -16,7 +16,7 @@
     <% end %>
   <% end %>
   
-  <%= form.govuk_date_field :electric_current_contract_end_date, legend: { text: I18n.t("energy.current_contract.when_contract_ends"), }, hint: { text: I18n.t("energy.current_contract.date_for_example") } %>
+  <%= form.govuk_date_field :electric_current_contract_end_date, maxlength_enabled: true, legend: { text: I18n.t("energy.current_contract.when_contract_ends"), }, hint: { text: I18n.t("energy.current_contract.date_for_example") } %>
 
   <%= render EnergyFormButtonsComponent.new(form)%>
 <% end %>

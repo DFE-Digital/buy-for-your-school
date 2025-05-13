@@ -16,4 +16,12 @@ RSpec.shared_context "with energy suppliers" do
       "Other",
     ]
   end
+
+  def fill_in_valid_supplier_and_date(day, month, year)
+    choose "British Gas"
+    fill_in "Day", with: day
+    fill_in "Month", with: month
+    fill_in "Year", with: year
+    click_button "Save and continue"
+  end
 end
