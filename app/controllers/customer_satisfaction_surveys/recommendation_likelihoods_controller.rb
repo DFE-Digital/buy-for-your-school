@@ -24,6 +24,10 @@ private
   end
 
   def back_url
-    @back_url = edit_customer_satisfaction_surveys_clear_to_use_rating_path(@customer_satisfaction_survey) if session[:net_promoter_score].present?
+    if session[:net_promoter_score].present?
+      @back_url = edit_customer_satisfaction_surveys_clear_to_use_rating_path(@customer_satisfaction_survey)
+    else
+      super
+    end
   end
 end
