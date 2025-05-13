@@ -4,7 +4,7 @@ class CustomerSatisfactionSurveys::SatisfactionReasonsController < CustomerSatis
     if @customer_satisfaction_survey.valid?
       @customer_satisfaction_survey.save!
       @customer_satisfaction_survey.complete_survey! if session[:net_promoter_score].blank?
-      redirect_to_path(@survey_flow.next_path,@customer_satisfaction_survey )
+      redirect_path
     else
       render :edit
     end
@@ -17,8 +17,10 @@ private
   end
 
   def redirect_path
-    return edit_customer_satisfaction_surveys_easy_to_use_rating_path(@customer_satisfaction_survey) if session[:net_promoter_score].present?
-
-    customer_satisfaction_surveys_thank_you_path
+    if session[:net_promoter_score].present?
+      redirect_to edit_customer_satisfaction_surveys_easy_to_use_rating_path(@customer_satisfaction_survey)
+    else
+      redirect_to_path(@survey_flow.next_path,@customer_satisfaction_survey )
+    end
   end
 end

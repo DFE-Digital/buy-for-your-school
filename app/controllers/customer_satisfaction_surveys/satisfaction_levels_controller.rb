@@ -12,7 +12,7 @@ class CustomerSatisfactionSurveys::SatisfactionLevelsController < CustomerSatisf
     if @customer_satisfaction_survey.valid?(:satisfaction_level)
       @customer_satisfaction_survey.save!
       @customer_satisfaction_survey.start_survey! if session[:net_promoter_score].present?
-      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey )
+      redirect_path
     else
       render :edit
     end
@@ -21,9 +21,11 @@ class CustomerSatisfactionSurveys::SatisfactionLevelsController < CustomerSatisf
 private
 
   def redirect_path
-    return edit_customer_satisfaction_surveys_satisfaction_reason_path(@customer_satisfaction_survey) if @customer_satisfaction_survey.source_exit_survey?
-
-    customer_satisfaction_surveys_thank_you_path
+    if @customer_satisfaction_survey.source_exit_survey?
+      redirect_to edit_customer_satisfaction_surveys_satisfaction_reason_path(@customer_satisfaction_survey)
+    else
+      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey )
+    end
   end
 
   def params_to_persist
@@ -36,9 +38,5 @@ private
   def form_params
     satisfaction_text_params = CustomerSatisfactionSurveyResponse.satisfaction_levels.keys.map { |level| "satisfaction_text_#{level}" }
     params.fetch(:customer_satisfaction_survey, {}).permit(:satisfaction_level, satisfaction_text_params)
-  end
-
-  def back_url
-    @back_url = edit_customer_satisfaction_surveys_clear_to_use_rating_path(@customer_satisfaction_survey) if session[:net_promoter_score].present?
   end
 end

@@ -11,18 +11,8 @@ class CustomerSatisfactionSurveysFlow
     @flow
   end
 
-  def current_path
-    convert_step_to_path(@current_step)
-  end
-
-  def next_path
-    following_step = next_step
-    following_step ? convert_step_to_path(following_step) : nil
-  end
-
-  def back_path
-    prev_step = previous_step
-    prev_step ? convert_step_to_path(prev_step) : nil
+  def start_step
+    @flow.first
   end
 
   def current_step
@@ -45,6 +35,24 @@ class CustomerSatisfactionSurveysFlow
     @flow[idx - 1]
   end
 
+  def start_path
+    convert_step_to_path(start_step)
+  end
+
+  def current_path
+    convert_step_to_path(@current_step)
+  end
+
+  def next_path
+    following_step = next_step
+    following_step ? convert_step_to_path(following_step) : nil
+  end
+
+  def back_path
+    prev_step = previous_step
+    prev_step ? convert_step_to_path(prev_step) : nil
+  end
+
   def convert_step_to_path(step)
     if step == "thank_you"
       step_path = "customer_satisfaction_surveys_#{step}_path"
@@ -54,5 +62,16 @@ class CustomerSatisfactionSurveysFlow
       step_path = "edit_customer_satisfaction_surveys_#{step}_path"
     end
     step_path
+  end
+
+  def get_step_from_path(path)
+    if path == "customer_satisfaction_surveys_thank_you_path"
+      "thank_you"
+    elsif path.include?("edit_customer_satisfaction_surveys_")
+      step = path.sub("edit_customer_satisfaction_surveys_", "").sub("_path", "")
+      step == "improvements" ? "improvement" : step
+    else
+      nil
+    end
   end
 end

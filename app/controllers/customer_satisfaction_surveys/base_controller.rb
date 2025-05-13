@@ -1,4 +1,4 @@
-class CustomerSatisfactionSurveys::BaseController < ApplicationController
+not class CustomerSatisfactionSurveys::BaseController < ApplicationController
   skip_before_action :authenticate_user!
 
   before_action :customer_satisfaction_survey
@@ -37,15 +37,13 @@ private
                 end
   end
 
-  def next_path
-    @survey_flow.next_path
-  end
-
   def redirect_to_path(path, survey)
-    if @survey_flow.all_steps.index(@survey_flow.current_step) == @survey_flow.all_steps.length - 2
+    step_in_path = @survey_flow.get_step_from_path(path)
+
+    if step_in_path == "thank_you"
       @customer_satisfaction_survey.complete_survey! unless @customer_satisfaction_survey.source_exit_survey?
     end
     redirect_to Rails.application.routes.url_helpers.
       public_send(path, survey)
-    end
+ end
 end
