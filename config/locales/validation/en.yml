@@ -445,6 +445,16 @@ en:
       rules:
         gas_single_multi:
           missing: Please select at least one option to proceed
+  vat_rate_charge:
+    rules:
+      vat_rate: ""
+      vat_lower_rate_percentage: ""
+    errors:
+      rules:
+        vat_rate:
+          missing: Please select at least one option to proceed
+        vat_lower_rate_precentage:
+          missing: Do dah!
   site_contact_details_form:
     rules:
       site_contact_first_name: ""

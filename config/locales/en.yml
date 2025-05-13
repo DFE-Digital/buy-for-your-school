@@ -558,6 +558,14 @@ en:
         heading: Are you sure you want to remove this MPAN?
         remove_mpan: Remove MPAN
         removed: MPAN successfully removed
+    vat_rate_charge:
+      title: VAT declaration
+      heading: Which VAT rate are you charged?
+      hint: If you're unsure, check your energy bills or ask your local authority
+      normal: 20%
+      lower: 5%
+      lower_rate_percentage: Percentage of total consumption qualifying for reduced rate of VAT
+      lower_rate_reg_no: VAT registration number (optional)
     site_contact_details:
       title: Site contact details
       heading: Who manages site access and maintenance?
