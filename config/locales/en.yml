@@ -558,6 +558,14 @@ en:
         heading: Are you sure you want to remove this MPAN?
         remove_mpan: Remove MPAN
         removed: MPAN successfully removed
+    site_contact_details:
+      title: Site contact details
+      heading: Who manages site access and maintenance?
+      sub_title: This is in case the supplier needs access to the site or meter equipment, or in case of emergency
+      first_name: First name
+      last_name: Last name
+      email: Email
+      telephone: Telephone
 
 
   errors:

@@ -22,9 +22,7 @@ private
     return energy_case_tasks_path if going_to_tasks?
     return energy_case_org_electricity_meter_type_path if switching_both?
 
-    # They must be switching gas only
-    # Change this to 'Who manages site access' when we have the screen
-    energy_case_org_gas_bill_consolidation_path(onboarding_case, @onboarding_case_organisation)
+    energy_case_org_site_contact_details_path
   end
 
   def form
