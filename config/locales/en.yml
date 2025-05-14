@@ -439,6 +439,8 @@ en:
     authorisation:
       heading: Are you authorised to switch energy suppliers for these schools?
       warning: Please seek appropriate authorisation to switch energy suppliers. There is no cooling off period once you’ve submitted this form.
+      alerts:
+        multiple_cases: There are multiple cases for this organisation
     switching_electricity:
       heading: Are you switching electricity, gas or both?
       energy_type:

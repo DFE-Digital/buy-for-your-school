@@ -18,12 +18,6 @@ describe "User can update gas usage details", :js do
 
     click_button "Save and continue"
 
-    visit energy_case_org_gas_meter_index_path(case_id: case_organisation.energy_onboarding_case_id, org_id: case_organisation.onboardable_id)
-
-    expect(page).to have_text("MPRN summary")
-
-    click_link "Add another MPRN"
-
     expect(page).to have_text("Gas meter details")
 
     fill_in "Add a Meter Point Reference Number (MPRN)", with: "3938424403"
