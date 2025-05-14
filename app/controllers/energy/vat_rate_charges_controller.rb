@@ -1,7 +1,7 @@
 module Energy
   class VatRateChargesController < ApplicationController
     before_action :organisation_details
-    before_action { @back_url = energy_case_gas_supplier_path(onboarding_case) }
+    before_action { @back_url = energy_case_gas_supplier_path(onboarding_case) } # Change to Site Contact Details when available
     before_action :form, only: %i[update]
 
     def show
@@ -31,7 +31,10 @@ module Energy
     end
 
     def form_params
-      params.fetch(:vat_rate_charge, {}).permit(:vat_rate, :vat_lower_rate_percentage, :vat_lower_rate_reg_no)
+      params
+        .fetch(:vat_rate_charge, {})
+        .permit(:vat_rate, :vat_lower_rate_percentage, :vat_lower_rate_reg_no)
+        .transform_values { |v| v.presence || 0 } # Default to 0 for integers
     end
 
     def redirect_path

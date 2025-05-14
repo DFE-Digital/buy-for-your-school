@@ -452,9 +452,10 @@ en:
     errors:
       rules:
         vat_rate:
-          missing: Please select at least one option to proceed
-        vat_lower_rate_precentage:
-          missing: Do dah!
+          missing: Select a VAT rate
+        vat_lower_rate_percentage:
+          missing: Enter the percentage qualifying for reduced VAT
+          invalid_range: Enter a value between 1 and 100
   site_contact_details_form:
     rules:
       site_contact_first_name: ""
