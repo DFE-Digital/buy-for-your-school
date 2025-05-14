@@ -7,10 +7,13 @@ class Energy::VatRateChargeFormSchema < Schema
   end
 
   rule(:vat_rate) do
-    key.failure(:missing) if value.blank?
+    key.failure(:missing) if value.zero?
   end
 
   rule(:vat_lower_rate_percentage) do
-    key.failure(:missing) if value.blank? && values[:vat_rate] == 5
+    if values[:vat_rate] == 5
+      key.failure(:missing) if value.zero?
+      key.failure(:invalid_range) if value < 1 || value > 100
+    end
   end
 end
