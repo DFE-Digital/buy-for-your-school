@@ -8,7 +8,7 @@
       <% if supplier == :other %>
         <%= form.govuk_radio_divider %>
         <%= form.govuk_radio_button :gas_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") } do %>
-          <%= form.govuk_text_field :gas_current_supplier_other, width: "one-third", label: { text: I18n.t("energy.current_contract.other_gas_supplier") } %>
+          <%= form.govuk_text_field :gas_current_supplier_other, maxlength: "60", width: "one-third", label: { text: I18n.t("energy.current_contract.other_gas_supplier") } %>
         <% end %>
       <% else %>
         <%= form.govuk_radio_button :gas_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") } %>

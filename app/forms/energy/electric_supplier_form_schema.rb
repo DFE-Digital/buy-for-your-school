@@ -4,7 +4,7 @@ class Energy::ElectricSupplierFormSchema < ::Support::Schema
   params do
     required(:electric_current_supplier).value(:string)
     required(:electric_current_contract_end_date).value(:hash)
-    required(:electric_current_supplier_other).value(:string)
+    required(:electric_current_supplier_other).value(:string, max_size?: 60)
   end
 
   rule(:electric_current_supplier) do
