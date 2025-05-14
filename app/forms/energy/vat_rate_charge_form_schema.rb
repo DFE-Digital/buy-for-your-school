@@ -4,6 +4,7 @@ class Energy::VatRateChargeFormSchema < Schema
   params do
     required(:vat_rate).value(:integer)
     required(:vat_lower_rate_percentage).value(:integer)
+    optional(:vat_lower_rate_reg_no).value(:string)
   end
 
   rule(:vat_rate) do
