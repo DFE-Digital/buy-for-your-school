@@ -519,6 +519,7 @@ Rails.application.routes.draw do
         resource :electricity_meter_type, only: %i[show update]
         resource :gas_single_multi, only: %i[show update]
         resources :electricity_meter, except: %i[show]
+        resource :vat_rate_charge, only: %i[show update]
         resource :site_contact_details, only: %i[show update]
       end
     end

@@ -445,6 +445,17 @@ en:
       rules:
         gas_single_multi:
           missing: Please select at least one option to proceed
+  vat_rate_charge:
+    rules:
+      vat_rate: ""
+      vat_lower_rate_percentage: ""
+    errors:
+      rules:
+        vat_rate:
+          missing: Select a VAT rate
+        vat_lower_rate_percentage:
+          missing: Enter the percentage qualifying for reduced VAT
+          invalid_range: Enter a value between 1 and 100
   site_contact_details_form:
     rules:
       site_contact_first_name: ""
