@@ -1,0 +1,16 @@
+<div class="govuk-tabs__panel" id="my-cases">
+  <h1 class="govuk-heading-l">
+    <%= I18n.t("support.case.list.my_cases") %>
+  </h1>
+  <%= render partial: "cec/onboarding_cases/case_list/case_list",
+        locals: {
+          tab: "my-cases",
+          cases: @my_cases,
+					list_display_name: I18n.t("support.case.list.my_cases"),
+          page_param_name: "my_cases_page",
+          filter_form: @my_cases_filter_form,
+          filter_form_scope: :filter_my_cases_form,
+          filter_url: cec_onboarding_cases_path(anchor: "my-cases"),
+          clear_url: cec_onboarding_cases_path(anchor: "my-cases", clear: true),
+        } %>
+</div>

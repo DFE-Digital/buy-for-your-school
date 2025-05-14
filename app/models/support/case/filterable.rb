@@ -65,6 +65,8 @@ module Support::Case::Filterable
     scope :created_by_e_and_o, -> { where(creation_source: :engagement_and_outreach_team) }
 
     scope :created_by, ->(created_by_ids) { where(created_by_id: created_by_ids) }
+
+    scope :dfe_energy, -> { by_category(Support::Category.find_by(title: "DfE Energy for Schools service")) }
   end
 
   class_methods do
