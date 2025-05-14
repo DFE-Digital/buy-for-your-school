@@ -40,37 +40,37 @@ private
   end
 
   def gas_contract_information
-    status = case_org.gas_current_supplier && case_org.gas_current_contract_end_date ? :completed : :not_started
+    status = case_org.gas_current_supplier && case_org.gas_current_contract_end_date ? :complete : :not_started
     path = energy_case_gas_supplier_path(case_id: case_org.energy_onboarding_case_id)
     Task.new(title: __method__, status:, path:)
   end
 
   def gas_meters_and_usage
-    status = case_org.gas_meters.any? ? :completed : :not_started
+    status = case_org.gas_meters.any? ? :complete : :not_started
     path = energy_case_org_gas_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id)
     Task.new(title: __method__, status:, path:)
   end
 
   def electric_contract_information
-    status = case_org.electric_current_supplier && case_org.electric_current_contract_end_date ? :completed : :not_started
+    status = case_org.electric_current_supplier && case_org.electric_current_contract_end_date ? :complete : :not_started
     path = energy_case_electric_supplier_path(case_id: case_org.energy_onboarding_case_id)
     Task.new(title: __method__, status:, path:)
   end
 
   def electric_meters_and_usage
-    status = case_org.electricity_meters.any? ? :completed : :not_started
+    status = case_org.electricity_meters.any? ? :complete : :not_started
     path = energy_case_org_electricity_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id)
     Task.new(title: __method__, status:, path:)
   end
 
   def site_contact_details
-    status = case_org.site_contact_email? ? :completed : :not_started
+    status = case_org.site_contact_email? ? :complete : :not_started
     path = energy_case_org_site_contact_details_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id)
     Task.new(title: __method__, status:, path:)
   end
 
   def vat_declaration
-    status = :in_progress
+    status = :not_started
     path = DEFAULT_PATH
     Task.new(title: __method__, status:, path:)
   end
@@ -97,7 +97,7 @@ private
 
     def status_colour
       case status
-      when :completed
+      when :complete
         "green"
       when :in_progress
         "blue"
