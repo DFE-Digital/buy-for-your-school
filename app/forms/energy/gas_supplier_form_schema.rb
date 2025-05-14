@@ -4,7 +4,7 @@ class Energy::GasSupplierFormSchema < ::Support::Schema
   params do
     required(:gas_current_supplier).value(:string)
     required(:gas_current_contract_end_date).value(:hash)
-    required(:gas_current_supplier_other).value(:string)
+    required(:gas_current_supplier_other).value(:string, max_size?: 60)
   end
 
   rule(:gas_current_supplier) do
