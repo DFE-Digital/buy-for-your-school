@@ -1,6 +1,7 @@
 module Energy
   class AuthorisationController < ApplicationController
     before_action :validate_school
+    before_action :check_active_onboarding_case
     before_action { @back_url = energy_school_selection_path }
 
     def show; end
@@ -8,18 +9,46 @@ module Energy
     def update
       return unless params[:type] == "single"
 
-      onboarding_case = existing_onboarding_case? || create_onboarding_case
+      onboarding_case = create_onboarding_case
       redirect_to energy_case_switch_energy_path(case_id: onboarding_case.energy_onboarding_case_id)
     end
 
   private
 
-    def existing_onboarding_case?
-      Energy::OnboardingCaseOrganisation.find_by(onboardable: @support_organisation)
+    def existing_onboarding_organisations
+      Energy::OnboardingCaseOrganisation.where(onboardable: @support_organisation)
     end
 
     def create_onboarding_case
       Energy::CaseCreatable.create_case(current_user, @support_organisation)
+    end
+
+    def check_active_onboarding_case
+      if existing_onboarding_organisations.any?
+        energy_case_ids = existing_onboarding_organisations.pluck(:energy_onboarding_case_id)
+        energy_cases = Energy::OnboardingCase.where(id: energy_case_ids)
+
+        if energy_cases.any?
+          support_case_ids = energy_cases.pluck(:support_case_id)
+          support_case = Support::Case.where(
+            id: support_case_ids,
+            email: current_user.email,
+          ).where.not(state: %w[closed resolved])
+
+          if support_case.count > 1
+            redirect_to energy_school_selection_path, notice: I18n.t("energy.authorisation.alerts.multiple_cases")
+          elsif support_case.count == 1
+            active_case = Energy::OnboardingCase.find_by(support_case_id: support_case.first.id)
+            active_onboarding_case = Energy::OnboardingCaseOrganisation.find_by(energy_onboarding_case_id: active_case.id)
+
+            if active_onboarding_case.switching_energy_type.nil?
+              redirect_to energy_case_switch_energy_path(case_id: active_onboarding_case.energy_onboarding_case_id)
+            else
+              redirect_to energy_case_tasks_path(case_id: active_onboarding_case.energy_onboarding_case_id)
+            end
+          end
+        end
+      end
     end
 
     def validate_school

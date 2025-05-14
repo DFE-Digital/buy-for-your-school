@@ -14,12 +14,6 @@ describe "User can update electricity meters and usage", :js do
 
     click_button "Save and continue"
 
-    visit energy_case_org_electricity_meter_index_path(case_id: case_organisation.energy_onboarding_case_id, org_id: case_organisation.onboardable_id)
-
-    expect(page).to have_text("MPAN summary")
-
-    click_link "Add another MPAN"
-
     expect(page).to have_text("Electricity meter details")
 
     fill_in "Add an MPAN", with: "1234567890123"
