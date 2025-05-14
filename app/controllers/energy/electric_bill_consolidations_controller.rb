@@ -19,10 +19,9 @@ class Energy::ElectricBillConsolidationsController < Energy::ApplicationControll
 private
 
   def redirect_path
-    # TODO: should redirect to "Who manages site access and maintenance?"
     return energy_case_tasks_path if going_to_tasks?
 
-    energy_case_org_electric_bill_consolidation_path
+    energy_case_org_site_contact_details_path
   end
 
   def form

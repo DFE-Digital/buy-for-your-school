@@ -443,3 +443,23 @@ en:
       rules:
         gas_single_multi:
           missing: Please select at least one option to proceed
+  site_contact_details_form:
+    rules:
+      site_contact_first_name: ""
+      site_contact_last_name: ""
+      site_contact_email: ""
+      site_contact_phone: ""
+    errors:
+      rules:
+        site_contact_first_name:
+          missing: Enter first name
+          max_size?: First name must be 60 characters or fewer
+        site_contact_last_name:
+          missing: Enter last name
+          max_size?: Last name must be 60 characters or fewer
+        site_contact_email:
+          missing: Enter email address
+          format?: Enter a valid email address
+        site_contact_phone:
+          missing: Enter telephone number
+          format?: Enter a valid telephone number

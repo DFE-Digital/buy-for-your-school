@@ -64,8 +64,8 @@ private
   end
 
   def site_contact_details
-    status = :not_started
-    path = DEFAULT_PATH
+    status = case_org.site_contact_email? ? :completed : :not_started
+    path = energy_case_org_site_contact_details_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id)
     Task.new(title: __method__, status:, path:)
   end
 
