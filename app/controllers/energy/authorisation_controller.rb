@@ -15,7 +15,7 @@ module Energy
 
   private
 
-    def existing_onboarding_case?
+    def existing_onboarding_organisations
       Energy::OnboardingCaseOrganisation.where(onboardable: @support_organisation)
     end
 
@@ -24,10 +24,8 @@ module Energy
     end
 
     def check_active_onboarding_case
-      onboarding_case_organisation = existing_onboarding_case?
-
-      if onboarding_case_organisation.any?
-        energy_case_ids = onboarding_case_organisation.pluck(:energy_onboarding_case_id)
+      if existing_onboarding_organisations.any?
+        energy_case_ids = existing_onboarding_organisations.pluck(:energy_onboarding_case_id)
         energy_cases = Energy::OnboardingCase.where(id: energy_case_ids)
 
         if energy_cases.any?
