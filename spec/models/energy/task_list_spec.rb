@@ -81,8 +81,8 @@ RSpec.describe Energy::TaskList do
     end
 
     context "when supplier and contract end date exist" do
-      it "returns a completed task" do
-        expect(task_list.send(:gas_contract_information).status).to eq :completed
+      it "returns a complete task" do
+        expect(task_list.send(:gas_contract_information).status).to eq :complete
       end
     end
   end
@@ -101,8 +101,8 @@ RSpec.describe Energy::TaskList do
         gas_meters
       end
 
-      it "returns a completed task" do
-        expect(task_list.send(:gas_meters_and_usage).status).to eq :completed
+      it "returns a complete task" do
+        expect(task_list.send(:gas_meters_and_usage).status).to eq :complete
       end
     end
   end
@@ -117,8 +117,8 @@ RSpec.describe Energy::TaskList do
     end
 
     context "when supplier and contract end date exist" do
-      it "returns a completed task" do
-        expect(task_list.send(:electric_contract_information).status).to eq :completed
+      it "returns a complete task" do
+        expect(task_list.send(:electric_contract_information).status).to eq :complete
       end
     end
   end
@@ -137,8 +137,8 @@ RSpec.describe Energy::TaskList do
         electricity_meters
       end
 
-      it "returns a completed task" do
-        expect(task_list.send(:electric_meters_and_usage).status).to eq :completed
+      it "returns a complete task" do
+        expect(task_list.send(:electric_meters_and_usage).status).to eq :complete
       end
     end
   end
