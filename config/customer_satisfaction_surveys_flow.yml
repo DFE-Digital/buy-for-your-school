@@ -1,0 +1,48 @@
+find_a_framework:
+  - recommendation_likelihood
+  - improvement
+  - easy_to_use_rating
+  - helped_how
+  - clear_to_use_rating
+  - research_opt_in
+  - satisfaction_level
+  - thank_you
+
+create_a_spec:
+  - recommendation_likelihood
+  - improvement
+  - easy_to_use_rating
+  - helped_how
+  - clear_to_use_rating
+  - research_opt_in
+  - satisfaction_level
+  - thank_you
+
+supported_journey:
+  - recommendation_likelihood
+  - improvement
+  - easy_to_use_rating
+  - helped_how
+  - clear_to_use_rating
+  - research_opt_in
+  - satisfaction_level
+  - thank_you
+
+request_for_help_form:
+  - recommendation_likelihood
+  - improvement
+  - easy_to_use_rating
+  - helped_how
+  - clear_to_use_rating
+  - research_opt_in
+  - satisfaction_level
+  - thank_you
+
+find_a_buying_solution:
+  - satisfaction_level
+  - easy_to_use_rating
+  - helped_how
+  - clear_to_use_rating
+  - recommendation_likelihood
+  - improvement
+  - thank_you
