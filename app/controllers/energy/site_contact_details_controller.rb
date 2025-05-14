@@ -21,7 +21,7 @@ private
   def redirect_path
     return energy_case_tasks_path if going_to_tasks?
 
-    energy_case_org_site_contact_details_path
+    energy_case_org_vat_rate_charge_path
   end
 
   def form

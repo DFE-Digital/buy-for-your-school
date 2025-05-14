@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema[7.2].define(version: 2025_05_13_125900) do
-=======
-ActiveRecord::Schema[7.2].define(version: 2025_05_13_121642) do
->>>>>>> 4754e217 (Add VAT rate charge screen)
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -255,16 +251,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_13_121642) do
     t.boolean "gas_bill_consolidation"
     t.integer "electricity_meter_type"
     t.boolean "is_electric_bill_consolidated"
-<<<<<<< HEAD
+    t.integer "vat_rate"
+    t.integer "vat_lower_rate_percentage"
+    t.string "vat_lower_rate_reg_no"
     t.string "site_contact_first_name"
     t.string "site_contact_last_name"
     t.string "site_contact_email"
     t.string "site_contact_phone"
-=======
-    t.integer "vat_rate"
-    t.integer "vat_lower_rate_percentage"
-    t.string "vat_lower_rate_reg_no"
->>>>>>> 4754e217 (Add VAT rate charge screen)
     t.index ["energy_onboarding_case_id"], name: "idx_on_energy_onboarding_case_id_a2b87b0066"
     t.index ["onboardable_type", "onboardable_id"], name: "idx_on_onboardable_type_onboardable_id_aa8b300738"
   end

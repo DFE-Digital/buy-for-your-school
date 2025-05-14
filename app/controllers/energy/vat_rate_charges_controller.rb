@@ -1,7 +1,7 @@
 module Energy
   class VatRateChargesController < ApplicationController
     before_action :organisation_details
-    before_action { @back_url = energy_case_gas_supplier_path(onboarding_case) } # Change to Site Contact Details when available
+    before_action { @back_url = energy_case_org_site_contact_details_path }
     before_action :form, only: %i[update]
 
     def show
