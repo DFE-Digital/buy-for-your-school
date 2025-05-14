@@ -1,7 +1,7 @@
 class Energy::SwitchEnergiesController < Energy::ApplicationController
   before_action :organisation_details
   before_action :form, only: %i[update]
-  before_action { @back_url = school_type_energy_authorisation_path(id: @organisation_detail.urn, type: "single") }
+  before_action { @back_url = energy_school_selection_path }
 
   def show
     @form = Energy::SwitchEnergyForm.new(**@onboarding_case_organisation.to_h.compact)

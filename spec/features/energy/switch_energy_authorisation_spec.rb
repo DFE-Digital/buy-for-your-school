@@ -43,5 +43,20 @@ describe "Switch energy authorisation", :js do
     onboarding_case_org = Energy::OnboardingCaseOrganisation.last
     expect(onboarding_case_org.onboarding_case).to eq(onboarding_case)
     expect(onboarding_case_org.onboardable).to eq(support_organisation)
+
+    expect(Support::Case.count).to eq(1)
+    visit school_type_energy_authorisation_path(id: support_organisation.urn, type: "single")
+    expect(page).to have_current_path(energy_case_switch_energy_path(case_id: onboarding_case.id))
+
+    onboarding_case_org.update!(switching_energy_type: "electricity")
+    visit school_type_energy_authorisation_path(id: support_organisation.urn, type: "single")
+    expect(page).to have_current_path(energy_case_tasks_path(case_id: onboarding_case.id))
+
+    kase.update!(state: "closed")
+    visit school_type_energy_authorisation_path(id: support_organisation.urn, type: "single")
+    expect(page).to have_text("Are you authorised to switch energy suppliers for these schools?")
+    click_link "Continue"
+    expect(page).to have_text("Are you switching electricity, gas or both?")
+    expect(Support::Case.count).to eq(2)
   end
 end
