@@ -38,7 +38,7 @@ class Energy::ElectricityMeterController < Energy::ApplicationController
     return unless params[:confirm]
 
     @electricity_meter_detail.destroy!
-    redirect_to energy_case_org_gas_meter_index_path,
+    redirect_to energy_case_org_electricity_meter_index_path,
                 notice: I18n.t("energy.electricity_meter.remove_page.removed")
   end
 
@@ -66,8 +66,10 @@ private
     @back_url =
       case action_name.to_sym
       when :index
+        edit_energy_case_org_electricity_meter_path(onboarding_case, @onboarding_case_organisation, electricity_usage_details.last)
+      when :edit, :new
         energy_case_org_electricity_meter_type_path
-      when :new, :edit, :create, :update
+      when :create, :update
         electricity_multiple_meters? ? energy_case_org_electricity_meter_index_path : energy_case_org_electricity_meter_type_path
       when :destroy
         energy_case_org_electricity_meter_index_path
