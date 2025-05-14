@@ -1,8 +1,6 @@
 <%= form_with model: @form, scope: :gas_bill_consolidation_form, url: energy_case_org_gas_bill_consolidation_path, method: :patch do |form| %>
     <%= form.govuk_error_summary %>
-
     <%= form.hidden_field :gas_bill_consolidation, value: '' %>
-
     <%= form.govuk_collection_radio_buttons :gas_bill_consolidation,
           [
           OpenStruct.new(value: true, label: I18n.t("energy.gas_bill_consolidation.radio_buttons.option_yes")),
@@ -10,9 +8,7 @@
           ],
           :value,
           :label,
-          legend: { text: I18n.t("energy.gas_bill_consolidation.option_heading")}
+          legend: { text: I18n.t("energy.gas_bill_consolidation.option_heading"), tag: "h1", size: "l"}
     %>
-
     <%= render EnergyFormButtonsComponent.new(form)%>
-
 <% end %>
