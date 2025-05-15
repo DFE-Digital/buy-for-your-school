@@ -67,7 +67,7 @@ private
       when :index
         edit_energy_case_org_gas_meter_path(onboarding_case, @onboarding_case_organisation, gas_meter_usage_details.last)
       when :edit, :new
-        energy_case_org_gas_single_multi_path
+        params[:return_to] == "summary" ? energy_case_org_gas_meter_index_path : energy_case_org_gas_single_multi_path
       when :create, :update
         gas_multiple_meters? ? energy_case_org_gas_meter_index_path : energy_case_org_gas_single_multi_path
       when :destroy

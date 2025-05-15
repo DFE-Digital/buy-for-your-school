@@ -47,7 +47,7 @@ private
 
   def gas_meters_and_usage
     status = case_org.gas_meters.any? ? :complete : :not_started
-    path = energy_case_org_gas_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id)
+    path = energy_case_org_gas_single_multi_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id)
     Task.new(title: __method__, status:, path:)
   end
 
@@ -59,7 +59,7 @@ private
 
   def electric_meters_and_usage
     status = case_org.electricity_meters.any? ? :complete : :not_started
-    path = energy_case_org_electricity_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id)
+    path = energy_case_org_electricity_meter_type_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id)
     Task.new(title: __method__, status:, path:)
   end
 
