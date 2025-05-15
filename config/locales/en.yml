@@ -536,7 +536,7 @@ en:
       mpan_hint: You can usually find the 13-digit MPAN on your electricity bill. Please check all pages.
       mpan_details_link: Where can I find my MPAN?
       mpan_details: Your MPAN is on your electricity bill. It’s the last 13 digits of the Supply number.
-      half_hourly_label: Is this a half hourly meter?
+      half_hourly_label: Is this a half-hourly meter?
       half_hourly_hint: Your meter is half hourly if your Supply number begins with 00. Your Supply number is on your electricity bill.
       half_hourly_yes_text: Half-hourly meters are sometimes managed by a separate company. Ask your electricity supplier if you need help answering the following questions.
       supplier_capacity_label: What is the supply capacity?

@@ -68,7 +68,7 @@ private
       when :index
         edit_energy_case_org_electricity_meter_path(onboarding_case, @onboarding_case_organisation, electricity_usage_details.last)
       when :edit, :new
-        energy_case_org_electricity_meter_type_path
+        params[:return_to] == "summary" ? energy_case_org_electricity_meter_index_path : energy_case_org_electricity_meter_type_path
       when :create, :update
         electricity_multiple_meters? ? energy_case_org_electricity_meter_index_path : energy_case_org_electricity_meter_type_path
       when :destroy

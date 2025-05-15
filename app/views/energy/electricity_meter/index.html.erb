@@ -33,7 +33,7 @@
               <td class="govuk-table__cell govuk-table__cell--numeric no-wrap">
                   <%= link_to safe_join([I18n.t("generic.link.change"),
                       content_tag(:span, "Change details for #{electricity_meter.mpan}", class: "govuk-visually-hidden")]),
-                          edit_energy_case_org_electricity_meter_path(id: electricity_meter.id),
+                          edit_energy_case_org_electricity_meter_path(id: electricity_meter.id, return_to: 'summary'),
                            class: "govuk-link govuk-!-margin-right-3" %>
                 <% if @electricity_meter_details.count > 1 %>
                   <%= link_to safe_join([I18n.t("generic.button.remove"), 
@@ -50,7 +50,7 @@
 
 <% if add_another_mpan_enabled? %>
 <%= link_to I18n.t("energy.electricity_meter.list_item.add_another_mpan"),
-            new_energy_case_org_electricity_meter_path, 
+            new_energy_case_org_electricity_meter_path(return_to: 'summary'), 
             class: 'govuk-button govuk-button--secondary' %>
 
 <br>

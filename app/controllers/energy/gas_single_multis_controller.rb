@@ -53,7 +53,7 @@ module Energy
     end
 
     def back_url
-      @back_url = switching_both? ? energy_case_electric_supplier_path(onboarding_case) : energy_case_gas_supplier_path(onboarding_case)
+      @back_url = request.referer || (switching_both? ? energy_case_electric_supplier_path(onboarding_case) : energy_case_gas_supplier_path(onboarding_case))
     end
   end
 end
