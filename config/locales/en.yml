@@ -488,6 +488,8 @@ en:
         heading: Are you sure you want to remove this MPRN?
         remove_mprn: Remove MPRN
         removed: MPRN successfully removed
+      alert:
+        limit_reached: Maximum number of MPRNs reached
     suppliers:
       british_gas: British Gas
       edf_energy: EDF Energy
@@ -560,6 +562,8 @@ en:
         heading: Are you sure you want to remove this MPAN?
         remove_mpan: Remove MPAN
         removed: MPAN successfully removed
+      alert:
+        limit_reached: Maximum number of MPANs reached
     vat_rate_charge:
       title: VAT declaration
       heading: Which VAT rate are you charged?

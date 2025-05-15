@@ -8,6 +8,11 @@ class Energy::GasMeterController < Energy::ApplicationController
   end
 
   def new
+    if @onboarding_case_organisation.gas_meters.count == MAX_METER_COUNT
+      redirect_to energy_case_org_gas_meter_index_path,
+                  notice: I18n.t("energy.gas_meter_details.alert.limit_reached")
+    end
+
     @gas_meter_detail = @onboarding_case_organisation.gas_meters.new
   end
 
