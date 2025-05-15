@@ -40,10 +40,10 @@ module Energy
 
     def redirect_path
       return energy_case_tasks_path if going_to_tasks?
+      return energy_case_org_vat_person_responsible_path if @onboarding_case_organisation.reload.vat_rate == 5
 
-      # Next: Are these the correct details for VAT purposes?
-      # Change when we have implemented the screen
-      energy_case_org_vat_rate_charge_path(onboarding_case, @onboarding_case_organisation)
+      # Change to VAT cert screen when it becomes available
+      energy_case_org_vat_rate_charge_path
     end
   end
 end

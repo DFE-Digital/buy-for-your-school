@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_13_125900) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_15_110844) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -258,6 +258,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_13_125900) do
     t.string "site_contact_last_name"
     t.string "site_contact_email"
     t.string "site_contact_phone"
+    t.boolean "vat_person_correct_details"
+    t.string "vat_person_first_name"
+    t.string "vat_person_last_name"
+    t.string "vat_person_phone"
+    t.jsonb "vat_person_address"
     t.index ["energy_onboarding_case_id"], name: "idx_on_energy_onboarding_case_id_a2b87b0066"
     t.index ["onboardable_type", "onboardable_id"], name: "idx_on_onboardable_type_onboardable_id_aa8b300738"
   end

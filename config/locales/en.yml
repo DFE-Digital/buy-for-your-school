@@ -580,7 +580,15 @@ en:
       last_name: Last name (optional)
       email: Email
       telephone: Telephone
-
+    vat_person_responsible:
+      title: VAT declaration
+      heading: Are these the correct details for VAT purposes?
+      hint: This information will be used to generate a VAT certificate which will be shared with the new suppliers.
+      option_yes: "Yes"
+      option_no: "No"
+      name: Name
+      address: Address
+      tel: Telephone number
 
   errors:
     contentful_entry_not_found:
