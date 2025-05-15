@@ -63,7 +63,9 @@ private
   end
 
   def back_url
-    @back_url = if switching_gas? && gas_multiple_meters?
+    @back_url = if params[:return_to] == "tasks"
+                  energy_case_tasks_path
+                elsif switching_gas? && gas_multiple_meters?
                   energy_case_org_gas_bill_consolidation_path
                 elsif switching_gas? && !gas_multiple_meters?
                   gas_meter_usage_exist? ? edit_gas_usage_path : new_gas_usage_path

@@ -14,10 +14,6 @@ class Energy::SiteContactDetailsFormSchema < Schema
     key.failure(:missing) if value.blank?
   end
 
-  rule(:site_contact_last_name) do
-    key.failure(:missing) if value.blank?
-  end
-
   rule(:site_contact_email) do
     key.failure(:missing) if value.blank?
   end
