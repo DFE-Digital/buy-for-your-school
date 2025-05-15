@@ -465,14 +465,14 @@ en:
     errors:
       rules:
         site_contact_first_name:
-          missing: Enter first name
+          missing: Enter a first name
           max_size?: First name must be 60 characters or fewer
         site_contact_last_name:
-          missing: Enter last name
+          missing: Enter a last name
           max_size?: Last name must be 60 characters or fewer
         site_contact_email:
-          missing: Enter email address
-          format?: Enter a valid email address
+          missing: Enter an email address like jo.wade.school.org.uk
+          format?: Enter an email address like jo.wade.school.org.uk
         site_contact_phone:
-          missing: Enter telephone number
-          format?: Enter a valid telephone number
+          missing: Enter a telephone number, like 07155487611
+          format?: Enter a telephone number, like 07155487611

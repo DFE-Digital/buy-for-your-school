@@ -575,9 +575,9 @@ en:
     site_contact_details:
       title: Site contact details
       heading: Who manages site access and maintenance?
-      sub_title: This is in case the supplier needs access to the site or meter equipment, or in case of emergency
+      sub_title: This is in case the supplier needs access to the site or meter equipment, or in case of emergency.
       first_name: First name
-      last_name: Last name
+      last_name: Last name (optional)
       email: Email
       telephone: Telephone
 
