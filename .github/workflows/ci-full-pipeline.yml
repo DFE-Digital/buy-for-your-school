@@ -1,5 +1,8 @@
 name: "CI/CD - Full Pipeline"
 
+env:
+  AZURE_CORE_USE_MSAL_HTTP_CACHE: "false"
+
 on:
   pull_request:
   push:
