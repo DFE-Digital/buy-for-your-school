@@ -6,7 +6,7 @@
   <%= form.hidden_field :service, value: @usability_survey.service %>
   <%= hidden_field_tag :return_url, params[:return_url] %>
 
-  <%= form.govuk_check_boxes_fieldset :usage_reasons, legend: { text: I18n.t("usability_survey.usage_reasons.question"), size: "s" } do %>
+  <%= form.govuk_check_boxes_fieldset :usage_reasons, legend: { text: I18n.t("usability_survey.usage_reasons.question"), size: "m"  }, hint: { text: I18n.t("usability_survey.usage_reasons.hint") } do %>
     <% usability_survey_usage_reason_options.each do |option| %>
       <% if option.id == "other" %>
         <%= form.govuk_check_box :usage_reasons, option.id, label: { text: option.title } do %>
@@ -18,7 +18,7 @@
     <% end %>
   <% end %>
 
-  <%= form.govuk_radio_buttons_fieldset :service_helpful, legend: { text: I18n.t("usability_survey.service_helpful"), size: "s" } do %>
+  <%= form.govuk_radio_buttons_fieldset :service_helpful, legend: { text: I18n.t("usability_survey.service_helpful"), size: "m" } do %>
     <%= form.govuk_radio_button :service_helpful, true, label: { text: "Yes" } %>
     <%= form.govuk_radio_button :service_helpful, false, label: { text: "No" } do %>
       <%= form.govuk_text_area :service_not_helpful_reason, label: { text: I18n.t("usability_survey.service_not_helpful_reason") } %>
@@ -27,7 +27,7 @@
 
   <%= form.govuk_text_area :improvements,
     rows: 5,
-    label: { text: I18n.t("usability_survey.improvements") }
+    label: { text: I18n.t("usability_survey.improvements"), size: "m" }
   %>
 
   <div class="govuk-button-group">
