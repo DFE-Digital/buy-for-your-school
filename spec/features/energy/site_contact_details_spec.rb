@@ -14,33 +14,28 @@ describe "User can update site contact details", :js do
 
     click_button "Save and continue"
 
-    expect(page).to have_text("Enter first name")
-    expect(page).to have_text("Enter last name")
-    expect(page).to have_text("Enter email address")
-    expect(page).to have_text("Enter telephone number")
+    expect(page).to have_text("Enter a first name")
+    expect(page).to have_text("Enter an email address like jo.wade.school.org.uk")
+    expect(page).to have_text("Enter a telephone number, like 07155487611")
 
     fill_in "First name", with: "Momo"
     click_button "Save and continue"
-    expect(page).not_to have_text("Enter first name")
-
-    fill_in "Last name", with: "Taro"
-    click_button "Save and continue"
-    expect(page).not_to have_text("Enter last name")
+    expect(page).not_to have_text("Enter a first name")
 
     fill_in "Email", with: "123"
     click_button "Save and continue"
-    expect(page).to have_text("Enter a valid email address")
+    expect(page).to have_text("Enter an email address like jo.wade.school.org.uk")
 
     fill_in "Email", with: "test@test.com"
     click_button "Save and continue"
-    expect(page).not_to have_text("Enter a valid email address")
+    expect(page).not_to have_text("Enter an email address like jo.wade.school.org.uk")
 
     fill_in "Telephone", with: "123"
     click_button "Save and continue"
-    expect(page).to have_text("Enter a valid telephone number")
+    expect(page).to have_text("Enter a telephone number, like 07155487611")
 
     fill_in "Telephone", with: "01234567890"
     click_button "Save and continue"
-    expect(page).not_to have_text("Enter a valid telephone number")
+    expect(page).not_to have_text("Enter a telephone number, like 07155487611")
   end
 end
