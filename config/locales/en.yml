@@ -2280,9 +2280,10 @@ en:
     improvements: How could we improve this service?
     send: Send feedback
     service_helpful: Did this service help you get what you were looking for?
-    service_not_helpful_reason: Please tell us why not
+    service_not_helpful_reason: Tell us why not
     skip: Skip survey
     usage_reasons:
+      hint: Select all options that are relevant to you
       options:
         browsing: Browsing
         finding_a_framework: Finding a framework
@@ -2290,4 +2291,4 @@ en:
         request_for_help: Request for help
         other: Other
       question: What did you use the service for today?
-      usage_reason_other: Please tell how else this service has helped you
+      usage_reason_other: Tell us how else this service has helped you
