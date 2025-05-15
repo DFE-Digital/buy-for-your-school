@@ -7,6 +7,8 @@ module Energy
       "Support::EstablishmentGroup",
     ].freeze
 
+    MAX_METER_COUNT = 5
+
   private
 
     def check_flag

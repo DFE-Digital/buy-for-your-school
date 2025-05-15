@@ -9,6 +9,10 @@ class Energy::ElectricityMeterController < Energy::ApplicationController
   end
 
   def new
+    if @onboarding_case_organisation.electricity_meters.count == MAX_METER_COUNT
+      redirect_to energy_case_org_electricity_meter_index_path,
+                  notice: I18n.t("energy.electricity_meter.alert.limit_reached")
+    end
     @electricity_meter_detail = @onboarding_case_organisation.electricity_meters.new
   end
 
@@ -53,9 +57,13 @@ private
   end
 
   def redirect_path
-    return energy_case_tasks_path if going_to_tasks?
-
-    energy_case_org_electricity_meter_index_path
+    if going_to_tasks?
+      energy_case_tasks_path
+    elsif !electricity_multiple_meters?
+      energy_case_org_site_contact_details_path
+    else
+      energy_case_org_electricity_meter_index_path
+    end
   end
 
   def form_params

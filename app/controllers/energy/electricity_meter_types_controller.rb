@@ -37,8 +37,8 @@ private
   end
 
   def back_url
-    if request.referer
-      request.referer
+    if params[:return_to] == "tasks"
+      energy_case_tasks_path
     elsif switching_both?
       gas_multiple_meters? ? energy_case_org_gas_bill_consolidation_path : edit_gas_usage_path
     elsif switching_electricity?
