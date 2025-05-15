@@ -27,7 +27,7 @@ module Support
       @reply_form.attributes = form_params
       if @reply_form.valid?
         @reply_form.save_draft!
-        @reply_form.delivery_as_reply
+        @reply_form.queue_delivery(:as_reply)
 
         respond_to do |format|
           format.turbo_stream do
