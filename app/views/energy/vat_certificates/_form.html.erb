@@ -1,0 +1,13 @@
+<%= form_with model: @form, scope: :vat_certificate_form, url: energy_case_org_vat_certificate_path, method: :patch do |form| %>
+    <%= form.govuk_error_summary %>
+
+    <div class="govuk-form-group">
+      <%= form.govuk_check_boxes_fieldset :vat_certificate_declared, legend: nil do %>
+        <% ['declaration1', 'declaration2', 'declaration3'].each do |dec| %>
+          <%= form.govuk_check_box :vat_certificate_declared, dec, label: { text: I18n.t(dec, scope: "energy.vat_certificate.declaration") } %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= render SubmitButtonComponent.new(form)%>
+<% end %>

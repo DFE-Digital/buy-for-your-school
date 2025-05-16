@@ -483,3 +483,10 @@ en:
       rules:
         vat_person_correct_details:
           missing: Select whether these are the correct details
+  vat_certificate_form:
+    rules:
+      vat_certificate_declared: ""
+    errors:
+      rules:
+        vat_certificate_declared:
+          select_all: Select all boxes to continue

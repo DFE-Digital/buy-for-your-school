@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_15_110844) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_16_112444) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -241,28 +241,29 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_15_110844) do
     t.integer "switching_energy_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "gas_single_multi"
+    t.boolean "gas_bill_consolidation"
     t.integer "gas_current_supplier"
     t.string "gas_current_supplier_other"
     t.date "gas_current_contract_end_date"
     t.integer "electric_current_supplier"
     t.string "electric_current_supplier_other"
     t.date "electric_current_contract_end_date"
-    t.boolean "gas_bill_consolidation"
     t.integer "electricity_meter_type"
+    t.integer "gas_single_multi"
     t.boolean "is_electric_bill_consolidated"
-    t.integer "vat_rate"
-    t.integer "vat_lower_rate_percentage"
-    t.string "vat_lower_rate_reg_no"
     t.string "site_contact_first_name"
     t.string "site_contact_last_name"
     t.string "site_contact_email"
     t.string "site_contact_phone"
+    t.integer "vat_rate"
+    t.integer "vat_lower_rate_percentage"
+    t.string "vat_lower_rate_reg_no"
     t.boolean "vat_person_correct_details"
     t.string "vat_person_first_name"
     t.string "vat_person_last_name"
     t.string "vat_person_phone"
     t.jsonb "vat_person_address"
+    t.boolean "vat_certificate_declared", default: false
     t.index ["energy_onboarding_case_id"], name: "idx_on_energy_onboarding_case_id_a2b87b0066"
     t.index ["onboardable_type", "onboardable_id"], name: "idx_on_onboardable_type_onboardable_id_aa8b300738"
   end
@@ -1258,15 +1259,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_15_110844) do
   add_foreign_key "user_journeys", "support_cases", column: "case_id"
 
   create_view "support_message_threads", sql_definition: <<-SQL
-      SELECT DISTINCT ON (se.outlook_conversation_id, se.ticket_id) se.outlook_conversation_id AS conversation_id,
-      se.case_id,
-      se.ticket_id,
-      se.ticket_type,
+      SELECT DISTINCT ON (outlook_conversation_id, ticket_id) outlook_conversation_id AS conversation_id,
+      case_id,
+      ticket_id,
+      ticket_type,
       ( SELECT jsonb_agg(DISTINCT elems.value) AS jsonb_agg
              FROM support_emails se2,
               LATERAL jsonb_array_elements(se2.recipients) elems(value)
             WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)) AS recipients,
-      se.subject,
+      subject,
       ( SELECT se2.sent_at
              FROM support_emails se2
             WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)

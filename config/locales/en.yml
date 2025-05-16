@@ -589,6 +589,16 @@ en:
       name: Name
       address: Address
       tel: Telephone number
+    vat_certificate:
+      title: VAT declaration
+      heading: VAT certificate of declaration
+      sub_title: This information will be used to generate a VAT certificate which will be shared with the new suppliers.
+      declaration:
+        declaration1: I certify that the information given is correct and complete and it will remain valid until I inform the supplier in writing of any significant changes in circumstances
+        declaration2: I undertake to inform the supplier of any change in the qualifying use
+        declaration3: I understand that any incorrect statement may make me liable for a financial penalty under the Value Added Tax Act (as amended from time to time)
+
+
 
   errors:
     contentful_entry_not_found:
