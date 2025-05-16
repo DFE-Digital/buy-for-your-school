@@ -58,6 +58,7 @@ module Energy
 
     def redirect_path
       return energy_case_tasks_path if going_to_tasks?
+
       # return <vat-contact-info-path> unless vat_details_correct?
 
       # Change to VAT certification when we have implemented the screen
