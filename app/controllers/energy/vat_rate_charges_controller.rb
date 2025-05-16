@@ -42,8 +42,7 @@ module Energy
       return energy_case_tasks_path if going_to_tasks?
       return energy_case_org_vat_person_responsible_path if @onboarding_case_organisation.reload.vat_rate == 5
 
-      # Change to VAT cert screen when it becomes available
-      energy_case_org_vat_rate_charge_path
+      energy_case_org_vat_certificate_path
     end
   end
 end

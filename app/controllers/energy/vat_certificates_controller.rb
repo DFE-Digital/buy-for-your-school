@@ -38,7 +38,9 @@ private
   end
 
   def back_url
-    @back_url = if @onboarding_case_organisation.vat_person_correct_details?
+    @back_url = if @onboarding_case_organisation.reload.vat_rate == 20
+                  energy_case_org_vat_rate_charge_path
+                elsif @onboarding_case_organisation.vat_person_correct_details?
                   energy_case_org_vat_person_responsible_path
                 else
                   energy_case_org_vat_alt_person_responsible_path
