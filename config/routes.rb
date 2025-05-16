@@ -522,6 +522,8 @@ Rails.application.routes.draw do
         resource :vat_rate_charge, only: %i[show update]
         resource :site_contact_details, only: %i[show update]
         resource :vat_person_responsible, only: %i[show update]
+        resource :vat_alt_person_responsible, only: %i[show update]
+        resource :vat_certificate, only: %i[show update]
       end
     end
   end
