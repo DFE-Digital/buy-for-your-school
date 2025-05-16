@@ -476,3 +476,10 @@ en:
         site_contact_phone:
           missing: Enter a telephone number, like 07155487611
           format?: Enter a telephone number, like 07155487611
+  vat_person_responsible:
+    rules:
+      vat_person_correct_details: ""
+    errors:
+      rules:
+        vat_person_correct_details:
+          missing: Select whether these are the correct details
