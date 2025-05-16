@@ -589,6 +589,25 @@ en:
       name: Name
       address: Address
       tel: Telephone number
+    billing_preferences:
+      title: Billing preferences
+      heading: Billing preferences
+      payment_method:
+        legend: How will the bills be paid?
+        bacs: BACS
+        direct_debit: Direct Debit
+        gov_procurement_card: Government Procurement Card
+      terms:
+        legend: Payment terms
+        days14: 14 days
+        days21: 21 days
+        days28: 28 days
+        days30: 30 days
+      invoicing:
+        legend: How do you want to be invoiced?
+        email: Email
+        email_address: Email address
+        paper: Paper
 
   errors:
     contentful_entry_not_found:
