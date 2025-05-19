@@ -11,8 +11,7 @@ class Energy::VatCertificatesController < Energy::ApplicationController
     if validation.success?
       @onboarding_case_organisation.update!(**form.data)
 
-      # TODO: Update this to the correct path
-      redirect_to energy_case_org_vat_certificate_path
+      redirect_to energy_case_org_billing_preferences_path
     else
       render :show
     end
