@@ -10,6 +10,11 @@ class Energy::SwitchEnergiesController < Energy::ApplicationController
   def update
     if validation.success?
       @onboarding_case_organisation.update!(**form.data)
+
+      if @onboarding_case_organisation.saved_change_to_switching_energy_type?
+        reset_energy_data
+      end
+
       redirect_to redirect_path
     else
       render :show
@@ -26,8 +31,43 @@ private
     energy_case_gas_supplier_path(onboarding_case)
   end
 
-  def energy_supplier_path
-    @onboarding_case_organisation.switching_energy_type_electricity? ? energy_case_electric_supplier_path : energy_case_gas_supplier_path
+  def reset_energy_data
+    if switching_electricity?
+      reset_gas_data
+    elsif switching_gas?
+      reset_electricity_data
+    end
+  end
+
+  def reset_gas_data
+    @onboarding_case_organisation.update!(reset_gas_params)
+    @onboarding_case_organisation.gas_meters.destroy_all
+  end
+
+  def reset_electricity_data
+    @onboarding_case_organisation.update!(reset_electricity_params)
+    @onboarding_case_organisation.electricity_meters.destroy_all
+  end
+
+  def reset_gas_params
+    {
+      gas_current_supplier: nil,
+      gas_current_supplier_other: nil,
+      gas_current_contract_end_date: nil,
+      gas_single_multi: nil,
+      gas_bill_consolidation: nil,
+
+    }
+  end
+
+  def reset_electricity_params
+    {
+      electric_current_supplier: nil,
+      electric_current_supplier_other: nil,
+      electric_current_contract_end_date: nil,
+      electricity_meter_type: nil,
+      is_electric_bill_consolidated: nil,
+    }
   end
 
   def form
