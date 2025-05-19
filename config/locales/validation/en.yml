@@ -471,8 +471,8 @@ en:
           missing: Enter a last name
           max_size?: Last name must be 60 characters or fewer
         site_contact_email:
-          missing: Enter an email address like jo.wade.school.org.uk
-          format?: Enter an email address like jo.wade.school.org.uk
+          missing: Enter an email address like jo.wade@school.org.uk
+          format?: Enter an email address like jo.wade@school.org.uk
         site_contact_phone:
           missing: Enter a telephone number, like 07155487611
           format?: Enter a telephone number, like 07155487611

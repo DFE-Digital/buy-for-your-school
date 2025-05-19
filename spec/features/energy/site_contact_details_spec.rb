@@ -15,7 +15,7 @@ describe "User can update site contact details", :js do
     click_button "Save and continue"
 
     expect(page).to have_text("Enter a first name")
-    expect(page).to have_text("Enter an email address like jo.wade.school.org.uk")
+    expect(page).to have_text("Enter an email address like jo.wade@school.org.uk")
     expect(page).to have_text("Enter a telephone number, like 07155487611")
 
     fill_in "First name", with: "Momo"
@@ -24,11 +24,11 @@ describe "User can update site contact details", :js do
 
     fill_in "Email", with: "123"
     click_button "Save and continue"
-    expect(page).to have_text("Enter an email address like jo.wade.school.org.uk")
+    expect(page).to have_text("Enter an email address like jo.wade@school.org.uk")
 
     fill_in "Email", with: "test@test.com"
     click_button "Save and continue"
-    expect(page).not_to have_text("Enter an email address like jo.wade.school.org.uk")
+    expect(page).not_to have_text("Enter an email address like jo.wade@school.org.uk")
 
     fill_in "Telephone", with: "123"
     click_button "Save and continue"
