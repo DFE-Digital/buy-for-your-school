@@ -11,6 +11,11 @@ module Energy
     def update
       if validation.success?
         @onboarding_case_organisation.update!(**form.data)
+
+        if @onboarding_case_organisation.saved_change_to_gas_single_multi?
+          reset_multimeter_data
+        end
+
         redirect_to redirect_path
       else
         render :show
@@ -41,6 +46,12 @@ module Energy
         new_gas_usage_path
       else
         gas_meter_usage_exist? ? edit_gas_usage_path : new_gas_usage_path
+      end
+    end
+
+    def reset_multimeter_data
+      unless gas_multiple_meters?
+        @onboarding_case_organisation.gas_meters.order(:created_at).offset(1).destroy_all
       end
     end
 

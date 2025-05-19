@@ -8,7 +8,7 @@ describe "User can update electricity meters and usage", :js do
     user_exists_in_dfe_sign_in(user:)
     user_is_signed_in(user:)
 
-    visit energy_case_org_electricity_meter_type_path(case_id: case_organisation.energy_onboarding_case_id, org_id: case_organisation.onboardable_id)
+    visit energy_case_org_electricity_meter_type_path(onboarding_case, case_organisation)
 
     expect(page).to have_text("Electricity meters and usage")
 
@@ -18,10 +18,26 @@ describe "User can update electricity meters and usage", :js do
 
     expect(page).to have_text("Please select at least one option to proceed")
 
-    choose "Single meter"
+    choose "Multi meter"
 
     click_button "Save and continue"
 
     expect(page).not_to have_text("Please select at least one option to proceed")
+
+    create(:energy_electricity_meter, :with_valid_data, mpan: "1234512345121", energy_onboarding_case_organisation_id: case_organisation.id)
+
+    create(:energy_electricity_meter, :with_valid_data, mpan: "1234512345122", energy_onboarding_case_organisation_id: case_organisation.id)
+
+    create(:energy_electricity_meter, :with_valid_data, mpan: "1234512345123", energy_onboarding_case_organisation_id: case_organisation.id)
+
+    visit energy_case_org_electricity_meter_type_path(onboarding_case, case_organisation)
+
+    choose "Single meter"
+
+    click_button "Save and continue"
+
+    expect(case_organisation.electricity_meters.count).to be(1)
+
+    expect(case_organisation.electricity_meters.last.mpan).to eq("1234512345121")
   end
 end
