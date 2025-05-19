@@ -1,0 +1,28 @@
+<%= form_with model: @form, scope: :billing_preferences, url: energy_case_org_billing_preferences_path, method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+  <%= form.hidden_field :billing_payment_method, value: form.object.billing_payment_method %>
+  <%= form.hidden_field :billing_payment_terms, value: form.object.billing_payment_terms %>
+  <%= form.hidden_field :billing_invoicing_method, value: form.object.billing_invoicing_method %>
+
+  <%= form.govuk_radio_buttons_fieldset :payment_method, legend: {hidden: true} do %>
+    <legend class="govuk-fieldset__legend"><%= I18n.t("energy.billing_preferences.payment_method.legend") %></legend>
+    <% form.object.payment_method_options.each do |option| %>
+      <%= form.govuk_radio_button :billing_payment_method, option, label: { text: I18n.t("energy.billing_preferences.payment_method.#{option}") } %>
+    <% end %>
+  <% end %>
+  <%= form.govuk_radio_buttons_fieldset :terms, legend: { hidden: true } do %>
+    <legend class="govuk-fieldset__legend"><%= I18n.t("energy.billing_preferences.terms.legend") %></legend>
+    <% form.object.payment_terms_options.each do |option| %>
+      <%= form.govuk_radio_button :billing_payment_terms, option, label: { text: I18n.t("energy.billing_preferences.terms.#{option}") } %>
+    <% end %>
+  <% end %>
+  <%= form.govuk_radio_buttons_fieldset :invoicing, legend: { hidden: true } do %>
+    <legend class="govuk-fieldset__legend"><%= I18n.t("energy.billing_preferences.invoicing.legend") %></legend>
+    <%= form.govuk_radio_button :billing_invoicing_method, :email, label: { text: I18n.t("energy.billing_preferences.invoicing.email") } do %>
+      <%= form.govuk_text_field :billing_invoicing_email, width: "three-quarters", label: {text: I18n.t("energy.billing_preferences.invoicing.email_address")}%>
+    <% end %>
+    <%= form.govuk_radio_button :billing_invoicing_method, :paper, label: { text: I18n.t("energy.billing_preferences.invoicing.paper") } %>
+  <% end %>
+
+  <%= render EnergyFormButtonsComponent.new(form)%>
+<% end %>

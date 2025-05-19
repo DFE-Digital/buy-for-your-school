@@ -55,4 +55,26 @@ class Energy::OnboardingCaseOrganisation < ApplicationRecord
   #   single  - Single meter
   #   multi   - Multi meter
   enum :electricity_meter_type, ELECTRICITY_SINGLE_MULTI, prefix: true
+
+  BILLING_PAYMENT_METHOD = {
+    bacs: 0,
+    direct_debit: 1,
+    gov_procurement_card: 2,
+  }.freeze
+
+  BILLING_PAYMENT_TERMS = {
+    days14: 0,
+    days21: 1,
+    days28: 2,
+    days30: 3,
+  }.freeze
+
+  BILLING_INVOICING_METHOD = {
+    email: 0,
+    paper: 1,
+  }.freeze
+
+  enum :billing_payment_method, BILLING_PAYMENT_METHOD, prefix: true
+  enum :billing_payment_terms, BILLING_PAYMENT_TERMS, prefix: true
+  enum :billing_invoicing_method, BILLING_INVOICING_METHOD, prefix: true
 end

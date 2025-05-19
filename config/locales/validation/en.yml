@@ -490,3 +490,19 @@ en:
       rules:
         vat_certificate_declared:
           select_all: Select all boxes to continue
+  billing_preferences:
+    rules:
+      billing_payment_method: ""
+      billing_payment_terms: ""
+      billing_invoicing_method: ""
+      billing_invoicing_email: ""
+    errors:
+      rules:
+        billing_payment_method:
+          missing: Select your preferred method of payment
+        billing_payment_terms:
+          missing: Select your payment terms
+        billing_invoicing_method:
+          missing: Select how you'd like to be invoiced
+        billing_invoicing_email:
+          missing: Enter an email address in the correct format, like name@example.com

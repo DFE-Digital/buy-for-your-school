@@ -597,6 +597,25 @@ en:
         declaration1: I certify that the information given is correct and complete and it will remain valid until I inform the supplier in writing of any significant changes in circumstances
         declaration2: I undertake to inform the supplier of any change in the qualifying use
         declaration3: I understand that any incorrect statement may make me liable for a financial penalty under the Value Added Tax Act (as amended from time to time)
+    billing_preferences:
+      title: Billing preferences
+      heading: Billing preferences
+      payment_method:
+        legend: How will the bills be paid?
+        bacs: BACS
+        direct_debit: Direct Debit
+        gov_procurement_card: Government Procurement Card
+      terms:
+        legend: Payment terms
+        days14: 14 days
+        days21: 21 days
+        days28: 28 days
+        days30: 30 days
+      invoicing:
+        legend: How do you want to be invoiced?
+        email: Email
+        email_address: Email address
+        paper: Paper
 
 
 
