@@ -1,0 +1,13 @@
+<%= form_with model: @form, scope: :billing_address_confirmation, url: energy_case_org_billing_address_confirmation_path, method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+  <%= form.hidden_field :billing_invoice_address_source_id, value: form.object.billing_invoice_address_source_id %>
+
+  <%= form.govuk_radio_buttons_fieldset :billing_address_confirmation,
+    legend: { size: "l", text: I18n.t("energy.billing_address_confirmation.heading") } do %>
+    <% @address_orgs.each do |id, org| %>
+      <%= form.govuk_radio_button :billing_invoice_address_source_id, id, label: { text: org.formatted_address } %>
+    <% end %>
+  <% end %>
+
+  <%= render EnergyFormButtonsComponent.new(form, include_tasks: false)%>
+<% end %>
