@@ -62,7 +62,8 @@ module Energy
       if @onboarding_case_organisation.vat_person_correct_details?
         energy_case_org_vat_certificate_path
       else
-        vat_alt_person_responsible_path
+        # Change to energy_case_org_vat_alt_person_responsible_path once screen implemented
+        energy_case_org_vat_person_responsible_path
       end
     end
   end
