@@ -626,6 +626,15 @@ en:
       last_name: Last name (optional)
       telephone: Telephone number
       address: Select an address
+    confirmation:
+      title: Information submitted
+      paragraph_one: We've sent you an email containing a copy of this form and details about your new contract.
+      paragraph_two: If your current contract expires before 31 March 2026, you’ll join the Energy for Schools contract on 1 April 2026.
+      paragraph_three: Depending on your contract’s end date, you may be placed on an interim contract to ensure continued supply to your school.
+      takes_five_minutes: (takes 5 minutes)
+      link:
+        label: What did you think of this service?
+        url: /customer_satisfaction_surveys/new?service=energy_for_schools&source=confirmation_screen
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
