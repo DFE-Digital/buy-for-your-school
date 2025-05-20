@@ -212,4 +212,4 @@ Style/SoleNestedConditional:
 Rails/UniqueValidationWithoutIndex:
   Exclude:
     - 'app/models/energy/gas_meter.rb'
-    - 'spec/features/energy/gas_meter_details_spec.rb'
+    - 'app/models/energy/electricity_meter.rb'

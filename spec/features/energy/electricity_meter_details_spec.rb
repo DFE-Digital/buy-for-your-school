@@ -8,35 +8,35 @@ describe "User can update electricity meters and usage", :js do
     user_exists_in_dfe_sign_in(user:)
     user_is_signed_in(user:)
 
-    visit new_energy_case_org_electricity_meter_path(case_id: case_organisation.energy_onboarding_case_id, org_id: case_organisation.onboardable_id)
+    visit new_energy_case_org_electricity_meter_path(onboarding_case, case_organisation)
 
     expect(page).to have_text("Electricity meter details")
 
     click_button "Save and continue"
 
-    expect(page).to have_text("Enter the MPAN")
+    expect(page).to have_text("Enter an MPAN number")
 
-    expect(page).to have_text("Select whether the meter is half hourly")
+    expect(page).to have_text("Select whether your meter is half hourly or not")
 
-    expect(page).to have_text("Enter the electricity usage")
+    expect(page).to have_text("Enter the estimated annual usage in kilowatt hours")
 
     fill_in "Add an MPAN", with: "10"
 
     click_button "Save and continue"
 
-    expect(page).to have_text("Enter a valid MPAN")
+    expect(page).to have_text("The MPAN must be in the correct format and 13 numbers long")
 
     fill_in "Add an MPAN", with: "testing text"
 
     click_button "Save and continue"
 
-    expect(page).to have_text("Enter a valid MPAN")
+    expect(page).to have_text("The MPAN must be in the correct format and 13 numbers long")
 
     fill_in "Add an MPAN", with: "1234567890123"
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("Enter a valid MPAN")
+    expect(page).not_to have_text("The MPAN must be in the correct format and 13 numbers long")
 
     choose "Yes"
 
@@ -96,12 +96,26 @@ describe "User can update electricity meters and usage", :js do
 
     click_button "Save and continue"
 
-    expect(page).to have_text("Enter a valid electricity usage")
+    expect(page).to have_text("Enter a valid estimated annual usage in kilowatt hours")
 
     fill_in "Estimated annual electricity usage", with: "1000"
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("Enter a valid electricity usage")
+    expect(page).not_to have_text("Enter a valid estimated annual usage in kilowatt hours")
+
+    visit new_energy_case_org_electricity_meter_path(onboarding_case, case_organisation)
+
+    fill_in "Add an MPAN", with: "1234567890123"
+
+    click_button "Save and continue"
+
+    expect(page).to have_text("This MPAN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter")
+
+    fill_in "Add an MPAN", with: "1234567890124"
+
+    click_button "Save and continue"
+
+    expect(page).not_to have_text("This MPAN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter")
   end
 end

@@ -197,10 +197,10 @@ en:
         energy/electricity_meter:
             attributes:
               mpan:
-                blank: Enter the MPAN
-                invalid: Enter a valid MPAN
+                blank: Enter an MPAN number
+                invalid: The MPAN must be in the correct format and 13 numbers long
               is_half_hourly:
-                inclusion: Select whether the meter is half hourly
+                inclusion: Select whether your meter is half hourly or not
               supply_capacity:
                 blank: Enter the supply capacity
                 invalid: Enter a valid supply capacity
@@ -215,10 +215,11 @@ en:
                 blank: Enter the meter operator
                 invalid: Enter a valid meter operator
               electricity_usage:
-                blank: Enter the electricity usage
-                invalid: Enter a valid electricity usage
-                not_a_number: Enter a valid electricity usage
+                blank: Enter the estimated annual usage in kilowatt hours
+                invalid: Enter a valid estimated annual usage in kilowatt hours
+                not_a_number: Enter a valid estimated annual usage in kilowatt hours
             maximum_mpan_per_organisation: Maximum number of MPANs reached
+            error_unique: This MPAN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter
 
   request:
     rules:
