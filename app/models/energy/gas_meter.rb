@@ -6,7 +6,8 @@ class Energy::GasMeter < ApplicationRecord
 
   validates :mprn,
             presence: true,
-            format: { with: /\A[1-9][0-9]{5,11}\z/ }
+            format: { with: /\A[1-9][0-9]{5,11}\z/ },
+            uniqueness: { case_sensitive: false, scope: :energy_onboarding_case_organisation_id, message: :error_unique }
   validates :gas_usage,
             presence: true,
             numericality: { greater_than_or_equal_to: 0, less_than: 1_000_000 }
