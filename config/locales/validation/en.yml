@@ -506,3 +506,10 @@ en:
           missing: Select how you'd like to be invoiced
         billing_invoicing_email:
           missing: Enter an email address in the correct format, like name@example.com
+  billing_address_confirmation:
+    rules:
+      billing_invoice_address_source_id: ""
+    errors:
+      rules:
+        billing_invoice_address_source_id:
+          missing: Select a billing address

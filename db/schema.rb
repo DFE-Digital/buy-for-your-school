@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_16_133110) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_19_110728) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -268,6 +268,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_16_133110) do
     t.integer "billing_invoicing_method"
     t.string "billing_invoicing_email"
     t.boolean "vat_certificate_declared", default: false
+    t.jsonb "billing_invoice_address"
+    t.string "billing_invoice_address_source_id"
     t.index ["energy_onboarding_case_id"], name: "idx_on_energy_onboarding_case_id_a2b87b0066"
     t.index ["onboardable_type", "onboardable_id"], name: "idx_on_onboardable_type_onboardable_id_aa8b300738"
   end

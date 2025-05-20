@@ -616,6 +616,9 @@ en:
         email: Email
         email_address: Email address
         paper: Paper
+    billing_address_confirmation:
+      title: Billing preferences
+      heading: Billing address
 
 
 
