@@ -30,7 +30,7 @@
                   subtitle: I18n.t("support.case.filter.labels.selected", count: Array(form.object.agent).length),
                   expanded: true, html: { "data-scroll-target" => "assignee" } do %>
         <%= form.govuk_check_boxes_fieldset :agent, legend: nil, small: true, form_group: { class: "govuk-!-margin-bottom-0" } do %>
-          <% available_agents.each do |agent| %>
+          <% available_cec_agents.each do |agent| %>
             <%= form.govuk_check_box :agent, agent.id, exclusive: agent.exclusive, label: { text: agent.title },
               html_options: { "data-action" => "change->scroll#saveScrollPosition click->scroll#setScrollTarget" } %>
           <% end %>
