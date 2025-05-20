@@ -38,7 +38,7 @@ module Support
         support_level: @attrs[:support_level] || :L1,
         value: @attrs[:procurement_amount],
         creation_source: @attrs[:creation_source],
-        procurement_stage: ProcurementStage.find_by(key: "need"),
+        procurement_stage: @attrs[:procurement_stage] || ProcurementStage.find_by(key: "need"),
         initial_request_text: @attrs[:request_text],
         state: @attrs[:state] || :initial,
       )
