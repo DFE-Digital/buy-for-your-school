@@ -186,13 +186,14 @@ en:
         energy/gas_meter:
             attributes:
               mprn:
-                blank: Enter the MPRN
-                invalid: Enter a valid MPRN
+                blank: Enter a Meter Point Reference Number
+                invalid: The MPRN must be in the correct format and between 6 and 12 numbers long
               gas_usage:
-                blank: Enter the gas usage
-                invalid: Enter a valid gas usage
-                not_a_number: Enter a valid gas usage
+                blank: Enter the estimated annual usage in kilowatt hours
+                invalid: Enter a valid estimated annual usage in kilowatt hours
+                not_a_number: Enter a valid estimated annual usage in kilowatt hours
             maximum_mprn_per_organisation: Maximum number of MPRNs reached
+            error_unique: This MPRN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter
         energy/electricity_meter:
             attributes:
               mpan:

@@ -207,3 +207,9 @@ Style/DateTime:
 Style/SoleNestedConditional:
   Exclude:
     - 'app/models/framework_request_flow.rb'
+
+# Offense count: 1
+Rails/UniqueValidationWithoutIndex:
+  Exclude:
+    - 'app/models/energy/gas_meter.rb'
+    - 'spec/features/energy/gas_meter_details_spec.rb'
