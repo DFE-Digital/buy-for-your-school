@@ -516,6 +516,7 @@ Rails.application.routes.draw do
       resource :check_your_answers, only: %i[show]
       resource :letter_of_authorisation, only: %i[show update]
       resource :confirmation, only: :show
+      resource :check_your_answers, only: %i[show]
 
       resources :org, except: %i[show] do
         resources :gas_meter, except: %i[show]
