@@ -515,3 +515,21 @@ en:
       rules:
         billing_invoice_address_source_id:
           missing: Select a billing address
+  vat_alt_person_responsible:
+    rules:
+      vat_alt_person_first_name: ""
+      vat_alt_person_last_name: ""
+      vat_alt_person_phone: ""
+      vat_alt_person_address: ""
+    errors:
+      rules:
+        vat_alt_person_first_name:
+          missing: Enter a contact name
+          max_size?: First name must be 60 characters or fewer
+        vat_alt_person_last_name:
+          max_size?: Last name must be 60 characters or fewer
+        vat_alt_person_phone:
+          missing: Enter a phone number
+          format?: Enter a phone number in the correct format, like 01632 960 001
+        vat_alt_person_address:
+          missing: Select an address

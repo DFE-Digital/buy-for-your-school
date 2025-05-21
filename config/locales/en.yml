@@ -619,9 +619,13 @@ en:
     billing_address_confirmation:
       title: Billing preferences
       heading: Billing address
-
-
-
+    vat_alt_person_responsible:
+      title: VAT declaration
+      heading: VAT contact information
+      first_name: First name
+      last_name: Last name (optional)
+      telephone: Telephone number
+      address: Select an address
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.

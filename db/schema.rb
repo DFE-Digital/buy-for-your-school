@@ -270,6 +270,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_19_110728) do
     t.boolean "vat_certificate_declared", default: false
     t.jsonb "billing_invoice_address"
     t.string "billing_invoice_address_source_id"
+    t.string "vat_alt_person_first_name"
+    t.string "vat_alt_person_last_name"
+    t.string "vat_alt_person_phone"
+    t.jsonb "vat_alt_person_address"
     t.index ["energy_onboarding_case_id"], name: "idx_on_energy_onboarding_case_id_a2b87b0066"
     t.index ["onboardable_type", "onboardable_id"], name: "idx_on_onboardable_type_onboardable_id_aa8b300738"
   end
