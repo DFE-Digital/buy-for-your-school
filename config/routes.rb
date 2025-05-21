@@ -526,6 +526,7 @@ Rails.application.routes.draw do
         resource :vat_certificate, only: %i[show update]
         resource :billing_preferences, only: %i[show update]
         resource :billing_address_confirmation, only: %i[show update]
+        resource :confirmation, only: :show
       end
     end
   end
