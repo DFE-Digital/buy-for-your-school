@@ -6,7 +6,8 @@ class Energy::ElectricityMeter < ApplicationRecord
 
   validates :mpan,
             presence: true,
-            format: { with: /\A\d{13}\z/ }
+            format: { with: /\A\d{13}\z/ },
+            uniqueness: { case_sensitive: false, scope: :energy_onboarding_case_organisation_id, message: :error_unique }
   validates :is_half_hourly, inclusion: { in: [true, false] }
 
   validates :supply_capacity,
