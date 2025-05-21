@@ -634,6 +634,14 @@ en:
       link:
         label: What did you think of this service?
         url: /customer_satisfaction_surveys/new?service=energy_for_schools&source=confirmation_screen
+    service_availability:
+      heading: Service only available for single schools
+      body_text: The online service does not currently allow for multiple schools to join Energy for Schools using a single form.
+      mat_text: If you represent a multi-academy trust (MAT), you can either
+      online_service: use the online service for each individual school within the MAT
+      due_to_open: The online service is due to open to MATs in mid July 2025.
+      email_subject: 'MAT Enquiry: %{org_name} from Energy for onboarding form'
+
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
