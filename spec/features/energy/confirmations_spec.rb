@@ -11,7 +11,6 @@ describe "School selection", :js do
 
     expect(page).to have_text("Information submitted")
     expect(page).to have_text("We've sent you an email containing a copy of this form and details about your new contract.")
-    expect(page).to have_text("If your current contract expires before 31 March 2026, you’ll join the Energy for Schools contract on 1 April 2026")
     expect(page).to have_text("Depending on your contract’s end date, you may be placed on an interim contract to ensure continued supply to your school.")
   end
 end

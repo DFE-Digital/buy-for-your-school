@@ -629,8 +629,7 @@ en:
     confirmation:
       title: Information submitted
       paragraph_one: We've sent you an email containing a copy of this form and details about your new contract.
-      paragraph_two: If your current contract expires before 31 March 2026, you’ll join the Energy for Schools contract on 1 April 2026.
-      paragraph_three: Depending on your contract’s end date, you may be placed on an interim contract to ensure continued supply to your school.
+      paragraph_two: Depending on your contract’s end date, you may be placed on an interim contract to ensure continued supply to your school.
       takes_five_minutes: (takes 5 minutes)
       link:
         label: What did you think of this service?
