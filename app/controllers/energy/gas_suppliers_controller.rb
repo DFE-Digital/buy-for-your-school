@@ -39,7 +39,8 @@ module Energy
     end
 
     def redirect_path
-      return energy_case_tasks_path if going_to_tasks?
+      return energy_case_tasks_path if going_to_tasks? || from_tasks?
+      return energy_case_check_your_answers_path if from_check?
       return energy_case_org_gas_single_multi_path(onboarding_case, @onboarding_case_organisation) if switching_gas?
 
       # They must be switching both

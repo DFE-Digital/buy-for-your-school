@@ -1,6 +1,6 @@
 module Energy
   class ApplicationController < ::ApplicationController
-    before_action :check_flag
+    before_action :check_flag, :set_from_tasks_or_check
 
     ALLOWED_CLASSES = [
       "Support::Organisation",
@@ -13,6 +13,18 @@ module Energy
 
     def check_flag
       render "errors/not_found", status: :not_found unless Flipper.enabled?(:energy)
+    end
+
+    def set_from_tasks_or_check
+      @from_tasks_or_check ||= %w[tasks check].include? params[:return_to]
+    end
+
+    def from_check?
+      params[:return_to] == "check"
+    end
+
+    def from_tasks?
+      params[:return_to] == "tasks"
     end
 
     def onboarding_case

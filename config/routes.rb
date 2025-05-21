@@ -513,6 +513,7 @@ Rails.application.routes.draw do
       resource :gas_supplier, only: %i[show update]
       resource :electric_supplier, only: %i[show update]
       resource :tasks, only: %i[show update]
+      resource :check_your_answers, only: %i[show]
       resource :letter_of_authorisation, only: %i[show update]
       resource :confirmation, only: :show
 

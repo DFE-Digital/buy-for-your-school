@@ -288,6 +288,8 @@ en:
       body: We will use your feedback to make our services better.
       heading: Thank you for your feedback
   energy:
+    generic:
+      change: Change
     related_actions:
       title: Related actions
       join: Join the scheme
@@ -643,6 +645,69 @@ en:
       online_service: use the online service for each individual school within the MAT
       due_to_open: The online service is due to open to MATs in mid July 2025.
       email_subject: 'MAT Enquiry: %{org_name} from Energy for onboarding form'
+    check_your_answers:
+      title: Check your answers
+      notes:
+      - By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.
+      - You cannot change your answers once you’ve submitted the form.
+      gas_contract_information:
+        title: Gas contract
+        gas_current_supplier: Current gas supplier
+        gas_current_supplier_other: Current gas supplier
+        gas_current_contract_end_date: When does your contract end
+      gas_meters_and_usage:
+        title: Gas information
+        gas_single_multi: Is this a single meter or multi meter site?
+        single: Single meter
+        multi: Multi meter
+        mprn: Meter Point Reference Number
+        gas_usage: Estimated annual gas usage
+        gas_bill_consolidation: Do you want your MPRNs consolidated on one bill?
+      electric_contract_information:
+        title: Electricity contract
+        electric_current_supplier: Current electricity supplier
+        electric_current_supplier_other: Current electricity supplier
+        electric_current_contract_end_date: When does your contract end
+      electric_meters_and_usage:
+        title: Electricity information
+        electricity_meter_type: Is this a single meter or multi meter site?
+        single: Single meter
+        multi: Multi meter
+        mpan: MPAN
+        supply_capacity: What is the supply capacity?
+        is_half_hourly: Is this a half-hourly MPAN?
+        is_electric_bill_consolidated: Do you want your MPANs consolidated on one bill?
+      site_contact_details:
+        title: Site contact details
+        site_contact_first_name: First name
+        site_contact_last_name: Last name
+        site_contact_email: Email
+        site_contact_phone: Phone
+      vat_declaration:
+        title: VAT Declaration
+        vat_rate: VAT rate
+        vat_lower_rate_percentage: Percentage of total consumption qualifying for reduced rate of VAT
+        vat_lower_rate_reg_no: VAT registration number
+        vat_person_first_name: Contact first name
+        vat_person_last_name: Contact surname
+        vat_person_phone: Telephone number
+        vat_person_address: Address
+      billing_preferences:
+        title: Billing preferences
+        billing_payment_method: How will you pay your bills?
+        bacs: BACS
+        direct_debit: Direct debit
+        gov_procurement_card: Government Procurement Card
+        billing_payment_terms: Payment terms
+        days14: 14 days
+        days21: 21 days
+        days28: 28 days
+        days30: 30 days
+        billing_invoicing_method: How would you like to receive your bills?
+        billing_invoicing_email: Email for invoice
+
+
+
     letter_of_authorisation:
       title: Agree to the Energy for Schools letter of authority
       paragraphs: 
