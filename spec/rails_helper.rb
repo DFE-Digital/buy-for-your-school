@@ -81,6 +81,7 @@ RSpec.configure do |config|
     Flipper.enable(:customer_satisfaction_survey)
     Flipper.enable(:sc_tasklist_case)
     Flipper.enable(:usability_surveys)
+    Flipper.enable(:energy)
   end
 
   config.after do

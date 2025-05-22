@@ -1,0 +1,12 @@
+<li aria-label="<%= "Case #{kase.ref}" %>">
+  <div class="case-panel">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <%= render partial: "cec/onboarding_cases/case_list/case_panel/top_left_pane", locals: { tab:, kase: } %>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <%= render partial: "cec/onboarding_cases/case_list/case_panel/top_right_pane", locals: { tab:, kase: } %>
+      </div>
+    </div>
+  </div>
+</li>

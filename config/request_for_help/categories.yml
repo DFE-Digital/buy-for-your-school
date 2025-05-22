@@ -177,6 +177,10 @@ categories:
         slug: other
         support_category: Other (Energy)
         flow: energy
+      - title: DfE Energy for Schools service
+        slug: dfe-energy-for-schools-service
+        support_category: DfE Energy for Schools service
+        flow: energy
 
   - title: Cleaning
     slug: cleaning
