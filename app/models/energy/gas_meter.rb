@@ -6,17 +6,30 @@ class Energy::GasMeter < ApplicationRecord
 
   validates :mprn,
             presence: true,
-            format: { with: /\A[1-9][0-9]{5,11}\z/ },
-            uniqueness: { case_sensitive: false, scope: :energy_onboarding_case_organisation_id, message: :error_unique }
+            format: { with: /\A[1-9][0-9]{5,11}\z/ }
   validates :gas_usage,
             presence: true,
             numericality: { greater_than_or_equal_to: 0, less_than: 1_000_000 }
 
   validate :maximum_mprn_per_organisation, on: :create
+  validate :mprn_uniqueness_with_active_cases, on: %i[create update]
 
   def maximum_mprn_per_organisation
     if onboarding_case_organisation.gas_meters.count >= MAX_METER_COUNT
       errors.add(:base, :maximum_mprn_per_organisation)
     end
+  end
+
+  def mprn_uniqueness_with_active_cases
+    duplicate_data = Energy::GasMeter.where(mprn:).where.not(id:) # Exclude the current record
+    active_support_cases = Support::Case
+      .where(id: Energy::OnboardingCase
+        .where(id: Energy::OnboardingCaseOrganisation
+          .where(id: duplicate_data.pluck(:energy_onboarding_case_organisation_id))
+          .pluck(:energy_onboarding_case_id))
+        .pluck(:support_case_id))
+      .where.not(state: %w[closed resolved])
+
+    errors.add(:mprn, :error_unique) if active_support_cases.exists?
   end
 end
