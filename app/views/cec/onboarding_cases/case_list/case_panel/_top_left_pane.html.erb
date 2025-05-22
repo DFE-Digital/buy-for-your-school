@@ -7,7 +7,7 @@
       </span>
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= kase.ref %>
+      <%= link_to kase.ref, cec_onboarding_case_path(kase.id, back_to: current_url_b64(tab)), class: "govuk-link--no-visited-state", "target" => "_top" %>
     </dd>
   </div>
   <div class="govuk-summary-list__row">
