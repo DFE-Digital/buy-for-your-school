@@ -36,7 +36,12 @@ module Energy
           ).where.not(state: %w[closed resolved])
 
           if support_case.count > 1
-            redirect_to energy_school_selection_path, notice: I18n.t("energy.authorisation.alerts.multiple_cases")
+            email_to = ENV["MS_GRAPH_SHARED_MAILBOX_ADDRESS"]
+            email_subject = I18n.t("energy.authorisation.alerts.email_subject")
+            click_here = I18n.t("energy.authorisation.alerts.click_here")
+            email_link = ActionController::Base.helpers.mail_to(email_to, click_here, subject: email_subject, class: "govuk-link")
+            notice_message = "#{I18n.t('energy.authorisation.alerts.multiple_cases')}, #{email_link}".html_safe
+            redirect_to energy_school_selection_path, notice: notice_message
           elsif support_case.count == 1
             active_case = Energy::OnboardingCase.find_by(support_case_id: support_case.first.id)
             active_onboarding_case = Energy::OnboardingCaseOrganisation.find_by(energy_onboarding_case_id: active_case.id)
