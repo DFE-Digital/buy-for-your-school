@@ -49,5 +49,5 @@ private
     @turbo_frame = params[:turbo_frame] || "messages_frame"
   end
 
-  def authorize_agent_scope = :access_proc_ops_portal?
+  def authorize_agent_scope = :access_individual_cases?
 end
