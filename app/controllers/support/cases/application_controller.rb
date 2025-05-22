@@ -21,5 +21,7 @@ module Support
     def current_agent
       AgentPresenter.new(super) if super
     end
+
+    def authorize_agent_scope = :access_individual_cases?
   end
 end

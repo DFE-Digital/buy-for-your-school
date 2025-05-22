@@ -127,4 +127,25 @@ RSpec.feature "Case summary", :js do
       expect(page).not_to have_css(".govuk-tabs__list-item", text: "Task list")
     end
   end
+
+  context "when the case is an energy for schools case" do
+    let(:dfe_energy_category) { create(:support_category, title: "DfE Energy for Schools service") }
+    let(:support_case) { create(:support_case, category: dfe_energy_category) }
+
+    it "has 7 visible tabs" do
+      expect(all(".govuk-tabs__list-item", visible: true).count).to eq(7)
+    end
+
+    it "defaults to the onboarding summary tab" do
+      expect(find(".govuk-tabs__list-item--selected")).to have_text "Onboarding summary"
+    end
+
+    it "does not have the tasklist tab" do
+      expect(page).not_to have_css(".govuk-tabs__list-item", text: "Task list")
+    end
+
+    it "does not have the request tab" do
+      expect(page).not_to have_css(".govuk-tabs__list-item", text: "Request")
+    end
+  end
 end
