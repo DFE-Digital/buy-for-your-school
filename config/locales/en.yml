@@ -441,6 +441,8 @@ en:
       warning: Please seek appropriate authorisation to switch energy suppliers. There is no cooling off period once you’ve submitted this form.
       alerts:
         multiple_cases: There are multiple cases for this organisation
+        click_here: click here to email support
+        email_subject: "Help request: multiple concurrent Energy for schools applications"
     switching_electricity:
       heading: Are you switching electricity, gas or both?
       energy_type:
