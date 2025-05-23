@@ -118,18 +118,16 @@
         </div>
       <% end %>  
 
-      <% unless @current_case.energy_onboarding_case? %>  
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= I18n.t("support.case.label.next_key_date.full_label") %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= current_case.next_key_date_formatted %>
-            <%= current_case.next_key_date_description_formatted %>
-          </dd>
-          <dd class="govuk-summary-list__actions"></dd>
-        </div>
-      <% end %>  
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= I18n.t("support.case.label.next_key_date.full_label") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= current_case.next_key_date_formatted %>
+          <%= current_case.next_key_date_description_formatted %>
+        </dd>
+        <dd class="govuk-summary-list__actions"></dd>
+      </div>
     </dl>
 
     <% unless @current_case.energy_onboarding_case? %>
