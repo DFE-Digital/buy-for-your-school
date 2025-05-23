@@ -819,9 +819,6 @@ en:
         days30: 30 days
         billing_invoicing_method: How would you like to receive your bills?
         billing_invoicing_email: Email for invoice
-<<<<<<< HEAD
-=======
-
     letter_of_authorisation:
       title: Agree to the Energy for Schools letter of authority
       paragraphs: 
