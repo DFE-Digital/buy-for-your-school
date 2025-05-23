@@ -9,8 +9,12 @@ module Energy
     def update
       return unless params[:type] == "single"
 
-      onboarding_case = create_onboarding_case
-      redirect_to energy_case_switch_energy_path(case_id: onboarding_case.energy_onboarding_case_id)
+      @onboarding_case_organisation = create_onboarding_case
+      @current_support_case = @onboarding_case_organisation.onboarding_case.support_case
+
+      draft_and_send_onboarding_email_to_school(current_user.email.to_json)
+
+      redirect_to energy_case_switch_energy_path(case_id: @onboarding_case_organisation.energy_onboarding_case_id)
     end
 
   private
@@ -76,6 +80,40 @@ module Energy
           current_user.orgs.pluck("urn"),
         ]
       end
+    end
+
+    def default_email_subject = "Form started: Energy for Schools – case [#{@current_support_case.ref}]"
+
+    def default_email_template = render_to_string(partial: "energy/authorisation/onboarding_email_template")
+
+    def email_template
+      @email_template ||= Support::EmailTemplate.find_by(title: "Energy onboarding Form started (email)")
+    end
+
+    def parse_template
+      @energy_onboarding_email.html_content = Energy::Emails::SchoolOnboardingVariableParser.new(@current_support_case, @energy_onboarding_email, onboarding_case_link).parse_template
+    end
+
+    def onboarding_case_link
+      "/energy/case/#{@onboarding_case_organisation.energy_onboarding_case_id}/switch_energy"
+    end
+
+    def draft_and_send_onboarding_email_to_school(to_recipients)
+      draft = Email::Draft.new(
+        default_content: default_email_template,
+        default_subject: default_email_subject,
+        template_id: email_template&.id,
+        ticket: @current_support_case.to_model,
+        to_recipients:,
+      ).save_draft!
+
+      @energy_onboarding_email = Email::Draft.find(draft.id)
+      @energy_onboarding_email.attributes = { html_content: email_template.body } if email_template
+
+      parse_template
+
+      @energy_onboarding_email.save_draft!
+      @energy_onboarding_email.deliver_as_new_message
     end
   end
 end
