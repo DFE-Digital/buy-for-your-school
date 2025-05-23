@@ -6,8 +6,7 @@ class Energy::ElectricityMeter < ApplicationRecord
 
   validates :mpan,
             presence: true,
-            format: { with: /\A\d{13}\z/ },
-            uniqueness: { case_sensitive: false, scope: :energy_onboarding_case_organisation_id, message: :error_unique }
+            format: { with: /\A\d{13}\z/ }
   validates :is_half_hourly, inclusion: { in: [true, false] }
 
   validates :supply_capacity,
@@ -27,10 +26,24 @@ class Energy::ElectricityMeter < ApplicationRecord
             numericality: { greater_than_or_equal_to: 0, less_than: 1_000_000 }
 
   validate :maximum_mpan_per_organisation, on: :create
+  validate :mpan_uniqueness_with_active_cases, on: %i[create update]
 
   def maximum_mpan_per_organisation
     if onboarding_case_organisation.electricity_meters.count >= MAX_METER_COUNT
       errors.add(:base, :maximum_mpan_per_organisation)
     end
+  end
+
+  def mpan_uniqueness_with_active_cases
+    duplicate_data = Energy::ElectricityMeter.where(mpan:).where.not(id:)
+    active_support_cases = Support::Case
+      .where(id: Energy::OnboardingCase
+        .where(id: Energy::OnboardingCaseOrganisation
+          .where(id: duplicate_data.pluck(:energy_onboarding_case_organisation_id))
+          .pluck(:energy_onboarding_case_id))
+        .pluck(:support_case_id))
+      .where.not(state: %w[closed resolved])
+
+    errors.add(:mpan, :error_unique) if active_support_cases.exists?
   end
 end
