@@ -1,7 +1,8 @@
 class Email::TemplateParser
   def initialize(variables: {})
     @variables = {
-      "caseworker_full_name" => "{{caseworker_full_name}}",
+      "caseworker_full_name" => Current.actor.try(:full_name),
+      "case_creator_full_name" => "{{case_creator_full_name}}",
       "case_reference_number" => "{{case_reference_number}}",
       "organisation_name" => "{{organisation_name}}",
       "sub_category" => "{{sub_category}}",

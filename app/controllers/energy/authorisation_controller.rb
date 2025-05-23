@@ -95,7 +95,7 @@ module Energy
     end
 
     def onboarding_case_link
-      "/energy/case/#{@onboarding_case_organisation.energy_onboarding_case_id}/switch_energy"
+      energy_case_switch_energy_url(case_id: @onboarding_case_organisation.energy_onboarding_case_id, host: request.host)
     end
 
     def draft_and_send_onboarding_email_to_school(to_recipients)
