@@ -54,6 +54,7 @@ RSpec.feature "Case summary", :js do
         expect(all(".govuk-summary-list__row")[1]).to have_text "Case level"
         expect(all(".govuk-summary-list__row")[2]).to have_text "Procurement stage"
         expect(all(".govuk-summary-list__row")[3]).to have_text "Source"
+        expect(all(".govuk-summary-list__row")[4]).to have_text "Next key date and description"
       end
     end
   end
