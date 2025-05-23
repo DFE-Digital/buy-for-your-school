@@ -13,6 +13,7 @@ class CmsPortalPolicy
   def access_establishment_search? = access_proc_ops_portal? || access_e_and_o_portal?
   def access_frameworks_portal? = allow_any_of(%w[global_admin framework_evaluator_admin framework_evaluator procops_admin procops internal])
   def access_cec_portal? = allow_any_of(%w[global_admin cec cec_admin])
+  def access_individual_cases? = access_proc_ops_portal? || access_cec_portal?
 
   # Agent management
 

@@ -1354,6 +1354,7 @@ en:
         case_files: Files
         case_history: Case history
         messages: Messages
+        onboarding_summary: Onboarding summary
         procurement_detail: Procurement details
         request: Request
         request_details: Request details

@@ -220,5 +220,9 @@ module Support
     def sub_category_with_indefinite_article
       sub_category.starts_with?("A", "E", "I", "O", "U") ? "an #{sub_category}" : "a #{sub_category}"
     end
+
+    def energy_onboarding_case?
+      sub_category == "DfE Energy for Schools service"
+    end
   end
 end

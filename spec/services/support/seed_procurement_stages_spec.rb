@@ -7,7 +7,7 @@ describe Support::SeedProcurementStages do
 
   it "populates the table" do
     expect { service.call }
-      .to change(stages, :count).from(0).to(18)
+      .to change(stages, :count).from(0).to(26)
   end
 
   it "sets expected values" do
@@ -17,5 +17,6 @@ describe Support::SeedProcurementStages do
     expect(stage.key).to eq("need")
     expect(stage.stage).to eq(0)
     expect(stage.archived).to be(false)
+    expect(stage.lifecycle_order).to eq(0)
   end
 end

@@ -1,6 +1,7 @@
 module Cec
   class OnboardingCasesController < Cec::ApplicationController
     before_action :filter_forms, only: %i[index]
+    before_action :current_case, only: %i[show]
 
     include Support::Concerns::FilterParameters
 
@@ -19,7 +20,16 @@ module Cec
       end
     end
 
+    def show
+      session[:back_link] = url_from(back_link_param) unless back_link_param.nil?
+      @back_url = url_from(back_link_param) || session[:back_link] || cec_onboarding_cases_path
+    end
+
   private
+
+    def current_case
+      @current_case ||= Support::CasePresenter.new(Support::Case.find_by(id: params[:id]))
+    end
 
     def filter_forms
       @all_cases_filter_form = Support::Case.dfe_energy.filtering(filter_params_for(:filter_all_cases_form))
