@@ -512,6 +512,7 @@ Rails.application.routes.draw do
       resource :gas_supplier, only: %i[show update]
       resource :electric_supplier, only: %i[show update]
       resource :tasks, only: %i[show update]
+      resource :check_your_answers, only: %i[show]
 
       resources :org, except: %i[show] do
         resources :gas_meter, except: %i[show]

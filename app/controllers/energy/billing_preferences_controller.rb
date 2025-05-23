@@ -45,8 +45,7 @@ module Energy
       return energy_case_tasks_path if going_to_tasks?
       return energy_case_org_billing_address_confirmation_path if paper_billing? && user_associated_with_trust?
 
-      # Change to Check your answers once implemented
-      energy_case_org_billing_preferences_path
+      energy_case_check_your_answers_path
     end
 
     def paper_billing?
