@@ -1,6 +1,6 @@
 module Energy
   class ApplicationController < ::ApplicationController
-    before_action :check_flag, :set_from_tasks_or_check
+    before_action :check_flag, :set_routing_flags, :set_from_tasks_or_check
 
     ALLOWED_CLASSES = [
       "Support::Organisation",
@@ -15,16 +15,20 @@ module Energy
       render "errors/not_found", status: :not_found unless Flipper.enabled?(:energy)
     end
 
+    def set_routing_flags
+      @routing_flags = {tasks: params[:tasks], check: params[:check]}
+    end
+
     def set_from_tasks_or_check
-      @from_tasks_or_check ||= %w[tasks check].include? params[:return_to]
+      @from_tasks_or_check = (params[:tasks] == "1" || params[:check] == "1")
     end
 
     def from_check?
-      params[:return_to] == "check"
+      params[:check] == "1"
     end
 
     def from_tasks?
-      params[:return_to] == "tasks"
+      params[:tasks] == "1"
     end
 
     def onboarding_case
@@ -71,6 +75,10 @@ module Energy
 
     def going_to_tasks?
       params[:commit] != I18n.t("generic.button.save_continue")
+    end
+
+    def gas_single_meter?
+      @onboarding_case_organisation.gas_single_multi_single?
     end
 
     def gas_multiple_meters?
