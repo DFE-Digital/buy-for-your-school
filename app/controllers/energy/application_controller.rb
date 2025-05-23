@@ -45,6 +45,10 @@ module Energy
       current_user.orgs.pluck("uid").compact.any?
     end
 
+    def organisation_associated_with_trust?
+      @organisation_detail.trust_code.present?
+    end
+
     def switching_electricity?
       @onboarding_case_organisation.switching_energy_type_electricity?
     end
