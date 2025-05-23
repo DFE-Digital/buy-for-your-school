@@ -3,6 +3,7 @@ class Energy::GasMeterController < Energy::ApplicationController
   before_action :add_another_mprn_enabled?
   before_action :set_gas_meter_detail, only: %i[edit update destroy]
   before_action :back_url
+
   def index
     @gas_meter_details = @onboarding_case_organisation.gas_meters.order(created_at: :asc)
   end
@@ -42,7 +43,7 @@ class Energy::GasMeterController < Energy::ApplicationController
     return unless params[:confirm]
 
     @gas_meter_detail.destroy!
-    redirect_to energy_case_org_gas_meter_index_path,
+    redirect_to energy_case_org_gas_meter_index_path(**@routing_flags),
                 notice: I18n.t("energy.gas_meter_details.remove_page.removed")
   end
 
@@ -59,10 +60,12 @@ private
   def redirect_path
     if going_to_tasks?
       energy_case_tasks_path
-    elsif switching_both? && !gas_multiple_meters?
+    elsif from_check? && gas_single_meter?
+      energy_case_check_your_answers_path
+    elsif switching_both? && gas_single_meter?
       energy_case_org_electricity_meter_type_path
     else
-      energy_case_org_gas_meter_index_path(onboarding_case, @onboarding_case_organisation)
+      energy_case_org_gas_meter_index_path(onboarding_case, @onboarding_case_organisation, **@routing_flags)
     end
   end
 

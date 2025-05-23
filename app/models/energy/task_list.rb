@@ -12,7 +12,7 @@ class Energy::TaskList
   # we do MAT flow, param needs to be changed to onboarding org
   def initialize(energy_onboarding_case_id, context: "tasks")
     @energy_onboarding_case_id = energy_onboarding_case_id
-    @context = context
+    @context = context == "tasks" ? :tasks : :check
     build_task_list
   end
 
@@ -52,7 +52,7 @@ private
 
   def gas_contract_information
     status = case_org.gas_current_supplier && case_org.gas_current_contract_end_date ? :complete : :not_started
-    path = energy_case_gas_supplier_path(case_id: case_org.energy_onboarding_case_id, return_to: context)
+    path = energy_case_gas_supplier_path(case_id: case_org.energy_onboarding_case_id, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
       if case_org.gas_current_supplier == "other"
         t.add_attribute :gas_current_supplier_other, case_org
@@ -66,9 +66,9 @@ private
   def gas_meters_and_usage
     status = case_org.gas_meters.any? ? :complete : :not_started
     path = if case_org.gas_single_multi == "single"
-      energy_case_org_gas_single_multi_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, return_to: context)
+      energy_case_org_gas_single_multi_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
     else
-      energy_case_org_gas_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, return_to: context)
+      energy_case_org_gas_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
     end
     Task.new(title: __method__, status:, path:).tap do |t|
       t.add_attribute(:gas_single_multi, case_org, text: I18n.t("energy.check_your_answers.gas_meters_and_usage.#{case_org.gas_single_multi}"))
@@ -84,7 +84,7 @@ private
 
   def electric_contract_information
     status = case_org.electric_current_supplier && case_org.electric_current_contract_end_date ? :complete : :not_started
-    path = energy_case_electric_supplier_path(case_id: case_org.energy_onboarding_case_id, return_to: context)
+    path = energy_case_electric_supplier_path(case_id: case_org.energy_onboarding_case_id, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
       if case_org.electric_current_supplier == "other"
         t.add_attribute :electric_current_supplier_other, case_org
@@ -98,9 +98,9 @@ private
   def electric_meters_and_usage
     status = case_org.electricity_meters.any? ? :complete : :not_started
     path = if case_org.electricity_meter_type == "single"
-      energy_case_org_electricity_meter_type_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, return_to: context)
+      energy_case_org_electricity_meter_type_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
     else
-      energy_case_org_electricity_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, return_to: context)
+      energy_case_org_electricity_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
     end
 
     Task.new(title: __method__, status:, path:).tap do |t|
@@ -124,7 +124,7 @@ private
 
   def site_contact_details
     status = case_org.site_contact_email? ? :complete : :not_started
-    path = energy_case_org_site_contact_details_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, return_to: context)
+    path = energy_case_org_site_contact_details_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
       t.add_attribute(:site_contact_first_name, case_org)
       t.add_attribute(:site_contact_last_name, case_org)
@@ -135,7 +135,7 @@ private
 
   def vat_declaration
     status = case_org.vat_rate ? :complete : :not_started
-    path = energy_case_org_vat_rate_charge_path(case_org.onboarding_case, case_org, return_to: context)
+    path = energy_case_org_vat_rate_charge_path(case_org.onboarding_case, case_org, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
       t.add_attribute(:vat_rate, case_org, text: "#{case_org.vat_rate}%")
       t.add_attribute(:vat_lower_rate_percentage, case_org)
@@ -153,7 +153,7 @@ private
     else
       :not_started
     end
-    path = energy_case_org_billing_preferences_path(case_org.onboarding_case, case_org, return_to: context)
+    path = energy_case_org_billing_preferences_path(case_org.onboarding_case, case_org, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
       t.add_attribute(:billing_payment_method, case_org, text: I18n.t("energy.check_your_answers.billing_preferences.#{case_org.billing_payment_method}"))
       t.add_attribute(:billing_payment_terms, case_org, text: I18n.t("energy.check_your_answers.billing_preferences.#{case_org.billing_payment_terms}"))
