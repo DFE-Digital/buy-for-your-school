@@ -43,12 +43,9 @@ module Energy
     end
 
     def associated_trust
-      # User links to Support::EstablishmentGroup (a trust) via uid
-      #  They should have a max of 1
-      trust_uid = current_user.orgs.pluck("uid").compact.first
-      return nil unless trust_uid
+      return nil if @organisation_detail.trust_code.nil?
 
-      Support::EstablishmentGroup.find_by_uid(trust_uid)
+      Support::EstablishmentGroup.find_by_uid(@organisation_detail.trust_code)
     end
 
     def address_orgs
