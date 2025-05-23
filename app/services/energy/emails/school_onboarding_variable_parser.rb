@@ -10,15 +10,11 @@ module Energy
 
     def variables
       {
-        "caseworker_full_name" => "#{@current_case.first_name} #{@current_case.last_name}".strip,
+        "case_creator_full_name" => "#{@current_case.first_name} #{@current_case.last_name}".strip,
         "case_reference_number" => @current_case.ref,
         "organisation_name" => @current_case.organisation_name || @current_case.email,
-        "unique_case_specific_link" => link_to("link", build_case_url, target: "_blank", rel: "noopener noreferrer"),
+        "unique_case_specific_link" => link_to("link", @unique_link, target: "_blank", rel: "noopener noreferrer"),
       }
-    end
-
-    def build_case_url
-      URI.join(ENV.fetch("APPLICATION_URL"), @unique_link).to_s
     end
 
     def parse_template
