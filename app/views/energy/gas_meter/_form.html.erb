@@ -1,7 +1,7 @@
 <%= form_with(
       model: @gas_meter_detail,
-      url: @gas_meter_detail.new_record? ? energy_case_org_gas_meter_index_path
-                                  : energy_case_org_gas_meter_path(id: params[:id]),
+      url: @gas_meter_detail.new_record? ? energy_case_org_gas_meter_index_path(**@routing_flags)
+                                  : energy_case_org_gas_meter_path(id: params[:id], **@routing_flags),
     ) do |form| %>
     <%= form.govuk_error_summary %>
 
@@ -17,6 +17,6 @@
       suffix_text: I18n.t("energy.gas_meter_details.gas_usage_suffix"),
       width: 5 %>
 
-    <%= render EnergyFormButtonsComponent.new(form)%>
+    <%= render EnergyFormButtonsComponent.new(form, include_tasks: !@from_tasks_or_check) %>
 
 <% end %>

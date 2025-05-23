@@ -6,7 +6,7 @@
       <h2 class="govuk-heading-l"><%= org_task_list.org_name %></h2>
       <% org_task_list.sections.each do |sec| %>
         <%= govuk_summary_card(title: I18n.t("energy.check_your_answers.#{sec.title}.title")) do |card|
-          card.with_action { govuk_link_to(I18n.t("energy.generic.change"), sec.path) }
+          card.with_action { govuk_link_to(I18n.t("energy.generic.change"), sec.path, id: "#{sec.title}_change") }
           card.with_summary_list(rows: sec.summary.map { |row|
             {
               key: {text: I18n.t("energy.check_your_answers.#{sec.title}.#{row[0]}")},
