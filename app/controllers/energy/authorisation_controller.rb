@@ -10,10 +10,8 @@ module Energy
       return unless params[:type] == "single"
 
       @onboarding_case_organisation = create_onboarding_case
-      @current_support_case = @onboarding_case_organisation.onboarding_case.support_case
 
-      draft_and_send_onboarding_email_to_school(current_user.email.to_json)
-
+      draft_and_send_onboarding_email_to_school
       redirect_to energy_case_switch_energy_path(case_id: @onboarding_case_organisation.energy_onboarding_case_id)
     end
 
@@ -82,38 +80,21 @@ module Energy
       end
     end
 
-    def default_email_subject = "Form started: Energy for Schools – case [#{@current_support_case.ref}]"
-
-    def default_email_template = render_to_string(partial: "energy/authorisation/onboarding_email_template")
-
-    def email_template
-      @email_template ||= Support::EmailTemplate.find_by(title: "Energy onboarding Form started (email)")
+    def draft_and_send_onboarding_email_to_school
+      Energy::Emails::OnboardingFormStartedMailer.new(
+        onboarding_case_organisation: @onboarding_case_organisation,
+        to_recipients: current_user.email,
+        default_email_template:,
+        onboarding_case_link:,
+      ).call
     end
 
-    def parse_template
-      @energy_onboarding_email.html_content = Energy::Emails::SchoolOnboardingVariableParser.new(@current_support_case, @energy_onboarding_email, onboarding_case_link).parse_template
+    def default_email_template
+      render_to_string(partial: "energy/authorisation/onboarding_email_template")
     end
 
     def onboarding_case_link
       energy_case_switch_energy_url(case_id: @onboarding_case_organisation.energy_onboarding_case_id, host: request.host)
-    end
-
-    def draft_and_send_onboarding_email_to_school(to_recipients)
-      draft = Email::Draft.new(
-        default_content: default_email_template,
-        default_subject: default_email_subject,
-        template_id: email_template&.id,
-        ticket: @current_support_case.to_model,
-        to_recipients:,
-      ).save_draft!
-
-      @energy_onboarding_email = Email::Draft.find(draft.id)
-      @energy_onboarding_email.attributes = { html_content: email_template.body } if email_template
-
-      parse_template
-
-      @energy_onboarding_email.save_draft!
-      @energy_onboarding_email.deliver_as_new_message
     end
   end
 end

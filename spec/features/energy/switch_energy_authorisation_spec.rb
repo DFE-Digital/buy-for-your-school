@@ -4,9 +4,11 @@ describe "Switch energy authorisation", :js do
   let(:support_organisation) { create(:support_organisation, urn: 100_253) }
   let(:user) { create(:user, :many_supported_schools_and_groups) }
   let(:category) { create(:support_category, title: "DfE Energy for Schools service") }
+  let(:mailer_double) { instance_double(Energy::Emails::OnboardingFormStartedMailer, call: true) }
 
   before do
     allow(Support::Category).to receive(:find_by).with(title: "DfE Energy for Schools service").and_return(category)
+    allow(Energy::Emails::OnboardingFormStartedMailer).to receive(:new).and_return(mailer_double)
   end
 
   specify "Are you authorised to switch energy suppliers" do
