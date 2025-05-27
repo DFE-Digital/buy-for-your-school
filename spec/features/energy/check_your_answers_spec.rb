@@ -8,18 +8,25 @@ describe "'Check your answers' flows", :js do
     user_exists_in_dfe_sign_in(user:)
     user_is_signed_in(user:)
 
-    case_organisation.update!(gas_single_multi:)
+    case_organisation.update!(gas_single_multi: gas_single_multi, electricity_meter_type: ele_single_multi)
 
     gas_meter_numbers.each do |mprn|
       create(:energy_gas_meter, :with_valid_data, mprn:, onboarding_case_organisation: case_organisation)
     end
 
     # Visit CYA
+    ele_meter_numbers.each do |mpan|
+      create(:energy_electricity_meter, :with_valid_data, mpan: mpan, onboarding_case_organisation: case_organisation)
+    end
+
     visit energy_case_check_your_answers_path(onboarding_case)
   end
 
   let(:gas_single_multi) { "single" }
   let(:gas_meter_numbers) { %w[654321] }
+
+  let(:ele_single_multi) { "single" }
+  let(:ele_meter_numbers) { %w[1234567890123] }
 
   describe "Gas contract" do
     it "directs to the gas contract page and back to CYA" do
@@ -185,61 +192,67 @@ describe "'Check your answers' flows", :js do
     end
   end
 
-  describe "TO DO: Electricity meters and usage" do
-    let(:new_mpan) { "923457" }
+  describe "Electricity meters and usage" do
+    let(:new_mpan) { "4747474747474" }
+
+    before do
+      expect(page).to have_text("Electricity information")
+      within ".govuk-summary-card", text: "Electricity information" do
+        click_link("Change")
+      end
+    end
 
     context "when a single meter has already been specified and needs to stay as a single meter" do
       it "navigates to the single/multi meter choice page, then electric meter details, then back to CYA" do
-        expect(page).to have_text("Electricity information")
-        within ".govuk-summary-card", text: "Electricity information" do
-          click_link("Change")
-        end
-
-        # Go to single/multi meter screen
+        # Land on single or multi meter screen
+        expect(page).to have_text("Electricity meters and usage")
         expect(page).to have_text("Is this a single or multi meter site?")
         expect(page).not_to have_button("Save and go to tasks")
+
         choose "Single meter"
         click_button "Save and continue"
 
-        # Go to meter details
+        # Land on the edit screen for the single meter
         expect(page).to have_text("Electricity meter details")
         expect(page).not_to have_button("Save and go to tasks")
-        expect(page).to have_field("Add a Meter Point Reference Number (MPRN)", with: gas_meter_numbers.first) # SHOULD THIS BE GAS????
-        fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "1234"
+        expect(page).to have_field("Add an MPAN", with: ele_meter_numbers.first)
+        fill_in "Estimated annual electricity usage", with: "1234"
         click_button "Save and continue"
 
         # Back to CYA
         expect(page).to have_text("Check your answers")
       end
     end
+    context "when a single meter has already been specified but needs to change to multi meter" do
+      context "when adding a meter" do
+        it "navigates to the single/multi meter choice page, then add meter details, then summary, then consolidation, then back to CYA" do
+          choose "Multi meter"
+          click_button "Save and continue"
 
-    context "Change to multi meter" do
-      pending
-      specify "Clicking 'Change'" do
-        choose "Multi meter"
-        click_button "Save and continue"
+          # Land on the new screen for the single meter
+          expect(page).to have_text("Electricity meter details")
+          expect(page).not_to have_button("Save and go to tasks")
+          fill_in "Add an MPAN", with: new_mpan
+          choose "No" # Is this a half-hourly meter?
+          fill_in "Estimated annual electricity usage", with: "1234"
+          click_button "Save and continue"
 
-        #  Land on the new screen for the single meter
-        expect(page).to have_text("Gas meter details")
-        expect(page).not_to have_button("Save and go to tasks")
-        fill_in "Add a Meter Point Reference Number (MPRN)", with: new_mprn
-        fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "1234"
-        click_button "Save and continue"
+          # Land on meter list
+          expect(page).to have_text("MPAN summary")
+          expect(page).not_to have_button("Save and go to tasks")
+          find("#save_and_continue").click
 
-        #  Land on meter list
-        expect(page).to have_text("MPRN summary")
-        expect(page).not_to have_button("Save and go to tasks")
-        find("#save_and_continue").click
+          #  Land on consolidation screen
+          expect(page).to have_text("Do you want your MPANs consolidated on one bill?")
+          expect(page).not_to have_button("Save and go to tasks")
+          save_and_open_page # FAIL
+          choose "No, I want a separate bill for each MPRN"
+          click_button "Save and continue"
 
-        #  Land on consolidation screen
-        expect(page).to have_text("Do you want your MPRNs consolidated on one bill?")
-        expect(page).not_to have_button("Save and go to tasks")
-        choose "No, I want a separate bill for each MPRN"
-        click_button "Save and continue"
-
-        #  Back to Check page
-        expect(page).to have_text("Check your answers")
-        expect(page).to have_text(new_mprn)
+          #  Back to Check page
+          expect(page).to have_text("Check your answers")
+          expect(page).to have_text(new_mprn)
+        end
       end
     end
 
