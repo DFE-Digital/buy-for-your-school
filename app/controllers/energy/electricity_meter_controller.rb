@@ -42,7 +42,7 @@ class Energy::ElectricityMeterController < Energy::ApplicationController
     return unless params[:confirm]
 
     @electricity_meter_detail.destroy!
-    redirect_to energy_case_org_electricity_meter_index_path,
+    redirect_to energy_case_org_electricity_meter_index_path(**@routing_flags),
                 notice: I18n.t("energy.electricity_meter.remove_page.removed")
   end
 
