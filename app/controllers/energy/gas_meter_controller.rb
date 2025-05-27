@@ -70,7 +70,8 @@ private
     @back_url =
       case action_name.to_sym
       when :index
-        edit_energy_case_org_gas_meter_path(onboarding_case, @onboarding_case_organisation, gas_meter_usage_details.last)
+        edit_energy_case_org_gas_meter_path(onboarding_case, @onboarding_case_organisation, gas_meter_usage_details.last) if gas_meter_usage_exist?
+        new_energy_case_org_gas_meter_path
       when :edit, :new
         params[:return_to] == "summary" ? energy_case_org_gas_meter_index_path : energy_case_org_gas_single_multi_path
       when :create, :update

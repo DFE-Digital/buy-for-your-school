@@ -74,7 +74,8 @@ private
     @back_url =
       case action_name.to_sym
       when :index
-        edit_energy_case_org_electricity_meter_path(onboarding_case, @onboarding_case_organisation, electricity_usage_details.last)
+        edit_energy_case_org_electricity_meter_path(onboarding_case, @onboarding_case_organisation, electricity_usage_details.last) if electricity_usage_exist?
+        new_energy_case_org_electricity_meter_path
       when :edit, :new
         params[:return_to] == "summary" ? energy_case_org_electricity_meter_index_path : energy_case_org_electricity_meter_type_path
       when :create, :update
