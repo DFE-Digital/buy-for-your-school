@@ -529,6 +529,7 @@ Rails.application.routes.draw do
         resource :billing_preferences, only: %i[show update]
         resource :billing_address_confirmation, only: %i[show update]
         resource :confirmation, only: :show
+        resource :letter_of_authorisation, only: %i[show update]
       end
     end
   end
