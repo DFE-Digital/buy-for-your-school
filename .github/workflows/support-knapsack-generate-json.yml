@@ -6,6 +6,9 @@ on:
     # At 01:00 on day-of-month 1. https://crontab.guru/#0_1_1_*_*
     - cron: '0 1 1 * *'
 
+env:
+  AZURE_CORE_USE_MSAL_HTTP_CACHE: "false"
+
 jobs:
   generate_json:
     runs-on: ubuntu-latest

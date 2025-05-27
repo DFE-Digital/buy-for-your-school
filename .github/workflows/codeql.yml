@@ -20,6 +20,9 @@ on:
   schedule:
     - cron: '31 12 * * 5'
 
+env:
+  AZURE_CORE_USE_MSAL_HTTP_CACHE: "false"
+
 jobs:
   analyze:
     name: Analyze
