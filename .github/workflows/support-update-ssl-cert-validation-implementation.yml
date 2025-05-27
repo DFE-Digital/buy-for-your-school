@@ -9,6 +9,7 @@ on:
 
 env:
   RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
+  AZURE_CORE_USE_MSAL_HTTP_CACHE: "false"
 
 jobs:
   check_need_for_validation_update:
