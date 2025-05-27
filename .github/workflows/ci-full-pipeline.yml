@@ -1,8 +1,5 @@
 name: "CI/CD - Full Pipeline"
 
-env:
-  AZURE_CORE_USE_MSAL_HTTP_CACHE: "false"
-
 on:
   pull_request:
   push:
@@ -10,6 +7,9 @@ on:
       - main
       - development
       - production
+
+env:
+  AZURE_CORE_USE_MSAL_HTTP_CACHE: "false"
 
 jobs:
   build_test:
