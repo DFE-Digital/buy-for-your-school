@@ -533,3 +533,10 @@ en:
           format?: Enter a phone number in the correct format, like 01632 960 001
         vat_alt_person_address:
           missing: Select an address
+  letter_of_authorisation_form:
+    rules:
+      loa_agreed: ""
+    errors:
+      rules:
+        loa_agreed:
+          select_all: Select all boxes to continue
