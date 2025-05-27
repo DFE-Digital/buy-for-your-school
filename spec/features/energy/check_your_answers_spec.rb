@@ -205,10 +205,11 @@ describe "'Check your answers' flows", :js do
         # Go to single/multi meter screen
         expect(page).to have_text("Is this a single or multi meter site?")
         expect(page).not_to have_button("Save and go to tasks")
+
         choose "Single meter"
         click_button "Save and continue"
 
-        # Go to meter details
+        #  Land on the edit screen for the single meter
         expect(page).to have_text("Electricity meter details")
         expect(page).not_to have_button("Save and go to tasks")
         expect(page).to have_field("Add an MPAN", with: electricity_meter_numbers.first)
