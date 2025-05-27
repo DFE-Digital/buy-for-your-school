@@ -9,6 +9,7 @@ describe "'Check your answers' flows", :js do
     user_is_signed_in(user:)
 
     case_organisation.update!(gas_single_multi:, electricity_meter_type:)
+    support_organisation.update!(address: { "street": "5 Main Street", "locality": "Duke's Place", "postcode": "EC3A 5DE" })
 
     gas_meter_numbers.each do |mprn|
       create(:energy_gas_meter, :with_valid_data, mprn:, onboarding_case_organisation: case_organisation)
@@ -349,9 +350,9 @@ describe "'Check your answers' flows", :js do
     end
   end
 
-  describe "TO DO: VAT declaration" do
-    context "when VAT declaration details are correct" do
-      it "navigates from VAT rate selection, to the current contract details page, to declaration page" do
+  describe "VAT declaration" do
+    context "when VAT rate needs to be 20%" do
+      it "navigates from VAT rate selection, back to CYA" do
         within ".govuk-summary-card", text: "VAT Declaration" do
           click_link("Change")
         end
@@ -362,37 +363,90 @@ describe "'Check your answers' flows", :js do
         choose "20%"
         click_button "Save and continue"
 
-        # Go to current contract details page
-        expect(page).to have_text("Are these the correct details for VAT purposes?")
-        expect(page).not_to have_button("Save and go to tasks")
-        choose "Yes"
-        click_button "Save and continue"
-
-        # Go to declaration page
-        expect(page).to have_text("VAT certificate of declaration")
-        expect(page).not_to have_button("Save and go to tasks")
-        check "vat-certificate-form-vat-certificate-declared-declaration2-field"
-        click_button "Save and continue"
+        # Back to CYA
+        expect(page).to have_text("Check your answers")
+        expect(page).to have_text("20%")
       end
     end
 
-    context "when VAT declaration details are incorrect" do
-      it "navigates from VAT rate selection, to the current contract details page, to the VAT contact information page, to declaration page" do
-        within ".govuk-summary-card", text: "VAT Declaration" do
-          click_link("Change")
+    context "when VAT rate needs to be 5%" do
+      context "and contact details are correct" do
+        it "navigates from VAT rate selection, to the current contract details page, to the declaration page, back to CYA" do
+          within ".govuk-summary-card", text: "VAT Declaration" do
+            click_link("Change")
+          end
+
+          # Go to VAT rate selection page
+          expect(page).to have_text("Which VAT rate are you charged?")
+          expect(page).not_to have_button("Save and go to tasks")
+          choose "5%"
+          fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: "25"
+          click_button "Save and continue"
+
+          # Go to current contract details page
+          expect(page).to have_text("Are these the correct details for VAT purposes?")
+          expect(page).not_to have_button("Save and go to tasks")
+          choose "Yes"
+          click_button "Save and continue"
+
+          # Go to declaration page
+          expect(page).to have_text("VAT certificate of declaration")
+          expect(page).not_to have_button("Save and go to tasks")
+          find("#vat-certificate-form-vat-certificate-declared-declaration1-field").check
+          find("#vat-certificate-form-vat-certificate-declared-declaration2-field").check
+          find("#vat-certificate-form-vat-certificate-declared-declaration3-field").check
+          click_button "Continue"
+
+          # Back to CYA
+          expect(page).to have_text("Check your answers")
+          expect(page).to have_text("5%")
+        end
+      end
+
+      context "and contact details are incorrect" do
+        before do
+          create(:support_establishment_group, :with_address, uid: "123")
+          support_organisation.update!(trust_code: "123")
         end
 
-        # Go to VAT rate selection page
-        expect(page).to have_text("Which VAT rate are you charged?")
-        expect(page).not_to have_button("Save and go to tasks")
-        choose "20%"
-        click_button "Save and continue"
+        it "navigates from VAT rate selection, to the current contract details page, to the VAT contact information page, to the declaration page, back to CYA" do
+          within ".govuk-summary-card", text: "VAT Declaration" do
+            click_link("Change")
+          end
 
-        # Go to current contract details page
-        expect(page).to have_text("Are these the correct details for VAT purposes?")
-        expect(page).not_to have_button("Save and go to tasks")
-        choose "No"
-        click_button "Save and continue"
+          # Go to VAT rate selection page
+          expect(page).to have_text("Which VAT rate are you charged?")
+          expect(page).not_to have_button("Save and go to tasks")
+          choose "5%"
+          fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: "25"
+          click_button "Save and continue"
+
+          # Go to current contract details page
+          expect(page).to have_text("Are these the correct details for VAT purposes?")
+          expect(page).not_to have_button("Save and go to tasks")
+          choose "No"
+          click_button "Save and continue"
+
+          # Go to contact information page
+          expect(page).to have_text("VAT contact information")
+          expect(page).not_to have_button("Save and go to tasks")
+          fill_in "First name", with: "Jane"
+          fill_in "Telephone number", with: "07123456789"
+          choose "5 Main Street, Duke's Place, EC3A 5DE"
+          click_button "Save and continue"
+
+          # Go to declaration page
+          expect(page).to have_text("VAT certificate of declaration")
+          expect(page).not_to have_button("Save and go to tasks")
+          find("#vat-certificate-form-vat-certificate-declared-declaration1-field").check
+          find("#vat-certificate-form-vat-certificate-declared-declaration2-field").check
+          find("#vat-certificate-form-vat-certificate-declared-declaration3-field").check
+          click_button "Continue"
+
+          # Back to CYA
+          expect(page).to have_text("Check your answers")
+          expect(page).to have_text("5%")
+        end
       end
     end
   end
@@ -442,7 +496,7 @@ describe "'Check your answers' flows", :js do
     context "when changing billing preferences to be paper and the org is a single school with a trust" do
       before do
         create(:support_establishment_group, :with_address, uid: "123")
-        support_organisation.update!(trust_code: "123", address: { "street": "5 Main Street", "locality": "Duke's Place", "postcode": "EC3A 5DE" })
+        support_organisation.update!(trust_code: "123")
       end
 
       it "navigates to the site billing preferences page, then to address confirmation page, then back to CYA" do
