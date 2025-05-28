@@ -78,7 +78,5 @@ class Energy::OnboardingCaseOrganisation < ApplicationRecord
   enum :billing_payment_terms, BILLING_PAYMENT_TERMS, prefix: true
   enum :billing_invoicing_method, BILLING_INVOICING_METHOD, prefix: true
 
-  def name
-    onboardable.name
-  end
+  delegate :name, to: :onboardable
 end
