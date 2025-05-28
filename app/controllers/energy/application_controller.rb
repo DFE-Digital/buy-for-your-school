@@ -20,7 +20,7 @@ module Energy
     end
 
     def set_from_tasks_or_check
-      @from_tasks_or_check = (params[:tasks] == "1" || params[:check] == "1")
+      @from_tasks_or_check = params[:tasks] == "1" || params[:check] == "1"
     end
 
     def from_check?
