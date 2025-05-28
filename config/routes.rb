@@ -292,6 +292,7 @@ Rails.application.routes.draw do
         get "closures/", to: "closures#index", as: "closures"
         post "closures/", to: "closures#create", as: "support_case_closures"
         post "closures/confirm", to: "closures#confirm", as: "closures_confirm"
+        resource :onboarding_summary, only: %i[show]
       end
     end
 
@@ -535,7 +536,7 @@ Rails.application.routes.draw do
   # Cec
   namespace :cec do
     root to: "onboarding_cases#index"
-    resources :onboarding_cases, only: %i[index]
+    resources :onboarding_cases, only: %i[index show]
 
     namespace :management do
       get "/", to: "base#index"

@@ -18,6 +18,7 @@ module Support
     scope :caseworkers, -> { by_role(%w[procops procops_admin]) }
     scope :non_caseworkers, -> { caseworkers.invert_where }
     scope :e_and_o_staff, -> { by_role(%w[e_and_o e_and_o_admin]) }
+    scope :cec_staff, -> { by_role(%w[cec cec_admin]) }
     scope :by_first_name, -> { order("first_name ASC, last_name ASC") }
     scope :disabled, -> { where("roles::text = '{}'::text") }
     scope :enabled, -> { disabled.invert_where }
