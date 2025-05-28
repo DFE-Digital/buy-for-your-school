@@ -21,7 +21,7 @@ private
   end
 
   def current_step
-    resource = controller_path.split('/').last.singularize
+    controller_path.split('/').last.singularize
   end
 
   def next_path
@@ -40,9 +40,10 @@ private
   def redirect_to_path(path, survey)
     step_in_path = @survey_flow.get_step_from_path(path)
 
-    if step_in_path == "thank_you"
-      @customer_satisfaction_survey.complete_survey! unless @customer_satisfaction_survey.source_exit_survey?
+    if step_in_path == "thank_you" && !@customer_satisfaction_survey.source_exit_survey?
+      @customer_satisfaction_survey.complete_survey!
     end
+
     redirect_to Rails.application.routes.url_helpers.
       public_send(path, survey)
   end
