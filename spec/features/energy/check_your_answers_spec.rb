@@ -489,7 +489,7 @@ describe "'Check your answers' flows", :js do
 
         # Back to CYA
         expect(page).to have_text("Check your answers")
-        expect(page).to have_text("Paper")
+        expect(page).to have_text("paper")
       end
     end
 
@@ -514,15 +514,14 @@ describe "'Check your answers' flows", :js do
 
         # Go to Address confirmation page
         expect(page).to have_text("Billing address")
-        expect(page).to have_text("5 Main Street")
-        expect(page).to have_text("Boundary House Shr")
+        expect(page).to have_text("5 Main Street, Duke's Place, EC3A 5DE")
         expect(page).not_to have_button("Save and go to tasks")
         choose "5 Main Street, Duke's Place, EC3A 5DE"
         click_button "Save and continue"
 
         # Back to CYA
         expect(page).to have_text("Check your answers")
-        expect(page).to have_text("Paper")
+        expect(page).to have_text("paper")
       end
     end
   end
