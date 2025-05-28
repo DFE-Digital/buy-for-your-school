@@ -1,6 +1,6 @@
 module Energy
   class Emails::OnboardingFormStartedMailer
-    FORM_STARTED_EMAIL_TEMPLATE = "Energy onboarding Form started (email)".freeze
+    FORM_STARTED_EMAIL_TEMPLATE = "Email notification of Energy for Schools form started".freeze
 
     def initialize(onboarding_case_organisation:, to_recipients:, default_email_template:, onboarding_case_link:)
       @onboarding_case_organisation = onboarding_case_organisation
@@ -30,7 +30,7 @@ module Energy
 
   private
 
-    def default_email_subject = "Form started: Energy for Schools – case #{@current_support_case.ref}"
+    def default_email_subject = "Case #{@current_support_case.ref} - form started: Energy for Schools"
 
     def email_template
       @email_template ||= Support::EmailTemplate.find_by(title: FORM_STARTED_EMAIL_TEMPLATE)
