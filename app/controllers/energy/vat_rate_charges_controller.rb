@@ -1,7 +1,7 @@
 module Energy
   class VatRateChargesController < ApplicationController
     before_action :organisation_details
-    before_action { @back_url = energy_case_org_site_contact_details_path }
+    before_action :form_url, :back_url
     before_action :form, only: %i[update]
 
     def show
@@ -41,6 +41,14 @@ module Energy
         # Default to 0 for integers
         %i[vat_rate vat_lower_rate_percentage].each { |key| p[key] = "0" if p[key].blank? }
       end
+    end
+
+    def form_url
+      @form_url = energy_case_org_vat_rate_charge_path(**@routing_flags)
+    end
+
+    def back_url
+      @back_url = energy_case_org_site_contact_details_path
     end
 
     def redirect_path
