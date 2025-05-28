@@ -66,19 +66,19 @@ private
   def gas_meters_and_usage
     status = case_org.gas_meters.any? ? :complete : :not_started
     path = if case_org.gas_single_multi == "single"
-      energy_case_org_gas_single_multi_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
-    else
-      energy_case_org_gas_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
-    end
+             energy_case_org_gas_single_multi_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
+           else
+             energy_case_org_gas_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
+           end
     Task.new(title: __method__, status:, path:).tap do |t|
       t.add_attribute(:gas_single_multi, case_org, text: I18n.t("energy.check_your_answers.gas_meters_and_usage.#{case_org.gas_single_multi}"))
 
-      case_org.gas_meters.each_with_index do |meter, i|
+      case_org.gas_meters.each_with_index do |meter, _i|
         t.add_attribute(:mprn, meter)
         t.add_attribute(:gas_usage, meter)
       end
 
-      t.add_attribute(:gas_bill_consolidation, case_org, text: case_org.gas_bill_consolidation ? I18n.t("generic.yes"):I18n.t("generic.no"))
+      t.add_attribute(:gas_bill_consolidation, case_org, text: case_org.gas_bill_consolidation ? I18n.t("generic.yes") : I18n.t("generic.no"))
     end
   end
 
@@ -98,27 +98,27 @@ private
   def electric_meters_and_usage
     status = case_org.electricity_meters.any? ? :complete : :not_started
     path = if case_org.electricity_meter_type == "single"
-      energy_case_org_electricity_meter_type_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
-    else
-      energy_case_org_electricity_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
-    end
+             energy_case_org_electricity_meter_type_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
+           else
+             energy_case_org_electricity_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
+           end
 
     Task.new(title: __method__, status:, path:).tap do |t|
       t.add_attribute(:electricity_meter_type, case_org, text: I18n.t("energy.check_your_answers.electric_meters_and_usage.#{case_org.electricity_meter_type}"))
 
       case_org.electricity_meters.each do |meter|
         t.add_attribute(:mpan, meter)
-        t.add_attribute(:is_half_hourly, meter, text: meter.is_half_hourly ? I18n.t("generic.yes"):I18n.t("generic.no"))
+        t.add_attribute(:is_half_hourly, meter, text: meter.is_half_hourly ? I18n.t("generic.yes") : I18n.t("generic.no"))
 
-        if meter.is_half_hourly
-          t.add_attribute(:supply_capacity, meter)
-          # t.add_attribute(:data_aggregator, meter)  These atts not on ticket screen grab
-          # t.add_attribute(:data_collector, meter)
-          # t.add_attribute(:meter_operator, meter)
-        end
+        next unless meter.is_half_hourly
+
+        t.add_attribute(:supply_capacity, meter)
+        # t.add_attribute(:data_aggregator, meter)  These atts not on ticket screen grab
+        # t.add_attribute(:data_collector, meter)
+        # t.add_attribute(:meter_operator, meter)
       end
 
-      t.add_attribute(:is_electric_bill_consolidated, case_org, text: case_org.is_electric_bill_consolidated ? I18n.t("generic.yes"):I18n.t("generic.no"))
+      t.add_attribute(:is_electric_bill_consolidated, case_org, text: case_org.is_electric_bill_consolidated ? I18n.t("generic.yes") : I18n.t("generic.no"))
     end
   end
 
@@ -149,10 +149,10 @@ private
 
   def billing_preferences
     status = if case_org.billing_payment_method && case_org.billing_payment_terms && case_org.billing_invoicing_method && case_org.billing_payment_method
-      :complete
-    else
-      :not_started
-    end
+               :complete
+             else
+               :not_started
+             end
     path = energy_case_org_billing_preferences_path(case_org.onboarding_case, case_org, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
       t.add_attribute(:billing_payment_method, case_org, text: I18n.t("energy.check_your_answers.billing_preferences.#{case_org.billing_payment_method}"))

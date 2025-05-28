@@ -9,4 +9,3 @@ class Energy::CheckYourAnswersController < Energy::ApplicationController
     end
   end
 end
-

@@ -1,7 +1,7 @@
 module Energy
   class VatPersonResponsiblesController < ApplicationController
     before_action :organisation_details, :suggested_details
-    before_action { @back_url = energy_case_org_vat_rate_charge_path }
+    before_action :back_url, :form_url
     before_action :form, only: %i[update]
 
     def show
@@ -56,13 +56,21 @@ module Energy
         .permit(:vat_person_correct_details)
     end
 
+    def back_url
+      @back_url = energy_case_org_vat_rate_charge_path
+    end
+
+    def form_url
+      @form_url = energy_case_org_vat_person_responsible_path(**@routing_flags)
+    end
+
     def redirect_path
       return energy_case_tasks_path if going_to_tasks?
 
       if @onboarding_case_organisation.vat_person_correct_details?
-        energy_case_org_vat_certificate_path
+        energy_case_org_vat_certificate_path(**@routing_flags)
       else
-        energy_case_org_vat_alt_person_responsible_path
+        energy_case_org_vat_alt_person_responsible_path(**@routing_flags)
       end
     end
   end

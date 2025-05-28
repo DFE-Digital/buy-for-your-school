@@ -60,8 +60,8 @@ RSpec.describe Energy::TaskList do
         tasks = task_list.call
         expect(tasks.map(&:title)).to eq(%i[
           gas_contract_information
-          gas_meters_and_usage
           electric_contract_information
+          gas_meters_and_usage
           electric_meters_and_usage
           site_contact_details
           vat_declaration

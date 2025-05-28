@@ -11,6 +11,8 @@ describe "User can update site contact details", :js do
     visit energy_case_org_site_contact_details_path(onboarding_case, case_organisation)
 
     expect(page).to have_text("Who manages site access and maintenance?")
+    fill_in "Email", with: ""
+    fill_in "Telephone", with: ""
 
     click_button "Save and continue"
 

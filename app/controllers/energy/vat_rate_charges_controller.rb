@@ -53,9 +53,18 @@ module Energy
 
     def redirect_path
       return energy_case_tasks_path if going_to_tasks?
-      return energy_case_org_vat_person_responsible_path if @onboarding_case_organisation.reload.vat_rate == 5
+      return energy_case_check_your_answers_path if from_check? && vat_rate_20?
+      return energy_case_org_vat_person_responsible_path(**@routing_flags) if vat_rate_5?
 
       energy_case_org_vat_certificate_path
+    end
+
+    def vat_rate_5?
+      @onboarding_case_organisation.reload.vat_rate == 5
+    end
+
+    def vat_rate_20?
+      @onboarding_case_organisation.reload.vat_rate == 20
     end
   end
 end
