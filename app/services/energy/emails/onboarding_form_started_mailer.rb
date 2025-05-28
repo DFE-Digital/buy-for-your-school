@@ -30,7 +30,7 @@ module Energy
 
   private
 
-    def default_email_subject = "Form started: Energy for Schools – case [#{@current_support_case.ref}]"
+    def default_email_subject = "Form started: Energy for Schools – case #{@current_support_case.ref}"
 
     def email_template
       @email_template ||= Support::EmailTemplate.find_by(title: FORM_STARTED_EMAIL_TEMPLATE)
