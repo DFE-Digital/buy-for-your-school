@@ -68,6 +68,7 @@ RSpec/LetSetup:
   Exclude:
     - 'spec/jobs/support/send_exit_survey_job_spec.rb'
     - 'spec/support/shared/duplicate_email_attachments.rb'
+    - 'spec/features/energy/electricity_meter_details_spec.rb'
 
 # Offense count: 5
 # Configuration parameters: AllowedPatterns.
@@ -181,6 +182,7 @@ Rails/SaveBang:
   Exclude:
     - 'app/controllers/customer_satisfaction_surveys/satisfaction_levels_controller.rb'
     - 'app/controllers/exit_survey/satisfaction_controller.rb'
+    - 'app/controllers/customer_satisfaction_surveys/recommendation_likelihoods_controller.rb'
 
 # Offense count: 7
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -206,3 +208,9 @@ Style/DateTime:
 Style/SoleNestedConditional:
   Exclude:
     - 'app/models/framework_request_flow.rb'
+
+# Offense count: 1
+Rails/UniqueValidationWithoutIndex:
+  Exclude:
+    - 'app/models/energy/gas_meter.rb'
+    - 'app/models/energy/electricity_meter.rb'

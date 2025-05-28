@@ -1,0 +1,27 @@
+<%= form_with model: @form, scope: :vat_person_responsible, url: energy_case_org_vat_person_responsible_path, method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+  <%= form.hidden_field :vat_person_correct_details, value: form.object.vat_person_correct_details %>
+
+  <%= form.govuk_radio_buttons_fieldset :vat_person_correct_details,
+    legend: { size: "l", text: I18n.t("energy.vat_person_responsible.heading") },
+    hint: { text: I18n.t("energy.vat_person_responsible.hint") } do %>
+    <%= govuk_summary_list do |summary_list|
+      summary_list.with_row do |row|
+        row.with_key(text: I18n.t("energy.vat_person_responsible.name"))
+        row.with_value(text: @name)
+      end
+      summary_list.with_row do |row|
+        row.with_key(text: I18n.t("energy.vat_person_responsible.address"))
+        row.with_value(text: @address)
+      end
+      summary_list.with_row do |row|
+        row.with_key(text: I18n.t("energy.vat_person_responsible.tel"))
+        row.with_value(text: @tel)
+      end
+    end %>
+    <%= form.govuk_radio_button :vat_person_correct_details, true, label: { text: I18n.t("energy.vat_person_responsible.option_yes") } %>
+    <%= form.govuk_radio_button :vat_person_correct_details, false, label: { text: I18n.t("energy.vat_person_responsible.option_no") } %>
+  <% end %>
+
+  <%= render EnergyFormButtonsComponent.new(form)%>
+<% end %>

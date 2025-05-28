@@ -8,6 +8,9 @@ on:
       - development
       - production
 
+env:
+  AZURE_CORE_USE_MSAL_HTTP_CACHE: "false"
+
 jobs:
   build_test:
     name: Build (Test)

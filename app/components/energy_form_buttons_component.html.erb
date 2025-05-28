@@ -1,0 +1,6 @@
+<div class="govuk-button-group flex-align-center">
+  <%= @form.submit I18n.t("generic.button.save_continue"), class: "govuk-button"  %>
+  <% if @include_tasks %>
+    <%= @form.submit I18n.t("generic.button.save_go_to_tasks"), class: "govuk-button govuk-button--secondary" %>
+  <% end %>
+</div>

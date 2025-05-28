@@ -35,11 +35,12 @@ module Support
         user_selected_category: @attrs[:user_selected_category],
         other_query: @attrs[:other_query],
         query_id: @attrs[:query_id],
-        support_level: :L1,
+        support_level: @attrs[:support_level] || :L1,
         value: @attrs[:procurement_amount],
         creation_source: @attrs[:creation_source],
-        procurement_stage: ProcurementStage.find_by(key: "need"),
+        procurement_stage: @attrs[:procurement_stage] || ProcurementStage.find_by(key: "need"),
         initial_request_text: @attrs[:request_text],
+        state: @attrs[:state] || :initial,
       )
 
       @attrs[:participating_schools].each { |organisation| CaseOrganisation.create!(case: kase, organisation:) } if @attrs[:participating_schools]

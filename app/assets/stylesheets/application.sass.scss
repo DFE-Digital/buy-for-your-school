@@ -44,6 +44,10 @@
    vertical-align: middle;
 }
 
+.govuk-table__cell.no-wrap {
+  white-space: nowrap;
+}
+
 .case-status-badge {
    white-space: nowrap !important;
 }
