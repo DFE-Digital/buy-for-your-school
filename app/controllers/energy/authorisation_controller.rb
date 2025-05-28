@@ -37,9 +37,10 @@ module Energy
 
           if support_case.count > 1
             email_to = ENV["MS_GRAPH_SHARED_MAILBOX_ADDRESS"]
-            email_subject = I18n.t("energy.authorisation.alerts.email_subject")
+            email_subject = I18n.t("energy.authorisation.alerts.email_subject", org_name: @support_organisation.name)
+            email_body = render_to_string(partial: "energy/authorisation/email_body")
             click_here = I18n.t("energy.authorisation.alerts.click_here")
-            email_link = ActionController::Base.helpers.mail_to(email_to, click_here, subject: email_subject, class: "govuk-link")
+            email_link = ActionController::Base.helpers.mail_to(email_to, click_here, subject: email_subject, body: email_body, class: "govuk-link")
             notice_message = "#{I18n.t('energy.authorisation.alerts.multiple_cases')}, #{email_link}".html_safe
             redirect_to energy_school_selection_path, notice: notice_message
           elsif support_case.count == 1

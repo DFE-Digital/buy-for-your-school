@@ -442,7 +442,7 @@ en:
       alerts:
         multiple_cases: There are multiple cases for this organisation
         click_here: click here to email support
-        email_subject: "Help request: multiple concurrent Energy for schools applications"
+        email_subject: "Help request: %{org_name} - multiple concurrent Energy for Schools applications"
     switching_electricity:
       heading: Are you switching electricity, gas or both?
       energy_type:
