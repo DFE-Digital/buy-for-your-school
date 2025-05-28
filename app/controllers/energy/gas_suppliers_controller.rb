@@ -3,8 +3,7 @@ module Energy
     include HasDateParams
     before_action :organisation_details
     before_action :form, only: %i[update]
-
-    before_action { @back_url = energy_case_switch_energy_path }
+    before_action :back_url, :form_url
 
     def show
       @form = Energy::GasSupplierForm.new(**@onboarding_case_organisation.to_h.compact)
@@ -36,6 +35,14 @@ module Energy
       gas_supplier_params = params.fetch(:gas_supplier_form, {}).permit(*%i[gas_current_supplier gas_current_contract_end_date gas_current_supplier_other])
       gas_supplier_params[:gas_current_contract_end_date] = date_param(:gas_supplier_form, :gas_current_contract_end_date)
       gas_supplier_params
+    end
+
+    def back_url
+      @back_url = energy_case_switch_energy_path
+    end
+
+    def form_url
+      @form_url = energy_case_gas_supplier_path(**@routing_flags)
     end
 
     def redirect_path

@@ -1,4 +1,4 @@
-<%= form_with model: @form, scope: :site_contact_details_form, url: energy_case_org_site_contact_details_path(**@routing_flags), method: :patch do |form| %>
+<%= form_with model: @form, scope: :site_contact_details_form, url: @form_url, method: :patch do |form| %>
     <%= form.govuk_error_summary %>
 
     <%= form.govuk_text_field :site_contact_first_name, label: { text: I18n.t("energy.site_contact_details.first_name") }, width: 20 %>
