@@ -4,7 +4,7 @@ class Energy::GasMeterController < Energy::ApplicationController
   before_action :set_gas_meter_detail, only: %i[edit update destroy]
   before_action :back_url
   def index
-    @gas_meter_details = @onboarding_case_organisation.gas_meters.all
+    @gas_meter_details = @onboarding_case_organisation.gas_meters.order(created_at: :asc)
   end
 
   def new
