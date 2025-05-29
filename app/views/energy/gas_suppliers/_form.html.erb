@@ -18,5 +18,5 @@
 
   <%= form.govuk_date_field :gas_current_contract_end_date, maxlength_enabled: true, legend: { text: I18n.t("energy.current_contract.when_contract_ends"), }, hint: { text: I18n.t("energy.current_contract.date_for_example") } %>
 
-  <%= render EnergyFormButtonsComponent.new(form, include_tasks: !@from_tasks_or_check) %>
+  <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
 <% end %>
