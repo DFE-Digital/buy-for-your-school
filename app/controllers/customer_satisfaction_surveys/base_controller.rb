@@ -44,7 +44,9 @@ private
       @customer_satisfaction_survey.complete_survey!
     end
 
-    redirect_to Rails.application.routes.url_helpers
-      .public_send(path, survey)
+    if path.present?
+      redirect_to Rails.application.routes.url_helpers
+        .public_send(path, survey)
+    end
   end
 end
