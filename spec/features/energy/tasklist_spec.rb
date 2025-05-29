@@ -35,7 +35,7 @@ describe "Tasklist flows", :js do
 
       # Go to Gas Contract
       expect(page).to have_text("Gas Contract")
-      expect(page).to have_button("Discard and go to task list")
+      expect(page).to have_link("Discard and go to task list")
       choose "Other"
       fill_in "Gas supplier", with: "Great Gas Ltd"
       click_button "Save and continue"
@@ -52,7 +52,7 @@ describe "Tasklist flows", :js do
 
       # Go to Electricity Contract
       expect(page).to have_text("Electricity Contract")
-      expect(page).to have_button("Discard and go to task list")
+      expect(page).to have_link("Discard and go to task list")
       choose "Other"
       fill_in "Electricity supplier", with: "Emilys Leccie Co"
       click_button "Save and continue"
@@ -72,13 +72,13 @@ describe "Tasklist flows", :js do
 
         # Go to single/multi meter screen
         expect(page).to have_text("Is this a single or multi meter site?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "Single meter"
         click_button "Save and continue"
 
         # Go to meter details
         expect(page).to have_text("Gas meter details")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         expect(page).to have_field("Add a Meter Point Reference Number (MPRN)", with: gas_meter_numbers.first)
         fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "123"
         click_button "Save and continue"
@@ -95,25 +95,25 @@ describe "Tasklist flows", :js do
 
         # Go to single/multi meter screen
         expect(page).to have_text("Is this a single or multi meter site?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "Multi meter"
         click_button "Save and continue"
 
         # Go to meter details
         expect(page).to have_text("Gas meter details")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         fill_in "Add a Meter Point Reference Number (MPRN)", with: new_mprn
         fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "1234"
         click_button "Save and continue"
 
         # Go to MPRN summary
         expect(page).to have_text("MPRN summary")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         find("#save_and_continue").click
 
         # Go to bill consolidation screen
         expect(page).to have_text("Do you want your MPRNs consolidated on one bill?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "No, I want a separate bill for each MPRN"
         click_button "Save and continue"
 
@@ -132,14 +132,14 @@ describe "Tasklist flows", :js do
 
         # Go to MPRN summary
         expect(page).to have_text("MPRN summary")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
 
         # Add a meter
         find("#add_another_mprn").click # click_button "Add another MPRN" results in: Unable to find button "Add another MPRN" that is not disabled
 
         # Go to Gas meter details
         expect(page).to have_text("Gas meter details")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         fill_in "Add a Meter Point Reference Number (MPRN)", with: new_mprn
         fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "123"
         click_button "Save and continue"
@@ -175,7 +175,7 @@ describe "Tasklist flows", :js do
 
         # Go to bill consolidation screen
         expect(page).to have_text("Do you want your MPRNs consolidated on one bill?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "No, I want a separate bill for each MPRN"
         click_button "Save and continue"
 
@@ -193,27 +193,27 @@ describe "Tasklist flows", :js do
 
         # Go to single/multi meter screen
         expect(page).to have_text("Is this a single or multi meter site?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "Multi meter"
         click_button "Save and continue"
 
         # Go to meter details
         expect(page).to have_text("Gas meter details")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         expect(page).to have_field("Add a Meter Point Reference Number (MPRN)", with: gas_meter_numbers.first)
         fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "123"
         click_button "Save and continue"
 
         # Go to MPRN summary
         expect(page).to have_text("MPRN summary")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
 
         # Add a meter
         find("#add_another_mprn").click # click_button "Add another MPRN" results in: Unable to find button "Add another MPRN" that is not disabled
 
         # Go to Gas meter details
         expect(page).to have_text("Gas meter details")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         fill_in "Add a Meter Point Reference Number (MPRN)", with: new_mprn
         fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "123"
         click_button "Save and continue"
@@ -249,7 +249,7 @@ describe "Tasklist flows", :js do
 
         # Go to bill consolidation screen
         expect(page).to have_text("Do you want your MPRNs consolidated on one bill?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "No, I want a separate bill for each MPRN"
         click_button "Save and continue"
 
@@ -269,13 +269,13 @@ describe "Tasklist flows", :js do
 
         # Go to single/multi meter screen
         expect(page).to have_text("Is this a single or multi meter site?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "Single meter"
         click_button "Save and continue"
 
         # Go to meter details
         expect(page).to have_text("Electricity meter details")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         expect(page).to have_field("Add an MPAN", with: electricity_meter_numbers.first)
         fill_in "Estimated annual electricity usage", with: "1234"
         click_button "Save and continue"
@@ -291,13 +291,13 @@ describe "Tasklist flows", :js do
 
         # Go to single/multi meter screen
         expect(page).to have_text("Is this a single or multi meter site?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "Multi meter"
         click_button "Save and continue"
 
         # Go to meter details
         expect(page).to have_text("Electricity meter details")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         fill_in "Add an MPAN", with: new_mpan
         choose "No"
         fill_in "Estimated annual electricity usage", with: "1234"
@@ -305,12 +305,12 @@ describe "Tasklist flows", :js do
 
         # Go to MPAN summary
         expect(page).to have_text("MPAN summary")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         click_on "Save and continue"
 
         # Go to bill consolidation screen
         expect(page).to have_text("Do you want your MPANs consolidated on one bill?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "No, I want a separate bill for each MPAN"
         click_button "Save and continue"
 
@@ -328,14 +328,14 @@ describe "Tasklist flows", :js do
 
         # Go to MPAN summary
         expect(page).to have_text("MPAN summary")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
 
         # Add a meter
         click_on "Add another MPAN"
 
         # Go to Electricity meter details
         expect(page).to have_text("Electricity meter details")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         fill_in "Add an MPAN", with: new_mpan
         choose "No"
         fill_in "Estimated annual electricity usage", with: "123"
@@ -372,7 +372,7 @@ describe "Tasklist flows", :js do
 
         # Go to bill consolidation screen
         expect(page).to have_text("Do you want your MPANs consolidated on one bill?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "No, I want a separate bill for each MPAN"
         click_button "Save and continue"
 
@@ -389,27 +389,27 @@ describe "Tasklist flows", :js do
 
         # Go to single/multi meter screen
         expect(page).to have_text("Is this a single or multi meter site?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "Multi meter"
         click_button "Save and continue"
 
         # Go to meter details
         expect(page).to have_text("Electricity meter details")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         expect(page).to have_field("Add an MPAN", with: electricity_meter_numbers.first)
         fill_in "Estimated annual electricity usage", with: "1234"
         click_button "Save and continue"
 
         # Go to MPAN summary
         expect(page).to have_text("MPAN summary")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
 
         # Add a meter
         click_on "Add another MPAN"
 
         # Go to Electricity meter details
         expect(page).to have_text("Electricity meter details")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         fill_in "Add an MPAN", with: new_mpan
         choose "No"
         fill_in "Estimated annual electricity usage", with: "123"
@@ -446,7 +446,7 @@ describe "Tasklist flows", :js do
 
         # Go to bill consolidation screen
         expect(page).to have_text("Do you want your MPANs consolidated on one bill?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "No, I want a separate bill for each MPAN"
         click_button "Save and continue"
 
@@ -464,7 +464,7 @@ describe "Tasklist flows", :js do
 
         # Go to Site contact
         expect(page).to have_text("Who manages site access and maintenance?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         fill_in "First name", with: "Penelope"
         click_button "Save and continue"
 
@@ -481,7 +481,7 @@ describe "Tasklist flows", :js do
 
         # Go to VAT rate selection page
         expect(page).to have_text("Which VAT rate are you charged?")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "20%"
         click_button "Save and continue"
 
@@ -497,20 +497,20 @@ describe "Tasklist flows", :js do
 
           # Go to VAT rate selection page
           expect(page).to have_text("Which VAT rate are you charged?")
-          expect(page).to have_button("Discard and go to task list")
+          expect(page).to have_link("Discard and go to task list")
           choose "5%"
           fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: "25"
           click_button "Save and continue"
 
           # Go to current contract details page
           expect(page).to have_text("Are these the correct details for VAT purposes?")
-          expect(page).to have_button("Discard and go to task list")
+          expect(page).to have_link("Discard and go to task list")
           choose "Yes"
           click_button "Save and continue"
 
           # Go to declaration page
           expect(page).to have_text("VAT certificate of declaration")
-          expect(page).to have_button("Discard and go to task list")
+          expect(page).to have_link("Discard and go to task list")
           find("#vat-certificate-form-vat-certificate-declared-declaration1-field").check
           find("#vat-certificate-form-vat-certificate-declared-declaration2-field").check
           find("#vat-certificate-form-vat-certificate-declared-declaration3-field").check
@@ -532,20 +532,20 @@ describe "Tasklist flows", :js do
 
           # Go to VAT rate selection page
           expect(page).to have_text("Which VAT rate are you charged?")
-          expect(page).to have_button("Discard and go to task list")
+          expect(page).to have_link("Discard and go to task list")
           choose "5%"
           fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: "25"
           click_button "Save and continue"
 
           # Go to current contract details page
           expect(page).to have_text("Are these the correct details for VAT purposes?")
-          expect(page).to have_button("Discard and go to task list")
+          expect(page).to have_link("Discard and go to task list")
           choose "No"
           click_button "Save and continue"
 
           # Go to contact information page
           expect(page).to have_text("VAT contact information")
-          expect(page).to have_button("Discard and go to task list")
+          expect(page).to have_link("Discard and go to task list")
           fill_in "First name", with: "Jane"
           fill_in "Telephone number", with: "07123456789"
           choose "5 Main Street, Duke's Place, EC3A 5DE"
@@ -553,7 +553,7 @@ describe "Tasklist flows", :js do
 
           # Go to declaration page
           expect(page).to have_text("VAT certificate of declaration")
-          expect(page).to have_button("Discard and go to task list")
+          expect(page).to have_link("Discard and go to task list")
           find("#vat-certificate-form-vat-certificate-declared-declaration1-field").check
           find("#vat-certificate-form-vat-certificate-declared-declaration2-field").check
           find("#vat-certificate-form-vat-certificate-declared-declaration3-field").check
@@ -573,7 +573,7 @@ describe "Tasklist flows", :js do
 
         # Go to Billing preferences
         expect(page).to have_text("Billing preferences")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "BACS"
         choose "21 days"
         choose "Email"
@@ -591,7 +591,7 @@ describe "Tasklist flows", :js do
 
         # Go to Billing preferences
         expect(page).to have_text("Billing preferences")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "BACS"
         choose "21 days"
         choose "Paper"
@@ -613,7 +613,7 @@ describe "Tasklist flows", :js do
 
         # Go to Billing preferences
         expect(page).to have_text("Billing preferences")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "BACS"
         choose "21 days"
         choose "Paper"
@@ -623,7 +623,7 @@ describe "Tasklist flows", :js do
         expect(page).to have_text("Billing address")
         expect(page).to have_text("5 Main Street")
         expect(page).to have_text("Boundary House Shr")
-        expect(page).to have_button("Discard and go to task list")
+        expect(page).to have_link("Discard and go to task list")
         choose "5 Main Street, Duke's Place, EC3A 5DE"
         click_button "Save and continue"
 
