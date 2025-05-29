@@ -1,5 +1,4 @@
 class CustomerSatisfactionSurveys::RecommendationLikelihoodsController < CustomerSatisfactionSurveys::BaseController
-
   def edit
     if form_params.present?
       session.delete(:net_promoter_score)

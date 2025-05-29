@@ -1,5 +1,4 @@
 class CustomerSatisfactionSurveys::EasyToUseRatingsController < CustomerSatisfactionSurveys::BaseController
-
   def update
     @customer_satisfaction_survey.attributes = form_params
     if @customer_satisfaction_survey.valid?(:easy_to_use_rating)
