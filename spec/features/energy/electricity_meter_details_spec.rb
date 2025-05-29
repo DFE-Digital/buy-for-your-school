@@ -137,5 +137,25 @@ describe "User can update electricity meters and usage", :js do
     click_button "Save and continue"
 
     expect(page).not_to have_text("This MPAN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter")
+
+    create(:energy_electricity_meter, :with_valid_data, mpan: "1234512345121", energy_onboarding_case_organisation_id: case_organisation.id)
+
+    create(:energy_electricity_meter, :with_valid_data, mpan: "1234512345122", energy_onboarding_case_organisation_id: case_organisation.id)
+
+    create(:energy_electricity_meter, :with_valid_data, mpan: "1234512345123", energy_onboarding_case_organisation_id: case_organisation.id)
+
+    visit energy_case_org_electricity_meter_index_path(onboarding_case, case_organisation)
+
+    # Find the table body
+    table_body = find(".govuk-table__body")
+
+    # Extract the MPAN values from the table rows
+    mpan_values = table_body.all("tr").map do |row|
+      row.find("td", match: :first).text.strip # MPAN is in the first column
+    end
+
+    # Check the order of the MPAN values
+    expected_order = %w[1234567890123 1234512345121 1234512345122 1234512345123]
+    expect(mpan_values).to eq(expected_order)
   end
 end
