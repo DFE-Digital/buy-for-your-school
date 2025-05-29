@@ -24,7 +24,7 @@ private
     if @customer_satisfaction_survey.source_exit_survey?
       redirect_to edit_customer_satisfaction_surveys_satisfaction_reason_path(@customer_satisfaction_survey)
     else
-      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey )
+      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey)
     end
   end
 

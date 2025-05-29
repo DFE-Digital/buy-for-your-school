@@ -4,7 +4,7 @@ class CustomerSatisfactionSurveys::EasyToUseRatingsController < CustomerSatisfac
     @customer_satisfaction_survey.attributes = form_params
     if @customer_satisfaction_survey.valid?(:easy_to_use_rating)
       @customer_satisfaction_survey.save!
-      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey )
+      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey)
     else
       render :edit
     end

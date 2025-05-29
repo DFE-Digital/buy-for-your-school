@@ -21,7 +21,7 @@ private
     if session[:net_promoter_score].present?
       redirect_to customer_satisfaction_surveys_thank_you_path
     else
-      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey )
+      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey)
     end
   end
 

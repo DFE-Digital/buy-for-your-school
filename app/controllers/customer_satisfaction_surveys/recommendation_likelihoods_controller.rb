@@ -12,7 +12,7 @@ class CustomerSatisfactionSurveys::RecommendationLikelihoodsController < Custome
     if @customer_satisfaction_survey.valid?(:recommendation_likelihood)
       @customer_satisfaction_survey.save!
       @customer_satisfaction_survey.start_survey! if session[:net_promoter_score].blank?
-      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey )
+      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey)
     else
       render :edit
     end
