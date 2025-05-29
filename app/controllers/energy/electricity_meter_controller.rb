@@ -5,7 +5,7 @@ class Energy::ElectricityMeterController < Energy::ApplicationController
   before_action :back_url
 
   def index
-    @electricity_meter_details = @onboarding_case_organisation.electricity_meters.all
+    @electricity_meter_details = @onboarding_case_organisation.electricity_meters.order(created_at: :asc)
   end
 
   def new
