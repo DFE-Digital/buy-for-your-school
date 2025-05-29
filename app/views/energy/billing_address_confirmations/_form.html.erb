@@ -9,5 +9,5 @@
     <% end %>
   <% end %>
 
-  <%= render EnergyFormButtonsComponent.new(form, include_tasks: false)%>
+  <%= render EnergyFormButtonsComponent.new(form, include_tasks: !@from_tasks_or_check)%>
 <% end %>

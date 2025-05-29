@@ -1292,6 +1292,7 @@ en:
       cancel: Cancel
       change_answer: Change
       delete: Delete
+      discard_go_to_task_list: Discard and go to task list
       next: Continue
       remove: Remove
       save: Save
