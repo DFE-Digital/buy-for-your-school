@@ -1,5 +1,4 @@
 class CustomerSatisfactionSurveys::ClearToUseRatingsController < CustomerSatisfactionSurveys::BaseController
-
   def update
     @customer_satisfaction_survey.attributes = form_params
     if @customer_satisfaction_survey.valid?(:clear_to_use_rating)
@@ -20,7 +19,7 @@ private
     if session[:net_promoter_score].present?
       redirect_to edit_customer_satisfaction_surveys_recommendation_likelihood_path(@customer_satisfaction_survey)
     else
-      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey )
+      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey)
     end
   end
 end
