@@ -12,7 +12,7 @@ class Energy::ElectricityMeterTypesController < Energy::ApplicationController
       @onboarding_case_organisation.update!(**form.data)
 
       if @onboarding_case_organisation.saved_change_to_electricity_meter_type?
-        reset_multimeter_data
+        reset_meter_data
       end
 
       redirect_to redirect_path
@@ -27,16 +27,15 @@ private
     if going_to_tasks?
       energy_case_tasks_path
     elsif electricity_multiple_meters?
-      new_energy_case_org_electricity_meter_path
+      electricity_usage_exist? ? energy_case_org_electricity_meter_index_path : new_energy_case_org_electricity_meter_path
     else
       electricity_usage_exist? ? edit_electric_usage_path : new_energy_case_org_electricity_meter_path
     end
   end
 
-  def reset_multimeter_data
-    unless gas_multiple_meters?
-      @onboarding_case_organisation.electricity_meters.order(:created_at).offset(1).destroy_all
-    end
+  def reset_meter_data
+    @onboarding_case_organisation.electricity_meters.destroy_all
+    @onboarding_case_organisation.update!(is_electric_bill_consolidated: nil) unless electricity_multiple_meters?
   end
 
   def edit_electric_usage_path
