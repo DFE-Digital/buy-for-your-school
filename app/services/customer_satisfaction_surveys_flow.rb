@@ -2,7 +2,7 @@ class CustomerSatisfactionSurveysFlow
   include Rails.application.routes.url_helpers
 
   def initialize(service_name, current_step = nil)
-    @service_name = service_name.to_sym
+    @service_name = service_name&.to_sym
     @flow = SURVEY_FLOWS[@service_name] || []
     @current_step = current_step || @flow.first
   end
