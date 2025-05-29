@@ -15,7 +15,7 @@ private
   end
 
   def redirect_to_path(path, survey)
-    redirect_to Rails.application.routes.url_helpers.
-      public_send(path, survey)
+    redirect_to Rails.application.routes.url_helpers
+      .public_send(path, survey)
   end
 end
