@@ -58,5 +58,13 @@ describe "Switch energy authorisation", :js do
     click_link "Continue"
     expect(page).to have_text("Are you switching electricity, gas or both?")
     expect(Support::Case.count).to eq(2)
+
+    kase.update!(state: "on_hold")
+    visit school_type_energy_authorisation_path(id: support_organisation.urn, type: "single")
+    expect(page).to have_link("click here to email support")
+
+    email_link = find_link("click here to email support")
+    decoded_href = URI.decode_www_form_component(email_link[:href])
+    expect(decoded_href).to include("Help request: School #1 - multiple concurrent Energy for Schools applications")
   end
 end
