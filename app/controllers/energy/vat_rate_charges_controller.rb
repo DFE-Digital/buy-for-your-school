@@ -10,7 +10,12 @@ module Energy
 
     def update
       if validation.success?
-        @onboarding_case_organisation.update!(**form.data)
+        data = form.data
+        if data[:vat_rate] == 20
+          data[:vat_lower_rate_percentage] = nil
+          data[:vat_lower_rate_reg_no] = nil
+        end
+        @onboarding_case_organisation.update!(**data)
         redirect_to redirect_path
       else
         render :show
