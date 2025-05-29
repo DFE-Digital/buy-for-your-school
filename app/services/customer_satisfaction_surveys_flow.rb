@@ -53,11 +53,11 @@ class CustomerSatisfactionSurveysFlow
 
   def convert_step_to_path(step)
     if step == "thank_you"
-                  "customer_satisfaction_surveys_#{step}_path"
-                elsif step == "improvement"
-                  "edit_customer_satisfaction_surveys_#{step.pluralize}_path"
-                else
-                  "edit_customer_satisfaction_surveys_#{step}_path"
+      "customer_satisfaction_surveys_#{step}_path"
+    elsif step == "improvement"
+      "edit_customer_satisfaction_surveys_#{step.pluralize}_path"
+    else
+      "edit_customer_satisfaction_surveys_#{step}_path"
     end
   end
 
