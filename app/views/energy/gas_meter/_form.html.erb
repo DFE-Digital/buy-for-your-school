@@ -17,6 +17,6 @@
       suffix_text: I18n.t("energy.gas_meter_details.gas_usage_suffix"),
       width: 5 %>
 
-    <%= render EnergyFormButtonsComponent.new(form, include_tasks: !@from_tasks_or_check) %>
+    <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
 
 <% end %>

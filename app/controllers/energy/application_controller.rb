@@ -1,6 +1,6 @@
 module Energy
   class ApplicationController < ::ApplicationController
-    before_action :check_flag, :set_routing_flags, :set_from_tasks_or_check
+    before_action :check_flag, :set_routing_flags
 
     ALLOWED_CLASSES = [
       "Support::Organisation",
@@ -17,10 +17,6 @@ module Energy
 
     def set_routing_flags
       @routing_flags = { tasks: params[:tasks], check: params[:check] }
-    end
-
-    def set_from_tasks_or_check
-      @from_tasks_or_check = params[:tasks] == "1" || params[:check] == "1"
     end
 
     def from_check?
