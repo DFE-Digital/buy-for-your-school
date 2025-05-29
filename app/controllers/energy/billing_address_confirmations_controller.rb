@@ -38,8 +38,7 @@ module Energy
     end
 
     def redirect_path
-      # Change to Check your answers when we have implemented the screen
-      energy_case_org_billing_address_confirmation_path
+      energy_case_check_your_answers_path
     end
 
     def associated_trust
