@@ -21,7 +21,7 @@ private
   end
 
   def current_step
-    controller_path.split('/').last.singularize
+    controller_path.split("/").last.singularize
   end
 
   def next_path
@@ -32,7 +32,7 @@ private
     @back_url = if @survey_flow.back_path
                   Rails.application.routes.url_helpers.public_send(
                     @survey_flow.back_path,
-                    @customer_satisfaction_survey
+                    @customer_satisfaction_survey,
                   )
                 end
   end
@@ -44,7 +44,7 @@ private
       @customer_satisfaction_survey.complete_survey!
     end
 
-    redirect_to Rails.application.routes.url_helpers.
-      public_send(path, survey)
+    redirect_to Rails.application.routes.url_helpers
+      .public_send(path, survey)
   end
 end

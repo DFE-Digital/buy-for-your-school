@@ -15,9 +15,7 @@ class CustomerSatisfactionSurveysFlow
     @flow.first
   end
 
-  def current_step
-    @current_step
-  end
+  attr_reader :current_step
 
   def next_step
     idx = @flow.index(@current_step)
@@ -29,7 +27,7 @@ class CustomerSatisfactionSurveysFlow
 
   def previous_step
     idx = @flow.index(@current_step)
-    return nil unless idx && idx > 0
+    return nil unless idx && idx.positive?
 
     # Get the previous step from the flow
     @flow[idx - 1]
@@ -55,13 +53,12 @@ class CustomerSatisfactionSurveysFlow
 
   def convert_step_to_path(step)
     if step == "thank_you"
-      step_path = "customer_satisfaction_surveys_#{step}_path"
-    elsif step == "improvement"
-      step_path = "edit_customer_satisfaction_surveys_#{step.pluralize}_path"
-    else
-      step_path = "edit_customer_satisfaction_surveys_#{step}_path"
+                  "customer_satisfaction_surveys_#{step}_path"
+                elsif step == "improvement"
+                  "edit_customer_satisfaction_surveys_#{step.pluralize}_path"
+                else
+                  "edit_customer_satisfaction_surveys_#{step}_path"
     end
-    step_path
   end
 
   def get_step_from_path(path)
@@ -70,8 +67,6 @@ class CustomerSatisfactionSurveysFlow
     elsif path.include?("edit_customer_satisfaction_surveys_")
       step = path.sub("edit_customer_satisfaction_surveys_", "").sub("_path", "")
       step == "improvements" ? "improvement" : step
-    else
-      nil
     end
   end
 end
