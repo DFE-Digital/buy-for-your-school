@@ -19,8 +19,8 @@ module Support
         return render :edit   if submit_action == "change"
 
         @case_summary.save!
-
-        redirect_to support_case_path(@current_case, anchor: "case-details")
+        # putting a redirect path in based on roles for now - this may change if a new form for CEC is created
+        redirect_path
       else
         render :edit
       end
@@ -38,6 +38,14 @@ module Support
 
     def submit_action
       params[:button]
+    end
+
+    def redirect_path
+      if (current_agent.roles & %w[cec cec_admin]).any?
+        redirect_to cec_onboarding_case_path(@current_case, anchor: "case-details")
+      else
+        redirect_to support_case_path(@current_case, anchor: "case-details")
+      end
     end
 
     def fields_pre_filled_in_params?

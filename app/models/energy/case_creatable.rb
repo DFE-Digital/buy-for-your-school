@@ -12,6 +12,7 @@ module Energy::CaseCreatable
         category_id: Support::Category.find_by(title: "DfE Energy for Schools service").id,
         organisation: support_organisation,
         state: :on_hold,
+        procurement_stage: Support::ProcurementStage.find_by(key: "onboarding_form"),
       }
       kase = Support::CreateCase.new(attrs).call
       Support::CreateInteraction.new(kase.id, "create_case", nil, { body: "DfE Energy support case created", additional_data: attrs.slice(:source, :category).compact }).call

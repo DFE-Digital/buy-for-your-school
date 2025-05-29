@@ -58,7 +58,7 @@ private
     @turbo_frame = params[:turbo_frame] || "messages-frame"
   end
 
-  def authorize_agent_scope = :access_proc_ops_portal?
+  def authorize_agent_scope = :access_individual_cases?
 
   class FilterAttachmentsForm
     include ActiveModel::Model

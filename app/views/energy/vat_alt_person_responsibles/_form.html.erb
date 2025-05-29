@@ -5,14 +5,12 @@
   <%= form.govuk_text_field :vat_alt_person_phone, label: { text: I18n.t("energy.vat_alt_person_responsible.telephone") }, width: "two-thirds" %>
 
   <% if form.object.vat_alt_address_options.present? %>
-    <%= form.hidden_field :vat_alt_person_address, value: form.object.vat_alt_person_address %>
-    <div class="govuk-form-group">
-      <fieldset class="govuk-fieldset"><legend class="govuk-fieldset__legend"><%= I18n.t("energy.vat_alt_person_responsible.address") %></legend>
-        <% form.object.vat_alt_address_options.values.each do |address| %>
-            <%= form.govuk_radio_button :vat_alt_person_address, address[:full].to_json,  checked: (form.object.vat_alt_person_address&.transform_keys(&:to_sym) == address[:full]), label: { text: address[:short] } %>
-        <% end %>
-      </fieldset>
-    </div>
+    <%= form.govuk_radio_buttons_fieldset :vat_alt_person_address,
+      legend: { size: "s", text: I18n.t("energy.vat_alt_person_responsible.address") } do %>
+      <% form.object.vat_alt_address_options.values.each do |address| %>
+        <%= form.govuk_radio_button :vat_alt_person_address, address[:full].to_json, checked: (form.object.vat_alt_person_address == address[:full]), label: { text: address[:short] } %>
+      <% end %>
+    <% end %>
   <% end %>
 
   <%= render EnergyFormButtonsComponent.new(form)%>

@@ -65,6 +65,14 @@
       background-color: $stage-4-colour;
     }
 
+    .stage-indicator[title="Stage 5"] {
+      background-color: $stage-5-colour;
+    }
+
+    .stage-indicator[title="Stage 6"] {
+      background-color: $stage-6-colour;
+    }
+
     .quick-edit-row {
       margin: 15px 0;
     }
