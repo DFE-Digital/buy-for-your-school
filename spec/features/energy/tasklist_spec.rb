@@ -186,6 +186,7 @@ describe "Tasklist flows", :js do
 
     context "when a multi meter has already been specified but there are no meter details" do
       let(:gas_single_multi) { "multi" }
+      let(:gas_meter_numbers) { [] }
 
       it "navigates to the single/multi meter choice page, then the meter details page, then the MPRN summary, then through adding more numbers, then bill consolidation, then back to the tasklist" do
         expect(page).to have_text("Gas meter and usage")
@@ -200,7 +201,7 @@ describe "Tasklist flows", :js do
         # Go to meter details
         expect(page).to have_text("Gas meter details")
         expect(page).to have_link("Discard and go to task list")
-        expect(page).to have_field("Add a Meter Point Reference Number (MPRN)", with: gas_meter_numbers.first)
+        fill_in "Add a Meter Point Reference Number (MPRN)", with: "654321"
         fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "123"
         click_button "Save and continue"
 

@@ -70,8 +70,8 @@ private
   end
 
   def gas_meters_and_usage
-    status = case_org.gas_meters.any? ? :complete : :not_started
-    path = if case_org.gas_single_multi == "single"
+    status = any_gas_meters? ? :complete : :not_started
+    path = if gas_single? || (context_tasks? && gas_multi? && no_gas_meters?)
              energy_case_org_gas_single_multi_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
            else
              energy_case_org_gas_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
@@ -189,6 +189,26 @@ private
   def case_org
     @case_org ||= Energy::OnboardingCaseOrganisation.includes(:gas_meters, :electricity_meters)
                                                     .find_by(energy_onboarding_case_id: @energy_onboarding_case_id)
+  end
+
+  def gas_single?
+    case_org.gas_single_multi_single?
+  end
+
+  def gas_multi?
+    case_org.gas_single_multi_multi?
+  end
+
+  def any_gas_meters?
+    case_org.gas_meters.any?
+  end
+
+  def no_gas_meters?
+    case_org.gas_meters.none?
+  end
+
+  def context_tasks?
+    context == :tasks
   end
 
   class Task
