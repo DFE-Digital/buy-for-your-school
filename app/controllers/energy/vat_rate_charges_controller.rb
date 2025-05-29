@@ -34,7 +34,7 @@ module Energy
       params.fetch(:vat_rate_charge, {})
             .permit(:vat_rate, :vat_lower_rate_percentage, :vat_lower_rate_reg_no).tap do |p|
         # Default to 0 for integers
-        %i[vat_rate vat_lower_rate_percentage].each { |key| p[key] = 0 if p[key].blank? }
+        %i[vat_rate vat_lower_rate_percentage].each { |key| p[key] = "0" if p[key].blank? }
       end
     end
 
