@@ -62,6 +62,8 @@ class CustomerSatisfactionSurveysFlow
   end
 
   def get_step_from_path(path)
+    return nil if path.nil?
+
     if path == "customer_satisfaction_surveys_thank_you_path"
       "thank_you"
     elsif path.include?("edit_customer_satisfaction_surveys_")
