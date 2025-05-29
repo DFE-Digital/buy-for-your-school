@@ -1,8 +1,4 @@
-<%= form_with(
-      model: @gas_meter_detail,
-      url: @gas_meter_detail.new_record? ? energy_case_org_gas_meter_index_path(**@routing_flags)
-                                  : energy_case_org_gas_meter_path(id: params[:id], **@routing_flags),
-    ) do |form| %>
+<%= form_with(model: @gas_meter_detail, url: @form_url) do |form| %>
     <%= form.govuk_error_summary %>
 
     <%= form.govuk_text_field :mprn,
