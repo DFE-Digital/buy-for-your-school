@@ -517,7 +517,7 @@ describe "Tasklist flows", :js do
           find("#vat-certificate-form-vat-certificate-declared-declaration1-field").check
           find("#vat-certificate-form-vat-certificate-declared-declaration2-field").check
           find("#vat-certificate-form-vat-certificate-declared-declaration3-field").check
-          click_button "Continue"
+          click_button "Save and continue"
 
           # Back to Tasklist
           expect(page).to have_text("Provide information about your schools")
@@ -560,7 +560,7 @@ describe "Tasklist flows", :js do
           find("#vat-certificate-form-vat-certificate-declared-declaration1-field").check
           find("#vat-certificate-form-vat-certificate-declared-declaration2-field").check
           find("#vat-certificate-form-vat-certificate-declared-declaration3-field").check
-          click_button "Continue"
+          click_button "Save and continue"
 
           # Back to Tasklist
           expect(page).to have_text("Provide information about your schools")

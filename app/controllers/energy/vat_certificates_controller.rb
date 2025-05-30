@@ -51,6 +51,7 @@ private
   end
 
   def redirect_path
+    return energy_case_tasks_path if from_tasks?
     return energy_case_check_your_answers_path if from_check?
 
     energy_case_org_billing_preferences_path
