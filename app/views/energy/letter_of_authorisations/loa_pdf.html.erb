@@ -1,3 +1,5 @@
+<p>&nbsp;</>
+<p>&nbsp;</>
 <p style="text-align: center;"><b>DfE Energy for Schools letter of authority</b></p>
 <br />
 <p>This letter of authority sets out the arrangements agreed between the Department for Education ('DfE') and <%= @organisation.name %> "Education Provider” in connection with the provision of energy supplies. </p>
@@ -70,8 +72,8 @@
   </label>
 </p>
 
-<br />
-<p>Signed on behalf of [school/trust name] by: </p>
-<p>[School user name] – [Date form submitted] </p>
+<p>&nbsp;</>
+<p>Signed on behalf of <%= @organisation.name %> by: </p>
+<p><%= @support_case.case_creator_full_name %> - <%= Date.current.strftime("%d/%m/%Y") %> </p>
 <p>Signed on behalf of the Department for Education by: </p>
 <p>[DfE signature] </p>
