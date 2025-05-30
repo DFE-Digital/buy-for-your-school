@@ -103,7 +103,7 @@ private
 
   def electric_meters_and_usage
     status = case_org.electricity_meters.any? ? :complete : :not_started
-    path = if case_org.electricity_meter_type == "single"
+    path = if elec_single? || (context_tasks? && elec_multi? && no_elec_meters?)
              energy_case_org_electricity_meter_type_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
            else
              energy_case_org_electricity_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
@@ -205,6 +205,22 @@ private
 
   def no_gas_meters?
     case_org.gas_meters.none?
+  end
+
+  def elec_single?
+    case_org.electricity_meter_type_single?
+  end
+
+  def elec_multi?
+    case_org.electricity_meter_type_multi?
+  end
+
+  def any_elec_meters?
+    case_org.electricity_meters.any?
+  end
+
+  def no_elec_meters?
+    case_org.electricity_meters.none?
   end
 
   def context_tasks?

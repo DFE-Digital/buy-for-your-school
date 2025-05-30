@@ -265,8 +265,8 @@ describe "Tasklist flows", :js do
 
     context "when a single meter has already been specified and needs to stay as a single meter" do
       it "navigates to the single/multi meter choice page, then electric meter details, then back to tasklist" do
-        expect(page).to have_text("Electricity contract information")
-        click_link("Electricity contract information")
+        expect(page).to have_text("Electricity meter and usage")
+        click_link("Electricity meter and usage")
 
         # Go to single/multi meter screen
         expect(page).to have_text("Is this a single or multi meter site?")
@@ -288,7 +288,7 @@ describe "Tasklist flows", :js do
 
     context "when a single meter has already been specified and needs to change to a multi meter" do
       it "navigates to the single/multi meter choice page, then the meter details page, then MPAN summary, then bill consolidation, then back to tasklist" do
-        click_link("Electricity contract information")
+        click_link("Electricity meter and usage")
 
         # Go to single/multi meter screen
         expect(page).to have_text("Is this a single or multi meter site?")
@@ -325,7 +325,7 @@ describe "Tasklist flows", :js do
       let(:electricity_meter_numbers) { %w[1234567890987 1234567890986] }
 
       it "navigates to the MPAN summary, then through adding more numbers, then bill consolidation, then back to the tasklist" do
-        click_link("Electricity contract information")
+        click_link("Electricity meter and usage")
 
         # Go to MPAN summary
         expect(page).to have_text("MPAN summary")
@@ -384,9 +384,10 @@ describe "Tasklist flows", :js do
 
     context "when a multi meter has already been specified but there are no meter details" do
       let(:electricity_meter_type) { "multi" }
+      let(:electricity_meter_numbers) { [] }
 
       it "navigates to the single/multi meter choice page, then electric meter details, then the MPAN summary, then through adding more numbers, then bill consolidation, then back to the tasklist" do
-        click_link("Electricity contract information")
+        click_link("Electricity meter and usage")
 
         # Go to single/multi meter screen
         expect(page).to have_text("Is this a single or multi meter site?")
@@ -397,7 +398,8 @@ describe "Tasklist flows", :js do
         # Go to meter details
         expect(page).to have_text("Electricity meter details")
         expect(page).to have_link("Discard and go to task list")
-        expect(page).to have_field("Add an MPAN", with: electricity_meter_numbers.first)
+        fill_in "Add an MPAN", with: "1234567890123"
+        choose "No"
         fill_in "Estimated annual electricity usage", with: "1234"
         click_button "Save and continue"
 
