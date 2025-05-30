@@ -7,7 +7,8 @@ describe "Letter Of Authorisation Agreement", :js do
     Current.user = user
     user_exists_in_dfe_sign_in(user:)
     user_is_signed_in(user:)
-    visit energy_case_org_letter_of_authorisation_path(onboarding_case, case_organisation)
+    # visit energy_case_letter_of_authorisation_path(case: onboarding_case)
+    visit energy_case_letter_of_authorisation_path(case_id: case_organisation.energy_onboarding_case_id)
   end
 
   specify "Letter Of Authorisation description" do
