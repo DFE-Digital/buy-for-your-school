@@ -12,7 +12,7 @@ module Energy
       if validation.success?
         @onboarding_case_organisation.update!(**form.data)
 
-        redirect_to energy_case_org_confirmation_path
+        redirect_to energy_case_confirmation_path
       else
         render :show
       end
@@ -38,8 +38,8 @@ module Energy
     end
 
     def back_url
-      # TODO: change to energy_case_org_check_your_answers_path
-      @back_url = energy_case_org_letter_of_authorisation_path
+      # TODO: change to energy_case_check_your_answers_path
+      @back_url = energy_case_letter_of_authorisation_path
     end
   end
 end
