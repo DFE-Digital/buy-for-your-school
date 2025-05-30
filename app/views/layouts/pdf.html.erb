@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template ">
+  <head>
+    <title>PDF</title>
+    <meta charset="UTF-8">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 12pt;
+        margin: 50px;
+      }
+
+      h1 {
+        color: #333;
+        border-bottom: 2px solid #ccc;
+      }
+
+      .section {
+        margin-bottom: 20px;
+      }
+
+      .checkbox {
+        display: flex;
+        align-items: center;
+      }
+      p, li {
+        line-height: 1.8; /* or use px, like 24px */
+      }
+
+      .checkbox input {
+        margin-right: 10px;
+        transform: scale(1.5);
+      }
+    </style>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>
