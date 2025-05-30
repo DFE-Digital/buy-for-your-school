@@ -514,6 +514,7 @@ Rails.application.routes.draw do
       resource :electric_supplier, only: %i[show update]
       resource :tasks, only: %i[show update]
       resource :check_your_answers, only: %i[show]
+      resource :letter_of_authorisation, only: %i[show update] # Cherry-picked from PR 2169 for testing purposes
 
       resources :org, except: %i[show] do
         resources :gas_meter, except: %i[show]

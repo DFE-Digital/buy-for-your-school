@@ -51,6 +51,8 @@ private
   end
 
   def date_format(val)
+    return "" if val.blank?
+
     val.strftime("%d-%m-%Y")
   end
 
@@ -114,12 +116,12 @@ private
         t.add_attribute(:mpan, meter)
         t.add_attribute(:is_half_hourly, meter, text: meter.is_half_hourly ? I18n.t("generic.yes") : I18n.t("generic.no"))
 
-        if meter.is_half_hourly
-          t.add_attribute(:supply_capacity, meter)
-          t.add_attribute(:data_aggregator, meter)
-          t.add_attribute(:data_collector, meter)
-          t.add_attribute(:meter_operator, meter)
-        end
+        next unless meter.is_half_hourly
+
+        t.add_attribute(:supply_capacity, meter)
+        t.add_attribute(:data_aggregator, meter)
+        t.add_attribute(:data_collector, meter)
+        t.add_attribute(:meter_operator, meter)
       end
 
       t.add_attribute(:is_electric_bill_consolidated, case_org, text: case_org.is_electric_bill_consolidated ? I18n.t("generic.yes") : I18n.t("generic.no"))
