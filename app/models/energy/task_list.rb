@@ -50,6 +50,10 @@ private
     case_org.switching_energy_type_electricity? || case_org.switching_energy_type_gas_electricity?
   end
 
+  def date_format(val)
+    val.strftime("%d-%m-%Y")
+  end
+
   def gas_contract_information
     status = case_org.gas_current_supplier && case_org.gas_current_contract_end_date ? :complete : :not_started
     path = energy_case_gas_supplier_path(case_id: case_org.energy_onboarding_case_id, context => "1")
@@ -59,7 +63,7 @@ private
       else
         t.add_attribute :gas_current_supplier, case_org, text: I18n.t("energy.suppliers.#{case_org.gas_current_supplier}")
       end
-      t.add_attribute :gas_current_contract_end_date, case_org
+      t.add_attribute :gas_current_contract_end_date, case_org, text: date_format(case_org.gas_current_contract_end_date)
     end
   end
 
@@ -91,7 +95,7 @@ private
       else
         t.add_attribute :electric_current_supplier, case_org, text: I18n.t("energy.suppliers.#{case_org.electric_current_supplier}")
       end
-      t.add_attribute :electric_current_contract_end_date, case_org
+      t.add_attribute :electric_current_contract_end_date, case_org, text: date_format(case_org.electric_current_contract_end_date)
     end
   end
 
@@ -110,12 +114,12 @@ private
         t.add_attribute(:mpan, meter)
         t.add_attribute(:is_half_hourly, meter, text: meter.is_half_hourly ? I18n.t("generic.yes") : I18n.t("generic.no"))
 
-        next unless meter.is_half_hourly
-
-        t.add_attribute(:supply_capacity, meter)
-        # t.add_attribute(:data_aggregator, meter)  These atts not on ticket screen grab
-        # t.add_attribute(:data_collector, meter)
-        # t.add_attribute(:meter_operator, meter)
+        if meter.is_half_hourly
+          t.add_attribute(:supply_capacity, meter)
+          t.add_attribute(:data_aggregator, meter)
+          t.add_attribute(:data_collector, meter)
+          t.add_attribute(:meter_operator, meter)
+        end
       end
 
       t.add_attribute(:is_electric_bill_consolidated, case_org, text: case_org.is_electric_bill_consolidated ? I18n.t("generic.yes") : I18n.t("generic.no"))
@@ -140,10 +144,20 @@ private
       t.add_attribute(:vat_rate, case_org, text: "#{case_org.vat_rate}%")
       t.add_attribute(:vat_lower_rate_percentage, case_org)
       t.add_attribute(:vat_lower_rate_reg_no, case_org)
-      t.add_attribute(:vat_person_first_name, case_org)
-      t.add_attribute(:vat_person_last_name, case_org)
-      t.add_attribute(:vat_person_phone, case_org)
-      t.add_attribute(:vat_person_address, case_org, text: format_address(case_org.vat_person_address))
+
+      if case_org.vat_person_correct_details?
+        t.add_attribute(:vat_person_first_name, case_org)
+        t.add_attribute(:vat_person_last_name, case_org)
+        t.add_attribute(:vat_person_phone, case_org)
+        t.add_attribute(:vat_person_address, case_org, text: format_address(case_org.vat_person_address))
+      else
+        t.add_attribute(:vat_alt_person_first_name, case_org)
+        t.add_attribute(:vat_alt_person_last_name, case_org)
+        t.add_attribute(:vat_alt_person_phone, case_org)
+        t.add_attribute(:vat_alt_person_address, case_org, text: format_address(case_org.vat_alt_person_address))
+      end
+
+      t.add_attribute(:vat_certificate_declared, case_org, text: case_org.vat_certificate_declared ? I18n.t("generic.yes") : I18n.t("generic.no"))
     end
   end
 
@@ -158,7 +172,12 @@ private
       t.add_attribute(:billing_payment_method, case_org, text: I18n.t("energy.check_your_answers.billing_preferences.#{case_org.billing_payment_method}"))
       t.add_attribute(:billing_payment_terms, case_org, text: I18n.t("energy.check_your_answers.billing_preferences.#{case_org.billing_payment_terms}"))
       t.add_attribute(:billing_invoicing_method, case_org)
-      t.add_attribute(:billing_invoicing_email, case_org)
+
+      if case_org.billing_invoicing_method == "email"
+        t.add_attribute(:billing_invoicing_email, case_org)
+      else
+        t.add_attribute(:billing_invoice_address, case_org, text: format_address(case_org.billing_invoice_address))
+      end
     end
   end
 
