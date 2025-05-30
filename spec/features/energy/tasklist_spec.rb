@@ -624,8 +624,7 @@ describe "Tasklist flows", :js do
 
         # Go to Address confirmation page
         expect(page).to have_text("Billing address")
-        expect(page).to have_text("5 Main Street")
-        expect(page).to have_text("Boundary House Shr")
+        expect(page).to have_text("5 Main Street, Duke's Place, EC3A 5DE")
         expect(page).to have_link("Discard and go to task list")
         choose "5 Main Street, Duke's Place, EC3A 5DE"
         click_button "Save and continue"
