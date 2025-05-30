@@ -676,6 +676,9 @@ en:
         mpan: MPAN
         supply_capacity: What is the supply capacity?
         is_half_hourly: Is this a half-hourly MPAN?
+        data_aggregator: Data aggregator
+        data_collector: Data collector
+        meter_operator: Meter operator
         is_electric_bill_consolidated: Do you want your MPANs consolidated on one bill?
       site_contact_details:
         title: Site contact details
@@ -692,6 +695,11 @@ en:
         vat_person_last_name: Contact surname
         vat_person_phone: Telephone number
         vat_person_address: Address
+        vat_alt_person_first_name: Contact first name
+        vat_alt_person_last_name: Contact surname
+        vat_alt_person_phone: Telephone number
+        vat_alt_person_address: Address
+        vat_certificate_declared: VAT certificate of declaration agreed?
       billing_preferences:
         title: Billing preferences
         billing_payment_method: How will you pay your bills?
@@ -705,8 +713,7 @@ en:
         days30: 30 days
         billing_invoicing_method: How would you like to receive your bills?
         billing_invoicing_email: Email for invoice
-
-
+        billing_invoice_address: Address for invoice
 
     letter_of_authorisation:
       title: Agree to the Energy for Schools letter of authority
