@@ -55,6 +55,7 @@ module Energy
       return energy_case_tasks_path if going_to_tasks? || (from_tasks? && vat_rate_20?)
       return energy_case_check_your_answers_path if from_check? && vat_rate_20?
       return energy_case_org_vat_person_responsible_path(**@routing_flags) if vat_rate_5?
+      return energy_case_org_billing_preferences_path if vat_rate_20?
 
       energy_case_org_vat_certificate_path
     end
