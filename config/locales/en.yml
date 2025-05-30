@@ -457,6 +457,7 @@ en:
       single: Single meter
       multi: Multi meter
     tasks:
+      error: Complete all sections of the task list before continuing
       heading: Provide information about your schools
       task_list:
         item:

@@ -634,4 +634,41 @@ describe "Tasklist flows", :js do
       end
     end
   end
+
+  describe "Continue from task list" do
+    context "when the user has completed all the sections" do
+      before do
+        case_organisation.update!(site_contact_first_name: "Jane",
+                                  site_contact_phone: "0123456789",
+                                  site_contact_email: "jane@test.com",
+                                  vat_rate: 20,
+                                  billing_payment_method: :bacs,
+                                  billing_payment_terms: :days14,
+                                  billing_invoicing_method: :paper)
+        visit energy_case_tasks_path(onboarding_case)
+      end
+
+      it "goes to the check your answers screen" do
+        expect(page).not_to have_text("Not started")
+        expect(page).not_to have_text("In progress")
+        expect(page).to have_text("Complete")
+        click_on("Continue")
+
+        expect(page).to have_text("Check your answers")
+        expect(page).not_to have_text("Complete all sections of the task list before continuing")
+      end
+    end
+
+    context "when the user has not completed all the sections" do
+      it "displays an error and does not go to the check your answers screen" do
+        # some sections are complete, some sections are not started based on the data already set
+
+        expect(page).to have_text("Not started")
+        click_on("Continue")
+
+        expect(page).to have_text("Provide information about your schools")
+        expect(find(".govuk-error-summary")).to have_text("Complete all sections of the task list before continuing")
+      end
+    end
+  end
 end
