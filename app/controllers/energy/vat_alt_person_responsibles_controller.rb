@@ -1,7 +1,7 @@
 module Energy
   class VatAltPersonResponsiblesController < ApplicationController
     before_action :organisation_details
-    before_action { @back_url = energy_case_org_vat_person_responsible_path }
+    before_action :back_url, :form_url
     before_action :form, only: %i[update]
 
     def show
@@ -42,8 +42,16 @@ module Energy
       form_params
     end
 
+    def back_url
+      @back_url = energy_case_org_vat_person_responsible_path
+    end
+
+    def form_url
+      @form_url = energy_case_org_vat_alt_person_responsible_path(**@routing_flags)
+    end
+
     def redirect_path
-      energy_case_org_vat_certificate_path
+      energy_case_org_vat_certificate_path(**@routing_flags)
     end
   end
 end
