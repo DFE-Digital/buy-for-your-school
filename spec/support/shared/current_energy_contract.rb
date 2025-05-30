@@ -34,6 +34,7 @@ RSpec.shared_context "with current energy contract" do |energy_type|
       expect(page).to have_text(supplier)
     end
     expect(page).to have_text("When does the contract end?")
+    expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
 
     click_button "Save and continue"
     expect(page).to have_text("Please select current #{energy_type} supplier")

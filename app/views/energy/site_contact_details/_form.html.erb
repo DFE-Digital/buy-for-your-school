@@ -1,4 +1,4 @@
-<%= form_with model: @form, scope: :site_contact_details_form, url: energy_case_org_site_contact_details_path, method: :patch do |form| %>
+<%= form_with model: @form, scope: :site_contact_details_form, url: @form_url, method: :patch do |form| %>
     <%= form.govuk_error_summary %>
 
     <%= form.govuk_text_field :site_contact_first_name, label: { text: I18n.t("energy.site_contact_details.first_name") }, width: 20 %>
@@ -9,9 +9,5 @@
 
     <%= form.govuk_text_field :site_contact_phone, label: { text: I18n.t("energy.site_contact_details.telephone") }, width: 20 %>
 
-    <div class="govuk-button-group flex-align-center">
-      <%= form.submit I18n.t("generic.button.save_continue"), class: "govuk-button"  %>
-      <%= form.submit I18n.t("generic.button.save_go_to_tasks"), class: "govuk-button govuk-button--secondary" %>
-    </div>
-
+    <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
 <% end %>

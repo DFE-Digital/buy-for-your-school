@@ -10,6 +10,7 @@ describe "Gas single or multi-meter selection", :js do
     visit energy_case_org_gas_single_multi_path(onboarding_case, case_organisation)
 
     expect(page).to have_text("Is this a single or multi meter site?")
+    expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
 
     click_button "Save and continue"
 

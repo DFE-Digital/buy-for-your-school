@@ -1,4 +1,4 @@
-<%= form_with model: @form, scope: :vat_certificate_form, url: energy_case_org_vat_certificate_path, method: :patch do |form| %>
+<%= form_with model: @form, scope: :vat_certificate_form, url: @form_url, method: :patch do |form| %>
     <%= form.govuk_error_summary %>
 
     <div class="govuk-form-group">
@@ -9,5 +9,5 @@
       <% end %>
     </div>
 
-    <%= render SubmitButtonComponent.new(form)%>
+    <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
 <% end %>

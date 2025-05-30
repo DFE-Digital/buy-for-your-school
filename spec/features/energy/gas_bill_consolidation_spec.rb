@@ -15,8 +15,8 @@ describe "User can update gas usage", :js do
     visit energy_case_org_gas_bill_consolidation_path(case_id: case_organisation.energy_onboarding_case_id, org_id: case_organisation.onboardable_id)
 
     expect(page).to have_text("Gas meters and usage")
-
     expect(page).to have_text("Do you want your MPRNs consolidated on one bill?")
+    expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
 
     click_button "Save and continue"
 

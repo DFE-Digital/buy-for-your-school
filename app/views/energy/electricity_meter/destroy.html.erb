@@ -7,12 +7,15 @@
 
     <div class="govuk-button-group flex-align-center">
       <%= link_to I18n.t("energy.electricity_meter.remove_page.remove_mpan"),
-                  energy_case_org_electricity_meter_path(@electricity_meter_detail, case_id: @onboarding_case_organisation.energy_onboarding_case_id, org_id: @onboarding_case_organisation.onboardable_id,  confirm: true),
+                  energy_case_org_electricity_meter_path(@electricity_meter_detail,
+                    case_id: @onboarding_case_organisation.energy_onboarding_case_id,
+                    org_id: @onboarding_case_organisation.onboardable_id,
+                    confirm: true, **@routing_flags),
                   method: :delete,
                   class: "govuk-button govuk-button--warning" %>
 
       <%= link_to I18n.t("generic.button.cancel"),
-                  energy_case_org_electricity_meter_index_path,
+                  energy_case_org_electricity_meter_index_path(**@routing_flags),
                   class: "govuk-link govuk-link--no-visited-state" %>
     </div>
 

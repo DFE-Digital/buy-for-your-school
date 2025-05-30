@@ -3,7 +3,7 @@ module Energy
     include HasDateParams
     before_action :organisation_details
     before_action :form, only: %i[update]
-    before_action { @back_url = set_back_url }
+    before_action :back_url, :form_url
 
     def show
       @form = Energy::ElectricSupplierForm.new(**@onboarding_case_organisation.to_h.compact)
@@ -38,16 +38,25 @@ module Energy
       electric_supplier_params
     end
 
+    def back_url
+      @back_url = if @onboarding_case_organisation.switching_energy_type_gas_electricity?
+                    energy_case_gas_supplier_path
+                  else
+                    energy_case_switch_energy_path
+                  end
+    end
+
+    def form_url
+      @form_url = energy_case_electric_supplier_path(return_to: params[:return_to], **@routing_flags)
+    end
+
     def redirect_path
-      return energy_case_tasks_path if going_to_tasks?
+      return energy_case_tasks_path if going_to_tasks? || from_tasks?
+      return energy_case_check_your_answers_path if from_check?
       return energy_case_org_electricity_meter_type_path(onboarding_case, @onboarding_case_organisation) if switching_electricity?
 
       # They must be switching both
       energy_case_org_gas_single_multi_path(onboarding_case, @onboarding_case_organisation)
-    end
-
-    def set_back_url
-      @onboarding_case_organisation.switching_energy_type_gas_electricity? ? energy_case_gas_supplier_path : energy_case_switch_energy_path
     end
   end
 end
