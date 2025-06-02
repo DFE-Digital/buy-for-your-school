@@ -8,7 +8,8 @@ describe "VAT rate charge", :js do
   let(:case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_organisation) }
 
   let(:vat_reg_no) { "123456789" }
-  let(:percentage) { 55 }
+  let(:percentage) { "55" }
+  let(:invalid_percentage) { "abc" }
 
   before do
     Current.user = user
@@ -34,13 +35,16 @@ describe "VAT rate charge", :js do
     choose "5%"
     click_button "Save and continue"
     expect(page).to have_text("Enter the percentage qualifying for reduced VAT")
-    fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: percentage.to_s
+    fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: invalid_percentage
     fill_in "VAT registration number (optional)", with: vat_reg_no
     click_button "Save and continue"
-    expect(page).not_to have_text("Enter the percentage qualifying for reduced VAT")
+    expect(page).to have_text("Enter a value between 1 and 100")
+    fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: percentage
+    click_button "Save and continue"
+    expect(page).not_to have_text("Enter a value between 1 and 100")
 
     expect(case_organisation.reload.vat_rate).to eq(5)
-    expect(case_organisation.vat_lower_rate_percentage).to eq(percentage)
+    expect(case_organisation.vat_lower_rate_percentage.to_s).to eq(percentage)
     expect(case_organisation.vat_lower_rate_reg_no).to eq(vat_reg_no)
   end
 end

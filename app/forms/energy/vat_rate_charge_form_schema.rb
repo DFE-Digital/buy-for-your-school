@@ -3,7 +3,7 @@ class Energy::VatRateChargeFormSchema < Schema
 
   params do
     required(:vat_rate).value(:integer)
-    required(:vat_lower_rate_percentage).value(:integer)
+    required(:vat_lower_rate_percentage).value(:string)
     optional(:vat_lower_rate_reg_no).value(:string)
   end
 
@@ -13,8 +13,11 @@ class Energy::VatRateChargeFormSchema < Schema
 
   rule(:vat_lower_rate_percentage) do
     if values[:vat_rate] == 5
-      key.failure(:missing) if value.zero?
-      key.failure(:invalid_range) if value < 1 || value > 100
+      if value.blank? || value == "0"
+        key.failure(:missing)
+      elsif !value.to_s.match?(/\A\d+\z/) || !(1..100).cover?(value.to_i)
+        key.failure(:invalid_range)
+      end
     end
   end
 end

@@ -10,7 +10,12 @@ module Energy
 
     def update
       if validation.success?
-        @onboarding_case_organisation.update!(**form.data)
+        data = form.data
+        if data[:vat_rate] == 20
+          data[:vat_lower_rate_percentage] = nil
+          data[:vat_lower_rate_reg_no] = nil
+        end
+        @onboarding_case_organisation.update!(**data)
         redirect_to redirect_path
       else
         render :show
@@ -34,7 +39,7 @@ module Energy
       params.fetch(:vat_rate_charge, {})
             .permit(:vat_rate, :vat_lower_rate_percentage, :vat_lower_rate_reg_no).tap do |p|
         # Default to 0 for integers
-        %i[vat_rate vat_lower_rate_percentage].each { |key| p[key] = 0 if p[key].blank? }
+        %i[vat_rate vat_lower_rate_percentage].each { |key| p[key] = "0" if p[key].blank? }
       end
     end
 
