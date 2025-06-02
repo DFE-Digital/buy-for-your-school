@@ -9,8 +9,10 @@ module Energy
     def update
       return unless params[:type] == "single"
 
-      onboarding_case = create_onboarding_case
-      redirect_to energy_case_switch_energy_path(case_id: onboarding_case.energy_onboarding_case_id)
+      @onboarding_case_organisation = create_onboarding_case
+
+      draft_and_send_onboarding_email_to_school
+      redirect_to energy_case_switch_energy_path(case_id: @onboarding_case_organisation.energy_onboarding_case_id)
     end
 
   private
@@ -76,6 +78,23 @@ module Energy
           current_user.orgs.pluck("urn"),
         ]
       end
+    end
+
+    def draft_and_send_onboarding_email_to_school
+      Energy::Emails::OnboardingFormStartedMailer.new(
+        onboarding_case_organisation: @onboarding_case_organisation,
+        to_recipients: current_user.email,
+        default_email_template:,
+        onboarding_case_link:,
+      ).call
+    end
+
+    def default_email_template
+      render_to_string(partial: "energy/authorisation/onboarding_email_template")
+    end
+
+    def onboarding_case_link
+      energy_case_tasks_url(case_id: @onboarding_case_organisation.energy_onboarding_case_id, host: request.host)
     end
   end
 end
