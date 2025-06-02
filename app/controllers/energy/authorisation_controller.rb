@@ -94,7 +94,7 @@ module Energy
     end
 
     def onboarding_case_link
-      energy_case_switch_energy_url(case_id: @onboarding_case_organisation.energy_onboarding_case_id, host: request.host)
+      energy_case_tasks_url(case_id: @onboarding_case_organisation.energy_onboarding_case_id, host: request.host)
     end
   end
 end
