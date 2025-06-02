@@ -62,5 +62,7 @@ module Support
       tab_params = params.fetch(:tower, {})
       tab_params.fetch(tab, {}).permit!
     end
+
+    def authorize_agent_scope = :access_proc_ops_portal?
   end
 end

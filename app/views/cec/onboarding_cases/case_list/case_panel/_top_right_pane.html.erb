@@ -41,4 +41,22 @@
       <span title="<%= kase.last_updated_at %>"><%= relative_date_format(kase.last_updated_at) %></span>
     </dd>
   </div>
+  <% if kase.next_key_date.present? %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.next_key_date.label") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= kase.next_key_date_formatted %>
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= I18n.t("support.case.label.next_key_date.description2") %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= kase.next_key_date_description_formatted %>
+      </dd>
+    </div>
+  <% end %>
 </dl>

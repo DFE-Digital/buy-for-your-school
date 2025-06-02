@@ -47,6 +47,15 @@ module Support
         )
     end
 
+    def available_cec_agents
+      CheckboxOption
+        .from(
+          Support::Agent.cec_staff.by_first_name.map { |a| Support::AgentPresenter.new(a) },
+          title_field: :full_name,
+          include_all: true,
+        )
+    end
+
     def available_procurement_stages
       CheckboxOption
         .from(

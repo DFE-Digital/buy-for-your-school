@@ -68,6 +68,7 @@ RSpec/LetSetup:
   Exclude:
     - 'spec/jobs/support/send_exit_survey_job_spec.rb'
     - 'spec/support/shared/duplicate_email_attachments.rb'
+    - 'spec/features/energy/electricity_meter_details_spec.rb'
 
 # Offense count: 5
 # Configuration parameters: AllowedPatterns.

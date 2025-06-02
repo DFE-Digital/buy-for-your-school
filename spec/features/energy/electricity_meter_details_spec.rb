@@ -3,6 +3,12 @@ require "rails_helper"
 describe "User can update electricity meters and usage", :js do
   include_context "with energy suppliers"
 
+  let!(:another_organisation) { create(:support_organisation, urn: 100_254) }
+  let!(:another_support_case) { create(:support_case, organisation: another_organisation, state: :on_hold) }
+  let!(:another_onboarding_case) { create(:onboarding_case, support_case: another_support_case) }
+  let!(:another_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case: another_onboarding_case, onboardable: another_organisation) }
+  let!(:electricity_meter) { create(:energy_electricity_meter, :with_valid_data, mpan: "1234567890555", energy_onboarding_case_organisation_id: another_case_organisation.id) }
+
   specify "Adding electricity usage" do
     Current.user = user
     user_exists_in_dfe_sign_in(user:)
@@ -117,5 +123,39 @@ describe "User can update electricity meters and usage", :js do
     click_button "Save and continue"
 
     expect(page).not_to have_text("This MPAN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter")
+
+    visit new_energy_case_org_electricity_meter_path(onboarding_case, case_organisation)
+
+    fill_in "Add an MPAN", with: "1234567890555"
+
+    click_button "Save and continue"
+
+    expect(page).to have_text("This MPAN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter")
+
+    another_support_case.update!(state: :closed)
+
+    click_button "Save and continue"
+
+    expect(page).not_to have_text("This MPAN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter")
+
+    create(:energy_electricity_meter, :with_valid_data, mpan: "1234512345121", energy_onboarding_case_organisation_id: case_organisation.id)
+
+    create(:energy_electricity_meter, :with_valid_data, mpan: "1234512345122", energy_onboarding_case_organisation_id: case_organisation.id)
+
+    create(:energy_electricity_meter, :with_valid_data, mpan: "1234512345123", energy_onboarding_case_organisation_id: case_organisation.id)
+
+    visit energy_case_org_electricity_meter_index_path(onboarding_case, case_organisation)
+
+    # Find the table body
+    table_body = find(".govuk-table__body")
+
+    # Extract the MPAN values from the table rows
+    mpan_values = table_body.all("tr").map do |row|
+      row.find("td", match: :first).text.strip # MPAN is in the first column
+    end
+
+    # Check the order of the MPAN values
+    expected_order = %w[1234567890123 1234512345121 1234512345122 1234512345123]
+    expect(mpan_values).to eq(expected_order)
   end
 end
