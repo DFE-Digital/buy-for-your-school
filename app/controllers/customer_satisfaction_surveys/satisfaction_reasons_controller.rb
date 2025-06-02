@@ -23,4 +23,8 @@ private
       redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey)
     end
   end
+
+  def back_url
+    @back_url = edit_customer_satisfaction_surveys_satisfaction_level_path(@customer_satisfaction_survey)
+  end
 end
