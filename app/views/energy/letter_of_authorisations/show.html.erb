@@ -7,7 +7,7 @@
     <% end %>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>[<%= @organisation_detail.name %>], [<%= Support::OrganisationPresenter.new(@organisation_detail)&.formatted_address %>]</li>
+      <li><%= @organisation_detail.name %>, <%= Support::OrganisationPresenter.new(@organisation_detail)&.formatted_address %></li>
     </ul>
 
     <h2 class="govuk-heading-m"><%= I18n.t("energy.letter_of_authorisation.appointment.title") %></h2>
