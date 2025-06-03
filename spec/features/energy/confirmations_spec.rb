@@ -7,7 +7,7 @@ describe "School selection", :js do
     user_exists_in_dfe_sign_in(user:)
     user_is_signed_in(user:)
 
-    visit energy_case_org_confirmation_path(onboarding_case, case_organisation)
+    visit energy_case_confirmation_path(case_id: case_organisation.energy_onboarding_case_id)
 
     expect(page).to have_text("Information submitted")
     expect(page).to have_text("We've sent you an email containing a copy of this form and details about your new contract.")
