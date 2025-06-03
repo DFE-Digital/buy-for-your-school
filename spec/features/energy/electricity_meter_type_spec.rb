@@ -32,12 +32,24 @@ describe "User can update electricity meters and usage", :js do
 
     visit energy_case_org_electricity_meter_type_path(onboarding_case, case_organisation)
 
+    expect(case_organisation.electricity_meters.count).to be(3)
+
     choose "Single meter"
 
     click_button "Save and continue"
 
+    expect(case_organisation.electricity_meters.count).to be(0)
+
+    create(:energy_electricity_meter, :with_valid_data, mpan: "1234512345124", energy_onboarding_case_organisation_id: case_organisation.id)
+
+    visit energy_case_org_electricity_meter_type_path(onboarding_case, case_organisation)
+
     expect(case_organisation.electricity_meters.count).to be(1)
 
-    expect(case_organisation.electricity_meters.last.mpan).to eq("1234512345121")
+    choose "Multi meter"
+
+    click_button "Save and continue"
+
+    expect(case_organisation.electricity_meters.count).to be(0)
   end
 end
