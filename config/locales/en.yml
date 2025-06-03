@@ -1668,7 +1668,7 @@ en:
           start_date: Start date
           supplier: Supplier
           supplier_is_sme: Supplier is a SME
-        procurement_stage: Procurement stage
+        procurement_stage: Stage
         procurement_value: Procurement value
         project:
           header: Project
