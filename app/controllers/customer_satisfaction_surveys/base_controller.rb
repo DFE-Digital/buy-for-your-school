@@ -6,6 +6,15 @@ class CustomerSatisfactionSurveys::BaseController < ApplicationController
   before_action :set_flow
   before_action :back_url
 
+  def set_service(service)
+    @service = service
+    set_flow
+  end
+
+  def get_flow
+    @survey_flow
+  end
+
 private
 
   def customer_satisfaction_survey
@@ -17,7 +26,8 @@ private
   end
 
   def set_flow
-    @survey_flow = CustomerSatisfactionSurveysFlow.new(@customer_satisfaction_survey.service, current_step)
+    @service = @customer_satisfaction_survey.service if @service.blank?
+    @survey_flow = CustomerSatisfactionSurveysFlow.new(@service, current_step)
   end
 
   def current_step
