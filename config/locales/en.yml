@@ -651,12 +651,12 @@ en:
       - By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.
       - You cannot change your answers once you’ve submitted the form.
       gas_contract_information:
-        title: Gas contract
+        title: Current contract details
         gas_current_supplier: Current gas supplier
         gas_current_supplier_other: Current gas supplier
         gas_current_contract_end_date: When does your contract end
       gas_meters_and_usage:
-        title: Gas information
+        title: Gas meters and usage
         gas_single_multi: Is this a single meter or multi meter site?
         single: Single meter
         multi: Multi meter
@@ -664,12 +664,12 @@ en:
         gas_usage: Estimated annual gas usage
         gas_bill_consolidation: Do you want your MPRNs consolidated on one bill?
       electric_contract_information:
-        title: Electricity contract
+        title: Current contract details
         electric_current_supplier: Current electricity supplier
         electric_current_supplier_other: Current electricity supplier
         electric_current_contract_end_date: When does your contract end
       electric_meters_and_usage:
-        title: Electricity information
+        title: Electricity meters and usage
         electricity_meter_type: Is this a single meter or multi meter site?
         single: Single meter
         multi: Multi meter
@@ -685,7 +685,7 @@ en:
         site_contact_first_name: First name
         site_contact_last_name: Last name
         site_contact_email: Email
-        site_contact_phone: Phone
+        site_contact_phone: Telephone
       vat_declaration:
         title: VAT Declaration
         vat_rate: VAT rate

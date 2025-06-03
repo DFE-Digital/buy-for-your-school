@@ -30,13 +30,11 @@ describe "'Check your answers' flows", :js do
 
   describe "Gas contract" do
     it "directs to the gas contract page and back to CYA" do
-      expect(page).to have_text("Gas contract")
-      within ".govuk-summary-card", text: "Gas contract" do
-        click_link("Change")
-      end
+      expect(page).to have_text("Current contract details")
+      find("#gas_contract_information_change").click
 
       # Go to Gas Contract
-      expect(page).to have_text("Gas Contract")
+      expect(page).to have_text("Current contract details")
       expect(page).not_to have_button("Save and go to tasks")
       choose "Other"
       fill_in "Gas supplier", with: "Great Gas Ltd"
@@ -50,10 +48,8 @@ describe "'Check your answers' flows", :js do
 
   describe "Electricity contract" do
     it "directs to the electricity contract page and back to CYA" do
-      expect(page).to have_text("Electricity contract")
-      within ".govuk-summary-card", text: "Electricity contract" do
-        click_link("Change")
-      end
+      expect(page).to have_text("Current contract details")
+      find("#electric_contract_information_change").click
 
       # Go to Electricity Contract
       expect(page).to have_text("Electricity Contract")
@@ -73,10 +69,8 @@ describe "'Check your answers' flows", :js do
 
     context "when a single meter has already been specified and needs to stay as a single meter" do
       it "navigates to the single/multi meter choice page, then gas meter details, then back to CYA" do
-        expect(page).to have_text("Gas information")
-        within ".govuk-summary-card", text: "Gas information" do
-          click_link("Change")
-        end
+        expect(page).to have_text("Current contract details")
+        find("#gas_meters_and_usage_change").click
 
         # Go to single/multi meter screen
         expect(page).to have_text("Is this a single or multi meter site?")
@@ -98,7 +92,7 @@ describe "'Check your answers' flows", :js do
 
     context "when a single meter has already been specified and needs to change to a multi meter" do
       it "navigates to the single/multi meter choice page, then the meter details page, then MPRN summary, then bill consolidation, then back to CYA" do
-        within ".govuk-summary-card", text: "Gas information" do
+        within ".govuk-summary-card", text: "Gas meters and usage" do
           click_link("Change")
         end
 
@@ -137,8 +131,8 @@ describe "'Check your answers' flows", :js do
       let(:gas_meter_numbers) { %w[654321 765432] }
 
       it "navigates to the MPRN summary, then through adding more numbers, then bill consolidation, then back to CYA" do
-        expect(page).to have_text("Gas information")
-        within ".govuk-summary-card", text: "Gas information" do
+        expect(page).to have_text("Gas meters and usage")
+        within ".govuk-summary-card", text: "Gas meters and usage" do
           click_link("Change")
         end
 
@@ -203,8 +197,8 @@ describe "'Check your answers' flows", :js do
 
     context "when a single meter has already been specified and needs to stay as a single meter" do
       it "navigates to the single/multi meter choice page, then electric meter details, then back to CYA" do
-        expect(page).to have_text("Electricity information")
-        within ".govuk-summary-card", text: "Electricity information" do
+        expect(page).to have_text("Electricity meters and usage")
+        within ".govuk-summary-card", text: "Electricity meters and usage" do
           click_link("Change")
         end
 
@@ -228,7 +222,7 @@ describe "'Check your answers' flows", :js do
 
     context "when a single meter has already been specified and needs to change to a multi meter" do
       it "navigates to the single/multi meter choice page, then the meter details page, then MPAN summary, then bill consolidation, then back to CYA" do
-        within ".govuk-summary-card", text: "Electricity information" do
+        within ".govuk-summary-card", text: "Electricity meters and usage" do
           click_link("Change")
         end
 
@@ -268,7 +262,7 @@ describe "'Check your answers' flows", :js do
       let(:electricity_meter_numbers) { %w[1234567890987 1234567890986] }
 
       it "navigates to the MPAN summary, then through adding more numbers, then bill consolidation, then back to CYA" do
-        within ".govuk-summary-card", text: "Electricity information" do
+        within ".govuk-summary-card", text: "Electricity meters and usage" do
           click_link("Change")
         end
 
