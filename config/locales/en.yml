@@ -292,7 +292,7 @@ en:
       change: Change
     related_actions:
       title: Related actions
-      join: Join the scheme
+      join: Join Energy for Schools
       guidance_page: Guidance page
       find_a_buying_solution: Find a buying solution
       request_support: Request support
@@ -355,7 +355,7 @@ en:
           - V30 start dates
           rows:
             -
-              - 25 September 2025
+              - 5pm, 11 September 2025
               - 1 April 2026
             -
               - September 2026
@@ -422,7 +422,7 @@ en:
         body2:
         - DfE will share your information with the new suppliers and send you a confirmation email with details of what happens next.
       button:
-        primary: Join the scheme
+        primary: Join Energy for Schools
         secondary: Request support
 
     before_you_start:
