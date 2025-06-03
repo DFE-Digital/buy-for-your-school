@@ -549,6 +549,8 @@ Rails.application.routes.draw do
 
     resources :cases, only: %i[index show] do
       scope module: :cases do
+        get "summary/edit", to: "/support/cases/summaries#edit", as: :edit_summary
+        patch "summary", to: "/support/cases/summaries#update", as: :update_summary
         get "message_threads/:id", to: "/support/cases/message_threads#show", as: :message_thread
         post "message_threads", to: "/support/cases/message_threads#create", as: :message_threads
         get "message_threads", to: "/support/cases/message_threads#index", as: :message_threads_index
