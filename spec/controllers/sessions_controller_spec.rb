@@ -88,7 +88,6 @@ describe SessionsController do
       end
 
       it "redirects to my_procurements_verify_unique_link_path" do
-        # binding.pry
         expect(response).to redirect_to(my_procurements_task_path(support_case))
       end
     end
