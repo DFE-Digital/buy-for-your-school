@@ -5,6 +5,7 @@ require "rails_helper"
     let(:create_a_spec_flow) { %w[recommendation_likelihood improvement easy_to_use_rating helped_how clear_to_use_rating research_opt_in satisfaction_level thank_you]}
     let(:supported_journey_flow) { %w[recommendation_likelihood improvement easy_to_use_rating helped_how clear_to_use_rating research_opt_in satisfaction_level thank_you]}
     let(:request_for_help_form_flow) { %w[recommendation_likelihood improvement easy_to_use_rating helped_how clear_to_use_rating research_opt_in satisfaction_level thank_you]}
+    let(:energy_for_schools_flow) { %w[recommendation_likelihood improvement easy_to_use_rating helped_how clear_to_use_rating research_opt_in satisfaction_level thank_you]}
     let(:find_a_buying_solution_flow) { %w[satisfaction_level easy_to_use_rating helped_how clear_to_use_rating recommendation_likelihood improvement thank_you]}
 
     describe "questions_flow" do
@@ -90,10 +91,10 @@ require "rails_helper"
       end
     end
 
-    context "when the customer survey is created for request_for_help_form" do
+    context "when the customer survey is created for energy_for_schools" do
       let(:survey) { create(:customer_satisfaction_survey_response, source: :exit_survey) }
       it "goes back to the first customer satisfaction question" do
-        controller.set_service("request_for_help_form")
+        controller.set_service("energy_for_schools")
         flow = controller.get_flow
         current_path =  controller.get_flow.current_path
         back_url = controller.get_flow.back_path
@@ -102,7 +103,7 @@ require "rails_helper"
         expect(current_path).to eq "edit_customer_satisfaction_surveys_recommendation_likelihood_path"
         expect(next_path).to eq "edit_customer_satisfaction_surveys_improvements_path"
         expect(back_url).to be_nil
-        expect(flow.all_steps).to eq request_for_help_form_flow
+        expect(flow.all_steps).to eq energy_for_schools_flow
       end
     end
   end

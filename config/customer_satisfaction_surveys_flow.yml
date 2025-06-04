@@ -38,6 +38,16 @@ request_for_help_form:
   - satisfaction_level
   - thank_you
 
+energy_for_schools:
+  - recommendation_likelihood
+  - improvement
+  - easy_to_use_rating
+  - helped_how
+  - clear_to_use_rating
+  - research_opt_in
+  - satisfaction_level
+  - thank_you
+
 find_a_buying_solution:
   - satisfaction_level
   - easy_to_use_rating
