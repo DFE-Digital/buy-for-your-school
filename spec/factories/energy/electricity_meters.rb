@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :energy_electricity_meter, class: "Energy::ElectricityMeter" do
-    energy_onboarding_case_organisation { nil }
+    onboarding_case_organisation { nil }
     mpan { "MyString" }
     trait :with_valid_data do
       mpan { "1234512345123" }

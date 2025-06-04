@@ -19,7 +19,8 @@ class Energy::SiteContactDetailsController < Energy::ApplicationController
 private
 
   def redirect_path
-    return energy_case_tasks_path if going_to_tasks?
+    return energy_case_tasks_path if going_to_tasks? || from_tasks?
+    return energy_case_check_your_answers_path if from_check?
 
     energy_case_org_vat_rate_charge_path
   end
@@ -63,7 +64,7 @@ private
   end
 
   def back_url
-    @back_url = if params[:return_to] == "tasks"
+    @back_url = if from_tasks?
                   energy_case_tasks_path
                 elsif switching_gas? && gas_multiple_meters?
                   energy_case_org_gas_bill_consolidation_path

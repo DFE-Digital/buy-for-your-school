@@ -55,15 +55,15 @@ module Energy
     end
 
     def edit_gas_usage_path
-      edit_energy_case_org_gas_meter_path(onboarding_case, @onboarding_case_organisation, gas_meter_usage_details.first)
+      edit_energy_case_org_gas_meter_path(onboarding_case, @onboarding_case_organisation, gas_meter_usage_details.first, **@routing_flags)
     end
 
     def new_gas_usage_path
-      new_energy_case_org_gas_meter_path(onboarding_case, @onboarding_case_organisation)
+      new_energy_case_org_gas_meter_path(onboarding_case, @onboarding_case_organisation, **@routing_flags)
     end
 
     def back_url
-      @back_url = if params[:return_to] == "tasks"
+      @back_url = if from_tasks?
                     energy_case_tasks_path
                   else
                     switching_both? ? energy_case_electric_supplier_path(onboarding_case) : energy_case_gas_supplier_path(onboarding_case)

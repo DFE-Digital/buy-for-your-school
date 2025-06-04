@@ -1,7 +1,7 @@
 class Energy::VatCertificatesController < Energy::ApplicationController
   before_action :organisation_details
   before_action :form, only: %i[update]
-  before_action :back_url
+  before_action :back_url, :form_url
 
   def show
     @form = Energy::VatCertificateForm.new(**@onboarding_case_organisation.to_h.compact)
@@ -11,7 +11,7 @@ class Energy::VatCertificatesController < Energy::ApplicationController
     if validation.success?
       @onboarding_case_organisation.update!(**form.data)
 
-      redirect_to energy_case_org_billing_preferences_path
+      redirect_to redirect_path
     else
       render :show
     end
@@ -44,5 +44,15 @@ private
                 else
                   energy_case_org_vat_alt_person_responsible_path
                 end
+  end
+
+  def form_url
+    @form_url = energy_case_org_vat_certificate_path(**@routing_flags)
+  end
+
+  def redirect_path
+    return energy_case_check_your_answers_path if from_check?
+
+    energy_case_org_billing_preferences_path
   end
 end
