@@ -1,6 +1,25 @@
 require "rails_helper"
 
 describe "Filling out a customer satisfaction survey" do
+  let(:post_params) { { service: "create_a_spec" } }
+  let!(:survey) do
+    post customer_satisfaction_surveys_path, params: post_params
+    CustomerSatisfactionSurveyResponse.last
+  end
+  describe "Starting a new survey" do
+    it "creates a new survey and redirects to the first question" do
+      expect {
+        post customer_satisfaction_surveys_path, params: post_params
+      }.to change(CustomerSatisfactionSurveyResponse, :count).by(1)
+
+      expect(response).to redirect_to(edit_customer_satisfaction_surveys_recommendation_likelihood_path(CustomerSatisfactionSurveyResponse.last))
+
+      survey = CustomerSatisfactionSurveyResponse.last
+      expect(survey.in_progress?).to eq(true)
+      expect(survey.survey_started_at).to be_within(1.second).of(Time.zone.now)
+    end
+  end
+
   describe "Accessing a completed survey" do
     let!(:survey) { create(:customer_satisfaction_survey_response, status: :completed) }
 
