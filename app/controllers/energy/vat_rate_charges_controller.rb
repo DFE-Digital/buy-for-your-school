@@ -1,7 +1,7 @@
 module Energy
   class VatRateChargesController < ApplicationController
     before_action :organisation_details
-    before_action { @back_url = energy_case_org_site_contact_details_path }
+    before_action :form_url, :back_url
     before_action :form, only: %i[update]
 
     def show
@@ -43,11 +43,29 @@ module Energy
       end
     end
 
+    def form_url
+      @form_url = energy_case_org_vat_rate_charge_path(**@routing_flags)
+    end
+
+    def back_url
+      @back_url = energy_case_org_site_contact_details_path
+    end
+
     def redirect_path
-      return energy_case_tasks_path if going_to_tasks?
-      return energy_case_org_vat_person_responsible_path if @onboarding_case_organisation.reload.vat_rate == 5
+      return energy_case_tasks_path if going_to_tasks? || (from_tasks? && vat_rate_20?)
+      return energy_case_check_your_answers_path if from_check? && vat_rate_20?
+      return energy_case_org_vat_person_responsible_path(**@routing_flags) if vat_rate_5?
+      return energy_case_org_billing_preferences_path if vat_rate_20?
 
       energy_case_org_vat_certificate_path
+    end
+
+    def vat_rate_5?
+      @onboarding_case_organisation.reload.vat_rate == 5
+    end
+
+    def vat_rate_20?
+      @onboarding_case_organisation.reload.vat_rate == 20
     end
   end
 end

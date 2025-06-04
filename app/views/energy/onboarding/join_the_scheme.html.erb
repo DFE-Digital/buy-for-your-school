@@ -12,9 +12,11 @@
   <% end %>
 
   <% c.with_right do %>
-    <h2 class="govuk-heading-m"><%= I18n.t("energy.related_actions.title") %></h2>
-    <%= govuk_list [
-      link_to(I18n.t('energy.related_actions.guidance_page'), energy_onboarding_path(:guidance), class: "govuk-link"),
-    ] %>
+    <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
+      <h2 class="govuk-heading-m"><%= I18n.t("energy.related_actions.title") %></h2>
+      <%= govuk_list [
+        link_to(I18n.t('energy.related_actions.guidance_page'), energy_onboarding_path(:guidance), class: "govuk-link"),
+      ] %>
+    </aside>
   <% end %>
 <% end %>

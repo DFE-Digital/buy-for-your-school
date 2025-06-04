@@ -8,11 +8,12 @@ describe "User can update electricity meters and usage", :js do
     user_exists_in_dfe_sign_in(user:)
     user_is_signed_in(user:)
 
+    case_organisation.update!(electricity_meter_type: nil)
     visit energy_case_org_electricity_meter_type_path(onboarding_case, case_organisation)
 
     expect(page).to have_text("Electricity meters and usage")
-
     expect(page).to have_text("Is this a single or multi meter site?")
+    expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
 
     click_button "Save and continue"
 
@@ -36,6 +37,8 @@ describe "User can update electricity meters and usage", :js do
 
     choose "Single meter"
 
+    # Without this pause, the spec fails on my machine, it sees 3 meters instead of the 1
+    sleep 1
     click_button "Save and continue"
 
     expect(case_organisation.electricity_meters.count).to be(0)
