@@ -189,23 +189,28 @@ private
       vat_certificate_declared: case_org.vat_certificate_declared,
     }
 
-    required_fields = %i[
-      vat_rate
-    ]
+    required_fields = %i[vat_rate]
 
     required_fields += %i[vat_lower_rate_percentage vat_person_correct_details vat_certificate_declared] if case_org.vat_rate == 5
     required_fields += %i[vat_person_first_name vat_person_phone vat_person_address] if case_org.vat_person_correct_details == true
     required_fields += %i[vat_alt_person_first_name vat_alt_person_phone vat_alt_person_address] if case_org.vat_person_correct_details == false
 
-    filled_fields = required_fields.reject { |field| fields[field].nil? }
+    # Separate out vat_certificate_declared so we can check false/true
+    non_certificate_fields = required_fields - [:vat_certificate_declared]
 
-    status = if filled_fields.empty?
-                :not_started
-              elsif filled_fields.size == required_fields.size
-                :complete
-              else
-                :in_progress
-              end
+    # Check if all non-certificate fields are filled
+    non_certificate_filled = non_certificate_fields.all? { |field| !fields[field].nil? }
+
+    certificate_valid = case_org.vat_rate != 5 || fields[:vat_certificate_declared] == true
+
+    status = if required_fields.all? { |field| fields[field].nil? }
+              :not_started
+            elsif non_certificate_filled && certificate_valid
+              :complete
+            else
+              :in_progress
+            end    
+
     path = energy_case_org_vat_rate_charge_path(case_org.onboarding_case, case_org, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
       t.add_attribute(:vat_rate, case_org, text: "#{case_org.vat_rate}%")
