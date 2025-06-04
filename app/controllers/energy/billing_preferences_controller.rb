@@ -50,19 +50,15 @@ module Energy
     end
 
     def redirect_path
-      return energy_case_tasks_path if going_to_tasks? || (from_tasks? && !organisation_associated_with_trust?)
-      return energy_case_check_your_answers_path if from_check? && paper_billing? && !organisation_associated_with_trust?
-      return energy_case_org_billing_address_confirmation_path(**@routing_flags) if paper_billing? && organisation_associated_with_trust?
+      return energy_case_tasks_path if going_to_tasks?
+      return energy_case_check_your_answers_path if from_check? && paper_billing? && !@onboarding_case_organisation.associated_with_trust?
+      return energy_case_org_billing_address_confirmation_path(**@routing_flags) if @onboarding_case_organisation.associated_with_trust?
 
       energy_case_check_your_answers_path
     end
 
     def paper_billing?
       @onboarding_case_organisation.reload.billing_invoicing_method == "paper"
-    end
-
-    def email_billing?
-      @onboarding_case_organisation.reload.billing_invoicing_method == "email"
     end
   end
 end
