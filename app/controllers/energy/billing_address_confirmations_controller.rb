@@ -1,7 +1,7 @@
 module Energy
   class BillingAddressConfirmationsController < ApplicationController
     before_action :organisation_details, :address_orgs
-    before_action { @back_url = energy_case_org_billing_preferences_path }
+    before_action :back_url, :form_url
     before_action :form, only: %i[update]
 
     def show
@@ -37,7 +37,17 @@ module Energy
       params.fetch(:billing_address_confirmation, {}).permit(:billing_invoice_address_source_id)
     end
 
+    def back_url
+      @back_url = energy_case_org_billing_preferences_path
+    end
+
+    def form_url
+      @form_url = energy_case_org_billing_address_confirmation_path(**@routing_flags)
+    end
+
     def redirect_path
+      return energy_case_tasks_path if from_tasks?
+
       energy_case_check_your_answers_path
     end
 

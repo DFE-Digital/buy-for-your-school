@@ -23,5 +23,5 @@
     <%= form.govuk_radio_button :vat_person_correct_details, false, label: { text: I18n.t("energy.vat_person_responsible.option_no") } %>
   <% end %>
 
-  <%= render EnergyFormButtonsComponent.new(form, include_tasks: !@from_tasks_or_check)%>
+  <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags)%>
 <% end %>

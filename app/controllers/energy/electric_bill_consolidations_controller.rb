@@ -19,7 +19,7 @@ class Energy::ElectricBillConsolidationsController < Energy::ApplicationControll
 private
 
   def redirect_path
-    return energy_case_tasks_path if going_to_tasks?
+    return energy_case_tasks_path if going_to_tasks? || from_tasks?
     return energy_case_check_your_answers_path if from_check?
 
     energy_case_org_site_contact_details_path

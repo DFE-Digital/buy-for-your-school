@@ -69,9 +69,27 @@ private
     end
   end
 
+  def gas_meters_status(case_org)
+    meter_type = case_org.gas_single_multi
+    meter_count = case_org.gas_meters.count
+    consolidated = case_org.gas_bill_consolidation
+
+    return :complete if meter_type == "single" && meter_count == 1
+    return :in_progress if meter_type == "single" && meter_count.zero?
+
+    if meter_type == "multi"
+      return :complete if meter_count.positive? && !consolidated.nil?
+      return :in_progress if meter_count.zero? || !consolidated.nil?
+    end
+
+    return :in_progress if meter_type.present? || meter_count.positive?
+
+    :not_started
+  end
+
   def gas_meters_and_usage
-    status = case_org.gas_meters.any? ? :complete : :not_started
-    path = if case_org.gas_single_multi == "single"
+    status = gas_meters_status(case_org)
+    path = if gas_single? || (context_tasks? && gas_multi? && no_gas_meters?)
              energy_case_org_gas_single_multi_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
            else
              energy_case_org_gas_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
@@ -101,9 +119,27 @@ private
     end
   end
 
+  def electricity_meters_status(case_org)
+    meter_type = case_org.electricity_meter_type
+    meter_count = case_org.electricity_meters.count
+    consolidated = case_org.is_electric_bill_consolidated
+
+    return :complete if meter_type == "single" && meter_count == 1
+    return :in_progress if meter_type == "single" && meter_count.zero?
+
+    if meter_type == "multi"
+      return :complete if meter_count.positive? && !consolidated.nil?
+      return :in_progress if meter_count.zero? || !consolidated.nil?
+    end
+
+    return :in_progress if meter_type.present? || meter_count.positive?
+
+    :not_started
+  end
+
   def electric_meters_and_usage
-    status = case_org.electricity_meters.any? ? :complete : :not_started
-    path = if case_org.electricity_meter_type == "single"
+    status = electricity_meters_status(case_org)
+    path = if elec_single? || (context_tasks? && elec_multi? && no_elec_meters?)
              energy_case_org_electricity_meter_type_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
            else
              energy_case_org_electricity_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
@@ -129,7 +165,7 @@ private
   end
 
   def site_contact_details
-    status = case_org.site_contact_email? ? :complete : :not_started
+    status = case_org.site_contact_first_name && case_org.site_contact_email && case_org.site_contact_phone ? :complete : :not_started
     path = energy_case_org_site_contact_details_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
       t.add_attribute(:site_contact_first_name, case_org)
@@ -140,7 +176,36 @@ private
   end
 
   def vat_declaration
-    status = case_org.vat_rate ? :complete : :not_started
+    fields = {
+      vat_rate: case_org.vat_rate,
+      vat_lower_rate_percentage: case_org.vat_lower_rate_percentage,
+      vat_person_correct_details: case_org.vat_person_correct_details,
+      vat_person_first_name: case_org.vat_person_first_name,
+      vat_person_phone: case_org.vat_person_phone,
+      vat_person_address: case_org.vat_person_address,
+      vat_alt_person_first_name: case_org.vat_alt_person_first_name,
+      vat_alt_person_phone: case_org.vat_alt_person_phone,
+      vat_alt_person_address: case_org.vat_alt_person_address,
+      vat_certificate_declared: case_org.vat_certificate_declared,
+    }
+
+    required_fields = %i[
+      vat_rate
+    ]
+
+    required_fields += %i[vat_lower_rate_percentage vat_person_correct_details vat_certificate_declared] if case_org.vat_rate == 5
+    required_fields += %i[vat_person_first_name vat_person_phone vat_person_address] if case_org.vat_person_correct_details == true
+    required_fields += %i[vat_alt_person_first_name vat_alt_person_phone vat_alt_person_address] if case_org.vat_person_correct_details == false
+
+    filled_fields = required_fields.reject { |field| fields[field].nil? }
+
+    status = if filled_fields.empty?
+                :not_started
+              elsif filled_fields.size == required_fields.size
+                :complete
+              else
+                :in_progress
+             end
     path = energy_case_org_vat_rate_charge_path(case_org.onboarding_case, case_org, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
       t.add_attribute(:vat_rate, case_org, text: "#{case_org.vat_rate}%")
@@ -167,10 +232,31 @@ private
   end
 
   def billing_preferences
-    status = if case_org.billing_payment_method && case_org.billing_payment_terms && case_org.billing_invoicing_method && case_org.billing_payment_method
-               :complete
-             else
-               :not_started
+    fields = {
+      billing_payment_method: case_org.billing_payment_method,
+      billing_payment_terms: case_org.billing_payment_terms,
+      billing_invoicing_method: case_org.billing_invoicing_method,
+      billing_invoicing_email: case_org.billing_invoicing_email,
+      billing_invoice_address: case_org.billing_invoice_address,
+      }
+
+    required_fields = %i[
+      billing_payment_method
+      billing_payment_terms
+      billing_invoicing_method
+    ]
+
+    required_fields << :billing_invoicing_email if case_org.billing_invoicing_method == "email"
+    required_fields << :billing_invoice_address if Support::Organisation.find_by(id: case_org.onboardable_id).trust_code.present?
+
+    filled_fields = required_fields.reject { |field| fields[field].nil? }
+
+    status = if filled_fields.empty?
+                :not_started
+              elsif filled_fields.size == required_fields.size
+                :complete
+              else
+                :in_progress
              end
     path = energy_case_org_billing_preferences_path(case_org.onboarding_case, case_org, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
@@ -189,6 +275,42 @@ private
   def case_org
     @case_org ||= Energy::OnboardingCaseOrganisation.includes(:gas_meters, :electricity_meters)
                                                     .find_by(energy_onboarding_case_id: @energy_onboarding_case_id)
+  end
+
+  def gas_single?
+    case_org.gas_single_multi_single?
+  end
+
+  def gas_multi?
+    case_org.gas_single_multi_multi?
+  end
+
+  def any_gas_meters?
+    case_org.gas_meters.any?
+  end
+
+  def no_gas_meters?
+    case_org.gas_meters.none?
+  end
+
+  def elec_single?
+    case_org.electricity_meter_type_single?
+  end
+
+  def elec_multi?
+    case_org.electricity_meter_type_multi?
+  end
+
+  def any_elec_meters?
+    case_org.electricity_meters.any?
+  end
+
+  def no_elec_meters?
+    case_org.electricity_meters.none?
+  end
+
+  def context_tasks?
+    context == :tasks
   end
 
   class Task

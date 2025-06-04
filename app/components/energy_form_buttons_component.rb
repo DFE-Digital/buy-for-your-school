@@ -1,6 +1,6 @@
 class EnergyFormButtonsComponent < ViewComponent::Base
-  def initialize(form, include_tasks: true)
+  def initialize(form, routing_flags: {})
     @form = form
-    @include_tasks = include_tasks
+    @routing_flags = routing_flags
   end
 end

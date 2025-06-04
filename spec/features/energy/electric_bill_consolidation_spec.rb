@@ -13,6 +13,7 @@ describe "User can update the electricity cosolidation", :js do
 
     expect(page).to have_text("Electricity meters and usage")
     expect(page).to have_text("Do you want your MPANs consolidated on one bill?")
+    expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
 
     click_button "Save and continue"
     expect(page).to have_text("Please select one option to proceed")

@@ -21,6 +21,8 @@ describe "VAT rate charge", :js do
 
   specify "Selecting 20% VAT rate" do
     expect(page).to have_text("Which VAT rate are you charged?")
+    expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
+
     click_button "Save and continue"
     expect(page).to have_text("Select a VAT rate")
     choose "20%"

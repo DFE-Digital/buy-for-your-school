@@ -1,4 +1,4 @@
-<%= form_with model: @form, scope: :gas_supplier_form, url: energy_case_gas_supplier_path(**@routing_flags), method: :patch do |form| %>
+<%= form_with model: @form, scope: :gas_supplier_form, url: @form_url, method: :patch do |form| %>
   <%= form.govuk_error_summary %>
 
   <%= form.hidden_field :gas_current_supplier, value: form.object.gas_current_supplier %>
@@ -18,5 +18,5 @@
 
   <%= form.govuk_date_field :gas_current_contract_end_date, maxlength_enabled: true, legend: { text: I18n.t("energy.current_contract.when_contract_ends"), }, hint: { text: I18n.t("energy.current_contract.date_for_example") } %>
 
-  <%= render EnergyFormButtonsComponent.new(form, include_tasks: !@from_tasks_or_check) %>
+  <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
 <% end %>

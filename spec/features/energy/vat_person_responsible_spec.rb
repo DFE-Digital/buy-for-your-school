@@ -16,6 +16,7 @@ describe "VAT person responsible", :js do
 
   specify "Specifying if correct details and choosing Yes" do
     expect(page).to have_text("Are these the correct details for VAT purposes?")
+    expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
 
     click_button "Save and continue"
     expect(page).to have_text("Select whether these are the correct details")
