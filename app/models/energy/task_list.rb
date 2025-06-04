@@ -144,22 +144,25 @@ private
     path = energy_case_org_vat_rate_charge_path(case_org.onboarding_case, case_org, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
       t.add_attribute(:vat_rate, case_org, text: "#{case_org.vat_rate}%")
-      t.add_attribute(:vat_lower_rate_percentage, case_org)
-      t.add_attribute(:vat_lower_rate_reg_no, case_org)
 
-      if case_org.vat_person_correct_details?
-        t.add_attribute(:vat_person_first_name, case_org)
-        t.add_attribute(:vat_person_last_name, case_org)
-        t.add_attribute(:vat_person_phone, case_org)
-        t.add_attribute(:vat_person_address, case_org, text: format_address(case_org.vat_person_address))
-      else
-        t.add_attribute(:vat_alt_person_first_name, case_org)
-        t.add_attribute(:vat_alt_person_last_name, case_org)
-        t.add_attribute(:vat_alt_person_phone, case_org)
-        t.add_attribute(:vat_alt_person_address, case_org, text: format_address(case_org.vat_alt_person_address))
+      if case_org.vat_rate == 5
+        t.add_attribute(:vat_lower_rate_percentage, case_org)
+        t.add_attribute(:vat_lower_rate_reg_no, case_org)
+
+        if case_org.vat_person_correct_details?
+          t.add_attribute(:vat_person_first_name, case_org)
+          t.add_attribute(:vat_person_last_name, case_org)
+          t.add_attribute(:vat_person_phone, case_org)
+          t.add_attribute(:vat_person_address, case_org, text: format_address(case_org.vat_person_address))
+        else
+          t.add_attribute(:vat_alt_person_first_name, case_org)
+          t.add_attribute(:vat_alt_person_last_name, case_org)
+          t.add_attribute(:vat_alt_person_phone, case_org)
+          t.add_attribute(:vat_alt_person_address, case_org, text: format_address(case_org.vat_alt_person_address))
+        end
+
+        t.add_attribute(:vat_certificate_declared, case_org, text: case_org.vat_certificate_declared ? I18n.t("generic.yes") : I18n.t("generic.no"))
       end
-
-      t.add_attribute(:vat_certificate_declared, case_org, text: case_org.vat_certificate_declared ? I18n.t("generic.yes") : I18n.t("generic.no"))
     end
   end
 
