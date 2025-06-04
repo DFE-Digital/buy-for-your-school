@@ -6,6 +6,7 @@ describe "Filling out a customer satisfaction survey" do
     post customer_satisfaction_surveys_path, params: post_params
     CustomerSatisfactionSurveyResponse.last
   end
+
   describe "Starting a new survey" do
     it "creates a new survey and redirects to the first question" do
       expect {
