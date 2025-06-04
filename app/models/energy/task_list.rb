@@ -89,7 +89,7 @@ private
 
   def gas_meters_and_usage
     status = gas_meters_status(case_org)
-    path = if gas_single? || (context_tasks? && gas_multi? && no_gas_meters?)
+    path = if gas_single? || (context_tasks? && gas_multi? && no_gas_meters?) || gas_meter_not_selected?
              energy_case_org_gas_single_multi_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
            else
              energy_case_org_gas_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
@@ -139,7 +139,7 @@ private
 
   def electric_meters_and_usage
     status = electricity_meters_status(case_org)
-    path = if elec_single? || (context_tasks? && elec_multi? && no_elec_meters?)
+    path = if elec_single? || (context_tasks? && elec_multi? && no_elec_meters?) || elec_meter_not_selected?
              energy_case_org_electricity_meter_type_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
            else
              energy_case_org_electricity_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
@@ -205,7 +205,7 @@ private
                 :complete
               else
                 :in_progress
-             end
+              end
     path = energy_case_org_vat_rate_charge_path(case_org.onboarding_case, case_org, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
       t.add_attribute(:vat_rate, case_org, text: "#{case_org.vat_rate}%")
@@ -285,6 +285,10 @@ private
     case_org.gas_single_multi_multi?
   end
 
+  def gas_meter_not_selected?
+    case_org.gas_single_multi.nil?
+  end
+
   def any_gas_meters?
     case_org.gas_meters.any?
   end
@@ -299,6 +303,10 @@ private
 
   def elec_multi?
     case_org.electricity_meter_type_multi?
+  end
+
+  def elec_meter_not_selected?
+    case_org.electricity_meter_type.nil?
   end
 
   def any_elec_meters?

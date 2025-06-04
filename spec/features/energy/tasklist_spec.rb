@@ -65,6 +65,31 @@ describe "Tasklist flows", :js do
   describe "Gas meters and usage" do
     let(:new_mprn) { "923457" }
 
+    context "when the meter type has not been specified" do
+      let(:gas_single_multi) { nil }
+
+      it "navigates to the single/multi meter choice page, then gas meter details, then back to the tasklist" do
+        expect(page).to have_text("Gas meter and usage")
+        click_link("Gas meter and usage")
+
+        # Go to single/multi meter screen
+        expect(page).to have_text("Is this a single or multi meter site?")
+        expect(page).to have_link("Discard and go to task list")
+        choose "Single meter"
+        click_button "Save and continue"
+
+        # Go to meter details
+        expect(page).to have_text("Gas meter details")
+        expect(page).to have_link("Discard and go to task list")
+        fill_in "Add a Meter Point Reference Number (MPRN)", with: gas_meter_numbers.first
+        fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "123"
+        click_button "Save and continue"
+
+        # Back to Tasklist
+        expect(page).to have_text("Provide information about your schools")
+      end
+    end
+
     context "when a single meter has already been specified and needs to stay as a single meter" do
       it "navigates to the single/multi meter choice page, then gas meter details, then back to the tasklist" do
         expect(page).to have_text("Gas meter and usage")
@@ -262,6 +287,32 @@ describe "Tasklist flows", :js do
 
   describe "Electricity meters and usage" do
     let(:new_mpan) { "1234567890124" }
+
+    context "when a meter type has not been specified" do
+      let(:electricity_meter_type) { nil }
+
+      it "navigates to the single/multi meter choice page, then electric meter details, then back to tasklist" do
+        expect(page).to have_text("Electricity meter and usage")
+        click_link("Electricity meter and usage")
+
+        # Go to single/multi meter screen
+        expect(page).to have_text("Is this a single or multi meter site?")
+        expect(page).to have_link("Discard and go to task list")
+        choose "Single meter"
+        click_button "Save and continue"
+
+        # Go to meter details
+        expect(page).to have_text("Electricity meter details")
+        expect(page).to have_link("Discard and go to task list")
+        fill_in "Add an MPAN", with: electricity_meter_numbers.first
+        choose "No"
+        fill_in "Estimated annual electricity usage", with: "1234"
+        click_button "Save and continue"
+
+        # Back to Tasklist
+        expect(page).to have_text("Provide information about your schools")
+      end
+    end
 
     context "when a single meter has already been specified and needs to stay as a single meter" do
       it "navigates to the single/multi meter choice page, then electric meter details, then back to tasklist" do
