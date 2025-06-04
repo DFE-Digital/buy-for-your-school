@@ -2,7 +2,8 @@
   <div class="govuk-grid-column-two-thirds">
 
     <h1 class="govuk-heading-l"><%= I18n.t("energy.letter_of_authorisation.title") %></h1>
-    <% I18n.t("energy.letter_of_authorisation.paragraphs").each do |key, value| %>
+    <p class="govuk-body"><%= I18n.t("energy.letter_of_authorisation.paragraphs.paragraph1", school_name: @organisation_detail.name) %></p>
+    <% I18n.t("energy.letter_of_authorisation.paragraphs").drop(1).each do |key, value| %>
       <p class="govuk-body"><%= value %></p>
     <% end %>
 
@@ -12,6 +13,7 @@
 
     <h2 class="govuk-heading-m"><%= I18n.t("energy.letter_of_authorisation.appointment.title") %></h2>
     <p class="govuk-body"><%= I18n.t("energy.letter_of_authorisation.appointment.paragraph_one") %></p>
+
     <p class="govuk-body"><%= I18n.t("energy.letter_of_authorisation.appointment.paragraph_two") %></p>
 
     <ul class="govuk-list govuk-list--bullet">
