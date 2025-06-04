@@ -40,6 +40,8 @@ module ApplicationHelper
       :supported_journey
     elsif request.path.starts_with?("/procurement-support")
       :request_for_help_form
+    elsif request.path.starts_with?("/energy")
+      :energy_for_schools
     else
       :create_a_spec
     end
