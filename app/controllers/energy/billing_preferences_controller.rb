@@ -50,7 +50,7 @@ module Energy
     end
 
     def redirect_path
-      return energy_case_tasks_path if going_to_tasks?
+      return energy_case_tasks_path if going_to_tasks? || (from_tasks? && !@onboarding_case_organisation.part_of_a_trust?)
       return energy_case_org_billing_address_confirmation_path(**@routing_flags) if @onboarding_case_organisation.part_of_a_trust?
 
       energy_case_check_your_answers_path
