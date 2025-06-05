@@ -49,4 +49,30 @@ describe "VAT rate charge", :js do
     expect(case_organisation.vat_lower_rate_percentage.to_s).to eq(percentage)
     expect(case_organisation.vat_lower_rate_reg_no).to eq(vat_reg_no)
   end
+
+  specify "Selecting 20% VAT rate after setting some 5% fields already" do
+    expect(page).to have_text("Which VAT rate are you charged?")
+    choose "5%"
+    fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: 7
+    fill_in "VAT registration number (optional)", with: vat_reg_no
+    click_button "Save and continue"
+    expect(page).to have_text("Are these the correct details for VAT purposes?")
+    choose "Yes"
+    click_button "Save and continue"
+    expect(page).to have_text("VAT certificate of declaration")
+    click_on "Back"
+    expect(page).to have_text("Are these the correct details for VAT purposes?")
+    click_on "Back"
+    expect(page).to have_text("Which VAT rate are you charged?")
+    choose "20%"
+    click_button "Save and continue"
+
+    expect(case_organisation.reload.vat_rate).to eq(20)
+    expect(case_organisation.vat_lower_rate_percentage).to eq(nil)
+    expect(case_organisation.vat_lower_rate_reg_no).to eq(nil)
+    expect(case_organisation.vat_person_correct_details).to eq(nil)
+    expect(case_organisation.vat_person_first_name).to eq(nil)
+    expect(case_organisation.vat_person_phone).to eq(nil)
+    expect(case_organisation.vat_person_address).to eq(nil)
+  end
 end
