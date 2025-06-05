@@ -13,7 +13,7 @@ module Energy
         "case_creator_full_name" => "#{@current_case.first_name} #{@current_case.last_name}".strip,
         "case_reference_number" => @current_case.ref,
         "organisation_name" => @current_case.organisation_name || @current_case.email,
-        "unique_case_specific_link" => link_to("link", @unique_link, target: "_blank", rel: "noopener noreferrer"),
+        "unique_case_specific_link" => link_to("Energy for Schools", @unique_link, target: "_blank", rel: "noopener noreferrer"),
       }
     end
 
