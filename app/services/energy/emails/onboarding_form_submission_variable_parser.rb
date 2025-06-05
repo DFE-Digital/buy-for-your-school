@@ -48,7 +48,9 @@ module Energy
     end
 
     def set_start_date(contract_end_date)
-      (contract_end_date + 1.day).to_date.strftime("%d/%m/%y")
+      return unless contract_end_date.is_a?(Date)
+
+      (contract_end_date + 1.day).to_date.strftime("%d/%m/%Y")
     end
   end
 end
