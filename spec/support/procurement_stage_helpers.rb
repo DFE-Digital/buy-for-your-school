@@ -11,10 +11,13 @@ module ProcurementStageHelpers
     define_procurement_stages(
       0 => %w[Need],
       2 => ["Tender preparation"],
+      5 => %w[Enquiry],
     )
   end
 
   def need_stage = Support::ProcurementStage.find_by(key: "need")
 
   def tender_prep_stage = Support::ProcurementStage.find_by(key: "tender_preparation")
+
+  def enquiry_stage = Support::ProcurementStage.find_by(key: "enquiry")
 end

@@ -86,6 +86,34 @@ describe("CaseStageController", () => {
       });
     });
 
+    describe("when the support level is 6", () => {
+      let e = { target: { value: "L6" } };
+
+      beforeEach(() => {
+        subject.procurementStageTarget.setAttribute("disabled", true);
+  
+        subject.toggleProcurementStageEnabled(e);
+      });
+
+      it("calls enable with true", () => {
+        expect(enableSpy).toHaveBeenCalledWith(subject.procurementStageTarget, true);
+      });
+    });
+
+    describe("when the support level is 7", () => {
+      let e = { target: { value: "L7" } };
+
+      beforeEach(() => {
+        subject.procurementStageTarget.setAttribute("disabled", true);
+  
+        subject.toggleProcurementStageEnabled(e);
+      });
+
+      it("calls enable with true", () => {
+        expect(enableSpy).toHaveBeenCalledWith(subject.procurementStageTarget, true);
+      });
+    });
+
     describe("when the support level is something else", () => {
       let e = { target: { value: "L3" } };
 

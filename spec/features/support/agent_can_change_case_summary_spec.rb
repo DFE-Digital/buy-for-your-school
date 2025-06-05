@@ -20,7 +20,7 @@ describe "Agent can change case summary", :js do
   context "when changing the support level, procurement stage, case value, case project, and next key date" do
     before do
       choose "4 - DfE buying through a framework"
-      select "Tender preparation", from: "Procurement stage"
+      select "Tender preparation", from: "Stage"
       fill_in "Case value or estimated contract value (optional)", with: "123.32"
       select "Please select", from: "Case project"
       fill_in "Day", with: "10"
@@ -88,6 +88,27 @@ describe "Agent can change case summary", :js do
           expect(page).to have_content("brand new project")
         end
       end
+    end
+  end
+
+  context "when changing the support level to L6 and procurement stage to Enquiry, then case status to be on hold" do
+    before do
+      support_case.update!(source: :energy_onboarding, category: dfe_energy_for_schools_service_category)
+      support_case.reload
+      choose "6 - DfE Energy for Schools support case"
+      page.execute_script("document.querySelector('#case-summary-procurement-stage-id-field').value = '#{enquiry_stage.id}';")
+      select "Please select", from: "Case project"
+      fill_in "Day", with: "10"
+      fill_in "Month", with: "08"
+      fill_in "Year", with: "2023"
+      fill_in "Description of next key date", with: "Key event"
+      click_button "Continue"
+      click_button "Save"
+    end
+
+    it "persists the changes" do
+      expect(support_case.reload.support_level).to eq("L6")
+      expect(support_case.reload.state).to eq("on_hold")
     end
   end
 end

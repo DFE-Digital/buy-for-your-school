@@ -22,6 +22,8 @@ export default class extends Controller {
     switch (supportLevel) {
       case "L4":
       case "L5":
+      case "L6":
+      case "L7":
         enable(this.procurementStageTarget, true);
         break;
       default:
