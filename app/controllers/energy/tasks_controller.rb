@@ -31,5 +31,14 @@ module Energy
 
       incomplete_tasks.none?
     end
+
+    def authenticate_user!
+      return unless current_user.guest?
+
+      session.delete(:energy_case_tasks_path)
+      session[:energy_case_tasks_path] = energy_case_tasks_path(case_id: params[:case_id]) if params[:case_id].present?
+
+      redirect_to energy_onboarding_path
+    end
   end
 end
