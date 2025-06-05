@@ -4,7 +4,7 @@
 
 <div class="notifications-header">
   <h1 class="govuk-heading-l">Notifications</h1>
-  <div><%= link_to "Mark all as read", support_notifications_mark_all_read_path, method: :post, class: "govuk-link govuk-link--no-visited-state" %></div>
+  <div><%= link_to "Mark all as read", portal_notifications_mark_all_read_path, method: :post, class: "govuk-link govuk-link--no-visited-state" %></div>
 </div>
 
 <%= turbo_frame_tag "notifications-table" do %>

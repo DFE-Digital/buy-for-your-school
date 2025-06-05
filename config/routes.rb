@@ -540,6 +540,19 @@ Rails.application.routes.draw do
     root to: "onboarding_cases#index"
     resources :onboarding_cases, only: %i[index show]
 
+    get "notifications", to: "/support/notifications#index", as: :notifications
+    post "notifications/mark_all_read", to: "/support/notifications/mark_all_reads#create", as: :notifications_mark_all_read
+    post "notifications/:notification_id/read", to: "/support/notifications/reads#create", as: :notification_read
+    delete "notifications/:notification_id/read", to: "/support/notifications/reads#destroy", as: :destroy_notification_read
+
+    resources :cases, only: %i[index show] do
+      scope module: :cases do
+        get "message_threads/:id", to: "/support/cases/message_threads#show", as: :message_thread
+        post "message_threads", to: "/support/cases/message_threads#create", as: :message_threads
+        get "message_threads", to: "/support/cases/message_threads#index", as: :message_threads_index
+      end
+    end
+
     namespace :management do
       get "/", to: "base#index"
       resources :agents, only: %i[index edit update new create]
