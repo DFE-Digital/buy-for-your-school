@@ -10,13 +10,8 @@ module Energy
 
     def update
       if validation.success?
-        # binding.pry
         @onboarding_case_organisation.update!(**form.data)
 
-        # Support::SyncFrameworksJob.perform_later
-        # Energy::GenerateLetterOfAuthorityPdf.new(@onboarding_case_organisation).call
-        # GenrateVatCertificatePdfJob.perform_later(@onboarding_case_organisation)
-        # GenerateCheckYourAnswersPdfJob.perform_later(@onboarding_case_organisation)
         draft_and_send_form_submission_email_to_school
 
         redirect_to energy_case_confirmation_path
@@ -49,11 +44,19 @@ module Energy
     end
 
     def draft_and_send_form_submission_email_to_school
+      return if onboarding_case.form_submitted_email_sent
+
       Energy::Emails::OnboardingFormSubmissionMailer.new(
         onboarding_case_organisation: @onboarding_case_organisation,
         to_recipients: current_user.email,
         default_email_template:,
       ).call
+
+      onboarding_case.update!(form_submitted_email_sent: true)
+    end
+
+    def onboarding_case
+      @onboarding_case ||= @onboarding_case_organisation.onboarding_case
     end
 
     def default_email_template

@@ -25,19 +25,14 @@ module Energy
     end
 
     def build_gas_and_or_electricity_contract_start_dates
-      if switching_gas?
-        gas = set_start_date(@onboarding_case_organisation.gas_current_contract_end_date)
-        "<span>#{gas} (gas)</span>"
-      elsif switching_electricity?
-        electricity = set_start_date(@onboarding_case_organisation.electric_current_contract_end_date)
-        "<span>#{electricity} (electricity)</span>"
-      elsif switching_both?
-        gas = set_start_date(@onboarding_case_organisation.gas_current_contract_end_date)
-        electricity = set_start_date(@onboarding_case_organisation.electric_current_contract_end_date)
-        "<span>#{gas} (gas)</span> </br> <span>#{electricity} (electricity)</span>"
-      else
-        ""
-      end
+      gas_date = set_start_date(@onboarding_case_organisation.gas_current_contract_end_date) if switching_gas? || switching_both?
+      electricity_date = set_start_date(@onboarding_case_organisation.electric_current_contract_end_date) if switching_electricity? || switching_both?
+
+      fragments = []
+      fragments << "<span>#{gas_date} (gas)</span>" if gas_date
+      fragments << "<span>#{electricity_date} (electricity)</span>" if electricity_date
+
+      fragments.join(" </br> ")
     end
 
     def switching_gas?
