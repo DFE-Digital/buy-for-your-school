@@ -64,5 +64,9 @@ module Support
     end
 
     def authorize_agent_scope = :access_proc_ops_portal?
+
+    helper_method def portal_new_case_assignments_path(current_case)
+      send("new_#{portal_namespace}_case_assignment_path", current_case)
+    end
   end
 end

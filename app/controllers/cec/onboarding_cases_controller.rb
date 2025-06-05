@@ -35,5 +35,9 @@ module Cec
       @all_cases_filter_form = Support::Case.dfe_energy.filtering(filter_params_for(:filter_all_cases_form))
       @my_cases_filter_form = Support::Case.dfe_energy.by_agent(current_agent.id).filtering(filter_params_for(:filter_my_cases_form))
     end
+
+    helper_method def portal_new_case_assignments_path(current_case)
+      send("#{portal_namespace}_case_assignment_new_path", current_case)
+    end
   end
 end
