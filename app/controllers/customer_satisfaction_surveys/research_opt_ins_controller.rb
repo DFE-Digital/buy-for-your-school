@@ -1,12 +1,10 @@
 class CustomerSatisfactionSurveys::ResearchOptInsController < CustomerSatisfactionSurveys::BaseController
-  before_action :back_url
-
   def update
     @customer_satisfaction_survey.attributes = form_params
     if @customer_satisfaction_survey.valid?(:research_opt_in)
       @customer_satisfaction_survey.save!
       @customer_satisfaction_survey.complete_survey! if session[:net_promoter_score].present?
-      redirect_to redirect_path
+      redirect_path
     else
       render :edit
     end
@@ -19,16 +17,18 @@ private
   end
 
   def redirect_path
-    return customer_satisfaction_surveys_thank_you_path if session[:net_promoter_score].present?
-
-    edit_customer_satisfaction_surveys_satisfaction_level_path(@customer_satisfaction_survey)
+    if session[:net_promoter_score].present?
+      redirect_to customer_satisfaction_surveys_thank_you_path
+    else
+      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey)
+    end
   end
 
   def back_url
     @back_url = if session[:net_promoter_score].present?
                   edit_customer_satisfaction_surveys_improvements_path(@customer_satisfaction_survey)
                 else
-                  edit_customer_satisfaction_surveys_clear_to_use_rating_path(@customer_satisfaction_survey)
+                  super
                 end
   end
 end
