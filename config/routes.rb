@@ -540,6 +540,13 @@ Rails.application.routes.draw do
     root to: "onboarding_cases#index"
     resources :onboarding_cases, only: %i[index show]
 
+    resources :cases, only: %i[index show] do
+      scope module: :cases do
+        get "assignments/new", to: "/support/cases/assignments#new", as: :assignment_new
+        post "assignments", to: "/support/cases/assignments#create", as: :assignments
+      end
+    end
+
     namespace :management do
       get "/", to: "base#index"
       resources :agents, only: %i[index edit update new create]

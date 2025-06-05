@@ -9,7 +9,7 @@
     </li>
     <% if @current_case.opened? %>
       <li>
-        <%= link_to I18n.t("support.case.label.change_owner"), new_support_case_assignment_path(@current_case), class: "govuk-link" %>
+        <%= link_to I18n.t("support.case.label.change_owner"), portal_new_case_assignments_path(@current_case), class: "govuk-link" %>
       </li>
       <li>
         <%= link_to I18n.t("support.case.label.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link" %>
@@ -25,7 +25,7 @@
       </li>
     <% else %>
       <li>
-        <%= link_to I18n.t("support.case.label.assign_to_agent"), new_support_case_assignment_path(@current_case), class: "govuk-link" unless @current_case.closed?%>
+        <%= link_to I18n.t("support.case.label.assign_to_agent"), portal_new_case_assignments_path(@current_case), class: "govuk-link" unless @current_case.closed?%>
       </li>
     <% end %>
 

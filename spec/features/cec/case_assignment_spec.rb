@@ -1,11 +1,11 @@
 RSpec.feature "Case worker assignment", :js, bullet: :skip do
-  include_context "with an agent"
+  include_context "with a cec agent"
 
   context "when re-assigning an agent to a case" do
     let(:support_case) { create(:support_case, :opened) }
 
     before do
-      visit support_case_path(support_case)
+      visit cec_onboarding_case_path(support_case)
       click_link "Change case owner"
       select_agent "Procurement Specialist"
       click_button "Assign"
@@ -15,7 +15,7 @@ RSpec.feature "Case worker assignment", :js, bullet: :skip do
       # TODO: Revisit if/when we switch to Playwright
       skip "Flaky test of mature functionality"
       expect(support_case.reload.agent).to eq(agent)
-      expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
+      expect(page).to have_current_path(cec_onboarding_case_path(support_case), ignore_query: true)
     end
   end
 
