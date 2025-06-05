@@ -23,6 +23,14 @@
     background-color: $stage-4-colour;
   }
 
+  optgroup[label="STAGE 5"] {
+    background-color: $stage-5-colour;
+  }
+
+  optgroup[label="STAGE 6"] {
+    background-color: $stage-6-colour;
+  }
+
   option {
     background-color: white;
     color: black;
