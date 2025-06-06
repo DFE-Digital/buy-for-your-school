@@ -2,6 +2,8 @@
 <% filter_url ||= request.path %>
 <% tab ||= 'all-cases' %>
 <% hide_towers = defined?(hide_towers) ? hide_towers : false %>
+<% hide_category = (current_agent.roles & %w[cec cec_admin]).any?  %>
+<% hide_towers = hide_category ? true : hide_towers %>
 
 <%= form_with id: scope, model: form, scope: scope, url: filter_url, method: :get, class: "filter-case-form" do |f| %>
   <h2 class="govuk-heading-m">
@@ -18,12 +20,14 @@
       </div>
     <% end %>
 
+    <% unless hide_category %>
     <div class="govuk-grid-column-one-quarter">
       <%= f.govuk_select :category,
                             options_for_select(available_categories(f.object.tower).map { |a| [a.title, a.id] },
                                                 f.object.category),
                             label: { text: I18n.t("support.case.filter.labels.sub_category") } %>
     </div>
+    <% end %>
 
     <% unless hide_towers %>
     <div class="govuk-grid-column-one-quarter">
