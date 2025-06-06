@@ -3,10 +3,13 @@ require "rails_helper"
 describe "Letter Of Authorisation Agreement", :js do
   include_context "with energy suppliers"
 
+  let(:mailer_double) { instance_double(Energy::Emails::OnboardingFormSubmissionMailer, call: true) }
+
   before do
     Current.user = user
     user_exists_in_dfe_sign_in(user:)
     user_is_signed_in(user:)
+    allow(Energy::Emails::OnboardingFormSubmissionMailer).to receive(:new).and_return(mailer_double)
     visit energy_case_letter_of_authorisation_path(case_id: case_organisation.energy_onboarding_case_id)
   end
 
