@@ -58,6 +58,3 @@ module Energy
     end
   end
 end
-
-# onboarding_case_organisation = Energy::OnboardingCaseOrganisation.last
-# Energy::GenerateLetterOfAuthorityPdf.new(onboarding_case_organisation).call
