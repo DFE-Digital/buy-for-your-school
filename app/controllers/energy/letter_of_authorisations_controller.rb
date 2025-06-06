@@ -12,7 +12,7 @@ module Energy
       if validation.success?
         @onboarding_case_organisation.update!(**form.data)
 
-        draft_and_send_form_submission_email_to_school
+        send_form_submission_email_with_documents_to_school
 
         redirect_to energy_case_confirmation_path
       else
@@ -43,24 +43,28 @@ module Energy
       @back_url = energy_case_check_your_answers_path
     end
 
-    def draft_and_send_form_submission_email_to_school
+    def send_form_submission_email_with_documents_to_school
       return if onboarding_case.form_submitted_email_sent
 
-      Energy::Emails::OnboardingFormSubmissionMailer.new(
-        onboarding_case_organisation: @onboarding_case_organisation,
+      # TODO
+      # This will create a draft email and use predefineed email template and send it to the school
+      # Also it should generate 3 different PDF documents and attach them to the case and then email them
+      # # The PDF documents are:
+      # 1. Letter of Authority
+      # 2. Check Your Answers
+      # 3. VAT certificate
+      # This job should run perform_later to avoid blocking the request
+
+      Energy::OnboardingFormSubmissionJob.perform_now(
+        onboarding_case_id: onboarding_case.id,
         to_recipients: current_user.email,
-        default_email_template:,
-      ).call
+      )
 
       onboarding_case.update!(form_submitted_email_sent: true)
     end
 
     def onboarding_case
       @onboarding_case ||= @onboarding_case_organisation.onboarding_case
-    end
-
-    def default_email_template
-      render_to_string(partial: "energy/letter_of_authorisations/onboarding_form_submission_email_template")
     end
   end
 end
