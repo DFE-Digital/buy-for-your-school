@@ -718,6 +718,7 @@ en:
 
     letter_of_authorisation:
       title: Agree to the Energy for Schools letter of authority
+      pdf_title: DfE Energy for Schools letter of authority
       paragraphs: 
         paragraph1: "This letter of authority sets out the arrangements agreed between the Department for Education ('DfE')and %{school_name} (the 'Education Provider') in connection with the provision of energy supplies."
         paragraph2: This letter supersedes and replaces all previous agreements between DfE and the Education Provider in relation to the supply of gas and/or electricity.
@@ -725,7 +726,7 @@ en:
         paragraph4: "The Education Provider has requested and DfE has agreed to arrange for the supply of gas and/or electricity to the following Site(s):"
       appointment: 
         title: Appointment
-        paragraph_one: The Education Provider appoints and authorises DfE to act on behalf of the Education Provider to negotiate and conclude arrangements with the relevant Supplier for the supply of gas and/or electricity to theSite(s).
+        paragraph_one: The Education Provider appoints and authorises DfE to act on behalf of the Education Provider to negotiate and conclude arrangements with the relevant Supplier for the supply of gas and/or electricity to the Site(s).
         paragraph_two: "The Education Provider acknowledges that DfE's appointment includes:"
         first_list:
           item1: obtaining consumption and billing data for the purposes of conducting consumption and cost analysis
@@ -760,6 +761,10 @@ en:
         agreement1: I confirm that I am authorised by the Education Provider to switch the supply of gas and/or electricity at the Site(s) to the Energy for Schools contract
         agreement2: I confirm that I have read this letter of authority and the Education Provider agrees to its terms and conditions
         agreement3: I understand that my name will be used as the authorised signatory for this letter of authority
+      signed:
+        signed_by_school: "Signed on behalf of %{school_name} by:"
+        signed_by_dfe: "Signed on behalf of the Department for Education by:"
+        signed_by_dfe_user: Annette Harrison
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
