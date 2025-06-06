@@ -1,11 +1,11 @@
 <tr class="govuk-table__row case-row">
   <td class="govuk-table__cell">
-    <%= link_to result.ref, support_case_path(result.id, back_to: current_url_b64), class: "govuk-link--no-visited-state" %>
+    <%= link_to result.ref, portal_case_path(result.id, back_to: current_url_b64), class: "govuk-link--no-visited-state" %>
   </td>
 
   <td class="govuk-table__cell">
     <div class="ellipsis-overflow col-350px">
-      <%= link_to result.organisation_name, support_case_path(result.id, back_to: current_url_b64), class: "govuk-link--no-visited-state", title: result.organisation_name %>
+      <%= link_to result.organisation_name, portal_case_path(result.id, back_to: current_url_b64), class: "govuk-link--no-visited-state", title: result.organisation_name %>
     </div>
   </td>
 

@@ -66,9 +66,13 @@
         <% end %>
       <% end %>
 
-      <% if cec_portal? %>
+      <% if cec_portal? || (support_portal? && (current_agent.roles & %w[cec cec_admin]).any?) %>
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to "Cases", cec_root_path, class: "govuk-header__link" %>
+        </li>
+
+         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
+          <%= link_to I18n.t("support.case.search.heading"), cec_case_search_new_path, class: "govuk-header__link" %>
         </li>
 
         <% if policy(:cms_portal).access_admin_settings? %>
