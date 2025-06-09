@@ -11,6 +11,7 @@ module Energy
     def update
       if validation.success?
         @onboarding_case_organisation.update!(**form.data)
+        onboarding_case.update!(submitted_at: Time.zone.now)
 
         send_form_submission_email_with_documents_to_school
 
