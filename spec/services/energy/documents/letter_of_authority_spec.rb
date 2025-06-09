@@ -1,13 +1,13 @@
 require "rails_helper"
 
-RSpec.describe Energy::GenerateLetterOfAuthorityPdf do
-  subject(:service) { described_class.new(onboarding_case_organisation) }
+RSpec.describe Energy::Documents::LetterOfAuthority do
+  subject(:service) { described_class.new(onboarding_case) }
 
   let(:support_organisation) { create(:support_organisation) }
   let(:user) { create(:user, :many_supported_schools_and_groups) }
   let(:support_case) { create(:support_case, organisation: support_organisation) }
   let(:onboarding_case) { create(:onboarding_case, support_case:) }
-  let(:onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_organisation) }
+  # let(:onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_organisation) }
 
   let(:pdf_data) { "DfE Energy for Schools letter of authority" }
 
