@@ -28,6 +28,7 @@ module Energy
 
     def send_email_with_documents
       Energy::Emails::OnboardingFormSubmissionMailer.new(onboarding_case:, to_recipients: current_user.email, documents:).call
+      onboarding_case.update!(form_submitted_email_sent: true)
     end
   end
 end

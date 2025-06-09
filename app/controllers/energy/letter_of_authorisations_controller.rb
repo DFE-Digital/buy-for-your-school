@@ -44,23 +44,12 @@ module Energy
     end
 
     def send_form_submission_email_with_documents_to_school
-      # return if onboarding_case.form_submitted_email_sent
+      return if onboarding_case.form_submitted_email_sent
 
-      # TODO
-      # This will create a draft email and use predefineed email template and send it to the school
-      # Also it should generate 3 different PDF documents and attach them to the case and then email them
-      # # The PDF documents are:
-      # 1. Letter of Authority
-      # 2. Check Your Answers
-      # 3. VAT certificate
-      # This job should run perform_later to avoid blocking the request
-      # generate_documents_and_send_email_job
-      Energy::GenerateDocumentsAndSendEmailJob.perform_now(
+      Energy::GenerateDocumentsAndSendEmailJob.perform_later(
         onboarding_case_id: onboarding_case.id,
         current_user_id: current_user.id,
       )
-
-      onboarding_case.update!(form_submitted_email_sent: true)
     end
 
     def onboarding_case

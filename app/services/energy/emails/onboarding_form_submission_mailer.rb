@@ -29,7 +29,7 @@ module Energy
       @email_draft.attributes = { html_content: email_template.body } if email_template
 
       parse_template
-      attach_documents if @documents.any?
+      # attach_documents if @documents.any?
 
       @email_draft.save_draft!
       @email_draft.deliver_as_new_message
