@@ -23,24 +23,16 @@ module Support
 
     private
 
-      def cec_namespace?
-        (current_agent.roles & %w[cec cec_admin]).any?
-      end
-
-      def portal_namespace
-        (current_agent.roles & %w[cec cec_admin]).any? ? "cec" : "support"
-      end
-
       helper_method def portal_case_quick_edit_path
-        send("#{portal_namespace}_case_quick_edit_path")
+        send("#{agent_portal_namespace}_case_quick_edit_path")
       end
 
       def back_url
-        @back_url = url_from(back_link_param) || (cec_namespace? ? cec_onboarding_cases_path : support_cases_path)
+        @back_url = url_from(back_link_param) || (is_user_cec_agent? ? cec_onboarding_cases_path : support_cases_path)
       end
 
       def redirect_to_url
-        url_from(back_link_param(back_to_param)) || (cec_namespace? ? cec_onboarding_cases_path : support_cases_path)
+        url_from(back_link_param(back_to_param)) || (is_user_cec_agent? ? cec_onboarding_cases_path : support_cases_path)
       end
 
       def back_to_param
