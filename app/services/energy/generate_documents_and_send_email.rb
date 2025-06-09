@@ -22,6 +22,7 @@ module Energy
       if onboarding_case_organisation.switching_energy_type_gas? && onboarding_case_organisation.vat_rate == 5
         documents << Energy::Documents::VatDeclarationFormTotal.new(onboarding_case).call
       end
+      check_your_answers
     rescue StandardError => e
       Rails.logger.error("Error generating documents: #{e.message}")
       raise e
@@ -36,6 +37,12 @@ module Energy
       loa_service = Energy::Documents::LetterOfAuthority.new(onboarding_case)
       loa_service.call
       @documents << loa_service.pdf_document
+    end
+
+    def check_your_answers
+      service = Energy::Documents::CheckYourAnswers.new(onboarding_case)
+      service.call
+      @documents << service.pdf_document
     end
   end
 end
