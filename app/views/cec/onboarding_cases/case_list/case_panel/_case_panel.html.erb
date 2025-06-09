@@ -19,6 +19,14 @@
             </div>
           </div>
         </div>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-half">
+            <%= render partial: "cec/onboarding_cases/case_list/case_panel/bottom_left_pane", locals: { kase: } %>
+          </div>
+          <div class="govuk-grid-column-one-half">
+            <%= render partial: "cec/onboarding_cases/case_list/case_panel/bottom_right_pane", locals: { kase: } %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
