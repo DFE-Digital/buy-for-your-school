@@ -567,6 +567,13 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :cases, only: %i[index show] do
+      scope module: :cases do
+        get "quick_edit/edit", to: "/support/cases/quick_edits#edit", as: :edit_quick_edit
+        patch "quick_edit", to: "/support/cases/quick_edits#update", as: :quick_edit
+      end
+    end
+
     namespace :management do
       get "/", to: "base#index"
       resources :agents, only: %i[index edit update new create]
