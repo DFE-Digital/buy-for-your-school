@@ -1,4 +1,5 @@
     <%= render "support/cases/show/tabs" do %>
+      <%= render "support/cases/show/onboarding_summary", current_case: @current_case %>
       <%= render "support/cases/show/tasklist", current_case: @current_case %>
       <%= render "support/cases/show/school_details", current_case: @current_case %>
       <%= render "support/cases/show/case_details", current_case: @current_case %>

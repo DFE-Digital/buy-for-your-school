@@ -1,0 +1,16 @@
+<%= form_with model: @form, scope: :energy_type_form, url: energy_case_switch_energy_path, method: :patch do |form| %>
+    <%= form.govuk_error_summary %>
+
+    <%= form.hidden_field :switching_energy_type, value: form.object.switching_energy_type %>
+
+    <%= form.govuk_radio_buttons_fieldset :switching_energy_type, legend: { text: I18n.t("energy.switching_electricity.heading"), size: "l" } do %>
+      <% form.object.switching_energy_type_options.each do |energy| %>
+        <%= form.govuk_radio_button :switching_energy_type, energy, label: { text: I18n.t(energy, scope: "energy.switching_electricity.energy_type") } %>
+      <% end %>
+    <% end %>
+
+    <div class="govuk-button-group flex-align-center">
+      <%= form.submit I18n.t("generic.button.save_continue"), class: "govuk-button"  %>
+    </div>
+
+<% end %>

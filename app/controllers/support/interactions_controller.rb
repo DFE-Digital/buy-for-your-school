@@ -69,5 +69,7 @@ module Support
         body: @interaction.body,
       )
     end
+
+    def authorize_agent_scope = :access_individual_cases?
   end
 end

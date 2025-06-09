@@ -1,0 +1,17 @@
+<%= form_with model: @form, scope: :vat_alt_person_responsible, url: @form_url, method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+  <%= form.govuk_text_field :vat_alt_person_first_name, label: { text: I18n.t("energy.vat_alt_person_responsible.first_name") }, width: "two-thirds" %>
+  <%= form.govuk_text_field :vat_alt_person_last_name, label: { text: I18n.t("energy.vat_alt_person_responsible.last_name") }, width: "two-thirds" %>
+  <%= form.govuk_text_field :vat_alt_person_phone, label: { text: I18n.t("energy.vat_alt_person_responsible.telephone") }, width: "two-thirds" %>
+
+  <% if form.object.vat_alt_address_options.present? %>
+    <%= form.govuk_radio_buttons_fieldset :vat_alt_person_address,
+      legend: { size: "s", text: I18n.t("energy.vat_alt_person_responsible.address") } do %>
+      <% form.object.vat_alt_address_options.values.each do |address| %>
+        <%= form.govuk_radio_button :vat_alt_person_address, address[:full].to_json, checked: (form.object.vat_alt_person_address == address[:full]), label: { text: address[:short] } %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags)%>
+<% end %>

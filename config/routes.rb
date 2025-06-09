@@ -292,6 +292,7 @@ Rails.application.routes.draw do
         get "closures/", to: "closures#index", as: "closures"
         post "closures/", to: "closures#create", as: "support_case_closures"
         post "closures/confirm", to: "closures#confirm", as: "closures_confirm"
+        resource :onboarding_summary, only: %i[show]
       end
     end
 
@@ -479,6 +480,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :usability_surveys, only: %i[new create]
+
   if Rails.env.development?
     require "sidekiq/web"
     mount Sidekiq::Web, at: "/sidekiq"
@@ -492,6 +495,56 @@ Rails.application.routes.draw do
     end
   end
   mount flipper_app, at: "/flipper"
+
+  # Energy
+  namespace :energy do
+    get "/onboarding(/:step)", to: "onboarding#show", as: "onboarding"
+    post "/onboarding/:step", to: "onboarding#update", as: "update_onboarding"
+    get "/service_availability(/:id)", to: "service_availability#show", as: "service_availability"
+    resource :school_selection, only: %i[show update]
+    resources :authorisation, only: %i[show update] do
+      member do
+        get ":type", to: "authorisation#show", as: :school_type
+        patch ":type", to: "authorisation#update"
+      end
+    end
+    resources :case, only: %i[show] do
+      resource :switch_energy, only: %i[show update]
+      resource :gas_supplier, only: %i[show update]
+      resource :electric_supplier, only: %i[show update]
+      resource :tasks, only: %i[show update]
+      resource :check_your_answers, only: %i[show]
+      resource :letter_of_authorisation, only: %i[show update]
+      resource :confirmation, only: :show
+
+      resources :org, except: %i[show] do
+        resources :gas_meter, except: %i[show]
+        resource :gas_bill_consolidation, only: %i[show update]
+        resource :electric_bill_consolidation, only: %i[show update]
+        resource :electricity_meter_type, only: %i[show update]
+        resource :gas_single_multi, only: %i[show update]
+        resources :electricity_meter, except: %i[show]
+        resource :vat_rate_charge, only: %i[show update]
+        resource :site_contact_details, only: %i[show update]
+        resource :vat_person_responsible, only: %i[show update]
+        resource :vat_alt_person_responsible, only: %i[show update]
+        resource :vat_certificate, only: %i[show update]
+        resource :billing_preferences, only: %i[show update]
+        resource :billing_address_confirmation, only: %i[show update]
+      end
+    end
+  end
+
+  # Cec
+  namespace :cec do
+    root to: "onboarding_cases#index"
+    resources :onboarding_cases, only: %i[index show]
+
+    namespace :management do
+      get "/", to: "base#index"
+      resources :agents, only: %i[index edit update new create]
+    end
+  end
 
   # Routes any/all Contentful Pages that are mirrored in t.pages
   get ":slug", to: "pages#show"

@@ -57,4 +57,22 @@ describe "User can provide feedback for different services" do
       expect(CustomerSatisfactionSurveyResponse.first.referer).to eq(support_cases_url)
     end
   end
+
+  context "when in the energy form" do
+    before do
+      visit energy_onboarding_path
+
+      within(".govuk-phase-banner") do
+        click_link "feedback"
+      end
+
+      click_button "Continue"
+    end
+
+    it "links to a feedback form for Energy from the beta banner link" do
+      expect(CustomerSatisfactionSurveyResponse.first.source).to eq("banner_link")
+      expect(CustomerSatisfactionSurveyResponse.first.service).to eq("energy_for_schools")
+      expect(CustomerSatisfactionSurveyResponse.first.referer).to eq(energy_onboarding_url)
+    end
+  end
 end

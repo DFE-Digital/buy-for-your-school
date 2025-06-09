@@ -27,9 +27,9 @@ RSpec.describe Support::Case, type: :model do
     end
   end
 
-  it { is_expected.to define_enum_for(:support_level).with_values(%i[L1 L2 L3 L4 L5]) }
+  it { is_expected.to define_enum_for(:support_level).with_values(%i[L1 L2 L3 L4 L5 L6 L7]) }
   it { is_expected.to define_enum_for(:state).with_values(%i[initial opened resolved on_hold closed pipeline no_response]) }
-  it { is_expected.to define_enum_for(:source).with_values(%i[digital nw_hub sw_hub incoming_email faf engagement_and_outreach schools_commercial_team engagement_and_outreach_cms]) }
+  it { is_expected.to define_enum_for(:source).with_values(%i[digital nw_hub sw_hub incoming_email faf engagement_and_outreach schools_commercial_team engagement_and_outreach_cms energy_onboarding]) }
 
   describe "#generate_ref" do
     context "when no cases exist" do

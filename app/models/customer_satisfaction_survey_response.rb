@@ -12,8 +12,8 @@ class CustomerSatisfactionSurveyResponse < ApplicationRecord
 
   enum :easy_to_use_rating, { strongly_disagree: 0, disagree: 1, neutral: 2, agree: 3, strongly_agree: 4 }, prefix: true
   enum :clear_to_use_rating, { strongly_disagree: 0, disagree: 1, neutral: 2, agree: 3, strongly_agree: 4 }, prefix: true
-  enum :service, { find_a_framework: 0, create_a_spec: 1, supported_journey: 2, request_for_help_form: 3 }, prefix: true
-  enum :source, { exit_survey: 0, banner_link: 1, sidebar_link: 2 }, prefix: true
+  enum :service, { find_a_framework: 0, create_a_spec: 1, supported_journey: 2, request_for_help_form: 3, energy_for_schools: 4 }, prefix: true
+  enum :source, { exit_survey: 0, banner_link: 1, sidebar_link: 2, confirmation_screen: 3 }, prefix: true
   enum :status, { sent_out: 0, in_progress: 1, completed: 2 }
 
   validates :easy_to_use_rating, presence: { message: "Select how strongly you agree that this service was easy to use" }, on: :easy_to_use_rating

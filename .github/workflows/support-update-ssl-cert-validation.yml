@@ -6,6 +6,9 @@ on:
     # At 09:00 on Monday. https://crontab.guru/#0_9_*_*_MON
     - cron: '0 9 * * MON'
 
+env:
+  AZURE_CORE_USE_MSAL_HTTP_CACHE: "false"
+
 jobs:
   check_need_to_validate_and_potentially_update:
     strategy:

@@ -17,6 +17,7 @@ module Support
           record = Support::ProcurementStage.find_or_initialize_by(key: sub_stage["key"])
           record.title = sub_stage["title"]
           record.stage = stage
+          record.lifecycle_order = sub_stage["lifecycle_order"]
           record.archived = sub_stage["is_archived"] == true
           record.save!
         end

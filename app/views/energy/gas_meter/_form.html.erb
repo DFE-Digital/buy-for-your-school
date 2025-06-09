@@ -1,0 +1,18 @@
+<%= form_with(model: @gas_meter_detail, url: @form_url) do |form| %>
+    <%= form.govuk_error_summary %>
+
+    <%= form.govuk_text_field :mprn,
+      autofocus: true,
+      label: { text:  I18n.t("energy.gas_meter_details.mprn_label"), class: 'govuk-label govuk-label govuk-label--s' },
+      hint: { text: I18n.t("energy.gas_meter_details.mprn_hint") },
+      width: 10 %>
+
+    <%= form.govuk_text_field :gas_usage,
+      label: { text: I18n.t("energy.gas_meter_details.gas_usage_label"), class: 'govuk-label govuk-label govuk-label--s' },
+      hint: { text: I18n.t("energy.gas_meter_details.gas_usage_hint") },
+      suffix_text: I18n.t("energy.gas_meter_details.gas_usage_suffix"),
+      width: 5 %>
+
+    <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
+
+<% end %>

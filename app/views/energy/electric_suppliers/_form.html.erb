@@ -1,0 +1,22 @@
+<%= form_with model: @form, scope: :electric_supplier_form, url: @form_url, method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.hidden_field :electric_current_supplier, value: form.object.electric_current_supplier %>
+
+  <%= form.govuk_radio_buttons_fieldset :electric_current_supplier , legend: { text: I18n.t("energy.current_contract.current_electric_supplier"), size: "m" } do %>
+    <% form.object.current_supllier_options.each do |supplier| %>
+      <% if supplier == :other %>
+        <%= form.govuk_radio_divider %>
+        <%= form.govuk_radio_button :electric_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") } do %>
+          <%= form.govuk_text_field :electric_current_supplier_other, maxlength: "60", width: "one-third", label: { text: I18n.t("energy.current_contract.other_electric_supplier") } %>
+        <% end %>
+      <% else %>
+        <%= form.govuk_radio_button :electric_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") } %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= form.govuk_date_field :electric_current_contract_end_date, maxlength_enabled: true, legend: { text: I18n.t("energy.current_contract.when_contract_ends"), }, hint: { text: I18n.t("energy.current_contract.date_for_example") } %>
+
+  <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
+<% end %>

@@ -1,0 +1,14 @@
+<%= form_with model: @form, scope: :gas_single_multi, url: @form_url, method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+  <%= form.hidden_field :gas_single_multi, value: form.object.gas_single_multi %>
+
+  <%= form.govuk_radio_buttons_fieldset :gas_single_multi,
+    legend: { size: "l", text: I18n.t("energy.gas_single_multi.heading") },
+    hint: { text: I18n.t("energy.gas_single_multi.hint") } do %>
+    <% form.object.single_multi_options.each do |option| %>
+      <%= form.govuk_radio_button :gas_single_multi, option, label: { text: I18n.t("energy.gas_single_multi.#{option}") } %>
+    <% end %>
+  <% end %>
+
+  <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
+<% end %>

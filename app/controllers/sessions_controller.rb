@@ -83,7 +83,12 @@ private
   #
   # @return [String]
   def entry_path(user)
-    if user.internal?
+    if session[:energy_onboarding] == true
+      session.delete(:energy_onboarding)
+      energy_case_tasks_path = session[:energy_case_tasks_path]
+      session.delete(:energy_case_tasks_path)
+      energy_case_tasks_path.presence || energy_school_selection_path
+    elsif user.internal?
       # proc ops / internal team members go to case management
       cms_entrypoint_path
     else

@@ -1,0 +1,31 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-caption-l"><%= @support_organisation.name%></p>
+        <h1 class="govuk-heading-l"><%= I18n.t("energy.authorisation.heading") %></h1>
+        <ul class="govuk-list govuk-list--bullet">
+            <% if params[:type] == 'mat'%>
+                <% @school_list.each do |school|%>
+                    <li><%= school.name%></li>
+                <% end %>
+            <% else %>
+                <li><%= @support_organisation.name%>
+            <% end %>
+        </ul>
+
+        <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+                <span class="govuk-visually-hidden">Warning</span>
+                <%= I18n.t("energy.authorisation.warning") %>
+            </strong>
+        </div>
+
+        <div class="govuk-button-group flex-align-center">
+            <%= link_to I18n.t("generic.button.continue"),
+                school_type_energy_authorisation_path(id: params[:id], type: params[:type]),
+                method: :patch,
+                class: "govuk-button" %>
+        </div>
+
+    </div>
+</div>

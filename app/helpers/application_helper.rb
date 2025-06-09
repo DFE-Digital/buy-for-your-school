@@ -22,8 +22,9 @@ module ApplicationHelper
     on_cases_index = current_page?(support_cases_path) || current_page?("/support")
     on_frameworks = request.path.starts_with?("/frameworks")
     on_eando_index = current_page?(engagement_cases_path) || current_page?("/engagement")
+    on_cec_index = current_page?(cec_onboarding_cases_path) || current_page?("/cec")
 
-    on_cases_index || on_frameworks || on_eando_index
+    on_cases_index || on_frameworks || on_eando_index || on_cec_index
   end
 
   def banner_feedback_link
@@ -39,6 +40,8 @@ module ApplicationHelper
       :supported_journey
     elsif request.path.starts_with?("/procurement-support")
       :request_for_help_form
+    elsif request.path.starts_with?("/energy")
+      :energy_for_schools
     else
       :create_a_spec
     end
