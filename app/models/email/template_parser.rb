@@ -8,6 +8,7 @@ class Email::TemplateParser
       "sub_category" => "{{sub_category}}",
       "unique_case_specific_link" => "{{unique_case_specific_link}}",
       "evaluation_due_date" => "{{evaluation_due_date}}",
+      "gas_and_or_electricity_contract_start_dates" => "{{gas_and_or_electricity_contract_start_dates}}",
     }.merge(variables)
   end
 
