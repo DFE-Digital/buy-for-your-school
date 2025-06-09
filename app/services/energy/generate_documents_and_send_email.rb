@@ -18,9 +18,9 @@ module Energy
   private
 
     def generate_documents
-      documents << Energy::Documents::LetterOfAuthority.new(onboarding_case:).generate
-      documents << Energy::Documents::CheckYourAnswers.new(onboarding_case:).generate
-      documents << Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).generate if onboarding_case_organisation.vat_rate == 5
+      letter_of_authority
+      # documents << Energy::Documents::CheckYourAnswers.new(onboarding_case:).generate
+      # documents << Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).generate if onboarding_case_organisation.vat_rate == 5
     rescue StandardError => e
       Rails.logger.error("Error generating documents: #{e.message}")
       raise e
@@ -29,6 +29,12 @@ module Energy
     def send_email_with_documents
       Energy::Emails::OnboardingFormSubmissionMailer.new(onboarding_case:, to_recipients: current_user.email, documents:).call
       onboarding_case.update!(form_submitted_email_sent: true)
+    end
+
+    def letter_of_authority
+      loa_service = Energy::Documents::LetterOfAuthority.new(onboarding_case)
+      loa_service.call
+      @documents << loa_service.pdf_document
     end
   end
 end

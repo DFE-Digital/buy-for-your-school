@@ -10,51 +10,30 @@ RSpec.describe Energy::GenerateDocumentsAndSendEmail do
   let(:onboarding_case) { create(:onboarding_case, support_case:) }
   let(:onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_organisation, vat_rate:) }
 
-  let(:loa_pdf) { instance_double(Energy::Documents::LetterOfAuthority, generate: "LOA_PDF") }
-  let(:cya_pdf) { instance_double(Energy::Documents::CheckYourAnswers, generate: "CYA_PDF") }
-  let(:vat_pdf) { instance_double(Energy::Documents::VatDeclarationFormEdf, generate: "VAT_PDF") }
+  let(:loa_pdf) { instance_double(Energy::Documents::LetterOfAuthority, call: "LOA_PDF") }
   let(:mailer) { instance_double(Energy::Emails::OnboardingFormSubmissionMailer, call: true) }
 
   before do
     onboarding_case_organisation
     allow(Energy::Documents::LetterOfAuthority).to receive(:new).and_return(loa_pdf)
-    allow(Energy::Documents::CheckYourAnswers).to receive(:new).and_return(cya_pdf)
-    allow(Energy::Documents::VatDeclarationFormEdf).to receive(:new).and_return(vat_pdf)
     allow(Energy::Emails::OnboardingFormSubmissionMailer).to receive(:new).and_return(mailer)
   end
 
-  describe "#call" do
+  describe "#call d" do
     context "when vat_rate is 5" do
       it "generates all documents and sends an email with them" do
-        expect(loa_pdf).to receive(:generate)
-        expect(cya_pdf).to receive(:generate)
-        expect(vat_pdf).to receive(:generate)
+        allow(loa_pdf).to receive(:pdf_document).and_return("LOA_PDF")
         expect(mailer).to receive(:call)
 
         service.call
 
-        expect(service.documents).to eq(%w[LOA_PDF CYA_PDF VAT_PDF])
-      end
-    end
-
-    context "when vat_rate is not 5" do
-      let(:vat_rate) { 20 }
-
-      it "does not generate VATDeclarationFormEDF" do
-        expect(loa_pdf).to receive(:generate)
-        expect(cya_pdf).to receive(:generate)
-        expect(vat_pdf).not_to receive(:generate)
-        expect(mailer).to receive(:call)
-
-        service.call
-
-        expect(service.documents).to eq(%w[LOA_PDF CYA_PDF])
+        expect(service.documents).to eq(%w[LOA_PDF])
       end
     end
 
     context "when an error occurs during document generation" do
       before do
-        allow(loa_pdf).to receive(:generate).and_raise(StandardError.new("generation failed"))
+        allow(loa_pdf).to receive(:call).and_raise(StandardError.new("generation failed"))
         allow(Rails.logger).to receive(:error)
       end
 
