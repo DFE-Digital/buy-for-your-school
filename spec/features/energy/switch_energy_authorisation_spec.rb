@@ -4,9 +4,11 @@ describe "Switch energy authorisation", :js do
   let(:support_organisation) { create(:support_organisation, urn: 100_253) }
   let(:user) { create(:user, :many_supported_schools_and_groups) }
   let(:category) { create(:support_category, title: "DfE Energy for Schools service") }
+  let(:mailer_double) { instance_double(Energy::Emails::OnboardingFormStartedMailer, call: true) }
 
   before do
     allow(Support::Category).to receive(:find_by).with(title: "DfE Energy for Schools service").and_return(category)
+    allow(Energy::Emails::OnboardingFormStartedMailer).to receive(:new).and_return(mailer_double)
   end
 
   specify "Are you authorised to switch energy suppliers" do
@@ -58,5 +60,13 @@ describe "Switch energy authorisation", :js do
     click_link "Continue"
     expect(page).to have_text("Are you switching electricity, gas or both?")
     expect(Support::Case.count).to eq(2)
+
+    kase.update!(state: "on_hold")
+    visit school_type_energy_authorisation_path(id: support_organisation.urn, type: "single")
+    expect(page).to have_link("click here to email support")
+
+    email_link = find_link("click here to email support")
+    decoded_href = URI.decode_www_form_component(email_link[:href])
+    expect(decoded_href).to include("Help request: School #1 - multiple concurrent Energy for Schools applications")
   end
 end

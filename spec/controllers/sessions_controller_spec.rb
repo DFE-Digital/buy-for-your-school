@@ -91,5 +91,22 @@ describe SessionsController do
         expect(response).to redirect_to(my_procurements_task_path(support_case))
       end
     end
+
+    context "when user logging in from energy form started link" do
+      let(:support_case) { create(:support_case) }
+      let(:onboarding_case) { create(:onboarding_case, support_case:) }
+      let(:energy_task_list_path) { energy_case_tasks_path(case_id: onboarding_case.id) }
+
+      let(:session) do
+        {
+          energy_case_tasks_path: energy_task_list_path,
+          energy_onboarding: true,
+        }
+      end
+
+      it "redirects to task list" do
+        expect(response).to redirect_to(energy_task_list_path)
+      end
+    end
   end
 end

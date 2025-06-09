@@ -37,8 +37,8 @@ describe "User can update electricity meters and usage", :js do
     click_button "Save and continue"
 
     expect(page).to have_text("1234567890999")
-
     expect(page).to have_text("2000")
+    expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
 
     click_link "Add another MPAN"
 

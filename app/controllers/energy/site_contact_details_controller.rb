@@ -1,7 +1,7 @@
 class Energy::SiteContactDetailsController < Energy::ApplicationController
   before_action :organisation_details
   before_action :form, only: %i[update]
-  before_action :back_url
+  before_action :back_url, :form_url
 
   def show
     @form = Energy::SiteContactDetailsForm.new(**@onboarding_case_organisation.to_h.compact)
@@ -17,12 +17,6 @@ class Energy::SiteContactDetailsController < Energy::ApplicationController
   end
 
 private
-
-  def redirect_path
-    return energy_case_tasks_path if going_to_tasks?
-
-    energy_case_org_vat_rate_charge_path
-  end
 
   def form
     @form = Energy::SiteContactDetailsForm.new(
@@ -63,7 +57,7 @@ private
   end
 
   def back_url
-    @back_url = if params[:return_to] == "tasks"
+    @back_url = if from_tasks?
                   energy_case_tasks_path
                 elsif switching_gas? && gas_multiple_meters?
                   energy_case_org_gas_bill_consolidation_path
@@ -74,5 +68,16 @@ private
                 else
                   electricity_usage_exist? ? edit_electricity_usage_path : new_electricity_usage_path
                 end
+  end
+
+  def form_url
+    @form_url = energy_case_org_site_contact_details_path(**@routing_flags)
+  end
+
+  def redirect_path
+    return energy_case_tasks_path if going_to_tasks? || from_tasks?
+    return energy_case_check_your_answers_path if from_check?
+
+    energy_case_org_vat_rate_charge_path
   end
 end

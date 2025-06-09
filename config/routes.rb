@@ -513,6 +513,9 @@ Rails.application.routes.draw do
       resource :gas_supplier, only: %i[show update]
       resource :electric_supplier, only: %i[show update]
       resource :tasks, only: %i[show update]
+      resource :check_your_answers, only: %i[show]
+      resource :letter_of_authorisation, only: %i[show update]
+      resource :confirmation, only: :show
 
       resources :org, except: %i[show] do
         resources :gas_meter, except: %i[show]
@@ -528,7 +531,6 @@ Rails.application.routes.draw do
         resource :vat_certificate, only: %i[show update]
         resource :billing_preferences, only: %i[show update]
         resource :billing_address_confirmation, only: %i[show update]
-        resource :confirmation, only: :show
       end
     end
   end

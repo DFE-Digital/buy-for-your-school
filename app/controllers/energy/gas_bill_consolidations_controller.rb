@@ -19,7 +19,8 @@ class Energy::GasBillConsolidationsController < Energy::ApplicationController
 private
 
   def redirect_path
-    return energy_case_tasks_path if going_to_tasks?
+    return energy_case_tasks_path if going_to_tasks? || from_tasks?
+    return energy_case_check_your_answers_path if from_check?
     return energy_case_org_electricity_meter_type_path if switching_both?
 
     energy_case_org_site_contact_details_path

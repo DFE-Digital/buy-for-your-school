@@ -77,4 +77,14 @@ class Energy::OnboardingCaseOrganisation < ApplicationRecord
   enum :billing_payment_method, BILLING_PAYMENT_METHOD, prefix: true
   enum :billing_payment_terms, BILLING_PAYMENT_TERMS, prefix: true
   enum :billing_invoicing_method, BILLING_INVOICING_METHOD, prefix: true
+
+  def part_of_a_trust?
+    onboardable_type == "Support::Organisation" && onboardable.trust_code.present?
+  end
+
+  def trust_organisation
+    Support::EstablishmentGroup.find_by_uid(onboardable.trust_code) if part_of_a_trust?
+  end
+
+  delegate :name, to: :onboardable
 end

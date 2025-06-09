@@ -5,7 +5,7 @@ class Energy::ElectricityMeterController < Energy::ApplicationController
   before_action :back_url
 
   def index
-    @electricity_meter_details = @onboarding_case_organisation.electricity_meters.all
+    @electricity_meter_details = @onboarding_case_organisation.electricity_meters.order(created_at: :asc)
   end
 
   def new
@@ -42,7 +42,7 @@ class Energy::ElectricityMeterController < Energy::ApplicationController
     return unless params[:confirm]
 
     @electricity_meter_detail.destroy!
-    redirect_to energy_case_org_electricity_meter_index_path,
+    redirect_to energy_case_org_electricity_meter_index_path(**@routing_flags),
                 notice: I18n.t("energy.electricity_meter.remove_page.removed")
   end
 
@@ -59,10 +59,18 @@ private
   def redirect_path
     if going_to_tasks?
       energy_case_tasks_path
+    elsif from_tasks?
+      if !electricity_multiple_meters?
+        energy_case_tasks_path
+      else
+        energy_case_org_electricity_meter_index_path(**@routing_flags)
+      end
+    elsif from_check? && !electricity_multiple_meters?
+      energy_case_check_your_answers_path
     elsif !electricity_multiple_meters?
       energy_case_org_site_contact_details_path
     else
-      energy_case_org_electricity_meter_index_path
+      energy_case_org_electricity_meter_index_path(**@routing_flags)
     end
   end
 

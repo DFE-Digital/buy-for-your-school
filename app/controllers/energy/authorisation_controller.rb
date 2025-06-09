@@ -9,8 +9,10 @@ module Energy
     def update
       return unless params[:type] == "single"
 
-      onboarding_case = create_onboarding_case
-      redirect_to energy_case_switch_energy_path(case_id: onboarding_case.energy_onboarding_case_id)
+      @onboarding_case_organisation = create_onboarding_case
+
+      draft_and_send_onboarding_email_to_school
+      redirect_to energy_case_switch_energy_path(case_id: @onboarding_case_organisation.energy_onboarding_case_id)
     end
 
   private
@@ -37,9 +39,10 @@ module Energy
 
           if support_case.count > 1
             email_to = ENV["MS_GRAPH_SHARED_MAILBOX_ADDRESS"]
-            email_subject = I18n.t("energy.authorisation.alerts.email_subject")
+            email_subject = I18n.t("energy.authorisation.alerts.email_subject", org_name: @support_organisation.name)
+            email_body = render_to_string(partial: "energy/authorisation/email_body")
             click_here = I18n.t("energy.authorisation.alerts.click_here")
-            email_link = ActionController::Base.helpers.mail_to(email_to, click_here, subject: email_subject, class: "govuk-link")
+            email_link = ActionController::Base.helpers.mail_to(email_to, click_here, subject: email_subject, body: email_body, class: "govuk-link")
             notice_message = "#{I18n.t('energy.authorisation.alerts.multiple_cases')}, #{email_link}".html_safe
             redirect_to energy_school_selection_path, notice: notice_message
           elsif support_case.count == 1
@@ -75,6 +78,23 @@ module Energy
           current_user.orgs.pluck("urn"),
         ]
       end
+    end
+
+    def draft_and_send_onboarding_email_to_school
+      Energy::Emails::OnboardingFormStartedMailer.new(
+        onboarding_case_organisation: @onboarding_case_organisation,
+        to_recipients: current_user.email,
+        default_email_template:,
+        onboarding_case_link:,
+      ).call
+    end
+
+    def default_email_template
+      render_to_string(partial: "energy/authorisation/onboarding_email_template")
+    end
+
+    def onboarding_case_link
+      energy_case_tasks_url(case_id: @onboarding_case_organisation.energy_onboarding_case_id, host: request.host)
     end
   end
 end

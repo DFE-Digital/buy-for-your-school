@@ -1,7 +1,7 @@
 module Energy
   class BillingAddressConfirmationsController < ApplicationController
     before_action :organisation_details, :address_orgs
-    before_action { @back_url = energy_case_org_billing_preferences_path }
+    before_action :back_url, :form_url
     before_action :form, only: %i[update]
 
     def show
@@ -37,22 +37,26 @@ module Energy
       params.fetch(:billing_address_confirmation, {}).permit(:billing_invoice_address_source_id)
     end
 
-    def redirect_path
-      # Change to Check your answers when we have implemented the screen
-      energy_case_org_billing_address_confirmation_path
+    def back_url
+      @back_url = energy_case_org_billing_preferences_path
     end
 
-    def associated_trust
-      # User links to Support::EstablishmentGroup (a trust) via uid
-      #  They should have a max of 1
-      trust_uid = current_user.orgs.pluck("uid").compact.first
-      return nil unless trust_uid
+    def form_url
+      @form_url = energy_case_org_billing_address_confirmation_path(**@routing_flags)
+    end
 
-      Support::EstablishmentGroup.find_by_uid(trust_uid)
+    def redirect_path
+      return energy_case_tasks_path if from_tasks?
+
+      energy_case_check_your_answers_path
     end
 
     def address_orgs
-      @address_orgs ||= { @organisation_detail.id => Support::OrganisationPresenter.new(@organisation_detail) }.tap do |list|
+      associated_trust = @onboarding_case_organisation.trust_organisation
+
+      @address_orgs ||= {
+        @organisation_detail.id => Support::OrganisationPresenter.new(@organisation_detail),
+      }.tap do |list|
         list.merge!({ associated_trust.id => Support::OrganisationPresenter.new(associated_trust) }) if associated_trust
       end
     end

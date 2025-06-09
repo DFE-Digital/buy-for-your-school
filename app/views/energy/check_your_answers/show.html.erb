@@ -1,0 +1,31 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl"><%= I18n.t("energy.check_your_answers.title")%></h1>
+
+    <% @organisation_task_lists.each do |org_task_list| %>
+      <h2 class="govuk-heading-l"><%= org_task_list.org_name %></h2>
+      <% org_task_list.sections.each do |sec| %>
+        <%= govuk_summary_card(title: I18n.t("energy.check_your_answers.#{sec.title}.title")) do |card|
+          card.with_action { govuk_link_to(I18n.t("energy.generic.change"), sec.path, id: "#{sec.title}_change") }
+          card.with_summary_list(rows: sec.summary.map { |row|
+            {
+              key: {text: I18n.t("energy.check_your_answers.#{sec.title}.#{row[0]}")},
+              value: {text: row[2] || row[1]},
+            }
+          })
+        end %>
+      <% end %>
+    <% end %>
+
+    <% I18n.t("energy.check_your_answers.notes").each do |note| %>
+      <%= render ParagraphComponent.new(text: note) %>
+    <% end %>
+
+    <div class="govuk-button-group flex-align-center">
+      <%= link_to I18n.t("generic.button.continue"),
+        energy_case_letter_of_authorisation_path,
+        class: "govuk-button"
+      %>
+    </div>
+  </div>
+</div>

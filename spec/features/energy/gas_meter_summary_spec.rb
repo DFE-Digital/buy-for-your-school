@@ -27,8 +27,8 @@ describe "User can update gas usage details", :js do
     click_button "Save and continue"
 
     expect(page).to have_text("3938424403")
-
     expect(page).to have_text("1000")
+    expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
 
     click_link "Change"
 

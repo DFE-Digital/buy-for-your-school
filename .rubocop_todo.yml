@@ -214,3 +214,9 @@ Rails/UniqueValidationWithoutIndex:
   Exclude:
     - 'app/models/energy/gas_meter.rb'
     - 'app/models/energy/electricity_meter.rb'
+
+# These files causes the rubocop to break. Until we update rubocop this file will be ignored.
+AllCops:
+  Exclude:
+    - 'app/models/energy/task_list.rb'
+    - 'app/controllers/energy/vat_alt_person_responsibles_controller.rb'

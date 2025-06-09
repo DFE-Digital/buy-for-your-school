@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_19_110728) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_05_145614) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -274,6 +274,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_19_110728) do
     t.string "vat_alt_person_last_name"
     t.string "vat_alt_person_phone"
     t.jsonb "vat_alt_person_address"
+    t.boolean "loa_agreed", default: false
     t.index ["energy_onboarding_case_id"], name: "idx_on_energy_onboarding_case_id_a2b87b0066"
     t.index ["onboardable_type", "onboardable_id"], name: "idx_on_onboardable_type_onboardable_id_aa8b300738"
   end
@@ -283,6 +284,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_19_110728) do
     t.boolean "are_you_authorised"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "form_started_email_sent", default: false
+    t.boolean "form_submitted_email_sent", default: false
     t.index ["support_case_id"], name: "index_energy_onboarding_cases_on_support_case_id"
   end
 
