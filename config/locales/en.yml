@@ -715,6 +715,8 @@ en:
         billing_invoicing_method: How would you like to receive your bills?
         billing_invoicing_email: Email for invoice
         billing_invoice_address: Address for invoice
+      summary_pdf:
+        title: "DfE Energy for Schools submission summary: %{date}"
 
     letter_of_authorisation:
       title: Agree to the Energy for Schools letter of authority
@@ -724,7 +726,7 @@ en:
         paragraph2: This letter supersedes and replaces all previous agreements between DfE and the Education Provider in relation to the supply of gas and/or electricity.
         paragraph3: DfE has entered into and/or will enter into one or more Framework Agreements with various suppliers for the provision of gas and/or electricity to DfE and to various sites identified by DfE. Each such energy supplier is referred to in this letter as a 'Supplier'. Under the Framework Agreements, DfE is entitled to request a Supplier to provide gas and/or electricity to locations identified by DfE.
         paragraph4: "The Education Provider has requested and DfE has agreed to arrange for the supply of gas and/or electricity to the following Site(s):"
-      appointment: 
+      appointment:
         title: Appointment
         paragraph_one: The Education Provider appoints and authorises DfE to act on behalf of the Education Provider to negotiate and conclude arrangements with the relevant Supplier for the supply of gas and/or electricity to the Site(s).
         paragraph_two: "The Education Provider acknowledges that DfE's appointment includes:"
