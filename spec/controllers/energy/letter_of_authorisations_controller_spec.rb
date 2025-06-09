@@ -12,6 +12,8 @@ RSpec.describe Energy::LetterOfAuthorisationsController, type: :controller do
   let(:mailer_double) { instance_double(Energy::Emails::OnboardingFormSubmissionMailer, call: true) }
 
   before do
+    ActiveJob::Base.queue_adapter = :test
+
     case_organisation
     user_is_signed_in(user:)
     allow(Energy::Emails::OnboardingFormSubmissionMailer).to receive(:new).and_return(mailer_double)
@@ -37,12 +39,21 @@ RSpec.describe Energy::LetterOfAuthorisationsController, type: :controller do
 
       it "updates the organisation loa attributes and sends an email only once" do
         expect(onboarding_case.form_submitted_email_sent).to be_falsey
-        expect(mailer_double).to receive(:call).once
+        # expect(mailer_double).to receive(:call).once
 
         patch(:update, params: { case_id: onboarding_case.id, letter_of_authorisation_form: })
 
         expect(response).to redirect_to(energy_case_confirmation_path)
         expect(onboarding_case.reload.form_submitted_email_sent).to be_truthy
+      end
+
+      it "enqueues GenerateDocumentsAndSendEmailJob" do
+        expect {
+          patch :update, params: { case_id: onboarding_case.id, letter_of_authorisation_form: }
+        }.to have_enqueued_job(Energy::GenerateDocumentsAndSendEmailJob).with(
+          onboarding_case_id: onboarding_case.id,
+          current_user_id: user.id,
+        )
       end
     end
   end

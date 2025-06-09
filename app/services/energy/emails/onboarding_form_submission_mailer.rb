@@ -2,11 +2,12 @@ module Energy
   class Emails::OnboardingFormSubmissionMailer
     FORM_SUBMISSION_EMAIL_TEMPLATE = "Email notification of Energy for Schools form completed".freeze
 
-    def initialize(onboarding_case:, to_recipients:)
+    def initialize(onboarding_case:, to_recipients:, documents: [])
       @onboarding_case = onboarding_case
       @onboarding_case_organisation = @onboarding_case.onboarding_case_organisations.first
       @support_case = @onboarding_case.support_case
       @to_recipients = to_recipients
+      @documents = documents
     end
 
     def default_template
@@ -28,6 +29,7 @@ module Energy
       @email_draft.attributes = { html_content: email_template.body } if email_template
 
       parse_template
+      attach_documents if @documents.any?
 
       @email_draft.save_draft!
       @email_draft.deliver_as_new_message
@@ -49,6 +51,15 @@ module Energy
 
     def parse_template
       @email_draft.html_content = Energy::Emails::OnboardingFormSubmissionVariableParser.new(@support_case, @onboarding_case_organisation, @email_draft).parse_template
+    end
+
+    def attach_documents
+      @documents.each do |document|
+        @email_draft.email.attachments.create!(file: document)
+      end
+    rescue StandardError => e
+      Rails.logger.error("Error attaching documents: #{e.message}")
+      raise e
     end
   end
 end
