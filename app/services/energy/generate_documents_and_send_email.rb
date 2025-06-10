@@ -19,7 +19,6 @@ module Energy
 
     def generate_documents
       letter_of_authority
-      documents << Energy::Documents::LetterOfAuthority.new(onboarding_case:).generate
       documents << Energy::Documents::CheckYourAnswers.new(onboarding_case:).generate
       documents << Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).generate if onboarding_case_organisation.vat_rate == 5
       if onboarding_case_organisation.switching_energy_type_gas? && onboarding_case_organisation.vat_rate == 5
