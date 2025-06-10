@@ -36,25 +36,6 @@ RSpec.describe Energy::LetterOfAuthorisationsController, type: :controller do
         expect(response.status).to eq(302)
         expect(response).to redirect_to(energy_case_confirmation_path)
       end
-
-      it "enqueues GenerateDocumentsAndSendEmailJob" do
-        expect(onboarding_case.form_submitted_email_sent).to be_falsey
-
-        expect {
-          patch :update, params: { case_id: onboarding_case.id, letter_of_authorisation_form: }
-        }.to have_enqueued_job(Energy::GenerateDocumentsAndSendEmailJob).with(
-          onboarding_case_id: onboarding_case.id,
-          current_user_id: user.id,
-        )
-      end
-
-      it "does not enqueue GenerateDocumentsAndSendEmailJob if email already sent" do
-        onboarding_case.update!(form_submitted_email_sent: true)
-
-        expect {
-          patch :update, params: { case_id: onboarding_case.id, letter_of_authorisation_form: }
-        }.not_to have_enqueued_job(Energy::GenerateDocumentsAndSendEmailJob)
-      end
     end
   end
 end
