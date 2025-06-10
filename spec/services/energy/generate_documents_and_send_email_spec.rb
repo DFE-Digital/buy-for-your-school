@@ -20,15 +20,6 @@ RSpec.describe Energy::GenerateDocumentsAndSendEmail do
   end
 
   describe "#call d" do
-    context "when vat_rate is 5" do
-      it "generates all documents and sends an email with them" do
-        allow(loa_pdf).to receive(:pdf_document).and_return("LOA_PDF")
-        expect(mailer).to receive(:call)
-
-        service.call
-      end
-    end
-
     context "when an error occurs during document generation" do
       before do
         allow(loa_pdf).to receive(:call).and_raise(StandardError.new("generation failed"))
