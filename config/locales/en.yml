@@ -1842,7 +1842,7 @@ en:
           lead: Lead
     case_assignment:
       agent_id:
-        label: Search for caseworker name
+        label: Search for case worker name
       flash:
         created: Agent assigned to case successfully
       header: Assign to case worker
