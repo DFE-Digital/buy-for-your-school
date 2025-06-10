@@ -2,6 +2,7 @@ module Support
   module Management
     class AgentForm < ::Support::Agent
       validates :email, :first_name, :last_name, presence: true
+      validate :validate_roles_exclusivity
 
       alias_attribute :__roles, :roles
       attr_writer :roles, :policy
@@ -9,6 +10,16 @@ module Support
       before_save :assign_roles
 
     private
+
+      def validate_roles_exclusivity
+        new_roles = (@roles || []).reject(&:blank?)
+        if (new_roles & %w[cec_admin cec]).any?
+          conflicting_roles = new_roles - %w[cec_admin cec]
+          if conflicting_roles.any?
+            errors.add(:roles, I18n.t("support.management.agents.role_error"))
+          end
+        end
+      end
 
       def assign_roles
         new_roles = (@roles || []).reject(&:blank?)
