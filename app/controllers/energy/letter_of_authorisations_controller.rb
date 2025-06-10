@@ -12,8 +12,6 @@ module Energy
       if validation.success?
         @onboarding_case_organisation.update!(**form.data)
 
-        send_form_submission_email_with_documents_to_school
-
         redirect_to energy_case_confirmation_path
       else
         render :show
