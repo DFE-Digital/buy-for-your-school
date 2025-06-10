@@ -1,11 +1,11 @@
 module Energy
   module Documents
     class VatDeclarationFormEdf
-      def initialize(onboarding_case:)
+      def initialize(onboarding_case)
         @onboarding_case = onboarding_case
       end
 
-      def generate
+      def call
         # Logic to generate the "VAT Declaration Form EDF" document
         # This could involve rendering a template with the onboarding_case data
         # and returning a PDF or similar document format.
