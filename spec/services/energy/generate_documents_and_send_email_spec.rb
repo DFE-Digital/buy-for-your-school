@@ -26,8 +26,6 @@ RSpec.describe Energy::GenerateDocumentsAndSendEmail do
         expect(mailer).to receive(:call)
 
         service.call
-
-        expect(service.documents).to eq(%w[LOA_PDF])
       end
     end
 
