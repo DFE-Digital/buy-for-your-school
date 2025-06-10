@@ -3,7 +3,7 @@ module Support
     before_action :set_back_url
 
     def index
-      agents = cec_namespace? ? Agent.cec_omnisearch(params[:q]) : Agent.omnisearch(params[:q])
+      agents = is_user_cec_agent? ? Agent.cec_omnisearch(params[:q]) : Agent.omnisearch(params[:q])
 
       respond_to do |format|
         format.json do
@@ -31,16 +31,8 @@ module Support
 
   private
 
-    def cec_namespace?
-      (current_agent.roles & %w[cec cec_admin]).any?
-    end
-
-    def portal_namespace
-      (current_agent.roles & %w[cec cec_admin]).any? ? "cec" : "support"
-    end
-
     def redirect_path
-      if cec_namespace?
+      if is_user_cec_agent?
         cec_onboarding_case_path(current_case, anchor: "case-history")
       else
         support_case_path(current_case, anchor: "case-history")
@@ -48,7 +40,7 @@ module Support
     end
 
     helper_method def portal_case_assignments_path(current_case)
-      send("#{portal_namespace}_case_assignments_path", current_case)
+      send("#{agent_portal_namespace}_case_assignments_path", current_case)
     end
 
     def validation
@@ -60,7 +52,7 @@ module Support
     end
 
     def set_back_url
-      @back_url = cec_namespace? ? cec_onboarding_case_path(current_case) : support_case_path(current_case)
+      @back_url = is_user_cec_agent? ? cec_onboarding_case_path(current_case) : support_case_path(current_case)
     end
   end
 end
