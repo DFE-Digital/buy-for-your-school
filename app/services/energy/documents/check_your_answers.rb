@@ -2,18 +2,20 @@ module Energy
   module Documents
     # rubocop:disable Layout/AccessModifierIndentation
     class CheckYourAnswers
-      def initialize(onboarding_case:)
+      attr_reader :pdf_document
+
+      def initialize(onboarding_case)
         @onboarding_case = onboarding_case
         @submission_date = @onboarding_case.submitted_at
         @support_case = @onboarding_case.support_case
       end
 
-      def generate
+      def call
         contents = generate_pdf_data
         write_pdf_to_file(contents)
         attach_pdf_to_case
-        contents
       ensure
+        pdf_document.rewind if pdf_document
         delete_temp_file
       end
 

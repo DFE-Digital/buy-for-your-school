@@ -1,15 +1,15 @@
 require "rails_helper"
 
-RSpec.describe Energy::GenerateSubmissionSummaryPdf do
-  subject(:service) { described_class.new(onboarding_case_organisation) }
+RSpec.describe Energy::Documents::CheckYourAnswers do
+  subject(:service) { described_class.new(onboarding_case) }
 
   let(:support_organisation) { create(:support_organisation) }
   let(:user) { create(:user, :many_supported_schools_and_groups) }
   let(:support_case) { create(:support_case, organisation: support_organisation) }
-  let(:onboarding_case) { create(:onboarding_case, support_case:) }
+  let(:onboarding_case) { create(:onboarding_case, :submitted, support_case:) }
   let(:onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_organisation) }
 
-  let(:pdf_data) { "DfE Energy for Schools letter of authority" }
+  let(:pdf_data) { "--- pretend PDF summary raw data ---" }
 
   before do
     allow(WickedPdf).to receive(:new).and_return(double(pdf_from_string: pdf_data))
@@ -27,7 +27,7 @@ RSpec.describe Energy::GenerateSubmissionSummaryPdf do
 
   describe "#file_name" do
     it "returns a properly formatted filename" do
-      expect(service.send(:file_name)).to include("DfE Energy for Schools Letter of Agreement")
+      expect(service.send(:file_name)).to include("EFS Summary")
       expect(service.send(:file_name)).to end_with(".pdf")
     end
   end
