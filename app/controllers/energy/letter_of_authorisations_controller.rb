@@ -2,7 +2,7 @@ module Energy
   class LetterOfAuthorisationsController < ApplicationController
     before_action :organisation_details
     before_action :form, only: %i[update]
-    before_action :back_url # check your answers page
+    before_action :back_url
 
     def show
       @form = Energy::LetterOfAuthorisationForm.new(**@onboarding_case_organisation.to_h.compact)
@@ -38,8 +38,20 @@ module Energy
     end
 
     def back_url
-      # TODO: change to energy_case_check_your_answers_path
-      @back_url = energy_case_letter_of_authorisation_path
+      @back_url = energy_case_check_your_answers_path
+    end
+
+    def send_form_submission_email_with_documents_to_school
+      return if onboarding_case.form_submitted_email_sent
+
+      Energy::GenerateDocumentsAndSendEmailJob.perform_later(
+        onboarding_case_id: onboarding_case.id,
+        current_user_id: current_user.id,
+      )
+    end
+
+    def onboarding_case
+      @onboarding_case ||= @onboarding_case_organisation.onboarding_case
     end
   end
 end
