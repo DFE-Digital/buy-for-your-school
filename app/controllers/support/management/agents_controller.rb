@@ -38,7 +38,7 @@ module Support
 
     def update
       @agent = Support::Management::AgentForm.find(params[:id])
-
+      @agent.assign_attributes(agent_form_params)
       if @agent.valid?
         @agent.update!(agent_form_params)
         redirect_to support_management_agents_path

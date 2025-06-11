@@ -11,15 +11,29 @@
     </span>
   </td>
 
-  <td class="govuk-table__cell">
-    <% if notification.read %>
-      <%= link_to(support_notification_read_path(notification, mark_as: "unread"), data: { turbo_method: :post }, class: "govuk-link--no-visited-state", title: "Changes the status of the notification to unread") do %>
-        Mark as unread
+  <% if cec_portal? || (support_portal? && (current_agent.roles & %w[cec cec_admin]).any?) %>
+    <td class="govuk-table__cell">
+      <% if notification.read %>
+        <%= link_to(cec_notification_read_path(notification, mark_as: "unread"), data: { turbo_method: :post }, class: "govuk-link--no-visited-state", title: "Changes the status of the notification to unread") do %>
+          Mark as unread
+        <% end %>
+      <% else %>
+        <%= link_to(cec_notification_read_path(notification, mark_as: "read"), data: { turbo_method: :post }, class: "govuk-link--no-visited-state", title: "Changes the status of the notification to read") do %>
+          Mark as read
+        <% end %>
       <% end %>
-    <% else %>
-      <%= link_to(support_notification_read_path(notification, mark_as: "read"), data: { turbo_method: :post }, class: "govuk-link--no-visited-state", title: "Changes the status of the notification to read") do %>
-        Mark as read
+    </td>
+  <% else %>
+    <td class="govuk-table__cell">
+      <% if notification.read %>
+        <%= link_to(support_notification_read_path(notification, mark_as: "unread"), data: { turbo_method: :post }, class: "govuk-link--no-visited-state", title: "Changes the status of the notification to unread") do %>
+          Mark as unread
+        <% end %>
+      <% else %>
+        <%= link_to(support_notification_read_path(notification, mark_as: "read"), data: { turbo_method: :post }, class: "govuk-link--no-visited-state", title: "Changes the status of the notification to read") do %>
+          Mark as read
+        <% end %>
       <% end %>
-    <% end %>
-  </td>
+    </td>
+  <% end %>
 </tr>

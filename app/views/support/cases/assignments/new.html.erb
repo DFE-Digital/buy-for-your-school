@@ -4,7 +4,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l"><%= I18n.t("support.case_assignment.header") %></h1>
 
-    <%= form_with model: @case_assignment_form, scope: :case_assignment_form, url: support_case_assignments_path(@current_case) do |form| %>
+    <%= form_with model: @case_assignment_form, scope: :case_assignment_form, url: portal_case_assignments_path(@current_case) do |form| %>
       <%= form.govuk_error_summary %>
 
       <%= render "components/autocomplete",

@@ -303,6 +303,22 @@ RSpec.describe Energy::TaskList do
       end
     end
 
+    context "when vat rate is 5%, there is a lower rate percentage, certificate is NOT declared, person correct details is true, and contact details are filled in" do
+      before do
+        energy_onboarding_case_organisation.update!(vat_rate: 5,
+                                                    vat_lower_rate_percentage: 8,
+                                                    vat_certificate_declared: false,
+                                                    vat_person_correct_details: true,
+                                                    vat_person_first_name: "Jane",
+                                                    vat_person_phone: "0123456789",
+                                                    vat_person_address: { "street": "5 Main Street", "locality": "Duke's Place", "postcode": "EC3A 5DE" })
+      end
+
+      it "returns an in progress task" do
+        expect(task_list.send(:vat_declaration).status).to eq :in_progress
+      end
+    end
+
     context "when vat rate is not filled in" do
       before do
         energy_onboarding_case_organisation.update!(vat_rate: nil)
