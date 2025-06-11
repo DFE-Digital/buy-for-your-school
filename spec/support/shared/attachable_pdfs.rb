@@ -1,4 +1,4 @@
-shared_context "attachable PDF" do |file_name|
+shared_context "with attachable PDF" do |file_name|
   subject(:service) { described_class.new(onboarding_case) }
 
   let(:support_organisation) { create(:support_organisation) }
