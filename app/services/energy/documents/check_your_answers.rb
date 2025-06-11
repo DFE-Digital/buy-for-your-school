@@ -49,8 +49,8 @@ module Energy
       end
 
       def document
-        file = File.open(file_path)
-        Support::Document.create!(case: @support_case, file_type: "application/pdf", file:)
+        @pdf_document = File.open(file_path)
+        Support::Document.create!(case: @support_case, file_type: "application/pdf", file: pdf_document)
       end
 
       def write_pdf_to_file(data)
