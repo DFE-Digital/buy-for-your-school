@@ -2519,6 +2519,7 @@ en:
           former_accounts:
             tab_heading: Former staff
         role_error: "Other roles cannot be included when 'CEC Staff Member' and/or 'CEC Admin' is selected"
+        procops_user_error: This user cannot be given CEC roles as they are already a Proc-ops user
       all_cases_surveys:
         eligible_cases:
           hint: List of case references that will receive the survey
