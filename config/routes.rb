@@ -539,6 +539,8 @@ Rails.application.routes.draw do
   namespace :cec do
     root to: "onboarding_cases#index"
     resources :onboarding_cases, only: %i[index show]
+    get "cases/find-a-case/new", to: "/support/cases/searches#new", as: :case_search_new
+    get "cases/find-a-case", to: "/support/cases/searches#index", as: :case_search_index
 
     get "notifications", to: "/support/notifications#index", as: :notifications
     post "notifications/mark_all_read", to: "/support/notifications/mark_all_reads#create", as: :notifications_mark_all_read
