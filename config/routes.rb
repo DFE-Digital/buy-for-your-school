@@ -548,6 +548,7 @@ Rails.application.routes.draw do
     delete "notifications/:notification_id/read", to: "/support/notifications/reads#destroy", as: :destroy_notification_read
     post "management/agents", to: "/support/management/agents#create", as: :management_agents
     patch "management/agents/:id", to: "/support/management/agents#update", as: :management_agent
+    patch "email_read_status/:email_id", to: "/support/email_read_status#update", as: :email_read_status
 
     resources :cases, only: %i[index show] do
       scope module: :cases do
