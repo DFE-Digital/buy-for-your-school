@@ -1,6 +1,6 @@
 module Energy
   class ApplicationController < ::ApplicationController
-    before_action :check_flag, :set_routing_flags
+    before_action :check_flag, :check_if_submitted, :set_routing_flags
 
     ALLOWED_CLASSES = [
       "Support::Organisation",
@@ -13,6 +13,12 @@ module Energy
 
     def check_flag
       render "errors/not_found", status: :not_found unless Flipper.enabled?(:energy)
+    end
+
+    def check_if_submitted
+      return if %w[school_selections authorisation confirmations].include? controller_name
+
+      redirect_to energy_case_confirmation_path(onboarding_case) if onboarding_case.submitted?
     end
 
     def set_routing_flags
