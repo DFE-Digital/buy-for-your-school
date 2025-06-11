@@ -7,9 +7,12 @@
         Signed in as <%= current_user.first_name %> <%= current_user.last_name %>
       </li>
 
-      <% if support_portal? %>
+      <% if support_portal? || cec_portal? %>
         <%= turbo_stream_from current_agent, "notifications" %>
         <%= render "layouts/navigation_links_notifications", notifications_unread: notifications_unread? %>
+      <% end %>
+
+      <% if support_portal? && (current_agent.roles & %w[cec cec_admin]).none? %>
 
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to I18n.t("support.case_statistics.header_link"), support_case_statistics_path, class: "govuk-header__link" %>
@@ -66,9 +69,13 @@
         <% end %>
       <% end %>
 
-      <% if cec_portal? %>
+      <% if cec_portal? || (support_portal? && (current_agent.roles & %w[cec cec_admin]).any?) %>
         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
           <%= link_to "Cases", cec_root_path, class: "govuk-header__link" %>
+        </li>
+
+         <li class="navbar-component__navigation-item--right govuk-header__navigation-item">
+          <%= link_to I18n.t("support.case.search.heading"), cec_case_search_new_path, class: "govuk-header__link" %>
         </li>
 
         <% if policy(:cms_portal).access_admin_settings? %>

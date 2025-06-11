@@ -36,6 +36,15 @@ module Support
       caseworkers.where(sql, q: "#{query}%").limit(30)
     }
 
+    scope :cec_omnisearch, lambda { |query|
+      sql = <<-SQL
+        lower(first_name) LIKE lower(:q) OR
+        lower(last_name) LIKE lower(:q)
+      SQL
+
+      cec_staff.where(sql, q: "#{query}%").limit(30)
+    }
+
     def self.find_or_create_by_full_name(full_name)
       first_name, last_name = String(full_name).split(" ")
 
