@@ -51,6 +51,10 @@ module Engagement
 
   private
 
+    helper_method def is_user_cec_agent?
+      (current_agent.roles & %w[cec cec_admin]).any?
+    end
+
     helper_method def portal_edit_management_agent_path(agent)
       send("edit_#{portal_namespace}_management_agent_path", agent)
     end
