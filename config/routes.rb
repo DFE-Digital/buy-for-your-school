@@ -557,6 +557,13 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :cases, only: %i[index show] do
+      scope module: :cases do
+        get "summary/edit", to: "/support/cases/summaries#edit", as: :edit_summary
+        patch "summary", to: "/support/cases/summaries#update", as: :update_summary
+      end
+    end
+
     namespace :management do
       get "/", to: "base#index"
       resources :agents, only: %i[index edit update new create]
