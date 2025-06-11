@@ -1,5 +1,5 @@
 shared_context "with attachable PDF" do |file_name|
-  subject(:service) { described_class.new(onboarding_case) }
+  subject(:service) { described_class.new(onboarding_case:) }
 
   let(:support_organisation) { create(:support_organisation) }
   let(:user) { create(:user, :many_supported_schools_and_groups) }
@@ -14,11 +14,9 @@ shared_context "with attachable PDF" do |file_name|
   end
 
   describe "#call" do
-    it "generates PDF, writes it, and attaches it to the support case" do
-      attached_file = service.call
-      expect(attached_file).to eq(support_case.case_attachments.first)
-      expect(attached_file.attachable).to be_a(Support::Document)
-      expect(attached_file.file.download).to eq(pdf_data)
+    it "generates PDF and writes to tmp folder" do
+      file_path = service.call
+      expect(File.exist?(file_path)).to be true
     end
   end
 
@@ -33,12 +31,6 @@ shared_context "with attachable PDF" do |file_name|
     it "returns a full path in tmp directory" do
       expect(service.send(:file_path).to_s).to include("tmp")
       expect(service.send(:file_path).to_s).to end_with(".pdf")
-    end
-  end
-
-  describe "#delete temp file" do
-    it "deletes the temp file after attaching to case" do
-      expect(File).not_to exist(service.send(:file_path).to_s)
     end
   end
 end
