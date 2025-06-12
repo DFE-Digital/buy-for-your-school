@@ -20,7 +20,7 @@ RSpec.feature "Case worker assignment", :js, bullet: :skip do
   end
 
   def select_agent(term)
-    fill_in "Search for caseworker name", with: term
+    fill_in "Search for case worker name", with: term
     select_autocomplete_option(term)
   end
 end

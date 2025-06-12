@@ -51,14 +51,12 @@ module Energy
       energy_case_check_your_answers_path
     end
 
-    def associated_trust
-      return nil if @organisation_detail.trust_code.nil?
-
-      Support::EstablishmentGroup.find_by_uid(@organisation_detail.trust_code)
-    end
-
     def address_orgs
-      @address_orgs ||= { @organisation_detail.id => Support::OrganisationPresenter.new(@organisation_detail) }.tap do |list|
+      associated_trust = @onboarding_case_organisation.trust_organisation
+
+      @address_orgs ||= {
+        @organisation_detail.id => Support::OrganisationPresenter.new(@organisation_detail),
+      }.tap do |list|
         list.merge!({ associated_trust.id => Support::OrganisationPresenter.new(associated_trust) }) if associated_trust
       end
     end

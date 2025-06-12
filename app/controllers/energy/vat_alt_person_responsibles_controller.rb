@@ -35,10 +35,11 @@ module Energy
 
     def form_params
       form_params = params.fetch(:vat_alt_person_responsible, {}).permit(:vat_alt_person_first_name, :vat_alt_person_last_name, :vat_alt_person_phone, :vat_alt_person_address)
-      if form_params[:vat_alt_person_address].present?
-        form_params[:vat_alt_person_address] = JSON.parse(form_params[:vat_alt_person_address])
-      end
-
+      form_params[:vat_alt_person_address] = if form_params[:vat_alt_person_address].present?
+                                                JSON.parse(form_params[:vat_alt_person_address])
+                                             else
+                                                @organisation_detail.address
+                                             end
       form_params
     end
 

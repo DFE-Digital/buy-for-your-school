@@ -14,6 +14,14 @@ module Energy
         if data[:vat_rate] == 20
           data[:vat_lower_rate_percentage] = nil
           data[:vat_lower_rate_reg_no] = nil
+          data[:vat_person_correct_details] = nil
+          data[:vat_person_first_name] = nil
+          data[:vat_person_phone] = nil
+          data[:vat_person_address] = nil
+          data[:vat_alt_person_first_name] = nil
+          data[:vat_alt_person_phone] = nil
+          data[:vat_alt_person_address] = nil
+          data[:vat_certificate_declared] = nil
         end
         @onboarding_case_organisation.update!(**data)
         redirect_to redirect_path

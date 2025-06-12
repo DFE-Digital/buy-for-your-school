@@ -1668,7 +1668,7 @@ en:
           start_date: Start date
           supplier: Supplier
           supplier_is_sme: Supplier is a SME
-        procurement_stage: Procurement stage
+        procurement_stage: Stage
         procurement_value: Procurement value
         project:
           header: Project
@@ -1842,7 +1842,7 @@ en:
           lead: Lead
     case_assignment:
       agent_id:
-        label: Search for caseworker name
+        label: Search for case worker name
       flash:
         created: Agent assigned to case successfully
       header: Assign to case worker
@@ -2518,6 +2518,7 @@ en:
             tab_heading: Current staff
           former_accounts:
             tab_heading: Former staff
+        role_error: "Other roles cannot be included when 'CEC Staff Member' and/or 'CEC Admin' is selected"
       all_cases_surveys:
         eligible_cases:
           hint: List of case references that will receive the survey

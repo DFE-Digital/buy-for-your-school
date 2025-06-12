@@ -18,7 +18,7 @@ describe "Agent can quick edit a case", :js do
     before do
       fill_in "Add a note to case 000001", with: "New note"
       choose "5 - DfE buying by getting quotes or bids"
-      select "Tender preparation", from: "Procurement stage"
+      select "Tender preparation", from: "Stage"
       fill_in "Day", with: "10"
       fill_in "Month", with: "08"
       fill_in "Year", with: "2023"
