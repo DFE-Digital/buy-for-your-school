@@ -36,9 +36,9 @@ RSpec.feature "Checkbox Question" do
       # It should not create a label when text for one isn't provided
       expect(page).not_to have_content "No_further_information"
 
-      within "span.govuk-visually-hidden" do
-        # Default the hidden label to something understandable for screen readers
-        expect(page).to have_content "Optional further information"
+      # Default the hidden label to something understandable for screen readers
+      within ".govuk-fieldset" do
+        expect(page).to have_css(".govuk-visually-hidden", text: "Optional further information")
       end
 
       fill_in "answer[no_further_information]", with: "A second piece of further information"
