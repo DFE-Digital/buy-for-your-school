@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Energy::Documents::VatDeclarationFormEdf, type: :model do
-  subject(:service) { described_class.new(onboarding_case:) }
+  subject(:service) { described_class.new(onboarding_case) }
 
   let(:support_organisation) { create(:support_organisation, name: "Hillside School") }
   let(:user) { create(:user, :many_supported_schools_and_groups) }
@@ -13,7 +13,7 @@ RSpec.describe Energy::Documents::VatDeclarationFormEdf, type: :model do
   let(:fields) { service.pdftk.get_fields(service.output_pdf_file) }
   let(:values) { fields.map(&:value).compact }
 
-  describe "#call f" do
+  describe "#call" do
     context "with vat person details" do
       let(:input_values) do
         {

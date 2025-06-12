@@ -1,27 +1,33 @@
 module Energy
   module Documents
+    # rubocop:disable Layout/AccessModifierIndentation
     class CheckYourAnswers
-      def initialize(onboarding_case:)
+      attr_reader :pdf_document
+
+      def initialize(onboarding_case)
         @onboarding_case = onboarding_case
         @submission_date = @onboarding_case.submitted_at
         @support_case = @onboarding_case.support_case
       end
 
       def call
-        write_pdf_to_file(generate_pdf)
-        file_path
+        contents = generate_pdf_data
+        write_pdf_to_file(contents)
+        attach_pdf_to_case
+      ensure
+        pdf_document.rewind if pdf_document
+        delete_temp_file
       end
 
-    private
+      private
 
-      def generate_pdf
-        html = render_html
-        WickedPdf.new.pdf_from_string(html, encoding: "UTF-8", page_size: "A4")
-      end
+      def generate_pdf_data
+        # There'll only be ONE for single flow, potentially many for MAT flow
+        @organisation_task_lists = @onboarding_case.onboarding_case_organisations.map do |org|
+          Energy::TaskList.new(org.energy_onboarding_case_id, context: "check")
+        end
 
-      def render_html
-        @organisation_task_lists = build_organisation_task_lists
-        ApplicationController.render(
+        html = ApplicationController.render(
           template: "energy/check_your_answers/summary_pdf",
           layout: "pdf",
           assigns: {
@@ -29,12 +35,22 @@ module Energy
             submission_date: @submission_date,
           },
         )
+
+        File.write(Rails.root.join("tmp/test.html"), html)
+        WickedPdf.new.pdf_from_string(html, encoding: "UTF-8", page_size: "A4")
       end
 
-      def build_organisation_task_lists
-        @onboarding_case.onboarding_case_organisations.map do |org|
-          Energy::TaskList.new(org.energy_onboarding_case_id, context: "check")
-        end
+      def attach_pdf_to_case
+        @support_case.case_attachments.create!(
+          attachable: document,
+          custom_name: file_name,
+          description: "System uploaded document",
+        )
+      end
+
+      def document
+        @pdf_document = File.open(file_path)
+        Support::Document.create!(case: @support_case, file_type: "application/pdf", file: pdf_document)
       end
 
       def write_pdf_to_file(data)
@@ -48,6 +64,11 @@ module Energy
       def file_path
         Rails.root.join("tmp", file_name)
       end
+
+      def delete_temp_file
+        File.delete(file_path) if File.exist?(file_path)
+      end
     end
+    # rubocop:enable Layout/AccessModifierIndentation
   end
 end

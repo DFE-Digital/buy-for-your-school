@@ -6,7 +6,7 @@ module Energy
       include Energy::Documents::PdfFormsHelper
       TEMPLATE_FILE = "VAT Declaration Total.pdf"
 
-      def initialize(onboarding_case:)
+      def initialize(onboarding_case)
         @support_case = onboarding_case.support_case
         @organisation = @support_case.organisation
         @onboarding_case_organisation = onboarding_case.onboarding_case_organisations.first

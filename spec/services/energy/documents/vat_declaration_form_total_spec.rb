@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Energy::Documents::VatDeclarationFormTotal, type: :model do
-  subject(:service) { described_class.new(onboarding_case:) }
+  subject(:service) { described_class.new(onboarding_case) }
 
   let(:support_organisation) { create(:support_organisation) }
   let(:user) { create(:user, :many_supported_schools_and_groups) }
@@ -9,7 +9,7 @@ RSpec.describe Energy::Documents::VatDeclarationFormTotal, type: :model do
   let(:onboarding_case) { create(:onboarding_case, support_case:) }
   let(:onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_organisation, **input_values) }
 
-  describe "#call df" do
+  describe "#call" do
     context "with vat person details" do
       let(:input_values) do
         {
