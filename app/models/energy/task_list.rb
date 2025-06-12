@@ -63,7 +63,7 @@ private
       if case_org.gas_current_supplier == "other"
         t.add_attribute :gas_current_supplier_other, case_org
       else
-        t.add_attribute :gas_current_supplier, case_org, text: I18n.t("energy.suppliers.#{case_org.gas_current_supplier}")
+        t.add_attribute :gas_current_supplier, case_org, text: case_org.gas_current_supplier.present? ? I18n.t("energy.suppliers.#{case_org.gas_current_supplier}") : ""
       end
       t.add_attribute :gas_current_contract_end_date, case_org, text: date_format(case_org.gas_current_contract_end_date)
     end
@@ -95,14 +95,14 @@ private
              energy_case_org_gas_meter_index_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
            end
     Task.new(title: __method__, status:, path:).tap do |t|
-      t.add_attribute(:gas_single_multi, case_org, text: I18n.t("energy.check_your_answers.gas_meters_and_usage.#{case_org.gas_single_multi}"))
+      t.add_attribute(:gas_single_multi, case_org, text: case_org.gas_single_multi.present? ? I18n.t("energy.check_your_answers.gas_meters_and_usage.#{case_org.gas_single_multi}") : "")
 
       case_org.gas_meters.each_with_index do |meter, _i|
         t.add_attribute(:mprn, meter)
         t.add_attribute(:gas_usage, meter)
       end
 
-      t.add_attribute(:gas_bill_consolidation, case_org, text: case_org.gas_bill_consolidation ? I18n.t("generic.yes") : I18n.t("generic.no"))
+      t.add_attribute(:gas_bill_consolidation, case_org, text: case_org.gas_bill_consolidation.nil? ? "" : (case_org.gas_bill_consolidation ? I18n.t("generic.yes") : I18n.t("generic.no")))
     end
   end
 
@@ -113,7 +113,7 @@ private
       if case_org.electric_current_supplier == "other"
         t.add_attribute :electric_current_supplier_other, case_org
       else
-        t.add_attribute :electric_current_supplier, case_org, text: I18n.t("energy.suppliers.#{case_org.electric_current_supplier}")
+        t.add_attribute :electric_current_supplier, case_org, text: case_org.electric_current_supplier.present? ? I18n.t("energy.suppliers.#{case_org.electric_current_supplier}") : ""
       end
       t.add_attribute :electric_current_contract_end_date, case_org, text: date_format(case_org.electric_current_contract_end_date)
     end
@@ -146,7 +146,7 @@ private
            end
 
     Task.new(title: __method__, status:, path:).tap do |t|
-      t.add_attribute(:electricity_meter_type, case_org, text: I18n.t("energy.check_your_answers.electric_meters_and_usage.#{case_org.electricity_meter_type}"))
+      t.add_attribute(:electricity_meter_type, case_org, text: case_org.electricity_meter_type.present? ? I18n.t("energy.check_your_answers.electric_meters_and_usage.#{case_org.electricity_meter_type}") : "")
 
       case_org.electricity_meters.each do |meter|
         t.add_attribute(:mpan, meter)
@@ -160,7 +160,7 @@ private
         t.add_attribute(:meter_operator, meter)
       end
 
-      t.add_attribute(:is_electric_bill_consolidated, case_org, text: case_org.is_electric_bill_consolidated ? I18n.t("generic.yes") : I18n.t("generic.no"))
+      t.add_attribute(:is_electric_bill_consolidated, case_org, text: case_org.is_electric_bill_consolidated.nil? ? "" : (case_org.is_electric_bill_consolidated ? I18n.t("generic.yes") : I18n.t("generic.no")))
     end
   end
 
@@ -213,7 +213,7 @@ private
 
     path = energy_case_org_vat_rate_charge_path(case_org.onboarding_case, case_org, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
-      t.add_attribute(:vat_rate, case_org, text: "#{case_org.vat_rate}%")
+      t.add_attribute(:vat_rate, case_org, text: case_org.vat_rate.present? ? "#{case_org.vat_rate}%" : "")
 
       if case_org.vat_rate == 5
         t.add_attribute(:vat_lower_rate_percentage, case_org)
@@ -265,8 +265,8 @@ private
              end
     path = energy_case_org_billing_preferences_path(case_org.onboarding_case, case_org, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
-      t.add_attribute(:billing_payment_method, case_org, text: I18n.t("energy.check_your_answers.billing_preferences.#{case_org.billing_payment_method}"))
-      t.add_attribute(:billing_payment_terms, case_org, text: I18n.t("energy.check_your_answers.billing_preferences.#{case_org.billing_payment_terms}"))
+      t.add_attribute(:billing_payment_method, case_org, text: case_org.billing_payment_method.present? ? I18n.t("energy.check_your_answers.billing_preferences.#{case_org.billing_payment_method}") : "")
+      t.add_attribute(:billing_payment_terms, case_org, text: case_org.billing_payment_terms.present? ? I18n.t("energy.check_your_answers.billing_preferences.#{case_org.billing_payment_terms}") : "")
       t.add_attribute(:billing_invoicing_method, case_org)
 
       if case_org.billing_invoicing_method == "email"
