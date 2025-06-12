@@ -13,6 +13,7 @@ module Energy
         ActiveRecord::Base.transaction do
           @onboarding_case_organisation.update!(**form.data)
           onboarding_case.update!(submitted_at: Time.zone.now)
+          onboarding_case.support_case.update!(procurement_stage: Support::ProcurementStage.find_by(key: "form_review"))
         end
 
         redirect_to energy_case_confirmation_path
