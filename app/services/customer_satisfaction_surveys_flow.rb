@@ -52,10 +52,11 @@ class CustomerSatisfactionSurveysFlow
   end
 
   def convert_step_to_path(step)
-    if step == "thank_you"
-      "customer_satisfaction_surveys_#{step}_path"
-    elsif step == "improvement"
-      "edit_customer_satisfaction_surveys_#{step.pluralize}_path"
+    case step
+    when "thank_you"
+      "customer_satisfaction_surveys_thank_you_path"
+    when "improvement"
+      "edit_customer_satisfaction_surveys_improvements_path"
     else
       "edit_customer_satisfaction_surveys_#{step}_path"
     end
@@ -63,12 +64,7 @@ class CustomerSatisfactionSurveysFlow
 
   def get_step_from_path(path)
     return nil if path.nil?
-
-    if path == "customer_satisfaction_surveys_thank_you_path"
-      "thank_you"
-    elsif path.include?("edit_customer_satisfaction_surveys_")
-      step = path.sub("edit_customer_satisfaction_surveys_", "").sub("_path", "")
-      step == "improvements" ? "improvement" : step
-    end
+    path.gsub(/\A(edit_)?customer_satisfaction_surveys_|_path\z/, "")
+        .singularize
   end
 end
