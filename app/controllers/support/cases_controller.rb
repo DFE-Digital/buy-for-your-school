@@ -34,6 +34,11 @@ module Support
       session[:back_link] = url_from(back_link_param) unless back_link_param.nil?
       @back_url = url_from(back_link_param) || session[:back_link] || support_cases_path
       @request = FrameworkRequestPresenter.new(current_case.request)
+      unless energy_onboarding_case.nil?
+        @organisation_task_lists = energy_onboarding_case.onboarding_case_organisations.map do |org|
+          Energy::TaskList.new(org.energy_onboarding_case_id)
+        end
+      end
     end
 
   private
@@ -46,6 +51,10 @@ module Support
     # @return [AgentPresenter, nil]
     def current_agent
       AgentPresenter.new(super) if super
+    end
+
+    def energy_onboarding_case
+      @energy_onboarding_case ||= Energy::OnboardingCase.find_by(support_case_id: current_case.id)
     end
 
     def filter_forms
