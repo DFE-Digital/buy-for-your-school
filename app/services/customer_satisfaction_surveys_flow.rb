@@ -64,6 +64,7 @@ class CustomerSatisfactionSurveysFlow
 
   def get_step_from_path(path)
     return nil if path.nil?
+
     path.gsub(/\A(edit_)?customer_satisfaction_surveys_|_path\z/, "")
         .singularize
   end
