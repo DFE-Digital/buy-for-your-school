@@ -1,4 +1,3 @@
-# generate_documents_and_send_email
 module Energy
   class GenerateDocumentsAndSendEmail
     attr_reader :onboarding_case, :onboarding_case_organisation, :current_user, :documents

@@ -1,3 +1,5 @@
+require "wicked_pdf"
+
 module Energy
   module Documents
     class CheckYourAnswers

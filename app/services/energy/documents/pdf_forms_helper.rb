@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+require "pdf_forms"
 
 module Energy
   module Documents
@@ -8,7 +8,7 @@ module Energy
       OUTPUT_PDF_PATH = Rails.root.join("tmp/").freeze
 
       def pdftk
-        @pdftk = ::PdfForms.new(PDFTK_PATH)
+        @pdftk = PdfForms.new(PDFTK_PATH)
       end
     end
   end
