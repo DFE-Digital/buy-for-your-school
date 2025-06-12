@@ -1,7 +1,9 @@
 module Energy
   class SchoolSelectionsController < ApplicationController
+    skip_before_action :check_if_submitted
     before_action :form, only: %i[update]
     before_action :select_schools
+
     def show
       @form = Energy::SchoolSelectionsForm.new(**select_schools.to_h)
     end
