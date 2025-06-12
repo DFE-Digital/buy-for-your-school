@@ -1,5 +1,6 @@
 module Energy
   class AuthorisationController < ApplicationController
+    skip_before_action :check_if_submitted
     before_action :validate_school
     before_action :check_active_onboarding_case
     before_action { @back_url = energy_school_selection_path }

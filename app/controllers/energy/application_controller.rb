@@ -16,8 +16,6 @@ module Energy
     end
 
     def check_if_submitted
-      return if %w[school_selections service_availability authorisation confirmations].include? controller_name
-
       redirect_to energy_case_confirmation_path(onboarding_case) if onboarding_case.submitted?
     end
 
