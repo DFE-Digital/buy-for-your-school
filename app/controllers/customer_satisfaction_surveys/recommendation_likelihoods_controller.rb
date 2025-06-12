@@ -1,6 +1,4 @@
 class CustomerSatisfactionSurveys::RecommendationLikelihoodsController < CustomerSatisfactionSurveys::BaseController
-  before_action :back_url
-
   def edit
     if form_params.present?
       session.delete(:net_promoter_score)
@@ -13,7 +11,7 @@ class CustomerSatisfactionSurveys::RecommendationLikelihoodsController < Custome
     if @customer_satisfaction_survey.valid?(:recommendation_likelihood)
       @customer_satisfaction_survey.save!
       @customer_satisfaction_survey.start_survey! if session[:net_promoter_score].blank?
-      redirect_to edit_customer_satisfaction_surveys_improvements_path(@customer_satisfaction_survey)
+      redirect_to_path(@survey_flow.next_path, @customer_satisfaction_survey)
     else
       render :edit
     end
@@ -26,6 +24,10 @@ private
   end
 
   def back_url
-    @back_url = edit_customer_satisfaction_surveys_clear_to_use_rating_path(@customer_satisfaction_survey) if session[:net_promoter_score].present?
+    if session[:net_promoter_score].present?
+      @back_url = edit_customer_satisfaction_surveys_clear_to_use_rating_path(@customer_satisfaction_survey)
+    else
+      super
+    end
   end
 end
