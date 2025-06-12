@@ -719,7 +719,7 @@ en:
         billing_invoice_address: Address for invoice
       summary_pdf:
         title: "DfE Energy for Schools submission summary: %{date}"
-
+      no_data: No onboarding data available for this case
     letter_of_authorisation:
       title: Agree to the Energy for Schools letter of authority
       pdf_title: DfE Energy for Schools letter of authority
