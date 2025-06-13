@@ -5,7 +5,7 @@
 
     <%= form_with model: @case_summary,
       scope: :case_summary,
-      url: support_case_summary_path(@current_case),
+      url: @form_url,
       method: :patch, class: "govuk-!-display-inline",
       html: { "data-controller" => "case-summary", "data-case-summary-case-stage-outlet" => ".case-stage-fields", "data-case-summary-request-type-outlet" => ".request-type-radios" } do |form| %>
 

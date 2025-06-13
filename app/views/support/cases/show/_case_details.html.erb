@@ -6,7 +6,8 @@
   <div role="tabpanel" aria-labelledby="tab_case-details" id="case_details_sections">
     <h3 class="govuk-heading-m">
       <%= I18n.t("support.case.case_details.case_summary.heading") %>
-      - <%= link_to I18n.t("support.case.link.change"), edit_support_case_summary_path(current_case), class: "govuk-link govuk-link--no-visited-state" %>
+      <% edit_summary_link = (current_agent.roles & %w[cec cec_admin]).any? ? cec_case_edit_summary_path(current_case) : edit_support_case_summary_path(current_case) %>
+      - <%= link_to I18n.t("support.case.link.change"), edit_summary_link, class: "govuk-link govuk-link--no-visited-state" %>
     </h3>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
       <% if current_case.category.present? %>

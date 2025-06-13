@@ -539,6 +539,30 @@ Rails.application.routes.draw do
   namespace :cec do
     root to: "onboarding_cases#index"
     resources :onboarding_cases, only: %i[index show]
+    get "cases/find-a-case/new", to: "/support/cases/searches#new", as: :case_search_new
+    get "cases/find-a-case", to: "/support/cases/searches#index", as: :case_search_index
+
+    get "notifications", to: "/support/notifications#index", as: :notifications
+    post "notifications/mark_all_read", to: "/support/notifications/mark_all_reads#create", as: :notifications_mark_all_read
+    post "notifications/:notification_id/read", to: "/support/notifications/reads#create", as: :notification_read
+    delete "notifications/:notification_id/read", to: "/support/notifications/reads#destroy", as: :destroy_notification_read
+
+    resources :cases, only: %i[index show] do
+      scope module: :cases do
+        get "assignments/new", to: "/support/cases/assignments#new", as: :assignment_new
+        post "assignments", to: "/support/cases/assignments#create", as: :assignments
+        get "message_threads/:id", to: "/support/cases/message_threads#show", as: :message_thread
+        post "message_threads", to: "/support/cases/message_threads#create", as: :message_threads
+        get "message_threads", to: "/support/cases/message_threads#index", as: :message_threads_index
+      end
+    end
+
+    resources :cases, only: %i[index show] do
+      scope module: :cases do
+        get "summary/edit", to: "/support/cases/summaries#edit", as: :edit_summary
+        patch "summary", to: "/support/cases/summaries#update", as: :update_summary
+      end
+    end
 
     resources :cases, only: %i[index show] do
       scope module: :cases do

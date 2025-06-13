@@ -17,7 +17,7 @@ RSpec.feature "Case summary details" do
         expect(all("dd.govuk-summary-list__value")[0]).to have_text "DfE Energy for Schools service"
         expect(all("dt.govuk-summary-list__key")[1]).to have_text "Case level"
         expect(all("dd.govuk-summary-list__value")[1]).to have_text "7 - DfE Energy for Schools onboarding case"
-        expect(all("dt.govuk-summary-list__key")[2]).to have_text "Procurement stage"
+        expect(all("dt.govuk-summary-list__key")[2]).to have_text "Stage"
         expect(all("dd.govuk-summary-list__value")[2]).to have_text "Stage 6 - Onboarding form"
         expect(all("dt.govuk-summary-list__key")[3]).to have_text "Source"
         expect(all("dd.govuk-summary-list__value")[3]).to have_text "Energy Onboarding"

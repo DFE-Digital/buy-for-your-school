@@ -69,6 +69,16 @@ module Support
 
     private
 
+      helper_method def back_link_message_threads_path(additional_params = {})
+        if (current_agent.roles & %w[cec cec_admin]).any?
+          send("cec_case_message_threads_index_path", additional_params)
+        else
+          send("support_case_message_threads_path", additional_params)
+        end
+      end
+
+      def authorize_agent_scope = :access_individual_cases?
+
       def current_case
         @current_case ||= CasePresenter.new(super)
       end
@@ -95,6 +105,8 @@ module Support
       def default_template = render_to_string(partial: "support/cases/messages/reply_form_template")
 
       def redirect_to_messages_tab
+        return redirect_to cec_onboarding_case_path(id: params[:case_id], anchor: "messages", messages_tab_url: request.url) if (current_agent.roles & %w[cec cec_admin]).any?
+
         redirect_to support_case_path(id: params[:case_id], anchor: "messages", messages_tab_url: request.url)
       end
 
