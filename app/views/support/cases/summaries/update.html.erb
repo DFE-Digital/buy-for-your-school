@@ -1,8 +1,8 @@
 <h2 class="govuk-heading-m">
   <%= I18n.t("support.case_summary_submissions.edit.header") %>
 </h2>
-
-<%= form_with model: @case_summary, scope: :case_summary, url: support_case_summary_path(@current_case, confirm: true), method: :patch, class: "govuk-!-display-inline" do |form| %>
+<% update_form_url = (current_agent.roles & %w[cec cec_admin]).any? ? cec_case_update_summary_path(@current_case, confirm: true) : support_case_summary_path(@current_case, confirm: true)%>
+<%= form_with model: @case_summary, scope: :case_summary, url: update_form_url, method: :patch, class: "govuk-!-display-inline" do |form| %>
   <% params[:case_summary].each do |key, value| %>
     <%= form.hidden_field key, value: value %>
   <% end %>

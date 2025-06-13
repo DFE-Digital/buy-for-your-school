@@ -1,4 +1,4 @@
-<%= form_with model: @form, scope: :search_case_form, url: support_case_search_index_path, method: :get do |form| %>
+<%= form_with model: @form, scope: :search_case_form, url: portal_case_search_index_path, method: :get do |form| %>
   <%= form.govuk_text_field :search_term,
                             label: { text: I18n.t("support.case.search.heading"), tag: "h1", size: "l" },
                             hint:  { text: I18n.t("support.case.search.hint") }

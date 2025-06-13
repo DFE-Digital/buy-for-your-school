@@ -12,7 +12,7 @@ module CategoryHelpers
     define_categories(
       "ICT" => %w[Peripherals Laptops Websites],
       "Or" => ["Not yet known", "No applicable category", "Other (General)"],
-      "Energy" => %w[Electricity Gas Water],
+      "Energy" => ["Electricity", "Gas", "Water", "DfE Energy for Schools service"],
     )
   end
 
@@ -29,6 +29,10 @@ module CategoryHelpers
 
   def legal_query
     Support::Query.find_by(title: "Legal")
+  end
+
+  def dfe_energy_for_schools_service_category
+    Support::Category.find_by(title: "DfE Energy for Schools service")
   end
 
   def define_basic_queries
