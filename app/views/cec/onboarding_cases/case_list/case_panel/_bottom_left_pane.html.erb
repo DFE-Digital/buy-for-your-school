@@ -1,0 +1,3 @@
+<% if kase.latest_note.present? %>
+  <%= simple_format("<b>Note:</b> #{kase.latest_note_date} #{kase.latest_note_author&.initials} - " + kase.latest_note_body, class: "govuk-body") %>
+<% end %>
