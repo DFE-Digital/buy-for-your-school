@@ -24,6 +24,7 @@ module Support
     scope :enabled, -> { disabled.invert_where }
     scope :with_cases, -> { where.associated(:cases).distinct }
     scope :with_live_cases, -> { where.associated(:live_cases).distinct }
+    scope :by_cec_roles, -> { where("roles::text LIKE '%cec%' OR roles::text LIKE '%cec_admin%'") }
 
     validates :email, uniqueness: { case_sensitive: false }
 
