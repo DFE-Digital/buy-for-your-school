@@ -546,6 +546,7 @@ Rails.application.routes.draw do
     post "notifications/mark_all_read", to: "/support/notifications/mark_all_reads#create", as: :notifications_mark_all_read
     post "notifications/:notification_id/read", to: "/support/notifications/reads#create", as: :notification_read
     delete "notifications/:notification_id/read", to: "/support/notifications/reads#destroy", as: :destroy_notification_read
+    patch "email_read_status/:email_id", to: "/support/email_read_status#update", as: :email_read_status
 
     resources :cases, only: %i[index show] do
       scope module: :cases do
