@@ -451,6 +451,7 @@ en:
     rules:
       vat_rate: ""
       vat_lower_rate_percentage: ""
+      vat_lower_rate_reg_no: ""
     errors:
       rules:
         vat_rate:
@@ -458,6 +459,9 @@ en:
         vat_lower_rate_percentage:
           missing: Enter the percentage qualifying for reduced VAT
           invalid_range: Enter a value between 1 and 100
+        vat_lower_rate_reg_no:
+          missing: Enter a VAT registration number
+          invalid: Enter a VAT registration number that's 9 digits long, like 123456789
   site_contact_details_form:
     rules:
       site_contact_first_name: ""
