@@ -35,17 +35,17 @@ module Energy
       fragments.join(" </br> ")
     end
 
-    def switching_gas?
-      @onboarding_case_organisation.switching_energy_type_gas?
-    end
+    # def switching_gas?
+    #   @onboarding_case_organisation.switching_energy_type_gas?
+    # end
 
-    def switching_electricity?
-      @onboarding_case_organisation.switching_energy_type_electricity?
-    end
+    # def switching_electricity?
+    #   @onboarding_case_organisation.switching_energy_type_electricity?
+    # end
 
-    def switching_both?
-      @onboarding_case_organisation.switching_energy_type_gas_electricity?
-    end
+    # def switching_both?
+    #   @onboarding_case_organisation.switching_energy_type_gas_electricity?
+    # end
 
     def set_start_date(contract_end_date)
       return unless contract_end_date.is_a?(Date)

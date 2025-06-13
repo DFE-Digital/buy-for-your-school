@@ -1,5 +1,6 @@
 module Energy
   class GenerateDocumentsAndSendEmail
+    include Energy::SwitchingEnergyTypeHelper
     attr_reader :onboarding_case, :onboarding_case_organisation, :current_user, :documents
 
     def initialize(onboarding_case:, current_user:)
@@ -45,9 +46,16 @@ module Energy
     end
 
     def generate_vat_certificates
-      # onboarding_case_organisation.switching_energy_type_gas? && onboarding_case_organisation.vat_rate == 5
-      documents << Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).call
-      documents << Energy::Documents::VatDeclarationFormTotal.new(onboarding_case:).call
+      return if onboarding_case_organisation.vat_rate != 5
+
+      if switching_gas?
+        documents << Energy::Documents::VatDeclarationFormTotal.new(onboarding_case:).call
+      elsif switching_electricity?
+        documents << Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).call
+      else
+        documents << Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).call
+        documents << Energy::Documents::VatDeclarationFormTotal.new(onboarding_case:).call
+      end
     end
 
     def attach_documents_to_support_case
