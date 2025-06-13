@@ -1,0 +1,70 @@
+<p>&nbsp;</>
+<p>&nbsp;</>
+<p style="text-align: center;"><b>DfE Energy for Schools letter of authority</b></p>
+<br />
+
+<p>This letter of authority sets out the arrangements agreed between the Department for Education (&nbsp;<b> 'DfE' </b>) and <%= @organisation.name %> <b>"Education Provider"</b> in connection with the provision of energy supplies. </p>
+<p>This letter supersedes and replaces all previous agreements between DfE and the Education Provider in relation to the supply of gas and/or electricity.</p>
+<p>DfE has entered into and/or will enter into one or more Framework Agreements with various suppliers for the provision of gas and/or electricity to DfE and to various sites identified by DfE. Each such energy supplier is referred to in this letter as a <b>'Supplier'</b>. Under the Framework Agreements, DfE is entitled to request a Supplier to provide gas and/or electricity to locations identified by DfE. </p>
+
+<p><%= I18n.t("energy.letter_of_authorisation.paragraphs.paragraph4") %></>
+<p>
+  <ul><li><%= @organisation.name %>, <%= Support::OrganisationPresenter.new(@organisation)&.formatted_address %></li></ul>
+</p>
+
+<p><b><%= I18n.t("energy.letter_of_authorisation.appointment.title") %></b></p>
+<p><%= I18n.t("energy.letter_of_authorisation.appointment.paragraph_one") %></p>
+<p><%= I18n.t("energy.letter_of_authorisation.appointment.paragraph_two") %></p>
+<ul>
+  <% I18n.t("energy.letter_of_authorisation.appointment.first_list").each do |key, value| %>
+    <li><%= value %></li>
+  <% end %>
+</ul>
+
+<p><%= I18n.t("energy.letter_of_authorisation.appointment.paragraph_three") %></p>
+
+<ul>
+  <% I18n.t("energy.letter_of_authorisation.appointment.second_list").each do |key, value| %>
+    <li><%= value %></li>
+  <% end %>
+</ul>
+
+<p><b><%= I18n.t("energy.letter_of_authorisation.responsibilities.title") %></b></p>
+<p><%= I18n.t("energy.letter_of_authorisation.responsibilities.paragraph_one.") %></p>
+<ul>
+  <% I18n.t("energy.letter_of_authorisation.responsibilities.list").each do |key, value| %>
+    <li><%= value %></li>
+  <% end %>
+</ul>
+
+<p><b><%= I18n.t("energy.letter_of_authorisation.invoices_and_billing.title") %></b></p>
+<p><%= I18n.t("energy.letter_of_authorisation.invoices_and_billing.paragraph_one") %></p>
+<p><%= I18n.t("energy.letter_of_authorisation.invoices_and_billing.paragraph_two") %></p>
+
+<p><b><%= I18n.t("energy.letter_of_authorisation.non_payment_of_invoices.title") %></b></p>
+<p><%= I18n.t("energy.letter_of_authorisation.non_payment_of_invoices.paragraph_one") %></p>
+
+<p>
+  <label>
+    <input type="checkbox" checked class="checkbox">
+    <%= I18n.t("energy.letter_of_authorisation.agreement.agreement1") %>
+  </label>
+</p>
+<p>
+  <label>
+    <input type="checkbox" checked class="checkbox">
+    <%= I18n.t("energy.letter_of_authorisation.agreement.agreement2") %>
+  </label>
+</p>
+<p>
+  <label>
+    <input type="checkbox" checked class="checkbox">
+    <%= I18n.t("energy.letter_of_authorisation.agreement.agreement3") %>
+  </label>
+</p>
+
+<p>&nbsp;</>
+<p><%= I18n.t("energy.letter_of_authorisation.signed.signed_by_school", school_name: @organisation.name) %></p>
+<p><%= @support_case.case_creator_full_name %> - <%= Date.current.strftime("%d/%m/%Y") %> </p>
+<p><%= I18n.t("energy.letter_of_authorisation.signed.signed_by_dfe") %></p>
+<p><%= I18n.t("energy.letter_of_authorisation.signed.signed_by_dfe_user") %></p>

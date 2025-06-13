@@ -11,6 +11,9 @@ module Energy
     def update
       if validation.success?
         @onboarding_case_organisation.update!(**form.data)
+        onboarding_case.update!(submitted_at: Time.zone.now)
+
+        send_form_submission_email_with_documents_to_school
 
         redirect_to energy_case_confirmation_path
       else
@@ -42,9 +45,9 @@ module Energy
     end
 
     def send_form_submission_email_with_documents_to_school
-      return if onboarding_case.form_submitted_email_sent
+      # return if onboarding_case.form_submitted_email_sent
 
-      Energy::GenerateDocumentsAndSendEmailJob.perform_later(
+      Energy::GenerateDocumentsAndSendEmailJob.perform_now(
         onboarding_case_id: onboarding_case.id,
         current_user_id: current_user.id,
       )
