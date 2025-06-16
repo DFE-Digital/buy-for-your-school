@@ -8,7 +8,9 @@
     <%= govuk_list I18n.t("energy.join.benefits.list"), type: :bullet %>
 
     <%= govuk_start_button(text: I18n.t("generic.button.start"), href: energy_onboarding_path(:before_you_start)) %>
-    <p><%= link_to I18n.t('energy.join.more_info'), energy_onboarding_path(:guidance), class: "govuk-link" %></p>
+    <%= govuk_list [
+        link_to(I18n.t('energy.join.more_info'), energy_onboarding_path(:guidance), class: "govuk-link"),
+      ] %>
   <% end %>
 
   <% c.with_right do %>
