@@ -20,4 +20,14 @@ class Energy::VatRateChargeFormSchema < Schema
       end
     end
   end
+
+  rule(:vat_lower_rate_reg_no) do
+    if values[:vat_rate] == 5
+      if value.blank?
+        key.failure(:missing)
+      elsif !value.to_s.match?(/\A\d{9}\z/)
+        key.failure(:invalid)
+      end
+    end
+  end
 end
