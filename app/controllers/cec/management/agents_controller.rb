@@ -11,7 +11,7 @@ module Cec
     end
 
     def index
-      @enabled_agents = Support::Agent.enabled.by_first_name
+      @enabled_agents = Support::Agent.by_cec_roles.by_first_name
         .map { |agent| Support::AgentPresenter.new(agent) }
       @disabled_agents = Support::Agent.disabled.by_first_name
         .map { |agent| Support::AgentPresenter.new(agent) }
@@ -22,7 +22,8 @@ module Cec
     end
 
     def edit
-      @agent = Support::Management::AgentForm.find(params[:id])
+      agent = Support::Agent.find(params[:id])
+      @agent = Support::Management::AgentForm.new(**agent.to_h)
     end
 
     def create
@@ -32,7 +33,7 @@ module Cec
 
       if @agent.valid?
         @agent.save!
-        redirect_to support_management_agents_path
+        redirect_to cec_management_agents_path
       else
         render :new
       end
@@ -40,16 +41,20 @@ module Cec
 
     def update
       @agent = Support::Management::AgentForm.find(params[:id])
-
+      @agent.assign_attributes(agent_form_params)
       if @agent.valid?
         @agent.update!(agent_form_params)
-        redirect_to support_management_agents_path
+        redirect_to cec_management_agents_path
       else
         render :edit
       end
     end
 
   private
+
+    helper_method def is_user_cec_agent?
+      (current_agent.roles & %w[cec cec_admin]).any?
+    end
 
     helper_method def portal_edit_management_agent_path(agent)
       send("edit_#{portal_namespace}_management_agent_path", agent)
@@ -61,6 +66,10 @@ module Cec
 
     helper_method def portal_management_agents_path
       send("#{portal_namespace}_management_agents_path")
+    end
+
+    helper_method def portal_management_agent_path(agent)
+      send("#{portal_namespace}_management_agent_path", agent)
     end
 
     helper_method def portal_management_path
