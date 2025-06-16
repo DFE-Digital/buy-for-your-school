@@ -8,7 +8,7 @@
     <%= form.govuk_radio_button :vat_rate, 20, label: { text: I18n.t("energy.vat_rate_charge.normal") } %>
     <%= form.govuk_radio_button :vat_rate, 5, label: { text: I18n.t("energy.vat_rate_charge.lower") } do %>
       <%= form.govuk_text_field :vat_lower_rate_percentage, width: "one-quarter", suffix_text: "%", label: {text: I18n.t("energy.vat_rate_charge.lower_rate_percentage")} %>
-      <%= form.govuk_text_field :vat_lower_rate_reg_no, width: "one-half", label: {text: I18n.t("energy.vat_rate_charge.lower_rate_reg_no")}%>
+      <%= form.govuk_text_field :vat_lower_rate_reg_no, width: "one-half", prefix_text: 'GB', label: {text: I18n.t("energy.vat_rate_charge.lower_rate_reg_no")}%>
     <% end %>
   <% end %>
 

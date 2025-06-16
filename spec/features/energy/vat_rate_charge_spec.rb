@@ -7,7 +7,8 @@ describe "VAT rate charge", :js do
   let(:onboarding_case) { create(:onboarding_case, support_case:) }
   let(:case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_organisation) }
 
-  let(:vat_reg_no) { "123456789" }
+  let(:valid_vat_reg_no) { "123456789" }
+  let(:invalid_vat_reg_no) { "123" }
   let(:percentage) { "55" }
   let(:invalid_percentage) { "abc" }
 
@@ -37,24 +38,30 @@ describe "VAT rate charge", :js do
     choose "5%"
     click_button "Save and continue"
     expect(page).to have_text("Enter the percentage qualifying for reduced VAT")
+    expect(page).to have_text("Enter a VAT registration number")
+
     fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: invalid_percentage
-    fill_in "VAT registration number (optional)", with: vat_reg_no
+    fill_in "VAT registration number (optional)", with: invalid_vat_reg_no
     click_button "Save and continue"
     expect(page).to have_text("Enter a value between 1 and 100")
+    expect(page).to have_text("Enter a VAT registration number that's 9 digits long, like 123456789")
+
     fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: percentage
+    fill_in "VAT registration number (optional)", with: valid_vat_reg_no
     click_button "Save and continue"
     expect(page).not_to have_text("Enter a value between 1 and 100")
+    expect(page).not_to have_text("Enter a VAT registration number that's 9 digits long, like 123456789")
 
     expect(case_organisation.reload.vat_rate).to eq(5)
     expect(case_organisation.vat_lower_rate_percentage.to_s).to eq(percentage)
-    expect(case_organisation.vat_lower_rate_reg_no).to eq(vat_reg_no)
+    expect(case_organisation.vat_lower_rate_reg_no).to eq(valid_vat_reg_no)
   end
 
   specify "Selecting 20% VAT rate after setting some 5% fields already" do
     expect(page).to have_text("Which VAT rate are you charged?")
     choose "5%"
     fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: 7
-    fill_in "VAT registration number (optional)", with: vat_reg_no
+    fill_in "VAT registration number (optional)", with: valid_vat_reg_no
     click_button "Save and continue"
     expect(page).to have_text("Are these the correct details for VAT purposes?")
     choose "Yes"

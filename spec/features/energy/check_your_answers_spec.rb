@@ -375,6 +375,7 @@ describe "'Check your answers' flows", :js do
           expect(page).not_to have_link("Discard and go to task list")
           choose "5%"
           fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: "25"
+          fill_in "VAT registration number (optional)", with: "123456789"
           click_button "Save and continue"
 
           # Go to current contract details page
@@ -413,6 +414,7 @@ describe "'Check your answers' flows", :js do
           expect(page).not_to have_link("Discard and go to task list")
           choose "5%"
           fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: "25"
+          fill_in "VAT registration number (optional)", with: "123456789"
           click_button "Save and continue"
 
           # Go to current contract details page
