@@ -18,9 +18,11 @@
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
       <%= link_to I18n.t("support.management.agents.tabs.current_accounts.tab_heading"), "#current-accounts", class: "govuk-tabs__tab" %>
     </li>
+    <% unless is_user_cec_agent? %>
     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
       <%= link_to I18n.t("support.management.agents.tabs.former_accounts.tab_heading"), "#former-accounts", class: "govuk-tabs__tab" %>
     </li>
+    <% end %>
   </ul>
 
 	<div class="govuk-tabs__panel">
@@ -31,6 +33,7 @@
     	  <li><%= link_to "New Agent", portal_new_management_agent_path , class: "govuk-link" %></li>
     	</ul>
 		</div>
+    <% unless is_user_cec_agent? %>
 		<div id="former-accounts">
 			<%= render partial: "support/management/agents/agents", locals: {agents: @disabled_agents} %>
       <% if !@disabled_agents.empty? %>
@@ -39,5 +42,6 @@
         </p>
       <% end %>
 		</div>
+     <% end %>
 	</div>
 </div>
