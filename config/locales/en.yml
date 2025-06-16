@@ -731,8 +731,8 @@ en:
         title: "DfE Energy for Schools submission summary: %{date}"
     letter_of_authorisation:
       title: Agree to the Energy for Schools letter of authority
-      pdf_title: DfE Energy for Schools letter of authority
       page_title: Letter of authority
+      pdf_title: DfE Energy for Schools letter of authority
       paragraphs: 
         paragraph1: "This letter of authority sets out the arrangements agreed between the Department for Education ('DfE')and %{school_name} (the 'Education Provider') in connection with the provision of energy supplies."
         paragraph2: This letter supersedes and replaces all previous agreements between DfE and the Education Provider in relation to the supply of gas and/or electricity.
