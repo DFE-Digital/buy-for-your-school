@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template ">
+  <head>
+    <title>PDF</title>
+    <meta charset="UTF-8">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 12pt;
+        margin: 50px;
+      }
+
+      h1 {
+        color: #333;
+        border-bottom: 2px solid #ccc;
+      }
+
+      .section {
+        margin-bottom: 20px;
+      }
+
+      .checkbox {
+        display: flex;
+        align-items: center;
+      }
+      p, li {
+        line-height: 1.8; /* or use px, like 24px */
+      }
+
+      .checkbox input {
+        margin-right: 10px;
+        transform: scale(1.5);
+      }
+
+      div.gov_card {
+        border: 1px solid rgb(177, 180, 182);
+        margin-bottom: 30px;
+        padding: 0;
+      }
+
+      table.gov_card {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      table.gov_card tbody tr {
+        border-bottom: 1px solid #ddd;
+      }
+
+      table.gov_card tbody td {
+        padding: 15px 20px;
+      }
+
+      table.gov_card tbody td:first-child {
+        width: 35%;
+        font-weight: bold;
+      }
+
+      table.gov_card thead th {
+        background: rgb(243,242,241);
+        padding: 15px 20px;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>
