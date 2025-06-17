@@ -47,6 +47,7 @@ gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
 gem "pandoc-ruby"
 gem "paper_trail"
+gem "pdf-forms"
 gem "pg"
 gem "pg_search"
 gem "puma", "~> 6"
@@ -67,8 +68,10 @@ gem "terser"
 gem "thor"
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+gem "wicked_pdf"
 gem "will_paginate", "~> 4.0.0"
 gem "wisper", "3.0.0"
+gem "wkhtmltopdf-binary"
 
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
