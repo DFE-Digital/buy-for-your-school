@@ -3,15 +3,11 @@ require "rails_helper"
 describe "Agent can quick edit a case", :js do
   include_context "with a cec agent"
 
-  let(:dfe_energy_category) { create(:support_category, title: "DfE Energy for Schools service") }
-  let(:energy_stage) { create(:support_procurement_stage, key: "onboarding_form", title: "Onboarding form", stage: "6") }
-  let(:support_case) { create(:support_case, ref: "000001", agent:, category: dfe_energy_category, support_level: "L6", source: :energy_onboarding, procurement_stage: energy_stage) }
+  let!(:dfe_energy_category) { create(:support_category, title: "DfE Energy for Schools service") }
+  let!(:energy_stage) { create(:support_procurement_stage, key: "onboarding_form", title: "Onboarding form", stage: "6") }
+  let!(:support_case) { create(:support_case, ref: "000001", agent:, category: dfe_energy_category, support_level: "L6", source: :energy_onboarding, procurement_stage: energy_stage) }
 
   before do
-    define_basic_categories
-    define_basic_procurement_stages
-    support_case
-
     visit cec_onboarding_cases_path(anchor: "my-cases")
     within("#my-cases") { click_link "Quick edit" }
   end
