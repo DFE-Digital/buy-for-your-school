@@ -293,7 +293,7 @@ en:
     related_actions:
       title: Related actions
       join: Join Energy for Schools
-      guidance_page: Guidance page
+      guidance_page: Energy for Schools guidance
       find_a_buying_solution: Find a buying solution
       request_support: Request support
     join:
@@ -303,7 +303,7 @@ en:
       - Schools and trusts that use the service are added to the Department for Education’s energy contract with Crown Commercial Service (CCS). The CCS buys energy for this particular contract over a long period of time, reducing the risk to customers of substantial fluctuations in price.
       benefits:
         title: Benefits
-        text: "Schools could save up to 36% on their energy bills, based on DfE’s estimates. The service also helps:"
+        text: "Schools could save on average 36% on their energy bills, based on DfE’s estimates. The service also helps:"
         list:
         - protect schools from market volatility and high prices
         - save time spent on procurement process
@@ -2520,6 +2520,7 @@ en:
           former_accounts:
             tab_heading: Former staff
         role_error: "Other roles cannot be included when 'CEC Staff Member' and/or 'CEC Admin' is selected"
+        procops_user_error: This user cannot be given CEC roles as they are already a Proc-ops user
       all_cases_surveys:
         eligible_cases:
           hint: List of case references that will receive the survey
