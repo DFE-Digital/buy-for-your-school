@@ -632,10 +632,11 @@ en:
       telephone: Telephone number
       address: Select an address
     confirmation:
-      title: Information submitted
+      title: Information submitted on %{date}
       case_reference_number: Case reference number
-      paragraph_one: We've sent you an email containing a copy of this form and details about your new contract.
-      paragraph_two: Depending on your contract’s end date, you may be placed on an interim contract to ensure continued supply to your school.
+      paragraph_one: "We’ve sent an email to <strong>%{email}</strong> containing a copy of this form and details about your new contract."
+      paragraph_two: Depending on your contract’s end date, you may be placed on an interim rate to ensure continued supply to your school.
+      paragraph_three: Check your current contract's termination terms and notice period to find out how much notice you need to provide to switch suppliers. You must provide notice to your current supplier in writing. DfE cannot do this for you.
       takes_five_minutes: (takes 5 minutes)
       link:
         label: What did you think of this service?
