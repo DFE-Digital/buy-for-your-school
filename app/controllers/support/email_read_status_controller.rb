@@ -46,5 +46,11 @@ module Support
     def default_action_required?
       @email.ticket.emails.unread.inbox.any?
     end
+
+    helper_method def portal_email_read_status_path(message, additional_params = {})
+      send("#{agent_portal_namespace}_email_read_status_path", message, additional_params)
+    end
+
+    def authorize_agent_scope = :access_individual_cases?
   end
 end
