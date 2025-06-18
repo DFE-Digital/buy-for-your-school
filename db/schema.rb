@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_05_145614) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_09_103336) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -284,6 +284,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_05_145614) do
     t.boolean "are_you_authorised"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "submitted_at"
     t.boolean "form_started_email_sent", default: false
     t.boolean "form_submitted_email_sent", default: false
     t.index ["support_case_id"], name: "index_energy_onboarding_cases_on_support_case_id"
