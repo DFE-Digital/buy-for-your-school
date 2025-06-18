@@ -3,10 +3,19 @@
     <%= render "support/cases/emails/#{message.is_read? ? "read_badge" : "unread_badge"}" %>
   </span>
 
+  <% if (current_agent.roles & %w[cec cec_admin]).any? %>
+  <span class="govuk-!-margin-left-1">
+    <%= link_to I18n.t("support.case.label.messages.table.#{message.is_read? ? "mark_as_unread" : "mark_as_read"}"),
+      cec_email_read_status_path(message, status: message.is_read? ? "unread" : "read"),
+      data: { turbo_method: :patch },
+      class: "govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-!-font-weight-bold" %>
+  </span>
+  <% else %>
   <span class="govuk-!-margin-left-1">
     <%= link_to I18n.t("support.case.label.messages.table.#{message.is_read? ? "mark_as_unread" : "mark_as_read"}"),
       support_email_read_status_path(message, status: message.is_read? ? "unread" : "read"),
       data: { turbo_method: :patch },
       class: "govuk-link govuk-link--no-visited-state govuk-link--no-underline govuk-!-font-weight-bold" %>
   </span>
+  <% end %>
 <% end %>
