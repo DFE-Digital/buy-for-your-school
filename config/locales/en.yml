@@ -632,9 +632,11 @@ en:
       telephone: Telephone number
       address: Select an address
     confirmation:
-      title: Information submitted
-      paragraph_one: We've sent you an email containing a copy of this form and details about your new contract.
-      paragraph_two: Depending on your contract’s end date, you may be placed on an interim contract to ensure continued supply to your school.
+      title: Information submitted on %{date}
+      case_reference_number: Case reference number
+      paragraph_one: "We’ve sent an email to <strong>%{email}</strong> containing a copy of this form and details about your new contract."
+      paragraph_two: Depending on your contract’s end date, you may be placed on an interim rate to ensure continued supply to your school.
+      paragraph_three: Check your current contract's termination terms and notice period to find out how much notice you need to provide to switch suppliers. You must provide notice to your current supplier in writing. DfE cannot do this for you.
       takes_five_minutes: (takes 5 minutes)
       link:
         label: What did you think of this service?
@@ -718,12 +720,12 @@ en:
 
     letter_of_authorisation:
       title: Agree to the Energy for Schools letter of authority
-      paragraphs: 
+      paragraphs:
         paragraph1: "This letter of authority sets out the arrangements agreed between the Department for Education ('DfE')and %{school_name} (the 'Education Provider') in connection with the provision of energy supplies."
         paragraph2: This letter supersedes and replaces all previous agreements between DfE and the Education Provider in relation to the supply of gas and/or electricity.
         paragraph3: DfE has entered into and/or will enter into one or more Framework Agreements with various suppliers for the provision of gas and/or electricity to DfE and to various sites identified by DfE. Each such energy supplier is referred to in this letter as a 'Supplier'. Under the Framework Agreements, DfE is entitled to request a Supplier to provide gas and/or electricity to locations identified by DfE.
         paragraph4: "The Education Provider has requested and DfE has agreed to arrange for the supply of gas and/or electricity to the following Site(s):"
-      appointment: 
+      appointment:
         title: Appointment
         paragraph_one: The Education Provider appoints and authorises DfE to act on behalf of the Education Provider to negotiate and conclude arrangements with the relevant Supplier for the supply of gas and/or electricity to theSite(s).
         paragraph_two: "The Education Provider acknowledges that DfE's appointment includes:"

@@ -30,11 +30,16 @@ RSpec.describe Energy::LetterOfAuthorisationsController, type: :controller do
 
   describe "PATCH #update" do
     context "with valid params" do
+      let(:form_review_stage) { Support::ProcurementStage.find_by(key: "form_review") }
+
       it "updates the organisation loa attributes" do
         patch(:update, params: { case_id: onboarding_case.id, letter_of_authorisation_form: })
 
         expect(response.status).to eq(302)
         expect(response).to redirect_to(energy_case_confirmation_path)
+
+        expect(onboarding_case.reload).to be_submitted
+        expect(onboarding_case.reload.support_case.procurement_stage).to eq(form_review_stage)
       end
     end
   end

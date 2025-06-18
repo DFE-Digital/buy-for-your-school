@@ -2,11 +2,16 @@
   <div class="govuk-grid-column-two-thirds">
     <div class="govuk-panel govuk-panel--confirmation">
       <h1 class="govuk-panel__title">
-        <%= I18n.t("energy.confirmation.title") %>
+        <%= I18n.t("energy.confirmation.title", date: @onboarding_case.submitted_at&.strftime("%d %B %Y")) %>
       </h1>
+      <div class="govuk-panel__body">
+        <%= I18n.t("energy.confirmation.case_reference_number") %><br>
+        <strong><%= @case_ref_no %></strong>
+      </div>
     </div>
-    <p class="govuk-body"><%= I18n.t("energy.confirmation.paragraph_one") %></p>
+    <p class="govuk-body"><%= I18n.t("energy.confirmation.paragraph_one", email: @onboarding_case.support_case&.email).html_safe %></p>
     <p class="govuk-body"><%= I18n.t("energy.confirmation.paragraph_two") %></p>
+    <p class="govuk-body"><%= I18n.t("energy.confirmation.paragraph_three") %></p>
     <p class="govuk-body"><a href="<%= I18n.t("energy.confirmation.link.url") %>"><%= I18n.t("energy.confirmation.link.label") %></a> <%= I18n.t("energy.confirmation.takes_five_minutes") %></p>
   </div>
 </div>

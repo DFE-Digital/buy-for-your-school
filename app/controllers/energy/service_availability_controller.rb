@@ -1,7 +1,9 @@
 module Energy
   class ServiceAvailabilityController < ApplicationController
+    skip_before_action :check_if_submitted
     before_action :establishment_group
     before_action { @back_url = energy_school_selection_path }
+
     def show; end
 
   private
