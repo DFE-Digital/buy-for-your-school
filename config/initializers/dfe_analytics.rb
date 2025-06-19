@@ -40,12 +40,12 @@ DfE::Analytics.configure do |config|
   # enable analytics. You might want to hook this up to a feature flag or
   # environment variable.
   #
-  config.enable_analytics = proc { ENV["ENABLE_DFE_ANALYTICS"] == "TRUE" }
+  config.enable_analytics = proc { ENV.fetch("ENABLE_DFE_ANALYTICS", nil) == "TRUE"  }
 
   # The environment we’re running in. This value will be attached
   # to all events we send to BigQuery.
   #
-  config.environment = ENV["RAILS_ENV"]
+  config.environment = ENV.fetch("RAILS_ENV", "development")
 
   # A proc which will be called with the user object, and which should
   # return the identifier for the user. This is useful for systems with
