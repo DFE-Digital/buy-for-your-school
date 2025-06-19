@@ -20,9 +20,11 @@ module Energy
       def call
         raise "Missing template file: #{input_template_file_xl}" unless File.exist?(input_template_file_xl)
 
-        electricity_meters.each_with_index do |electricity_meter, index|
-          column_values(electricity_meter).each_with_index do |(_key, value), i|
-            cell = worksheet[STARTING_ROW_NUMBER + index][i]
+        electricity_meters.each_with_index do |electricity_meter, row_index|
+          site_addition_data = build_site_addition_data(electricity_meter)
+
+          site_addition_data.each_with_index do |(_key, value), column_index|
+            cell = worksheet[STARTING_ROW_NUMBER + row_index][column_index]
             next if cell.nil?
 
             cell.change_contents(value)
@@ -50,11 +52,10 @@ module Energy
       end
 
       def electricity_meters
-        @electricity_meters ||= Energy::ElectricityMeter.includes(:onboarding_case_organisation)
-                                                        .where(energy_onboarding_case_organisation_id: @onboarding_case_organisation.id)
+        @electricity_meters ||= Energy::ElectricityMeter.includes(:onboarding_case_organisation).where(energy_onboarding_case_organisation_id: @onboarding_case_organisation.id)
       end
 
-      def column_values(electricity_meter)
+      def build_site_addition_data(electricity_meter)
         {
           "Customer Name" => @organisation.name,
           "Site Address Line 1" => site_address_line1,
@@ -76,18 +77,18 @@ module Energy
           "Meter Operator" => electricity_meter.meter_operator,
           "Payment Method" => payment_method,
           "Payment Durration" => @onboarding_case_organisation.billing_payment_terms.to_s[/\d+/],
-          "Energy Source" => "Standard", # default
+          "Energy Source" => "Standard",
           "Consolidated Billing (Yes/ No)" => @onboarding_case_organisation.is_electric_bill_consolidated? ? "Yes" : "No",
         }.merge(key_business_information)
       end
 
-      # These are sort of default values
+      # Default values
       def key_business_information
         {
           "Key Business Contact Full Name" => "Annette Harrison",
           "Key Business Contact Email" => "annette.harrison@education.gov.uk",
-          "Company Registered Address Line 1" => "Sanctuary Bulidings, Great Smith Street",
-          "Company Registered Address Line 2" => "",
+          "Company Registered Address Line 1" => "Department for Education",
+          "Company Registered Address Line 2" => "Sanctuary Buildings, Great Smith Street",
           "Customer Registered City/Town" => "London",
           "Company Registered Postcode" => "SW1P 3BT",
           "Company Registration/Charity Number" => "N/A",
@@ -150,10 +151,6 @@ module Energy
         (contract_end_date + 1.day).strftime("%d/%m/%Y")
       end
 
-      def set_value
-        "N/A"
-      end
-
       def payment_method
         return if @onboarding_case_organisation.billing_payment_method_gov_procurement_card?
 
@@ -162,6 +159,3 @@ module Energy
     end
   end
 end
-
-# onboarding_case = Energy::OnboardingCase.find("4e72426d-95fe-4a30-b0ab-eb38d796752e")
-# res = Energy::Documents::SiteAdditionFormEdf.new(onboarding_case:).call
