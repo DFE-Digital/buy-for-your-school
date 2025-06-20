@@ -50,7 +50,7 @@ module Support
         @reply_form.attributes = new_thread_params
         if @reply_form.valid?(:new_message)
           @reply_form.save_draft!
-          @reply_form.deliver_as_new_message
+          @reply_form.queue_delivery(:as_new_message)
           redirect_to support_case_message_threads_path(case_id: current_case.id)
         else
           render :edit
