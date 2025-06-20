@@ -145,6 +145,10 @@ module Energy
         billing_address[:postcode]
       end
 
+      def gas_supplier
+        @onboarding_case_organisation.gas_current_supplier || @onboarding_case_organisation.gas_current_supplier_other
+      end
+
       def contract_end_date
         @contract_end_date ||= @onboarding_case_organisation.electric_current_contract_end_date
       end
