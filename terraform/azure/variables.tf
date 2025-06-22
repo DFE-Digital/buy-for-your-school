@@ -1,3 +1,8 @@
+variable "container_app_name_override" {
+  description = "Name of container to be used instead of default for environment purposes."
+  type        = string
+}
+
 variable "production_subscription_id" {
   description = "ID of the production subscription, used for linking child and parent DNS zones."
   type        = string
@@ -34,31 +39,98 @@ variable "tags" {
   default     = {}
 }
 
+# @note copy of azure rm custom container app 
 variable "custom_container_apps" {
-  description = "Custom container apps, by default deployed within the container app environment"
+  description = "Custom container apps, by default deployed within the container app environment managed by this module."
   type = map(object({
-    response_export_values = optional(list(string), [])
-    body = object({
-      properties = object({
-        managedEnvironmentId = optional(string, "")
-        configuration = object({
-          activeRevisionsMode = optional(string, "single")
-          secrets             = optional(list(map(string)), [])
-          ingress             = optional(any, {})
-          registries          = optional(list(map(any)), [])
-          dapr                = optional(map(string), {})
-        })
-        template = object({
-          revisionSuffix = string
-          containers     = list(any)
-          scale          = map(any)
-          volumes        = list(map(string))
-        })
+    container_app_environment_id = optional(string, "")
+    resource_group_name          = optional(string, "")
+    revision_mode                = optional(string, "Single")
+    container_port               = optional(number, 0)
+    ingress = optional(object({
+      external_enabled = optional(bool, true)
+      target_port      = optional(number, null)
+      traffic_weight = object({
+        percentage = optional(number, 100)
       })
-    })
+      cdn_frontdoor_custom_domain                = optional(string, "")
+      cdn_frontdoor_origin_fqdn_override         = optional(string, "")
+      cdn_frontdoor_origin_host_header_override  = optional(string, "")
+      enable_cdn_frontdoor_health_probe          = optional(bool, false)
+      cdn_frontdoor_health_probe_protocol        = optional(string, "")
+      cdn_frontdoor_health_probe_interval        = optional(number, 120)
+      cdn_frontdoor_health_probe_request_type    = optional(string, "")
+      cdn_frontdoor_health_probe_path            = optional(string, "")
+      cdn_frontdoor_forwarding_protocol_override = optional(string, "")
+    }), null)
+    identity = optional(list(object({
+      type         = string
+      identity_ids = list(string)
+    })), [])
+    secrets = optional(list(object({
+      name  = string
+      value = string
+    })), [])
+    registry = optional(object({
+      server               = optional(string, "")
+      username             = optional(string, "")
+      password_secret_name = optional(string, "")
+      identity             = optional(string, "")
+    }), null),
+    image   = string
+    cpu     = number
+    memory  = number
+    command = list(string)
+    liveness_probes = optional(list(object({
+      interval_seconds = number
+      transport        = string
+      port             = number
+      path             = optional(string, null)
+    })), [])
+    env = optional(list(object({
+      name      = string
+      value     = optional(string, null)
+      secretRef = optional(string, null)
+    })), [])
+    min_replicas = number
+    max_replicas = number
   }))
   default = {}
 }
+
+# @note original custom container defintion that appears to clash with azurerm module defintion
+# variable "custom_container_apps" {
+#   description = "Custom container apps, by default deployed within the container app environment"
+#   type = map(object({
+#     response_export_values = optional(list(string), [])
+#     body = object({
+#       properties = object({
+#         managedEnvironmentId = optional(string, "")
+#         configuration = object({
+#           activeRevisionsMode = optional(string, "single")
+#           secrets             = optional(list(map(string)), [])
+#           ingress             = optional(any, {})
+#           registries          = optional(list(map(any)), [])
+#           dapr                = optional(map(string), {})
+#         })
+#  #       template = object({
+#           revisionSuffix = string
+#           containers     = list(any)
+#           scale          = map(any)
+#           volumes        = list(map(string))
+# # @note added required parameters as specified by validate results below
+#           cpu            = number
+#           command        = string
+#           image          = string
+#           max_replicas   = number
+#           min_replicas   = number
+#           memory         = number
+#   #      })
+#       })
+#     })
+#   }))
+#   default = {}
+# }
 
 variable "application_env" {
   description = "Application environment variables, which are defined as `secrets` within the container app configuration. This is to help reduce the risk of accidentally exposing secrets."
@@ -460,7 +532,7 @@ variable "container_app_blob_storage_public_access_enabled" {
   default     = false
 }
 
-variable "container_app_blob_storage_ipv4_allow_list" {
+variable "storage_account_ipv4_allow_list" {
   description = "A list of public IPv4 address to grant access to the Blob Storage Account"
   type        = list(string)
   default     = []
@@ -474,7 +546,8 @@ variable "enable_key_vault_tfvars" {
 
 variable "key_vault_access_users" {
   description = "List of users that require access to the Key Vault. This should be a list of User Principle Names (Found in Active Directory) that need to run terraform"
-  type        = list(string)
+  type = list(string)
+  default = []
 }
 
 variable "key_vault_access_ipv4" {

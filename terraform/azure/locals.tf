@@ -75,7 +75,7 @@ locals {
 
   enable_container_app_blob_storage                = var.enable_container_app_blob_storage
   container_app_blob_storage_public_access_enabled = var.container_app_blob_storage_public_access_enabled
-  container_app_blob_storage_ipv4_allow_list       = var.container_app_blob_storage_ipv4_allow_list
+  storage_account_ipv4_allow_list                  = var.storage_account_ipv4_allow_list
 
   enable_key_vault_tfvars             = var.enable_key_vault_tfvars
   key_vault_access_users              = var.key_vault_access_users

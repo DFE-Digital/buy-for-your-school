@@ -98,14 +98,27 @@ config/master.key
 !.env.example
 !.env.test
 
-# Terraform files
+# Terraform files -to ignore
 **/.terraform/*
+# .tfstate files
 *.tfstate
 *.tfstate.*
+*.tfplan
+#Crash log files
 crash.log
+crash.*.log
+terraform.log
+# All tfvars files ar to be exclude as they contain sensitive data that should not be exposed in a source control
+# and may also change from one environmen to another
 *.tfvars
+*.tfvars.json
 .terraformrc
 terraform.rc
+# Override files ignore as related to locally required overrides
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
 
 # Data dumps (might lead to accidental data breach)
 *.dump

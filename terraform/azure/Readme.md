@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-### 1, Get your environments tfvars file
+### 1. Get your environments tfvars file
 
 Only certain people can access this file, your Azure AD service principle must be added to the keyvault's access policies in order to download it.
 
@@ -14,19 +14,23 @@ Vault name is constructed like: `<env><project>-tfvars`
 
 Secret name is like: `<env><project>-tfvars`
 
-### 2, Get your `backend.tfvars`
+### 2. Get your `backend.tfvars`
 
 This file will need to be securely shared with you prior to running any terraform commands.
 
 ## Running terraform
 
-### 1, Init the modules
+### 1. Init the modules
 
 ```
-$ terraform init -backend-config=backend.tfvars
+$ terraform init -backend-config="backend.tfvars"
 ```
+__NOTE:__ The tfvars file name needs to be enclosed in quotes other wise the terraform command line may consider it two seperate items.
 
-### 2, Select your workspace
+See [terraform tracing](#tracing) later if problems occur.
+
+
+### 2. Select your workspace
 
 ```
 $ terraform workspace list
@@ -224,20 +228,25 @@ Each environment should be set up with the following environment secrets:
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.62.1 |
+| <a name="requirement_terraform_cli"></a> [terraform cli](#requirement\_terraform_cli) | >= 1.12.1 |
+
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4.30.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm.prod"></a> [azurerm.prod](#provider\_azurerm.prod) | 3.62.1 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.62.1 |
+| <a name="provider_azurerm.prod"></a> [azurerm.prod](#provider\_azurerm.prod) | 4.30.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.30.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_azure_container_apps_hosting"></a> [azure\_container\_apps\_hosting](#module\_azure\_container\_apps\_hosting) | github.com/ryantk/terraform-azurerm-container-apps-hosting | ryans-changes |
+| <a name="module_azure_container_apps_hosting"></a> [azure\_container\_apps\_hosting](#module\_azure\_container\_apps\_hosting) | github.com/DFE-Digital/terraform-azurerm-container-apps-hosting| v1.20.0 (latest) |
 | <a name="module_azurerm_key_vault_tfvars"></a> [azurerm\_key\_vault\_tfvars](#module\_azurerm\_key\_vault\_tfvars) | github.com/DFE-Digital/terraform-azurerm-key-vault-tfvars | v0.1.3 |
 
 ## Resources
@@ -290,7 +299,7 @@ Each environment should be set up with the following environment secrets:
 | <a name="input_enable_dns_zone"></a> [enable\_dns\_zone](#input\_enable\_dns\_zone) | Conditionally create a DNS zone | `bool` | `false` | no |
 | <a name="input_dns_zone_domain_name"></a> [dns\_zone\_domain\_name](#input\_dns\_zone\_domain\_name) | DNS zone domain name. If created, records will automatically be created to point to the CDN. | `string` | `""` | no |
 | <a name="input_cdn_frontdoor_custom_domains"></a> [cdn\_frontdoor\_custom\_domains](#input\_cdn\_frontdoor\_custom\_domains) | Azure CDN Front Door custom domains | `list(string)` | `[]` | no |
-| <a name="input_connect_dns_to_parent_zone"></a> [connect\_dns\_to\_parent\_zone](#input\_connect\_dns\_to\_parent\_zone) | Should the created DNS zone be added automatically to the parent DNS zone? | `bool` | n/a | yes |
+| <a name="input_connect_dns_to_parent_zone"></a> [connect\_dns\_to\_parent\_zone](#input\_connect\_dns\_to\_parent\_zone) | Should the created DNS zone be added automatically to the parent DNS zone? If set to true currently access to production AZURE resource groups will be needed| `bool` | n/a | yes |
 | <a name="input_parent_dns_zone_record_name"></a> [parent\_dns\_zone\_record\_name](#input\_parent\_dns\_zone\_record\_name) | Name given to the NS record created within the parent DNS zone (when enabling connect\_dns\_to\_parent\_zone) | `string` | n/a | yes |
 | <a name="input_parent_dns_zone_resource_group_name"></a> [parent\_dns\_zone\_resource\_group\_name](#input\_parent\_dns\_zone\_resource\_group\_name) | Name of the resource group which holds the parent DNS zone | `string` | n/a | yes |
 | <a name="input_monitoring_email_receivers"></a> [monitoring\_email\_receivers](#input\_monitoring\_email\_receivers) | A list of email addresses that should be notified by monitoring alerts | `list(string)` | `[]` | no |
@@ -337,3 +346,14 @@ Each environment should be set up with the following environment secrets:
 
 No outputs.
 <!-- END_TF_DOCS -->
+
+# <a name="tracing"></a>Terraform Tracing 
+
+If issues occur while executing terraform commands a trace mode can be enabled via environment variables that may highlight what the issue is. In PowerShell for instance enable tracing with the following command. The TF_LOG_PATH profvides a file location for the latest log file of each terraform plan execution.
+
+```
+$Env:TF_LOG="trace"
+$Env:TF_LOG_PATH="./terraform.log"
+```
+
+To cease tracing redefine TF_LOG as an empty pair of quotes.

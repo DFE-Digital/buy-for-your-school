@@ -5,12 +5,12 @@ terraform {
       version = "~> 3.62.1"
     }
   }
-  backend "azurerm" {}
+ backend "azurerm" {}
 }
 
 provider "azurerm" {
   features {}
-  skip_provider_registration = true
+  resource_provider_registrations = "none"
   subscription_id            = var.app_subscription_id
 }
 
@@ -18,7 +18,6 @@ provider "azurerm" {
   alias = "prod"
 
   features {}
-  skip_provider_registration = true
+  resource_provider_registrations = "none"
   subscription_id            = var.production_subscription_id
 }
-
