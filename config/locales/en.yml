@@ -425,6 +425,7 @@ en:
         primary: Join Energy for Schools
         secondary: Request support
 
+    service_name: Energy for Schools
     before_you_start:
       title: Energy for Schools
       subtitle: Before you start

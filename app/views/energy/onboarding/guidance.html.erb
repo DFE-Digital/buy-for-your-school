@@ -1,4 +1,4 @@
-<%= content_for :title, I18n.t("energy.guidance.title") %>
+<%= content_for :title, "#{I18n.t("energy.guidance.title")} - #{I18n.t("energy.service_name")}" %>
 
 <%= govuk_back_link(href: energy_onboarding_path(:join_the_scheme)) %>
 <%= render Column21Component.new do |c| %>

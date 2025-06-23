@@ -1,4 +1,4 @@
-<%= content_for :title, I18n.t("energy.school_selections.heading") %>
+<%= content_for :title, "#{@form.errors.any? ? 'Error: ' : ''}#{I18n.t('energy.school_selections.heading')} - #{I18n.t('energy.service_name')}" %>
 
 <p class="govuk-caption-l"><%= I18n.t("energy.school_selections.title") %></p>
 
