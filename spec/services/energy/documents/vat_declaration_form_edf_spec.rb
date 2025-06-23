@@ -47,7 +47,7 @@ RSpec.describe Energy::Documents::VatDeclarationFormEdf, type: :model do
         expect(fields.find { |f| f.name == "ELECTRCITY" }.value).to eq "Yes"
         expect(fields.find { |f| f.name == "CHARITY" }.value).to eq "Yes"
         full_name = fields.find { |f| f.name == "FULL NAME" }.value
-        expect(full_name).to eq("#{input_values[:vat_person_first_name]} #{input_values[:vat_person_last_name]}")
+        expect(full_name).to eq("#{input_values[:vat_person_first_name]} #{input_values[:vat_person_last_name]}".upcase)
         expect(fields.find { |f| f.name == "TELEPHONE" }.value).to eq input_values[:vat_person_phone]
         expect(fields.find { |f| f.name == "ADDRESS 5 POSTCODE" }.value).to eq(input_values[:vat_person_address][:postcode])
       end

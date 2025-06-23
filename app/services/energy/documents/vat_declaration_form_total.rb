@@ -7,14 +7,11 @@ module Energy
       TEMPLATE_FILE = "VAT Declaration Total.pdf"
 
       def initialize(onboarding_case:)
-        @support_case = onboarding_case.support_case
+        @onboarding_case = onboarding_case
+        @support_case = @onboarding_case.support_case
         @organisation = @support_case.organisation
         @onboarding_case_organisation = onboarding_case.onboarding_case_organisations.first
       end
-
-      # Fills the PDF form using the provided template file and saves it to the output path.
-      # Raises an error if the template file is missing.
-      # @return Pathname the path to the filled output PDF file
 
       def call
         raise "Missing template file" unless File.exist?(input_pdf_template_file)
@@ -61,7 +58,7 @@ module Energy
           percentage_of_property_rated: "#{@onboarding_case_organisation.vat_lower_rate_percentage}%",
           full_name_and_status_of_signatory: vat_person_or_vat_alt_person,
           signed: "",
-          date: Time.current.strftime("%Y-%m-%d"),
+          date: submitted_date,
         }
       end
 
@@ -95,6 +92,10 @@ module Energy
 
       def postcode
         address[:postcode]
+      end
+
+      def submitted_date
+        (@onboarding_case.submitted_at || Time.current).strftime("%d-%m-%Y")
       end
     end
   end

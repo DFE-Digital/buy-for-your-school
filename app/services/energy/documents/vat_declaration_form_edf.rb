@@ -7,7 +7,8 @@ module Energy
       TEMPLATE_FILE = "VAT Declaration Form EDF.pdf"
 
       def initialize(onboarding_case:)
-        @support_case = onboarding_case.support_case
+        @onboarding_case = onboarding_case
+        @support_case = @onboarding_case.support_case
         @organisation = @support_case.organisation
         @onboarding_case_organisation = onboarding_case.onboarding_case_organisations.first
       end
@@ -67,7 +68,7 @@ module Energy
         {
           "CHARITY" => "Yes",
           "Signature Field 2" => "",
-          "FULL NAME" => vat_person_or_vat_alt_person,
+          "FULL NAME" => vat_person_or_vat_alt_person.to_s.upcase,
           "Text Field 35" => submitted_date[0],
           "Text Field 36" => submitted_date[1],
           "Text Field 37" => submitted_date[2],
@@ -116,7 +117,7 @@ module Energy
       end
 
       def submitted_date
-        @submitted_date ||= Time.current.strftime("%d%m%y")
+        @submitted_date ||= (@onboarding_case.submitted_at || Time.current).strftime("%d%m%y")
       end
 
       def vat_registration_no

@@ -47,7 +47,7 @@ module Energy
     end
 
     def send_form_submission_email_with_documents_to_school
-      # return if onboarding_case.form_submitted_email_sent
+      return if onboarding_case.form_submitted_email_sent
 
       Energy::GenerateDocumentsAndSendEmailJob.perform_now(
         onboarding_case_id: onboarding_case.id,
