@@ -607,6 +607,76 @@
   - data
   - created_at
   - updated_at
+  :energy_onboarding_case_organisations:
+  - id
+  - energy_onboarding_case_id
+  - onboardable_id
+  - onboardable_type
+  - switching_energy_type
+  - created_at
+  - updated_at
+  - gas_bill_consolidation
+  - gas_current_supplier
+  - gas_current_supplier_other
+  - gas_current_contract_end_date
+  - electric_current_supplier
+  - electric_current_supplier_other
+  - electric_current_contract_end_date
+  - gas_single_multi
+  - electricity_meter_type
+  - is_electric_bill_consolidated
+  - site_contact_first_name
+  - site_contact_last_name
+  - site_contact_email
+  - site_contact_phone
+  - vat_rate
+  - vat_lower_rate_percentage
+  - vat_lower_rate_reg_no
+  - vat_certificate_declared
+  - vat_person_correct_details
+  - vat_person_first_name
+  - vat_person_last_name
+  - vat_person_phone
+  - vat_person_address
+  - billing_payment_method
+  - billing_payment_terms
+  - billing_invoicing_method
+  - billing_invoicing_email
+  - billing_invoice_address
+  - billing_invoice_address_source_id
+  - vat_alt_person_first_name
+  - vat_alt_person_last_name
+  - vat_alt_person_phone
+  - vat_alt_person_address
+  - loa_agreed
+  :energy_onboarding_cases:
+  - id
+  - support_case_id
+  - are_you_authorised
+  - created_at
+  - updated_at
+  - form_started_email_sent
+  - form_submitted_email_sent
+  - submitted_at
+  :energy_gas_meters:
+  - id
+  - energy_onboarding_case_organisation_id
+  - mprn
+  - created_at
+  - updated_at
+  - gas_usage
+  :energy_electricity_meters:
+  - id
+  - energy_onboarding_case_organisation_id
+  - mpan
+  - created_at
+  - updated_at
+  - is_half_hourly
+  - supply_capacity
+  - data_aggregator
+  - data_collector
+  - meter_operator
+  - electricity_usage
   :support_case_attachments:
   - id
   - support_case_id
@@ -1075,73 +1145,3 @@
   - key
   - created_at
   - updated_at
-  :energy_onboarding_case_organisations:
-  - id
-  - energy_onboarding_case_id
-  - onboardable_id
-  - onboardable_type
-  - switching_energy_type
-  - created_at
-  - updated_at
-  - gas_bill_consolidation
-  - gas_current_supplier
-  - gas_current_supplier_other
-  - gas_current_contract_end_date
-  - electric_current_supplier
-  - electric_current_supplier_other
-  - electric_current_contract_end_date
-  - gas_single_multi
-  - electricity_meter_type
-  - is_electric_bill_consolidated
-  - site_contact_first_name
-  - site_contact_last_name
-  - site_contact_email
-  - site_contact_phone
-  - vat_rate
-  - vat_lower_rate_percentage
-  - vat_lower_rate_reg_no
-  - vat_certificate_declared
-  - vat_person_correct_details
-  - vat_person_first_name
-  - vat_person_last_name
-  - vat_person_phone
-  - vat_person_address
-  - billing_payment_method
-  - billing_payment_terms
-  - billing_invoicing_method
-  - billing_invoicing_email
-  - billing_invoice_address
-  - billing_invoice_address_source_id
-  - vat_alt_person_first_name
-  - vat_alt_person_last_name
-  - vat_alt_person_phone
-  - vat_alt_person_address
-  - loa_agreed
-  :energy_onboarding_cases:
-  - id
-  - support_case_id
-  - are_you_authorised
-  - created_at
-  - updated_at
-  - form_started_email_sent
-  - form_submitted_email_sent
-  - submitted_at
-  :energy_gas_meters:
-  - id
-  - energy_onboarding_case_organisation_id
-  - mprn
-  - created_at
-  - updated_at
-  - gas_usage
-  :energy_electricity_meters:
-  - id
-  - energy_onboarding_case_organisation_id
-  - mpan
-  - created_at
-  - updated_at
-  - is_half_hourly
-  - supply_capacity
-  - data_aggregator
-  - data_collector
-  - meter_operator
-  - electricity_usage
