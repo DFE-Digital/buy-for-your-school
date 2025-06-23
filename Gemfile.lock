@@ -882,6 +882,7 @@ DEPENDENCIES
   rails (~> 7)
   rails-controller-testing
   rails_layout
+  rake
   redis (~> 4.8)
   redis-client
   redis-namespace
