@@ -445,6 +445,38 @@ describe "'Check your answers' flows", :js do
         end
       end
     end
+
+    context "when VAT rate is 5% and the vat certificate has not been accepted and the user clicks continue" do
+      before do
+        case_organisation.update!(vat_rate: 5,
+                                  vat_lower_rate_percentage: 8,
+                                  vat_certificate_declared: false,
+                                  vat_person_correct_details: true,
+                                  vat_person_first_name: "Jane",
+                                  vat_person_phone: "0123456789",
+                                  vat_person_address: { "street": "5 Main Street", "locality": "Duke's Place", "postcode": "EC3A 5DE" })
+        visit energy_case_check_your_answers_path(onboarding_case)
+      end
+
+      it "navigates to the vat certificate declaration page without go to task list link, then to LOA" do
+        within ".govuk-summary-card", text: "VAT Declaration" do
+          expect(page).to have_text("5%")
+          expect(page).to have_text("No")
+        end
+        click_on "Continue"
+
+        # Go to declaration page
+        expect(page).to have_text("VAT certificate of declaration")
+        expect(page).not_to have_link("Discard and go to task list")
+        find("#vat-certificate-form-vat-certificate-declared-declaration1-field").check
+        find("#vat-certificate-form-vat-certificate-declared-declaration2-field").check
+        find("#vat-certificate-form-vat-certificate-declared-declaration3-field").check
+        click_button "Save and continue"
+
+        # Go to LOA
+        expect(page).to have_text("Agree to the Energy for Schools letter of authority")
+      end
+    end
   end
 
   describe "Billing preferences" do
