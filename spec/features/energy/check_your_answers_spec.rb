@@ -211,7 +211,7 @@ describe "'Check your answers' flows", :js do
         #  Land on the edit screen for the single meter
         expect(page).to have_text("Electricity meter details")
         expect(page).not_to have_link("Discard and go to task list")
-        expect(page).to have_field("Add an MPAN", with: electricity_meter_numbers.first)
+        expect(page).to have_field("Add the MPAN", with: electricity_meter_numbers.first)
         fill_in "Estimated annual electricity usage", with: "1234"
         click_button "Save and continue"
 
