@@ -553,8 +553,9 @@ en:
       page_title: Electricity meter summary
       heading: Electricity meter details
       mpan_label: Add an MPAN
-      mpan_hint: You can usually find the 13-digit MPAN on your electricity bill. Please check all pages.
-      mpan_details_link: Where can I find my MPAN?
+      mpan_label_single: Add the MPAN
+      mpan_image_alt_text1: Image of a 21-digit Supply number with the final 13 digits highlighted, to represent the MPAN
+      mpan_image_alt_text2: Image of a 21-digit Supply number with the first 2 digits as 00 highlighted, to represent the MPAN is half hourly
       mpan_details: Your MPAN is on your electricity bill. It’s the last 13 digits of the Supply number.
       half_hourly_label: Is this a half-hourly meter?
       half_hourly_hint: Your meter is half hourly if your Supply number begins with 00. Your Supply number is on your electricity bill.
@@ -564,7 +565,7 @@ en:
       data_aggregator_label: Who is the data aggregator?
       data_collector_label: Who is the data collector?
       meter_operator_label: Who is the meter operator?
-      electricity_usage_label: Estimated annual electricity usage
+      electricity_usage_label: Estimated annual electricity usage, in kilowatt hours (kWh)
       electricity_usage_suffix: kWh
       electricity_usage_details_link: Where can I find annual electricity usage?
       electricity_usage_details: If your annual estimated usage for this meter is not on your bill, add up the kWh for this meter from your last 12 electricity bills to calculate your total usage.
