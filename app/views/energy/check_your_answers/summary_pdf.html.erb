@@ -1,0 +1,26 @@
+<p>&nbsp;</>
+<p style="text-align: center;"><b><%= I18n.t("energy.check_your_answers.summary_pdf.title", date: @submission_date.strftime("%d-%m-%Y")) %></b></p>
+<br />
+
+<% @organisation_task_lists.each do |org_task_list| %>
+  <h2><%= org_task_list.org_name %></h2>
+  <% org_task_list.sections.each do |sec| %>
+    <div class="gov_card">
+      <table class="gov_card">
+        <thead>
+          <tr>
+            <th colspan="2"><%= I18n.t("energy.check_your_answers.#{sec.title}.title") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% sec.summary.each do |row| %>
+            <tr>
+              <td><%= I18n.t("energy.check_your_answers.#{sec.title}.#{row[0]}") %></td>
+              <td><%= row[2] || row[1] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

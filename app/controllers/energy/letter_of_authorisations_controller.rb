@@ -16,6 +16,7 @@ module Energy
           onboarding_case.support_case.update!(procurement_stage: Support::ProcurementStage.find_by(key: "form_review"))
         end
 
+        send_form_submission_email_with_documents_to_school
         redirect_to energy_case_confirmation_path
       else
         render :show
