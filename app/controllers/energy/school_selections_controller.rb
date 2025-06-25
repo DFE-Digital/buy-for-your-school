@@ -2,6 +2,8 @@ module Energy
   class SchoolSelectionsController < ApplicationController
     skip_before_action :check_if_submitted
     before_action :form, only: %i[update]
+    before_action :valid_support_organisation
+    before_action :valid_establishment_group
     before_action :select_schools
 
     def show
@@ -29,10 +31,20 @@ module Energy
   private
 
     def select_schools
-      @select_schools = current_user.orgs.map do |org|
-        key = org["urn"] ? "urn_#{org['urn']}" : "uid_#{org['uid']}"
-        [key, org["name"]]
-      end
+      valid_urns = @valid_support_organisation.pluck(:urn)
+      valid_uids = @valid_establishment_group.pluck(:uid)
+
+      @select_schools = current_user.orgs
+        .select { |org| valid_urns.include?(org["urn"]) || valid_uids.include?(org["uid"]) }
+        .map { |org| ["#{org['urn'] ? 'urn' : 'uid'}_#{org['urn'] || org['uid']}", org["name"]] }
+    end
+
+    def valid_support_organisation
+      @valid_support_organisation = Support::Organisation.all
+    end
+
+    def valid_establishment_group
+      @valid_establishment_group = Support::EstablishmentGroup.all
     end
 
     def form
