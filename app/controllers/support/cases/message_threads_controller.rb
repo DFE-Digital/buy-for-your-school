@@ -77,6 +77,10 @@ module Support
         end
       end
 
+      helper_method def portal_case_message_thread_path(additional_params = {})
+        send("#{agent_portal_namespace}_case_message_thread_path", additional_params)
+      end
+
       def authorize_agent_scope = :access_individual_cases?
 
       def current_case

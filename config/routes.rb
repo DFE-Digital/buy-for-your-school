@@ -548,6 +548,7 @@ Rails.application.routes.draw do
     delete "notifications/:notification_id/read", to: "/support/notifications/reads#destroy", as: :destroy_notification_read
     post "management/agents", to: "/support/management/agents#create", as: :management_agents
     patch "management/agents/:id", to: "/support/management/agents#update", as: :management_agent
+    patch "email_read_status/:email_id", to: "/support/email_read_status#update", as: :email_read_status
 
     resources :cases, only: %i[index show] do
       scope module: :cases do
@@ -563,6 +564,13 @@ Rails.application.routes.draw do
       scope module: :cases do
         get "summary/edit", to: "/support/cases/summaries#edit", as: :edit_summary
         patch "summary", to: "/support/cases/summaries#update", as: :update_summary
+      end
+    end
+
+    resources :cases, only: %i[index show] do
+      scope module: :cases do
+        get "quick_edit/edit", to: "/support/cases/quick_edits#edit", as: :edit_quick_edit
+        patch "quick_edit", to: "/support/cases/quick_edits#update", as: :quick_edit
       end
     end
 

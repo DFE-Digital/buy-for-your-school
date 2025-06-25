@@ -10,8 +10,13 @@ module Energy
 
     def update
       if validation.success?
-        @onboarding_case_organisation.update!(**form.data)
+        ActiveRecord::Base.transaction do
+          @onboarding_case_organisation.update!(**form.data)
+          onboarding_case.update!(submitted_at: Time.zone.now)
+          onboarding_case.support_case.update!(procurement_stage: Support::ProcurementStage.find_by(key: "form_review"))
+        end
 
+        send_form_submission_email_with_documents_to_school
         redirect_to energy_case_confirmation_path
       else
         render :show
@@ -48,10 +53,6 @@ module Energy
         onboarding_case_id: onboarding_case.id,
         current_user_id: current_user.id,
       )
-    end
-
-    def onboarding_case
-      @onboarding_case ||= @onboarding_case_organisation.onboarding_case
     end
   end
 end

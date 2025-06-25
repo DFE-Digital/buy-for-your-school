@@ -632,9 +632,11 @@ en:
       telephone: Telephone number
       address: Select an address
     confirmation:
-      title: Information submitted
-      paragraph_one: We've sent you an email containing a copy of this form and details about your new contract.
-      paragraph_two: Depending on your contract’s end date, you may be placed on an interim contract to ensure continued supply to your school.
+      title: Information submitted on %{date}
+      case_reference_number: Case reference number
+      paragraph_one: "We’ve sent an email to <strong>%{email}</strong> containing a copy of this form and details about your new contract."
+      paragraph_two: Depending on your contract’s end date, you may be placed on an interim rate to ensure continued supply to your school.
+      paragraph_three: Check your current contract's termination terms and notice period to find out how much notice you need to provide to switch suppliers. You must provide notice to your current supplier in writing. DfE cannot do this for you.
       takes_five_minutes: (takes 5 minutes)
       link:
         label: What did you think of this service?
@@ -715,23 +717,26 @@ en:
         billing_invoicing_method: How would you like to receive your bills?
         billing_invoicing_email: Email for invoice
         billing_invoice_address: Address for invoice
-
+      no_data: No onboarding data available for this case
+      summary_pdf:
+        title: "DfE Energy for Schools submission summary: %{date}"
     letter_of_authorisation:
       title: Agree to the Energy for Schools letter of authority
-      paragraphs: 
+      pdf_title: DfE Energy for Schools letter of authority
+      paragraphs:
         paragraph1: "This letter of authority sets out the arrangements agreed between the Department for Education ('DfE')and %{school_name} (the 'Education Provider') in connection with the provision of energy supplies."
         paragraph2: This letter supersedes and replaces all previous agreements between DfE and the Education Provider in relation to the supply of gas and/or electricity.
         paragraph3: DfE has entered into and/or will enter into one or more Framework Agreements with various suppliers for the provision of gas and/or electricity to DfE and to various sites identified by DfE. Each such energy supplier is referred to in this letter as a 'Supplier'. Under the Framework Agreements, DfE is entitled to request a Supplier to provide gas and/or electricity to locations identified by DfE.
         paragraph4: "The Education Provider has requested and DfE has agreed to arrange for the supply of gas and/or electricity to the following Site(s):"
-      appointment: 
+      appointment:
         title: Appointment
-        paragraph_one: The Education Provider appoints and authorises DfE to act on behalf of the Education Provider to negotiate and conclude arrangements with the relevant Supplier for the supply of gas and/or electricity to theSite(s).
+        paragraph_one: The Education Provider appoints and authorises DfE to act on behalf of the Education Provider to negotiate and conclude arrangements with the relevant Supplier for the supply of gas and/or electricity to the Site(s).
         paragraph_two: "The Education Provider acknowledges that DfE's appointment includes:"
         first_list:
           item1: obtaining consumption and billing data for the purposes of conducting consumption and cost analysis
           item2: obtaining contractual details (contract durations and terms) for existing energy supplies
           item3: notifying energy suppliers of or initiating 'Change of Tenancies' (COT’s) or Novations
-          item4: notifying energy suppliers of or initiating 'Change of Address' for any of the School/Academy’s accounts or billing addresses
+          item4: notifying energy suppliers of or initiating 'Change of Address' for any of the Education provider's accounts or billing addresses
           item5: providing annual trading reports and monthly consolidated data reports to help budget forecasting
           item6: taking responsibility for the contractual arrangements between DfE and the Suppliers
         paragraph_three: "but does not include:"
@@ -760,6 +765,10 @@ en:
         agreement1: I confirm that I am authorised by the Education Provider to switch the supply of gas and/or electricity at the Site(s) to the Energy for Schools contract
         agreement2: I confirm that I have read this letter of authority and the Education Provider agrees to its terms and conditions
         agreement3: I understand that my name will be used as the authorised signatory for this letter of authority
+      signed:
+        signed_by_school: "Signed on behalf of %{school_name} by:"
+        signed_by_dfe: "Signed on behalf of the Department for Education by:"
+        signed_by_dfe_user: Annette Harrison
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
