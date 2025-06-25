@@ -4,7 +4,7 @@
     <%= form.hidden_field :electricity_meter_type, value: '' %>
 
     <%= form.govuk_radio_buttons_fieldset :electricity_meter_type,
-            legend: { text: I18n.t("energy.electricity_meter_type.question"), size: "l" },
+            legend: { text: I18n.t("energy.electricity_meter_type.question"), size: "l", tag: "h1" },
             hint:  { text: I18n.t("energy.electricity_meter_type.hint") } do %>
       <% form.object.electricity_meter_type_options.each do |meter_type| %>
         <%= form.govuk_radio_button :electricity_meter_type, meter_type, label: { text: I18n.t(meter_type, scope: "energy.electricity_meter_type.meter_types") } %>

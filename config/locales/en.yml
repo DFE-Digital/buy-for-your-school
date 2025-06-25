@@ -425,6 +425,7 @@ en:
         primary: Join Energy for Schools
         secondary: Request support
 
+    service_name: Energy for Schools
     before_you_start:
       title: Energy for Schools
       subtitle: Before you start
@@ -440,6 +441,7 @@ en:
       heading: Which school are you buying for?
     authorisation:
       heading: Are you authorised to switch energy suppliers for these schools?
+      page_title: Do you have authorisation?
       warning: Please seek appropriate authorisation to switch energy suppliers. There is no cooling off period once you’ve submitted this form.
       alerts:
         multiple_cases: There are multiple cases for this organisation
@@ -447,18 +449,21 @@ en:
         email_subject: "Help request: %{org_name} - multiple concurrent Energy for Schools applications"
     switching_electricity:
       heading: Are you switching electricity, gas or both?
+      page_title: Which energy supply are you switching?
       energy_type:
         electricity: Electricity only
         gas: Gas only
         gas_electricity: Gas and electricity
     gas_single_multi:
       heading: Is this a single or multi meter site?
+      page_title: Is this a single gas meter site?
       hint: If your site is multi meter, your bill will have more than one meter number in the readings section.
       single: Single meter
       multi: Multi meter
     tasks:
       error: Complete all sections of the task list before continuing
       heading: Provide information about your schools
+      page_title: Task list
       task_list:
         item:
           gas_contract_information: Gas contract information
@@ -475,6 +480,7 @@ en:
             not_started: Not started
     gas_meter_details:
       title: Gas meters and usage
+      page_title: Gas meter summary
       heading: Gas meter details
       heading_info: You can usually find this information on your gas bill. Please check all pages.
       mprn_label: Add a Meter Point Reference Number (MPRN)
@@ -531,6 +537,7 @@ en:
         option_no: "No, I want a separate bill for each MPAN"
     electricity_meter_type:
       title: Electricity meters and usage
+      page_title: Is this a single electricity meter site?
       question: Is this a single or multi meter site?
       hint: If your site is multi meter, your bill will have more than one meter number in the readings section.
       meter_types:
@@ -538,6 +545,7 @@ en:
         multi: Multi meter
     electricity_meter:
       title: Electricity meters and usage
+      page_title: Electricity meter summary
       heading: Electricity meter details
       mpan_label: Add an MPAN
       mpan_hint: You can usually find the 13-digit MPAN on your electricity bill. Please check all pages.
@@ -723,7 +731,8 @@ en:
     letter_of_authorisation:
       title: Agree to the Energy for Schools letter of authority
       pdf_title: DfE Energy for Schools letter of authority
-      paragraphs:
+      page_title: Letter of authority
+      paragraphs: 
         paragraph1: "This letter of authority sets out the arrangements agreed between the Department for Education ('DfE')and %{school_name} (the 'Education Provider') in connection with the provision of energy supplies."
         paragraph2: This letter supersedes and replaces all previous agreements between DfE and the Education Provider in relation to the supply of gas and/or electricity.
         paragraph3: DfE has entered into and/or will enter into one or more Framework Agreements with various suppliers for the provision of gas and/or electricity to DfE and to various sites identified by DfE. Each such energy supplier is referred to in this letter as a 'Supplier'. Under the Framework Agreements, DfE is entitled to request a Supplier to provide gas and/or electricity to locations identified by DfE.
