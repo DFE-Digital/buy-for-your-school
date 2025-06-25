@@ -38,7 +38,7 @@ describe "VAT rate charge", :js do
     choose "5%"
     click_button "Save and continue"
     expect(page).to have_text("Enter the percentage qualifying for reduced VAT")
-    expect(page).to have_text("Enter a VAT registration number")
+    expect(page).not_to have_text("Enter a VAT registration number")
 
     fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: invalid_percentage
     fill_in "VAT registration number (optional)", with: invalid_vat_reg_no

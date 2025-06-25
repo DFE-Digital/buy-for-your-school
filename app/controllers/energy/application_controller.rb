@@ -20,7 +20,7 @@ module Energy
     end
 
     def set_routing_flags
-      @routing_flags = { tasks: params[:tasks], check: params[:check] }
+      @routing_flags = { tasks: params[:tasks], check: params[:check], vat_declaration_prompt: params[:vat_declaration_prompt] }
     end
 
     def from_check?
@@ -29,6 +29,10 @@ module Energy
 
     def from_tasks?
       params[:tasks] == "1"
+    end
+
+    def from_vat_declaration_prompt?
+      params[:vat_declaration_prompt] == "1"
     end
 
     def onboarding_case
