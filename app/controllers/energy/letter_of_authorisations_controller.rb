@@ -16,6 +16,7 @@ module Energy
           onboarding_case.support_case.update!(procurement_stage: Support::ProcurementStage.find_by(key: "form_review"))
         end
 
+        send_form_submission_email_with_documents_to_school
         redirect_to energy_case_confirmation_path
       else
         render :show
@@ -48,7 +49,7 @@ module Energy
     def send_form_submission_email_with_documents_to_school
       return if onboarding_case.form_submitted_email_sent
 
-      Energy::GenerateDocumentsAndSendEmailJob.perform_later(
+      Energy::GenerateDocumentsAndSendEmailJob.perform_now(
         onboarding_case_id: onboarding_case.id,
         current_user_id: current_user.id,
       )
