@@ -16,7 +16,7 @@ module Energy
     end
 
     def check_if_submitted
-      redirect_to energy_case_confirmation_path(onboarding_case) if onboarding_case.submitted?
+      # redirect_to energy_case_confirmation_path(onboarding_case) if onboarding_case.submitted?
     end
 
     def set_routing_flags
