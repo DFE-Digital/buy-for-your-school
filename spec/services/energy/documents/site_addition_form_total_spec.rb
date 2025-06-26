@@ -49,7 +49,7 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
       }
     end
 
-    # after { FileUtils.rm_f(service.output_file_xl) }
+    after { FileUtils.rm_f(service.output_file_xl) }
 
     describe "creates site addition details on XL document" do
       before do
@@ -63,7 +63,7 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
 
       it "matches organisation details" do
         expect(worksheet[starting_row][0].value).to eq("Department for Education")
-        expect(worksheet[starting_row][1].value).to eq("Sanctuary Bulidings")
+        expect(worksheet[starting_row][1].value).to eq("Sanctuary Buildings")
         expect(worksheet[starting_row][5].value).to eq("SW1P 3BT")
       end
 
@@ -110,6 +110,7 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
         expect(worksheet[starting_row][47].value).to eq(20)
         expect(worksheet[starting_row][48].value).to eq("Single meter site")
         expect(worksheet[starting_row][50].value).to eq("Paper")
+        expect(worksheet[starting_row][52].value).to eq("Email invoice notification with link to TGP Portal")
       end
     end
 
@@ -148,8 +149,8 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
           expect(worksheet[starting_row][0].value).to eq("Department for Education")
           expect(worksheet[starting_row + 1][0].value).to eq("Department for Education")
 
-          expect(worksheet[starting_row][1].value).to eq("Sanctuary Bulidings")
-          expect(worksheet[starting_row + 1][1].value).to eq("Sanctuary Bulidings")
+          expect(worksheet[starting_row][1].value).to eq("Sanctuary Buildings")
+          expect(worksheet[starting_row + 1][1].value).to eq("Sanctuary Buildings")
         end
 
         it "has multiple rows for main contact details with same data" do
