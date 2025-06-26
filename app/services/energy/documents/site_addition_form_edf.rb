@@ -38,7 +38,7 @@ module Energy
       end
 
       def output_file_xl
-        @output_file_xl ||= OUTPUT_XL_PATH.join("EDF_XL_#{@support_case.ref}_#{Date.current}.xlsx")
+        @output_file_xl ||= OUTPUT_XL_PATH.join("EDF Site Addition_#{@support_case.ref}_#{Date.current}.xlsx")
       end
 
     private
