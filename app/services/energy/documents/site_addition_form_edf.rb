@@ -18,7 +18,6 @@ module Energy
       end
 
       def call
-        # binding.pry
         raise "Missing template file: #{input_template_file_xl}" unless File.exist?(input_template_file_xl)
 
         electricity_meters.each_with_index do |electricity_meter, row_index|
@@ -53,7 +52,6 @@ module Energy
       end
 
       def electricity_meters
-        # binding.pry
         @electricity_meters ||= Energy::ElectricityMeter.includes(:onboarding_case_organisation).where(energy_onboarding_case_organisation_id: @onboarding_case_organisation.id)
       end
 
@@ -84,7 +82,6 @@ module Energy
         }.merge(key_business_information)
       end
 
-      # Default values
       def key_business_information
         {
           "Key Business Contact Full Name" => "Annette Harrison",
@@ -145,10 +142,6 @@ module Energy
         billing_address[:postcode]
       end
 
-      def gas_supplier
-        @onboarding_case_organisation.gas_current_supplier || @onboarding_case_organisation.gas_current_supplier_other
-      end
-
       def contract_end_date
         @contract_end_date ||= @onboarding_case_organisation.electric_current_contract_end_date
       end
@@ -165,6 +158,3 @@ module Energy
     end
   end
 end
-
-# onboarding_case = Energy::OnboardingCase.find("4e72426d-95fe-4a30-b0ab-eb38d796752e")
-# res = Energy::Documents::SiteAdditionFormEdf.new(onboarding_case:).call
