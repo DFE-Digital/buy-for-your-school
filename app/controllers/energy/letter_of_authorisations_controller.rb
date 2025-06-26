@@ -49,15 +49,16 @@ module Energy
     end
 
     def send_form_submission_email_with_documents_to_school
-      # return if onboarding_case.form_submitted_email_sent
+      return if onboarding_case.form_submitted_email_sent
 
-      Energy::GenerateDocumentsAndSendEmailJob.perform_now(
+      Energy::GenerateDocumentsAndSendEmailJob.perform_later(
         onboarding_case_id: onboarding_case.id,
         current_user_id: current_user.id,
       )
     end
 
     def generate_site_addition_xl_documents
+      # should change to perform_later once QA passed
       Energy::GenerateSiteAdditionXlDocumentsJob.perform_now(
         onboarding_case_id: onboarding_case.id,
         current_user_id: current_user.id,
