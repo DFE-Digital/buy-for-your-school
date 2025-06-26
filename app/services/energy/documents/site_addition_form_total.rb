@@ -20,7 +20,6 @@ module Energy
       def call
         raise "Missing template file: #{input_template_file_xl}" unless File.exist?(input_template_file_xl)
 
-        # binding.pry
         gas_meters.each_with_index do |gas_meter, row_index|
           site_addition_data = build_site_addition_data(gas_meter)
 
@@ -110,7 +109,7 @@ module Energy
           "*Billing Address Line 2" => site_address_line2,
           "*Billing Address Town/City" => billing_address_city,
           "*Billing Address Country" => "UK",
-          "*Billing Address Postcode" => site_address_postcode,
+          "*Billing Address Postcode" => billing_address_postcode,
           "Special Instructions" => "Department for Education/#{@organisation.name}",
           "*Site Address Line 1" => site_address_line1,
           "*Site Address Line 2" => site_address_line2,
@@ -134,7 +133,7 @@ module Energy
           "*VAT Rate (%)" => @onboarding_case_organisation.vat_rate,
           "*Is this a single meter or multi meter site?" => gas_meter_type,
           "Premise level aggregation required - Please detail MPRs to aggregate" => "",
-          "*Billing Method" => payment_method,
+          "*Billing Method" => billing_invoicing_method,
           "*Email address(es) for online bills" => @onboarding_case_organisation.billing_invoicing_email,
           "*Billing Notification Preference" => "Check with BA",
         }
@@ -223,7 +222,3 @@ module Energy
     end
   end
 end
-
-# onboarding_case = Energy::OnboardingCase.find("0fafd4ed-9535-4c3c-9163-06dda4fe905e")
-# d = onboarding_case.onboarding_case_organisations.first
-# res = Energy::Documents::SiteAdditionFormTotal.new(onboarding_case:).call
