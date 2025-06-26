@@ -564,6 +564,17 @@ Rails.application.routes.draw do
         get "message_threads/:id", to: "/support/cases/message_threads#show", as: :message_thread
         post "message_threads", to: "/support/cases/message_threads#create", as: :message_threads
         get "message_threads", to: "/support/cases/message_threads#index", as: :message_threads_index
+        get "message_threads/logged_contacts", to: "/support/cases/message_threads#logged_contacts", as: :logged_contacts
+        get "interactions/new", to: "/support/interactions#new", as: :new_interaction
+        post "interactions", to: "/support/interactions#create", as: :interactions
+        post "on_hold", to: "/support/cases/on_holds#create", as: :on_hold
+        post "opening", to: "/support/cases/openings#create", as: :opening
+        get "opening/new", to: "/support/cases/openings#new", as: :new_opening
+        get "resolution/new", to: "/support/cases/resolutions#new", as: :new_resolution
+        post "resolution", to: "/support/cases/resolutions#create", as: :resolution
+        get "closures", to: "/support/cases/closures#index", as: :closures
+        post "closures/confirm", to: "/support/cases/closures#confirm", as: :closures_confirm
+        post "closures", to: "/support/cases/closures#create", as: :closures_post
       end
     end
 
