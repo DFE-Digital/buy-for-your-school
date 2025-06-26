@@ -38,8 +38,7 @@ module Energy
       end
 
       def output_file_xl
-        # @output_file_xl ||= OUTPUT_XL_PATH.join("TOTAL Site Addition_#{@support_case.ref}_#{Date.current}.xlsx")
-        @output_file_xl ||= OUTPUT_XL_PATH.join("total_xl_#{@support_case.ref}_#{Date.current}.xlsx")
+        @output_file_xl ||= OUTPUT_XL_PATH.join("TOTAL Site Addition_#{@support_case.ref}_#{Date.current}.xlsx")
       end
 
     private
@@ -69,7 +68,7 @@ module Energy
       def organisation_details
         {
           "*Group Name" => "Department for Education",
-          "*Central Organisation Address Line 1" => "Sanctuary Bulidings",
+          "*Central Organisation Address Line 1" => "Sanctuary Buildings",
           "*Central Organisation Address Line 2" => "Great Smith Street",
           "*Central Organisation Address Line 3" => "London",
           "*Central Organisation Address Line 4" => "",
@@ -135,7 +134,7 @@ module Energy
           "Premise level aggregation required - Please detail MPRs to aggregate" => "",
           "*Billing Method" => billing_invoicing_method,
           "*Email address(es) for online bills" => @onboarding_case_organisation.billing_invoicing_email,
-          "*Billing Notification Preference" => "Check with BA",
+          "*Billing Notification Preference" => billing_notification_preference,
         }
       end
 
@@ -218,6 +217,10 @@ module Energy
 
       def gas_meter_type
         @onboarding_case_organisation.gas_single_multi_single? ? "Single meter site" : "Multi meter site"
+      end
+
+      def billing_notification_preference
+        @onboarding_case_organisation.billing_invoicing_method_email? ? "Email with invoice attachment" : "Email invoice notification with link to TGP Portal"
       end
     end
   end
