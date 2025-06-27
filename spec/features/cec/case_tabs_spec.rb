@@ -35,6 +35,10 @@ RSpec.feature "Case summary", :js do
     expect(page).not_to have_css(".govuk-tabs__list-item", text: "Request")
   end
 
+  it "does not have the link Move emails to existing case" do
+    expect(page).not_to have_text "Move emails to existing case"
+  end
+
   describe "School details tab" do
     before { visit "/cec/onboarding_cases/#{support_case.id}#school-details" }
 
