@@ -3,14 +3,14 @@
 <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
   <ol class="govuk-breadcrumbs__list">
     <li class="govuk-breadcrumbs__list-item">
-      <%= link_to I18n.t("support.management.base.header"), support_management_path, class: "govuk-breadcrumbs__link" %>
+      <%= link_to I18n.t("support.management.base.header"), portal_management_path, class: "govuk-breadcrumbs__link" %>
     </li>
     <li class="govuk-breadcrumbs__list-item">
-      <%= link_to I18n.t("support.management.email_templates.header"), support_management_email_templates_path, class: "govuk-breadcrumbs__link" %>
+      <%= link_to I18n.t("support.management.email_templates.header"), portal_management_email_templates_index_path, class: "govuk-breadcrumbs__link" %>
     </li>
   </ol>
 </nav>
 
 <h1 class="govuk-heading-l"><%= I18n.t("support.management.email_templates.new.header") %></h1>
 
-<%= render partial: "support/management/email_templates/form/form", locals: { method: :post, url: support_management_email_templates_path, edit: false } %>
+<%= render partial: "support/management/email_templates/form/form", locals: { method: :post, url: portal_management_email_templates_path, edit: false } %>
