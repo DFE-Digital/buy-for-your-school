@@ -224,5 +224,9 @@ module Support
     def energy_onboarding_case?
       sub_category == "DfE Energy for Schools service"
     end
+
+    def case_creator_full_name
+      "#{first_name} #{last_name}".strip
+    end
   end
 end

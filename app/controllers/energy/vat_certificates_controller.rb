@@ -53,6 +53,7 @@ private
   def redirect_path
     return energy_case_tasks_path if from_tasks?
     return energy_case_check_your_answers_path if from_check?
+    return energy_case_letter_of_authorisation_path if from_vat_declaration_prompt?
 
     energy_case_org_billing_preferences_path
   end
