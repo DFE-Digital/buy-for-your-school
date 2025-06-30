@@ -40,7 +40,14 @@ DfE::Analytics.configure do |config|
   # enable analytics. You might want to hook this up to a feature flag or
   # environment variable.
   #
-  config.enable_analytics = proc { ENV.fetch("ENABLE_DFE_ANALYTICS", nil) == "TRUE" }
+  config.enable_analytics = proc {
+    # Block analytics for specific request paths or conditions
+    excluded_paths = ["/health_check"]
+    current_path = Thread.current[:current_request_path] # Set this in a middleware or controller
+
+    # Enable analytics only if the path is not excluded and the environment variable is set to TRUE
+    ENV.fetch("ENABLE_DFE_ANALYTICS", nil) == "TRUE" && !excluded_paths.include?(current_path)
+  }
 
   # The environment we’re running in. This value will be attached
   # to all events we send to BigQuery.
