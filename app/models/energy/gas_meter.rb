@@ -3,6 +3,7 @@ class Energy::GasMeter < ApplicationRecord
                                             foreign_key: "energy_onboarding_case_organisation_id"
 
   after_save :update_support_case_timestamp
+  after_destroy :update_support_case_timestamp
 
   MAX_METER_COUNT = 5
 
