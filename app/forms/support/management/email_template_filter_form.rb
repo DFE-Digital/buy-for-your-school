@@ -19,6 +19,7 @@ module Support
         @group = Support::EmailTemplateGroup.find(@group_id) if @group_id.present?
         @subgroup_ids = [Support::Emails::Templates::Filter.all_none_values[:all]] if subgroup_ids.blank?
         @stages = [Support::Emails::Templates::Filter.all_none_values[:all]] if stages.blank?
+        @selected_id = group_id
       end
 
       def group_options
@@ -40,7 +41,7 @@ module Support
           OpenStruct.new(id: Support::Emails::Templates::Filter.all_none_values[:all], title: I18n.t("support.management.email_templates.index.template_manager.filters.all_stages"), exclusive: true),
           OpenStruct.new(id: Support::Emails::Templates::Filter.all_none_values[:none], title: I18n.t("support.management.email_templates.index.template_manager.filters.no_stage"), exclusive: false),
         ]
-        other_options + Support::EmailTemplate.stages.map { |stage| OpenStruct.new(id: stage.to_s, title: "#{I18n.t('support.management.email_templates.common.stage')} #{stage}", exclusive: false) }
+        other_options + Support::EmailTemplate.stages(@group_id).map { |stage| OpenStruct.new(id: stage.to_s, title: I18n.t(stage, scope: "support.management.email_templates.stages").to_s, exclusive: false) }
       end
 
       def has_subgroups?
