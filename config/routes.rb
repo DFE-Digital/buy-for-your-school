@@ -549,6 +549,13 @@ Rails.application.routes.draw do
     post "management/agents", to: "/support/management/agents#create", as: :management_agents
     patch "management/agents/:id", to: "/support/management/agents#update", as: :management_agent
     patch "email_read_status/:email_id", to: "/support/email_read_status#update", as: :email_read_status
+    post "management/email_templates", to: "/support/management/email_templates#create", as: :management_email_templates
+    get "management/email_templates", to: "/support/management/email_templates#index", as: :management_email_templates_index
+    get "management/email_templates/new", to: "/support/management/email_templates#new", as: :new_management_email_template
+    get "management/email_templates/:id/edit", to: "/support/management/email_templates#edit", as: :edit_management_email_template
+    patch "management/email_templates/:id", to: "/support/management/email_templates#update", as: :update_management_email_template
+    delete "management/email_templates/:id", to: "/support/management/email_templates#destroy", as: :delete_management_email_template
+    get "management/email_template_groups/subgroups/(:group_id)", to: "/support/management/email_template_groups#subgroups", as: :subgroups_management_email_template_groups
 
     resources :cases, only: %i[index show] do
       scope module: :cases do
