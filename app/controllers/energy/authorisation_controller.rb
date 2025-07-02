@@ -29,7 +29,7 @@ module Energy
     def check_active_onboarding_case
       if existing_onboarding_organisations.any?
         energy_case_ids = existing_onboarding_organisations.pluck(:energy_onboarding_case_id)
-        energy_cases = Energy::OnboardingCase.where(id: energy_case_ids)
+        energy_cases = Energy::OnboardingCase.where(id: energy_case_ids, submitted_at: nil)
 
         if energy_cases.any?
           support_case_ids = energy_cases.pluck(:support_case_id)

@@ -2,7 +2,9 @@
     <%= form.govuk_error_summary %>
 
     <div class="govuk-form-group">
-      <%= form.govuk_check_boxes_fieldset :vat_certificate_declared, legend: nil do %>
+      <%= form.govuk_check_boxes_fieldset :vat_certificate_declared,
+            legend: {text: I18n.t("energy.vat_certificate.heading"), tag: :h1, size: "l"},
+            hint: -> { tag.p(I18n.t("energy.vat_certificate.sub_title"), class: "govuk-body") } do %>
         <% ['declaration1', 'declaration2', 'declaration3'].each do |dec| %>
           <%= form.govuk_check_box :vat_certificate_declared, dec, label: { text: I18n.t(dec, scope: "energy.vat_certificate.declaration") } %>
         <% end %>
