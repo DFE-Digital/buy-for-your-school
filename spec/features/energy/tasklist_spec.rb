@@ -304,7 +304,7 @@ describe "Tasklist flows", :js do
         # Go to meter details
         expect(page).to have_text("Electricity meter details")
         expect(page).to have_link("Discard and go to task list")
-        fill_in "Add an MPAN", with: electricity_meter_numbers.first
+        fill_in "Add the MPAN", with: electricity_meter_numbers.first
         choose "No"
         fill_in "Estimated annual electricity usage", with: "1234"
         click_button "Save and continue"
@@ -328,7 +328,7 @@ describe "Tasklist flows", :js do
         # Go to meter details
         expect(page).to have_text("Electricity meter details")
         expect(page).to have_link("Discard and go to task list")
-        expect(page).to have_field("Add an MPAN", with: electricity_meter_numbers.first)
+        expect(page).to have_field("Add the MPAN", with: electricity_meter_numbers.first)
         fill_in "Estimated annual electricity usage", with: "1234"
         click_button "Save and continue"
 
