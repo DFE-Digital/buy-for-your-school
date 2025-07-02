@@ -13,8 +13,8 @@
       <% if mode == :edit %>
         <div class="govuk-grid-column-one-quarter">
           <div class="template-manager__template-actions">
-            <%= link_to I18n.t("support.management.email_templates.index.template_manager.templates.edit"), edit_support_management_email_template_path(template), class: "govuk-link govuk-link--no-visited-state" %>
-            <%= link_to I18n.t("support.management.email_templates.index.template_manager.templates.delete"), support_management_email_template_path(template), method: :delete, data: { confirm: I18n.t("support.management.email_templates.index.template_manager.templates.delete_confirmation") }, class: "govuk-link govuk-link--no-visited-state" %>
+            <%= link_to I18n.t("support.management.email_templates.index.template_manager.templates.edit"), portal_edit_management_email_template_path(template), class: "govuk-link govuk-link--no-visited-state" %>
+            <%= link_to I18n.t("support.management.email_templates.index.template_manager.templates.delete"), portal_delete_management_email_template_path(template), method: :delete, data: { confirm: I18n.t("support.management.email_templates.index.template_manager.templates.delete_confirmation") }, class: "govuk-link govuk-link--no-visited-state" %>
           </div>
         </div>
       <% end %>
