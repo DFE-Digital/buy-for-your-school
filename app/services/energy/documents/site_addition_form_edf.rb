@@ -151,8 +151,6 @@ module Energy
       end
 
       def payment_method
-        return if @onboarding_case_organisation.billing_payment_method_gov_procurement_card?
-
         @onboarding_case_organisation.billing_payment_method_bacs? ? "BACS" : "Direct Debit"
       end
     end
