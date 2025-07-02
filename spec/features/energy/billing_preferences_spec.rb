@@ -16,6 +16,7 @@ describe "Billing preferences", :js do
 
     expect(page).to have_text("Billing preferences")
     expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
+    expect(page).not_to have_text("Government Procurement Card")
 
     click_button "Save and continue"
     expect(page).to have_text("Select your preferred method of payment")
