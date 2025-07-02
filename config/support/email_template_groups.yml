@@ -29,3 +29,7 @@ groups:
 
   - title: Approvals
     sub_groups: []
+
+  - title: CEC
+    sub_groups:
+      - title: DfE Energy for Schools service

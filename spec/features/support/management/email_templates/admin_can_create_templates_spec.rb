@@ -6,6 +6,9 @@ describe "Admin can create email templates", :js, :with_csrf_protection do
   before do
     energy = create(:support_email_template_group, title: "Energy")
     create(:support_email_template_group, title: "Solar", parent: energy)
+
+    cec = create(:support_email_template_group, title: "CEC")
+    create(:support_email_template_group, title: "DfE Energy for Schools service", parent: cec)
   end
 
   describe "Admin viewing email templates selects to create a new template" do
@@ -33,6 +36,19 @@ describe "Admin can create email templates", :js, :with_csrf_protection do
       expect(page).to have_content("Stage 3")
       expect(page).to have_content("New template subject")
       expect(page).to have_content("Procurement Specialist")
+    end
+  end
+
+  describe "Admin can view CEC template group" do
+    before do
+      visit support_management_email_templates_path
+      click_on "Create new template"
+      select "CEC", from: "Template group"
+    end
+
+    it "view DfE Energy for Schools service" do
+      subgroup_field = find("#email-template-form-subgroup-id-field")
+      expect(subgroup_field).to have_selector("option", text: "DfE Energy for Schools service")
     end
   end
 end

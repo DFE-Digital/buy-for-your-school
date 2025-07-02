@@ -4,6 +4,7 @@ module Support
       before_action :redirect_to_messages_tab, unless: :turbo_frame_request?, only: %i[show templated_messages logged_contacts]
       before_action :current_thread, only: %i[show]
       before_action :back_url, only: %i[index show edit submit templated_messages logged_contacts]
+      before_action :cec_template_group, only: %i[index show edit]
 
       helper_method :back_to_url_b64
 
@@ -106,6 +107,13 @@ module Support
 
       def back_url
         @back_url ||= url_from(back_link_param) || is_user_cec_agent? ? cec_cases_path : support_cases_path
+      end
+
+      def cec_template_group
+        @cec_group = Support::EmailTemplateGroup.find_by(title: "CEC")
+        if @cec_group.present?
+          @dfe_subgroup = Support::EmailTemplateGroup.find_by(title: "DfE Energy for Schools service", parent_id: @cec_group.id)
+        end
       end
 
       def default_subject = "Case #{current_case.ref} – DfE Get help buying for schools: your request for advice and guidance"

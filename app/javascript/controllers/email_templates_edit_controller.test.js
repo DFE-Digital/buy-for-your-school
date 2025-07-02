@@ -17,6 +17,7 @@ describe("EmailTemplatesEditController", () => {
     subject.subgroupSelectTarget = document.createElement("select");
     subject.subgroupWrapperTarget = document.createElement("div");
     subject.variableWarningTarget = document.createElement("div");
+    subject.stageSelectTarget = document.createElement("select");
   });
 
   afterAll(() => {
@@ -25,6 +26,7 @@ describe("EmailTemplatesEditController", () => {
 
   describe("subgroupSource", () => {
     const groupId = "123";
+    const groupText = "Group 1"
 
     it("concatenates the groupId to the subgroupUrl", () => {
       expect(subject.subgroupSource(groupId)).toEqual("https://test-url.com/123");
@@ -71,7 +73,16 @@ describe("EmailTemplatesEditController", () => {
       let clearSubgroupsSpy;
 
       beforeEach(() => {
-        event = { target: { value: "" } };
+        event =  {
+          target: {
+            value: "",
+            options: [
+              { text: "Group 1" },
+              { text: "Group 2" },
+            ],
+            selectedIndex: 0,
+          },
+        };
         clearSubgroupsSpy = jest.spyOn(subject, "clearSubgroups").mockImplementation(() => {});
       });
 
@@ -96,7 +107,16 @@ describe("EmailTemplatesEditController", () => {
       })
 
       beforeEach(() => {
-        event = { target: { value: "1" } };
+        event = {
+          target: {
+            value: "1",
+            options: [
+              { text: "Group 1" },
+              { text: "Group 2" },
+            ],
+            selectedIndex: 1,
+          },
+        };
         subgroupSourceSpy = jest.spyOn(subject, "subgroupSource").mockImplementation(() => "https://test-url.com/123");
         groupsToOptionsSpy = jest.spyOn(subject, "groupsToOptions").mockImplementation(() => options);
 

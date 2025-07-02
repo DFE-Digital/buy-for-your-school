@@ -30,7 +30,8 @@
           <%= form.govuk_select :stage,
               options_for_select(form.object.stage_options, form.object.stage),
               options: { include_blank: I18n.t("support.management.email_templates.new.select_stage") },
-              label: { text: I18n.t("support.management.email_templates.new.stage"), size: "m" } %>
+              label: { text: I18n.t("support.management.email_templates.new.stage"), size: "m" },
+              "data-email-templates-edit-target" => "stageSelect" %>
 
           <%= form.govuk_text_field :title,
               label: { text: I18n.t("support.management.email_templates.new.title"), size: "m" } %>
