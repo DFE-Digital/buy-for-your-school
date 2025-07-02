@@ -8,7 +8,7 @@ module Support
 
     private
 
-      def authorize_agent_scope = [super, :access_proc_ops_portal?]
+      def authorize_agent_scope = [super, :access_individual_cases?]
     end
   end
 end
