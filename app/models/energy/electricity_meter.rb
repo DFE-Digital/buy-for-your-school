@@ -2,6 +2,9 @@ class Energy::ElectricityMeter < ApplicationRecord
   belongs_to :onboarding_case_organisation, class_name: "Energy::OnboardingCaseOrganisation",
                                             foreign_key: "energy_onboarding_case_organisation_id"
 
+  after_save :update_support_case_timestamp
+  after_destroy :update_support_case_timestamp
+
   MAX_METER_COUNT = 5
 
   validates :mpan,
@@ -45,5 +48,11 @@ class Energy::ElectricityMeter < ApplicationRecord
       .where.not(state: %w[closed resolved])
 
     errors.add(:mpan, :error_unique) if active_support_cases.exists?
+  end
+
+private
+
+  def update_support_case_timestamp
+    onboarding_case_organisation&.update_support_case_timestamp
   end
 end
