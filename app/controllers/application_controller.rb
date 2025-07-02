@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include DfE::Analytics::Requests
   include ActiveStorage::SetCurrent
   include Pundit::Authorization
   include InsightsTrackable
