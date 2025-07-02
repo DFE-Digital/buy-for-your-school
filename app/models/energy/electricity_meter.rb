@@ -2,6 +2,8 @@ class Energy::ElectricityMeter < ApplicationRecord
   belongs_to :onboarding_case_organisation, class_name: "Energy::OnboardingCaseOrganisation",
                                             foreign_key: "energy_onboarding_case_organisation_id"
 
+  after_save :update_support_case_timestamp
+
   MAX_METER_COUNT = 5
 
   validates :mpan,
@@ -61,5 +63,9 @@ private
 
   def sanitize_mpan
     self.mpan = mpan.gsub(/[\s\-()]/, "") if mpan.present?
+  end
+
+  def update_support_case_timestamp
+    onboarding_case_organisation&.update_support_case_timestamp
   end
 end
