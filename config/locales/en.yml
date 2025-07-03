@@ -617,7 +617,6 @@ en:
         legend: How will the bills be paid?
         bacs: BACS
         direct_debit: Direct Debit
-        gov_procurement_card: Government Procurement Card
       terms:
         legend: Payment terms
         days14: 14 days
@@ -716,7 +715,6 @@ en:
         billing_payment_method: How will you pay your bills?
         bacs: BACS
         direct_debit: Direct debit
-        gov_procurement_card: Government Procurement Card
         billing_payment_terms: Payment terms
         days14: 14 days
         days21: 21 days
