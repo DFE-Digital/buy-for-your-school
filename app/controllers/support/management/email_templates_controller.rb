@@ -69,7 +69,7 @@ module Support
       def filter_params
         filters = params.fetch(:email_template_filters, {}).permit(:group_id, :remove_group, :remove_subgroup, :remove_stage, subgroup_ids: [], stages: [])
 
-        if (current_agent&.roles & %w[cec cec_admin]).any?
+        if (current_agent&.roles & %w[cec cec_admin]).any? && params[:email_template_filters].blank?
           filters[:group_id] = @cec_group&.id
           filters[:subgroup_ids] = [@dfe_subgroup&.id]
         end
