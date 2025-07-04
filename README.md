@@ -21,4 +21,4 @@ how to configure your local environment and get access to required systems.
 
 ## Documentation
 
-See the [index of documentation](doc/README.md). 
+See the [index of documentation](doc/README.md).
