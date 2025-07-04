@@ -24,12 +24,12 @@ module Energy
 
     def generate_documents
       if switching_gas?
-        documents << Energy::Documents::PortalAccessFormTotal.new(onboarding_case:).call
+        documents << Energy::Documents::PortalAccessFormTotal.new(onboarding_case:, current_user:).call
       elsif switching_electricity?
-        documents << Energy::Documents::PortalAccessFormEdf.new(onboarding_case:).call
+        documents << Energy::Documents::PortalAccessFormEdf.new(onboarding_case:, current_user:).call
       else
-        documents << Energy::Documents::PortalAccessFormTotal.new(onboarding_case:).call
-        documents << Energy::Documents::PortalAccessFormEdf.new(onboarding_case:).call
+        documents << Energy::Documents::PortalAccessFormTotal.new(onboarding_case:, current_user:).call
+        documents << Energy::Documents::PortalAccessFormEdf.new(onboarding_case:, current_user:).call
       end
     rescue StandardError => e
       Rails.logger.error("Error generating documents: #{e.message}")
