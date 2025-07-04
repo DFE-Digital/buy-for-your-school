@@ -23,7 +23,9 @@ module Energy
         raise "Missing template file: #{input_template_file_xl}" unless File.exist?(input_template_file_xl)
 
         electricity_meters.each_with_index do |electricity_meter, row_index|
-          portal_access_data(electricity_meter, @onboarding_case_organisation).each_with_index do |(_key, value), column_index|
+          portal_access_data = build_portal_access_data(electricity_meter)
+
+          portal_access_data.each_with_index do |(_key, value), column_index|
             cell = worksheet[STARTING_ROW_NUMBER + row_index][column_index]
             next if cell.nil?
 
@@ -57,7 +59,7 @@ module Energy
         @electricity_meters ||= Energy::ElectricityMeter.includes(:onboarding_case_organisation).where(energy_onboarding_case_organisation_id: @onboarding_case_organisation.id)
       end
 
-      def portal_access_data(electricity_meter)
+      def build_portal_access_data(electricity_meter)
         {
           "Account No" => "",
           "5% VAT (Y/N)" => vat_rate_yes_no,
@@ -73,8 +75,8 @@ module Energy
           "Title" => "",
           "Forename" => @current_user.first_name,
           "Surname" => @current_user.last_name,
-          "Phone Number" => "foo",
-          "Job Title" => "foo",
+          "Phone Number" => "",
+          "Job Title" => "",
         }
       end
 
@@ -87,7 +89,7 @@ module Energy
       end
 
       def contract_end_date
-        @contract_end_date ||= @onboarding_case_organisation.gas_current_contract_end_date
+        @contract_end_date ||= @onboarding_case_organisation.electric_current_contract_end_date
       end
 
       def supply_start_date
