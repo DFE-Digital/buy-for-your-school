@@ -313,10 +313,11 @@ en:
     guidance:
       contents: Contents
       email: dfe-energy.services-team@education.gov.uk
-      title: Energy for Schools guidance
+      title: Energy for Schools
+      page_title: Energy for Schools guidance
       intro:
       - How state-funded schools and trusts can join Energy for Schools, an alternative to energy procurement, which may save time and money.
-      - Applies to England
+      applies_to_england: Applies to England
       about:
         title: About Energy for Schools
         body:
@@ -328,7 +329,7 @@ en:
         body:
         - All central government departments are on the V30 contract to compliantly procure their energy supply.
         - Customers are protected from market volatility and soaring prices because the CCS buys some of the energy up front, during the 30 months prior to delivery, and then during the delivery period itself. This helps to level out the peaks and troughs in price variances.
-        - V30 could save schools money on their bills. According to a price comparison exercise carried out by DfE, schools could’ve saved on average up to 36% on their energy bills in the financial year ending 2024 had they been on the V30 contract.
+        - V30 could save schools money on their bills. According to a price comparison exercise carried out by DfE, schools could’ve saved on average 36% on their energy bills in the financial year ending 2024 had they been on the V30 contract.
         - If your school joins Energy for Schools, DfE will handle certain contractual responsibilities and administrative paperwork with the new energy suppliers.
         - "This means schools:"
         list:

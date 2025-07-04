@@ -1,6 +1,5 @@
 <%= content_for :title, "#{I18n.t("energy.before_you_start.subtitle")} - #{I18n.t("energy.service_name")}" %>
 
-<%= govuk_back_link(href: energy_onboarding_path(:join_the_scheme)) %>
 <%= render Column21Component.new do |c| %>
   <% c.with_left do %>
     <h1 class="govuk-heading-xl"><%= I18n.t("energy.before_you_start.title") %></h1>
