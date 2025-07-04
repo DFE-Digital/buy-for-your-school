@@ -74,7 +74,7 @@ RSpec.describe Energy::Documents::PortalAccessFormTotal, type: :model do
         service.call
       end
 
-      it "has single row forfor portal access details" do
+      it "has single row for portal access details" do
         expect(onboarding_case_organisation.gas_meters.count).to eq(1)
         expect(worksheet[starting_row][3].value).to eq(gas_meter_values[:mprn])
       end

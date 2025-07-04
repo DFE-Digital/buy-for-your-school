@@ -57,68 +57,74 @@ RSpec.describe Energy::Documents::PortalAccessFormEdf, type: :model do
 
       it "Matches portal access details" do
         expect(worksheet[starting_row][0].value).to eq("")
-        expect(worksheet[starting_row][1].value).to eq(organisation.name)
-        # expect(worksheet[starting_row][2].value).to eq(organisation.address["postcode"])
-        # expect(worksheet[starting_row][3].value).to eq(energy_electricity_meter.mprn)
-        # expect(worksheet[starting_row][4].value).to eq((contract_end_date + 1.day).strftime("%d/%m/%Y"))
-        # expect(worksheet[starting_row][5].value).to eq("Site Addition")
-        # expect(worksheet[starting_row][6].value).to eq(current_user.email)
-        # expect(worksheet[starting_row][7].value).to eq("Y")
-        # expect(worksheet[starting_row][8].value).to eq("Y")
-        # expect(worksheet[starting_row][9].value).to eq("Y")
-        # expect(worksheet[starting_row][10].value).to eq("Email Pull")
+        expect(worksheet[starting_row][1].value).to eq("Y")
+        expect(worksheet[starting_row][2].value).to eq("Y")
+        expect(worksheet[starting_row][3].value).to eq("Y")
+        expect(worksheet[starting_row][3].value).to eq("Y")
+        expect(worksheet[starting_row][4].value).to eq("")
+        expect(worksheet[starting_row][5].value).to eq(organisation.name)
+        expect(worksheet[starting_row][6].value).to eq(organisation.address["postcode"])
+        expect(worksheet[starting_row][7].value).to eq(energy_electricity_meter.mpan)
+        expect(worksheet[starting_row][8].value).to eq((contract_end_date + 1.day).strftime("%d/%m/%Y"))
+        expect(worksheet[starting_row][9].value).to eq("Site Addition")
+        expect(worksheet[starting_row][10].value).to eq(current_user.email)
+        expect(worksheet[starting_row][11].value).to eq("")
+        expect(worksheet[starting_row][12].value).to eq(current_user.first_name)
+        expect(worksheet[starting_row][13].value).to eq(current_user.last_name)
+        expect(worksheet[starting_row][14].value).to eq("")
+        expect(worksheet[starting_row][15].value).to eq("")
       end
     end
 
-    # describe "single meter" do
-    #   before do
-    #     energy_electricity_meter
-    #     service.call
-    #   end
+    describe "single meter" do
+      before do
+        energy_electricity_meter
+        service.call
+      end
 
-    #   it "has single row forfor portal access details" do
-    #     expect(onboarding_case_organisation.electricity_meters.count).to eq(1)
-    #     expect(worksheet[starting_row][3].value).to eq(electricity_meter_values[:mprn])
-    #   end
+      it "has single row for portal access details" do
+        expect(onboarding_case_organisation.electricity_meters.count).to eq(1)
+        expect(worksheet[starting_row][7].value).to eq(electricity_meter_values[:mpan])
+      end
 
-    #   it "has single row for meter details" do
-    #     expect(worksheet[starting_row][3].value).to eq(electricity_meter_values[:mprn])
-    #     expect(worksheet[starting_row + 1][3].value).to be_nil
-    #   end
-    # end
+      it "has single row for meter details" do
+        expect(worksheet[starting_row][7].value).to eq(electricity_meter_values[:mpan])
+        expect(worksheet[starting_row + 1][7].value).to be_nil
+      end
+    end
 
-    # describe "multi meter" do
-    #   context "with multiple meters" do
-    #     let(:meter_type) { :multi }
-    #     let(:onboarding_case) { create(:onboarding_case, support_case:) }
-    #     let(:another_onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: organisation, **input_values) }
-    #     let(:electricity_meter1) { create(:energy_electricity_meter, mprn: 123_456_789, electricity_usage: 1000, onboarding_case_organisation: another_onboarding_case_organisation) }
-    #     let(:electricity_meter2) { create(:energy_electricity_meter, mprn: 223_456_789, electricity_usage: 2000, onboarding_case_organisation: another_onboarding_case_organisation) }
+    describe "multi meter" do
+      context "with multiple meters" do
+        let(:meter_type) { :multi }
+        let(:onboarding_case) { create(:onboarding_case, support_case:) }
+        let(:another_onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: organisation, **input_values) }
+        let(:electricity_meter1) { create(:energy_electricity_meter, :another_meter, onboarding_case_organisation: another_onboarding_case_organisation) }
+        let(:electricity_meter2) { create(:energy_electricity_meter, :another_meter, onboarding_case_organisation: another_onboarding_case_organisation) }
 
-    #     before do
-    #       electricity_meter1
-    #       electricity_meter2
-    #       service.call
-    #     end
+        before do
+          electricity_meter1
+          electricity_meter2
+          service.call
+        end
 
-    #     it "2 meter rows for meter details" do
-    #       expect(another_onboarding_case_organisation.electricity_meters.count).to eq(2)
-    #     end
+        it "2 meter rows for meter details" do
+          expect(another_onboarding_case_organisation.electricity_meters.count).to eq(2)
+        end
 
-    #     it "has multiple rows for portal access details" do
-    #       expect(worksheet[starting_row][0].value).to eq("")
-    #       expect(worksheet[starting_row][1].value).to eq(organisation.name)
-    #       expect(worksheet[starting_row + 1][1].value).to eq(organisation.name)
+        it "has multiple rows for portal access details" do
+          expect(worksheet[starting_row][0].value).to eq("")
+          expect(worksheet[starting_row][5].value).to eq(organisation.name)
+          expect(worksheet[starting_row + 1][5].value).to eq(organisation.name)
 
-    #       expect(worksheet[starting_row][2].value).to eq(organisation.address["postcode"])
-    #       expect(worksheet[starting_row + 1][2].value).to eq(organisation.address["postcode"])
-    #     end
+          expect(worksheet[starting_row][6].value).to eq(organisation.address["postcode"])
+          expect(worksheet[starting_row + 1][6].value).to eq(organisation.address["postcode"])
+        end
 
-    #     it "has multiple rows for meter details" do
-    #       expect(worksheet[starting_row][3].value).to eq(electricity_meter1.mprn)
-    #       expect(worksheet[starting_row + 1][3].value).to eq(electricity_meter2.mprn)
-    #     end
-    #   end
-    # end
+        it "has multiple rows for meter details" do
+          expect(worksheet[starting_row][7].value).to eq(electricity_meter1.mpan)
+          expect(worksheet[starting_row + 1][7].value).to eq(electricity_meter2.mpan)
+        end
+      end
+    end
   end
 end
