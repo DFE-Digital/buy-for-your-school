@@ -9,7 +9,10 @@ class Energy::SiteContactDetailsController < Energy::ApplicationController
 
   def update
     if validation.success?
-      @onboarding_case_organisation.update!(**form.data)
+      sanitized_data = form.data
+      sanitized_data[:site_contact_phone] = sanitized_data[:site_contact_phone].gsub(/\D/, "")
+
+      @onboarding_case_organisation.update!(**sanitized_data)
       redirect_to redirect_path
     else
       render :show
