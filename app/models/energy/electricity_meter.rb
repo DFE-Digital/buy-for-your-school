@@ -9,7 +9,7 @@ class Energy::ElectricityMeter < ApplicationRecord
 
   validates :mpan,
             presence: true,
-            format: { with: /\A\d{13}\z/ }
+            format: { with: /\A[\d\-\s()]+\z/ }
   validates :is_half_hourly, inclusion: { in: [true, false] }
 
   validates :supply_capacity,
@@ -28,8 +28,18 @@ class Energy::ElectricityMeter < ApplicationRecord
             presence: true,
             numericality: { greater_than_or_equal_to: 0, less_than: 1_000_000 }
 
+  validate :validate_mpan_format, on: %i[create update]
   validate :maximum_mpan_per_organisation, on: :create
   validate :mpan_uniqueness_with_active_cases, on: %i[create update]
+
+  before_save :sanitize_mpan
+
+  def validate_mpan_format
+    digits = mpan.to_s.gsub(/\D/, "")
+    if digits.length != 13
+      errors.add(:mpan, :invalid)
+    end
+  end
 
   def maximum_mpan_per_organisation
     if onboarding_case_organisation.electricity_meters.count >= MAX_METER_COUNT
@@ -51,6 +61,10 @@ class Energy::ElectricityMeter < ApplicationRecord
   end
 
 private
+
+  def sanitize_mpan
+    self.mpan = mpan.gsub(/[\s\-()]/, "") if mpan.present?
+  end
 
   def update_support_case_timestamp
     onboarding_case_organisation&.update_support_case_timestamp

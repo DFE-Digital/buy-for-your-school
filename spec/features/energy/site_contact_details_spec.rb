@@ -40,5 +40,10 @@ describe "User can update site contact details", :js do
     fill_in "Telephone", with: "01234567890"
     click_button "Save and continue"
     expect(page).not_to have_text("Enter a telephone number, like 07155487611")
+
+    visit energy_case_org_site_contact_details_path(onboarding_case, case_organisation)
+    fill_in "Telephone", with: "(44) 1234-567890"
+    click_button "Save and continue"
+    expect(page).not_to have_text("Enter a telephone number, like 07155487611")
   end
 end

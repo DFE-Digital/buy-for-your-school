@@ -64,4 +64,14 @@ describe "VAT Alt person responsible", :js do
       expect(case_organisation.reload.vat_alt_person_address).to eq({ "county" => "", "locality" => "91 Charter House Street", "postcode" => "EC1M 6HR", "street" => "Boundary House Shr", "town" => "London" })
     end
   end
+
+  specify "allow spaces, hyphens, brackets to the phone number validation" do
+    visit energy_case_org_vat_alt_person_responsible_path(case_id: case_organisation.energy_onboarding_case_id, org_id: case_organisation.onboardable_id)
+
+    fill_in "First name", with: "Jon"
+    fill_in "Telephone number", with: "(44) 1234-567890"
+    click_button "Save and continue"
+
+    expect(page).not_to have_text("Enter a phone number in the correct format, like 01632 960 001")
+  end
 end
