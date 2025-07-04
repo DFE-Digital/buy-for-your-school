@@ -9,6 +9,7 @@ module Energy
       include Energy::Documents::XlSheetHelper
       TEMPLATE_FILE = "Portal Access Template Total.xlsx"
       STARTING_ROW_NUMBER = 1
+      WORKSHEET_INDEX = 0
 
       def initialize(onboarding_case:, current_user:)
         @onboarding_case = onboarding_case
@@ -49,7 +50,7 @@ module Energy
       end
 
       def worksheet
-        @worksheet ||= workbook.worksheets[0]
+        @worksheet ||= workbook.worksheets[WORKSHEET_INDEX]
       end
 
       def gas_meters
