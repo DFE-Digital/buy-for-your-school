@@ -34,7 +34,7 @@ describe "'Check your answers' flows", :js do
       find("#gas_contract_information_change").click
 
       # Go to Gas Contract
-      expect(page).to have_text("Current contract details")
+      expect(page).to have_text("Current gas supplier")
       expect(page).not_to have_link("Discard and go to task list")
       choose "Other"
       fill_in "Gas supplier", with: "Great Gas Ltd"
@@ -52,7 +52,7 @@ describe "'Check your answers' flows", :js do
       find("#electric_contract_information_change").click
 
       # Go to Electricity Contract
-      expect(page).to have_text("Electricity Contract")
+      expect(page).to have_text("Electricity contract")
       expect(page).not_to have_link("Discard and go to task list")
       choose "Other"
       fill_in "Electricity supplier", with: "Emilys Leccie Co"

@@ -511,13 +511,16 @@ en:
       other: Other
     or: or
     current_contract:
-      heading: Current contract details
-      gas_contract: Gas Contract
-      electric_contract: Electricity Contract
-      current_supplier: Current gas supplier
-      current_electric_supplier: Current electricity supplier
-      other_gas_supplier: Gas supplier
-      other_electric_supplier: Electricity supplier
+      gas:
+        heading: Current gas supplier
+        contract: Gas contract
+        current_supplier: Who currently supplies your gas?
+        other_supplier: Gas supplier
+      electric:
+        heading: Current electricity supplier
+        contract: Electricity contract
+        current_supplier: Who currently supplies your electricity?
+        other_supplier: Electricity supplier
       when_contract_ends: When does the contract end?
       date_for_example: For example, 27 3 2025
       end_day: Day
@@ -732,7 +735,7 @@ en:
       title: Agree to the Energy for Schools letter of authority
       pdf_title: DfE Energy for Schools letter of authority
       page_title: Letter of authority
-      paragraphs: 
+      paragraphs:
         paragraph1: "This letter of authority sets out the arrangements agreed between the Department for Education ('DfE')and %{school_name} (the 'Education Provider') in connection with the provision of energy supplies."
         paragraph2: This letter supersedes and replaces all previous agreements between DfE and the Education Provider in relation to the supply of gas and/or electricity.
         paragraph3: DfE has entered into and/or will enter into one or more Framework Agreements with various suppliers for the provision of gas and/or electricity to DfE and to various sites identified by DfE. Each such energy supplier is referred to in this letter as a 'Supplier'. Under the Framework Agreements, DfE is entitled to request a Supplier to provide gas and/or electricity to locations identified by DfE.
