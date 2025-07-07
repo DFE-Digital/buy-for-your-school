@@ -17,6 +17,7 @@ module Energy
         end
 
         send_form_submission_email_with_documents_to_school
+        generate_portal_access_xl_documents
         redirect_to energy_case_confirmation_path
       else
         render :show
@@ -50,6 +51,13 @@ module Energy
       return if onboarding_case.form_submitted_email_sent
 
       Energy::GenerateDocumentsAndSendEmailJob.perform_later(
+        onboarding_case_id: onboarding_case.id,
+        current_user_id: current_user.id,
+      )
+    end
+
+    def generate_portal_access_xl_documents
+      Energy::GeneratePortalAccessXlDocumentsJob.perform_now(
         onboarding_case_id: onboarding_case.id,
         current_user_id: current_user.id,
       )
