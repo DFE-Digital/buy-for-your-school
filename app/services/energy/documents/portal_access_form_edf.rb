@@ -7,9 +7,9 @@ module Energy
   module Documents
     class PortalAccessFormEdf
       include Energy::Documents::XlSheetHelper
+      include Energy::Documents::PortalAccessXlHelper
+
       TEMPLATE_FILE = "Portal Access Template EDF.xlsx"
-      STARTING_ROW_NUMBER = 1
-      WORKSHEET_INDEX = 0
 
       def initialize(onboarding_case:, current_user:)
         @onboarding_case = onboarding_case
@@ -41,19 +41,10 @@ module Energy
       end
 
       def output_file_xl
-        # @output_file_xl ||= OUTPUT_XL_PATH.join("EDF Power portal Access_#{@support_case.ref}_#{Date.current}.xlsx")
-        @output_file_xl ||= OUTPUT_XL_PATH.join("edf_access_#{@support_case.ref}_#{Date.current}.xlsx")
+        @output_file_xl ||= OUTPUT_XL_PATH.join("EDF Power portal Access_#{@support_case.ref}_#{Date.current}.xlsx")
       end
 
     private
-
-      def workbook
-        @workbook ||= RubyXL::Parser.parse(input_template_file_xl)
-      end
-
-      def worksheet
-        @worksheet ||= workbook.worksheets[WORKSHEET_INDEX]
-      end
 
       def electricity_meters
         @electricity_meters ||= Energy::ElectricityMeter.includes(:onboarding_case_organisation).where(energy_onboarding_case_organisation_id: @onboarding_case_organisation.id)
