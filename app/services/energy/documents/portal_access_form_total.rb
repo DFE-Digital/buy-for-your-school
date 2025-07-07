@@ -7,9 +7,9 @@ module Energy
   module Documents
     class PortalAccessFormTotal
       include Energy::Documents::XlSheetHelper
+      include Energy::Documents::PortalAccessXlHelper
+
       TEMPLATE_FILE = "Portal Access Template Total.xlsx"
-      STARTING_ROW_NUMBER = 1
-      WORKSHEET_INDEX = 0
 
       def initialize(onboarding_case:, current_user:)
         @onboarding_case = onboarding_case
@@ -44,14 +44,6 @@ module Energy
       end
 
     private
-
-      def workbook
-        @workbook ||= RubyXL::Parser.parse(input_template_file_xl)
-      end
-
-      def worksheet
-        @worksheet ||= workbook.worksheets[WORKSHEET_INDEX]
-      end
 
       def gas_meters
         @gas_meters ||= Energy::GasMeter.includes(:onboarding_case_organisation).where(energy_onboarding_case_organisation_id: @onboarding_case_organisation.id)
