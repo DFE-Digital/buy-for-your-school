@@ -5,30 +5,79 @@ export default class extends Controller {
   static targets = ["dateValidation"]
 
   connect() {
-    this.dateValidationTarget.querySelector('form input[type=submit].validate_date').addEventListener("click", (e) => {
+    const submitButton = this.dateValidationTarget.querySelector('form input[type=submit].validate_date');
+    const dateInputs = this.dateValidationTarget.querySelectorAll('.govuk-form-group .govuk-date-input');
+  
+    submitButton.addEventListener("click", (e) => {
       e.preventDefault();
       this.removeErrorFieldStyle();
       let isValid = true;
-      e.target.blur()
+      e.target.blur();
   
-      this.dateValidationTarget.querySelectorAll('.govuk-form-group .govuk-date-input').forEach((dateGroup, index) => {
-
-        const day = parseInt(dateGroup.querySelectorAll('.govuk-date-input__input')[0].value, 10);
-        const month = parseInt(dateGroup.querySelectorAll('.govuk-date-input__input')[1].value, 10) - 1; // Months are 0-indexed in JS
-        const year = parseInt(dateGroup.querySelectorAll('.govuk-date-input__input')[2].value, 10);
-
-        // Check if the date is valid
-        const date = new Date(year, month, day);
-        if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
+      dateInputs.forEach((dateGroup, index) => {
+        const [dayInput, monthInput, yearInput] = dateGroup.querySelectorAll('.govuk-date-input__input');
+        const day = parseInt(dayInput.value, 10);
+        const year = parseInt(yearInput.value, 10);
+        const monthData = monthInput.value;
+  
+        const { date, validMonth, convertedMonth } = this.processDate(day, monthData, year);
+  
+        if (validMonth) {
+          monthInput.value = convertedMonth; // Update month input if valid
+        }
+  
+        if (!this.isDateValid(date, day, year, validMonth) && dayInput.value && monthInput.value && yearInput.value) {
           isValid = false;
           this.setErrorFieldStyle(dateGroup, index);
         }
       });
-
+  
       if (isValid) {
         this.dateValidationTarget.querySelector('form').submit();
       }
     });
+  }
+  
+  processDate(day, monthData, year) {
+    if (this.checkValidMonthFormat(monthData)) {
+      const date = new Date(`${day} ${monthData} ${year}`);
+      return {
+        date,
+        validMonth: true,
+        convertedMonth: date.getMonth() + 1 // Convert to 1-indexed month
+      };
+    } else {
+      const month = parseInt(monthData, 10) - 1; // Convert to 0-indexed month
+      const date = new Date(year, month, day);
+      return {
+        date,
+        validMonth: date.getMonth() === month,
+        convertedMonth: date.getMonth() + 1
+      };
+    }
+  }
+  
+  isDateValid(date, day, year, validMonth) {
+    return date.getFullYear() === year && validMonth && date.getDate() === day;
+  }
+
+  checkValidMonthFormat(month) {  
+    const validMonths = [
+      "jan", "january",
+      "feb", "february",
+      "mar", "march",
+      "apr", "april",
+      "may",
+      "jun", "june",
+      "jul", "july",
+      "aug", "august",
+      "sep", "september",
+      "oct", "october",
+      "nov", "november",
+      "dec", "december"
+    ];
+
+    return validMonths.includes(month.toLowerCase());
   }
 
   setErrorFieldStyle(dateGroup, index) {
