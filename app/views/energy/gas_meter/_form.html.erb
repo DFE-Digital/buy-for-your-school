@@ -1,17 +1,30 @@
 <%= form_with(model: @gas_meter_detail, url: @form_url) do |form| %>
     <%= form.govuk_error_summary %>
 
+    <% add_mprn_label = @onboarding_case_organisation.gas_single_multi_multi? ? I18n.t("energy.gas_meter_details.mprn_multi_label") : I18n.t("energy.gas_meter_details.mprn_label") %>
+
     <%= form.govuk_text_field :mprn,
       autofocus: true,
-      label: { text:  I18n.t("energy.gas_meter_details.mprn_label"), class: 'govuk-label govuk-label govuk-label--s' },
+      label: { text:  add_mprn_label, class: 'govuk-label govuk-label govuk-label--s', tag: "h2"},
       hint: { text: I18n.t("energy.gas_meter_details.mprn_hint") },
       width: 10 %>
 
     <%= form.govuk_text_field :gas_usage,
-      label: { text: I18n.t("energy.gas_meter_details.gas_usage_label"), class: 'govuk-label govuk-label govuk-label--s' },
-      hint: { text: I18n.t("energy.gas_meter_details.gas_usage_hint") },
+      label: { text: I18n.t("energy.gas_meter_details.gas_usage_label"), class: 'govuk-label govuk-label govuk-label--s', tag: "h2"},
       suffix_text: I18n.t("energy.gas_meter_details.gas_usage_suffix"),
-      width: 5 %>
+      width: 5,
+      hint: -> do
+          content_tag(:div) do
+            tag.details(class: "govuk-details", data: { module: "govuk-details" }) do
+              tag.summary(class: "govuk-details__summary") do
+                tag.span(I18n.t("energy.gas_meter_details.gas_usage_hint_link"), class: "govuk-details__summary-text")
+              end +
+              tag.div(class: "govuk-details__text") do
+              I18n.t("energy.gas_meter_details.gas_usage_hint").html_safe
+              end
+            end
+          end
+        end %>
 
     <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
 
