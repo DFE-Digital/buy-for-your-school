@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "boot"
+require_relative "../lib/real_ip"
 
 require "rails/all"
 
@@ -50,6 +51,8 @@ module BuyForYourSchool
 
     # Set London as the timezone - handles daylight savings automatically
     config.time_zone = "London"
+
+    config.middleware.use RealIp
 
     # detect bots in order to keep user journey data clean
     config.middleware.use Rack::CrawlerDetect
