@@ -10,7 +10,9 @@ module Energy
 
     def update
       if validation.success?
-        @onboarding_case_organisation.update!(**form.data.except(:organisation))
+        sanitized_data = form.data.except(:organisation)
+        sanitized_data[:vat_alt_person_phone] = sanitized_data[:vat_alt_person_phone].gsub(/\D/, "")
+        @onboarding_case_organisation.update!(**sanitized_data)
         redirect_to redirect_path
       else
         render :show
