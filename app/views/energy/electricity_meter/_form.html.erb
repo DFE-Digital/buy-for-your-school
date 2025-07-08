@@ -2,6 +2,7 @@
       model: @electricity_meter_detail,
       url: @electricity_meter_detail.new_record? ? energy_case_org_electricity_meter_index_path(**@routing_flags)
                                   : energy_case_org_electricity_meter_path(id: params[:id], **@routing_flags),
+      html: { "data-controller" => "electricity_meter_conditional_option" },
     ) do |form| %>
     <%= form.govuk_error_summary %>
 
@@ -28,9 +29,8 @@
         width: 10,
         class: "govuk-input--width-10" %>
 
-    <div data-controller="electricity_meter_conditional_option">
-      <%= form.govuk_radio_buttons_fieldset :is_half_hourly,
-        legend: { text: I18n.t("energy.electricity_meter.half_hourly_label") },
+    <%= form.govuk_radio_buttons_fieldset :is_half_hourly,
+        legend: { text: I18n.t("energy.electricity_meter.half_hourly_label"), size: "s", tag: "h2" },
         hint: { text: I18n.t("energy.electricity_meter.half_hourly_hint") }  do %>
 
         <img src="<%=image_path('mpan-half-hourly.png') %>" alt="" width="30%">
@@ -70,7 +70,6 @@
           </div>
         </div>
       <% end %>
-    </div>
 
 
     <%= form.govuk_text_field :electricity_usage,
