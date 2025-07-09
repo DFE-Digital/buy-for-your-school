@@ -7,7 +7,16 @@ module ApplicationHelper
   end
 
   def banner_message
-    I18n.t("banner.beta.message", feedback_link: link_to(I18n.t("banner.beta.feedback_link"), banner_feedback_link, class: "govuk-link", target: "_blank", rel: :noopener))
+    I18n.t(
+      "banner.beta.message",
+      feedback_link: link_to(
+        "#{I18n.t('banner.beta.feedback_link')}<span class=\"govuk-visually-hidden\"> opens in new tab</span>".html_safe,
+        banner_feedback_link,
+        class: "govuk-link",
+        target: "_blank",
+        rel: :noopener,
+      ),
+    )
   end
 
   def dsi_url(**args)

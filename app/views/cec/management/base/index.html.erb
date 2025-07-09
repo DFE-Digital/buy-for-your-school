@@ -16,4 +16,8 @@
   <% if policy(:cms_portal).manage_agents? %>
     <li><%= link_to I18n.t("support.management.agents.header"), cec_management_agents_path, class: "govuk-link" %></li>
   <% end %>
+
+  <% if policy(:cms_portal).access_cec_portal? %>
+    <li><%= link_to I18n.t("support.management.email_templates.header"), cec_management_email_templates_index_path, class: "govuk-link" %></li>
+  <% end %>
 </ul>

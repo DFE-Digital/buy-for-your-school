@@ -5,7 +5,7 @@
     <%= form_with model: @form, scope: :email_template_form, method:, url:,
         html: {
           "data-controller" => "email-templates-edit email-attachment",
-          "data-email-templates-edit-subgroup-url-value" => subgroups_support_management_email_template_groups_path,
+          "data-email-templates-edit-subgroup-url-value" => portal_subgroups_management_email_template_groups_path,
           "data-email-attachment-attachment-list-url-value" => edit ? attachment_list_support_management_email_template_path : nil
         } do |form| %>
       <%= form.govuk_error_summary %>
@@ -69,7 +69,7 @@
               data-email-attachment-target="btnDisplayFileDialog">
               <%= I18n.t("support.case.label.messages.reply.add_attachments") %>
             </span>
-            <%= link_to I18n.t("support.management.email_templates.new.cancel"), support_management_email_templates_path, class: "govuk-link govuk-link--no-visited-state" %>
+            <%= link_to I18n.t("support.management.email_templates.new.cancel"), portal_management_email_templates_index_path, class: "govuk-link govuk-link--no-visited-state" %>
           </div>
           <%= form.govuk_file_field :file_attachments, multiple: true, include_hidden: false, class: "govuk-!-display-none", "data-email-attachment-target" => "fileAttachmentsField", form_group: { class: "govuk-!-display-none" } %>
           <%= form.hidden_field :blob_attachments, "data-email-attachment-target" => "blobAttachmentsField" %>
