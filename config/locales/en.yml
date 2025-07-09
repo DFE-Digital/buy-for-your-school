@@ -70,7 +70,7 @@ en:
   banner:
     beta:
       feedback_link: feedback
-      message: This is a new service – your %{feedback_link} will help us to improve it.
+      message: This is a new service – your %{feedback_link} will help us to improve it
       tag: Beta
     design: "%{env} Environment"
     session:
@@ -425,6 +425,7 @@ en:
         primary: Join Energy for Schools
         secondary: Request support
 
+    service_name: Energy for Schools
     before_you_start:
       title: Energy for Schools
       subtitle: Before you start
@@ -440,6 +441,7 @@ en:
       heading: Which school are you buying for?
     authorisation:
       heading: Are you authorised to switch energy suppliers for these schools?
+      page_title: Do you have authorisation?
       warning: Please seek appropriate authorisation to switch energy suppliers. There is no cooling off period once you’ve submitted this form.
       alerts:
         multiple_cases: There are multiple cases for this organisation
@@ -447,18 +449,21 @@ en:
         email_subject: "Help request: %{org_name} - multiple concurrent Energy for Schools applications"
     switching_electricity:
       heading: Are you switching electricity, gas or both?
+      page_title: Which energy supply are you switching?
       energy_type:
         electricity: Electricity only
         gas: Gas only
         gas_electricity: Gas and electricity
     gas_single_multi:
       heading: Is this a single or multi meter site?
+      page_title: Is this a single gas meter site?
       hint: If your site is multi meter, your bill will have more than one meter number in the readings section.
       single: Single meter
       multi: Multi meter
     tasks:
       error: Complete all sections of the task list before continuing
       heading: Provide information about your schools
+      page_title: Task list
       task_list:
         item:
           gas_contract_information: Gas contract information
@@ -475,6 +480,7 @@ en:
             not_started: Not started
     gas_meter_details:
       title: Gas meters and usage
+      page_title: Gas meter summary
       heading: Gas meter details
       heading_info: You can usually find this information on your gas bill. Please check all pages.
       mprn_label: Add a Meter Point Reference Number (MPRN)
@@ -531,6 +537,7 @@ en:
         option_no: "No, I want a separate bill for each MPAN"
     electricity_meter_type:
       title: Electricity meters and usage
+      page_title: Is this a single electricity meter site?
       question: Is this a single or multi meter site?
       hint: If your site is multi meter, your bill will have more than one meter number in the readings section.
       meter_types:
@@ -538,6 +545,7 @@ en:
         multi: Multi meter
     electricity_meter:
       title: Electricity meters and usage
+      page_title: Electricity meter summary
       heading: Electricity meter details
       mpan_label: Add an MPAN
       mpan_hint: You can usually find the 13-digit MPAN on your electricity bill. Please check all pages.
@@ -570,9 +578,9 @@ en:
       alert:
         limit_reached: Maximum number of MPANs reached
     vat_rate_charge:
-      title: VAT declaration
+      title: "About your schools: VAT declaration"
       heading: Which VAT rate are you charged?
-      hint: If you're unsure, check your energy bills or ask your local authority
+      hint: If you're unsure, check your bills. Or, if relevant, ask your local authority or chief financial officer.
       normal: 20%
       lower: 5%
       lower_rate_percentage: Percentage of total consumption qualifying for reduced rate of VAT
@@ -718,9 +726,12 @@ en:
         billing_invoicing_email: Email for invoice
         billing_invoice_address: Address for invoice
       no_data: No onboarding data available for this case
-
+      summary_pdf:
+        title: "DfE Energy for Schools submission summary: %{date}"
     letter_of_authorisation:
       title: Agree to the Energy for Schools letter of authority
+      pdf_title: DfE Energy for Schools letter of authority
+      page_title: Letter of authority
       paragraphs:
         paragraph1: "This letter of authority sets out the arrangements agreed between the Department for Education ('DfE')and %{school_name} (the 'Education Provider') in connection with the provision of energy supplies."
         paragraph2: This letter supersedes and replaces all previous agreements between DfE and the Education Provider in relation to the supply of gas and/or electricity.
@@ -728,13 +739,13 @@ en:
         paragraph4: "The Education Provider has requested and DfE has agreed to arrange for the supply of gas and/or electricity to the following Site(s):"
       appointment:
         title: Appointment
-        paragraph_one: The Education Provider appoints and authorises DfE to act on behalf of the Education Provider to negotiate and conclude arrangements with the relevant Supplier for the supply of gas and/or electricity to theSite(s).
+        paragraph_one: The Education Provider appoints and authorises DfE to act on behalf of the Education Provider to negotiate and conclude arrangements with the relevant Supplier for the supply of gas and/or electricity to the Site(s).
         paragraph_two: "The Education Provider acknowledges that DfE's appointment includes:"
         first_list:
           item1: obtaining consumption and billing data for the purposes of conducting consumption and cost analysis
           item2: obtaining contractual details (contract durations and terms) for existing energy supplies
           item3: notifying energy suppliers of or initiating 'Change of Tenancies' (COT’s) or Novations
-          item4: notifying energy suppliers of or initiating 'Change of Address' for any of the School/Academy’s accounts or billing addresses
+          item4: notifying energy suppliers of or initiating 'Change of Address' for any of the Education provider's accounts or billing addresses
           item5: providing annual trading reports and monthly consolidated data reports to help budget forecasting
           item6: taking responsibility for the contractual arrangements between DfE and the Suppliers
         paragraph_three: "but does not include:"
@@ -763,6 +774,10 @@ en:
         agreement1: I confirm that I am authorised by the Education Provider to switch the supply of gas and/or electricity at the Site(s) to the Energy for Schools contract
         agreement2: I confirm that I have read this letter of authority and the Education Provider agrees to its terms and conditions
         agreement3: I understand that my name will be used as the authorised signatory for this letter of authority
+      signed:
+        signed_by_school: "Signed on behalf of %{school_name} by:"
+        signed_by_dfe: "Signed on behalf of the Department for Education by:"
+        signed_by_dfe_user: Annette Harrison
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.

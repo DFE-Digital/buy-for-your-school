@@ -3,7 +3,7 @@
   <%= form.hidden_field :vat_person_correct_details, value: form.object.vat_person_correct_details %>
 
   <%= form.govuk_radio_buttons_fieldset :vat_person_correct_details,
-    legend: { size: "l", text: I18n.t("energy.vat_person_responsible.heading") },
+    legend: { size: "l", text: I18n.t("energy.vat_person_responsible.heading"), tag: "h1" },
     hint: { text: I18n.t("energy.vat_person_responsible.hint") } do %>
     <%= govuk_summary_list do |summary_list|
       summary_list.with_row do |row|

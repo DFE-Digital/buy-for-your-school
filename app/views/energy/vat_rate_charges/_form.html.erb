@@ -3,7 +3,7 @@
   <%= form.hidden_field :vat_rate, value: form.object.vat_rate %>
 
   <%= form.govuk_radio_buttons_fieldset :vat_rate,
-    legend: { size: "l", text: I18n.t("energy.vat_rate_charge.heading") },
+    legend: { size: "l", text: I18n.t("energy.vat_rate_charge.heading"), tag: "h1" },
     hint: { text: I18n.t("energy.vat_rate_charge.hint") } do %>
     <%= form.govuk_radio_button :vat_rate, 20, label: { text: I18n.t("energy.vat_rate_charge.normal") } %>
     <%= form.govuk_radio_button :vat_rate, 5, label: { text: I18n.t("energy.vat_rate_charge.lower") } do %>
