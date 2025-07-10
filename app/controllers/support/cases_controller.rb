@@ -77,5 +77,41 @@ module Support
     helper_method def portal_new_case_assignments_path(current_case)
       send("new_#{portal_namespace}_case_assignment_path", current_case)
     end
+
+    helper_method def portal_new_case_interaction_path(current_case, additional_params = {})
+      if is_user_cec_agent?
+        send("cec_case_new_interaction_path", current_case, additional_params)
+      else
+        send("new_support_case_interaction_path", current_case, additional_params)
+      end
+    end
+
+    helper_method def portal_case_on_hold_path(current_case)
+      send("#{portal_namespace}_case_on_hold_path", current_case)
+    end
+
+    helper_method def portal_case_opening_path(current_case)
+      send("#{portal_namespace}_case_opening_path", current_case)
+    end
+
+    helper_method def portal_new_case_opening_path(current_case)
+      if is_user_cec_agent?
+        send("cec_case_new_opening_path", current_case)
+      else
+        send("new_support_case_opening_path", current_case)
+      end
+    end
+
+    helper_method def portal_new_case_resolution_path(current_case)
+      if is_user_cec_agent?
+        send("cec_case_new_resolution_path", current_case)
+      else
+        send("new_support_case_resolution_path", current_case)
+      end
+    end
+
+    helper_method def portal_case_closures_path(current_case)
+      send("#{portal_namespace}_case_closures_path", current_case)
+    end
   end
 end

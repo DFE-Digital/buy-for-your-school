@@ -18,13 +18,15 @@ module Support
 
         record_action(case_id: current_case.id, action: "resolve_case")
 
-        redirect_to support_case_path(current_case), notice: I18n.t("support.case_resolution.flash.created")
+        redirect_to redirect_path, notice: I18n.t("support.case_resolution.flash.created")
       else
         render :new
       end
     end
 
   private
+
+    def authorize_agent_scope = :access_individual_cases?
 
     def validation
       CaseResolutionFormSchema.new.call(**case_resolution_form_params)
@@ -38,6 +40,14 @@ module Support
       unless current_case.exit_survey_sent
         SendExitSurveyJob.start(@current_case.ref)
       end
+    end
+
+    def redirect_path
+      is_user_cec_agent? ? cec_onboarding_case_path(current_case) : support_case_path(current_case)
+    end
+
+    helper_method def portal_case_resolution_path(current_case)
+      send("#{agent_portal_namespace}_case_resolution_path", current_case)
     end
   end
 end
