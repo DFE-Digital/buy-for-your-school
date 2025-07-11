@@ -19,8 +19,14 @@ class Energy::OnboardingController < ApplicationController
   # This will probably end up as a separate class - a routing brain
   def set_routing
     permitted_steps = %w[join_the_scheme before_you_start guidance]
+    back_urls = [
+      "",
+      energy_onboarding_path(:join_the_scheme),
+      energy_onboarding_path(:join_the_scheme),
+    ]
     step_position = permitted_steps.index(params[:step]) || 0
     @current_step = permitted_steps[step_position]
+    @back_url = back_urls[step_position]
   end
 end
 # rubocop:enable Layout/AccessModifierIndentation
