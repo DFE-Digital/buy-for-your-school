@@ -10,7 +10,7 @@
     <% if template.stage.present? %>
       <li>
         <strong class="govuk-tag govuk-tag--grey">
-          <%= template.stage %>
+          <%= I18n.t(template.stage.gsub("Stage ", "").strip, scope: 'support.management.email_templates.stages') %>
         </strong>
       </li>
     <% end %>
