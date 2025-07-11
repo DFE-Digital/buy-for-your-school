@@ -61,7 +61,6 @@ class Energy::OnboardingCaseOrganisation < ApplicationRecord
   BILLING_PAYMENT_METHOD = {
     bacs: 0,
     direct_debit: 1,
-    gov_procurement_card: 2,
   }.freeze
 
   BILLING_PAYMENT_TERMS = {
