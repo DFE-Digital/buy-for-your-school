@@ -1,6 +1,8 @@
 class Energy::OnboardingCaseOrganisation < ApplicationRecord
   belongs_to :onboarding_case, class_name: "Energy::OnboardingCase", foreign_key: "energy_onboarding_case_id"
 
+  after_save :update_support_case_timestamp
+
   # An onboarding organisation can be one of:
   #   1. A single school         --> polymorphic association to Support::Organisation
   #   2. A school within a trust --> polymorphic association to Support::Organisation
@@ -86,4 +88,8 @@ class Energy::OnboardingCaseOrganisation < ApplicationRecord
   end
 
   delegate :name, to: :onboardable
+
+  def update_support_case_timestamp
+    onboarding_case&.support_case&.touch if onboarding_case.present?
+  end
 end

@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "messages-frame" do %>
-  <%= link_to I18n.t("support.case.label.message_threads.back"), support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
+  <%= link_to I18n.t("support.case.label.message_threads.back"), portal_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
 
   <h3 class="govuk-heading-m"><%= I18n.t("support.case.label.message_threads.logged_contacts") %></h3>
 
