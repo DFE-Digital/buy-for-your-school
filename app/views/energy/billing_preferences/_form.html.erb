@@ -4,20 +4,20 @@
   <%= form.hidden_field :billing_payment_terms, value: form.object.billing_payment_terms %>
   <%= form.hidden_field :billing_invoicing_method, value: form.object.billing_invoicing_method %>
 
-  <%= form.govuk_radio_buttons_fieldset :payment_method, legend: {hidden: true} do %>
-    <legend class="govuk-fieldset__legend"><%= I18n.t("energy.billing_preferences.payment_method.legend") %></legend>
+  <%= form.govuk_radio_buttons_fieldset :payment_method, 
+    legend: {text: I18n.t("energy.billing_preferences.payment_method.legend"), size: "s"} do %>
     <% form.object.payment_method_options.each do |option| %>
       <%= form.govuk_radio_button :billing_payment_method, option, label: { text: I18n.t("energy.billing_preferences.payment_method.#{option}") } %>
     <% end %>
   <% end %>
-  <%= form.govuk_radio_buttons_fieldset :terms, legend: { hidden: true } do %>
-    <legend class="govuk-fieldset__legend"><%= I18n.t("energy.billing_preferences.terms.legend") %></legend>
+  <%= form.govuk_radio_buttons_fieldset :terms,
+    legend: {text: I18n.t("energy.billing_preferences.terms.legend"), size: "s"} do %>
     <% form.object.payment_terms_options.each do |option| %>
       <%= form.govuk_radio_button :billing_payment_terms, option, label: { text: I18n.t("energy.billing_preferences.terms.#{option}") } %>
     <% end %>
   <% end %>
-  <%= form.govuk_radio_buttons_fieldset :invoicing, legend: { hidden: true } do %>
-    <legend class="govuk-fieldset__legend"><%= I18n.t("energy.billing_preferences.invoicing.legend") %></legend>
+  <%= form.govuk_radio_buttons_fieldset :invoicing,
+    legend: {text: I18n.t("energy.billing_preferences.invoicing.legend"), size: "s"} do %>
     <%= form.govuk_radio_button :billing_invoicing_method, :email, label: { text: I18n.t("energy.billing_preferences.invoicing.email") } do %>
       <%= form.govuk_text_field :billing_invoicing_email, width: "three-quarters", label: {text: I18n.t("energy.billing_preferences.invoicing.email_address")}%>
     <% end %>
