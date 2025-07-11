@@ -3,7 +3,7 @@
 <%= form_with model: @case_closure_form,
               scope: :case_closure_form,
               method: :post,
-              url: support_case_closures_path do |form|
+              url: case_closures_path do |form|
 %>
 
 <%= form.hidden_field :reason %>
@@ -82,14 +82,14 @@
             <%= I18n.t("support.case_closures.edit.reasons.#{@case_closure_form.reason}") %>
           </dd>
           <dd class="govuk-summary-list__actions">
-            <%= link_to "Change", support_case_closures_path, class: "govuk-link govuk-link--no-visited-state" %>
+            <%= link_to "Change", case_closures_path, class: "govuk-link govuk-link--no-visited-state" %>
           </dd>
         </div>
       </dl>
 
     <div class="govuk-button-group">
       <%= form.submit I18n.t("support.case_closures.confirm.close"), class: "govuk-button govuk-button--warning", role: "button" %>
-      <%= link_to I18n.t("support.case_closures.confirm.cancel"), support_case_path(@current_case, anchor: "case-details"), class: "govuk-link govuk-link--no-visited-state" %>
+      <%= link_to I18n.t("support.case_closures.confirm.cancel"), case_closures_cancel_path, class: "govuk-link govuk-link--no-visited-state" %>
     </div>
   </div>
 </div>

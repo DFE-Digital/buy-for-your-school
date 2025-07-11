@@ -39,7 +39,7 @@
     <br>
 
     <div class="govuk-button-group">
-      <%= link_to I18n.t("support.case_openings.new.reopen"), support_case_opening_path(@current_case), method: :post, class: "govuk-button govuk-button--warning", role: "button" %>
+      <%= link_to I18n.t("support.case_openings.new.reopen"), portal_case_opening_path(@current_case), method: :post, class: "govuk-button govuk-button--warning", role: "button" %>
       <%= link_to I18n.t("support.case_openings.new.cancel"), @back_url, class: "govuk-link" %>
     </div>
   </div>

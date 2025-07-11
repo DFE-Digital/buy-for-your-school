@@ -578,9 +578,9 @@ en:
       alert:
         limit_reached: Maximum number of MPANs reached
     vat_rate_charge:
-      title: VAT declaration
+      title: "About your schools: VAT declaration"
       heading: Which VAT rate are you charged?
-      hint: If you're unsure, check your energy bills or ask your local authority
+      hint: If you're unsure, check your bills. Or, if relevant, ask your local authority or chief financial officer.
       normal: 20%
       lower: 5%
       lower_rate_percentage: Percentage of total consumption qualifying for reduced rate of VAT
@@ -732,7 +732,7 @@ en:
       title: Agree to the Energy for Schools letter of authority
       pdf_title: DfE Energy for Schools letter of authority
       page_title: Letter of authority
-      paragraphs: 
+      paragraphs:
         paragraph1: "This letter of authority sets out the arrangements agreed between the Department for Education ('DfE')and %{school_name} (the 'Education Provider') in connection with the provision of energy supplies."
         paragraph2: This letter supersedes and replaces all previous agreements between DfE and the Education Provider in relation to the supply of gas and/or electricity.
         paragraph3: DfE has entered into and/or will enter into one or more Framework Agreements with various suppliers for the provision of gas and/or electricity to DfE and to various sites identified by DfE. Each such energy supplier is referred to in this letter as a 'Supplier'. Under the Framework Agreements, DfE is entitled to request a Supplier to provide gas and/or electricity to locations identified by DfE.
