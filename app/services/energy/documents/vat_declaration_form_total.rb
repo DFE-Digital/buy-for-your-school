@@ -16,7 +16,7 @@ module Energy
       def call
         raise "Missing template file" unless File.exist?(input_pdf_template_file)
 
-        pdftk.fill_form(input_pdf_template_file, output_pdf_file, form_field_values)
+        pdftk.fill_form(input_pdf_template_file, output_pdf_file, form_field_values, flatten: true)
         output_pdf_file
       end
 
