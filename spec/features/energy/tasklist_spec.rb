@@ -34,7 +34,7 @@ describe "Tasklist flows", :js do
       click_link("Gas contract information")
 
       # Go to Gas Contract
-      expect(page).to have_text("Gas Contract")
+      expect(page).to have_text("Gas contract")
       expect(page).to have_link("Discard and go to task list")
       choose "Other"
       fill_in "Gas supplier", with: "Great Gas Ltd"
@@ -51,7 +51,7 @@ describe "Tasklist flows", :js do
       click_link("Electricity contract information")
 
       # Go to Electricity Contract
-      expect(page).to have_text("Electricity Contract")
+      expect(page).to have_text("Electricity contract")
       expect(page).to have_link("Discard and go to task list")
       choose "Other"
       fill_in "Electricity supplier", with: "Emilys Leccie Co"
