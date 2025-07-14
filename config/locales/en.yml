@@ -343,7 +343,7 @@ en:
         - The V30 is a low-risk variable rate contract.
         - Prices can go up and down, but changes are less drastic than other variable rates. It’s the most stable variable rate contract available to schools, although it may not always give you the lowest price.
         - CCS cannot provide potential customers with energy prices before they join due to commercial sensitivity.
-        - To get an estimate of prices, email <a href="mailto:%{email}">%{email}</a> and request DfE’s benchmarking service. We’ll provide a price comparison based on your energy bills from the last financial year.
+        - To get an estimate of prices, email <a class="govuk-link" href="mailto:%{email}">%{email}</a> and request DfE’s benchmarking service. We’ll provide a price comparison based on your energy bills from the last financial year.
         - V30 is a rolling contract, meaning your school will remain on the contract until you give notice to exit. 30 months’ notice is required.
       start_date:
         title: Start date
@@ -400,14 +400,14 @@ en:
         title: Renewable energy
         body:
         - The energy supply is from the supplier’s standard ‘Brown’ product. Everyone who uses this supply gets between 30-40% renewable energy through the UK power grid. This percentage is increasing as more renewable energy sources are added to the grid.
-        - You can choose to pay more for a product that contains more renewable energy. Email <a href="mailto:%{email}">%{email}</a> to discuss renewable options.
+        - You can choose to pay more for a product that contains more renewable energy. Email <a class="govuk-link" href="mailto:%{email}">%{email}</a> to discuss renewable options.
         - Energy savings made through renewable energy, such as solar panels, are not factored into this contract. You should continue your current arrangement or contact EDF about setting up a Smart Export Guarantee if you wish to export energy back to the grid.
       objections:
         title: Objections
         body:
         - In some cases, the current energy supplier may raise an objection to switching contracts. Common reasons for objections include unpaid invoices, incorrect meter numbers or insufficient notice given to terminate the current contract.
         - DfE will inform you if an objection is raised. You’ll need to contact your existing supplier to resolve the issue and switch contracts – DfE does not have the authority to do this for you.
-        - For queries about Energy for Schools or help joining, email <a href="mailto:%{email}">%{email}</a>
+        - For queries about Energy for Schools or help joining, email <a class="govuk-link" href="mailto:%{email}">%{email}</a>
       how_to_join:
         title: How to join
         body:
