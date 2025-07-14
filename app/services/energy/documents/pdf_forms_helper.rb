@@ -10,6 +10,10 @@ module Energy
       def pdftk
         @pdftk = PdfForms.new(PDFTK_PATH)
       end
+
+      def fill_pdf_form(input_pdf_template_file, output_pdf_file, form_field_values, flatten)
+        pdftk.fill_form(input_pdf_template_file, output_pdf_file, form_field_values, flatten:)
+      end
     end
   end
 end
