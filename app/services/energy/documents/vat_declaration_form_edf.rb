@@ -2,24 +2,8 @@
 
 module Energy
   module Documents
-    class VatDeclarationFormEdf
-      include Energy::Documents::PdfFormsHelper
+    class VatDeclarationFormEdf < VatDeclarationForm
       TEMPLATE_FILE = "VAT Declaration Form EDF.pdf"
-
-      def initialize(onboarding_case:, flatten: true)
-        @onboarding_case = onboarding_case
-        @support_case = @onboarding_case.support_case
-        @organisation = @support_case.organisation
-        @onboarding_case_organisation = onboarding_case.onboarding_case_organisations.first
-        @flatten = flatten
-      end
-
-      def call
-        raise "Missing template file" unless File.exist?(input_pdf_template_file)
-
-        fill_pdf_form(input_pdf_template_file, output_pdf_file, form_field_values, @flatten)
-        output_pdf_file
-      end
 
       def input_pdf_template_file
         @input_pdf_template_file ||= INPUT_PDF_TEMPLATE_PATH.join(TEMPLATE_FILE)
