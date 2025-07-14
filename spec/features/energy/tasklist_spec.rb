@@ -81,7 +81,7 @@ describe "Tasklist flows", :js do
         # Go to meter details
         expect(page).to have_text("Gas meter details")
         expect(page).to have_link("Discard and go to task list")
-        fill_in "Add a Meter Point Reference Number (MPRN)", with: gas_meter_numbers.first
+        fill_in "Add the Meter Point Reference Number (MPRN)", with: gas_meter_numbers.first
         fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "123"
         click_button "Save and continue"
 
@@ -104,7 +104,7 @@ describe "Tasklist flows", :js do
         # Go to meter details
         expect(page).to have_text("Gas meter details")
         expect(page).to have_link("Discard and go to task list")
-        expect(page).to have_field("Add a Meter Point Reference Number (MPRN)", with: gas_meter_numbers.first)
+        expect(page).to have_field("Add the Meter Point Reference Number (MPRN)", with: gas_meter_numbers.first)
         fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "123"
         click_button "Save and continue"
 
