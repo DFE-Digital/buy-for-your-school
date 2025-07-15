@@ -19,6 +19,7 @@ RSpec.describe Energy::Documents::SiteAdditionFormEdf, type: :model do
   let(:payment_method) { :bacs }
   let(:payment_term) { :days14 }
   let(:is_bill_consolidated) { true }
+  let(:customer_name) { "Department for Education" }
 
   let(:electricity_meter_values) do
     {
@@ -62,26 +63,21 @@ RSpec.describe Energy::Documents::SiteAdditionFormEdf, type: :model do
       end
 
       context "with site and billing addresses" do
-        # it "matches site details and address" do
-        #   expect(worksheet[starting_row][0].value).to eq(support_organisation.name)
-        #   expect(worksheet[starting_row][1].value).to eq(support_organisation.address["street"])
-        #   expect(worksheet[starting_row][4].value).to eq(support_organisation.address["postcode"])
-        # end
-
-        # it "matches billing address" do
-        #   expect(worksheet[starting_row][5].value).to eq(input_values[:billing_invoice_address][:street])
-        #   expect(worksheet[starting_row][7].value).to eq(input_values[:billing_invoice_address][:town])
-        #   expect(worksheet[starting_row][8].value).to eq(input_values[:billing_invoice_address][:postcode])
-        # end
         context "when single school" do
           it "matches site details and address" do
-            expect(worksheet[starting_row][0].value).to eq(support_organisation.name)
-            expect(worksheet[starting_row][1].value).to eq(support_organisation.address["street"])
+            expect(worksheet[starting_row][0].value).to eq(customer_name)
+            expect(worksheet[starting_row][1].value).to eq(support_organisation.name)
+
+            site_address_line2 = "#{support_organisation.address['street']}, #{support_organisation.address['locality']}"
+            expect(worksheet[starting_row][2].value).to eq(site_address_line2)
             expect(worksheet[starting_row][4].value).to eq(support_organisation.address["postcode"])
           end
 
           it "matches billing address" do
-            expect(worksheet[starting_row][5].value).to eq(input_values[:billing_invoice_address][:street])
+            expect(worksheet[starting_row][5].value).to eq(support_organisation.name)
+
+            billing_address_line2 = "#{input_values[:billing_invoice_address][:street]}, #{input_values[:billing_invoice_address][:locality]}"
+            expect(worksheet[starting_row][6].value).to eq(billing_address_line2)
             expect(worksheet[starting_row][7].value).to eq(input_values[:billing_invoice_address][:town])
             expect(worksheet[starting_row][8].value).to eq(input_values[:billing_invoice_address][:postcode])
           end
@@ -162,13 +158,13 @@ RSpec.describe Energy::Documents::SiteAdditionFormEdf, type: :model do
         end
 
         it "has same organisation details on each row" do
-          expect(worksheet[starting_row][0].value).to eq(support_organisation.name)
-          expect(worksheet[starting_row + 1][0].value).to eq(support_organisation.name)
+          expect(worksheet[starting_row][0].value).to eq(customer_name)
+          expect(worksheet[starting_row + 1][0].value).to eq(customer_name)
         end
 
         it "has same site details and address on each row" do
-          expect(worksheet[starting_row][1].value).to eq(support_organisation.address["street"])
-          expect(worksheet[starting_row + 1][1].value).to eq(support_organisation.address["street"])
+          expect(worksheet[starting_row][1].value).to eq(support_organisation.name)
+          expect(worksheet[starting_row + 1][1].value).to eq(support_organisation.name)
 
           expect(worksheet[starting_row][4].value).to eq(support_organisation.address["postcode"])
           expect(worksheet[starting_row + 1][4].value).to eq(support_organisation.address["postcode"])

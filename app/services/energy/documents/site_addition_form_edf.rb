@@ -58,7 +58,7 @@ module Energy
 
       def build_site_addition_data(electricity_meter)
         {
-          "Customer Name" => @organisation.name,
+          "Customer Name" => "Department for Education",
           "Site Address Line 1" => site_address_line1,
           "Site Address Line 2" => site_address_line2,
           "Site Address City" => site_address_city,
@@ -95,16 +95,20 @@ module Energy
         }
       end
 
+      def establishment_group
+        @establishment_group ||= Support::EstablishmentGroup.find_by(uid: @organisation.trust_code)
+      end
+
       def site_address
         @site_address ||= (@organisation.address || {}).with_indifferent_access
       end
 
       def site_address_line1
-        site_address[:street]
+        @organisation.name
       end
 
       def site_address_line2
-        site_address[:locality]
+        [site_address[:street], site_address[:locality]].reject(&:blank?).join(", ").strip
       end
 
       def site_address_line3
@@ -120,15 +124,15 @@ module Energy
       end
 
       def billing_address
-        @billing_address ||= (@onboarding_case_organisation.billing_invoice_address || site_address).with_indifferent_access
+        @billing_address ||= @onboarding_case_organisation.billing_invoice_address.to_h.with_indifferent_access.presence || site_address
       end
 
       def billing_address_line1
-        billing_address[:street]
+        mat_address? ? establishment_group&.name : @organisation.name
       end
 
       def billing_address_line2
-        billing_address[:locality]
+        [billing_address[:street], billing_address[:locality]].reject(&:blank?).join(", ").strip
       end
 
       def billing_address_line3
@@ -141,6 +145,10 @@ module Energy
 
       def billing_address_postcode
         billing_address[:postcode]
+      end
+
+      def mat_address?
+        Support::EstablishmentGroup.find_by(id: @onboarding_case_organisation.billing_invoice_address_source_id).present?
       end
 
       def contract_end_date

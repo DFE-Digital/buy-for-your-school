@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Energy::GenerateSiteAdditionXlDocuments do
-  subject(:service) { described_class.new(onboarding_case:, current_user: user) }
+  subject(:service) { described_class.new(onboarding_case:, current_user:) }
 
   let(:support_organisation) { create(:support_organisation) }
-  let(:user) { create(:user, :many_supported_schools_and_groups) }
+  let(:current_user) { create(:user, :many_supported_schools_and_groups) }
   let(:support_case) { create(:support_case, organisation: support_organisation) }
   let(:onboarding_case) { create(:onboarding_case, support_case:) }
   let(:onboarding_case_organisation) { create(:energy_onboarding_case_organisation, :with_energy_details, onboarding_case:, onboardable: support_organisation, **input_values) }
@@ -23,11 +23,11 @@ RSpec.describe Energy::GenerateSiteAdditionXlDocuments do
     onboarding_case_organisation
 
     allow(Energy::Documents::SiteAdditionFormTotal).to receive(:new)
-      .with(onboarding_case:)
+      .with(onboarding_case:, current_user:)
       .and_return(double(call: temp_xl_file_total.path))
 
     allow(Energy::Documents::SiteAdditionFormEdf).to receive(:new)
-      .with(onboarding_case:)
+      .with(onboarding_case:, current_user:)
       .and_return(double(call: temp_xl_file_edf.path))
   end
 
