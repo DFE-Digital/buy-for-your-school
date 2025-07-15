@@ -40,7 +40,7 @@ module Energy
     def default_email_subject = "Case #{@support_case.ref} - form submission: Energy for Schools"
 
     def email_template
-      @email_template ||= Support::EmailTemplate.find_by(title: FORM_SUBMISSION_EMAIL_TEMPLATE)
+      @email_template ||= Support::EmailTemplate.find_by(title: FORM_SUBMISSION_EMAIL_TEMPLATE, archived: false)
     end
 
     def default_email_template

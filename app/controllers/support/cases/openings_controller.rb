@@ -15,18 +15,28 @@ module Support
 
         @current_case.notify_agent_of_case_reopened if @current_case.agent.present? && is_current_state_closed
 
-        redirect_to support_case_path(current_case, anchor: "case-history"),
+        redirect_to redirect_path,
                     notice: I18n.t("support.case_opening.flash.reopened")
       else
-        redirect_to support_case_path(current_case),
+        redirect_to redirect_path,
                     notice: I18n.t("support.case_opening.flash.error")
       end
     end
 
   private
 
+    def authorize_agent_scope = :access_individual_cases?
+
     def set_back_url
-      @back_url = support_case_path(@current_case, anchor: "case-details")
+      @back_url = is_user_cec_agent? ? cec_onboarding_case_path(current_case, anchor: "case-details") : support_case_path(current_case, anchor: "case-details")
+    end
+
+    def redirect_path
+      is_user_cec_agent? ? cec_onboarding_case_path(current_case, anchor: "case-history") : support_case_path(current_case, anchor: "case-history")
+    end
+
+    helper_method def portal_case_opening_path(current_case)
+      send("#{agent_portal_namespace}_case_opening_path", current_case)
     end
   end
 end

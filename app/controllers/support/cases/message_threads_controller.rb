@@ -81,6 +81,10 @@ module Support
         send("#{agent_portal_namespace}_case_message_thread_path", additional_params)
       end
 
+      helper_method def portal_case_message_threads_path(additional_params = {})
+        send("#{agent_portal_namespace}_case_message_threads_path", additional_params)
+      end
+
       def authorize_agent_scope = :access_individual_cases?
 
       def current_case
@@ -101,7 +105,7 @@ module Support
       end
 
       def back_url
-        @back_url ||= url_from(back_link_param) || support_cases_path
+        @back_url ||= url_from(back_link_param) || is_user_cec_agent? ? cec_cases_path : support_cases_path
       end
 
       def default_subject = "Case #{current_case.ref} – DfE Get help buying for schools: your request for advice and guidance"
@@ -109,7 +113,7 @@ module Support
       def default_template = render_to_string(partial: "support/cases/messages/reply_form_template")
 
       def redirect_to_messages_tab
-        return redirect_to cec_onboarding_case_path(id: params[:case_id], anchor: "messages", messages_tab_url: request.url) if (current_agent.roles & %w[cec cec_admin]).any?
+        return redirect_to cec_onboarding_case_path(id: params[:case_id], anchor: "messages", messages_tab_url: request.url) if is_user_cec_agent?
 
         redirect_to support_case_path(id: params[:case_id], anchor: "messages", messages_tab_url: request.url)
       end

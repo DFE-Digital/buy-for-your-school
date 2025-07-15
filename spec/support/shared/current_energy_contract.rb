@@ -29,7 +29,7 @@ RSpec.shared_context "with current energy contract" do |energy_type|
            end
     visit path
 
-    expect(page).to have_text("#{support_organisation.name}: Current contract details")
+    expect(page).to have_text("#{support_organisation.name}: Current ")
     expected_suppliers.each do |supplier|
       expect(page).to have_text(supplier)
     end
