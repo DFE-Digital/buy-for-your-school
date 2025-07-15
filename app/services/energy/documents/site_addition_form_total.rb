@@ -10,11 +10,12 @@ module Energy
       TEMPLATE_FILE = "Site Addition Form Total.xlsx"
       STARTING_ROW_NUMBER = 10
 
-      def initialize(onboarding_case:)
+      def initialize(onboarding_case:, current_user:)
         @onboarding_case = onboarding_case
         @support_case = onboarding_case.support_case
         @organisation = @support_case.organisation
         @onboarding_case_organisation = onboarding_case.onboarding_case_organisations.first
+        @current_user = current_user
       end
 
       def call
@@ -105,11 +106,11 @@ module Energy
           "*Site Contact Email" => @onboarding_case_organisation.site_contact_email,
           "Site Customer Own Ref" => "",
           "*Billing Address Line 1" => billing_address_line1,
-          "*Billing Address Line 2" => site_address_line2,
+          "*Billing Address Line 2" => billing_address_line2,
           "*Billing Address Town/City" => billing_address_city,
           "*Billing Address Country" => "UK",
           "*Billing Address Postcode" => billing_address_postcode,
-          "Special Instructions" => "Department for Education/#{@organisation.name}",
+          "Special Instructions" => special_instructions,
           "*Site Address Line 1" => site_address_line1,
           "*Site Address Line 2" => site_address_line2,
           "*Country" => "UK",
@@ -133,9 +134,17 @@ module Energy
           "*Is this a single meter or multi meter site?" => gas_meter_type,
           "Premise level aggregation required - Please detail MPRs to aggregate" => "",
           "*Billing Method" => billing_invoicing_method,
-          "*Email address(es) for online bills" => @onboarding_case_organisation.billing_invoicing_email,
+          "*Email address(es) for online bills" => email_for_online_bills,
           "*Billing Notification Preference" => billing_notification_preference,
         }
+      end
+
+      def establishment_group
+        @establishment_group ||= Support::EstablishmentGroup.find_by(uid: @organisation.trust_code)
+      end
+
+      def special_instructions
+        ["Department for Education", @establishment_group&.name, @organisation.name].compact.join("/")
       end
 
       def site_address
@@ -143,11 +152,11 @@ module Energy
       end
 
       def site_address_line1
-        site_address[:street]
+        @organisation.name
       end
 
       def site_address_line2
-        site_address[:locality]
+        [site_address[:street], site_address[:locality]].reject(&:blank?).join(", ").strip
       end
 
       def site_address_line3
@@ -163,15 +172,15 @@ module Energy
       end
 
       def billing_address
-        @billing_address ||= @onboarding_case_organisation.billing_invoice_address.to_h.with_indifferent_access
+        @billing_address ||= @onboarding_case_organisation.billing_invoice_address.to_h.with_indifferent_access.presence || site_address
       end
 
       def billing_address_line1
-        billing_address[:street]
+        mat_address? ? establishment_group&.name : @organisation.name
       end
 
       def billing_address_line2
-        billing_address[:locality]
+        [billing_address[:street], billing_address[:locality]].reject(&:blank?).join(", ").strip
       end
 
       def billing_address_line3
@@ -184,6 +193,10 @@ module Energy
 
       def billing_address_postcode
         billing_address[:postcode]
+      end
+
+      def mat_address?
+        Support::EstablishmentGroup.find_by(id: @onboarding_case_organisation.billing_invoice_address_source_id).present?
       end
 
       def gas_supplier
@@ -215,6 +228,10 @@ module Energy
 
       def gas_meter_type
         @onboarding_case_organisation.gas_single_multi_single? ? "Single meter site" : "Multi meter site"
+      end
+
+      def email_for_online_bills
+        @onboarding_case_organisation.billing_invoicing_method_paper? ? @current_user.email : @onboarding_case_organisation.billing_invoicing_email
       end
 
       def billing_notification_preference

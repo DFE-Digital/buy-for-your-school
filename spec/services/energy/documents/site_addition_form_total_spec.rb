@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
-  subject(:service) { described_class.new(onboarding_case:) }
+  subject(:service) { described_class.new(onboarding_case:, current_user:) }
 
   let(:support_organisation) { create(:support_organisation, :with_address, name: "Northway School") }
-  let(:user) { create(:user, :many_supported_schools_and_groups) }
+  let(:current_user) { create(:user, :many_supported_schools_and_groups) }
   let(:support_case) { create(:support_case, organisation: support_organisation) }
   let(:onboarding_case) { create(:onboarding_case, support_case:) }
   let(:onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_organisation, **input_values) }
@@ -74,25 +74,30 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
         expect(worksheet[starting_row][16].value).to include("education.gov.uk")
       end
 
-      it "matches site and billing addresses" do
-        expect(worksheet[starting_row][18].value).to eq(support_organisation.name)
-        expect(worksheet[starting_row][21].value).to eq("School")
-        expect(worksheet[starting_row][22].value).to eq(input_values[:site_contact_first_name])
-        expect(worksheet[starting_row][23].value).to eq(input_values[:site_contact_last_name])
-        expect(worksheet[starting_row][25].value).to eq(input_values[:site_contact_email])
+      context "with site and billing addresses" do
+        context "when single school without trust" do
+          it "matches site and billing addresses" do
+            expect(worksheet[starting_row][18].value).to eq(support_organisation.name)
+            expect(worksheet[starting_row][21].value).to eq("School")
+            expect(worksheet[starting_row][22].value).to eq(input_values[:site_contact_first_name])
+            expect(worksheet[starting_row][23].value).to eq(input_values[:site_contact_last_name])
+            expect(worksheet[starting_row][25].value).to eq(input_values[:site_contact_email])
+            # Billing address
+            expect(worksheet[starting_row][27].value).to eq(support_organisation.name)
+            billing_address_line2 = "#{input_values[:billing_invoice_address][:street]}, #{input_values[:billing_invoice_address][:locality]}"
 
-        expect(worksheet[starting_row][27].value).to eq(input_values[:billing_invoice_address][:street])
-        expect(worksheet[starting_row][29].value).to eq(input_values[:billing_invoice_address][:town])
-        expect(worksheet[starting_row][31].value).to eq(input_values[:billing_invoice_address][:postcode])
+            expect(worksheet[starting_row][28].value).to eq(billing_address_line2)
+            expect(worksheet[starting_row][29].value).to eq(input_values[:billing_invoice_address][:town])
+            expect(worksheet[starting_row][31].value).to eq(input_values[:billing_invoice_address][:postcode])
 
-        expect(worksheet[starting_row][27].value).to eq(input_values[:billing_invoice_address][:street])
-        expect(worksheet[starting_row][29].value).to eq(input_values[:billing_invoice_address][:town])
-        expect(worksheet[starting_row][31].value).to eq(input_values[:billing_invoice_address][:postcode])
-
-        # Site address
-        expect(worksheet[starting_row][33].value).to eq(support_organisation.address["street"])
-        expect(worksheet[starting_row][36].value).to eq(support_organisation.address["postcode"])
-        expect(worksheet[starting_row][37].value).to eq(support_organisation.address["town"])
+            # Site address
+            expect(worksheet[starting_row][33].value).to eq(support_organisation.name)
+            site_address_line2 = "#{support_organisation.address['street']}, #{support_organisation.address['locality']}"
+            expect(worksheet[starting_row][34].value).to eq(site_address_line2)
+            expect(worksheet[starting_row][36].value).to eq(support_organisation.address["postcode"])
+            expect(worksheet[starting_row][37].value).to eq(support_organisation.address["town"])
+          end
+        end
       end
 
       it "matches gas supplier and details" do
@@ -174,15 +179,20 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
           expect(worksheet[starting_row][25].value).to eq(input_values[:site_contact_email])
           expect(worksheet[starting_row + 1][25].value).to eq(input_values[:site_contact_email])
 
-          expect(worksheet[starting_row][27].value).to eq(input_values[:billing_invoice_address][:street])
-          expect(worksheet[starting_row + 1][27].value).to eq(input_values[:billing_invoice_address][:street])
+          expect(worksheet[starting_row][27].value).to eq(support_organisation.name)
+          expect(worksheet[starting_row + 1][27].value).to eq(support_organisation.name)
 
           expect(worksheet[starting_row][31].value).to eq(input_values[:billing_invoice_address][:postcode])
           expect(worksheet[starting_row + 1][31].value).to eq(input_values[:billing_invoice_address][:postcode])
 
           # Site address
-          expect(worksheet[starting_row][33].value).to eq(support_organisation.address["street"])
-          expect(worksheet[starting_row + 1][33].value).to eq(support_organisation.address["street"])
+          expect(worksheet[starting_row][33].value).to eq(support_organisation.name)
+          expect(worksheet[starting_row + 1][33].value).to eq(support_organisation.name)
+
+          site_address_line2 = "#{support_organisation.address['street']}, #{support_organisation.address['locality']}"
+          expect(worksheet[starting_row][34].value).to eq(site_address_line2)
+          expect(worksheet[starting_row + 1][34].value).to eq(site_address_line2)
+
           expect(worksheet[starting_row][36].value).to eq(support_organisation.address["postcode"])
           expect(worksheet[starting_row + 1][36].value).to eq(support_organisation.address["postcode"])
         end

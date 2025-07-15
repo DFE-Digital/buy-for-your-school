@@ -10,11 +10,12 @@ module Energy
       TEMPLATE_FILE = "Site Addition Form EDF.xlsx"
       STARTING_ROW_NUMBER = 13
 
-      def initialize(onboarding_case:)
+      def initialize(onboarding_case:, current_user:)
         @onboarding_case = onboarding_case
         @support_case = onboarding_case.support_case
         @organisation = @support_case.organisation
         @onboarding_case_organisation = onboarding_case.onboarding_case_organisations.first
+        @current_user = current_user
       end
 
       def call

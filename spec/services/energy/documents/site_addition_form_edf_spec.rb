@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Energy::Documents::SiteAdditionFormEdf, type: :model do
-  subject(:service) { described_class.new(onboarding_case:) }
+  subject(:service) { described_class.new(onboarding_case:, current_user:) }
 
   let(:support_organisation) { create(:support_organisation, :with_address, name: "Hillside School") }
-  let(:user) { create(:user, :many_supported_schools_and_groups) }
+  let(:current_user) { create(:user, :many_supported_schools_and_groups) }
   let(:support_case) { create(:support_case, organisation: support_organisation) }
   let(:onboarding_case) { create(:onboarding_case, support_case:) }
   let(:onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_organisation, **input_values) }
@@ -61,16 +61,31 @@ RSpec.describe Energy::Documents::SiteAdditionFormEdf, type: :model do
         expect(File.exist?(service.output_file_xl)).to be true
       end
 
-      it "matches site details and address" do
-        expect(worksheet[starting_row][0].value).to eq(support_organisation.name)
-        expect(worksheet[starting_row][1].value).to eq(support_organisation.address["street"])
-        expect(worksheet[starting_row][4].value).to eq(support_organisation.address["postcode"])
-      end
+      context "with site and billing addresses" do
+        # it "matches site details and address" do
+        #   expect(worksheet[starting_row][0].value).to eq(support_organisation.name)
+        #   expect(worksheet[starting_row][1].value).to eq(support_organisation.address["street"])
+        #   expect(worksheet[starting_row][4].value).to eq(support_organisation.address["postcode"])
+        # end
 
-      it "matches billing address" do
-        expect(worksheet[starting_row][5].value).to eq(input_values[:billing_invoice_address][:street])
-        expect(worksheet[starting_row][7].value).to eq(input_values[:billing_invoice_address][:town])
-        expect(worksheet[starting_row][8].value).to eq(input_values[:billing_invoice_address][:postcode])
+        # it "matches billing address" do
+        #   expect(worksheet[starting_row][5].value).to eq(input_values[:billing_invoice_address][:street])
+        #   expect(worksheet[starting_row][7].value).to eq(input_values[:billing_invoice_address][:town])
+        #   expect(worksheet[starting_row][8].value).to eq(input_values[:billing_invoice_address][:postcode])
+        # end
+        context "when single school" do
+          it "matches site details and address" do
+            expect(worksheet[starting_row][0].value).to eq(support_organisation.name)
+            expect(worksheet[starting_row][1].value).to eq(support_organisation.address["street"])
+            expect(worksheet[starting_row][4].value).to eq(support_organisation.address["postcode"])
+          end
+
+          it "matches billing address" do
+            expect(worksheet[starting_row][5].value).to eq(input_values[:billing_invoice_address][:street])
+            expect(worksheet[starting_row][7].value).to eq(input_values[:billing_invoice_address][:town])
+            expect(worksheet[starting_row][8].value).to eq(input_values[:billing_invoice_address][:postcode])
+          end
+        end
       end
 
       it "matches contract dates" do
