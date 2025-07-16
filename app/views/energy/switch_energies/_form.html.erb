@@ -5,7 +5,7 @@
 
     <%= form.govuk_radio_buttons_fieldset :switching_energy_type, legend: { text: I18n.t("energy.switching_electricity.heading"), tag: "h1", size: "l" } do %>
       <% form.object.switching_energy_type_options.each do |energy| %>
-        <%= form.govuk_radio_button :switching_energy_type, energy, label: { text: I18n.t(energy, scope: "energy.switching_electricity.energy_type") } %>
+        <%= form.govuk_radio_button :switching_energy_type, energy, label: { text: I18n.t(energy, scope: "energy.switching_electricity.energy_type") }, link_errors: true %>
       <% end %>
     <% end %>
 

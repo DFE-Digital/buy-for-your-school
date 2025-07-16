@@ -27,6 +27,13 @@ RSpec.shared_context "with current energy contract" do |energy_type|
            else
              energy_case_gas_supplier_path(case_id: case_organisation.energy_onboarding_case_id)
            end
+
+    energy_type_error = if energy_type == "electric"
+                          "Select an electricity supplier"
+                        else
+                          "Select a gas supplier"
+                        end
+
     visit path
 
     expect(page).to have_text("#{support_organisation.name}: Current ")
@@ -37,27 +44,27 @@ RSpec.shared_context "with current energy contract" do |energy_type|
     expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
 
     click_button "Save and continue"
-    expect(page).to have_text("Please select current #{energy_type} supplier")
-    expect(page).to have_text("Please enter #{energy_type} current contract end date")
+    expect(page).to have_text(energy_type_error)
+    expect(page).to have_text("Enter a contract end date")
 
     fill_in_supplier_and_contract_end_date(day: "31", month: "12", year: "2035") # check upper limit of date
-    expect(page).to have_text("Please enter a date within the range of - 1 and + 5 years of the current date")
+    expect(page).to have_text("Enter a contract end date that’s no more than 1 year prior to and no more than 5 years from today’s date")
 
     fill_in_supplier_and_contract_end_date(day: "10", month: "05", year: "2024") # check lower limit of date
-    expect(page).to have_text("Please enter a date within the range of - 1 and + 5 years of the current date")
+    expect(page).to have_text("Enter a contract end date that’s no more than 1 year prior to and no more than 5 years from today’s date")
 
     fill_in_supplier_and_contract_end_date(day: "32", month: "01", year: "2025") # check invalid date
-    expect(page).to have_text("Please enter a valid #{energy_type} current contract end date")
+    expect(page).to have_text("Enter a valid date")
 
     fill_in_supplier_and_contract_end_date(day: "29", month: "02", year: "2025") # check non leap year
-    expect(page).to have_text("Please enter a valid #{energy_type} current contract end date")
+    expect(page).to have_text("Enter a valid date")
 
     fill_in_supplier_and_contract_end_date(day: "31", month: "12", year: "2025")
     expect(page).not_to have_current_path(path)
   end
 
   def fill_in_supplier_and_contract_end_date(day:, month:, year:)
-    choose "British Gas"
+    find('input[type="radio"][value="british_gas"]', match: :first).click
     fill_in "Day", with: day
     fill_in "Month", with: month
     fill_in "Year", with: year

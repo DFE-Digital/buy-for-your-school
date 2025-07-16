@@ -26,31 +26,31 @@ describe "User can update gas usage details", :js do
 
     click_button "Save and continue"
 
-    expect(page).to have_text("The MPRN must be in the correct format and between 6 and 12 numbers long")
+    expect(page).to have_text("Enter an MPRN between 6 and 12 digits, like 12345678")
 
     fill_in "Add a Meter Point Reference Number (MPRN)", with: "testing text"
 
     click_button "Save and continue"
 
-    expect(page).to have_text("The MPRN must be in the correct format and between 6 and 12 numbers long")
+    expect(page).to have_text("Enter an MPRN between 6 and 12 digits, like 12345678")
 
     fill_in "Add a Meter Point Reference Number (MPRN)", with: "3938424403"
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("The MPRN must be in the correct format and between 6 and 12 numbers long")
+    expect(page).not_to have_text("Enter an MPRN between 6 and 12 digits, like 12345678")
 
     fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "text"
 
     click_button "Save and continue"
 
-    expect(page).to have_text("Enter a valid estimated annual usage in kilowatt hours")
+    expect(page).to have_text("Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800")
 
     fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "1000"
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("Enter a valid estimated annual usage in kilowatt hours")
+    expect(page).not_to have_text("Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800")
 
     visit new_energy_case_org_gas_meter_path(onboarding_case, case_organisation)
 
@@ -58,13 +58,13 @@ describe "User can update gas usage details", :js do
 
     click_button "Save and continue"
 
-    expect(page).to have_text("This MPRN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter")
+    expect(page).to have_text("This MPRN is already registered with Energy for Schools. Contact dfe-energy.services-team@education.gov.uk to resolve the matter")
 
     fill_in "Add a Meter Point Reference Number (MPRN)", with: "3938424404"
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("This MPRN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter")
+    expect(page).not_to have_text("This MPRN is already registered with Energy for Schools. Contact dfe-energy.services-team@education.gov.uk to resolve the matter")
 
     create(:energy_gas_meter, :with_valid_data, mprn: "12345666", energy_onboarding_case_organisation_id: case_organisation.id)
 

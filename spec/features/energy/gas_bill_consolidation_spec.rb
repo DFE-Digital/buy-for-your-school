@@ -20,12 +20,12 @@ describe "User can update gas usage", :js do
 
     click_button "Save and continue"
 
-    expect(page).to have_text("Please select at least one option to proceed")
+    expect(page).to have_text("Select yes if you'd like your meters consolidated on one bill")
 
     choose "Yes"
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("Please select at least one option to proceed")
+    expect(page).not_to have_text("Select yes if you'd like your meters consolidated on one bill")
   end
 end

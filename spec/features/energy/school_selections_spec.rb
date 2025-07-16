@@ -20,12 +20,12 @@ describe "School selection", :js do
 
     click_button "Continue"
 
-    expect(page).to have_text("Please select at least one option to proceed")
+    expect(page).to have_text("Select the school you are buying for")
 
     choose "Specialist School for Testing"
 
     click_button "Continue"
 
-    expect(page).not_to have_text("Please select at least one option to proceed")
+    expect(page).not_to have_text("Select the school you are buying for")
   end
 end

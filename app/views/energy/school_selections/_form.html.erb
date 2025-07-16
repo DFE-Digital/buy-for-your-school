@@ -5,7 +5,7 @@
 
     <%= form.govuk_radio_buttons_fieldset :select_school, legend: { text: I18n.t("energy.school_selections.heading"), tag: "h1", size: "l" } do %>
       <% @select_schools.each do |key, value|%>
-        <%= form.govuk_radio_button :select_school, key, label: { text: value } %>
+        <%= form.govuk_radio_button :select_school, key, label: { text: value }, link_errors: true %>
       <% end %>
     <% end %>
 
