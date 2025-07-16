@@ -19,7 +19,6 @@ RSpec.describe Energy::Documents::SiteAdditionFormEdf, type: :model do
   let(:payment_method) { :bacs }
   let(:payment_term) { :days14 }
   let(:is_bill_consolidated) { true }
-  let(:customer_name) { "Department for Education" }
 
   let(:electricity_meter_values) do
     {
@@ -52,7 +51,7 @@ RSpec.describe Energy::Documents::SiteAdditionFormEdf, type: :model do
 
     after { FileUtils.rm_f(service.output_file_xl) }
 
-    describe "createssite addition details on xl document" do
+    describe "creates site addition details on xl document" do
       before do
         energy_electricity_meter
         service.call
@@ -65,7 +64,7 @@ RSpec.describe Energy::Documents::SiteAdditionFormEdf, type: :model do
       context "with site and billing addresses" do
         context "when single school" do
           it "matches site details and address" do
-            expect(worksheet[starting_row][0].value).to eq(customer_name)
+            expect(worksheet[starting_row][0].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_NAME)
             expect(worksheet[starting_row][1].value).to eq(support_organisation.name)
 
             site_address_line2 = "#{support_organisation.address['street']}, #{support_organisation.address['locality']}"
@@ -158,8 +157,8 @@ RSpec.describe Energy::Documents::SiteAdditionFormEdf, type: :model do
         end
 
         it "has same organisation details on each row" do
-          expect(worksheet[starting_row][0].value).to eq(customer_name)
-          expect(worksheet[starting_row + 1][0].value).to eq(customer_name)
+          expect(worksheet[starting_row][0].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_NAME)
+          expect(worksheet[starting_row + 1][0].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_NAME)
         end
 
         it "has same site details and address on each row" do

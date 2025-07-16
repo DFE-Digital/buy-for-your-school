@@ -19,6 +19,7 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
   let(:meter_type) { :single }
   let(:payment_method) { :bacs }
   let(:payment_term) { :days14 }
+  let(:edf_energy) { "EDF Energy" }
 
   let(:gas_meter_values) do
     {
@@ -62,9 +63,9 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
       end
 
       it "matches organisation details" do
-        expect(worksheet[starting_row][0].value).to eq("Department for Education")
-        expect(worksheet[starting_row][1].value).to eq("Sanctuary Buildings")
-        expect(worksheet[starting_row][5].value).to eq("SW1P 3BT")
+        expect(worksheet[starting_row][0].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_NAME)
+        expect(worksheet[starting_row][1].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_ADDRESS_LINE1)
+        expect(worksheet[starting_row][5].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_ADDRESS_POSTCODE)
       end
 
       it "matches main contact details" do
@@ -101,7 +102,7 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
       end
 
       it "matches gas supplier and details" do
-        expect(worksheet[starting_row][38].value).to eq("EDF Energy")
+        expect(worksheet[starting_row][38].value).to eq(edf_energy)
         expect(worksheet[starting_row][39].value).to eq(contract_end_date.strftime("%d/%m/%Y"))
         expect(worksheet[starting_row][40].value).to eq("No")
         expect(worksheet[starting_row][41].value).to eq("No")
@@ -151,11 +152,11 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
         end
 
         it "has same organisation details on each row with same data" do
-          expect(worksheet[starting_row][0].value).to eq("Department for Education")
-          expect(worksheet[starting_row + 1][0].value).to eq("Department for Education")
+          expect(worksheet[starting_row][0].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_NAME)
+          expect(worksheet[starting_row + 1][0].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_NAME)
 
-          expect(worksheet[starting_row][1].value).to eq("Sanctuary Buildings")
-          expect(worksheet[starting_row + 1][1].value).to eq("Sanctuary Buildings")
+          expect(worksheet[starting_row][1].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_ADDRESS_LINE1)
+          expect(worksheet[starting_row + 1][1].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_ADDRESS_LINE1)
         end
 
         it "has multiple rows for main contact details with same data" do
@@ -198,8 +199,8 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
         end
 
         it "has multiple rows for meter details" do
-          expect(worksheet[starting_row][38].value).to eq("EDF Energy")
-          expect(worksheet[starting_row + 1][38].value).to eq("EDF Energy")
+          expect(worksheet[starting_row][38].value).to eq(edf_energy)
+          expect(worksheet[starting_row + 1][38].value).to eq(edf_energy)
 
           expect(worksheet[starting_row][42].value).to eq(gas_meter_values[:mprn])
           expect(worksheet[starting_row][42].value).to eq(gas_meter1.mprn)
