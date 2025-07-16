@@ -4,7 +4,7 @@
   <div class="govuk-form-group">
     <%= form.govuk_check_boxes_fieldset :loa_agreed, legend: nil do %>
       <% ['agreement1', 'agreement2', 'agreement3'].each do |dec| %>
-        <%= form.govuk_check_box :loa_agreed, dec, label: { text: I18n.t(dec, scope: "energy.letter_of_authorisation.agreement") } %>
+        <%= form.govuk_check_box :loa_agreed, dec, label: { text: I18n.t(dec, scope: "energy.letter_of_authorisation.agreement") }, link_errors: true %>
       <% end %>
     <% end %>
   </div>

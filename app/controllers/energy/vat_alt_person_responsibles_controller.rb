@@ -10,7 +10,13 @@ module Energy
 
     def update
       if validation.success?
-        @onboarding_case_organisation.update!(**form.data.except(:organisation))
+        if @onboarding_case_organisation.onboardable.trust_code.blank? && validation.to_h[:vat_alt_person_address].blank?
+          form_data = validation.to_h.merge(vat_alt_person_address: @organisation_detail.address)
+        else
+          form_data = validation.to_h
+        end
+    
+        @onboarding_case_organisation.update!(**form_data.except(:organisation))
         redirect_to redirect_path
       else
         render :show
@@ -35,10 +41,10 @@ module Energy
 
     def form_params
       form_params = params.fetch(:vat_alt_person_responsible, {}).permit(:vat_alt_person_first_name, :vat_alt_person_last_name, :vat_alt_person_phone, :vat_alt_person_address)
-      form_params[:vat_alt_person_address] = if form_params[:vat_alt_person_address].present?
+      form_params[:vat_alt_person_address] = if form_params[:vat_alt_person_address].present? 
                                                 JSON.parse(form_params[:vat_alt_person_address])
                                              else
-                                                @organisation_detail.address
+                                                {}
                                              end
       form_params
     end

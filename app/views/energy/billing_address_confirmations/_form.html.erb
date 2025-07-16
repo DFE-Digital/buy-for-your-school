@@ -5,7 +5,7 @@
   <%= form.govuk_radio_buttons_fieldset :billing_invoice_address_source_id,
     legend: { size: "l", text: I18n.t("energy.billing_address_confirmation.heading"), tag: "h1" } do %>
     <% @address_orgs.each do |id, org| %>
-      <%= form.govuk_radio_button :billing_invoice_address_source_id, id, label: { text: org.formatted_address } %>
+      <%= form.govuk_radio_button :billing_invoice_address_source_id, id, label: { text: org.formatted_address }, link_errors: true %>
     <% end %>
   <% end %>
 

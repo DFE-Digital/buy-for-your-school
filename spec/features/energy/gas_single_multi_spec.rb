@@ -14,13 +14,13 @@ describe "Gas single or multi-meter selection", :js do
 
     click_button "Save and continue"
 
-    expect(page).to have_text("Please select at least one option to proceed")
+    expect(page).to have_text("Select whether your school is single or multi meter")
 
-    choose "Multi meter"
+    find('input[type="radio"][value="multi"]', match: :first).click
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("Please select at least one option to proceed")
+    expect(page).not_to have_text("Select whether your school is single or multi meter")
 
     create(:energy_gas_meter, :with_valid_data, mprn: "12345666", energy_onboarding_case_organisation_id: case_organisation.id)
 

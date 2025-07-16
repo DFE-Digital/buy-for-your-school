@@ -43,13 +43,13 @@ describe "VAT rate charge", :js do
     fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: invalid_percentage
     fill_in "VAT registration number (optional)", with: invalid_vat_reg_no
     click_button "Save and continue"
-    expect(page).to have_text("Enter a value between 1 and 100")
+    expect(page).to have_text("The percentage must be a number between 1 and 100 and rounded up to the nearest whole number. For example, 35%")
     expect(page).to have_text("Enter a VAT registration number that's 9 digits long, like 123456789")
 
     fill_in "Percentage of total consumption qualifying for reduced rate of VAT", with: percentage
     fill_in "VAT registration number (optional)", with: valid_vat_reg_no
     click_button "Save and continue"
-    expect(page).not_to have_text("Enter a value between 1 and 100")
+    expect(page).not_to have_text("The percentage must be a number between 1 and 100 and rounded up to the nearest whole number. For example, 35%")
     expect(page).not_to have_text("Enter a VAT registration number that's 9 digits long, like 123456789")
 
     expect(case_organisation.reload.vat_rate).to eq(5)
