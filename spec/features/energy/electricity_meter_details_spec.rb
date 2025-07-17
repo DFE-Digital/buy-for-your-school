@@ -59,7 +59,7 @@ describe "User can update electricity meters and usage", :js do
 
     expect(page).to have_text("Enter the meter operator")
 
-    fill_in "What is the supply capacity?", with: "1000"
+    fill_in "What is the supply capacity, in kilovolt-amperes (kVA)?", with: "1000"
 
     click_button "Save and continue"
 

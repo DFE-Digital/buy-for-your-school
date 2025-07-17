@@ -560,7 +560,7 @@ en:
       half_hourly_label: Is this a half-hourly meter?
       half_hourly_hint: Your meter is half hourly if your Supply number begins with 00. Your Supply number is on your electricity bill.
       half_hourly_yes_text: Half-hourly meters are sometimes managed by a separate company. Ask your electricity supplier if you need help answering the following questions.
-      supplier_capacity_label: What is the supply capacity?
+      supplier_capacity_label: What is the supply capacity, in kilovolt-amperes (kVA)?
       supplier_capacity_suffix: kVA
       data_aggregator_label: Who is the data aggregator?
       data_collector_label: Who is the data collector?
