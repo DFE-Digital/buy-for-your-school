@@ -75,6 +75,17 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
         expect(worksheet[starting_row][16].value).to include("education.gov.uk")
       end
 
+      context "when gas current supplier is Other" do
+        let(:gas_supplier) { :other }
+        let(:input_values) do
+          super().merge(gas_current_supplier_other: "Other gas supplier")
+        end
+
+        it "matches gas supplier name" do
+          expect(worksheet[starting_row][38].value).to eq("Other gas supplier")
+        end
+      end
+
       context "with site and billing addresses" do
         context "when single school without trust" do
           it "matches site and billing addresses" do

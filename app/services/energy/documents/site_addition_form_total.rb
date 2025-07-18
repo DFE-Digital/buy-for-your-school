@@ -118,9 +118,13 @@ module Energy
 
       def gas_supplier
         supplier = @onboarding_case_organisation.gas_current_supplier || @onboarding_case_organisation.gas_current_supplier_other
-        if supplier == "edf_energy"
+
+        case supplier
+        when "other"
+          @onboarding_case_organisation.gas_current_supplier_other
+        when "edf_energy"
           "EDF Energy"
-        elsif supplier == "eon_next"
+        when "eon_next"
           "E.ON Next"
         else
           supplier.titleize
