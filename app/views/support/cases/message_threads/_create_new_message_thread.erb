@@ -6,8 +6,12 @@
   </summary>
   <div class="govuk-details__text">
     <div class="govuk-button-group flex-align-center">
+      <% if (current_agent&.roles & %w[cec cec_admin]).any? %>
+      <%= link_to I18n.t("support.case.label.message_threads.create_with_template"), support_case_email_templates_path(back_to: Base64.encode64(@back_url), email_template_filters: { group_id: @cec_group&.id, subgroup_ids: [@dfe_subgroup&.id]} ), class: "govuk-button govuk-button--secondary", role: "button" %>
+      <% else %>
       <%= link_to I18n.t("support.case.label.message_threads.create_with_template"), support_case_email_templates_path(back_to: Base64.encode64(@back_url)), class: "govuk-button govuk-button--secondary", role: "button" %>
-      <%= button_to I18n.t("support.case.label.message_threads.create_using_signatory_template"), support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-button govuk-button--secondary" %>
+      <% end %>
+      <%= button_to I18n.t("support.case.label.message_threads.create_using_signatory_template"), support_case_message_threads_path(back_to: Base64.encode64(@back_url) ), class: "govuk-button govuk-button--secondary" %>
     </div>
   </div>
 </details>
