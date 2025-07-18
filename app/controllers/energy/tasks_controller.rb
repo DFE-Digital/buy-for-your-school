@@ -10,7 +10,7 @@ module Energy
       if all_tasks_complete?
         redirect_to energy_case_check_your_answers_path
       else
-        flash[:error] = { message: I18n.t("energy.tasks.error"), class: "govuk-error" }
+        flash[:tasklist_not_complete_error] = { message: I18n.t("energy.tasks.error"), path: error_link_path }
         render :show
         flash.clear
       end
@@ -30,6 +30,28 @@ module Energy
       incomplete_tasks = @task_list.select { |task| %i[in_progress not_started].include?(task.status) }
 
       incomplete_tasks.none?
+    end
+
+    def error_link_path
+      first_task_path = nil
+
+      @task_list.each_with_index do |task, index|
+        if task.status == :not_started
+          first_task_path = "#energy-task-#{index + 1}-link"
+          break
+        end
+      end
+
+      if first_task_path.nil?
+        @task_list.each_with_index do |task, index|
+          if task.status == :in_progress
+            first_task_path = "#energy-task-#{index + 1}-link"
+            break
+          end
+        end
+      end
+
+      first_task_path
     end
 
     def authenticate_user!

@@ -6,7 +6,7 @@
     legend: { size: "l", text: I18n.t("energy.gas_single_multi.heading"), tag: "h1" },
     hint: { text: I18n.t("energy.gas_single_multi.hint") } do %>
     <% form.object.single_multi_options.each do |option| %>
-      <%= form.govuk_radio_button :gas_single_multi, option, label: { text: I18n.t("energy.gas_single_multi.#{option}") } %>
+      <%= form.govuk_radio_button :gas_single_multi, option, label: { text: I18n.t("energy.gas_single_multi.#{option}") }, link_errors: true %>
     <% end %>
   <% end %>
 
