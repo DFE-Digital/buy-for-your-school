@@ -22,9 +22,11 @@
        <li>
         <%= link_to I18n.t("support.case.label.resolve"), portal_new_case_resolution_path(@current_case), class: "govuk-link" %>
       </li>
+      <% if !@current_case.energy_onboarding_case? || (current_agent&.roles & %w[procops_admin cec_admin]).any? %>
       <li>
         <%= link_to I18n.t("support.case_closures.action"), portal_case_closures_path(@current_case), class: "govuk-link" %>
       </li>
+      <% end %>
     <% else %>
       <li>
         <%= link_to I18n.t("support.case.label.assign_to_agent"), portal_new_case_assignments_path(@current_case), class: "govuk-link" unless @current_case.closed?%>
