@@ -19,7 +19,8 @@ class Energy::VatAltPersonResponsibleFormSchema < Schema
   end
 
   rule(:vat_alt_person_phone) do
-    key.failure(:format?) if value && !value.match?(/\A(0\d{2,4}\s?\d{3,4}\s?\d{3,4})\z/)
+    digits = value.gsub(/\D/, "")
+    key.failure(:format?) if value && (!value.match?(/\A[\d\s\-+()]+\z/) || digits.length < 10 || digits.length > 13)
   end
 
   rule(:vat_alt_person_address) do
