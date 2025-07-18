@@ -6,34 +6,27 @@
     ) do |form| %>
     <%= form.govuk_error_summary %>
 
-
+    <% add_mpan_label = @onboarding_case_organisation.electricity_meter_type_multi? ? I18n.t("energy.electricity_meter.mpan_label") : I18n.t("energy.electricity_meter.mpan_label_single") %>
     <%= form.govuk_text_field :mpan,
-        label: { text: I18n.t("energy.electricity_meter.mpan_label"), size: "s" },
+        label: { text: add_mpan_label, size: "s", tag: "h2" },
         hint: -> do
-          tag.div(I18n.t("energy.electricity_meter.mpan_hint").html_safe) +
-          tag.details(class: "govuk-details") do
-            tag.summary(class: "govuk-details__summary") do
-              tag.span(I18n.t("energy.electricity_meter.mpan_details_link"), class: "govuk-details__summary-text")
-            end +
-            tag.div(class: "govuk-details__text") do
               I18n.t("energy.electricity_meter.mpan_details").html_safe +
+              tag.br +
               tag.img(
                 src: image_path("mpan.png"),
-                alt: "mpan",
-                width: 187,
-                height: 55
+                alt: I18n.t("energy.electricity_meter.mpan_image_alt_text1"),
+                width: "30%",
               )
-            end
-          end
         end,
         width: 10,
         class: "govuk-input--width-10" %>
 
-    <%= form.govuk_radio_buttons_fieldset :is_half_hourly,
-        legend: { text: I18n.t("energy.electricity_meter.half_hourly_label"), size: "s", tag: "h2" },
+    <div data-controller="electricity_meter_conditional_option">
+      <%= form.govuk_radio_buttons_fieldset :is_half_hourly,
+        legend: { tag: "h2", text: I18n.t("energy.electricity_meter.half_hourly_label"), class: "govuk-label govuk-label--s" },
         hint: { text: I18n.t("energy.electricity_meter.half_hourly_hint") }  do %>
 
-        <img src="<%=image_path('mpan-half-hourly.png') %>" alt="" width="30%">
+        <img src="<%=image_path('mpan-half-hourly.png') %>" alt="<%= I18n.t("energy.electricity_meter.mpan_image_alt_text2") %>" width="30%">
         <div class="govuk-radios" data-electricity_meter_conditional_option-target = "input">
           <div class="govuk-radios__item">
             <%= form.radio_button :is_half_hourly, true, class: "govuk-radios__input" %>
@@ -73,7 +66,7 @@
 
 
     <%= form.govuk_text_field :electricity_usage,
-      label: { text: I18n.t("energy.electricity_meter.electricity_usage_label"), class: 'govuk-label govuk-label govuk-label--s' },
+      label: { text: I18n.t("energy.electricity_meter.electricity_usage_label"), class: 'govuk-label govuk-label govuk-label--s', tag: "h2" },
       suffix_text: I18n.t("energy.electricity_meter.electricity_usage_suffix"),
       width: 5,
       hint: -> do
