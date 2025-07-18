@@ -6,16 +6,28 @@
 
     <% @organisation_task_lists.each do |org_task_list| %>
       <h2 class="govuk-heading-l"><%= org_task_list.org_name %></h2>
+
       <% org_task_list.sections.each do |sec| %>
-        <%= govuk_summary_card(title: I18n.t("energy.check_your_answers.#{sec.title}.title")) do |card|
-          card.with_action { govuk_link_to(I18n.t("energy.generic.change"), sec.path, id: "#{sec.title}_change") }
-          card.with_summary_list(rows: sec.summary.map { |row|
-            {
-              key: {text: I18n.t("energy.check_your_answers.#{sec.title}.#{row[0]}")},
-              value: {text: row[2] || row[1]},
-            }
-          })
-        end %>
+        <div class="govuk-summary-card">
+          <div class="govuk-summary-card__title-wrapper">
+            <h3 class="govuk-summary-card__title"><%= I18n.t("energy.check_your_answers.#{sec.title}.title") %></h3>
+            <ul class="govuk-summary-card__actions">
+              <li class="govuk-summary-card__action">
+                <%= govuk_link_to(I18n.t("energy.generic.change"), sec.path, id: "#{sec.title}_change") %>
+              </li>
+            </ul>
+          </div>
+          <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+              <% sec.summary.each do |row| %>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key"><%= I18n.t("energy.check_your_answers.#{sec.title}.#{row[0]}") %></dt>
+                  <dd class="govuk-summary-list__value"><%= row[2] || row[1] %></dd>
+                </div>
+              <% end %>
+            </dl>
+          </div>
+        </div>
       <% end %>
     <% end %>
 
