@@ -7,6 +7,10 @@ describe "User can update gas usage details", :js do
     user_exists_in_dfe_sign_in(user:)
     user_is_signed_in(user:)
 
+    case_organisation.update!(gas_single_multi: "multi")
+
+    case_organisation.reload
+
     visit new_energy_case_org_gas_meter_path(onboarding_case, case_organisation)
 
     expect(page).to have_text("Gas meter details")
@@ -81,5 +85,13 @@ describe "User can update gas usage details", :js do
     # Check the order of the MPRN values
     expected_order = %w[3938424403 12345666 12345777 12345888]
     expect(mprn_values).to eq(expected_order)
+
+    visit energy_case_org_gas_single_multi_path(onboarding_case, case_organisation)
+
+    choose "Single meter"
+
+    click_button "Save and continue"
+
+    expect(page).to have_text("Add the Meter Point Reference Number (MPRN)")
   end
 end

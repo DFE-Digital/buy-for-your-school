@@ -9,11 +9,13 @@ describe "User can update electricity meters and usage", :js do
   let!(:another_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case: another_onboarding_case, onboardable: another_organisation) }
   let!(:electricity_meter) { create(:energy_electricity_meter, :with_valid_data, mpan: "1234567890555", energy_onboarding_case_organisation_id: another_case_organisation.id) }
 
-  specify "Adding electricity usage" do
+  before do
     Current.user = user
     user_exists_in_dfe_sign_in(user:)
     user_is_signed_in(user:)
+  end
 
+  specify "Adding electricity usage" do
     visit new_energy_case_org_electricity_meter_path(onboarding_case, case_organisation)
 
     expect(page).to have_text("Electricity meter details")
@@ -57,7 +59,7 @@ describe "User can update electricity meters and usage", :js do
 
     expect(page).to have_text("Enter the meter operator")
 
-    fill_in "What is the supply capacity?", with: "1000"
+    fill_in "What is the supply capacity, in kilovolt-amperes (kVA)?", with: "1000"
 
     click_button "Save and continue"
 
@@ -99,13 +101,13 @@ describe "User can update electricity meters and usage", :js do
 
     expect(page).not_to have_text("Enter a valid meter operator")
 
-    fill_in "Estimated annual electricity usage", with: "text"
+    fill_in "Estimated annual electricity usage, in kilowatt hours (kWh)", with: "text"
 
     click_button "Save and continue"
 
     expect(page).to have_text("Enter a valid estimated annual usage in kilowatt hours")
 
-    fill_in "Estimated annual electricity usage", with: "1000"
+    fill_in "Estimated annual electricity usage, in kilowatt hours (kWh)", with: "1000"
 
     click_button "Save and continue"
 
@@ -158,5 +160,15 @@ describe "User can update electricity meters and usage", :js do
     # Check the order of the MPAN values
     expected_order = %w[1234567890123 1234512345121 1234512345122 1234512345123]
     expect(mpan_values).to eq(expected_order)
+  end
+
+  specify "Check mpan label" do
+    case_organisation.update!(electricity_meter_type: "single")
+    visit new_energy_case_org_electricity_meter_path(onboarding_case, case_organisation)
+    expect(page).to have_text("Add the MPAN")
+
+    case_organisation.update!(electricity_meter_type: "multi")
+    visit new_energy_case_org_electricity_meter_path(onboarding_case, case_organisation)
+    expect(page).to have_text("Add an MPAN")
   end
 end

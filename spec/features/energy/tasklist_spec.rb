@@ -34,7 +34,7 @@ describe "Tasklist flows", :js do
       click_link("Gas contract information")
 
       # Go to Gas Contract
-      expect(page).to have_text("Gas Contract")
+      expect(page).to have_text("Gas contract")
       expect(page).to have_link("Discard and go to task list")
       choose "Other"
       fill_in "Gas supplier", with: "Great Gas Ltd"
@@ -51,7 +51,7 @@ describe "Tasklist flows", :js do
       click_link("Electricity contract information")
 
       # Go to Electricity Contract
-      expect(page).to have_text("Electricity Contract")
+      expect(page).to have_text("Electricity contract")
       expect(page).to have_link("Discard and go to task list")
       choose "Other"
       fill_in "Electricity supplier", with: "Emilys Leccie Co"
@@ -81,7 +81,7 @@ describe "Tasklist flows", :js do
         # Go to meter details
         expect(page).to have_text("Gas meter details")
         expect(page).to have_link("Discard and go to task list")
-        fill_in "Add a Meter Point Reference Number (MPRN)", with: gas_meter_numbers.first
+        fill_in "Add the Meter Point Reference Number (MPRN)", with: gas_meter_numbers.first
         fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "123"
         click_button "Save and continue"
 
@@ -104,7 +104,7 @@ describe "Tasklist flows", :js do
         # Go to meter details
         expect(page).to have_text("Gas meter details")
         expect(page).to have_link("Discard and go to task list")
-        expect(page).to have_field("Add a Meter Point Reference Number (MPRN)", with: gas_meter_numbers.first)
+        expect(page).to have_field("Add the Meter Point Reference Number (MPRN)", with: gas_meter_numbers.first)
         fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "123"
         click_button "Save and continue"
 
@@ -304,7 +304,7 @@ describe "Tasklist flows", :js do
         # Go to meter details
         expect(page).to have_text("Electricity meter details")
         expect(page).to have_link("Discard and go to task list")
-        fill_in "Add an MPAN", with: electricity_meter_numbers.first
+        fill_in "Add the MPAN", with: electricity_meter_numbers.first
         choose "No"
         fill_in "Estimated annual electricity usage", with: "1234"
         click_button "Save and continue"
@@ -328,7 +328,7 @@ describe "Tasklist flows", :js do
         # Go to meter details
         expect(page).to have_text("Electricity meter details")
         expect(page).to have_link("Discard and go to task list")
-        expect(page).to have_field("Add an MPAN", with: electricity_meter_numbers.first)
+        expect(page).to have_field("Add the MPAN", with: electricity_meter_numbers.first)
         fill_in "Estimated annual electricity usage", with: "1234"
         click_button "Save and continue"
 

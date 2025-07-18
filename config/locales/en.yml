@@ -343,7 +343,7 @@ en:
         - The V30 is a low-risk variable rate contract.
         - Prices can go up and down, but changes are less drastic than other variable rates. It’s the most stable variable rate contract available to schools, although it may not always give you the lowest price.
         - CCS cannot provide potential customers with energy prices before they join due to commercial sensitivity.
-        - To get an estimate of prices, email <a href="mailto:%{email}">%{email}</a> and request DfE’s benchmarking service. We’ll provide a price comparison based on your energy bills from the last financial year.
+        - To get an estimate of prices, email <a class="govuk-link" href="mailto:%{email}">%{email}</a> and request DfE’s benchmarking service. We’ll provide a price comparison based on your energy bills from the last financial year.
         - V30 is a rolling contract, meaning your school will remain on the contract until you give notice to exit. 30 months’ notice is required.
       start_date:
         title: Start date
@@ -400,14 +400,14 @@ en:
         title: Renewable energy
         body:
         - The energy supply is from the supplier’s standard ‘Brown’ product. Everyone who uses this supply gets between 30-40% renewable energy through the UK power grid. This percentage is increasing as more renewable energy sources are added to the grid.
-        - You can choose to pay more for a product that contains more renewable energy. Email <a href="mailto:%{email}">%{email}</a> to discuss renewable options.
+        - You can choose to pay more for a product that contains more renewable energy. Email <a class="govuk-link" href="mailto:%{email}">%{email}</a> to discuss renewable options.
         - Energy savings made through renewable energy, such as solar panels, are not factored into this contract. You should continue your current arrangement or contact EDF about setting up a Smart Export Guarantee if you wish to export energy back to the grid.
       objections:
         title: Objections
         body:
         - In some cases, the current energy supplier may raise an objection to switching contracts. Common reasons for objections include unpaid invoices, incorrect meter numbers or insufficient notice given to terminate the current contract.
         - DfE will inform you if an objection is raised. You’ll need to contact your existing supplier to resolve the issue and switch contracts – DfE does not have the authority to do this for you.
-        - For queries about Energy for Schools or help joining, email <a href="mailto:%{email}">%{email}</a>
+        - For queries about Energy for Schools or help joining, email <a class="govuk-link" href="mailto:%{email}">%{email}</a>
       how_to_join:
         title: How to join
         body:
@@ -483,9 +483,11 @@ en:
       page_title: Gas meter summary
       heading: Gas meter details
       heading_info: You can usually find this information on your gas bill. Please check all pages.
-      mprn_label: Add a Meter Point Reference Number (MPRN)
+      mprn_label: Add the Meter Point Reference Number (MPRN)
+      mprn_multi_label: Add a Meter Point Reference Number (MPRN)
       mprn_hint: This is a 6 to 12 digit number on your gas bill. It may also be called MPR or M number.
-      gas_usage_label: Estimated annual gas usage for this meter, in kilowatt hours
+      gas_usage_label: Estimated annual gas usage for this meter, in kilowatt hours (kWh)
+      gas_usage_hint_link: Where can I find annual gas usage?
       gas_usage_hint: If your annual estimated usage for this meter is not on your bill, add up the kWh for this meter from your last 12 gas bills to calculate your total usage.
       gas_usage_suffix: kWh
       list_item:
@@ -511,13 +513,16 @@ en:
       other: Other
     or: or
     current_contract:
-      heading: Current contract details
-      gas_contract: Gas Contract
-      electric_contract: Electricity Contract
-      current_supplier: Current gas supplier
-      current_electric_supplier: Current electricity supplier
-      other_gas_supplier: Gas supplier
-      other_electric_supplier: Electricity supplier
+      gas:
+        heading: Current gas supplier
+        contract: Gas contract
+        current_supplier: Who currently supplies your gas?
+        other_supplier: Gas supplier
+      electric:
+        heading: Current electricity supplier
+        contract: Electricity contract
+        current_supplier: Who currently supplies your electricity?
+        other_supplier: Electricity supplier
       when_contract_ends: When does the contract end?
       date_for_example: For example, 27 3 2025
       end_day: Day
@@ -548,18 +553,19 @@ en:
       page_title: Electricity meter summary
       heading: Electricity meter details
       mpan_label: Add an MPAN
-      mpan_hint: You can usually find the 13-digit MPAN on your electricity bill. Please check all pages.
-      mpan_details_link: Where can I find my MPAN?
+      mpan_label_single: Add the MPAN
+      mpan_image_alt_text1: Image of a 21-digit Supply number with the final 13 digits highlighted, to represent the MPAN
+      mpan_image_alt_text2: Image of a 21-digit Supply number with the first 2 digits as 00 highlighted, to represent the MPAN is half hourly
       mpan_details: Your MPAN is on your electricity bill. It’s the last 13 digits of the Supply number.
       half_hourly_label: Is this a half-hourly meter?
       half_hourly_hint: Your meter is half hourly if your Supply number begins with 00. Your Supply number is on your electricity bill.
       half_hourly_yes_text: Half-hourly meters are sometimes managed by a separate company. Ask your electricity supplier if you need help answering the following questions.
-      supplier_capacity_label: What is the supply capacity?
+      supplier_capacity_label: What is the supply capacity, in kilovolt-amperes (kVA)?
       supplier_capacity_suffix: kVA
       data_aggregator_label: Who is the data aggregator?
       data_collector_label: Who is the data collector?
       meter_operator_label: Who is the meter operator?
-      electricity_usage_label: Estimated annual electricity usage
+      electricity_usage_label: Estimated annual electricity usage, in kilowatt hours (kWh)
       electricity_usage_suffix: kWh
       electricity_usage_details_link: Where can I find annual electricity usage?
       electricity_usage_details: If your annual estimated usage for this meter is not on your bill, add up the kWh for this meter from your last 12 electricity bills to calculate your total usage.
@@ -578,9 +584,9 @@ en:
       alert:
         limit_reached: Maximum number of MPANs reached
     vat_rate_charge:
-      title: VAT declaration
+      title: "About your schools: VAT declaration"
       heading: Which VAT rate are you charged?
-      hint: If you're unsure, check your energy bills or ask your local authority
+      hint: If you're unsure, check your bills. Or, if relevant, ask your local authority or chief financial officer.
       normal: 20%
       lower: 5%
       lower_rate_percentage: Percentage of total consumption qualifying for reduced rate of VAT
@@ -617,7 +623,6 @@ en:
         legend: How will the bills be paid?
         bacs: BACS
         direct_debit: Direct Debit
-        gov_procurement_card: Government Procurement Card
       terms:
         legend: Payment terms
         days14: 14 days
@@ -716,7 +721,6 @@ en:
         billing_payment_method: How will you pay your bills?
         bacs: BACS
         direct_debit: Direct debit
-        gov_procurement_card: Government Procurement Card
         billing_payment_terms: Payment terms
         days14: 14 days
         days21: 21 days
@@ -732,7 +736,7 @@ en:
       title: Agree to the Energy for Schools letter of authority
       pdf_title: DfE Energy for Schools letter of authority
       page_title: Letter of authority
-      paragraphs: 
+      paragraphs:
         paragraph1: "This letter of authority sets out the arrangements agreed between the Department for Education ('DfE')and %{school_name} (the 'Education Provider') in connection with the provision of energy supplies."
         paragraph2: This letter supersedes and replaces all previous agreements between DfE and the Education Provider in relation to the supply of gas and/or electricity.
         paragraph3: DfE has entered into and/or will enter into one or more Framework Agreements with various suppliers for the provision of gas and/or electricity to DfE and to various sites identified by DfE. Each such energy supplier is referred to in this letter as a 'Supplier'. Under the Framework Agreements, DfE is entitled to request a Supplier to provide gas and/or electricity to locations identified by DfE.
