@@ -1,23 +1,9 @@
 # frozen_string_literal: true
 
-require "rubyXL"
-require "rubyXL/convenience_methods/cell"
-
 module Energy
   module Documents
-    class PortalAccessFormEdf
-      include Energy::Documents::XlSheetHelper
-      include Energy::Documents::PortalAccessXlHelper
-
+    class PortalAccessFormEdf < PortalAccessForm
       TEMPLATE_FILE = "Portal Access Template EDF.xlsx"
-
-      def initialize(onboarding_case:, current_user:)
-        @onboarding_case = onboarding_case
-        @support_case = onboarding_case.support_case
-        @organisation = @support_case.organisation
-        @onboarding_case_organisation = onboarding_case.onboarding_case_organisations.first
-        @current_user = current_user
-      end
 
       def call
         raise "Missing template file: #{input_template_file_xl}" unless File.exist?(input_template_file_xl)
@@ -34,10 +20,6 @@ module Energy
         end
 
         workbook.write(output_file_xl)
-      end
-
-      def input_template_file_xl
-        @input_template_file_xl ||= INPUT_XL_TEMPLATE_PATH.join(TEMPLATE_FILE)
       end
 
       def output_file_xl
@@ -66,17 +48,9 @@ module Energy
           "Title" => "",
           "Forename" => @current_user.first_name,
           "Surname" => @current_user.last_name,
-          "Phone Number" => "",
+          "Phone Number" => @organisation.telephone_number,
           "Job Title" => "",
         }
-      end
-
-      def establishment_group
-        @establishment_group ||= Support::EstablishmentGroup.find_by(uid: @organisation.trust_code)
-      end
-
-      def postcode
-        @organisation.address["postcode"]
       end
 
       def contract_end_date
@@ -85,22 +59,6 @@ module Energy
 
       def supply_start_date
         (contract_end_date + 1.day).strftime("%d/%m/%Y")
-      end
-
-      def email_addresses
-        @current_user.email
-      end
-
-      def vat_rate_yes_no
-        @onboarding_case_organisation.vat_rate == 5 ? "Y" : "N"
-      end
-
-      def direct_debit_yes_no
-        @onboarding_case_organisation.billing_payment_method_direct_debit? ? "Y" : "N"
-      end
-
-      def access_type
-        @onboarding_case_organisation.billing_invoicing_method_email? ? "Email Push" : "Email Pull"
       end
     end
   end

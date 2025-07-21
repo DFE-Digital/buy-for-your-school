@@ -1,5 +1,6 @@
 module Energy
   class GeneratePortalAccessXlDocuments
+    include Energy::SupportDocumentsHelper
     include Energy::SwitchingEnergyTypeHelper
     attr_reader :onboarding_case, :current_user, :documents
 
@@ -14,10 +15,10 @@ module Energy
     def call
       ActiveRecord::Base.transaction do
         generate_documents
-        attach_documents_to_support_case
+        attach_documents_to_support_case(documents, @support_case)
       end
     ensure
-      delete_temp_files
+      delete_temp_files(documents)
     end
 
   private
@@ -34,31 +35,6 @@ module Energy
     rescue StandardError => e
       Rails.logger.error("Error generating documents: #{e.message}")
       raise e
-    end
-
-    def attach_documents_to_support_case
-      documents.each do |document_path|
-        @support_case.case_attachments.create!(
-          attachable: support_document(document_path),
-          custom_name: File.basename(document_path),
-          description: "System uploaded document",
-        )
-      end
-    end
-
-    def support_document(document_path)
-      xl_document = File.open(document_path)
-      Support::Document.create!(
-        case: @support_case,
-        file_type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        file: xl_document,
-      )
-    end
-
-    def delete_temp_files
-      documents.each do |document_path|
-        File.delete(document_path) if File.exist?(document_path)
-      end
     end
   end
 end

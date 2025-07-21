@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Energy::Documents::PortalAccessFormEdf, type: :model do
   subject(:service) { described_class.new(onboarding_case:, current_user:) }
 
-  let(:organisation) { create(:support_organisation, :with_address, name: "Northway School") }
+  let(:organisation) { create(:support_organisation, :with_address, name: "Northway School", telephone_number:) }
   let(:current_user) { create(:user, :many_supported_schools_and_groups) }
   let(:support_case) { create(:support_case, organisation:) }
   let(:onboarding_case) { create(:onboarding_case, support_case:) }
@@ -21,6 +21,7 @@ RSpec.describe Energy::Documents::PortalAccessFormEdf, type: :model do
   let(:meter_type) { :single }
   let(:payment_method) { :direct_debit }
   let(:payment_term) { :days14 }
+  let(:telephone_number) { "0207 123 4567" }
 
   let(:electricity_meter_values) do
     {
@@ -71,7 +72,7 @@ RSpec.describe Energy::Documents::PortalAccessFormEdf, type: :model do
         expect(worksheet[starting_row][11].value).to eq("")
         expect(worksheet[starting_row][12].value).to eq(current_user.first_name)
         expect(worksheet[starting_row][13].value).to eq(current_user.last_name)
-        expect(worksheet[starting_row][14].value).to eq("")
+        expect(worksheet[starting_row][14].value).to eq(telephone_number)
         expect(worksheet[starting_row][15].value).to eq("")
       end
     end
