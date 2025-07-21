@@ -20,7 +20,7 @@
     <% end %>
   <% end %>
 
-  <%= form.govuk_date_field :electric_current_contract_end_date, maxlength_enabled: true, legend: { text: I18n.t("energy.current_contract.when_contract_ends"), size: "s", tag: "h2" }, hint: { text: I18n.t("energy.current_contract.date_for_example") } %>
+  <%= form.govuk_date_field :electric_current_contract_end_date, legend: { text: I18n.t("energy.current_contract.when_contract_ends"), size: "s", tag: "h2" }, hint: { text: I18n.t("energy.current_contract.date_for_example") } %>
 
-  <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
+  <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags, submit_button_additional_classes: "validate_date") %>
 <% end %>
