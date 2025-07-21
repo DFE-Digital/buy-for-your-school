@@ -9,7 +9,7 @@ class Energy::GasMeter < ApplicationRecord
 
   validates :mprn,
             presence: true,
-            format: { with: /\A[\d\-\s()]+\z/ }
+            format: { with: Energy::MeterNumberFormat::VALID_METER_NUMBER_REGEX }
   validates :gas_usage,
             presence: true,
             numericality: { greater_than_or_equal_to: 0, less_than: 1_000_000 }

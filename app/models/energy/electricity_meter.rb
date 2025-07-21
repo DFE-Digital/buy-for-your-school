@@ -9,7 +9,7 @@ class Energy::ElectricityMeter < ApplicationRecord
 
   validates :mpan,
             presence: true,
-            format: { with: /\A[\d\-\s()]+\z/ }
+            format: { with: Energy::MeterNumberFormat::VALID_METER_NUMBER_REGEX }
   validates :is_half_hourly, inclusion: { in: [true, false] }
 
   validates :supply_capacity,
