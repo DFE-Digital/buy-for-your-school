@@ -1,13 +1,11 @@
 <%= form_with model: @form, scope: :letter_of_authorisation_form, url: energy_case_letter_of_authorisation_path, method: :patch do |form| %>
   <%= form.govuk_error_summary %>
 
-  <div class="govuk-form-group">
-    <%= form.govuk_check_boxes_fieldset :loa_agreed, legend: nil do %>
-      <% ['agreement1', 'agreement2', 'agreement3'].each do |dec| %>
-        <%= form.govuk_check_box :loa_agreed, dec, label: { text: I18n.t(dec, scope: "energy.letter_of_authorisation.agreement") }, link_errors: true %>
-      <% end %>
-    <% end %>
-  </div>
+  <%= form.govuk_check_boxes_fieldset :loa_agreed, legend: nil do %>
+    <%= form.govuk_check_box :loa_agreed, 'agreement1', label: { text: I18n.t('agreement1', scope: "energy.letter_of_authorisation.agreement") }, link_errors: true %>
+    <%= form.govuk_check_box :loa_agreed, 'agreement2', label: { text: I18n.t('agreement2', scope: "energy.letter_of_authorisation.agreement") } %>
+    <%= form.govuk_check_box :loa_agreed, 'agreement3', label: { text: I18n.t('agreement3', scope: "energy.letter_of_authorisation.agreement") } %>
+  <% end %>
 
   <%= render SubmitButtonComponent.new(form)%>
 <% end %>

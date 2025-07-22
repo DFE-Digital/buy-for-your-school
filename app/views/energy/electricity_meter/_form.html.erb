@@ -2,7 +2,6 @@
       model: @electricity_meter_detail,
       url: @electricity_meter_detail.new_record? ? energy_case_org_electricity_meter_index_path(**@routing_flags)
                                   : energy_case_org_electricity_meter_path(id: params[:id], **@routing_flags),
-      html: { "data-controller" => "electricity_meter_conditional_option" },
     ) do |form| %>
     <%= form.govuk_error_summary %>
 
