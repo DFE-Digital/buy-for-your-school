@@ -49,7 +49,7 @@ class Energy::GasMeter < ApplicationRecord
 private
 
   def sanitize_mprn
-    self.mprn = mprn.gsub(/[\s\-()]/, "") if mprn.present?
+    self.mprn = mprn.gsub(/[\s\-()]\D/, "") if mprn.present?
   end
 
   def update_support_case_timestamp

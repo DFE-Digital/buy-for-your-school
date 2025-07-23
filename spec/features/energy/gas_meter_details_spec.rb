@@ -98,7 +98,7 @@ describe "User can update gas usage details", :js do
 
     expect(page).not_to have_text("The MPRN must be in the correct format and between 6 and 12 numbers long")
 
-    expect(page).to have_text("393 8424999")
+    expect(page).to have_text("3938424999")
 
     visit energy_case_org_gas_single_multi_path(onboarding_case, case_organisation)
 

@@ -174,7 +174,7 @@ describe "User can update electricity meters and usage", :js do
 
     expect(page).not_to have_text("The MPAN must be in the correct format and 13 numbers long")
 
-    expect(page).to have_text("123 4512345555")
+    expect(page).to have_text("1234512345555")
   end
 
   specify "Check mpan label" do

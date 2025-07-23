@@ -63,7 +63,7 @@ class Energy::ElectricityMeter < ApplicationRecord
 private
 
   def sanitize_mpan
-    self.mpan = mpan.gsub(/[\s\-()]/, "") if mpan.present?
+    self.mpan = mpan.gsub(/[\s\-()\D]/, "") if mpan.present?
   end
 
   def update_support_case_timestamp
