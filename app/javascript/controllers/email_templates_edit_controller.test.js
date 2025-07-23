@@ -26,7 +26,6 @@ describe("EmailTemplatesEditController", () => {
 
   describe("subgroupSource", () => {
     const groupId = "123";
-    const groupText = "Group 1"
 
     it("concatenates the groupId to the subgroupUrl", () => {
       expect(subject.subgroupSource(groupId)).toEqual("https://test-url.com/123");
@@ -97,7 +96,7 @@ describe("EmailTemplatesEditController", () => {
       let subgroupSourceSpy;
       let groupsToOptionsSpy;
       const options = [createOption("", "Select group"), createOption("1", "Group 1"), createOption("2", "Group 2")];
-      const csrf_token = "token";      
+      const csrf_token = "token";
 
       beforeAll(() => {
         const meta = document.createElement("meta");
@@ -181,7 +180,7 @@ describe("EmailTemplatesEditController", () => {
       beforeEach(() => {
         textContent = "hi {{caseworker_full_name}}";
         displaySpy = jest.spyOn(utilities, "display").mockImplementation(() => {});
-        
+
         subject.displayVariablesWarning(null);
       });
 
@@ -194,7 +193,7 @@ describe("EmailTemplatesEditController", () => {
       beforeEach(() => {
         textContent = "this is test content";
         displaySpy = jest.spyOn(utilities, "display").mockImplementation(() => {});
-        
+
         subject.displayVariablesWarning(null);
       });
 
