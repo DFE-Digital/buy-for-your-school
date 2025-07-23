@@ -2,6 +2,7 @@ module Support
   module Cases
     class EmailTemplatesController < Cases::ApplicationController
       require "will_paginate/array"
+      include CecEmailTemplateFilters
 
       before_action :back_url, only: %i[index]
 
@@ -17,10 +18,6 @@ module Support
         params.require(:email_template_form).permit(*%i[
           group_id subgroup_id stage title description subject body
         ]).merge(id: params[:id], agent: current_agent)
-      end
-
-      def filter_params
-        params.fetch(:email_template_filters, {}).permit(:group_id, :remove_group, :remove_subgroup, :remove_stage, subgroup_ids: [], stages: [])
       end
 
       def back_url
