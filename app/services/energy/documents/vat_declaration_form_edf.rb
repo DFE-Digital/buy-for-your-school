@@ -4,6 +4,7 @@ module Energy
   module Documents
     class VatDeclarationFormEdf < VatDeclarationForm
       TEMPLATE_FILE = "VAT Declaration Form EDF.pdf"
+      BUSINESS_NAME = "Department for Education"
 
       def input_pdf_template_file
         @input_pdf_template_file ||= INPUT_PDF_TEMPLATE_PATH.join(TEMPLATE_FILE)
@@ -23,8 +24,8 @@ module Energy
 
       def customer_details
         {
-          "BUSINESS NAME" => @organisation.name,
-          "ADDRESS 1" => address_line1,
+          "BUSINESS NAME" => BUSINESS_NAME,
+          "ADDRESS 1" => "#{@organisation.name}, #{address_line1}",
           "ADDRESS 2" => address_line2,
           "ADDRESS 3" => city,
           "ADDRESS 4" => address_line3,
