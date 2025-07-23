@@ -440,8 +440,6 @@ en:
       rules:
         electricity_meter_type:
           missing: Select whether your school is single or multi meter
-          invalid_date: Please enter a valid electric current contract end date
-          invalid_range: Please enter a date within the range of - 1 and + 5 years of the current date
   gas_single_multi:
     rules:
       gas_single_multi: ""

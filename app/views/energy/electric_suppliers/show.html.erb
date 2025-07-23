@@ -1,9 +1,7 @@
 <%= content_for :title, "#{@form.errors.any? ? 'Error: ' : ''}#{I18n.t("energy.current_contract.electric.contract")} - #{I18n.t('energy.service_name')}" %>
 
-<div class="govuk-grid-row" data-controller="date_validation">
-  <div class="govuk-grid-column-two-thirds"
-    data-date_validation-target="dateValidation" 
-    date-validation-error-messages='<%= [I18n.t("electric_supplier_form.errors.rules.electric_current_contract_end_date.invalid_date")].to_json %>'>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
     <span class="govuk-caption-l"><%= @organisation_detail.name %>: <%= I18n.t("energy.current_contract.electric.heading") %></span>
     <h1 class="govuk-heading-l"><%= I18n.t("energy.current_contract.electric.contract") %></h1>
     <%= render "form" %>

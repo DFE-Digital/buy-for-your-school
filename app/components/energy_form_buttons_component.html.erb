@@ -1,5 +1,5 @@
 <div class="govuk-button-group flex-align-center">
-  <%= @form.submit I18n.t("generic.button.save_continue"), class: "govuk-button #{@submit_button_additional_classes}"  %>
+  <%= @form.submit I18n.t("generic.button.save_continue"), class: "govuk-button" %>
   <% unless @routing_flags[:check] == "1" || @routing_flags[:vat_declaration_prompt] == "1"%>
     <%= link_to I18n.t("generic.button.discard_go_to_task_list"), energy_case_tasks_path, class: "govuk-link" %>
   <% end %>

@@ -1,7 +1,6 @@
 class EnergyFormButtonsComponent < ViewComponent::Base
-  def initialize(form, routing_flags: {}, submit_button_additional_classes: "")
+  def initialize(form, routing_flags: {})
     @form = form
     @routing_flags = routing_flags
-    @submit_button_additional_classes = submit_button_additional_classes
   end
 end
