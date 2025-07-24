@@ -504,7 +504,9 @@ Rails.application.routes.draw do
     get "/before-you-start", to: "onboarding#before_you_start", as: "before_you_start"
 
     get "/service_availability(/:id)", to: "service_availability#show", as: "service_availability"
-    resource :school_selection, only: %i[show update]
+
+    resource :school_selection, only: %i[show update], path: "/which-school-buying-for"
+
     resources :authorisation, only: %i[show update] do
       member do
         get ":type", to: "authorisation#show", as: :school_type
