@@ -23,7 +23,7 @@ describe "User can update electricity meters and usage", :js do
 
     click_button "Save and continue"
 
-    expect(page).to have_text("Enter an MPAN number")
+    expect(page).to have_text("Enter an MPAN")
 
     expect(page).to have_text("Select whether your meter is half hourly or not")
 
@@ -33,19 +33,19 @@ describe "User can update electricity meters and usage", :js do
 
     click_button "Save and continue"
 
-    expect(page).to have_text("The MPAN must be in the correct format and 13 numbers long")
+    expect(page).to have_text("Enter an MPAN that's 13 digits long, like 1234567891011")
 
     fill_in "Add an MPAN", with: "testing text"
 
     click_button "Save and continue"
 
-    expect(page).to have_text("The MPAN must be in the correct format and 13 numbers long")
+    expect(page).to have_text("Enter an MPAN that's 13 digits long, like 1234567891011")
 
     fill_in "Add an MPAN", with: "1234567890123"
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("The MPAN must be in the correct format and 13 numbers long")
+    expect(page).not_to have_text("Enter an MPAN that's 13 digits long, like 1234567891011")
 
     choose "Yes"
 
@@ -69,49 +69,49 @@ describe "User can update electricity meters and usage", :js do
 
     click_button "Save and continue"
 
-    expect(page).to have_text("Enter a valid data aggregator")
+    expect(page).to have_text("Enter the name of your data aggregator")
 
     fill_in "Who is the data aggregator?", with: "Test Aggregator"
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("Enter a valid data aggregator")
+    expect(page).not_to have_text("Enter the name of your data aggregator")
 
     fill_in "Who is the data collector?", with: "123"
 
     click_button "Save and continue"
 
-    expect(page).to have_text("Enter a valid data collector")
+    expect(page).to have_text("Enter the name of your data collector")
 
     fill_in "Who is the data collector?", with: "Test Collector"
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("Enter a valid data collector")
+    expect(page).not_to have_text("Enter the name of your data collector")
 
     fill_in "Who is the meter operator?", with: "123"
 
     click_button "Save and continue"
 
-    expect(page).to have_text("Enter a valid meter operator")
+    expect(page).to have_text("Enter the name of your meter operator")
 
     fill_in "Who is the meter operator?", with: "Test Operator"
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("Enter a valid meter operator")
+    expect(page).not_to have_text("Enter the name of your meter operator")
 
     fill_in "Estimated annual electricity usage, in kilowatt hours (kWh)", with: "text"
 
     click_button "Save and continue"
 
-    expect(page).to have_text("Enter a valid estimated annual usage in kilowatt hours")
+    expect(page).to have_text("Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800")
 
     fill_in "Estimated annual electricity usage, in kilowatt hours (kWh)", with: "1000"
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("Enter a valid estimated annual usage in kilowatt hours")
+    expect(page).not_to have_text("Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800")
 
     visit new_energy_case_org_electricity_meter_path(onboarding_case, case_organisation)
 
@@ -119,13 +119,13 @@ describe "User can update electricity meters and usage", :js do
 
     click_button "Save and continue"
 
-    expect(page).to have_text("This MPAN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter")
+    expect(page).to have_text("This MPAN is already registered with Energy for Schools. Contact dfe-energy.services-team@education.gov.uk to resolve the matter")
 
     fill_in "Add an MPAN", with: "1234567890124"
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("This MPAN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter")
+    expect(page).not_to have_text("This MPAN is already registered with Energy for Schools. Contact dfe-energy.services-team@education.gov.uk to resolve the matter")
 
     visit new_energy_case_org_electricity_meter_path(onboarding_case, case_organisation)
 
@@ -133,13 +133,13 @@ describe "User can update electricity meters and usage", :js do
 
     click_button "Save and continue"
 
-    expect(page).to have_text("This MPAN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter")
+    expect(page).to have_text("This MPAN is already registered with Energy for Schools. Contact dfe-energy.services-team@education.gov.uk to resolve the matter")
 
     another_support_case.update!(state: :closed)
 
     click_button "Save and continue"
 
-    expect(page).not_to have_text("This MPAN is already registered with Energy for Schools. Please contact dfe-energy.services-team@education.gov.uk to resolve the matter")
+    expect(page).not_to have_text("This MPAN is already registered with Energy for Schools. Contact dfe-energy.services-team@education.gov.uk to resolve the matter")
 
     create(:energy_electricity_meter, :with_valid_data, mpan: "1234512345121", energy_onboarding_case_organisation_id: case_organisation.id)
 

@@ -16,10 +16,10 @@ describe "User can update the electricity cosolidation", :js do
     expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
 
     click_button "Save and continue"
-    expect(page).to have_text("Please select one option to proceed")
+    expect(page).to have_text("Select yes if you'd like your meters consolidated on one bill")
 
     choose "Yes"
     click_button "Save and continue"
-    expect(page).not_to have_text("Please select at least one option to proceed")
+    expect(page).not_to have_text("Select yes if you'd like your meters consolidated on one bill")
   end
 end

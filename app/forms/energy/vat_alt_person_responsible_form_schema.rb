@@ -23,6 +23,6 @@ class Energy::VatAltPersonResponsibleFormSchema < Schema
   end
 
   rule(:vat_alt_person_address) do
-    key.failure(:missing) if organisation.trust_code.present? && value.blank?
+    key.failure(:missing) if organisation.trust_code.present? && (value.blank? || value == {})
   end
 end

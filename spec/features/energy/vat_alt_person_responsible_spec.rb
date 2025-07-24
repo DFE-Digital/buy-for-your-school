@@ -18,16 +18,16 @@ describe "VAT Alt person responsible", :js do
     expect(page).to have_text("VAT contact information")
 
     click_button "Save and continue"
-    expect(page).to have_text("Enter a contact name")
-    expect(page).to have_text("Enter a phone number")
+    expect(page).to have_text("Enter a name")
+    expect(page).to have_text("Enter a telephone number")
 
     fill_in "First name", with: "Jon"
     fill_in "Last name", with: SecureRandom.hex(61)
     fill_in "Telephone number", with: "1234"
     click_button "Save and continue"
-    expect(page).not_to have_text("Enter a contact name")
+    expect(page).not_to have_text("Enter a name")
     expect(page).to have_text("Last name must be 60 characters or fewer")
-    expect(page).to have_text("Enter a phone number in the correct format, like 01632 960 001")
+    expect(page).to have_text("Enter a telephone number, like 07155487611")
 
     fill_in "First name", with: "Jon"
     fill_in "Last name", with: ""
@@ -51,13 +51,13 @@ describe "VAT Alt person responsible", :js do
       expect(page).to have_text("VAT contact information")
 
       click_button "Save and continue"
-      expect(page).to have_text("Enter a contact name")
-      expect(page).to have_text("Enter a phone number")
+      expect(page).to have_text("Enter a name")
+      expect(page).to have_text("Enter a telephone number")
       expect(page).to have_text("Select an address")
 
       fill_in "First name", with: "Jon"
       fill_in "Telephone number", with: "01632 960 001"
-      choose "Boundary House Shr, 91 Charter House Street, EC1M 6HR"
+      find('input[type="radio"][value*="Boundary House"]', match: :first).click
 
       click_button "Save and continue"
       expect(page).not_to have_text("Select an address")

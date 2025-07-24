@@ -19,7 +19,7 @@
         row.with_value(text: @tel)
       end
     end %>
-    <%= form.govuk_radio_button :vat_person_correct_details, true, label: { text: I18n.t("energy.vat_person_responsible.option_yes") } %>
+    <%= form.govuk_radio_button :vat_person_correct_details, true, label: { text: I18n.t("energy.vat_person_responsible.option_yes") }, link_errors: true %>
     <%= form.govuk_radio_button :vat_person_correct_details, false, label: { text: I18n.t("energy.vat_person_responsible.option_no") } %>
   <% end %>
 

@@ -21,17 +21,17 @@ describe "Billing preferences", :js do
     click_button "Save and continue"
     expect(page).to have_text("Select your preferred method of payment")
 
-    choose "BACS"
+    find('input[type="radio"][value="bacs"]', match: :first).click
     click_button "Save and continue"
     expect(page).to have_text("Select your payment terms")
 
-    choose "14 days"
+    find('input[type="radio"][value="days14"]', match: :first).click
     click_button "Save and continue"
     expect(page).to have_text("Select how you'd like to be invoiced")
 
-    choose "Email"
+    find('input[type="radio"][value="email"]', match: :first).click
     click_button "Save and continue"
-    expect(page).to have_text("Enter an email address in the correct format, like name@example.com")
+    expect(page).to have_text("Enter an email address in the correct format, like jo.wade@school.org.uk")
 
     fill_in "Email address", with: "foo@bar.com"
     click_button "Save and continue"

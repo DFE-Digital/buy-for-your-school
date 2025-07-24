@@ -7,8 +7,12 @@
   <% if form.object.vat_alt_address_options.present? %>
     <%= form.govuk_radio_buttons_fieldset :vat_alt_person_address,
       legend: { size: "s", text: I18n.t("energy.vat_alt_person_responsible.address"), tag: "h2" } do %>
-      <% form.object.vat_alt_address_options.values.each do |address| %>
-        <%= form.govuk_radio_button :vat_alt_person_address, address[:full].to_json, checked: (form.object.vat_alt_person_address == address[:full]), label: { text: address[:short] } %>
+      <% form.object.vat_alt_address_options.values.each_with_index do |address, i| %>
+        <% if i.zero? %>
+          <%= form.govuk_radio_button :vat_alt_person_address, address[:full].to_json, checked: (form.object.vat_alt_person_address == address[:full]), label: { text: address[:short] }, link_errors: true %>
+        <% else %>
+          <%= form.govuk_radio_button :vat_alt_person_address, address[:full].to_json, checked: (form.object.vat_alt_person_address == address[:full]), label: { text: address[:short] } %>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>

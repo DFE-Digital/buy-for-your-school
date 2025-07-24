@@ -3,17 +3,18 @@
 
   <%= form.hidden_field :electric_current_supplier, value: form.object.electric_current_supplier %>
 
-  <%= form.govuk_radio_buttons_fieldset :electric_current_supplier , legend: { text: I18n.t("energy.current_contract.electric.current_supplier"), size: "s", tag: "h2" } do %>
-    <% form.object.current_supllier_options.each do |supplier| %>
+  <%= form.govuk_radio_buttons_fieldset :electric_current_supplier, legend: { text: I18n.t("energy.current_contract.electric.current_supplier"), size: "s", tag: "h2" } do %>
+    <% form.object.current_supplier_options.each_with_index do |supplier, i| %>
       <% if supplier == :other %>
         <%= form.govuk_radio_divider %>
-        <%= form.govuk_radio_button :electric_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") } do %>
+        <%= form.govuk_radio_button :electric_current_supplier, supplier, id: "electric-current-supplier-other-radio", label: { for: "electric-current-supplier-other-radio", text: I18n.t("energy.suppliers.#{supplier}") } do %>
           <%= form.govuk_text_field :electric_current_supplier_other,
             maxlength: "60",
             width: "one-third",
-            id: "other-text",
-            label: { for: "other-text", text: I18n.t("energy.current_contract.electric.other_supplier") } %>
+            label: { text: I18n.t("energy.current_contract.electric.other_supplier") } %>
         <% end %>
+      <% elsif i.zero? %>
+        <%= form.govuk_radio_button :electric_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") }, link_errors: true %>
       <% else %>
         <%= form.govuk_radio_button :electric_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") } %>
       <% end %>
@@ -22,5 +23,5 @@
 
   <%= form.govuk_date_field :electric_current_contract_end_date, legend: { text: I18n.t("energy.current_contract.when_contract_ends"), size: "s", tag: "h2" }, hint: { text: I18n.t("energy.current_contract.date_for_example") } %>
 
-  <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags, submit_button_additional_classes: "validate_date") %>
+  <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
 <% end %>

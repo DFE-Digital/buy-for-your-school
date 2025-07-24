@@ -221,3 +221,4 @@ AllCops:
     - 'app/models/energy/task_list.rb'
     - 'app/controllers/energy/vat_alt_person_responsibles_controller.rb'
     - 'app/controllers/energy/check_your_answers_controller.rb'
+    - 'app/controllers/concerns/has_date_params.rb'
