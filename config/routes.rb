@@ -499,8 +499,10 @@ Rails.application.routes.draw do
 
   # Energy
   namespace :energy do
-    get "/onboarding(/:step)", to: "onboarding#show", as: "onboarding"
-    post "/onboarding/:step", to: "onboarding#update", as: "update_onboarding"
+    get "/start", to: "onboarding#start", as: "start"
+    get "/guidance", to: "onboarding#guidance", as: "guidance"
+    get "/before-you-start", to: "onboarding#before_you_start", as: "before_you_start"
+
     get "/service_availability(/:id)", to: "service_availability#show", as: "service_availability"
     resource :school_selection, only: %i[show update]
     resources :authorisation, only: %i[show update] do

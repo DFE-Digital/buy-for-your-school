@@ -1,6 +1,6 @@
 <%= content_for :title, "#{I18n.t("energy.guidance.title")} - #{I18n.t("energy.service_name")}" %>
 
-<%= govuk_back_link(href: energy_onboarding_path(:join_the_scheme)) %>
+<%= govuk_back_link(href: energy_start_path) %>
 <%= render Column21Component.new do |c| %>
   <% c.with_left do %>
     <h1 class="govuk-heading-xl"><%= I18n.t("energy.guidance.title") %></h1>
@@ -64,14 +64,14 @@
     <%= render ParagraphComponent.new(
       text: I18n.t("energy.guidance.objections.body", email: I18n.t("energy.guidance.email"))) %>
 
-    <%= govuk_button_link_to(I18n.t("energy.guidance.button.primary"), energy_onboarding_path(:join_the_scheme)) %>
+    <%= govuk_button_link_to(I18n.t("energy.guidance.button.primary"), energy_start_path) %>
   <% end %>
 
   <% c.with_right do %>
     <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
       <h2 class="govuk-heading-m"><%= I18n.t("energy.related_actions.title") %></h2>
       <%= govuk_list [
-        link_to(I18n.t('energy.related_actions.join'), energy_onboarding_path(:join_the_scheme), class: "govuk-link"),
+        link_to(I18n.t('energy.related_actions.join'), energy_start_path, class: "govuk-link"),
       ] %>
     </aside>
   <% end %>
