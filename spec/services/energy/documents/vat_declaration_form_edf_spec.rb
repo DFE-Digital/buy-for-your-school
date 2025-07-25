@@ -13,6 +13,7 @@ RSpec.describe Energy::Documents::VatDeclarationFormEdf, type: :model do
 
   let(:fields) { service.pdftk.get_fields(service.output_pdf_file) }
   let(:values) { fields.map(&:value).compact }
+  let(:county) { "Hertfordshire" }
 
   describe "#call" do
     let(:input_values) do
@@ -28,6 +29,7 @@ RSpec.describe Energy::Documents::VatDeclarationFormEdf, type: :model do
           street: "456 Secondary St",
           locality: "Suite 5",
           town: "Another City",
+          county:,
           postcode: "WD18 0FV",
         },
       }
@@ -47,15 +49,34 @@ RSpec.describe Energy::Documents::VatDeclarationFormEdf, type: :model do
         expect(values).to include(Energy::Documents::VatDeclarationFormEdf::BUSINESS_NAME)
         expect(values).to include(support_organisation.name)
 
-        address_line3 = "#{input_values[:vat_person_address][:locality]}, #{input_values[:vat_person_address][:town]}".strip
-        expect(values).to include(address_line3)
-
         expect(fields.find { |f| f.name == "ELECTRCITY" }.value).to eq "Yes"
         expect(fields.find { |f| f.name == "CHARITY" }.value).to eq "Yes"
         full_name = fields.find { |f| f.name == "FULL NAME" }.value
         expect(full_name).to eq("#{input_values[:vat_person_first_name]} #{input_values[:vat_person_last_name]}".upcase)
         expect(fields.find { |f| f.name == "TELEPHONE" }.value).to eq input_values[:vat_person_phone]
-        expect(fields.find { |f| f.name == "ADDRESS 5 POSTCODE" }.value).to eq(input_values[:vat_person_address][:postcode])
+      end
+
+      context "with address fields" do
+        it "joins locality and town in address line 3" do
+          address_line3 = "#{input_values[:vat_person_address][:locality]}, #{input_values[:vat_person_address][:town]}".strip
+          expect(fields.find { |f| f.name == "ADDRESS 3" }.value).to eq(address_line3)
+        end
+
+        it "populates county" do
+          expect(fields.find { |f| f.name == "ADDRESS 4" }.value).to eq(county)
+        end
+
+        it "populates postcode" do
+          expect(fields.find { |f| f.name == "ADDRESS 5 POSTCODE" }.value).to eq(input_values[:vat_person_address][:postcode])
+        end
+
+        context "when county is 'Not recorded'" do
+          let(:county) { "Not recorded" }
+
+          it "does not populate county field" do
+            expect(fields.find { |f| f.name == "ADDRESS 4" }.value).to eq("")
+          end
+        end
       end
 
       it "has electricity mpan numbers populated" do
