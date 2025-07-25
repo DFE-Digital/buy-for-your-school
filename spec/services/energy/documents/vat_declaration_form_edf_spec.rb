@@ -45,7 +45,11 @@ RSpec.describe Energy::Documents::VatDeclarationFormEdf, type: :model do
 
       it "matches the input values with the output pdf" do
         expect(values).to include(Energy::Documents::VatDeclarationFormEdf::BUSINESS_NAME)
-        expect(values).to include("#{support_organisation.name}, #{input_values[:vat_person_address][:street]}")
+        expect(values).to include(support_organisation.name)
+
+        address_line3 = "#{input_values[:vat_person_address][:locality]}, #{input_values[:vat_person_address][:town]}".strip
+        expect(values).to include(address_line3)
+
         expect(fields.find { |f| f.name == "ELECTRCITY" }.value).to eq "Yes"
         expect(fields.find { |f| f.name == "CHARITY" }.value).to eq "Yes"
         full_name = fields.find { |f| f.name == "FULL NAME" }.value

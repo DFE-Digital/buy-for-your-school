@@ -25,10 +25,10 @@ module Energy
       def customer_details
         {
           "BUSINESS NAME" => BUSINESS_NAME,
-          "ADDRESS 1" => "#{@organisation.name}, #{address_line1}",
-          "ADDRESS 2" => address_line2,
-          "ADDRESS 3" => city,
-          "ADDRESS 4" => address_line3,
+          "ADDRESS 1" => @organisation.name,
+          "ADDRESS 2" => street,
+          "ADDRESS 3" => [locality, city].reject(&:blank?).join(", ").strip,
+          "ADDRESS 4" => county,
           "ADDRESS 5 POSTCODE" => postcode,
           "PERCENT VAT" => vat_lower_percentage[0],
           "PERCENT VAT 1" => vat_lower_percentage[1],
@@ -118,16 +118,17 @@ module Energy
                      end.with_indifferent_access
       end
 
-      def address_line1
+      def street
         address[:street]
       end
 
-      def address_line2
+      def locality
         address[:locality]
       end
 
-      def address_line3
-        address[:county]
+      def county
+        county = address[:county].to_s.strip
+        county.casecmp("Not recorded").zero? ? "" : county
       end
 
       def city
