@@ -1,2 +1,5 @@
----
-shared: {}
+recorded_attributes:
+  user:
+    - id
+    - dfe_sign_in_uid
+
