@@ -2582,6 +2582,20 @@ en:
           stage: Stage
           unsafe_attachments: One or more attachments contain a virus
           variable_warning: "'{{caseworker_full_name}}' will be replaced by the name of the caseworker sending the email."
+        stages:
+          0: Stage 0
+          1: Stage 1
+          2: Stage 2
+          3: Stage 3
+          4: Stage 4
+          5: Enquiry
+          6: Onboarding form
+          7: Form review
+          8: With supplier
+          9: Objection
+          10: Awaiting contract start
+          11: Interim rate customer
+          12: V30 Rate Customer
         create:
           notice: Your template has been saved
         destroy:
