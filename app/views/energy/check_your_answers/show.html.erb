@@ -13,7 +13,12 @@
             <h3 class="govuk-summary-card__title"><%= I18n.t("energy.check_your_answers.#{sec.title}.title") %></h3>
             <ul class="govuk-summary-card__actions">
               <li class="govuk-summary-card__action">
-                <%= govuk_link_to(I18n.t("energy.generic.change"), sec.path, id: "#{sec.title}_change") %>
+                <% change_title = sec.title.to_s.gsub('_', ' ') %>
+                <%= link_to safe_join([I18n.t("energy.generic.change"),
+                      content_tag(:span, "Change details for #{change_title}", class: "govuk-visually-hidden")]),
+                      sec.path,
+                      class: "govuk-link",
+                      id: "#{sec.title}_change" %>
               </li>
             </ul>
           </div>

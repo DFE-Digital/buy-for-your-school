@@ -698,8 +698,7 @@ en:
         is_electric_bill_consolidated: Do you want your MPANs consolidated on one bill?
       site_contact_details:
         title: Site contact details
-        site_contact_first_name: First name
-        site_contact_last_name: Last name
+        site_contact_first_name: Contact name
         site_contact_email: Email
         site_contact_phone: Telephone
       vat_declaration:
@@ -707,12 +706,10 @@ en:
         vat_rate: VAT rate
         vat_lower_rate_percentage: Percentage of total consumption qualifying for reduced rate of VAT
         vat_lower_rate_reg_no: VAT registration number
-        vat_person_first_name: Contact first name
-        vat_person_last_name: Contact surname
+        vat_person_first_name: Contact name
         vat_person_phone: Telephone number
         vat_person_address: Address
-        vat_alt_person_first_name: Contact first name
-        vat_alt_person_last_name: Contact surname
+        vat_alt_person_first_name: Contact name
         vat_alt_person_phone: Telephone number
         vat_alt_person_address: Address
         vat_certificate_declared: VAT certificate of declaration agreed?

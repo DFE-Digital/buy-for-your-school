@@ -168,8 +168,7 @@ private
     status = case_org.site_contact_first_name && case_org.site_contact_email && case_org.site_contact_phone ? :complete : :not_started
     path = energy_case_org_site_contact_details_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
-      t.add_attribute(:site_contact_first_name, case_org)
-      t.add_attribute(:site_contact_last_name, case_org)
+      t.add_attribute(:site_contact_first_name, case_org, text: "#{case_org.site_contact_first_name} #{case_org.site_contact_last_name}")
       t.add_attribute(:site_contact_email, case_org)
       t.add_attribute(:site_contact_phone, case_org)
     end
@@ -220,13 +219,11 @@ private
         t.add_attribute(:vat_lower_rate_reg_no, case_org)
 
         if case_org.vat_person_correct_details?
-          t.add_attribute(:vat_person_first_name, case_org)
-          t.add_attribute(:vat_person_last_name, case_org)
+          t.add_attribute(:vat_person_first_name, case_org, text: "#{case_org.vat_person_first_name} #{case_org.vat_person_last_name}")
           t.add_attribute(:vat_person_phone, case_org)
           t.add_attribute(:vat_person_address, case_org, text: format_address(case_org.vat_person_address))
         else
-          t.add_attribute(:vat_alt_person_first_name, case_org)
-          t.add_attribute(:vat_alt_person_last_name, case_org)
+          t.add_attribute(:vat_alt_person_first_name, case_org, text: "#{case_org.vat_alt_person_first_name} #{case_org.vat_alt_person_last_name}")
           t.add_attribute(:vat_alt_person_phone, case_org)
           t.add_attribute(:vat_alt_person_address, case_org, text: format_address(case_org.vat_alt_person_address))
         end
