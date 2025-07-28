@@ -1,4 +1,4 @@
-recorded_attributes:
+shared:
   user:
     - id
     - dfe_sign_in_uid
