@@ -1,11 +1,13 @@
 module Support
   module Management
     class EmailTemplatesController < BaseController
+      before_action :cec_template_group
       require "will_paginate/array"
+      include CecEmailTemplateFilters
 
       def index
         parser = Email::TemplateParser.new
-        @filter_form = Support::Management::EmailTemplateFilterForm.new(**filter_params)
+        @filter_form = Support::Management::EmailTemplateFilterForm.new(**filter_params.to_h)
         @templates = @filter_form.results.map { |e| Support::EmailTemplatePresenter.new(e, parser) }.paginate(page: params[:page])
       end
 
@@ -63,10 +65,6 @@ module Support
         params.require(:email_template_form).permit(
           :group_id, :subgroup_id, :stage, :title, :description, :subject, :body, :blob_attachments, file_attachments: []
         ).merge(id: params[:id], agent: current_agent)
-      end
-
-      def filter_params
-        params.fetch(:email_template_filters, {}).permit(:group_id, :remove_group, :remove_subgroup, :remove_stage, subgroup_ids: [], stages: [])
       end
 
       helper_method def portal_management_path

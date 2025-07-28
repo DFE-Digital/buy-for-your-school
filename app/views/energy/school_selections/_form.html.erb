@@ -4,8 +4,12 @@
     <%= form.hidden_field :select_school, value: '' %>
 
     <%= form.govuk_radio_buttons_fieldset :select_school, legend: { text: I18n.t("energy.school_selections.heading"), tag: "h1", size: "l" } do %>
-      <% @select_schools.each do |key, value|%>
-        <%= form.govuk_radio_button :select_school, key, label: { text: value } %>
+      <% @select_schools.each_with_index do |school, i|%>
+        <% if i.zero? %>
+          <%= form.govuk_radio_button :select_school, school[0], label: { text: school[1] }, link_errors: true %>
+        <% else %>
+          <%= form.govuk_radio_button :select_school, school[0], label: { text: school[1] } %>
+        <% end %>
       <% end %>
     <% end %>
 

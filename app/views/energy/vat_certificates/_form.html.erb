@@ -1,15 +1,20 @@
+<% first_unchecked_found = false %>
+
 <%= form_with model: @form, scope: :vat_certificate_form, url: @form_url, method: :patch do |form| %>
-    <%= form.govuk_error_summary %>
+  <%= form.govuk_error_summary %>
 
-    <div class="govuk-form-group">
-      <%= form.govuk_check_boxes_fieldset :vat_certificate_declared,
-            legend: {text: I18n.t("energy.vat_certificate.heading"), tag: :h1, size: "l"},
-            hint: -> { tag.p(I18n.t("energy.vat_certificate.sub_title"), class: "govuk-body") } do %>
-        <% ['declaration1', 'declaration2', 'declaration3'].each do |dec| %>
-          <%= form.govuk_check_box :vat_certificate_declared, dec, label: { text: I18n.t(dec, scope: "energy.vat_certificate.declaration") } %>
-        <% end %>
-      <% end %>
-    </div>
+  <%= form.govuk_check_boxes_fieldset :vat_certificate_declared,
+        legend: { text: I18n.t("energy.vat_certificate.heading"), tag: :h1, size: "l" },
+        hint: -> { tag.p(I18n.t("energy.vat_certificate.sub_title"), class: "govuk-body") } do %>
+    <% ['declaration1', 'declaration2', 'declaration3'].each do |declaration| %>
+      <% is_checked = Array(@form.vat_certificate_declared)&.include?(declaration) %>
+      <% link_errors = !is_checked && !first_unchecked_found %>
+      <% first_unchecked_found ||= link_errors %>
+      <%= form.govuk_check_box :vat_certificate_declared, declaration,
+            label: { text: I18n.t(declaration, scope: "energy.vat_certificate.declaration") },
+            link_errors: link_errors %>
+    <% end %>
+  <% end %>
 
-    <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
+  <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
 <% end %>

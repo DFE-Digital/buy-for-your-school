@@ -21,6 +21,12 @@ class Energy::BillingPreferencesFormSchema < Schema
   end
 
   rule(:billing_invoicing_email) do
-    key.failure(:missing) if value.blank? && values[:billing_invoicing_method] == "email"
+    if values[:billing_invoicing_method] == "email"
+      if value.blank?
+        key.failure(:missing)
+      elsif !URI::MailTo::EMAIL_REGEXP.match?(value)
+        key.failure(:invalid)
+      end
+    end
   end
 end
