@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root to: "specify/home#show"
+  root to: "specify/create_a_specification#show"
 
   # Misc
   get "health_check" => "application#health_check"
@@ -64,6 +64,7 @@ Rails.application.routes.draw do
   # Specify
   scope module: :specify do
     get "dashboard", to: "dashboard#show"
+    get "create_a_specification", to: "create_a_specification#show"
 
     resources :feedback, only: %i[new show create edit update]
     get "profile", to: "profile#show"
