@@ -29,6 +29,7 @@ describe "Agent can change case summary", :js do
       fill_in "Description of next key date", with: "Key event"
       click_button "Continue"
       click_button "Save"
+      sleep 0.1
     end
 
     it "persists the changes" do
@@ -104,6 +105,7 @@ describe "Agent can change case summary", :js do
       fill_in "Description of next key date", with: "Key event"
       click_button "Continue"
       click_button "Save"
+      sleep 0.1
     end
 
     it "persists the changes" do
