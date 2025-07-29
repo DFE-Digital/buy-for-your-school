@@ -663,6 +663,7 @@ en:
       email_subject: 'MAT Enquiry: %{org_name} from Energy for onboarding form'
     check_your_answers:
       title: Check your answers
+      not_provided: Not provided
       notes:
       - By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.
       - You cannot change your answers once you’ve submitted the form.
