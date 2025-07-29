@@ -1,4 +1,6 @@
 class Energy::GasMeter < ApplicationRecord
+  include SanitiseMeterNumbers
+
   belongs_to :onboarding_case_organisation, class_name: "Energy::OnboardingCaseOrganisation",
                                             foreign_key: "energy_onboarding_case_organisation_id"
 
@@ -49,7 +51,7 @@ class Energy::GasMeter < ApplicationRecord
 private
 
   def sanitize_mprn
-    self.mprn = mprn.gsub(/[\s\-()]\D/, "") if mprn.present?
+    self.mprn = sanitise_meter_number(mprn) if mprn.present?
   end
 
   def update_support_case_timestamp

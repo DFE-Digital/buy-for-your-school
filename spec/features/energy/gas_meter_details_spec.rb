@@ -90,7 +90,7 @@ describe "User can update gas usage details", :js do
 
     visit new_energy_case_org_gas_meter_path(onboarding_case, case_organisation)
 
-    fill_in "Add a Meter Point Reference Number (MPRN)", with: "(393)#{non_breaking_space}842-#{zero_width_space}4999"
+    fill_in "Add a Meter Point Reference Number (MPRN)", with: "(393)#{non_breaking_space}#{non_breaking_space}842-#{zero_width_space}4999"
 
     fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "1000"
 

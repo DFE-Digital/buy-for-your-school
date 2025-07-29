@@ -1,4 +1,6 @@
 class Energy::ElectricityMeter < ApplicationRecord
+  include SanitiseMeterNumbers
+
   belongs_to :onboarding_case_organisation, class_name: "Energy::OnboardingCaseOrganisation",
                                             foreign_key: "energy_onboarding_case_organisation_id"
 
@@ -63,7 +65,7 @@ class Energy::ElectricityMeter < ApplicationRecord
 private
 
   def sanitize_mpan
-    self.mpan = mpan.gsub(/[\s\-()\D]/, "") if mpan.present?
+    self.mpan = sanitise_meter_number(mpan) if mpan.present?
   end
 
   def update_support_case_timestamp
