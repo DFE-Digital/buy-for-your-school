@@ -498,47 +498,70 @@ Rails.application.routes.draw do
   mount flipper_app, at: "/flipper"
 
   # Energy
-  namespace :energy do
-    get "/start", to: "onboarding#start", as: "start"
-    get "/guidance", to: "onboarding#guidance", as: "guidance"
-    get "/before-you-start", to: "onboarding#before_you_start", as: "before_you_start"
+  # Pre-sign-in
+  get "/energy/start", to: "energy/onboarding#start", as: "energy_start"
+  get "/energy/guidance", to: "energy/onboarding#guidance", as: "energy_guidance"
+  get "/energy/before-you-start", to: "energy/onboarding#before_you_start", as: "energy_before_you_start"
 
-    get "/service_availability(/:id)", to: "service_availability#show", as: "service_availability"
+  # School selection
+  get "/energy/which-school-buying-for", to: "energy/school_selections#show", as: "energy_school_selection"
+  patch "/energy/which-school-buying-for", to: "energy/school_selections#update"
+  get "/energy/school-selection-unavailable(/:id)", to: "energy/service_availability#show", as: "energy_service_availability"
 
-    resource :school_selection, only: %i[show update], path: "/which-school-buying-for"
+  # Authorisation
+  get "/energy/authorisation/:id/:type", to: "energy/authorisation#show", as: "school_type_energy_authorisation"
+  patch "/energy/authorisation/:id/:type", to: "energy/authorisation#update"
 
-    resources :authorisation, only: %i[show update] do
-      member do
-        get ":type", to: "authorisation#show", as: :school_type
-        patch ":type", to: "authorisation#update"
-      end
-    end
-    resources :case, only: %i[show] do
-      resource :switch_energy, only: %i[show update]
-      resource :gas_supplier, only: %i[show update]
-      resource :electric_supplier, only: %i[show update]
-      resource :tasks, only: %i[show update]
-      resource :check_your_answers, only: %i[show]
-      resource :letter_of_authorisation, only: %i[show update]
-      resource :confirmation, only: :show
-
-      resources :org, except: %i[show] do
-        resources :gas_meter, except: %i[show]
-        resource :gas_bill_consolidation, only: %i[show update]
-        resource :electric_bill_consolidation, only: %i[show update]
-        resource :electricity_meter_type, only: %i[show update]
-        resource :gas_single_multi, only: %i[show update]
-        resources :electricity_meter, except: %i[show]
-        resource :vat_rate_charge, only: %i[show update]
-        resource :site_contact_details, only: %i[show update]
-        resource :vat_person_responsible, only: %i[show update]
-        resource :vat_alt_person_responsible, only: %i[show update]
-        resource :vat_certificate, only: %i[show update]
-        resource :billing_preferences, only: %i[show update]
-        resource :billing_address_confirmation, only: %i[show update]
-      end
-    end
+  # rubocop:disable Layout/SpaceInsideArrayPercentLiteral
+  # Case level
+  [
+    #  Slug (0)                 Controller (1)                Helper name (2)
+    %w[which-energy-supply      switch_energies               energy_case_switch_energy], # FIXME: Should be org level
+    %w[gas-contract             gas_suppliers                 energy_case_gas_supplier], # FIXME: Should be org level
+    %w[electricity-contract     electric_suppliers            energy_case_electric_supplier], # FIXME: Should be org level
+    %w[task-list                tasks                         energy_case_tasks],
+    %w[letter-of-authority      letter_of_authorisations      energy_case_letter_of_authorisation],
+  ].each do |vals|
+    get "/energy/#{vals[0]}/:case_id", to: "energy/#{vals[1]}#show", as: vals[2]
+    patch "/energy/#{vals[0]}/:case_id", to: "energy/#{vals[1]}#update"
   end
+
+  get "/energy/check-answers/:case_id", to: "energy/check_your_answers#show", as: "energy_case_check_your_answers"
+  get "/energy/information-submitted/:case_id", to: "energy/confirmations#show", as: "energy_case_confirmation"
+
+  # Org level
+  [
+    #  Slug (0)                 Controller (1)                Helper name (2)
+    %w[gas-multi-single         gas_single_multis             energy_case_org_gas_single_multi],
+    %w[gas-bill                 gas_bill_consolidations       energy_case_org_gas_bill_consolidation],
+    %w[electricity-multi-single electricity_meter_types       energy_case_org_electricity_meter_type],
+    %w[electricity-bill         electric_bill_consolidations  energy_case_org_electric_bill_consolidation],
+    %w[site-contact             site_contact_details          energy_case_org_site_contact_details],
+    %w[vat-rate                 vat_rate_charges              energy_case_org_vat_rate_charge],
+    %w[vat-contact              vat_person_responsibles       energy_case_org_vat_person_responsible],
+    %w[vat-contact-manual       vat_alt_person_responsibles   energy_case_org_vat_alt_person_responsible],
+    %w[vat-certificate          vat_certificates              energy_case_org_vat_certificate],
+    %w[billing-preferences      billing_preferences           energy_case_org_billing_preferences],
+    %w[billing-address          billing_address_confirmations energy_case_org_billing_address_confirmation],
+  ].each do |vals|
+    get "/energy/#{vals[0]}/:case_id/:org_id", to: "energy/#{vals[1]}#show", as: vals[2]
+    patch "/energy/#{vals[0]}/:case_id/:org_id", to: "energy/#{vals[1]}#update"
+  end
+
+  # Meter level
+  [
+    #  Slug (0)          ID name (1) Controller (2)    Helper name root (3)
+    %w[gas-meter         mprn        gas_meter         gas_meter],
+    %w[electricity-meter mpan        electricity_meter electricity_meter],
+  ].each do |vals|
+    get "/energy/#{vals[0]}/:case_id/:org_id", to: "energy/#{vals[2]}#new", as: "new_energy_case_org_#{vals[3]}"
+    get "/energy/#{vals[0]}-summary/:case_id/:org_id", to: "energy/#{vals[2]}#index", as: "energy_case_org_#{vals[3]}_index"
+    post "/energy/#{vals[0]}-summary/:case_id/:org_id", to: "energy/#{vals[2]}#create" # FIXME: -summary?
+    get "/energy/#{vals[0]}/:case_id/:org_id/:id", to: "energy/#{vals[2]}#edit", as: "edit_energy_case_org_#{vals[3]}"
+    patch "/energy/#{vals[0]}/:case_id/:org_id/:id", to: "energy/#{vals[2]}#update", as: "energy_case_org_#{vals[3]}"
+    delete "/energy/remove-#{vals[1]}/:case_id/:org_id/:id", to: "energy/#{vals[2]}#destroy", as: "delete_energy_case_org_#{vals[3]}"
+  end
+  # rubocop:enable Layout/SpaceInsideArrayPercentLiteral
 
   # Cec
   namespace :cec do
