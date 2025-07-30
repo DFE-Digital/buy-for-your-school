@@ -83,4 +83,37 @@ RSpec.describe Support::Case, type: :model do
       expect(described_class.high_level.map(&:support_level)).to match_array(%w[L3 L4 L5])
     end
   end
+
+  describe "search by_mpan_or_mprn" do
+    let(:support_case2) { create(:support_case) }
+    let(:onboarding_case) { create(:onboarding_case, support_case:) }
+    let(:onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_case.organisation) }
+    let(:gas_meter) { create(:energy_gas_meter, :with_valid_data, onboarding_case_organisation:, mprn:) }
+    let(:electricity_meter) { create(:energy_electricity_meter, :with_valid_data, onboarding_case_organisation:, mpan:) }
+
+    let(:mprn) { "123456789" }
+    let(:mpan) { "0123456789123" }
+
+    before do
+      gas_meter
+      electricity_meter
+    end
+
+    it "finds case by mprn (gas meter)" do
+      results = described_class.by_mpan_or_mprn(mprn)
+      expect(results).to include(support_case)
+      expect(results).not_to include(support_case2)
+    end
+
+    it "finds case by mpan (electricity meter)" do
+      results = described_class.by_mpan_or_mprn(mpan)
+      expect(results).to include(support_case)
+      expect(results).not_to include(support_case2)
+    end
+
+    it "returns empty when term doesn't match" do
+      results = described_class.by_mpan_or_mprn("000000000")
+      expect(results).to be_empty
+    end
+  end
 end

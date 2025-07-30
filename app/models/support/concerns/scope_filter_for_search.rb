@@ -7,7 +7,11 @@ class Support::Concerns::ScopeFilterForSearch
   def filter(records)
     return records unless entered?
 
-    records.send(:by_search_term, value, exact_match:)
+    results = records.send(:by_search_term, value, exact_match:)
+
+    return results if results.present?
+
+    records.send(:by_mpan_or_mprn, value)
   end
 
   def entered?
