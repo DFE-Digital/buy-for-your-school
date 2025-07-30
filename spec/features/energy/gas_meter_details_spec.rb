@@ -2,6 +2,8 @@ require "rails_helper"
 
 describe "User can update gas usage details", :js do
   include_context "with energy suppliers"
+  include_context "with awkward space characters"
+
   specify "Adding gas usage" do
     Current.user = user
     user_exists_in_dfe_sign_in(user:)
@@ -85,6 +87,18 @@ describe "User can update gas usage details", :js do
     # Check the order of the MPRN values
     expected_order = %w[3938424403 12345666 12345777 12345888]
     expect(mprn_values).to eq(expected_order)
+
+    visit new_energy_case_org_gas_meter_path(onboarding_case, case_organisation)
+
+    fill_in "Add a Meter Point Reference Number (MPRN)", with: "(393)#{non_breaking_space}#{non_breaking_space}842-#{zero_width_space}4999"
+
+    fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "1000"
+
+    click_button "Save and continue"
+
+    expect(page).not_to have_text("The MPRN must be in the correct format and between 6 and 12 numbers long")
+
+    expect(page).to have_text("3938424999")
 
     visit energy_case_org_gas_single_multi_path(onboarding_case, case_organisation)
 

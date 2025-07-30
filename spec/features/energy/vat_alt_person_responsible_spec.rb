@@ -1,6 +1,8 @@
 require "rails_helper"
 
 describe "VAT Alt person responsible", :js do
+  include_context "with awkward space characters"
+
   let(:support_organisation) { create(:support_organisation, :with_address, urn: 100_253) }
   let(:user) { create(:user, :many_supported_schools_and_groups) }
   let(:support_case) { create(:support_case, organisation: support_organisation) }
@@ -63,5 +65,15 @@ describe "VAT Alt person responsible", :js do
       expect(page).not_to have_text("Select an address")
       expect(case_organisation.reload.vat_alt_person_address).to eq({ "county" => "", "locality" => "91 Charter House Street", "postcode" => "EC1M 6HR", "street" => "Boundary House Shr", "town" => "London" })
     end
+  end
+
+  specify "allow spaces (including zero-width), hyphens, brackets to the phone number validation" do
+    visit energy_case_org_vat_alt_person_responsible_path(case_id: case_organisation.energy_onboarding_case_id, org_id: case_organisation.onboardable_id)
+
+    fill_in "First name", with: "Jon"
+    fill_in "Telephone number", with: "(44) 1234-567#{zero_width_space}890"
+    click_button "Save and continue"
+
+    expect(page).not_to have_text("Enter a phone number in the correct format, like 01632 960 001")
   end
 end
