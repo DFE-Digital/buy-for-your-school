@@ -706,7 +706,7 @@ en:
         title: VAT Declaration
         vat_rate: VAT rate
         vat_lower_rate_percentage: Percentage of total consumption qualifying for reduced rate of VAT
-        vat_lower_rate_reg_no: VAT registration number
+        vat_lower_rate_reg_no: VAT registration number (optional)
         vat_person_first_name: Contact name
         vat_person_phone: Telephone number
         vat_person_address: Address
