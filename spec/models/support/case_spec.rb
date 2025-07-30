@@ -94,26 +94,52 @@ RSpec.describe Support::Case, type: :model do
     let(:mprn) { "123456789" }
     let(:mpan) { "0123456789123" }
 
-    before do
-      gas_meter
-      electricity_meter
+    context "with gas meter only" do
+      before do
+        gas_meter
+      end
+
+      it "finds case by mprn (gas meter)" do
+        results = described_class.by_mpan_or_mprn(mprn)
+        expect(results).to include(support_case)
+        expect(results).not_to include(support_case2)
+      end
     end
 
-    it "finds case by mprn (gas meter)" do
-      results = described_class.by_mpan_or_mprn(mprn)
-      expect(results).to include(support_case)
-      expect(results).not_to include(support_case2)
+    context "with electricity meter only" do
+      before do
+        electricity_meter
+      end
+
+      it "finds case by mpan (electricity meter)" do
+        results = described_class.by_mpan_or_mprn(mpan)
+        expect(results).to include(support_case)
+        expect(results).not_to include(support_case2)
+      end
     end
 
-    it "finds case by mpan (electricity meter)" do
-      results = described_class.by_mpan_or_mprn(mpan)
-      expect(results).to include(support_case)
-      expect(results).not_to include(support_case2)
-    end
+    context "with both gas and electricity meters" do
+      before do
+        gas_meter
+        electricity_meter
+      end
 
-    it "returns empty when term doesn't match" do
-      results = described_class.by_mpan_or_mprn("000000000")
-      expect(results).to be_empty
+      it "finds case by mprn (gas meter)" do
+        results = described_class.by_mpan_or_mprn(mprn)
+        expect(results).to include(support_case)
+        expect(results).not_to include(support_case2)
+      end
+
+      it "finds case by mpan (electricity meter)" do
+        results = described_class.by_mpan_or_mprn(mpan)
+        expect(results).to include(support_case)
+        expect(results).not_to include(support_case2)
+      end
+
+      it "returns empty when term doesn't match" do
+        results = described_class.by_mpan_or_mprn("000000000")
+        expect(results).to be_empty
+      end
     end
   end
 end
