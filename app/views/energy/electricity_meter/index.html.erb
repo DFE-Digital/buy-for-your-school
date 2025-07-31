@@ -40,7 +40,7 @@
                 <% if @electricity_meter_details.count > 1 %>
                   <%= link_to safe_join([I18n.t("generic.button.remove"),
                       content_tag(:span, "Remove details for #{electricity_meter.mpan}", class: "govuk-visually-hidden")]),
-                          energy_case_org_electricity_meter_path(id: electricity_meter.id, **@routing_flags),
+                          delete_energy_case_org_electricity_meter_path(id: electricity_meter.id, **@routing_flags),
                           class: "govuk-link", method: :delete %>
                 <% end %>
               </td>
