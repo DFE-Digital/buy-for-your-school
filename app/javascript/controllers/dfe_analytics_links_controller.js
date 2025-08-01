@@ -3,10 +3,8 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   connect() {
     document.querySelectorAll('a').forEach(link => {
-        const eventType = 'external_link_clicked'
-        if (this.isExternalLink(link.href)) {
-          link.addEventListener('click', (event) => this.trackClick(event, eventType));
-        }
+        const eventType = this.isExternalLink(link.href) ? 'external_link_clicked' : 'link_click'
+        link.addEventListener('click', (event) => this.trackClick(event, eventType));
     });
   }
 
@@ -43,7 +41,10 @@ export default class extends Controller {
         })
       })
     } finally {
-      window.open(href, '_blank', 'noopener,noreferrer');
+      if (eventType == 'external_link_clicked')
+        window.open(href, '_blank', 'noopener,noreferrer');
+      else
+        window.location.href = href
     }
   }
 }
