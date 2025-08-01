@@ -3,6 +3,9 @@
 Rails.application.routes.draw do
   root to: "specify/create_a_specification#show"
 
+  # DfE analytics
+  post "/dfe_analytics_events", to: "dfe_analytics_events#create"
+
   # Misc
   get "health_check" => "application#health_check"
   get "maintenance" => "application#maintenance"
