@@ -1,7 +1,6 @@
 class DfeAnalyticsLinksController < ApplicationController
   EVENT_ALLOWLIST = {
     external_link_clicked: %i[text href],
-    link_click: %i[text href],
   }.freeze
 
   def create
