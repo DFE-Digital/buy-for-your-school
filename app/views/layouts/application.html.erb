@@ -50,7 +50,7 @@
     <%= javascript_include_tag "application" %>
   </head>
 
-  <body class="govuk-template__body" data-controller="dfe_analytics_engagement_tracking">
+  <body class="govuk-template__body" data-controller="dfe_analytics_engagement_tracking dfe_analytics_links">
 
     <%= javascript_tag nonce: true do -%>
       document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');

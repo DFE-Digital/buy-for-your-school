@@ -1,6 +1,7 @@
 class DfeAnalyticsEventsController < ApplicationController
   EVENT_ALLOWLIST = {
     page_engagement: %i[engaged_time_ms page_path page_title session_duration_ms timestamp],
+    external_link_clicked: %i[text href],
   }.freeze
 
   def create
