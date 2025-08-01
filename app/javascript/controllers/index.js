@@ -90,3 +90,6 @@ application.register("date_validation", DateValidationController)
 
 import DfeAnalyticsEngagementTrackingController from "./dfe_analytics_engagement_tracking_controller"
 application.register("dfe_analytics_engagement_tracking", DfeAnalyticsEngagementTrackingController);
+
+import DfeAnalyticsLinksController from "./dfe_analytics_links_controller"
+application.register("dfe_analytics_links", DfeAnalyticsLinksController);
