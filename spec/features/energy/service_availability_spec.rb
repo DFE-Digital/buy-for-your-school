@@ -10,6 +10,6 @@ describe "Service availability", :js do
 
     visit energy_service_availability_path(id: "1010010")
 
-    expect(page).to have_text("Service only available for single schools")
+    expect(page).to have_text("Service only available for individual schools")
   end
 end

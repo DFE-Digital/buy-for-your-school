@@ -3,21 +3,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl"><%= I18n.t("energy.service_availability.heading") %></h1>
-
-    <p class="govuk-body"><%= I18n.t("energy.service_availability.body_text") %></p>
-
-    <p class="govuk-body"><%= I18n.t("energy.service_availability.mat_text") %></p>
-
-    <% email_to = "dfe-energy.services-team@education.gov.uk" %>
-    <% email_subject = I18n.t("energy.service_availability.email_subject", org_name: @org_name) %>
-    <% email_body = render partial: "email_body" %>
-
-    <ul class="govuk-list govuk-list--bullet">
-        <li><%= I18n.t("energy.service_availability.online_service") %></li>
-        <p>(or)</p>
-        <li>contact <%= mail_to email_to, email_to, subject: email_subject, body: email_body, class: "govuk-link" %> to join using paper forms</li>
-    </ul>
-
-    <p class="govuk-body"><%= I18n.t("energy.service_availability.due_to_open") %></p>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.service_availability.body", form_url: @register_your_interest_form_url)) %>
   </div>
 </div>
