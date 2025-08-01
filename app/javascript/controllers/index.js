@@ -87,3 +87,6 @@ application.register("download_documents", DownloadDocumentsController)
 
 import DateValidationController from "./date_validation_controller"
 application.register("date_validation", DateValidationController)
+
+import DfeAnalyticsLinksController from "./dfe_analytics_links_controller"
+application.register("dfe_analytics_links", DfeAnalyticsLinksController);
