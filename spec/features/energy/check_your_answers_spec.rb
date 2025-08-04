@@ -70,6 +70,7 @@ describe "'Check your answers' flows", :js do
     context "when a single meter has already been specified and needs to stay as a single meter" do
       it "navigates to the single/multi meter choice page, then gas meter details, then back to CYA" do
         expect(page).to have_text("Current contract details")
+        expect(page).not_to have_text("Do you want your MPRNs consolidated on one bill?")
         find("#gas_meters_and_usage_change").click
 
         # Go to single/multi meter screen
@@ -122,6 +123,7 @@ describe "'Check your answers' flows", :js do
 
         # Back to CYA
         expect(page).to have_text("Check your answers")
+        expect(page).to have_text("Do you want your MPRNs consolidated on one bill?")
         expect(page).to have_text(new_mprn)
       end
     end
@@ -198,6 +200,7 @@ describe "'Check your answers' flows", :js do
     context "when a single meter has already been specified and needs to stay as a single meter" do
       it "navigates to the single/multi meter choice page, then electric meter details, then back to CYA" do
         expect(page).to have_text("Electricity meters and usage")
+        expect(page).not_to have_text("Do you want your MPANs consolidated on one bill?")
         within ".govuk-summary-card", text: "Electricity meters and usage" do
           click_link("Change")
         end
@@ -253,6 +256,7 @@ describe "'Check your answers' flows", :js do
 
         # Back to CYA
         expect(page).to have_text("Check your answers")
+        expect(page).to have_text("Do you want your MPANs consolidated on one bill?")
         expect(page).to have_text(new_mpan)
       end
     end
@@ -517,6 +521,7 @@ describe "'Check your answers' flows", :js do
 
         # Back to CYA
         expect(page).to have_text("Check your answers")
+        expect(page).not_to have_text("Address for invoice")
         expect(page).to have_text("paper")
       end
     end
@@ -549,6 +554,7 @@ describe "'Check your answers' flows", :js do
 
         # Back to CYA
         expect(page).to have_text("Check your answers")
+        expect(page).to have_text("Address for invoice")
         expect(page).to have_text("paper")
       end
     end
