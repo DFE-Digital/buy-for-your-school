@@ -1850,7 +1850,7 @@ en:
         button: Start a new search
         count: "%{count} cases found containing '%{term}'"
         heading: Find a case
-        hint: Enter the case ID, contact email, organisation name, establishment unique reference number (URN) or case owner.
+        hint: Enter the Case ID, contact email, organisation name, establishment group, establishment unique reference number (URN), MPRN, MPAN or case owner.
         results: Search results
     case_additional_contact:
       organisation:
