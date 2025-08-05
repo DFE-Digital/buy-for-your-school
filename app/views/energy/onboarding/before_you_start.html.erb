@@ -4,7 +4,7 @@
 <%= render Column21Component.new do |c| %>
   <% c.with_left do %>
     <h1 class="govuk-heading-xl"><%= I18n.t("energy.before_you_start.title") %></h1>
-    <h2 class="govuk-heading-m"><%= I18n.t("energy.before_you_start.subtitle") %></h2>
+    <h2 class="govuk-heading-l"><%= I18n.t("energy.before_you_start.subtitle") %></h2>
     <%= render ParagraphComponent.new(text: I18n.t("energy.before_you_start.need")) %>
     <%= govuk_list I18n.t("energy.before_you_start.need_list"), type: :bullet %>
     <%= render ParagraphComponent.new(text: I18n.t("energy.before_you_start.time_required")) %>
