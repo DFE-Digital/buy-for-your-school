@@ -12,7 +12,7 @@
         <%= @current_case.full_name %>
       </dd>
       <dd class="govuk-summary-list__actions">
-        <% unless @current_case.closed? || @current_case.energy_onboarding_case? %>
+        <% unless @current_case.closed? || (@current_case.energy_onboarding_case? && @current_case.support_level == "L7") %>
           <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
         <% end %>
       </dd>
@@ -58,7 +58,7 @@
         <%= @current_case.email %>
       </dd>
       <dd class="govuk-summary-list__actions">
-        <% unless @current_case.closed? || @current_case.energy_onboarding_case? %>
+        <% unless @current_case.closed? || (@current_case.energy_onboarding_case? && @current_case.support_level == "L7") %>
           <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
         <% end %>
       </dd>
@@ -88,7 +88,7 @@
         <%= @current_case.organisation_name if @current_case.organisation.present? %>
       </dd>
       <dd class="govuk-summary-list__actions">
-        <% unless @current_case.closed? || ( @current_case.energy_onboarding_case? && @current_case.support_level == "L7") %>
+        <% unless @current_case.closed? || (@current_case.energy_onboarding_case? && @current_case.support_level == "L7") %>
           <%= link_to @current_case.organisation.present? ? "Change" : "Add",
             edit_support_case_organisation_path(@current_case), class: "govuk-link", target: "_top" %>
         <% end %>
