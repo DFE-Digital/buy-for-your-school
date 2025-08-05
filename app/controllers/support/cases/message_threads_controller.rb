@@ -118,7 +118,13 @@ module Support
 
       def default_subject = "Case #{current_case.ref} – DfE Get help buying for schools: your request for advice and guidance"
 
-      def default_template = render_to_string(partial: "support/cases/messages/reply_form_template")
+      def default_template
+        if current_case.energy_onboarding_case?
+          render_to_string(partial: "support/cases/messages/energy_reply_form_template")
+        else
+          render_to_string(partial: "support/cases/messages/reply_form_template")
+        end
+      end
 
       def redirect_to_messages_tab
         return redirect_to cec_onboarding_case_path(id: params[:case_id], anchor: "messages", messages_tab_url: request.url) if is_user_cec_agent?
