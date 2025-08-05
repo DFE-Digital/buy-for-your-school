@@ -5,6 +5,8 @@ class FrameworkRequests::FrameworkRequestsController < FrameworkRequests::Applic
 
   def index
     session[:faf_referrer] = referral_link
+    session.delete(:energy_case_tasks_path)
+    session.delete(:energy_onboarding)
   end
 
   def show
