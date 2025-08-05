@@ -309,6 +309,9 @@ en:
         - save time spent on procurement process
         - remove risk associated with unregulated energy brokers
         - comply with procurement regulations
+      mat_info:
+      - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
+      - Multi-academy trusts (MATs) can join the contract by filling in the <a class="govuk-link" href="%{form_url}">Register your interest form</a> and completing the process offline.
       more_info: Get more information
     guidance:
       contents: Contents
@@ -663,12 +666,10 @@ en:
         label: What did you think of this service?
         url: /customer_satisfaction_surveys/new?service=energy_for_schools&source=confirmation_screen
     service_availability:
-      heading: Service only available for single schools
-      body_text: The online service does not currently allow for multiple schools to join Energy for Schools using a single form.
-      mat_text: If you represent a multi-academy trust (MAT), you can either
-      online_service: use the online service for each individual school within the MAT
-      due_to_open: The online service is due to open to MATs in mid July 2025.
-      email_subject: 'MAT Enquiry: %{org_name} from Energy for onboarding form'
+      heading: Service only available for individual schools
+      body:
+      - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
+      - Multi-academy trusts (MATs) can join the contract by filling in the <a class="govuk-link" href="%{form_url}">Register your interest form</a> and completing the process offline.
     check_your_answers:
       title: Check your answers
       not_provided: Not provided
