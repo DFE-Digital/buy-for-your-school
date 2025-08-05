@@ -7,7 +7,10 @@
     <h2 class="govuk-heading-l"><%= I18n.t("energy.before_you_start.subtitle") %></h2>
     <%= render ParagraphComponent.new(text: I18n.t("energy.before_you_start.need")) %>
     <%= govuk_list I18n.t("energy.before_you_start.need_list"), type: :bullet %>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.before_you_start.half_hourly_electricity")) %>
+    <%= govuk_list I18n.t("energy.before_you_start.half_hourly_electricity_list"), type: :bullet %>
     <%= render ParagraphComponent.new(text: I18n.t("energy.before_you_start.time_required")) %>
+
     <%= govuk_button_to(I18n.t("generic.button.continue"), '/auth/dfe') %>
   <% end %>
 

@@ -339,7 +339,7 @@ en:
       v30contract:
         title: The contract
         body:
-        - The V30 is a low-risk variable rate contract.
+        - The V30 basket with CCS is a low-risk variable rate contract.
         - Prices can go up and down, but changes are less drastic than other variable rates. It's the most stable variable rate contract available to schools, although it may not always give you the lowest price.
         - CCS cannot provide potential customers with energy prices before they join due to commercial sensitivity.
         - To get an estimate of prices, email <a class="govuk-link" href="mailto:%{email}">%{email}</a> and request DfE’s benchmarking service. We’ll provide a price comparison based on your energy bills from the last financial year.
@@ -431,10 +431,19 @@ en:
       need: 'You will need:'
       need_list:
       - authorisation from your school or trust to switch energy supplier
-      - electricity and/or gas bills from the past 12 months, to estimate annual usage in kilowatt hours
+      - your electricity and/or gas meter numbers and estimated annual usage in kilowatt hours per meter (you can calculate this from your bills)
       - your electricity and/or gas contract end date
-      - the percentage VAT your school is charged for energy, and the percentage of total consumption which qualifies for a reduced rate, if you pay 5% VAT
-      time_required: This form may take up to 20 minutes to complete, providing you have your bills and VAT details to hand. Please allow longer if you’re switching contracts for multiple schools or using a screen reader.
+      - the percentage VAT your school is charged for energy, and the percentage of total consumption qualifying if you pay 5% VAT
+      half_hourly_electricity: "If you have a half hourly electricity meter, you will also need to know:" 
+      half_hourly_electricity_list:
+      - supply capacity (kVA)
+      - data aggregator
+      - data collector
+      - meter operator
+      time_required: 
+        - Ask your current supplier or broker if you need help finding this information.
+        - This form may take up to 20 minutes to complete, providing you have the required information to hand. Allow longer if you're using assistive technology, like a screen reader.
+        - We'll send you an email with a link once you've started the form. We'll also save the answers on each page you complete. If you need to exit the form, use the email link to return and complete it at a later date.
     school_selections:
       title: About your school
       heading: Which school are you buying for?
