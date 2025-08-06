@@ -23,7 +23,9 @@
         <%= link_to I18n.t("support.case.label.resolve"), portal_new_case_resolution_path(@current_case), class: "govuk-link" %>
       </li>
       <li>
-        <%= link_to I18n.t("support.case_closures.action"), portal_case_closures_path(@current_case), class: "govuk-link" %>
+        <% unless @current_case.energy_onboarding_case? && (current_agent&.roles & %w[procops procops_admin cec_admin]).none? %>
+          <%= link_to I18n.t("support.case_closures.action"), portal_case_closures_path(@current_case), class: "govuk-link" %>
+        <% end %>
       </li>
     <% else %>
       <li>
@@ -40,7 +42,7 @@
       <li>
         <%= link_to I18n.t("support.case.label.reopen"), portal_new_case_opening_path(@current_case), class: "govuk-link" %>
       </li>
-      
+
     <% end %>
 
     <% if @current_case.initial? %>
