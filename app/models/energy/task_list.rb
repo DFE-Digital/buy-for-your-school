@@ -153,6 +153,7 @@ private
       case_org.electricity_meters.each do |meter|
         t.add_attribute(:mpan, meter)
         t.add_attribute(:is_half_hourly, meter, text: meter.is_half_hourly ? I18n.t("generic.yes") : I18n.t("generic.no"))
+        t.add_attribute(:electricity_usage, meter)
 
         next unless meter.is_half_hourly
 

@@ -705,6 +705,7 @@ en:
         data_aggregator: Data aggregator
         data_collector: Data collector
         meter_operator: Meter operator
+        electricity_usage: Estimated annual electricity usage, in kilowatt hours (kWh)
         is_electric_bill_consolidated: Do you want your MPANs consolidated on one bill?
       site_contact_details:
         title: Site contact details

@@ -220,6 +220,7 @@ describe "'Check your answers' flows", :js do
 
         # Back to CYA
         expect(page).to have_text("Check your answers")
+        expect(page).to have_text("Estimated annual electricity usage, in kilowatt hours (kWh)")
       end
     end
 
