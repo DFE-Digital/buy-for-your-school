@@ -25,5 +25,9 @@ FactoryBot.define do
     trait :sent_items do
       folder { :sent_items }
     end
+
+    trait :draft do
+      is_draft { true }
+    end
   end
 end
