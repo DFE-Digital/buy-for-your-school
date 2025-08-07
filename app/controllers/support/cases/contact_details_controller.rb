@@ -10,7 +10,7 @@ module Support
       case_contact_details_form_params[:is_evaluator] = params[:is_evaluator] == "true" ? "true" : "false"
       if validation.success? && !@emails.include?(case_contact_details_form_params[:email])
         if @current_case.update!(case_contact_details_form_params)
-          redirect_to contact_details_path(current_case), notice: I18n.t("support.case_contact_details.flash.updated")
+          redirect_to contact_details_path(current_case, anchor: "school-details"), notice: I18n.t("support.case_contact_details.flash.updated")
         end
       else
         flash[:error] = { message: "Already a contact", class: "govuk-error" } if @emails.include?(case_contact_details_form_params[:email])
@@ -24,19 +24,19 @@ module Support
       CaseContactDetailsFormSchema.new.call(**case_contact_details_form_params)
     end
 
-    helper_method def portal_case_contact_details_path(current_case, anchor: nil)
+    helper_method def portal_case_contact_details_path(current_case)
       if (current_agent.roles & %w[cec cec_admin]).any?
-        send("cec_case_update_contact_details_path", current_case, anchor:)
+        send("cec_case_update_contact_details_path", current_case)
       else
-        send("support_case_contact_details_path", current_case, anchor:)
+        send("support_case_contact_details_path", current_case)
       end
     end
 
-    def contact_details_path(current_case)
+    helper_method def contact_details_path(current_case, anchor: nil)
       if (current_agent.roles & %w[cec cec_admin]).any?
-        cec_onboarding_case_path(current_case, anchor: "school-details")
+        send("cec_onboarding_case_path", current_case, anchor:)
       else
-        support_case_path(current_case, anchor: "school-details")
+        send("support_case_path", current_case, anchor:)
       end
     end
 

@@ -18,9 +18,8 @@
     <div class="govuk-form-group">
       <%= form.govuk_check_box :is_evaluator, :true, :false, multiple: false,  checked: @current_case.is_evaluator, label: { text: "Evaluator" } %>
     </div>
-
             
   <%= form.submit I18n.t("support.case_contact_details.submit"), class: "govuk-button" %>
-  <%= link_to 'Cancel changes', support_case_path(@current_case), class: 'govuk-button govuk-button--secondary' %>
+  <%= link_to 'Cancel changes', contact_details_path(@current_case), class: 'govuk-button govuk-button--secondary' %>
 <% end %>
 
