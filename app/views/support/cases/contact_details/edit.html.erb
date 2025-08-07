@@ -1,6 +1,6 @@
 <h1 class="govuk-heading-xl"><%= I18n.t("support.case_contact_details.header") %></h1>
 
-<%= form_with model: @case_contact_details_form, scope: :case_contact_details_form, url: support_case_contact_details_path(@current_case), method: :patch do |form| %>
+<%= form_with model: @case_contact_details_form, scope: :case_contact_details_form, url: portal_case_contact_details_path(@current_case), method: :patch do |form| %>
   <%= form.govuk_error_summary %>
 
   <%= form.govuk_text_field :first_name, autofocus: true, width: 'one-half', label: { text: I18n.t("support.case_contact_details.label.first_name") } %>
