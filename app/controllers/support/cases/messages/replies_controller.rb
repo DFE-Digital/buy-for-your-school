@@ -49,7 +49,13 @@ module Support
 
   private
 
-    def default_template = render_to_string(partial: "support/cases/messages/reply_form_template")
+    def default_template
+      if current_case.energy_onboarding_case?
+        render_to_string(partial: "support/cases/messages/energy_reply_form_template")
+      else
+        render_to_string(partial: "support/cases/messages/reply_form_template")
+      end
+    end
 
     def form_params
       params.require(:"message_reply_form_#{params[:unique_id]}").permit(:html_content, :template_id, :blob_attachments, file_attachments: [])
