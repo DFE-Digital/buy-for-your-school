@@ -2,7 +2,8 @@ require "rails_helper"
 
 describe "Agent can move emails to a case" do
   let!(:source_case) { create(:support_case, action_required: true) }
-  let!(:destination_case) { create(:support_case) }
+  let!(:case_owner) { create(:support_agent) }
+  let!(:destination_case) { create(:support_case, agent: case_owner) }
   let(:agent) { create(:support_agent) }
 
   let(:email_mover) do
@@ -13,7 +14,10 @@ describe "Agent can move emails to a case" do
     )
   end
 
-  before { Current.actor = agent }
+  before do
+    Current.actor = agent
+    Current.agent = agent
+  end
 
   context "when source case has emails attached" do
     before do
@@ -43,6 +47,12 @@ describe "Agent can move emails to a case" do
       )
       expect(source_case.interactions.email_merge.first.body).to eq("to ##{destination_case.ref}")
       expect(destination_case.interactions.email_merge.first.body).to eq("from ##{source_case.ref}")
+    end
+
+    it "notifies the agent of the email merge" do
+      expect { email_mover.save! }.to(
+        change { destination_case.notifications.count }.from(0).to(1),
+      )
     end
   end
 
