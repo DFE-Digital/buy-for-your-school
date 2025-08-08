@@ -81,8 +81,8 @@ module Support
     end
 
     def update_action_required
-      pending_evaluations = @current_case.evaluators.where(has_uploaded_documents: true, evaluation_approved: false).any?
-      unread_emails = Support::Email.where(ticket_id: @current_case.id, folder: 0, is_read: false).any?
+      pending_evaluations = @current_case.evaluators.reload.where(has_uploaded_documents: true, evaluation_approved: false).any?
+      unread_emails = Support::Email.where(ticket_id: @current_case.id, folder: 0, is_read: false).where.not(outlook_conversation_id: nil).any?
       action_required = pending_evaluations || unread_emails
       @current_case.update!(action_required:)
     end
