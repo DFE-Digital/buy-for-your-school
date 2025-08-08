@@ -86,7 +86,16 @@ export default class extends Controller {
       { id: 12, title: "V30 Rate Customer" }
     ]
 
-    const stageOptions = groupText == 'CEC' ? cecStages : defaultStages
+    const allStages = [...defaultStages, ...cecStages];
+
+    let stageOptions;
+    if (groupText == 'CEC') {
+      stageOptions = cecStages;
+    } else if (groupText == 'System') {
+      stageOptions = allStages;
+    } else {
+      stageOptions = defaultStages;
+    }
     const options = stageOptions.map(stage => {
       const option = document.createElement("option");
       option.setAttribute("value", stage.id);
