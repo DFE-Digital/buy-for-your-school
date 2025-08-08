@@ -40,6 +40,7 @@ module Support
         end
         record_action(case_id: current_case.id, action: "close_case", data: { closure_reason: @case_closure_form.reason })
         current_case.notify_agent_of_case_closed if current_case.agent.present?
+        update_action_required
         redirect_to redirect_path, notice: I18n.t("support.case_closures.flash.updated")
       else
         render :index
@@ -82,6 +83,13 @@ module Support
 
     helper_method def portal_case_closures_confirm_path(current_case)
       send("#{agent_portal_namespace}_case_closures_confirm_path", current_case)
+    end
+
+    def update_action_required
+      pending_evaluations = @current_case.evaluators.where(has_uploaded_documents: true, evaluation_approved: false).any?
+      unread_emails = Support::Email.where(ticket_id: @current_case.id, folder: 0, is_read: false).where.not(outlook_conversation_id: nil).any?
+      action_required = pending_evaluations || unread_emails
+      @current_case.update!(action_required:)
     end
   end
 end
