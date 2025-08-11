@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_16_154247) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_11_151829) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
