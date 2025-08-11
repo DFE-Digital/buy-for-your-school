@@ -8,8 +8,11 @@ inputs:
   docker_image_and_tag:
     description: The docker image and tag that will be deployed
     required: true
-  container_app_name:
-    description: The name of the container app to be deployed to
+  web_app_name:
+    description: The name of the web_app container to be deployed to
+    required: true
+  worker_app_name:
+    description: The name of the worker_app container to be deployed to
     required: true
   resource_group_name:
     description: The name of the resource group that contains the container app
@@ -31,13 +34,13 @@ runs:
           az config set extension.use_dynamic_install=yes_without_prompt
 
           az containerapp update \
-            --name ${{ inputs.container_app_name }} \
+            --name ${{ inputs.web_app_name }} \
             --resource-group ${{ inputs.resource_group_name }} \
             --image ${{ inputs.docker_image_and_tag }} \
             --output none
 
           az containerapp update \
-            --name ${{ inputs.container_app_name }}-worker \
+            --name ${{ inputs.worker_app_name }} \
             --resource-group ${{ inputs.resource_group_name }} \
             --image ${{ inputs.docker_image_and_tag }} \
             --output none
