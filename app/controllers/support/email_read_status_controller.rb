@@ -38,13 +38,13 @@ module Support
     end
 
     def notify_procops_action_required?
-      unread_emails = @email.ticket.emails.unread.inbox.any?
+      unread_emails = @email.ticket.emails.inbox.unread.where.not(outlook_conversation_id: nil).any?
       pending_evaluations = Support::Evaluator.where(support_case_id: @email.ticket_id, has_uploaded_documents: true, evaluation_approved: false).any?
       unread_emails || pending_evaluations
     end
 
     def default_action_required?
-      @email.ticket.emails.unread.inbox.any?
+      @email.ticket.emails.inbox.unread.where.not(outlook_conversation_id: nil).any?
     end
 
     helper_method def portal_email_read_status_path(message, additional_params = {})
