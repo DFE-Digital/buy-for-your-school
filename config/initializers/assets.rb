@@ -12,8 +12,8 @@ Rails.application.config.assets.version = "1.0"
 Rails.application.config.assets.paths << Rails.root.join("app/javascript")
 
 # Add the GOVUK Frontend assets paths
-Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets")
-Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/images")
+Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand")
+Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand/images")
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/fonts")
 
 ### PLEASE NOTE - DUE TO THE WAY govuk-frontend WORKS THE PRODUCTION SERVER SERVES NON DIGESTED
@@ -25,17 +25,13 @@ Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-fro
 # Add GOVUK assets by name, these are assets not loaded via sass
 Rails.application.config.assets.precompile += [
   "images/favicon.ico",
+  "images/favicon.svg",
   "images/govuk-apple-touch-icon-152x152.png",
   "images/govuk-apple-touch-icon-167x167.png",
   "images/govuk-apple-touch-icon-180x180.png",
   "images/govuk-apple-touch-icon.png",
-  "images/govuk-crest-2x.png",
-  "images/govuk-crest.png",
   "images/govuk-logotype-crown.png",
-  "images/govuk-mask-icon.svg",
   "images/govuk-opengraph-image.png",
-
-  "images/favicon.svg",
   "images/govuk-icon-180.png",
   "images/govuk-icon-192.png",
   "images/govuk-icon-512.png",
