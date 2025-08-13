@@ -438,13 +438,13 @@ en:
       - your electricity and/or gas meter numbers and estimated annual usage in kilowatt hours per meter (you can calculate this from your bills)
       - your electricity and/or gas contract end date
       - the percentage VAT your school is charged for energy, and the percentage of total consumption qualifying if you pay 5% VAT
-      half_hourly_electricity: "If you have a half hourly electricity meter, you will also need to know:" 
+      half_hourly_electricity: "If you have a half hourly electricity meter, you will also need to know:"
       half_hourly_electricity_list:
       - supply capacity (kVA)
       - data aggregator
       - data collector
       - meter operator
-      time_required: 
+      time_required:
         - Ask your current supplier or broker if you need help finding this information.
         - This form may take up to 20 minutes to complete, providing you have the required information to hand. Allow longer if you're using assistive technology, like a screen reader.
         - We'll send you an email with a link once you've started the form. We'll also save the answers on each page you complete. If you need to exit the form, use the email link to return and complete it at a later date.
@@ -1906,6 +1906,7 @@ en:
           out_of_scope: Out of scope
           spam: Spam
           test_case: Test case
+          objections: Objections resulted in cancellation
         submit: Save and reject case
       flash:
         created: Case rejected successfully
@@ -2170,6 +2171,7 @@ en:
             out_of_scope: Out of scope
             spam: Spam
             test_case: Test case
+            objections: Objections resulted in cancellation
           request_category: Sub-category
           status: Status
     case_organisation:

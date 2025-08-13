@@ -54,7 +54,7 @@ module Support
     def authorize_agent_scope = :access_individual_cases?
 
     def set_reasons
-      @reasons = %i[no_engagement spam out_of_scope test_case other]
+      @reasons = %i[no_engagement spam out_of_scope test_case objections other]
     end
 
     def validation
