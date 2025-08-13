@@ -1,5 +1,5 @@
-<li id="navbar_notifications_icon" class="navbar-component__navigation-item--right govuk-header__navigation-item">
-  <%= link_to "Notifications", cec_portal? || (support_portal? && (current_agent.roles & %w[cec cec_admin]).any?) ? cec_notifications_path : support_notifications_path, class: "govuk-header__link" %>
+<li id="navbar_notifications_icon" class="govuk-service-navigation__item <%= "govuk-service-navigation__item--active" if current_page?(cec_notifications_path || support_notifications_path)%>">
+  <%= link_to "Notifications", cec_portal? || (support_portal? && (current_agent.roles & %w[cec cec_admin]).any?) ? cec_notifications_path : support_notifications_path, class: "govuk-service-navigation__link" %>
 
   <% if notifications_unread %>
     <span class="notification-unread-icon"></span>
