@@ -8,8 +8,8 @@ describe Support::Emails::Templates::SeedGroups do
 
   it "populates the tables" do
     expect { service.call }
-      .to change(groups, :count).from(0).to(7)
-      .and change(sub_groups, :count).from(0).to(14)
+      .to change(groups, :count).from(0).to(8)
+      .and change(sub_groups, :count).from(0).to(17)
   end
 
   context "when a group has sub-groups" do
