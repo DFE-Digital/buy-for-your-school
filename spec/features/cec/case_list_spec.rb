@@ -9,8 +9,8 @@ RSpec.feature "CEC homepage" do
   end
 
   it "is signed in as correct agent" do
-    within "header.govuk-header" do
-      expect(find("#userInfo")).to have_text "Signed in as Procurement Specialist"
+    within ".govuk-header__container" do
+      expect(page).to have_text "Signed in as Procurement Specialist"
     end
   end
 

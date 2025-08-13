@@ -4,7 +4,7 @@
 mkdir -p public/assets/fonts
 mkdir -p public/assets/images
 cp -r node_modules/govuk-frontend/dist/govuk/assets/fonts/* public/assets/fonts
-cp -r node_modules/govuk-frontend/dist/govuk/assets/images/* public/assets/images
+cp -r node_modules/govuk-frontend/dist/govuk/assets/rebrand/images/* public/assets/images
 
 # # Add tinymce assets
 mkdir -p public/assets/tinymce
