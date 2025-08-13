@@ -2154,6 +2154,7 @@ en:
     case_opening:
       flash:
         error: Case cannot be reopened
+        re_used_meter_numbers: Case cannot be reopened because one or more meter numbers are in use in other cases
         reopened: Case reopened successfully
     case_openings:
       new:
