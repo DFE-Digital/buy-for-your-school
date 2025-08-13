@@ -3,7 +3,7 @@ $govuk-images-path: "/assets/images/";
 $govuk-fonts-path: "/assets/fonts/";
 $govuk-new-organisation-colours: true;
 
-@import "govuk-frontend/dist/govuk/all";
+@import "govuk-frontend/dist/govuk/index";
 
 .govuk-table__row.borderless .govuk-table__cell,
 .borderless {
