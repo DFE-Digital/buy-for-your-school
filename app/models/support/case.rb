@@ -83,17 +83,17 @@ module Support
     #   L5       - Run bespoke procurement
     enum :support_level, { L1: 0, L2: 1, L3: 2, L4: 3, L5: 4, L6: 5, L7: 6 }
 
-    # Closure reason
-    #
-    #   resolved
-    #   email_merge
-    #   spam
-    #   out_of_scope
-    #   other
-    #   transfer
-    #   no_engagement
-    #   test_case
-    enum :closure_reason, { resolved: 0, email_merge: 1, spam: 2, out_of_scope: 3, other: 4, transfer: 5, no_engagement: 6, test_case: 7 }, suffix: true
+    enum :closure_reason, {
+      resolved: 0,
+      email_merge: 1,
+      spam: 2,
+      out_of_scope: 3,
+      other: 4,
+      transfer: 5,
+      no_engagement: 6,
+      test_case: 7,
+      objections: 8,
+    }, suffix: true
 
     # Source
     #
