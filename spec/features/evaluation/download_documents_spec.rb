@@ -58,6 +58,7 @@ describe "Evaluator can see uploaded documents", :js do
     click_button "Continue"
 
     support_case.reload
+    sleep 5
 
     visit evaluation_task_path(support_case)
 
