@@ -81,3 +81,25 @@
   border-top: 2px solid #1d70b8;
   padding-top: 10px;
 }
+
+// govuk rebrand header personalisation for 'Signed in' as
+.govuk-header__container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: space-between;
+  flex-wrap: wrap;
+
+  .govuk-header__signed-in-user{
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding: 10px 0;
+  }
+
+  .govuk-header__logo{
+    flex-basis:50%;
+    flex-grow: 2;
+    flex-shrink: 1;
+  }
+}
