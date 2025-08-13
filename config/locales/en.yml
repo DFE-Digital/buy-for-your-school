@@ -1633,8 +1633,10 @@ en:
             to: TO
           new_thread: Create a new message thread
           recipients: Recipients
-          reply_using_signatory_template: Reply using a signatory template
-          reply_with_template: Reply with an email template
+          reply_with_signature: Reply with signature
+          reply_with_template: Reply with template
+          forward_with_signature: Forward with signature
+          forward_with_template: Forward with template
           status: Status
           subject: Subject
           templated_messages: Templated messages
