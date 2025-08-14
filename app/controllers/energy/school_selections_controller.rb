@@ -17,9 +17,7 @@ module Energy
         when "urn"
           redirect_to school_type_energy_authorisation_path(id:, type: "single")
         when "uid"
-          # TODO: Update this when MAT service is available
-          # redirect_to school_type_energy_authorisation_path(id: id, type: "mat")
-          redirect_to energy_service_availability_path(id:)
+          redirect_to energy_mat_school_picker_path(id:)
         else
           redirect_to energy_school_selection_path
         end

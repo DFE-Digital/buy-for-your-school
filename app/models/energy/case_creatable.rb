@@ -1,7 +1,8 @@
 module Energy::CaseCreatable
   extend ActiveSupport::Concern
 
-  def self.create_case(current_user, support_organisation)
+  # If we're creating a case for a MAT, there'll be no organisatons at this stage
+  def self.create_case(current_user, support_organisation = nil)
     ActiveRecord::Base.transaction do
       attrs = {
         first_name: current_user.first_name,
@@ -17,7 +18,8 @@ module Energy::CaseCreatable
       kase = Support::CreateCase.new(attrs).call
       Support::CreateInteraction.new(kase.id, "create_case", nil, { body: "DfE Energy support case created", additional_data: attrs.slice(:source, :category).compact }).call
       onboarding_case = Energy::OnboardingCase.create!(are_you_authorised: true, support_case: kase)
-      Energy::OnboardingCaseOrganisation.create!(onboarding_case:, onboardable: support_organisation)
+      Energy::OnboardingCaseOrganisation.create!(onboarding_case:, onboardable: support_organisation) if support_organisation
+      kase
     end
   end
 end
