@@ -511,6 +511,9 @@ Rails.application.routes.draw do
   patch "/energy/which-school-buying-for", to: "energy/school_selections#update"
   get "/energy/school-selection-unavailable(/:id)", to: "energy/service_availability#show", as: "energy_service_availability"
 
+  # MAT school selection
+  get "/energy/which-mat-schools-buying-for/:id", to: "energy/mat_school_picker#edit", as: "energy_mat_school_picker"
+
   # Authorisation
   get "/energy/authorisation/:id/:type", to: "energy/authorisation#show", as: "school_type_energy_authorisation"
   patch "/energy/authorisation/:id/:type", to: "energy/authorisation#update"
