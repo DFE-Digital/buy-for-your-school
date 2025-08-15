@@ -266,6 +266,9 @@ Rails.application.routes.draw do
             resources :replies, only: %i[create edit] do
               post "submit", on: :member
             end
+            resources :forwards, only: %i[create edit] do
+              post "submit", on: :member
+            end
           end
         end
         resources :email_templates, only: %i[index]

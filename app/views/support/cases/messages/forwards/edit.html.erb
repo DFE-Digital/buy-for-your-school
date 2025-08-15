@@ -1,0 +1,13 @@
+<%= turbo_frame_tag "reply-frame" do %>
+  <% if @show_attachment_warning %>
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-visually-hidden"><%= I18n.t("support.case.label.messages.reply.warning") %></span>
+        <%= I18n.t("support.case.label.messages.reply.warning_body") %>
+      </strong>
+    </div>
+  <% end %>
+
+  <%= render "support/cases/messages/forwards/form", email: @last_received_reply, reply: true %>
+<% end %>
