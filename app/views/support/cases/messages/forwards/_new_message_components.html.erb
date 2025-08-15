@@ -1,0 +1,86 @@
+<%= form.hidden_field :to_recipients, value: @reply_form.to_recipients.to_s %>
+<%= form.hidden_field :cc_recipients, value: @reply_form.cc_recipients.to_s %>
+<%= form.hidden_field :bcc_recipients, value: @reply_form.bcc_recipients.to_s %>
+
+<%= form.govuk_text_field :subject, label: { text: I18n.t("support.case.label.message_threads.new.enter_subject"), size: "m" }, class: "subject-input" %>
+
+<p class="govuk-label govuk-label--m"><%= I18n.t("support.case.label.message_threads.new.add_recipients") %></p>
+<span class="recipient-input-group">
+  <%= form.govuk_text_field :to,
+        label: nil,
+        prefix_text: I18n.t("support.case.label.message_threads.new.to"),
+        placeholder: I18n.t("support.case.label.message_threads.new.press_enter_to_add_recipients"),
+        "data-collection" => "message_reply_form_#{unique_id}[to_recipients]",
+        "data-table" => "#{unique_id}_to" %>
+  <button class="govuk-button"
+          data-module="govuk-button"
+          data-component="add-recipients"
+          data-input-field=<%= "message_reply_form_#{unique_id}[to]" %>
+          type="button">
+    <%= I18n.t("support.case.label.message_threads.new.add_to") %>
+  </button>
+</span>
+<div class="govuk-!-display-none" data-draft-email-target="ccField">
+  <span class="recipient-input-group">
+    <%= form.govuk_text_field :cc,
+          label: nil,
+          prefix_text: I18n.t("support.case.label.message_threads.new.cc"),
+          placeholder: I18n.t("support.case.label.message_threads.new.press_enter_to_add_cc"),
+          "data-collection" => "message_reply_form_#{unique_id}[cc_recipients]",
+          "data-table" => "#{unique_id}_cc" %>
+    <button class="govuk-button"
+            data-module="govuk-button"
+            data-component="add-recipients"
+            data-input-field=<%= "message_reply_form_#{unique_id}[cc]" %>
+            type="button">
+      <%= I18n.t("support.case.label.message_threads.new.add_cc") %>
+    </button>
+  </span>
+</div>
+
+<div class="govuk-!-display-none" data-draft-email-target="bccField">
+  <span class="recipient-input-group">
+    <%= form.govuk_text_field :bcc,
+          label: nil,
+          prefix_text: I18n.t("support.case.label.message_threads.new.bcc"),
+          placeholder: I18n.t("support.case.label.message_threads.new.press_enter_to_add_bcc"),
+          "data-collection" => "message_reply_form_#{unique_id}[bcc_recipients]",
+          "data-table" => "#{unique_id}_bcc" %>
+    <button class="govuk-button"
+            data-module="govuk-button"
+            data-component="add-recipients"
+            data-input-field=<%= "message_reply_form_#{unique_id}[bcc]" %>
+            type="button">
+      <%= I18n.t("support.case.label.message_threads.new.add_bcc") %>
+    </button>
+  </span>
+</div>
+
+<div class="govuk-button-group">
+  <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" data-draft-email-target="btnToggleCc" data-action="draft-email#toggleCc">
+    <%= I18n.t("support.case.label.message_threads.new.show_cc") %>
+  </button>
+  <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" data-draft-email-target="btnToggleBcc" data-action="draft-email#toggleBcc">
+    <%= I18n.t("support.case.label.message_threads.new.show_bcc") %>
+  </button>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <table id="<%= unique_id %>_to" class="govuk-table added_recipients_table" data-row-label="TO" hidden="true">
+      <tbody class="govuk-table__body">
+        <% # to be populated by javascript %>
+      </tbody>
+    </table>
+    <table id="<%= unique_id %>_cc" class="govuk-table added_recipients_table" data-row-label="CC" hidden="true">
+      <tbody class="govuk-table__body">
+        <% # to be populated by javascript %>
+      </tbody>
+    </table>
+    <table id="<%= unique_id %>_bcc" class="govuk-table added_recipients_table" data-row-label="BCC" hidden="true">
+      <tbody class="govuk-table__body">
+        <% # to be populated by javascript %>
+      </tbody>
+    </table>
+  </div>
+</div>
