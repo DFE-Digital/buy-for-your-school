@@ -1,0 +1,56 @@
+<% unique_id = "A#{SecureRandom.uuid}" %>
+<% url = reply ? submit_support_case_message_reply_path(case_id: @current_case.id, message_id: params[:message_id], id: params[:id], unique_id: unique_id) : submit_support_case_message_thread_path(case_id: @current_case.id, id: params[:id], unique_id: unique_id) %>
+<% submit_text = reply ? I18n.t("support.case.label.messages.reply.send_reply") : I18n.t("support.case.label.messages.reply.send_message") %>
+<% delete_redirect = reply ? support_case_message_thread_path(id: email.outlook_conversation_id, case_id: @current_case.id) : support_case_message_threads_path(case_id: @current_case.id) %>
+<% turbo_frame = reply ? "reply-frame" : "messages-frame" %>
+<% binding.pry %>
+<%= form_with id: "message-form", model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post,
+    html: {
+      "data-controller" => "draft-email",
+      "data-draft-email-list-attachments-endpoint-value" => attachments_messages_path(message_id: params[:id]),
+      "data-draft-email-upload-attachments-endpoint-value" => attachments_messages_path(message_id: params[:id]),
+      "data-draft-email-remove-attachments-endpoint-value" => attachments_remove_messages_path(message_id: params[:id]),
+      "data-draft-email-update-endpoint-value" => messages_path(message_id: params[:id], unique_id: unique_id),
+      "data-draft-email-target" => "form"
+    } do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.hidden_field :template_id %>
+
+  <% if @reply_form.template.present? %>
+    <div class="govuk-inset-text">
+      <%= I18n.t("support.case.label.message_threads.using_template", template: @reply_form.template.title) %>
+    </div>
+  <% end %>
+
+  <% if reply %>
+    <%= render "support/cases/message_threads/recipient_table", email: %>
+  <% else %>
+    <%= render "support/cases/messages/replies/new_message_components", form:, unique_id: %>
+  <% end %>
+
+  <%= form.govuk_text_area :html_content, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 8, class: "message-reply-box",
+    "data-component" => "tinymce",
+    "data-tinymce-profile" => "basic",
+    "data-tinymce-selector" => ".message-reply-box",
+    value: form.object.body
+  %>
+
+  <div class="govuk-button-group">
+    <%= form.submit submit_text, class: "govuk-button", role: "button", "data-prevent-double-click" => true, "data-draft-email-target" => "btnSubmit" %>
+    <%= govuk_link_to I18n.t("support.case.label.messages.reply.delete"), messages_path(message_id: params[:id], redirect_back: delete_redirect), data: { turbo_method: :delete, turbo_frame: "messages-frame", turbo_confirm: I18n.t("support.case.label.messages.reply.delete_confirmation") }, no_visited_state: true %>
+  </div>
+
+  <h2 class="govuk-heading-s govuk-!-margin-bottom-2"><%= I18n.t("support.emails.attachments.attach_files") %></h2>
+  <ul class="govuk-list">
+    <li><%= govuk_link_to I18n.t("support.emails.attachments.email_attachments"), attach_email_attachments_path(message_id: params[:id], back_to: back_to_url_b64, turbo_frame: turbo_frame), no_visited_state: true, "data-draft-email-target": "emailAttachmentsLink" %></li>
+    <li><%= govuk_link_to I18n.t("support.emails.attachments.case_files"), attach_case_files_path(message_id: params[:id], back_to: back_to_url_b64, turbo_frame: turbo_frame), no_visited_state: true, "data-draft-email-target": "caseFilesLink" %></li>
+    <li>
+      <span class="fake-link" role="link" data-draft-email-target="btnDisplayFileDialog">
+        <%= I18n.t("support.emails.attachments.files_from_your_computer") %>
+      </span>
+    </li>
+  </ul>
+
+  <%= render "components/draft_email_attachments" %>
+<% end %>
