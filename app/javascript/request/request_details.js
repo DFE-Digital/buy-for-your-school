@@ -32,10 +32,15 @@ function removeValuesOnSelect() {
   } else {
     const otherCategoryText = document.getElementById("request_details_other_category_text");
     const categorySelect = document.getElementById("select_request_details_category_id");
+    const supportLevel6 = document.getElementById("case-summary-support-level-l6-field");
     changeOtherCategoryTextState("hidden")
 
     otherCategoryText.value = '';
     categorySelect.value = '';
+
+    if (supportLevel6.checked) {
+      document.getElementById("case-summary-support-level-l1-field").checked = true;
+    }
   }
 }
 
@@ -98,9 +103,9 @@ function toggleCategoryOtherBoxVisibility() {
 
 function handlingEnergyCategory() {
   const energyCategory = this.options[this.selectedIndex].text == 'DfE Energy for Schools service'
-  const caseLevel1 = document.querySelector("input[name='case_summary[support_level]'][value='L1']");
-  const caseLevel6 = document.querySelector("input[name='case_summary[support_level]'][value='L6']");
-  const procurementStage = document.getElementById("case-summary-procurement-stage-id-field");
+  const caseLevel1 = document.querySelector("#case-summary-support-level-l1-field");
+  const caseLevel6 = document.querySelector("#case-summary-support-level-l6-field");
+  const procurementStage = document.querySelector("#case-summary-procurement-stage-id-field");
 
   if (energyCategory ) {
     const stageSelect = Array.from(procurementStage.options).find(option => option.text === "Enquiry");
@@ -112,9 +117,11 @@ function handlingEnergyCategory() {
     caseLevel6.checked = true
     caseLevel6.dispatchEvent(new Event("change"));
   } else {
-    procurementStage.selectedIndex = 0
-    procurementStage.dispatchEvent(new Event("change"))
-  
+    if (!procurementStage.disabled) {
+      procurementStage.selectedIndex = 0
+      procurementStage.dispatchEvent(new Event("change"))
+    }
+    caseLevel6.checked = false
     caseLevel1.checked = true
     caseLevel1.dispatchEvent(new Event("change"));
   }

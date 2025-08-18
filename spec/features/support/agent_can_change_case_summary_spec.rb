@@ -172,5 +172,15 @@ describe "Agent can change case summary", :js do
 
       expect(page.find("#case-summary-procurement-stage-id-field")["disabled"]).to eq("false")
     end
+
+    it "show only onboarding stages" do
+      onboarding_case.update!(submitted_at: Time.current)
+
+      select_box = page.find("#case-summary-procurement-stage-id-field")
+      option_group_6 = select_box.all("optgroup").find { |group| group[:label] == "STAGE 6" }
+      option_group_1 = select_box.all("optgroup").find { |group| group[:label] == "STAGE 1" }
+      expect(option_group_6).not_to be_nil
+      expect(option_group_1).to be_nil
+    end
   end
 end

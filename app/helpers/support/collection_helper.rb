@@ -28,8 +28,8 @@ module Support
       end
     end
 
-    def procurement_stage_grouped_options(selected_procurement_stage_id: -1, energy_case: false, energy_case_submitted: false)
-      (energy_case && energy_case_submitted ? [6] : Support::ProcurementStage.stages).map do |stage|
+    def procurement_stage_grouped_options(selected_procurement_stage_id: -1, energy_case: false, onboarding_form: false)
+      (energy_case && onboarding_form ? [6] : Support::ProcurementStage.stages.reject { |stage| stage == 6 }).map do |stage|
         ["STAGE #{stage}", Support::ProcurementStage.substages_for_stage(stage).map { |sub_stage| [sub_stage.title, sub_stage.id, { selected: selected_procurement_stage_id == sub_stage.id }] }]
       end
     end
