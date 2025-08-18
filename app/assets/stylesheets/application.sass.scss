@@ -103,3 +103,13 @@
     flex-shrink: 1;
   }
 }
+
+// dfe logo correct size and focus
+.govuk-header__link .govuk-header__logotype{
+  height: 30px;
+}
+
+.govuk-header__link:focus .govuk-header__logotype{
+  content: url(department-for-education_black.png);
+  height: 30px;
+}
