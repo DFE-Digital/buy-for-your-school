@@ -50,6 +50,10 @@ class Email::Draft
     email.cache_message(microsoft_graph.create_and_send_new_reply(mailbox:, draft: self), folder: "SentItems")
   end
 
+  def queue_delivery(send_type)
+    DeliverEmailJob.perform_later(email.id, send_type)
+  end
+
   def save_draft!
     if email.present?
       email.update!(
