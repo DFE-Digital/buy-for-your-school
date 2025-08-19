@@ -1,5 +1,13 @@
-if ENV["MS_GRAPH_CLIENT_ID"].present?
-  require "microsoft_graph/microsoft_graph"
+# Always load the gem so Zeitwerk sees the MicrosoftGraph::* constants
+require "microsoft_graph"
+
+# let the app boot even if MS Graph is not configured
+ENABLE_MS_GRAPH = ActiveModel::Type::Boolean.new.cast(ENV["ENABLE_MS_GRAPH"])
+
+if ENABLE_MS_GRAPH &&
+    ENV["MS_GRAPH_CLIENT_ID"].present? &&
+    ENV["MS_GRAPH_CLIENT_SECRET"].present? &&
+    ENV["MS_GRAPH_TENANT"].present?
 
   configuration = MicrosoftGraph::ClientConfiguration.new(
     tenant: ENV.fetch("MS_GRAPH_TENANT"),
@@ -9,9 +17,8 @@ if ENV["MS_GRAPH_CLIENT_ID"].present?
     grant_type: "client_credentials".freeze,
   )
 
-  client_session = MicrosoftGraph::ClientSession.new(
-    MicrosoftGraph::ApplicationAuthenticator.new(configuration),
-  )
+  authenticator = MicrosoftGraph::ApplicationAuthenticator.new(configuration)
+  client_session = MicrosoftGraph::ClientSession.new(authenticator:)
 
   MicrosoftGraph.client = MicrosoftGraph::Client.new(client_session)
 
@@ -31,4 +38,7 @@ if ENV["MS_GRAPH_CLIENT_ID"].present?
     Email.on_new_message_cached_handlers.add ->(email) { Frameworks::Evaluation.on_email_cached(email) }
     Email.on_new_message_cached_handlers.add ->(email) { Support::Case.on_email_cached(email) }
   end
+
+else
+  Rails.logger.info("[MSGraph] client not configured – gem loaded, but credentials/flag missing")
 end
