@@ -43,16 +43,26 @@
 #   Rails.logger.info("[MSGraph] client not configured – gem loaded, but credentials/flag missing")
 # end
 
-# Always load so Zeitwerk can see the constants
+# Always load the gem so Zeitwerk sees MicrosoftGraph::* constants
 require "microsoft_graph"
 
 ENABLE_MS_GRAPH = ActiveModel::Type::Boolean.new.cast(ENV["ENABLE_MS_GRAPH"])
 
-# define safe defaults so specs don’t crash if env is missing
+# Provide constants whether or not we have real creds
 SHARED_MAILBOX_USER_ID = ENV["MS_GRAPH_SHARED_MAILBOX_USER_ID"] || "dummy-user-id"
 SHARED_MAILBOX_NAME    = ENV["MS_GRAPH_SHARED_MAILBOX_NAME"]    || "dummy-mailbox"
 SHARED_MAILBOX_ADDRESS = ENV["MS_GRAPH_SHARED_MAILBOX_ADDRESS"] || "dummy@example.org"
 
+#  ALWAYS set the default mailbox so tests and app code don't see nil
+Rails.configuration.after_initialize do
+  Email.set_default_mailbox(
+    user_id: SHARED_MAILBOX_USER_ID,
+    name: SHARED_MAILBOX_NAME,
+    email_address: SHARED_MAILBOX_ADDRESS,
+  )
+end
+
+# Only configure a real Graph client if the feature is enabled AND we have creds
 if ENABLE_MS_GRAPH &&
     ENV["MS_GRAPH_CLIENT_ID"].present? &&
     ENV["MS_GRAPH_CLIENT_SECRET"].present? &&
@@ -62,31 +72,14 @@ if ENABLE_MS_GRAPH &&
     tenant: ENV.fetch("MS_GRAPH_TENANT"),
     client_id: ENV.fetch("MS_GRAPH_CLIENT_ID"),
     client_secret: ENV.fetch("MS_GRAPH_CLIENT_SECRET"),
-    scope: "https://graph.microsoft.com/.default".freeze,
-    grant_type: "client_credentials".freeze,
+    scope: "https://graph.microsoft.com/.default",
+    grant_type: "client_credentials",
   )
 
   authenticator  = MicrosoftGraph::ApplicationAuthenticator.new(configuration)
   client_session = MicrosoftGraph::ClientSession.new(authenticator:)
+
   MicrosoftGraph.client = MicrosoftGraph::Client.new(client_session)
-
-  # set once at boot (works in test/CI)
-  Rails.application.config.after_initialize do
-    Email.set_default_mailbox(
-      user_id: SHARED_MAILBOX_USER_ID,
-      name: SHARED_MAILBOX_NAME,
-      email_address: SHARED_MAILBOX_ADDRESS,
-    )
-  end
-
-  # also on code reloads in development
-  Rails.application.config.to_prepare do
-    Email.set_default_mailbox(
-      user_id: SHARED_MAILBOX_USER_ID,
-      name: SHARED_MAILBOX_NAME,
-      email_address: SHARED_MAILBOX_ADDRESS,
-    )
-  end
 else
   Rails.logger.info("[MSGraph] client not configured – gem loaded, but credentials/flag missing")
 end
