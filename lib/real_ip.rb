@@ -6,7 +6,9 @@ class RealIp
   def call(env)
     request = ActionDispatch::Request.new(env)
 
-    env["HTTP_X_REAL_IP"] = request.remote_ip
+    if request.remote_ip
+      env["HTTP_X_REAL_IP"] = request.remote_ip
+    end
 
     @app.call(env)
   end
