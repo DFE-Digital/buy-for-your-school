@@ -4,7 +4,6 @@
     <% add_mprn_label = @onboarding_case_organisation.gas_single_multi_multi? ? I18n.t("energy.gas_meter_details.mprn_multi_label") : I18n.t("energy.gas_meter_details.mprn_label") %>
 
     <%= form.govuk_text_field :mprn,
-      autofocus: true,
       label: { text:  add_mprn_label, class: 'govuk-label govuk-label govuk-label--s', tag: "h2"},
       hint: { text: I18n.t("energy.gas_meter_details.mprn_hint") },
       width: 10 %>
