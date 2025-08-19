@@ -566,7 +566,7 @@ en:
       mpan_label: Add an MPAN
       mpan_label_single: Add the MPAN
       mpan_image_alt_text1: Image of a 21-digit Supply number with the final 13 digits highlighted, to represent the MPAN
-      mpan_image_alt_text2: Image of a 21-digit Supply number with the first 2 digits as 00 highlighted, to represent the MPAN is half hourly
+      mpan_image_alt_text2: Image of an MPAN highlighting the first 2 digits on the top row as 00 indicating this is a half hourly MPAN
       mpan_details: Your MPAN is on your electricity bill. It’s the last 13 digits of the Supply number.
       half_hourly_label: Is this a half-hourly meter?
       half_hourly_hint: Your meter is half hourly if your Supply number begins with 00. Your Supply number is on your electricity bill.
