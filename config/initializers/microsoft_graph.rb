@@ -1,5 +1,5 @@
 # config/initializers/microsoft_graph.rb
-require "microsoft_graph"
+require "microsoft_graph/microsoft_graph"
 
 # In test, default the flag to true so the sync code runs during specs.
 ENABLE_MS_GRAPH = ActiveModel::Type::Boolean.new.cast(
