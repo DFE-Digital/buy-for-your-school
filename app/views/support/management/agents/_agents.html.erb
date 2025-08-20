@@ -13,8 +13,13 @@
         <td class="govuk-table__cell">
           <%= agent.labelled_roles.join("<br />").html_safe %>
         </td>
-        <td class="govuk-table__cell">
+        <td class="govuk-table__cell no-wrap">
           <%= link_to "Edit", portal_edit_management_agent_path(agent), class: "govuk-link govuk-link--no-visited-state" %>
+          &nbsp;
+          <%= link_to I18n.t("generic.button.remove"),
+                  portal_management_agent_path(agent),
+                  method: :delete,
+                  class: "govuk-link govuk-link--no-visited-state" %>
         </td>
       </tr>
 		<% end %>

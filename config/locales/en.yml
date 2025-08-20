@@ -2532,6 +2532,8 @@ en:
     management:
       agents:
         header: Agents
+        delete_confirmation: Are you sure you want to remove %{name} (%{email})?
+        destroyed: "%{name} (%{email}) successfully removed"
         table:
           actions: Actions
           admin: Admin

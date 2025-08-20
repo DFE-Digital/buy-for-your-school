@@ -1,0 +1,16 @@
+<%= content_for :title, "CMS Management | Delete Agent" %>
+
+<h1 class="govuk-heading-l">
+  <%= I18n.t("support.management.agents.delete_confirmation", name: @agent.full_name, email: @agent.email) %>
+</h1>
+
+<div class="govuk-button-group flex-align-center">
+  <%= link_to I18n.t("generic.button.remove"),
+              portal_management_agent_path(@agent, confirm: true),
+              method: :delete,
+              class: "govuk-button govuk-button--warning" %>
+
+  <%= link_to I18n.t("generic.button.cancel"),
+              redirect_path,
+              class: "govuk-link govuk-link--no-visited-state" %>
+</div>
