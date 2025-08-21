@@ -24,7 +24,7 @@
 
         <div class="govuk-button-group flex-align-center">
             <%= link_to I18n.t("generic.button.continue"),
-                school_type_energy_authorisation_path(id: params[:id], type: params[:type]),
+                school_type_energy_authorisation_path(id: params[:id], type: params[:type], onboarding_case_id: params[:onboarding_case_id]),
                 method: :patch,
                 class: "govuk-button" %>
         </div>

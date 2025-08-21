@@ -7,10 +7,17 @@ module Energy
 
     def show; end
 
+    #  PATCH /energy/authorisation/:id/:type(/:onboarding_case_id)
     def update
-      return unless params[:type] == "single"
-
-      @onboarding_case_organisation = create_onboarding_case
+      if params[:type] == "single"
+        @onboarding_case_organisation = create_onboarding_case
+      else
+        # MAT - Support::Case and Energy::OnboardingCase have already been created
+        onboarding_case = Energy::OnboardingCase.find(params[:onboarding_case_id])
+        @onboarding_case_organisation = Energy::OnboardingCaseOrganisation.create!(
+          onboarding_case:, onboardable: @support_organisation,
+        )
+      end
 
       draft_and_send_onboarding_email_to_school
       redirect_to energy_case_switch_energy_path(case_id: @onboarding_case_organisation.energy_onboarding_case_id)
@@ -23,7 +30,8 @@ module Energy
     end
 
     def create_onboarding_case
-      Energy::CaseCreatable.create_case(current_user, @support_organisation)
+      _support_case, onboarding_case = Energy::CaseCreatable.create_case(current_user, @support_organisation)
+      onboarding_case.onboarding_case_organisations.first
     end
 
     def check_active_onboarding_case
