@@ -2,6 +2,23 @@ module SpecScreenshotHelper
   # rubocop:disable Lint/Debugger
   # rubocop:disable Lint/SuppressedException
 
+  def save_timestamped_screenshot_page(page, name)
+    timestamp = Time.zone.now.strftime("%Y-%m-%d-%H-%M-%S.%3N")
+    screenshot = sprintf("screenshot-%s-%s.png", timestamp, name.gsub(/\W+/, "_"))
+
+    path = if ENV.key?("SCREENSHOT_PATH")
+              File.join(ENV.fetch("SCREENSHOT_PATH"), screenshot)
+           else
+              Rails.root.join("tmp", "capybara", screenshot)
+           end
+
+    page.save_screenshot(path)
+
+    puts "Screenshot saved to: #{path}"
+  rescue Capybara::NotSupportedByDriverError
+    warn "Screenshot not supported by current Capybara driver."
+  end
+
   def save_timestamped_screenshot
     file = Time.zone.now.utc.strftime("screenshot-%Y-%m-%d-%H-%M-%S.%3N.png")
     page.save_screenshot Rails.root.join("tmp", "screenshots", file)
