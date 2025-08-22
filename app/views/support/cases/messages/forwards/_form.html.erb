@@ -1,9 +1,10 @@
 <% unique_id = "A#{SecureRandom.uuid}" %>
-<% url = reply ? submit_support_case_message_reply_path(case_id: @current_case.id, message_id: params[:message_id], id: params[:id], unique_id: unique_id) : submit_support_case_message_thread_path(case_id: @current_case.id, id: params[:id], unique_id: unique_id) %>
-<% submit_text = reply ? I18n.t("support.case.label.messages.reply.send_reply") : I18n.t("support.case.label.messages.reply.send_message") %>
+
+<% url = submit_support_case_message_forward_path(case_id: @current_case.id, message_id: params[:message_id], id: params[:id], unique_id: unique_id) %>
+<% submit_text = I18n.t("support.case.label.messages.reply.send_message") %>
 <% delete_redirect = reply ? support_case_message_thread_path(id: email.outlook_conversation_id, case_id: @current_case.id) : support_case_message_threads_path(case_id: @current_case.id) %>
 <% turbo_frame = reply ? "reply-frame" : "messages-frame" %>
-<% binding.pry %>
+
 <%= form_with id: "message-form", model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post,
     html: {
       "data-controller" => "draft-email",
@@ -14,16 +15,15 @@
       "data-draft-email-target" => "form"
     } do |form| %>
   <%= form.govuk_error_summary %>
-
   <%= form.hidden_field :template_id %>
-
+  <% #binding.pry %>
   <% if @reply_form.template.present? %>
     <div class="govuk-inset-text">
       <%= I18n.t("support.case.label.message_threads.using_template", template: @reply_form.template.title) %>
     </div>
   <% end %>
 
-  <% if reply %>
+  <% if reply && 1 == 2 %>
     <%= render "support/cases/message_threads/recipient_table", email: %>
   <% else %>
     <%= render "support/cases/messages/replies/new_message_components", form:, unique_id: %>
