@@ -27,6 +27,7 @@ module Energy
       generate_letter_of_authority
       generate_check_your_answers
       generate_vat_certificates
+      generate_direct_debit_form
     rescue StandardError => e
       Rails.logger.error("Error generating documents: #{e.message}")
       raise e
@@ -43,6 +44,12 @@ module Energy
 
     def generate_check_your_answers
       documents << Energy::Documents::CheckYourAnswers.new(onboarding_case:).call
+    end
+
+    def generate_direct_debit_form
+      if (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit?
+        documents << Energy::Documents::DirectDebitFormEdf.new(onboarding_case:, current_user:).call
+      end
     end
 
     def generate_vat_certificates
