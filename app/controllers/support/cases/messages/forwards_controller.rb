@@ -7,6 +7,7 @@ module Support
 
     def edit
       @reply_form = Email::Draft.find(params[:id])
+      @reply_form.subject = "FwDD: #{current_email.subject}"
       @last_received_reply = Support::Messages::OutlookMessagePresenter.new(current_email)
     end
 
@@ -15,19 +16,21 @@ module Support
         default_content: default_template,
         template_id: params[:template_id],
         ticket: current_case.to_model,
-        reply_to_email: current_email,
+        forward_to_email: current_email,
       ).save_draft!
-      binding.pry
       redirect_to redirect_url
     end
 
     def submit
+      # binding.pry
       @reply_form = Email::Draft.find(params[:id])
-      @reply_form.reply_to_email = current_email
+      @reply_form.forward_to_email = current_email
+      @reply_form.subject = form_params[:subject]
       @reply_form.attributes = form_params
+
       if @reply_form.valid?
         @reply_form.save_draft!
-        @reply_form.delivery_as_reply
+        @reply_form.deliver_as_forward
 
         respond_to do |format|
           format.turbo_stream do
@@ -58,11 +61,11 @@ module Support
     end
 
     def form_params
-      params.require(:"message_reply_form_#{params[:unique_id]}").permit(:html_content, :template_id, :blob_attachments, file_attachments: [])
+      params.require(:"message_reply_form_#{params[:unique_id]}")
+            .permit(:html_content, :template_id, :blob_attachments, :subject, :to_recipients, :cc_recipients, :bcc_recipients, file_attachments: [])
     end
 
     def current_email
-      # binding.pry
       @current_email = Support::Email.find(params[:message_id]) if params[:message_id].present?
     end
 
