@@ -6,8 +6,8 @@ module Support
     helper_method :back_to_url_b64
 
     def edit
-      @reply_form = Email::Draft.find(params[:id])
-      @reply_form.subject = "FwDD: #{current_email.subject}"
+      @email_draft = Email::Draft.find(params[:id])
+      @email_draft.subject = "Fw: #{current_email.subject}"
       @last_received_reply = Support::Messages::OutlookMessagePresenter.new(current_email)
     end
 
@@ -22,15 +22,14 @@ module Support
     end
 
     def submit
-      # binding.pry
-      @reply_form = Email::Draft.find(params[:id])
-      @reply_form.forward_to_email = current_email
-      @reply_form.subject = form_params[:subject]
-      @reply_form.attributes = form_params
+      @email_draft = Email::Draft.find(params[:id])
+      @email_draft.forward_to_email = current_email
+      @email_draft.subject = form_params[:subject]
+      @email_draft.attributes = form_params
 
-      if @reply_form.valid?
-        @reply_form.save_draft!
-        @reply_form.deliver_as_forward
+      if @email_draft.valid?
+        @email_draft.save_draft!
+        @email_draft.deliver_as_forward
 
         respond_to do |format|
           format.turbo_stream do
