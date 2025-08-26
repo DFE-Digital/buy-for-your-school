@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_07_161142) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_26_152419) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -300,28 +300,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_07_161142) do
     t.uuid "support_case_id"
     t.uuid "case_request_id"
     t.index ["case_request_id"], name: "index_engagement_case_uploads_on_case_request_id"
-  end
-
-  create_table "exit_survey_responses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "case_id"
-    t.integer "satisfaction_level"
-    t.string "satisfaction_text"
-    t.integer "saved_time"
-    t.integer "better_quality"
-    t.integer "future_support"
-    t.integer "hear_about_service"
-    t.boolean "opt_in"
-    t.string "opt_in_name"
-    t.string "opt_in_email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "hear_about_service_other"
-    t.integer "status"
-    t.string "user_ip"
-    t.datetime "survey_started_at"
-    t.datetime "survey_sent_at"
-    t.datetime "survey_completed_at"
-    t.index ["case_id"], name: "index_exit_survey_responses_on_case_id"
   end
 
   create_table "flipper_features", force: :cascade do |t|
@@ -1235,7 +1213,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_07_161142) do
   add_foreign_key "energy_onboarding_case_organisations", "energy_onboarding_cases"
   add_foreign_key "energy_onboarding_cases", "support_cases"
   add_foreign_key "engagement_case_uploads", "case_requests"
-  add_foreign_key "exit_survey_responses", "support_cases", column: "case_id"
   add_foreign_key "framework_requests", "request_for_help_categories", column: "category_id"
   add_foreign_key "framework_requests", "support_cases"
   add_foreign_key "framework_requests", "users"
@@ -1273,15 +1250,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_07_161142) do
   add_foreign_key "user_journeys", "support_cases", column: "case_id"
 
   create_view "support_message_threads", sql_definition: <<-SQL
-      SELECT DISTINCT ON (se.outlook_conversation_id, se.ticket_id) se.outlook_conversation_id AS conversation_id,
-      se.case_id,
-      se.ticket_id,
-      se.ticket_type,
+      SELECT DISTINCT ON (outlook_conversation_id, ticket_id) outlook_conversation_id AS conversation_id,
+      case_id,
+      ticket_id,
+      ticket_type,
       ( SELECT jsonb_agg(DISTINCT elems.value) AS jsonb_agg
              FROM support_emails se2,
               LATERAL jsonb_array_elements(se2.recipients) elems(value)
             WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)) AS recipients,
-      se.subject,
+      subject,
       ( SELECT se2.sent_at
              FROM support_emails se2
             WHERE ((se2.outlook_conversation_id)::text = (se.outlook_conversation_id)::text)
