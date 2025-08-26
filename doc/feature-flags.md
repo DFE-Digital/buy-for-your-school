@@ -30,7 +30,6 @@ Click on `add feature` and enter the name you have used for your feature flag. Y
 ## Current Flags
 |Flag name|Description|Status|Actions|
 |--|--|--|--|
-|customer_satisfaction_survey|Replace the exit survey with the new customer satisfaction survey.|ENABLED|Feature now live, flag to be removed|
 |energy|Energy for Schools|ENABLED|Feature now live, flag to be removed|
 |maintenance_mode|Prevent user access to the application. Intended for infrastructure or data maintenance.|DISABLED|To be enabled when required|
 |rfh_usability_survey|Embed the RfH usability survey in the RfH submission confirmation page.|ENABLED|Feature now live, flag to be removed|
