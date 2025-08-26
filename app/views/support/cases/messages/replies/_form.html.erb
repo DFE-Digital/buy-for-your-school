@@ -26,7 +26,7 @@
   <% if reply %>
     <%= render "support/cases/message_threads/recipient_table", email: %>
   <% else %>
-    <%= render "support/cases/messages/replies/new_message_components", form:, unique_id: %>
+    <%= render "support/cases/messages/new_message_components", form:, unique_id:, email_draft: @reply_form %>
   <% end %>
 
   <%= form.govuk_text_area :html_content, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 8, class: "message-reply-box",

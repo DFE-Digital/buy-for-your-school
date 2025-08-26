@@ -2,10 +2,10 @@
 
 <% url = submit_support_case_message_forward_path(case_id: @current_case.id, message_id: params[:message_id], id: params[:id], unique_id: unique_id) %>
 <% submit_text = I18n.t("support.case.label.messages.reply.send_message") %>
-<% delete_redirect = reply ? support_case_message_thread_path(id: email.outlook_conversation_id, case_id: @current_case.id) : support_case_message_threads_path(case_id: @current_case.id) %>
-<% turbo_frame = reply ? "reply-frame" : "messages-frame" %>
+<% delete_redirect = support_case_message_threads_path(case_id: @current_case.id) %>
+<% turbo_frame = "messages-frame" %>
 
-<%= form_with id: "message-form", model: @reply_form, scope: :"message_reply_form_#{unique_id}", url: url, method: :post,
+<%= form_with id: "message-form", model: @email_draft, scope: :"message_reply_form_#{unique_id}", url: url, method: :post,
     html: {
       "data-controller" => "draft-email",
       "data-draft-email-list-attachments-endpoint-value" => attachments_messages_path(message_id: params[:id]),
@@ -16,18 +16,13 @@
     } do |form| %>
   <%= form.govuk_error_summary %>
   <%= form.hidden_field :template_id %>
-  <% #binding.pry %>
-  <% if @reply_form.template.present? %>
+  <% if @email_draft.template.present? %>
     <div class="govuk-inset-text">
-      <%= I18n.t("support.case.label.message_threads.using_template", template: @reply_form.template.title) %>
+      <%= I18n.t("support.case.label.message_threads.using_template", template: @email_draft.template.title) %>
     </div>
   <% end %>
 
-  <% if reply && 1 == 2 %>
-    <%= render "support/cases/message_threads/recipient_table", email: %>
-  <% else %>
-    <%= render "support/cases/messages/replies/new_message_components", form:, unique_id: %>
-  <% end %>
+  <%= render "support/cases/messages/new_message_components", form:, unique_id:, email_draft: @email_draft %>
 
   <%= form.govuk_text_area :html_content, label: { text: I18n.t("support.case.label.messages.reply.body"), class: "govuk-!-display-none" }, rows: 8, class: "message-reply-box",
     "data-component" => "tinymce",
