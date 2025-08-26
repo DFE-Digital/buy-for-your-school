@@ -1,20 +1,7 @@
+NAVIGATED_TO_MESSAGE_VIEW = "with navigated to messages view".freeze
 describe "Agent can reply to incoming emails", :js, bullet: :skip do
   include_context "with an agent"
-
-  let(:email) { create(:support_email, origin, ticket: support_case) }
-  let(:support_case) { create(:support_case) }
-  let(:origin) { :inbox }
-  let(:interaction_type) { :email_from_school }
-  let(:additional_data) { { email_id: email.id } }
-
-  before do
-    create(:support_interaction, interaction_type,
-           body: email.body,
-           additional_data:,
-           case: support_case)
-
-    visit support_case_path(support_case)
-  end
+  include_context "with a support case and email"
 
   context "when there is an email from the school" do
     before do
@@ -23,18 +10,15 @@ describe "Agent can reply to incoming emails", :js, bullet: :skip do
     end
 
     describe "allows agent to send a reply", :with_csrf_protection do
+      include_context NAVIGATED_TO_MESSAGE_VIEW
+
       before do
         template = create(:support_email_template, title: "Energy template", subject: "about energy", body: "energy body")
         create(:support_email_template_attachment, template:)
-
-        click_link "Messages"
-        within("#messages-frame") { click_link "View" }
       end
 
       context "with a signatory template" do
-        before do
-          click_on "Reply using a signatory template"
-        end
+        before { click_on "Reply with signature" }
 
         it "shows the recipients" do
           within("#recipient-table") do
@@ -46,12 +30,12 @@ describe "Agent can reply to incoming emails", :js, bullet: :skip do
 
       context "with a selected template" do
         before do
-          click_on "Reply with an email template"
+          click_on "Reply with template"
           choose "Energy template"
           click_on "Use selected template"
         end
 
-        it "pre-fills the template boby" do
+        it "pre-fills the template body" do
           expect(page).to have_text "energy body"
         end
 
@@ -66,10 +50,7 @@ describe "Agent can reply to incoming emails", :js, bullet: :skip do
     let(:origin) { :sent_items }
     let(:interaction_type) { :email_to_school }
 
-    before do
-      click_link "Messages"
-      within("#messages-frame") { click_link "View" }
-    end
+    include_context NAVIGATED_TO_MESSAGE_VIEW
 
     it "does not show the reply form" do
       within("#messages") do
@@ -81,12 +62,7 @@ describe "Agent can reply to incoming emails", :js, bullet: :skip do
   context "when there is a logged email" do
     let(:additional_data) { {} }
 
-    before do
-      click_link "Messages"
-      within("#thread_logged_contacts") do
-        click_link "View"
-      end
-    end
+    include_context NAVIGATED_TO_MESSAGE_VIEW, frame: "#thread_logged_contacts"
 
     it "does not show the reply form" do
       within("#messages") do
