@@ -102,7 +102,9 @@ private
         t.add_attribute(:gas_usage, meter)
       end
 
-      t.add_attribute(:gas_bill_consolidation, case_org, text: case_org.gas_bill_consolidation.nil? ? "" : (case_org.gas_bill_consolidation ? I18n.t("generic.yes") : I18n.t("generic.no")))
+      if case_org.gas_single_multi_multi?
+        t.add_attribute(:gas_bill_consolidation, case_org, text: case_org.gas_bill_consolidation.nil? ? "" : (case_org.gas_bill_consolidation ? I18n.t("generic.yes") : I18n.t("generic.no")))
+      end
     end
   end
 
@@ -151,6 +153,7 @@ private
       case_org.electricity_meters.each do |meter|
         t.add_attribute(:mpan, meter)
         t.add_attribute(:is_half_hourly, meter, text: meter.is_half_hourly ? I18n.t("generic.yes") : I18n.t("generic.no"))
+        t.add_attribute(:electricity_usage, meter)
 
         next unless meter.is_half_hourly
 
@@ -160,7 +163,9 @@ private
         t.add_attribute(:meter_operator, meter)
       end
 
-      t.add_attribute(:is_electric_bill_consolidated, case_org, text: case_org.is_electric_bill_consolidated.nil? ? "" : (case_org.is_electric_bill_consolidated ? I18n.t("generic.yes") : I18n.t("generic.no")))
+      if case_org.electricity_meter_type_multi?
+        t.add_attribute(:is_electric_bill_consolidated, case_org, text: case_org.is_electric_bill_consolidated.nil? ? "" : (case_org.is_electric_bill_consolidated ? I18n.t("generic.yes") : I18n.t("generic.no")))
+      end
     end
   end
 
@@ -268,7 +273,7 @@ private
 
       if case_org.billing_invoicing_method == "email"
         t.add_attribute(:billing_invoicing_email, case_org)
-      else
+      elsif case_org.part_of_a_trust?
         t.add_attribute(:billing_invoice_address, case_org, text: format_address(case_org.billing_invoice_address))
       end
     end

@@ -68,6 +68,10 @@ describe "Agent can send new emails", :js do
           expect(page).to have_text "bcc@email.com"
         end
       end
+
+      it "has the procops team signature" do
+        expect(page).to have_text "GET HELP BUYING FOR SCHOOLS SERVICE DISCLAIMER"
+      end
     end
 
     context "with a selected template" do

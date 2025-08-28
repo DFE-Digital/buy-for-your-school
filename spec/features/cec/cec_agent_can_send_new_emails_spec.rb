@@ -59,6 +59,11 @@ describe "Cec agent can send new emails", :js do
         end
       end
 
+      it "has the energy team signature" do
+        expect(page).to have_text "DfE Energy for Schools Team"
+        expect(page).to have_text "Energy for Schools disclaimer"
+      end
+
       it "allows attachments from case files" do
         click_link "Case files"
         check "Classroom.pdf"

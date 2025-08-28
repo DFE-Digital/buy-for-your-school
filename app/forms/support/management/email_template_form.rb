@@ -79,7 +79,14 @@ module Support
       end
 
       def stage_options
-        stages = @group&.title == "CEC" ? Support::EmailTemplate.cec_stages : Support::EmailTemplate.stages
+        stages = case @group&.title
+                 when "CEC"
+                   Support::EmailTemplate.cec_stages
+                 when "System"
+                   Support::EmailTemplate.all_stages
+                 else
+                   Support::EmailTemplate.stages
+                 end
         stages.map { |stage| [I18n.t(stage, scope: "support.management.email_templates.stages").to_s, stage] }
       end
 
