@@ -60,7 +60,7 @@ describe "Cec agent can send new emails", :js do
       end
 
       it "has the energy team signature" do
-        expect(page).to have_text "Energy for Schools Service Team"
+        expect(page).to have_text "DfE Energy for Schools Team"
         expect(page).to have_text "Energy for Schools disclaimer"
       end
 

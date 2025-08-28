@@ -33,3 +33,9 @@ groups:
   - title: CEC
     sub_groups:
       - title: DfE Energy for Schools service
+
+  - title: System
+    sub_groups:
+      - title: DfE Energy for Schools
+      - title: Document sharing
+      - title: Other
