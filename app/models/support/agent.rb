@@ -15,16 +15,16 @@ module Support
     belongs_to :support_tower, class_name: "Support::Tower", optional: true
     belongs_to :user, foreign_key: "dsi_uid", primary_key: "dfe_sign_in_uid", optional: true
 
-    scope :caseworkers, -> { by_role(%w[procops procops_admin]) }
+    scope :caseworkers, -> { by_role(%w[procops procops_admin cec cec_admin]) }
     scope :non_caseworkers, -> { caseworkers.invert_where }
     scope :e_and_o_staff, -> { by_role(%w[e_and_o e_and_o_admin]) }
     scope :cec_staff, -> { by_role(%w[cec cec_admin]) }
     scope :by_first_name, -> { order("first_name ASC, last_name ASC") }
-    scope :disabled, -> { where("roles::text = '{}'::text") }
-    scope :enabled, -> { disabled.invert_where }
+    scope :disabled, -> { where("roles::text = '{}'::text").where(archived: false) }
+    scope :enabled, -> { disabled.invert_where.where(archived: false) }
     scope :with_cases, -> { where.associated(:cases).distinct }
     scope :with_live_cases, -> { where.associated(:live_cases).distinct }
-    scope :by_cec_roles, -> { where("roles::text LIKE '%cec%' OR roles::text LIKE '%cec_admin%'") }
+    scope :by_cec_roles, -> { where("roles::text LIKE '%cec%' OR roles::text LIKE '%cec_admin%'").where(archived: false) }
 
     validates :email, uniqueness: { case_sensitive: false }
 
@@ -34,7 +34,7 @@ module Support
         lower(last_name) LIKE lower(:q)
       SQL
 
-      caseworkers.where(sql, q: "#{query}%").limit(30)
+      caseworkers.where(sql, q: "#{query}%").where(archived: false).limit(30)
     }
 
     scope :cec_omnisearch, lambda { |query|
@@ -43,7 +43,7 @@ module Support
         lower(last_name) LIKE lower(:q)
       SQL
 
-      cec_staff.where(sql, q: "#{query}%").limit(30)
+      cec_staff.where(sql, q: "#{query}%").where(archived: false).limit(30)
     }
 
     def self.find_or_create_by_full_name(full_name)
