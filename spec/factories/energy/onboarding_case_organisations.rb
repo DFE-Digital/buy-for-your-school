@@ -16,5 +16,11 @@ FactoryBot.define do
       site_contact_email { "ned@kelly.com" }
       site_contact_phone { "07777123123" }
     end
+
+    trait :with_billing_address do
+      billing_invoice_address do
+        { town: "Anytown", county: "Wessex", street: "Foot St", locality: "Marsh House", postcode: "NE32 2TY" }
+      end
+    end
   end
 end
