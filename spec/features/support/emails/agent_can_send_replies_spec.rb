@@ -33,7 +33,7 @@ describe "Agent can reply to incoming emails", :js, bullet: :skip do
 
       context "with a signatory template" do
         before do
-          click_on "Reply using a signatory template"
+          click_on "Reply with signature"
         end
 
         it "shows the recipients" do
@@ -46,7 +46,7 @@ describe "Agent can reply to incoming emails", :js, bullet: :skip do
 
       context "with a selected template" do
         before do
-          click_on "Reply with an email template"
+          click_on "Reply with template"
           choose "Energy template"
           click_on "Use selected template"
         end
