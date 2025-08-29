@@ -17,18 +17,18 @@ module Energy
 
       def form_field_values
         {
-          Text3: input_values[:business_name],
-          Text4: input_values[:vat_registration_no],
-          Text5: input_values[:address_line1],
-          Text6: input_values[:address_line2],
-          Text7: input_values[:city],
-          Text8: input_values[:postcode],
-          Text9: input_values[:commodity],
-          Text10: input_values[:percentage_of_property_rated],
-          Text11: input_values[:full_name_and_status_of_signatory],
-          Text12: input_values[:signed],
-          Text13: input_values[:date],
-        }
+          business_name: input_values[:business_name],
+          vat_registration_no: input_values[:vat_registration_no],
+          address_line1: input_values[:address_line1],
+          address_line2: input_values[:address_line2],
+          address_line3: input_values[:city],
+          postcode: input_values[:postcode],
+          commodity: input_values[:commodity],
+          percentage: input_values[:percentage_of_property_rated],
+          full_name_and_status_of_signatory: input_values[:full_name_and_status_of_signatory],
+          signed: input_values[:signed],
+          date: input_values[:date],
+        }.merge(gas_mprn_numbers)
       end
 
       def input_values
@@ -45,6 +45,16 @@ module Energy
           signed: "",
           date: submitted_date,
         }
+      end
+
+      def gas_meters
+        @onboarding_case_organisation.gas_meters.map(&:mprn) || []
+      end
+
+      def gas_mprn_numbers
+        gas_meters.each_with_index.to_h do |mprn, index|
+          ["gas_mprn#{index + 1}", mprn]
+        end
       end
 
       def vat_person_or_vat_alt_person

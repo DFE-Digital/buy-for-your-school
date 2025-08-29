@@ -1,0 +1,22 @@
+<div class="notification-details">
+  <div class="major">
+    <% if cec_portal? || (support_portal? && (current_agent.roles & %w[cec cec_admin]).any?) %>
+      <span class="action">
+        <%= link_to(cec_notification_read_path(notification, redirect_to: cec_onboarding_case_path(notification.support_case, back_to: Base64.encode64(cec_notifications_path))), method: :post, class: "govuk-link--no-visited-state") do %>
+          Case <%= notification.case_ref %> - Email(s) merged to case
+        <% end %>
+      </span>
+    <% else %>
+      <span class="action">
+        <%= link_to(support_notification_read_path(notification, redirect_to: support_case_path(notification.support_case, back_to: Base64.encode64(support_notifications_path))), method: :post, class: "govuk-link--no-visited-state") do %>
+          Case <%= notification.case_ref %> - Email(s) merged to case
+        <% end %>
+      </span>
+    <% end %>
+    <span class="by">by <%= notification.assigned_by_email_address %></span>
+  </div>
+
+  <div class="minor">
+    <strong>Case created:</strong> <%= notification.case_created.strftime("%d %b %Y at %H:%M") %>
+  </div>
+</div>
