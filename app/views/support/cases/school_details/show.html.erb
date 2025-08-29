@@ -1,3 +1,10 @@
+<% if (current_agent.roles & %w[cec cec_admin]).any?
+    portal_case_contact_details_path = cec_case_edit_contact_details_path(@current_case)
+  else
+    portal_case_contact_details_path = edit_support_case_contact_details_path(@current_case)
+  end 
+%>
+
 <%= turbo_frame_tag "school-details-frame" do %>
   <h2 class="govuk-heading-l">
     <%= I18n.t("support.case.header.school_detail") %>
@@ -12,8 +19,8 @@
         <%= @current_case.full_name %>
       </dd>
       <dd class="govuk-summary-list__actions">
-        <% unless @current_case.closed? || @current_case.energy_onboarding_case? %>
-          <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
+        <% unless @current_case.closed? || (@current_case.energy_onboarding_case? && @current_case.support_level == "L7") %>
+          <%= link_to "Change", portal_case_contact_details_path, class: "govuk-link", target: "_top" %>
         <% end %>
       </dd>
     </div>
@@ -28,7 +35,7 @@
       </dd>
       <dd class="govuk-summary-list__actions">
         <% unless @current_case.closed? %>
-          <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
+          <%= link_to "Change", portal_case_contact_details_path, class: "govuk-link", target: "_top" %>
         <% end %>
       </dd>
     </div>
@@ -44,7 +51,7 @@
       </dd>
       <dd class="govuk-summary-list__actions">
         <% unless @current_case.closed? %>
-          <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
+          <%= link_to "Change", portal_case_contact_details_path, class: "govuk-link", target: "_top" %>
         <% end %>
       </dd>
     </div>
@@ -58,8 +65,8 @@
         <%= @current_case.email %>
       </dd>
       <dd class="govuk-summary-list__actions">
-        <% unless @current_case.closed? || @current_case.energy_onboarding_case? %>
-          <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
+        <% unless @current_case.closed? || (@current_case.energy_onboarding_case? && @current_case.support_level == "L7") %>
+          <%= link_to "Change", portal_case_contact_details_path, class: "govuk-link", target: "_top" %>
         <% end %>
       </dd>
     </div>
@@ -88,7 +95,7 @@
         <%= @current_case.organisation_name if @current_case.organisation.present? %>
       </dd>
       <dd class="govuk-summary-list__actions">
-        <% unless @current_case.closed? || @current_case.energy_onboarding_case? %>
+        <% unless @current_case.closed? || (@current_case.energy_onboarding_case? && @current_case.support_level == "L7") %>
           <%= link_to @current_case.organisation.present? ? "Change" : "Add",
             edit_support_case_organisation_path(@current_case), class: "govuk-link", target: "_top" %>
         <% end %>
