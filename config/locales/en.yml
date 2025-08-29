@@ -300,7 +300,7 @@ en:
       title: Join Energy for Schools
       explanations:
       - Energy for Schools helps state-funded schools and trusts switch to the same energy contract used by the Department for Education.
-      - Schools and trusts that use the service are added to the Department for Education’s energy contract with Crown Commercial Service (CCS). The CCS buys energy for this particular contract over a long period of time, reducing the risk to customers of substantial fluctuations in price.
+      - Schools and trusts that use the service are added to the Department for Education's V30 energy contract with Crown Commercial Service (CCS). The CCS buys energy for this particular contract over a long period of time, reducing the risk to customers of substantial fluctuations in price.
       benefits:
         title: Benefits
         text: "Schools could save on average 36% on their energy bills, based on DfE’s estimates. The service also helps:"
@@ -312,6 +312,7 @@ en:
       mat_info:
       - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
       - Multi-academy trusts (MATs) can join the contract by filling in the <a class="govuk-link" href="%{form_url}">Register your interest form</a> and completing the process offline.
+      deadline: "<span class=\"govuk-!-font-weight-bold\">Apply by 5pm, 11 September 2025</span> to join the next available V30 contract in April 2026. You’ll be placed on an interim rate if your current contract expires before 31 March 2026."
       more_info: Get more information
     guidance:
       contents: Contents
