@@ -37,7 +37,7 @@ module Support
     end
 
     def send_exit_survey
-      unless current_case.exit_survey_sent
+      unless current_case.exit_survey_sent || current_case.energy_onboarding_case?
         SendExitSurveyJob.start(@current_case.ref)
       end
     end
