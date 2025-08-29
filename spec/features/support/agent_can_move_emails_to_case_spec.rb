@@ -21,7 +21,7 @@ describe "Agent can move emails to a case" do
 
   context "when source case has emails attached" do
     before do
-      create_list(:support_email, 2, ticket: source_case, is_read: false)
+      create_list(:support_email, 2, ticket: source_case, is_read: false, folder: 0)
     end
 
     it "moves emails from the source case to the destination case" do
@@ -96,6 +96,23 @@ describe "Agent can move emails to a case" do
     it "fails validation" do
       expect(email_mover).not_to be_valid
       expect(email_mover.errors.messages[:destination_ref]).to eq ["You must choose a valid case"]
+    end
+  end
+
+  context "when the destination case has pending evaluation" do
+    before do
+      create_list(:support_email, 2, ticket: source_case, is_read: false, folder: 0)
+      destination_case.evaluators.create!(first_name: "Oni", last_name: "Baba", email: "email@address", has_uploaded_documents: true)
+      destination_case.update!(action_required: true, evaluation_due_date: Date.tomorrow)
+    end
+
+    it "no change to destination case action_required status" do
+      expect { email_mover.save! }.to(
+        change(source_case, :closed?).from(false).to(true)
+        .and(change(source_case, :closure_reason).from(nil).to("email_merge"))
+        .and(change(source_case, :action_required?).from(true).to(false))
+        .and(not_change { destination_case.reload.action_required? }),
+      )
     end
   end
 end
