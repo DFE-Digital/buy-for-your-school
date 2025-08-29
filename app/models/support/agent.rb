@@ -15,7 +15,7 @@ module Support
     belongs_to :support_tower, class_name: "Support::Tower", optional: true
     belongs_to :user, foreign_key: "dsi_uid", primary_key: "dfe_sign_in_uid", optional: true
 
-    scope :caseworkers, -> { by_role(%w[procops procops_admin]) }
+    scope :caseworkers, -> { by_role(%w[procops procops_admin cec cec_admin]) }
     scope :non_caseworkers, -> { caseworkers.invert_where }
     scope :e_and_o_staff, -> { by_role(%w[e_and_o e_and_o_admin]) }
     scope :cec_staff, -> { by_role(%w[cec cec_admin]) }
