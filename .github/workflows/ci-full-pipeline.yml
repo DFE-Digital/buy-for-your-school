@@ -172,6 +172,13 @@ jobs:
           name: coverage-report-${{ matrix.ci_node_index }}
           path: coverage/.resultset-${{ matrix.ci_node_index }}.json
           include-hidden-files: true
+      - name: Store screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ matrix.ci_node_index }}
+          path: tmp/capybara/
+          include-hidden-files: true
 
   rspec_quarantine:
     name: Checks - Rspec (Quarantined tests)
