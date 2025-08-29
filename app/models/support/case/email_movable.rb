@@ -31,6 +31,7 @@ module Support::Case::EmailMovable
         body: "from ##{ticket.ref}",
         agent_id: Current.actor.id,
       )
+      notify_agent_of_email_merge(agent_id) if agent_id.present?
       update!(action_required: emails.any? { |email| !email.is_read? })
     end
   end
