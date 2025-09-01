@@ -11,6 +11,7 @@ module Support
       case_reopened: 2,
       case_closed: 3,
       evaluation_documents_uploaded: 4,
+      email_merge: 5,
     }
 
     scope :unread, -> { where(read: false) }
@@ -42,6 +43,7 @@ module Support
     def case_ref = support_case.ref
     def case_created = support_case.created_at
     def assigned_by_name = assigned_by.full_name
+    def assigned_by_email_address = assigned_by.email
     def received_at = created_at
   end
 end

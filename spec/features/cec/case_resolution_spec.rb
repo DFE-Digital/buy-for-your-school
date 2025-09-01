@@ -3,8 +3,9 @@ require "rails_helper"
 describe "Resolving a case" do
   include_context "with a cec agent"
 
+  let(:dfe_energy_category) { create(:support_category, title: "DfE Energy for Schools service") }
   let(:existing_agent) { create(:support_agent) }
-  let(:support_case) { create(:support_case, :opened, agent: existing_agent) }
+  let(:support_case) { create(:support_case, category: dfe_energy_category, state: :opened, agent: existing_agent) }
 
   before do
     # exit survey stub
@@ -49,7 +50,7 @@ describe "Resolving a case" do
       click_button "Save and close case"
     end
 
-    it "resolves the case" do
+    it "resolves the case without sending an exit survey" do
       expect(page).to have_content("Case resolved successfully")
 
       within "#case-history tr", text: "Status change" do
@@ -57,6 +58,8 @@ describe "Resolving a case" do
       end
 
       expect(page).to have_content("Case owner: first_name last_name")
+
+      expect(WebMock).not_to have_requested(:post, "https://api.notifications.service.gov.uk/v2/notifications/email")
     end
   end
 end
