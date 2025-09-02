@@ -257,6 +257,16 @@
             "name": "support/management/email_templates/template_manager/templates/_template",
             "file": "app/views/support/management/email_templates/template_manager/templates/_template.html.erb"
           }
+        },
+        {
+          "type": "template",
+          "name": "support/management/schools_emails/schools_emails_templates/templates/index",
+          "line": 31,
+          "file": "app/views/support/management/schools_emails/schools_emails_templates/templates/index.html.erb",
+          "rendered": {
+            "name": "support/management/email_templates/template_manager/templates/_template",
+            "file": "app/views/support/management/email_templates/template_manager/templates/_template.html.erb"
+          }
         }
       ],
       "location": {
