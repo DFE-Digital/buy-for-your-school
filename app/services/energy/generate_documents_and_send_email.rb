@@ -39,7 +39,7 @@ module Energy
       Energy::Emails::OnboardingFormSubmissionMailer.new(onboarding_case:, to_recipients: current_user.email, documents:).call
       onboarding_case.update!(form_submitted_email_sent: true)
 
-      if Flipper.enabled?(:auto_email_vat_dd_edf) && eligible_dd_vat_edf?
+      if Flipper.enabled?(:auto_email_vat_dd) && eligible_dd_vat_edf?
         Energy::Emails::DirectDebitVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email, documents: dd_vat_edf_documents).call
       end
     end
