@@ -60,7 +60,7 @@ module Energy
       session.delete(:energy_case_tasks_path)
       session[:energy_case_tasks_path] = energy_case_tasks_path(case_id: params[:case_id]) if params[:case_id].present?
 
-      redirect_to energy_onboarding_path
+      redirect_to energy_start_path
     end
   end
 end

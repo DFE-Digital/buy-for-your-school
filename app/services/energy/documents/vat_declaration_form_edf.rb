@@ -4,6 +4,7 @@ module Energy
   module Documents
     class VatDeclarationFormEdf < VatDeclarationForm
       TEMPLATE_FILE = "VAT Declaration Form EDF.pdf"
+      BUSINESS_NAME = "Department for Education"
 
       def input_pdf_template_file
         @input_pdf_template_file ||= INPUT_PDF_TEMPLATE_PATH.join(TEMPLATE_FILE)
@@ -23,11 +24,11 @@ module Energy
 
       def customer_details
         {
-          "BUSINESS NAME" => @organisation.name,
-          "ADDRESS 1" => address_line1,
-          "ADDRESS 2" => address_line2,
-          "ADDRESS 3" => city,
-          "ADDRESS 4" => address_line3,
+          "BUSINESS NAME" => BUSINESS_NAME,
+          "ADDRESS 1" => @organisation.name,
+          "ADDRESS 2" => street,
+          "ADDRESS 3" => [locality, city].reject(&:blank?).join(", ").strip,
+          "ADDRESS 4" => county,
           "ADDRESS 5 POSTCODE" => postcode,
           "PERCENT VAT" => vat_lower_percentage[0],
           "PERCENT VAT 1" => vat_lower_percentage[1],
@@ -117,16 +118,17 @@ module Energy
                      end.with_indifferent_access
       end
 
-      def address_line1
+      def street
         address[:street]
       end
 
-      def address_line2
+      def locality
         address[:locality]
       end
 
-      def address_line3
-        address[:county]
+      def county
+        county = address[:county].to_s.strip
+        county.casecmp("Not recorded").zero? ? "" : county
       end
 
       def city

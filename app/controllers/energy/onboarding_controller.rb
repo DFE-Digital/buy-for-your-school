@@ -1,26 +1,19 @@
 # rubocop:disable Layout/AccessModifierIndentation
-class Energy::OnboardingController < ApplicationController
-  skip_before_action :authenticate_user!
-  before_action :check_flag, :set_routing
+class Energy::OnboardingController < Energy::ApplicationController
+  skip_before_action :authenticate_user!, :check_if_submitted
+  before_action :remember_onboarding
+  before_action :set_register_your_interest_form_url, only: :start
 
-  # /energy/onboarding/:step
-  def show
-    session[:energy_onboarding] = true
-    render @current_step
-  end
+  def start; end
+
+  def guidance; end
+
+  def before_you_start; end
 
   private
 
-  # Remove this and before_action reference when flag removed
-  def check_flag
-    render "errors/not_found", status: :not_found unless Flipper.enabled?(:energy)
-  end
-
-  # This will probably end up as a separate class - a routing brain
-  def set_routing
-    permitted_steps = %w[join_the_scheme before_you_start guidance]
-    step_position = permitted_steps.index(params[:step]) || 0
-    @current_step = permitted_steps[step_position]
+  def remember_onboarding
+    session[:energy_onboarding] = true
   end
 end
 # rubocop:enable Layout/AccessModifierIndentation

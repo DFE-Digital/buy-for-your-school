@@ -8,10 +8,12 @@
     <h2 class="govuk-heading-m"><%= I18n.t("energy.join.benefits.title") %></h2>
     <%= render ParagraphComponent.new(text: I18n.t("energy.join.benefits.text")) %>
     <%= govuk_list I18n.t("energy.join.benefits.list"), type: :bullet %>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.join.mat_info", form_url: @register_your_interest_form_url)) %>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.join.deadline").html_safe) %>
 
-    <%= govuk_start_button(text: I18n.t("generic.button.start"), href: energy_onboarding_path(:before_you_start)) %>
+    <%= govuk_start_button(text: I18n.t("generic.button.start"), href: energy_before_you_start_path) %>
     <%= govuk_list [
-        link_to(I18n.t('energy.join.more_info'), energy_onboarding_path(:guidance), class: "govuk-link"),
+        link_to(I18n.t('energy.join.more_info'), energy_guidance_path, class: "govuk-link"),
       ] %>
   <% end %>
 
@@ -19,7 +21,7 @@
     <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
       <h2 class="govuk-heading-m"><%= I18n.t("energy.related_actions.title") %></h2>
       <%= govuk_list [
-        link_to(I18n.t('energy.related_actions.guidance_page'), energy_onboarding_path(:guidance), class: "govuk-link"),
+        link_to(I18n.t('energy.related_actions.guidance_page'), energy_guidance_path, class: "govuk-link"),
       ] %>
     </aside>
   <% end %>

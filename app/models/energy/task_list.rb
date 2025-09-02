@@ -102,7 +102,9 @@ private
         t.add_attribute(:gas_usage, meter)
       end
 
-      t.add_attribute(:gas_bill_consolidation, case_org, text: case_org.gas_bill_consolidation.nil? ? "" : (case_org.gas_bill_consolidation ? I18n.t("generic.yes") : I18n.t("generic.no")))
+      if case_org.gas_single_multi_multi?
+        t.add_attribute(:gas_bill_consolidation, case_org, text: case_org.gas_bill_consolidation.nil? ? "" : (case_org.gas_bill_consolidation ? I18n.t("generic.yes") : I18n.t("generic.no")))
+      end
     end
   end
 
@@ -151,6 +153,7 @@ private
       case_org.electricity_meters.each do |meter|
         t.add_attribute(:mpan, meter)
         t.add_attribute(:is_half_hourly, meter, text: meter.is_half_hourly ? I18n.t("generic.yes") : I18n.t("generic.no"))
+        t.add_attribute(:electricity_usage, meter)
 
         next unless meter.is_half_hourly
 
@@ -160,7 +163,9 @@ private
         t.add_attribute(:meter_operator, meter)
       end
 
-      t.add_attribute(:is_electric_bill_consolidated, case_org, text: case_org.is_electric_bill_consolidated.nil? ? "" : (case_org.is_electric_bill_consolidated ? I18n.t("generic.yes") : I18n.t("generic.no")))
+      if case_org.electricity_meter_type_multi?
+        t.add_attribute(:is_electric_bill_consolidated, case_org, text: case_org.is_electric_bill_consolidated.nil? ? "" : (case_org.is_electric_bill_consolidated ? I18n.t("generic.yes") : I18n.t("generic.no")))
+      end
     end
   end
 
@@ -168,8 +173,7 @@ private
     status = case_org.site_contact_first_name && case_org.site_contact_email && case_org.site_contact_phone ? :complete : :not_started
     path = energy_case_org_site_contact_details_path(case_id: case_org.energy_onboarding_case_id, org_id: case_org.onboardable_id, context => "1")
     Task.new(title: __method__, status:, path:).tap do |t|
-      t.add_attribute(:site_contact_first_name, case_org)
-      t.add_attribute(:site_contact_last_name, case_org)
+      t.add_attribute(:site_contact_first_name, case_org, text: "#{case_org.site_contact_first_name} #{case_org.site_contact_last_name}")
       t.add_attribute(:site_contact_email, case_org)
       t.add_attribute(:site_contact_phone, case_org)
     end
@@ -220,13 +224,11 @@ private
         t.add_attribute(:vat_lower_rate_reg_no, case_org)
 
         if case_org.vat_person_correct_details?
-          t.add_attribute(:vat_person_first_name, case_org)
-          t.add_attribute(:vat_person_last_name, case_org)
+          t.add_attribute(:vat_person_first_name, case_org, text: "#{case_org.vat_person_first_name} #{case_org.vat_person_last_name}")
           t.add_attribute(:vat_person_phone, case_org)
           t.add_attribute(:vat_person_address, case_org, text: format_address(case_org.vat_person_address))
         else
-          t.add_attribute(:vat_alt_person_first_name, case_org)
-          t.add_attribute(:vat_alt_person_last_name, case_org)
+          t.add_attribute(:vat_alt_person_first_name, case_org, text: "#{case_org.vat_alt_person_first_name} #{case_org.vat_alt_person_last_name}")
           t.add_attribute(:vat_alt_person_phone, case_org)
           t.add_attribute(:vat_alt_person_address, case_org, text: format_address(case_org.vat_alt_person_address))
         end
@@ -271,7 +273,7 @@ private
 
       if case_org.billing_invoicing_method == "email"
         t.add_attribute(:billing_invoicing_email, case_org)
-      else
+      elsif case_org.part_of_a_trust?
         t.add_attribute(:billing_invoice_address, case_org, text: format_address(case_org.billing_invoice_address))
       end
     end

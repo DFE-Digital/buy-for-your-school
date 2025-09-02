@@ -13,10 +13,10 @@ RSpec.describe Energy::TasksController, type: :controller do
         case_organisation
       end
 
-      it "redirects to energy_onboarding_path" do
+      it "redirects to energy_start_path" do
         get(:show, params: { case_id: onboarding_case.id })
 
-        expect(response).to redirect_to(energy_onboarding_path)
+        expect(response).to redirect_to(energy_start_path)
         expect(session[:energy_case_tasks_path]).to eq(energy_case_tasks_path(case_id: onboarding_case.id))
       end
     end

@@ -2,6 +2,7 @@ require "rails_helper"
 
 describe "User can update electricity meters and usage", :js do
   include_context "with energy suppliers"
+  include_context "with awkward space characters"
 
   let!(:another_organisation) { create(:support_organisation, urn: 100_254) }
   let!(:another_support_case) { create(:support_case, organisation: another_organisation, state: :on_hold) }
@@ -160,6 +161,20 @@ describe "User can update electricity meters and usage", :js do
     # Check the order of the MPAN values
     expected_order = %w[1234567890123 1234512345121 1234512345122 1234512345123]
     expect(mpan_values).to eq(expected_order)
+
+    visit new_energy_case_org_electricity_meter_path(onboarding_case, case_organisation)
+
+    fill_in "Add an MPAN", with: "(123)#{non_breaking_space}45123-#{zero_width_space}45555"
+
+    choose "No"
+
+    fill_in "Estimated annual electricity usage", with: "1000"
+
+    click_button "Save and continue"
+
+    expect(page).not_to have_text("The MPAN must be in the correct format and 13 numbers long")
+
+    expect(page).to have_text("1234512345555")
   end
 
   specify "Check mpan label" do

@@ -20,8 +20,8 @@ module Support
 
         @case_summary.save!
 
-        # set status to ‘On hold’ when case level is L6 and procurement stage is Enquiry
-        if @case_summary.support_case.support_level == "L6" && @case_summary.procurement_stage.title == "Enquiry"
+        # set status to ‘On hold’ when case level is L6
+        if @case_summary.support_case.support_level == "L6"
           change_case_state(to: :on_hold)
         end
         # putting a redirect path in based on roles for now - this may change if a new form for CEC is created

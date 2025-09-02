@@ -58,5 +58,5 @@ private
     @email = Email.find(params[:message_id])
   end
 
-  def authorize_agent_scope = :access_proc_ops_portal?
+  def authorize_agent_scope = :access_individual_cases?
 end

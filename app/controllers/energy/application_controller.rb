@@ -1,6 +1,6 @@
 module Energy
   class ApplicationController < ::ApplicationController
-    before_action :check_flag, :check_if_submitted, :set_routing_flags
+    before_action :check_flag, :set_accessibility_link, :check_if_submitted, :set_routing_flags
 
     ALLOWED_CLASSES = [
       "Support::Organisation",
@@ -10,6 +10,10 @@ module Energy
     MAX_METER_COUNT = 5
 
   private
+
+    def set_accessibility_link
+      @energy_accessibility_link = "https://accessibility-statements.education.gov.uk/s/29"
+    end
 
     def check_flag
       render "errors/not_found", status: :not_found unless Flipper.enabled?(:energy)
@@ -103,6 +107,10 @@ module Energy
 
     def electricity_usage_details
       @onboarding_case_organisation.electricity_meters.all
+    end
+
+    def set_register_your_interest_form_url
+      @register_your_interest_form_url = "https://submit.forms.service.gov.uk/form/7281/register-your-interest-in-energy-for-schools/27000"
     end
   end
 end

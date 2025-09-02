@@ -37,7 +37,7 @@
                 <% if @gas_meter_details.count > 1 %>
                   <%= link_to safe_join([I18n.t("generic.button.remove"),
                       content_tag(:span, "Remove details for #{gas_meter.mprn}", class: "govuk-visually-hidden")]),
-                          energy_case_org_gas_meter_path(id: gas_meter.id, **@routing_flags),
+                          delete_energy_case_org_gas_meter_path(id: gas_meter.id, **@routing_flags),
                           class: "govuk-link remove_meter", method: :delete %>
                 <% end %>
               </td>

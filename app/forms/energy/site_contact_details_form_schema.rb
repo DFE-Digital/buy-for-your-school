@@ -29,6 +29,7 @@ class Energy::SiteContactDetailsFormSchema < Schema
   end
 
   rule(:site_contact_phone) do
-    key.failure(:format?) if value && !value.match?(/\A(0|\+?44)[12378]\d{8,9}\z/)
+    digits = value.gsub(/\D/, "")
+    key.failure(:format?) if value && (!value.match?(VALID_PHONE_NUMBER_REGEX) || digits.length < 10 || digits.length > 13)
   end
 end
