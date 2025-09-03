@@ -13,6 +13,9 @@ class Energy::OnboardingController < Energy::ApplicationController
   private
 
   def remember_onboarding
+    session.delete(:email_evaluator_link)
+    session.delete(:email_school_buyer_link)
+    session.delete(:faf_referrer)
     session[:energy_onboarding] = true
   end
 end
