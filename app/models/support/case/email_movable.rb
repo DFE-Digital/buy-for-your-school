@@ -32,11 +32,16 @@ module Support::Case::EmailMovable
         agent_id: Current.actor.id,
       )
       notify_agent_of_email_merge(agent_id) if agent_id.present?
-      update!(action_required: emails.any? { |email| !email.is_read? })
+      update!(action_required: emails.any? { |email| !email.is_read? && email.inbox? } || pending_evaluations?)
     end
   end
 
   def receive_interactions_from(ticket:)
     ticket.interactions.update_all(case_id: id)
+  end
+
+  def pending_evaluations?
+    current_case = Support::Case.find(id)
+    current_case.evaluators.where(has_uploaded_documents: true, evaluation_approved: false).any?
   end
 end
