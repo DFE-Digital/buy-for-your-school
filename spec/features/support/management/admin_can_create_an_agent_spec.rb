@@ -15,6 +15,7 @@ describe "Admin can create an Agent" do
 
     within "tr", text: "Abbey Dale" do
       expect(page).to have_content("Procurement Operations Staff Member")
+      expect(page).to have_content("Remove")
     end
   end
 
