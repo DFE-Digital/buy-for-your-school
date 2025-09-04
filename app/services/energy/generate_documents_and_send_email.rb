@@ -59,7 +59,7 @@ module Energy
     end
 
     def eligible_dd_vat_edf?
-      (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit?
+      (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit? && @onboarding_case_organisation.vat_rate == 5
     end
 
     def generate_vat_certificates
