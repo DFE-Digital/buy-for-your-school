@@ -8,6 +8,8 @@ module Support
       @back_url = support_management_path
     end
 
+    before_action :set_agent, only: %i[edit destroy]
+
     def index
       @enabled_agents = Support::Agent.enabled.by_first_name
         .map { |agent| Support::AgentPresenter.new(agent) }
@@ -19,10 +21,7 @@ module Support
       @agent = Support::Management::AgentForm.new
     end
 
-    def edit
-      agent = Support::Agent.find(params[:id])
-      @agent = Support::Management::AgentForm.new(**agent.to_h)
-    end
+    def edit; end
 
     def create
       @agent = Support::Management::AgentForm
@@ -31,6 +30,7 @@ module Support
 
       if @agent.valid?
         @agent.save!
+        @agent.update!(archived: false)
         redirect_to redirect_path
       else
         render :new
@@ -48,9 +48,23 @@ module Support
       end
     end
 
+    def destroy
+      return unless params[:confirm]
+
+      @agent = Support::Management::AgentForm.find(params[:id])
+      destroy_params = { policy: policy(:cms_portal) }
+      destroy_params[:roles] = []
+      destroy_params[:archived] = true
+
+      @agent.update!(destroy_params)
+
+      redirect_to redirect_path,
+                  notice: I18n.t("support.management.agents.destroyed", name: @agent.full_name, email: @agent.email)
+    end
+
   private
 
-    def redirect_path
+    helper_method def redirect_path
       is_user_cec_agent? ? cec_management_agents_path : support_management_agents_path
     end
 
@@ -70,8 +84,8 @@ module Support
       send("#{portal_namespace}_management_agents_path")
     end
 
-    helper_method def portal_management_agent_path(agent)
-      send("#{portal_namespace}_management_agent_path", agent)
+    helper_method def portal_management_agent_path(agent, additional_params = {})
+      send("#{portal_namespace}_management_agent_path", agent, additional_params)
     end
 
     helper_method def portal_management_path
@@ -81,6 +95,11 @@ module Support
     def agent_form_params
       params.require(:agent).permit(:email, :first_name, :last_name, roles: [])
         .merge(policy: policy(:cms_portal))
+    end
+
+    def set_agent
+      agent = Support::Agent.find(params[:id])
+      @agent = Support::Management::AgentForm.new(**agent.to_h)
     end
 
     def authorize_agent_scope = [super, :manage_agents?]

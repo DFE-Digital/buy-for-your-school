@@ -1,6 +1,6 @@
 <h1 class="govuk-heading-xl"><%= I18n.t("support.case_contact_details.header") %></h1>
 
-<%= form_with model: @case_contact_details_form, scope: :case_contact_details_form, url: support_case_contact_details_path(@current_case), method: :patch do |form| %>
+<%= form_with model: @case_contact_details_form, scope: :case_contact_details_form, url: portal_case_contact_details_path(@current_case), method: :patch do |form| %>
   <%= form.govuk_error_summary %>
 
   <%= form.govuk_text_field :first_name, autofocus: true, width: 'one-half', label: { text: I18n.t("support.case_contact_details.label.first_name") } %>
@@ -18,9 +18,8 @@
     <div class="govuk-form-group">
       <%= form.govuk_check_box :is_evaluator, :true, :false, multiple: false,  checked: @current_case.is_evaluator, label: { text: "Evaluator" } %>
     </div>
-
             
   <%= form.submit I18n.t("support.case_contact_details.submit"), class: "govuk-button" %>
-  <%= link_to 'Cancel changes', support_case_path(@current_case), class: 'govuk-button govuk-button--secondary' %>
+  <%= link_to 'Cancel changes', contact_details_path(@current_case), class: 'govuk-button govuk-button--secondary' %>
 <% end %>
 

@@ -45,4 +45,16 @@ module Support::Case::Notifiable
       created_at: updated_at,
     )
   end
+
+  def notify_agent_of_email_merge(agent_id, assigned_by: Current.agent)
+    return if agent_id == Current.agent.id
+
+    notifications.email_merge.create!(
+      support_case: self,
+      assigned_by:,
+      assigned_to_id: agent_id,
+      subject: self,
+      created_at: updated_at,
+    )
+  end
 end

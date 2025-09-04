@@ -18,6 +18,8 @@ module Support
 
         record_action(case_id: current_case.id, action: "resolve_case")
 
+        update_action_required
+
         redirect_to redirect_path, notice: I18n.t("support.case_resolution.flash.created")
       else
         render :new
@@ -37,7 +39,7 @@ module Support
     end
 
     def send_exit_survey
-      unless current_case.exit_survey_sent
+      unless current_case.exit_survey_sent || current_case.energy_onboarding_case?
         SendExitSurveyJob.start(@current_case.ref)
       end
     end
@@ -48,6 +50,13 @@ module Support
 
     helper_method def portal_case_resolution_path(current_case)
       send("#{agent_portal_namespace}_case_resolution_path", current_case)
+    end
+
+    def update_action_required
+      pending_evaluations = @current_case.evaluators.where(has_uploaded_documents: true, evaluation_approved: false).any?
+      unread_emails = Support::Email.where(ticket_id: @current_case.id, folder: 0, is_read: false).where.not(outlook_conversation_id: nil).any?
+      action_required = pending_evaluations || unread_emails
+      @current_case.update!(action_required:)
     end
   end
 end

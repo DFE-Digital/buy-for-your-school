@@ -300,7 +300,7 @@ en:
       title: Join Energy for Schools
       explanations:
       - Energy for Schools helps state-funded schools and trusts switch to the same energy contract used by the Department for Education.
-      - Schools and trusts that use the service are added to the Department for Education’s energy contract with Crown Commercial Service (CCS). The CCS buys energy for this particular contract over a long period of time, reducing the risk to customers of substantial fluctuations in price.
+      - Schools and trusts that use the service are added to the Department for Education's V30 energy contract with Crown Commercial Service (CCS). The CCS buys energy for this particular contract over a long period of time, reducing the risk to customers of substantial fluctuations in price.
       benefits:
         title: Benefits
         text: "Schools could save on average 36% on their energy bills, based on DfE’s estimates. The service also helps:"
@@ -312,6 +312,7 @@ en:
       mat_info:
       - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
       - Multi-academy trusts (MATs) can join the contract by filling in the <a class="govuk-link" href="%{form_url}">Register your interest form</a> and completing the process offline.
+      deadline: "<span class=\"govuk-!-font-weight-bold\">Apply by 5pm, 11 September 2025</span> to join the next available V30 contract in April 2026. You’ll be placed on an interim rate if your current contract expires before 31 March 2026."
       more_info: Get more information
     guidance:
       contents: Contents
@@ -437,13 +438,13 @@ en:
       - your electricity and/or gas meter numbers and estimated annual usage in kilowatt hours per meter (you can calculate this from your bills)
       - your electricity and/or gas contract end date
       - the percentage VAT your school is charged for energy, and the percentage of total consumption qualifying if you pay 5% VAT
-      half_hourly_electricity: "If you have a half hourly electricity meter, you will also need to know:" 
+      half_hourly_electricity: "If you have a half hourly electricity meter, you will also need to know:"
       half_hourly_electricity_list:
       - supply capacity (kVA)
       - data aggregator
       - data collector
       - meter operator
-      time_required: 
+      time_required:
         - Ask your current supplier or broker if you need help finding this information.
         - This form may take up to 20 minutes to complete, providing you have the required information to hand. Allow longer if you're using assistive technology, like a screen reader.
         - We'll send you an email with a link once you've started the form. We'll also save the answers on each page you complete. If you need to exit the form, use the email link to return and complete it at a later date.
@@ -1905,6 +1906,7 @@ en:
           out_of_scope: Out of scope
           spam: Spam
           test_case: Test case
+          objections: Objections resulted in cancellation
         submit: Save and reject case
       flash:
         created: Case rejected successfully
@@ -2152,6 +2154,7 @@ en:
     case_opening:
       flash:
         error: Case cannot be reopened
+        re_used_meter_numbers: Case cannot be reopened because one or more meter numbers are in use in other cases
         reopened: Case reopened successfully
     case_openings:
       new:
@@ -2169,6 +2172,7 @@ en:
             out_of_scope: Out of scope
             spam: Spam
             test_case: Test case
+            objections: Objections resulted in cancellation
           request_category: Sub-category
           status: Status
     case_organisation:
@@ -2532,6 +2536,8 @@ en:
     management:
       agents:
         header: Agents
+        delete_confirmation: Are you sure you want to remove %{name} (%{email})?
+        destroyed: "%{name} (%{email}) successfully removed"
         table:
           actions: Actions
           admin: Admin
