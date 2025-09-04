@@ -22,7 +22,7 @@ module Support
       @email_draft.forward_to_email = current_email
       @email_draft.attributes = form_params
 
-      super(deliver: :deliver_as_forward)
+      super(deliver: :deliver_as_forward, action: :forward_email)
     end
 
     def back_to_url_b64

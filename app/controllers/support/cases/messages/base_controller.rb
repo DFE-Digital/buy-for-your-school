@@ -16,8 +16,8 @@ module Support
       )
     end
 
-    def submit(deliver:)
-      if @email_draft.valid?
+    def submit(deliver:, action: nil)
+      if @email_draft.valid?(action)
         @email_draft.save_draft!
         @email_draft.send(deliver)
 
