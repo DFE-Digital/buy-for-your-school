@@ -1,6 +1,6 @@
 module Energy
   class Emails::DirectDebitVatEdfMailer
-    DD_VAT_EDF_EMAIL_TEMPLATE = "DD and VAT email - electricity".freeze
+    DD_VAT_EDF_EMAIL_TEMPLATE = "Energy for Schools: electricity VAT and DD instructions".freeze
 
     def initialize(onboarding_case:, to_recipients:, documents: [])
       @onboarding_case = onboarding_case
@@ -37,7 +37,7 @@ module Energy
 
   private
 
-    def default_email_subject = "Case #{@support_case.ref} - DD and VAT email"
+    def default_email_subject = "Case #{@support_case.ref} - send your VAT and Direct Debit instructions for electricity: Energy for Schools"
 
     def email_template
       @email_template ||= Support::EmailTemplate.find_by(title: DD_VAT_EDF_EMAIL_TEMPLATE, archived: false)
