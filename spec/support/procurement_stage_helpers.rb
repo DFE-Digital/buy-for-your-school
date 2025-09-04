@@ -12,6 +12,7 @@ module ProcurementStageHelpers
       0 => %w[Need],
       2 => ["Tender preparation"],
       5 => %w[Enquiry],
+      6 => %w[Onboarding form],
     )
   end
 
@@ -20,4 +21,6 @@ module ProcurementStageHelpers
   def tender_prep_stage = Support::ProcurementStage.find_by(key: "tender_preparation")
 
   def enquiry_stage = Support::ProcurementStage.find_by(key: "enquiry")
+
+  def onboarding_form_stage = Support::ProcurementStage.find_by(key: "onboarding_form")
 end
