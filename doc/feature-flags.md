@@ -30,9 +30,12 @@ Click on `add feature` and enter the name you have used for your feature flag. Y
 ## Current Flags
 |Flag name|Description|Status|Actions|
 |--|--|--|--|
-|rfh_usability_survey|When enabled, embeds the RfH usability survey in the RfH submission confirmation page.|ENABLED|Feature now live, flag to be removed|
-|customer_satisfaction_survey|When enabled, replaces the existing exit survey with the new customer satisfaction survey.|ENABLED|Feature now live, flag to be removed|
-|maintenance_mode|Special flag, when enabled will prevent user access to the application. Intended for infrastructure or data maintenance.|DISABLED|To be enabled when required|
-|sc_tasklist_case|When enabled, the task list tab for a case at level 4 or 5 will be visible, and the 'case action_required' flag will be updated based on the evaluation document upload status and the evaluation approval status. |ENABLED in development, DISABLED in production|To be enabled when all components of the task list are ready|
+|customer_satisfaction_survey|Replace the exit survey with the new customer satisfaction survey.|ENABLED|Feature now live, flag to be removed|
+|energy|Energy for Schools|ENABLED|Feature now live, flag to be removed|
+|maintenance_mode|Prevent user access to the application. Intended for infrastructure or data maintenance.|DISABLED|To be enabled when required|
+|rfh_usability_survey|Embed the RfH usability survey in the RfH submission confirmation page.|ENABLED|Feature now live, flag to be removed|
+|sc_tasklist_case|The task list tab for a case at level 4 or 5 will be visible, and the 'case action_required' flag will be updated based on the evaluation document upload status and the evaluation approval status. |ENABLED in development, DISABLED in production|To be enabled when all components of the task list are ready|
+|usability_surveys|Usability survey for FABS|ENABLED|Feature now live, flag to be removed|
+
 
 When the feature flag is no longer needed, you can remove it from the code and from the flipper features area in all the environments where it was created. It should also be removed from the current flags table above so we have an up-to-date record of feature flags in the system.

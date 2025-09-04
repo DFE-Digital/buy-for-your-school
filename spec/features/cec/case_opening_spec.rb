@@ -39,6 +39,34 @@ RSpec.feature "Case worker can open a case" do
 
   context "when re-opening a case from closed" do
     it_behaves_like "a reopened case", :closed, "closed"
+
+    context "but there are other cases using some of it's meter numbers" do
+      before do
+        # Meters on this case
+        create(:energy_gas_meter, :with_valid_data, onboarding_case_organisation: ob_org, mprn:)
+        create(:energy_electricity_meter, :with_valid_data, onboarding_case_organisation: ob_org, mpan:)
+
+        # Meters on other case
+        create(:energy_gas_meter, :with_valid_data, onboarding_case_organisation: other_onboarding_case_organisation, mprn:)
+        create(:energy_electricity_meter, :with_valid_data, onboarding_case_organisation: other_onboarding_case_organisation, mpan:)
+      end
+
+      let(:support_case) { create(:support_case, :closed) }
+      let(:other_support_case) { create(:support_case) }
+      let(:ob_case) { create(:onboarding_case, support_case:) }
+      let(:ob_org) { create(:energy_onboarding_case_organisation, onboarding_case: ob_case, onboardable: support_case.organisation) }
+      let(:mprn) { "123456789" }
+      let(:mpan) { "0123456789123" }
+      let(:other_onboarding_case) { create(:onboarding_case, support_case: other_support_case) }
+      let(:other_onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case: other_onboarding_case, onboardable: other_support_case.organisation) }
+
+      it "redirects to the case with error message" do
+        visit current_path # Ensures the page is reloaded
+        click_on "Reopen the case"
+        expect(page).to have_current_path(cec_onboarding_case_path(support_case), ignore_query: true)
+        expect(page).to have_text("Case cannot be reopened because one or more meter numbers are in use in other cases")
+      end
+    end
   end
 
   context "when a case is on hold" do

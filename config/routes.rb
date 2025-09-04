@@ -332,7 +332,7 @@ Rails.application.routes.draw do
 
     namespace :management do
       get "/", to: "base#index"
-      resources :agents, only: %i[index edit update new create]
+      resources :agents
       resources :categories, only: %i[index update]
       resources :email_templates do
         get "/attachment-list", to: "email_templates#attachment_list", on: :member
@@ -389,7 +389,7 @@ Rails.application.routes.draw do
 
     namespace :management do
       get "/", to: "base#index"
-      resources :agents, only: %i[index edit update new create]
+      resources :agents
     end
   end
 
@@ -606,6 +606,8 @@ Rails.application.routes.draw do
         get "closures", to: "/support/cases/closures#index", as: :closures
         post "closures/confirm", to: "/support/cases/closures#confirm", as: :closures_confirm
         post "closures", to: "/support/cases/closures#create", as: :closures_post
+        get "contact_details/edit", to: "/support/cases/contact_details#edit", as: :edit_contact_details
+        patch "contact_details", to: "/support/cases/contact_details#update", as: :update_contact_details
       end
     end
 
