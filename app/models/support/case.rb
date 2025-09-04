@@ -83,17 +83,17 @@ module Support
     #   L5       - Run bespoke procurement
     enum :support_level, { L1: 0, L2: 1, L3: 2, L4: 3, L5: 4, L6: 5, L7: 6 }
 
-    # Closure reason
-    #
-    #   resolved
-    #   email_merge
-    #   spam
-    #   out_of_scope
-    #   other
-    #   transfer
-    #   no_engagement
-    #   test_case
-    enum :closure_reason, { resolved: 0, email_merge: 1, spam: 2, out_of_scope: 3, other: 4, transfer: 5, no_engagement: 6, test_case: 7 }, suffix: true
+    enum :closure_reason, {
+      resolved: 0,
+      email_merge: 1,
+      spam: 2,
+      out_of_scope: 3,
+      other: 4,
+      transfer: 5,
+      no_engagement: 6,
+      test_case: 7,
+      objections: 8,
+    }, suffix: true
 
     # Source
     #
@@ -227,6 +227,27 @@ module Support
 
     def case_creator_full_name
       "#{first_name} #{last_name}".strip
+    end
+
+    # If the case is closed and associated with an energy onboarding case, other
+    # onboarding cases may have been created that re-use meter numbers associated
+    # with this case. This needs to be checked if the case is re-opened
+    def re_used_meter_numbers?
+      return false if energy_onboarding_case.blank?
+
+      org_ids = energy_onboarding_case.onboarding_case_organisations.pluck(:id)
+
+      { Energy::GasMeter => :mprn, Energy::ElectricityMeter => :mpan }.each do |meter_klass, ref|
+        used_in_this = meter_klass.where(energy_onboarding_case_organisation_id: org_ids).pluck(ref)
+        used_in_others = meter_klass.joins(onboarding_case_organisation: { onboarding_case: :support_case })
+          .where(ref => used_in_this)
+          .where.not(energy_onboarding_case_organisation_id: org_ids)
+          .where("support_cases.id NOT IN (?)", Support::Case.by_state("closed").pluck(:id))
+
+        return true if used_in_others.any?
+      end
+
+      false
     end
   end
 end

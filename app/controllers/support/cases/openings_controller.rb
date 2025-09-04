@@ -8,18 +8,20 @@ module Support
 
     def create
       if current_case.may_open?
-        is_current_state_closed = @current_case.closed?
+        if current_case.re_used_meter_numbers?
+          redirect_to redirect_path, notice: I18n.t("support.case_opening.flash.re_used_meter_numbers")
+        else
+          is_current_state_closed = @current_case.closed?
 
-        state_data = @current_case.previous_state_of("change_state")
-        state_data["old_state"] == "initial" && state_data["new_state"] == "closed" ? change_case_state(to: :initial) : change_case_state(to: :open)
+          state_data = @current_case.previous_state_of("change_state")
+          state_data["old_state"] == "initial" && state_data["new_state"] == "closed" ? change_case_state(to: :initial) : change_case_state(to: :open)
 
-        @current_case.notify_agent_of_case_reopened if @current_case.agent.present? && is_current_state_closed
+          @current_case.notify_agent_of_case_reopened if @current_case.agent.present? && is_current_state_closed
 
-        redirect_to redirect_path,
-                    notice: I18n.t("support.case_opening.flash.reopened")
+          redirect_to redirect_path, notice: I18n.t("support.case_opening.flash.reopened")
+        end
       else
-        redirect_to redirect_path,
-                    notice: I18n.t("support.case_opening.flash.error")
+        redirect_to redirect_path, notice: I18n.t("support.case_opening.flash.error")
       end
     end
 
