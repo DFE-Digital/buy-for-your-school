@@ -1,6 +1,6 @@
 module Energy
   class Emails::OnboardingFormDdTotalMailer
-    FORM_VAT_EDF_EMAIL_TEMPLATE = "Energy for Schools: gas Direct Debit".freeze
+    FORM_DD_TOTAL_EMAIL_TEMPLATE = "Energy for Schools: gas Direct Debit".freeze
 
     def initialize(onboarding_case:, to_recipients:)
       @onboarding_case = onboarding_case
@@ -38,7 +38,7 @@ module Energy
     def default_email_subject = "Case #{@support_case.ref} - set up your Direct Debit for gas: Energy for Schools"
 
     def email_template
-      @email_template ||= Support::EmailTemplate.find_by(title: FORM_VAT_EDF_EMAIL_TEMPLATE, archived: false)
+      @email_template ||= Support::EmailTemplate.find_by(title: FORM_DD_TOTAL_EMAIL_TEMPLATE, archived: false)
     end
 
     def default_email_template
