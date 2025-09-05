@@ -5,8 +5,8 @@ module Energy
     class DirectDebitFormEdf < DirectDebitForm
       include AddressHelper
 
-      TEMPLATE_FILE = "direct_debit_single_mpan_number.pdf"
-      TEMPLATE_FILE_MULTI = "direct_debit_multi_mpan_number.pdf"
+      TEMPLATE_FILE = "direct_debit_edf_single_mpan_number.pdf"
+      TEMPLATE_FILE_MULTI = "direct_debit_edf_multi_mpan_number.pdf"
 
       def input_pdf_template_file
         file_name = is_multi_mpan? ? TEMPLATE_FILE_MULTI : TEMPLATE_FILE

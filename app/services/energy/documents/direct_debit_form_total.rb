@@ -5,8 +5,8 @@ module Energy
     class DirectDebitFormTotal < DirectDebitForm
       include AddressHelper
 
-      TEMPLATE_FILE = "DD Form Total - single.pdf"
-      TEMPLATE_FILE_MULTI = "DD Form Total - multi.pdf"
+      TEMPLATE_FILE = "direct_debit_total_single_mprn_number.pdf"
+      TEMPLATE_FILE_MULTI = "direct_debit_total_multi_mprn_number.pdf"
 
       def input_pdf_template_file
         file_name = is_multi_mprn? ? TEMPLATE_FILE_MULTI : TEMPLATE_FILE
