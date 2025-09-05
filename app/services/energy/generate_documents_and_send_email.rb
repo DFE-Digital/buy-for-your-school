@@ -37,8 +37,8 @@ module Energy
 
     def send_email_with_documents
       Energy::Emails::OnboardingFormSubmissionMailer.new(onboarding_case:, to_recipients: current_user.email, documents:).call
-      if Flipper.enabled?(:auto_email_vat_dd) && eligible_vat_edf?
-        Energy::Emails::OnboardingFormVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email).call
+      if Flipper.enabled?(:auto_email_vat_dd) && eligible_dd_edf?
+        Energy::Emails::OnboardingFormDdEdfMailer.new(onboarding_case:, to_recipients: current_user.email).call
       end
       if Flipper.enabled?(:auto_email_vat_dd) && eligible_dd_total?
         Energy::Emails::OnboardingFormDdTotalMailer.new(onboarding_case:, to_recipients: current_user.email).call
@@ -50,11 +50,19 @@ module Energy
     end
 
     def eligible_vat_edf?
-      (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_bacs?
+      (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_bacs? && @onboarding_case_organisation.vat_rate == 5
     end
 
     def eligible_dd_total?
       (switching_gas? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit? && @onboarding_case_organisation.vat_rate == 20
+    end
+
+    def eligible_dd_edf?
+      (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit? && @onboarding_case_organisation.vat_rate == 20
+    end
+
+    def eligible_dd_vat_edf?
+      (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit? && @onboarding_case_organisation.vat_rate == 5
     end
 
     def generate_letter_of_authority
@@ -69,10 +77,6 @@ module Energy
       if eligible_dd_vat_edf?
         dd_vat_edf_documents << Energy::Documents::DirectDebitFormEdf.new(onboarding_case:, current_user:).call
       end
-    end
-
-    def eligible_dd_vat_edf?
-      (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit? && @onboarding_case_organisation.vat_rate == 5
     end
 
     def generate_vat_certificates
