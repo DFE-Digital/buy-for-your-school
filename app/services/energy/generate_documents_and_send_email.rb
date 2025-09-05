@@ -1,7 +1,7 @@
 module Energy
   class GenerateDocumentsAndSendEmail
     include Energy::SwitchingEnergyTypeHelper
-    attr_reader :onboarding_case, :onboarding_case_organisation, :current_user, :documents
+    attr_reader :onboarding_case, :onboarding_case_organisation, :current_user, :documents, :dd_vat_edf_documents
 
     def initialize(onboarding_case:, current_user:)
       @onboarding_case = onboarding_case
@@ -9,6 +9,7 @@ module Energy
       @onboarding_case_organisation = @onboarding_case.onboarding_case_organisations.first
       @current_user = current_user
       @documents = []
+      @dd_vat_edf_documents = []
     end
 
     def call
@@ -37,6 +38,10 @@ module Energy
     def send_email_with_documents
       Energy::Emails::OnboardingFormSubmissionMailer.new(onboarding_case:, to_recipients: current_user.email, documents:).call
       onboarding_case.update!(form_submitted_email_sent: true)
+
+      if Flipper.enabled?(:auto_email_vat_dd) && eligible_dd_vat_edf?
+        Energy::Emails::DirectDebitVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email, documents: dd_vat_edf_documents).call
+      end
     end
 
     def generate_letter_of_authority
@@ -48,9 +53,13 @@ module Energy
     end
 
     def generate_direct_debit_form
-      if (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit?
-        documents << Energy::Documents::DirectDebitFormEdf.new(onboarding_case:, current_user:).call
+      if eligible_dd_vat_edf?
+        dd_vat_edf_documents << Energy::Documents::DirectDebitFormEdf.new(onboarding_case:, current_user:).call
       end
+    end
+
+    def eligible_dd_vat_edf?
+      (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit? && @onboarding_case_organisation.vat_rate == 5
     end
 
     def generate_vat_certificates
@@ -80,6 +89,14 @@ module Energy
           description: "System uploaded document",
         )
       end
+
+      dd_vat_edf_documents.each do |document_path|
+        @support_case.case_attachments.create!(
+          attachable: support_document(document_path),
+          custom_name: File.basename(document_path),
+          description: "System uploaded document",
+        )
+      end
     end
 
     def support_document(document_path)
@@ -89,6 +106,9 @@ module Energy
 
     def delete_temp_files
       documents.each do |document_path|
+        File.delete(document_path) if File.exist?(document_path)
+      end
+      dd_vat_edf_documents.each do |document_path|
         File.delete(document_path) if File.exist?(document_path)
       end
     end
