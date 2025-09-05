@@ -1,6 +1,6 @@
 module Energy
   class Emails::OnboardingFormVatEdfMailer
-    FORM_VAT_EDF_EMAIL_TEMPLATE = "VAT only email – electricity".freeze
+    FORM_VAT_EDF_EMAIL_TEMPLATE = "Energy for Schools: electricity VAT certificate".freeze
 
     def initialize(onboarding_case:, to_recipients:)
       @onboarding_case = onboarding_case
@@ -35,7 +35,7 @@ module Energy
 
   private
 
-    def default_email_subject = "Case #{@support_case.ref} - VAT and EDF"
+    def default_email_subject = "Case #{@support_case.ref} - send your VAT certificate for electricity: Energy for Schools "
 
     def email_template
       @email_template ||= Support::EmailTemplate.find_by(title: FORM_VAT_EDF_EMAIL_TEMPLATE, archived: false)
