@@ -37,6 +37,9 @@ module Energy
 
     def send_email_with_documents
       Energy::Emails::OnboardingFormSubmissionMailer.new(onboarding_case:, to_recipients: current_user.email, documents:).call
+      if Flipper.enabled?(:auto_email_vat_dd) && eligible_vat_edf?
+        Energy::Emails::OnboardingFormVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email).call
+      end
       if Flipper.enabled?(:auto_email_vat_dd) && eligible_dd_edf?
         Energy::Emails::OnboardingFormDdEdfMailer.new(onboarding_case:, to_recipients: current_user.email).call
       end
