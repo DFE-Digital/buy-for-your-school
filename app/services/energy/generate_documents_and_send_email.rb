@@ -1,7 +1,8 @@
 module Energy
   class GenerateDocumentsAndSendEmail
     include Energy::SwitchingEnergyTypeHelper
-    attr_reader :onboarding_case, :onboarding_case_organisation, :current_user, :documents, :dd_vat_edf_documents
+    attr_reader :onboarding_case, :onboarding_case_organisation, :current_user,
+                :documents, :dd_vat_edf_documents, :dd_vat_total_documents
 
     def initialize(onboarding_case:, current_user:)
       @onboarding_case = onboarding_case
@@ -10,6 +11,7 @@ module Energy
       @current_user = current_user
       @documents = []
       @dd_vat_edf_documents = []
+      @dd_vat_total_documents = []
     end
 
     def call
@@ -37,21 +39,16 @@ module Energy
 
     def send_email_with_documents
       Energy::Emails::OnboardingFormSubmissionMailer.new(onboarding_case:, to_recipients: current_user.email, documents:).call
-      if Flipper.enabled?(:auto_email_vat_dd) && eligible_vat_edf?
-        Energy::Emails::OnboardingFormVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email).call
+
+      if Flipper.enabled?(:auto_email_vat_dd)
+        Energy::Emails::OnboardingFormVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email).call if eligible_vat_edf?
+        Energy::Emails::OnboardingFormDdEdfMailer.new(onboarding_case:, to_recipients: current_user.email).call if eligible_dd_edf?
+        Energy::Emails::NonDirectDebitVatTotalMailer.new(onboarding_case:, to_recipients: current_user.email).call if eligible_non_dd_vat_total?
+        Energy::Emails::OnboardingFormDdTotalMailer.new(onboarding_case:, to_recipients: current_user.email).call if eligible_dd_total?
+        Energy::Emails::DirectDebitVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email, documents: dd_vat_edf_documents).call if eligible_dd_vat_edf?
+        Energy::Emails::DirectDebitVatTotalMailer.new(onboarding_case:, to_recipients: current_user.email, documents: dd_vat_total_documents).call if eligible_dd_vat_total?
       end
-      if Flipper.enabled?(:auto_email_vat_dd) && eligible_dd_edf?
-        Energy::Emails::OnboardingFormDdEdfMailer.new(onboarding_case:, to_recipients: current_user.email).call
-      end
-      if Flipper.enabled?(:auto_email_vat_dd) && eligible_non_dd_vat_total?
-        Energy::Emails::NonDirectDebitVatTotalMailer.new(onboarding_case:, to_recipients: current_user.email).call
-      end
-      if Flipper.enabled?(:auto_email_vat_dd) && eligible_dd_total?
-        Energy::Emails::OnboardingFormDdTotalMailer.new(onboarding_case:, to_recipients: current_user.email).call
-      end
-      if Flipper.enabled?(:auto_email_vat_dd) && eligible_dd_vat_edf?
-        Energy::Emails::DirectDebitVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email, documents: dd_vat_edf_documents).call
-      end
+      
       onboarding_case.update!(form_submitted_email_sent: true)
     end
 
@@ -93,19 +90,29 @@ module Energy
       return if onboarding_case_organisation.vat_rate != 5
 
       if switching_gas?
-        documents << Energy::Documents::VatDeclarationFormTotal.new(onboarding_case:).call
+        Energy::Documents::VatDeclarationFormTotal.new(onboarding_case:).call.tap do |doc|
+          documents << doc
+          dd_vat_total_documents << doc
+        end
       elsif switching_electricity?
         documents << Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).call
       else
         documents << Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).call
-        documents << Energy::Documents::VatDeclarationFormTotal.new(onboarding_case:).call
+        Energy::Documents::VatDeclarationFormTotal.new(onboarding_case:).call.tap do |doc|
+          documents << doc
+          dd_vat_total_documents << doc
+        end
       end
     end
 
     def generate_total_direct_debit_form
       if (switching_gas? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit?
-        documents << Energy::Documents::DirectDebitFormTotal.new(onboarding_case:, current_user:).call
+        dd_vat_total_documents << Energy::Documents::DirectDebitFormTotal.new(onboarding_case:, current_user:).call
       end
+    end
+
+    def eligible_dd_vat_total?
+      (switching_gas? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit?
     end
 
     def attach_documents_to_support_case
@@ -124,6 +131,14 @@ module Energy
           description: "System uploaded document",
         )
       end
+
+      dd_vat_total_documents.each do |document_path|
+        @support_case.case_attachments.create!(
+          attachable: support_document(document_path),
+          custom_name: File.basename(document_path),
+          description: "System uploaded document",
+        )
+      end
     end
 
     def support_document(document_path)
@@ -136,6 +151,9 @@ module Energy
         File.delete(document_path) if File.exist?(document_path)
       end
       dd_vat_edf_documents.each do |document_path|
+        File.delete(document_path) if File.exist?(document_path)
+      end
+      dd_vat_total_documents.each do |document_path|
         File.delete(document_path) if File.exist?(document_path)
       end
     end
