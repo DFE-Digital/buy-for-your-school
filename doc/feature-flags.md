@@ -4,7 +4,7 @@ Feature flags were introduced to enable functionality to be enabled / disabled w
 These allowed for:
 - Functionality to be tested  / enabled for a set period of time in live to assess impact
 - Large pieces of functionality to be developed without ‘blocking’ the release pipeline and to discourage a developer from having large chunks of code that is not merged into the main code base
-- Multiple developers to work together on a large piece of new functionality 
+- Multiple developers to work together on a large piece of new functionality
 
 On the whole, the use of feature flags is transitional and they should be removed once the need for them has gone.
 
@@ -18,14 +18,14 @@ if Flipper.enabled?(:my_feature)
 else
   # do the other thing
 end
-``` 
+```
 
 ## Enabling / Disabling feature flags
 Visit https://`<your-environment>`/flipper e.g. https://www.get-help-buying-for-schools.service.gov.uk/flipper and enter the username and password for feature flag access.
 
 The username and password for each environment can be found in Azure within each container app (e.g., `devghbs-buyforyourschool`) in the secrets section of settings on the left hand side.
 
-Click on `add feature` and enter the name you have used for your feature flag. You can then choose to enable and disable it based on need. It's important to remember you will need to add and enable/disable on each environment you use, including local host. 
+Click on `add feature` and enter the name you have used for your feature flag. You can then choose to enable and disable it based on need. It's important to remember you will need to add and enable/disable on each environment you use, including local host.
 
 ## Current Flags
 |Flag name|Description|Status|Actions|
