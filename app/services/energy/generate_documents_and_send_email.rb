@@ -84,7 +84,7 @@ module Energy
     end
 
     def generate_direct_debit_form
-      if eligible_dd_vat_edf?
+      if (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit?
         dd_vat_edf_documents << Energy::Documents::DirectDebitFormEdf.new(onboarding_case:, current_user:).call
       end
     end
