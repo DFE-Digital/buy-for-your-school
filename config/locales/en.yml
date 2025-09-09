@@ -1439,6 +1439,16 @@ en:
       requirements: Tell us about your access needs
       requirements_hint: For example, I have difficulty hearing so I cannot do video calls
   specifying:
+    closing:
+      doc_title: Create a specification is closing
+      page_title: Sorry, Create a specification is closing
+      p1: Create a specification is no longer accepting new cases.
+      p2: 'Use <a href="/energy/start" class="govuk-link">Get help buying for schools</a> to:'
+      list:
+      - find DfE-approved buying options
+      - request support with procurements
+      - read procurement guidance
+      p3: If you have an existing specification which is in progress, select start to sign in to your DfE Sign-in account and complete and download the specification.
     start_page:
       before_you_start_body:
       - The service will guide you through what information to provide. Standard regulations and requirements that suppliers must comply with will be added automatically.

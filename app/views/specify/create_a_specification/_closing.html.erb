@@ -1,0 +1,16 @@
+<%= content_for :title, I18n.t("specifying.closing.doc_title") %>
+
+<h1 class="govuk-heading-xl"><%= I18n.t("specifying.closing.page_title") %></h1>
+
+<p class="govuk-body"><%= I18n.t("specifying.closing.p1") %></p>
+<p class="govuk-body"><%= I18n.t("specifying.closing.p2").html_safe %></p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <% I18n.t("specifying.closing.list").each do |list_item| %>
+    <li><%= list_item %></li>
+  <% end %>
+</ul>
+
+<p class="govuk-body">
+  <%= I18n.t("specifying.closing.p3") %>
+</p>
