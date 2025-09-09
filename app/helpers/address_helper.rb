@@ -8,6 +8,8 @@ module AddressHelper
       address_hash["town"],
       address_hash["county"],
       address_hash["postcode"],
-    ].reject(&:blank?).to_sentence(last_word_connector: ", ", two_words_connector: ", ").presence || I18n.t("generic.not_provided")
+    ].reject { |value| value.blank? || value == I18n.t("generic.not_provided") }
+     .to_sentence(last_word_connector: ", ", two_words_connector: ", ")
+     .presence || I18n.t("generic.not_provided")
   end
 end
