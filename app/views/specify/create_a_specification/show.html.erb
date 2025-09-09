@@ -1,4 +1,7 @@
 <%= content_for :title, I18n.t("specifying.start_page.page_title") %>
 
-<%= render 'closing'%>
-<%#= render 'default'%>
+<% if Rails.env.test? %>
+  <%= render 'default'%>
+<% else %>
+  <%= render 'closing'%>
+<% end %>
