@@ -43,6 +43,9 @@ module Energy
       if Flipper.enabled?(:auto_email_vat_dd) && eligible_dd_edf?
         Energy::Emails::OnboardingFormDdEdfMailer.new(onboarding_case:, to_recipients: current_user.email).call
       end
+      if Flipper.enabled?(:auto_email_vat_dd) && eligible_non_dd_vat_total?
+        Energy::Emails::NonDirectDebitVatTotalMailer.new(onboarding_case:, to_recipients: current_user.email).call
+      end
       if Flipper.enabled?(:auto_email_vat_dd) && eligible_dd_total?
         Energy::Emails::OnboardingFormDdTotalMailer.new(onboarding_case:, to_recipients: current_user.email).call
       end
@@ -58,6 +61,10 @@ module Energy
 
     def eligible_dd_total?
       (switching_gas? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit? && @onboarding_case_organisation.vat_rate == 20
+    end
+
+    def eligible_non_dd_vat_total?
+      (switching_gas? || switching_both?) && @onboarding_case_organisation.billing_payment_method_bacs? && @onboarding_case_organisation.vat_rate == 5
     end
 
     def eligible_dd_edf?
