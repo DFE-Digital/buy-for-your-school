@@ -48,7 +48,7 @@ module Energy
         Energy::Emails::DirectDebitVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email, documents: dd_vat_edf_documents).call if eligible_dd_vat_edf?
         Energy::Emails::DirectDebitVatTotalMailer.new(onboarding_case:, to_recipients: current_user.email, documents: dd_vat_total_documents).call if eligible_dd_vat_total?
       end
-      
+
       onboarding_case.update!(form_submitted_email_sent: true)
     end
 
