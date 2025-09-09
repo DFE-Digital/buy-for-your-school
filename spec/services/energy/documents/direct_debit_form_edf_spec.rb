@@ -30,7 +30,6 @@ RSpec.describe Energy::Documents::DirectDebitFormEdf, type: :model do
         expect(values).to include(support_organisation.name)
 
         expect(fields.find { |f| f.name == "Check Box 2" }.value).to eq "No"
-        expect(fields.find { |f| f.name == "Text Field 1" }.value).to eq support_organisation.name
         expect(fields.find { |f| f.name == "Text Field 12" }.value).to eq "#{user.first_name} #{user.last_name}"
         expect(fields.find { |f| f.name == "Text Field 25" }.value).to eq support_organisation.name
         expect(fields.find { |f| f.name == "Text Field 15" }.value).to eq support_organisation.telephone_number

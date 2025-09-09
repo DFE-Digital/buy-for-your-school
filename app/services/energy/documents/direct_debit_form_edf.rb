@@ -20,15 +20,8 @@ module Energy
     private
 
       def form_field_values
-        business_details.merge(customer_details)
-                        .merge(electricity_mpan_numbers)
+        customer_details.merge(electricity_mpan_numbers)
                         .merge(multi_mpan_check)
-      end
-
-      def business_details
-        {
-          "Text Field 1" => @organisation_detail.name,
-        }
       end
 
       def customer_details
