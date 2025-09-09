@@ -116,7 +116,7 @@ jobs:
         ports:
           - 6379:6379
       chrome:
-        image: selenium/standalone-chrome:95.0-chromedriver-95.0
+        image: selenium/standalone-chrome:120.0
         ports:
           - 4444:4444
 
@@ -126,6 +126,7 @@ jobs:
           docker run \
             --network ${{ job.container.network }} \
             --name test_container \
+            --shm-size=2g \
             -e RAILS_ENV=test \
             -e DATABASE_URL=postgres://postgres:password@postgres:5432/buy-for-your-school-test \
             -e DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL="true" \
@@ -199,7 +200,7 @@ jobs:
         ports:
           - 6379:6379
       chrome:
-        image: selenium/standalone-chrome:95.0-chromedriver-95.0
+        image: selenium/standalone-chrome:120.0
         ports:
           - 4444:4444
 
@@ -210,6 +211,7 @@ jobs:
           docker run \
             --network ${{ job.container.network }} \
             --name test_container \
+            --shm-size=2g \
             -e RAILS_ENV=test \
             -e DATABASE_URL=postgres://postgres:password@postgres:5432/buy-for-your-school-test \
             -e DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL="true" \
