@@ -46,14 +46,6 @@ module Energy
         }
       end
 
-      def vat_person_or_vat_alt_person
-        if @onboarding_case_organisation.vat_person_correct_details
-          "#{@onboarding_case_organisation.vat_person_first_name} #{@onboarding_case_organisation.vat_person_last_name}"
-        else
-          "#{@onboarding_case_organisation.vat_alt_person_first_name} #{@onboarding_case_organisation.vat_alt_person_last_name}"
-        end
-      end
-
       def address
         (@onboarding_case_organisation.billing_invoice_address || @organisation.address).with_indifferent_access
       end
