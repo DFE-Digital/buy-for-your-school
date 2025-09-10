@@ -25,13 +25,13 @@ def enums_to_csv
   CSV.generate(headers: true) do |csv|
     csv << %w[table column name value]
 
-    ApplicationRecord.descendants.each do |klass|
+    ApplicationRecord.descendants.sort_by(&:name).each do |klass|
       next if klass.abstract_class?
 
-      klass.attribute_types.each do |column, attr|
+      klass.attribute_types.sort.each do |column, attr|
         next unless attr.is_a? ActiveRecord::Enum::EnumType
 
-        attr.send(:mapping).each do |name, value|
+        attr.send(:mapping).sort_by(&:last).each do |name, value|
           csv << [klass.table_name, column, name, value]
         end
       end
