@@ -2,7 +2,9 @@ module Energy
   class GenerateDocumentsAndSendEmail
     include Energy::SwitchingEnergyTypeHelper
     attr_reader :onboarding_case, :onboarding_case_organisation, :current_user,
-                :documents, :dd_vat_edf_documents, :dd_vat_total_documents
+                :documents, :dd_vat_edf_documents, :dd_vat_total_documents,
+                :edf_vat_documents, :edf_dd_documents,
+                :total_vat_documents, :total_dd_documents
 
     def initialize(onboarding_case:, current_user:)
       @onboarding_case = onboarding_case
@@ -12,6 +14,10 @@ module Energy
       @documents = []
       @dd_vat_edf_documents = []
       @dd_vat_total_documents = []
+      @edf_vat_documents = []
+      @edf_dd_documents = []
+      @total_vat_documents = []
+      @total_dd_documents = []
     end
 
     def call
@@ -41,10 +47,10 @@ module Energy
       Energy::Emails::OnboardingFormSubmissionMailer.new(onboarding_case:, to_recipients: current_user.email, documents:).call
 
       if Flipper.enabled?(:auto_email_vat_dd)
-        Energy::Emails::OnboardingFormVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email).call if eligible_vat_edf?
-        Energy::Emails::OnboardingFormDdEdfMailer.new(onboarding_case:, to_recipients: current_user.email).call if eligible_dd_edf?
-        Energy::Emails::NonDirectDebitVatTotalMailer.new(onboarding_case:, to_recipients: current_user.email).call if eligible_non_dd_vat_total?
-        Energy::Emails::OnboardingFormDdTotalMailer.new(onboarding_case:, to_recipients: current_user.email).call if eligible_dd_total?
+        Energy::Emails::OnboardingFormVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email, documents: edf_vat_documents).call if eligible_vat_edf?
+        Energy::Emails::OnboardingFormDdEdfMailer.new(onboarding_case:, to_recipients: current_user.email, documents: edf_dd_documents).call if eligible_dd_edf?
+        Energy::Emails::NonDirectDebitVatTotalMailer.new(onboarding_case:, to_recipients: current_user.email, documents: total_vat_documents).call if eligible_non_dd_vat_total?
+        Energy::Emails::OnboardingFormDdTotalMailer.new(onboarding_case:, to_recipients: current_user.email, documents: total_dd_documents).call if eligible_dd_total?
         Energy::Emails::DirectDebitVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email, documents: dd_vat_edf_documents).call if eligible_dd_vat_edf?
         Energy::Emails::DirectDebitVatTotalMailer.new(onboarding_case:, to_recipients: current_user.email, documents: dd_vat_total_documents).call if eligible_dd_vat_total?
       end
@@ -91,16 +97,26 @@ module Energy
 
       if switching_gas?
         Energy::Documents::VatDeclarationFormTotal.new(onboarding_case:).call.tap do |doc|
-          documents << doc
+          documents << doc unless Flipper.enabled?(:auto_email_vat_dd)
           dd_vat_total_documents << doc
+          total_vat_documents << doc
         end
       elsif switching_electricity?
-        documents << Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).call
+        Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).call.tap do |doc|
+          documents << doc unless Flipper.enabled?(:auto_email_vat_dd)
+          dd_vat_edf_documents << doc
+          edf_vat_documents << doc
+        end
       else
-        documents << Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).call
+        Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).call.tap do |doc|
+          documents << doc unless Flipper.enabled?(:auto_email_vat_dd)
+          dd_vat_edf_documents << doc
+          edf_vat_documents << doc
+        end
         Energy::Documents::VatDeclarationFormTotal.new(onboarding_case:).call.tap do |doc|
-          documents << doc
+          documents << doc unless Flipper.enabled?(:auto_email_vat_dd)
           dd_vat_total_documents << doc
+          total_vat_documents << doc
         end
       end
     end
