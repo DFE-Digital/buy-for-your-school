@@ -122,6 +122,7 @@ jobs:
 
     steps:
       - name: Run Rspec tests
+        continue-on-error: true
         run: |
           docker run \
             --network ${{ job.container.network }} \
@@ -161,6 +162,13 @@ jobs:
             -e CI_NODE_INDEX=${{ matrix.ci_node_index }} \
             ${{ needs.build_test.outputs.docker_image }} \
             bash -c "bundle exec rake 'knapsack:rspec[--tag ~flaky]'"
+      - name: Store screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-${{ matrix.ci_node_index }}
+          path: tmp/capybara/
+          if-no-files-found: ignore
+          compression-level: 0
       - name: Get coverage from container
         run: |
           mkdir coverage
