@@ -17,7 +17,7 @@ module Energy
 
     def variables
       {
-        "case_creator_first_name" => @current_case.first_name,
+        "case_creator_full_name" => "#{@current_case.first_name} #{@current_case.last_name}".strip,
       }
     end
   end
