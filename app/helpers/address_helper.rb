@@ -2,14 +2,8 @@ module AddressHelper
   def format_address(address_hash)
     return "" if address_hash.blank?
 
-    [
-      address_hash["street"],
-      address_hash["locality"],
-      address_hash["town"],
-      address_hash["county"],
-      address_hash["postcode"],
-    ].reject { |value| value.blank? || value == I18n.t("generic.not_provided") }
-     .to_sentence(last_word_connector: ", ", two_words_connector: ", ")
-     .presence || I18n.t("generic.not_provided")
+    %w[street locality town county postcode].map { |key|
+      address_hash[key].presence unless address_hash[key] == "Not recorded"
+    }.compact.join(", ")
   end
 end
