@@ -26,7 +26,7 @@ RSpec.describe Energy::Emails::DirectDebitVatEdfVariableParser do
     context "with a valid Liquid template" do
       let(:email_body) do
         <<~LIQUID
-          Hello {{ case_creator_first_name }},
+          Hello {{ case_creator_full_name }},
           Your billing payment terms is {{ billing_payment_terms }}.
           electricity contract end date: {{ electricity_contract_end_date }}
         LIQUID
@@ -35,7 +35,7 @@ RSpec.describe Energy::Emails::DirectDebitVatEdfVariableParser do
       context "with support case details" do
         it "renders dynamic attributes" do
           output = service.parse_template
-          expect(output).to include(support_case.first_name.to_s)
+          expect(output).to include("#{support_case.first_name} #{support_case.last_name}")
         end
       end
 

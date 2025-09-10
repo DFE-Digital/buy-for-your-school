@@ -16,14 +16,14 @@ RSpec.describe Energy::Emails::OnboardingFormVatEdfVariableParser do
     context "with a valid Liquid template" do
       let(:email_body) do
         <<~LIQUID
-          Hello {{ case_creator_first_name }},
+          Hello {{ case_creator_full_name }},
         LIQUID
       end
 
       context "with support case details" do
         it "renders dynamic attributes" do
           output = service.parse_template
-          expect(output).to include(support_case.first_name.to_s)
+          expect(output).to include("#{support_case.first_name} #{support_case.last_name}")
         end
       end
     end
