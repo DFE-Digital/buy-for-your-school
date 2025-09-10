@@ -97,20 +97,24 @@ module Energy
 
       if switching_gas?
         Energy::Documents::VatDeclarationFormTotal.new(onboarding_case:).call.tap do |doc|
+          documents << doc unless Flipper.enabled?(:auto_email_vat_dd)
           dd_vat_total_documents << doc
           total_vat_documents << doc
         end
       elsif switching_electricity?
         Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).call.tap do |doc|
+          documents << doc unless Flipper.enabled?(:auto_email_vat_dd)
           dd_vat_edf_documents << doc
           edf_vat_documents << doc
         end
       else
         Energy::Documents::VatDeclarationFormEdf.new(onboarding_case:).call.tap do |doc|
+          documents << doc unless Flipper.enabled?(:auto_email_vat_dd)
           dd_vat_edf_documents << doc
           edf_vat_documents << doc
         end
         Energy::Documents::VatDeclarationFormTotal.new(onboarding_case:).call.tap do |doc|
+          documents << doc unless Flipper.enabled?(:auto_email_vat_dd)
           dd_vat_total_documents << doc
           total_vat_documents << doc
         end
