@@ -88,7 +88,10 @@ module Energy
 
     def generate_direct_debit_form
       if (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit?
-        dd_vat_edf_documents << Energy::Documents::DirectDebitFormEdf.new(onboarding_case:, current_user:).call
+        Energy::Documents::DirectDebitFormEdf.new(onboarding_case:, current_user:).call.tap do |doc|
+          edf_dd_documents << doc
+          dd_vat_edf_documents << doc
+        end
       end
     end
 
@@ -123,7 +126,10 @@ module Energy
 
     def generate_total_direct_debit_form
       if (switching_gas? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit?
-        dd_vat_total_documents << Energy::Documents::DirectDebitFormTotal.new(onboarding_case:, current_user:).call
+        Energy::Documents::DirectDebitFormTotal.new(onboarding_case:, current_user:).call.tap do |doc|
+          total_dd_documents << doc
+          dd_vat_total_documents << doc
+        end
       end
     end
 
