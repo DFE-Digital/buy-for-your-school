@@ -17,7 +17,7 @@ module Energy
 
     def variables
       {
-        "case_creator_first_name" => @current_case.first_name,
+        "case_creator_full_name" => "#{@current_case.first_name} #{@current_case.last_name}".strip,
         "billing_payment_terms" => I18n.t("energy.check_your_answers.billing_preferences.#{@onboarding_case_organisation.billing_payment_terms}"),
         "gas_contract_end_date" => set_end_date(@onboarding_case_organisation.gas_current_contract_end_date),
       }
