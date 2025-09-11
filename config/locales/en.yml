@@ -312,7 +312,6 @@ en:
       mat_info:
       - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
       - Multi-academy trusts (MATs) can join the contract by filling in the <a class="govuk-link" href="%{form_url}">Register your interest form</a> and completing the process offline.
-      deadline: "<span class=\"govuk-!-font-weight-bold\">Apply by 5pm, 11 September 2025</span> to join the next available V30 contract in April 2026. You’ll be placed on an interim rate if your current contract expires before 31 March 2026."
       more_info: Get more information
     guidance:
       contents: Contents
