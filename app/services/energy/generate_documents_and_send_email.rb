@@ -36,7 +36,7 @@ module Energy
       generate_letter_of_authority
       generate_check_your_answers
       generate_vat_certificates
-      generate_direct_debit_form
+      generate_edf_direct_debit_form
       generate_total_direct_debit_form
     rescue StandardError => e
       Rails.logger.error("Error generating documents: #{e.message}")
@@ -47,7 +47,7 @@ module Energy
       Energy::Emails::OnboardingFormSubmissionMailer.new(onboarding_case:, to_recipients: current_user.email, documents:).call
 
       if Flipper.enabled?(:auto_email_vat_dd)
-        Energy::Emails::OnboardingFormVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email, documents: edf_vat_documents).call if eligible_vat_edf?
+        Energy::Emails::OnboardingFormVatEdfMailer.new(onboarding_case:, to_recipients: current_user.email, documents: edf_vat_documents).call if eligible_non_dd_vat_edf?
         Energy::Emails::OnboardingFormDdEdfMailer.new(onboarding_case:, to_recipients: current_user.email, documents: edf_dd_documents).call if eligible_dd_edf?
         Energy::Emails::NonDirectDebitVatTotalMailer.new(onboarding_case:, to_recipients: current_user.email, documents: total_vat_documents).call if eligible_non_dd_vat_total?
         Energy::Emails::OnboardingFormDdTotalMailer.new(onboarding_case:, to_recipients: current_user.email, documents: total_dd_documents).call if eligible_dd_total?
@@ -58,7 +58,7 @@ module Energy
       onboarding_case.update!(form_submitted_email_sent: true)
     end
 
-    def eligible_vat_edf?
+    def eligible_non_dd_vat_edf?
       (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_bacs? && @onboarding_case_organisation.vat_rate == 5
     end
 
@@ -78,6 +78,10 @@ module Energy
       (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit? && @onboarding_case_organisation.vat_rate == 5
     end
 
+    def eligible_dd_vat_total?
+      (switching_gas? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit? && @onboarding_case_organisation.vat_rate == 5
+    end
+
     def generate_letter_of_authority
       documents << Energy::Documents::LetterOfAuthority.new(onboarding_case:).call
     end
@@ -86,7 +90,7 @@ module Energy
       documents << Energy::Documents::CheckYourAnswers.new(onboarding_case:).call
     end
 
-    def generate_direct_debit_form
+    def generate_edf_direct_debit_form
       if (switching_electricity? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit?
         Energy::Documents::DirectDebitFormEdf.new(onboarding_case:, current_user:).call.tap do |doc|
           edf_dd_documents << doc
@@ -131,10 +135,6 @@ module Energy
           dd_vat_total_documents << doc
         end
       end
-    end
-
-    def eligible_dd_vat_total?
-      (switching_gas? || switching_both?) && @onboarding_case_organisation.billing_payment_method_direct_debit?
     end
 
     def attach_documents_to_support_case
