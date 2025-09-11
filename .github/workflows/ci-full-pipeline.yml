@@ -316,6 +316,65 @@ jobs:
             **Line:** ${{ steps.current-run-coverage.outputs.line }}%
             **Branch:** ${{ steps.current-run-coverage.outputs.branch }}%
 
+  check_enums:
+    name: Checks - Is enums export up to date?
+    needs: build_test
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Run check
+        run: |
+          docker run \
+            --network ${{ job.container.network }} \
+            --name test_container \
+            -e RAILS_ENV=test \
+            -e DATABASE_URL=postgres://postgres:password@postgres:5432/buy-for-your-school-test \
+            -e DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL="true" \
+            -e DOCKER=true \
+            -e SELENIUM_HUB_URL=http://chrome:4444/wd/hub \
+            -e REDIS_URL=redis://redis:6379 \
+            -e APPLICATION_URL=http://localhost:3000 \
+            -e SECRET_KEY_BASE=test \
+            -e CONTENTFUL_SPACE=test \
+            -e CONTENTFUL_ENVIRONMENT=master \
+            -e CONTENTFUL_DELIVERY_TOKEN=123 \
+            -e CONTENTFUL_PREVIEW_TOKEN=123 \
+            -e CONTENTFUL_ENTRY_CACHING=false \
+            -e CONTENTFUL_WEBHOOK_API_KEY=test \
+            -e NOTIFY_API_KEY=development_team-12345678-1234-1234-1234-abcd12345678-12345678-1234-1234-1234-abcd12345678 \
+            -e MS_GRAPH_TENANT=test \
+            -e MS_GRAPH_CLIENT_ID=test \
+            -e MS_GRAPH_CLIENT_SECRET=test \
+            -e MS_GRAPH_SHARED_MAILBOX_USER_ID=test \
+            -e MS_GRAPH_SHARED_MAILBOX_NAME=mailbox \
+            -e MS_GRAPH_SHARED_MAILBOX_ADDRESS=test@mailbox.com \
+            -e CLAMAV_REST_SERVICE_URL=test \
+            -e DSI_ENV=test \
+            -e DFE_SIGN_IN_IDENTIFIER=service \
+            -e DFE_SIGN_IN_API_SECRET=secret \
+            -e PROC_OPS_TEAM="DSI Caseworkers" \
+            -e QUALTRICS_SURVEY_URL=https://dferesearch.fra1.qualtrics.com \
+            -e SUPPORT_EMAIL=email@example.gov.uk \
+            -e FAF_FRAMEWORK_ENDPOINT=http://faf.test \
+            -e FAF_WEBHOOK_SECRET=test \
+            ${{ needs.build_test.outputs.docker_image }} \
+            bash -c "RAILS_ENV=test bundle exec rake enums:check"
+
   release_dev:
     name: Deploy release (Dev)
     runs-on: ubuntu-latest
