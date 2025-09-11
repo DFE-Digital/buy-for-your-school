@@ -17,8 +17,7 @@ module Energy
         end
 
         send_form_submission_email_with_documents_to_school
-        generate_site_addition_xl_documents
-        generate_portal_access_xl_documents
+        generate_site_addition_and_portal_access_xl_documents
 
         redirect_to energy_case_confirmation_path
       else
@@ -67,6 +66,13 @@ module Energy
 
     def generate_portal_access_xl_documents
       Energy::GeneratePortalAccessXlDocumentsJob.perform_now(
+        onboarding_case_id: onboarding_case.id,
+        current_user_id: current_user.id,
+      )
+    end
+
+    def generate_site_addition_and_portal_access_xl_documents
+      Energy::GenerateSiteAdditionAndPortalAccessXlDocumentsJob.perform_now(
         onboarding_case_id: onboarding_case.id,
         current_user_id: current_user.id,
       )
