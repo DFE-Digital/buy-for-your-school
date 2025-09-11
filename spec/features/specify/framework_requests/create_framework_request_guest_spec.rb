@@ -135,7 +135,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(find("h1.govuk-heading-l")).to have_text "Is this the school you're buying for?"
 
         expect(keys[0]).to have_text "Name and Address"
-        expect(values[0]).to have_text "Greendale Academy for Bright Sparks, St James's Passage, Duke's Place, EC3A 5DE"
+        expect(values[0]).to have_text "Greendale Academy for Bright Sparks, St James's Passage, Duke's Place, London, EC3A 5DE"
 
         expect(keys[1]).to have_text "Local authority"
         expect(values[1]).to have_text "Camden"
@@ -346,7 +346,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         expect(page).to have_text "Is this the school you're buying for?"
 
-        expect(values[0]).to have_text "Greendale Academy for Bright Sparks, St James's Passage, Duke's Place, EC3A 5DE"
+        expect(values[0]).to have_text "Greendale Academy for Bright Sparks, St James's Passage, Duke's Place, London, EC3A 5DE"
       end
 
       it "doesn't include archived establishment groups in the dropdown", :flaky do
