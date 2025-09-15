@@ -5,10 +5,10 @@
   <ul>
     <% if form.present? && mode == :select %>
       <%= form.govuk_radio_buttons_fieldset(:template_id, legend: nil) do %>
-        <%= render partial: "support/management/email_templates/template_manager/templates/template", collection: @templates, as: :template, locals: { mode:, form: } %>
+        <%= render partial: "support/management/email_templates/template_manager/templates/template", collection: @templates, as: :template, locals: { mode:, form:, hide_tag: false } %>
       <% end %>
     <% else %>
-      <%= render partial: "support/management/email_templates/template_manager/templates/template", collection: @templates, as: :template, locals: { mode:, form: } %>
+      <%= render partial: "support/management/email_templates/template_manager/templates/template", collection: @templates, as: :template, locals: { mode:, form:, hide_tag: false } %>
     <% end %>
   </ul>
 </div>
