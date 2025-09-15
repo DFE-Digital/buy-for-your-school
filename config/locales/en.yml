@@ -2662,6 +2662,57 @@ en:
         - Click <strong>Synchronise</strong> to trigger the task manually.
         header: Synchronise frameworks
         sync: Synchronise
+      energy_for_schools:
+        header: Energy for Schools
+        configure_email_options: Configure email options
+        links:
+          electricity: Send electricity emails to
+          gas: Send gas emails to
+        hint: Use a semi-colon (;) to separate multiple email addresses
+        save_return: Save and return
+        choose_email_template: Choose email template
+        not_provided: Not provided
+        not_selected: Not selected
+        flash:
+          updated: Email configuration updated successfully
+        templates:
+          electricity_supplier_submitted_template: Electricity supplier Form submitted
+          electricity_supplier_direct_debit_template: Electricity supplier Direct debit
+          electricity_supplier_vat_template: Electricity supplier VAT details
+          electricity_supplier_direct_debit_vat_template: Electricity supplier Direct debit and VAT
+          gas_supplier_submitted_template: Gas supplier Form submitted
+          gas_supplier_direct_debit_template: Gas supplier Direct debit
+          gas_supplier_vat_template: Gas supplier VAT details
+          gas_supplier_direct_debit_vat_template: Gas supplier Direct debit and VAT
+          school_electricity_direct_debit_template: Schools - Electricity Direct Debit setup template
+          school_gas_direct_debit_template: Schools - Gas Direct Debit setup template
+          school_electricity_vat_template: Schools - Electricity VAT details
+          school_gas_vat_template: Schools - Gas VAT details
+          school_electricity_direct_debit_vat_template: Schools - Electricity VAT & DD details template
+          school_gas_direct_debit_vat_template: Schools - Gas VAT & DD details template
+        electricity:
+          title: Electricity supplier emails
+          email_to: Send to
+          submitted_template: Form submitted
+          direct_debit: Direct debit
+          vat: VAT details
+          direct_debit_vat: Direct debit and VAT
+        gas:
+          title: Gas supplier emails
+          email_to: Send to
+          submitted_template: Form submitted
+          direct_debit: Direct debit
+          vat: VAT details
+          direct_debit_vat: Direct debit and VAT
+        schools:
+          title: Schools emails
+          email_to: send emails to
+          electricity_direct_debit_template: Electricity Direct Debit setup template
+          gas_direct_debit_template: Gas Direct Debit setup template
+          electricity_vat: Electricity VAT details
+          gas_vat: Gas VAT details
+          electricity_direct_debit_vat: Electricity VAT & DD details template
+          gas_direct_debit_vat: Gas VAT & DD details template
     organisation_statuses:
       closed: Closed
       closing: Open, but proposed to close %{date}
