@@ -3,8 +3,18 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <p class="govuk-caption-l"><%= @organisation_detail.name %>: <%= I18n.t("energy.site_contact_details.title") %></p>
-    <h1 class="govuk-heading-l"><%= I18n.t("energy.site_contact_details.heading") %></h1>
-    <p class="govuk-body"><%= I18n.t("energy.site_contact_details.sub_title") %></p>
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="site-contact-details-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            <%= I18n.t("energy.site_contact_details.heading") %>
+          </h1>
+        </legend>
+        <div id="site-contact-details-hint" class="govuk-hint">
+          <%= I18n.t("energy.site_contact_details.sub_title") %>
+        </div>
+      </fieldset>
+    </div>
 
     <%= render "form" %>
   </div>

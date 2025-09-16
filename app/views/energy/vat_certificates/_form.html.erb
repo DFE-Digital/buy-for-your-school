@@ -5,7 +5,7 @@
 
   <%= form.govuk_check_boxes_fieldset :vat_certificate_declared,
         legend: { text: I18n.t("energy.vat_certificate.heading"), tag: :h1, size: "l" },
-        hint: -> { tag.p(I18n.t("energy.vat_certificate.sub_title"), class: "govuk-body") } do %>
+        hint: -> { tag.div(I18n.t("energy.vat_certificate.sub_title"), class: "govuk-hint") } do %>
     <% ['declaration1', 'declaration2', 'declaration3'].each do |declaration| %>
       <% is_checked = Array(@form.vat_certificate_declared)&.include?(declaration) %>
       <% link_errors = !is_checked && !first_unchecked_found %>
