@@ -64,19 +64,33 @@ module Energy
       @support_organisation, valid_school_urns = support_organisation_and_valid_urns
       @school_list = Support::Organisation.where(trust_code: params[:id]) if params[:type] == "mat"
 
-      redirect_to energy_school_selection_path unless @support_organisation && valid_school_urns.include?(params[:id])
+      unless @support_organisation && user_associated_with_school_or_trust?(valid_school_urns, @support_organisation.trust_code)
+        redirect_to energy_school_selection_path
+      end
+    end
+
+    def user_associated_trust_uids
+      current_user.orgs.pluck("uid").compact
+    end
+
+    def user_associated_school_urns
+      current_user.orgs.pluck("urn").compact
+    end
+
+    def user_associated_with_school_or_trust?(valid_school_urns, trust_code)
+      valid_school_urns.include?(params[:id]) || user_associated_trust_uids.include?(trust_code)
     end
 
     def support_organisation_and_valid_urns
       if params[:type] == "mat"
         [
           Support::EstablishmentGroup.find_by(uid: params[:id]),
-          current_user.orgs.pluck("uid"),
+          user_associated_trust_uids,
         ]
       else
         [
           Support::Organisation.find_by(urn: params[:id]),
-          current_user.orgs.pluck("urn"),
+          user_associated_school_urns,
         ]
       end
     end
