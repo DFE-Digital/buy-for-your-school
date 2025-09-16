@@ -457,6 +457,10 @@ en:
     school_selections:
       title: About your school
       heading: Which school are you buying for?
+    mat_school_picker:
+      caption: About your school
+      subtitle: Select a school
+      title: Which school in your academy trust or federation will be involved in this procurement?
     authorisation:
       heading: Are you authorised to switch energy suppliers for these schools?
       page_title: Do you have authorisation?
