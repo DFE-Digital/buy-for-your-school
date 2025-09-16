@@ -1,0 +1,38 @@
+<%# side = show_school_picker_filters?(@all_schools) ? "filters" : nil %>
+
+<%= content_for :title, I18n.t("energy.mat_school_picker.title") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= I18n.t("energy.mat_school_picker.caption") %></span>
+    <h1 class="govuk-heading-l"><%= I18n.t("energy.mat_school_picker.title") %></h1>
+  </div>
+</div>
+
+<%#= render "framework_requests/form", route: "school_pickers", verb: :post, side:, path: energy_mat_school_picker_path %>
+<div class="govuk-grid-row">
+  <% if false %>
+    <div class="govuk-grid-column-one-third">
+      <div>FILTER HERE</div>
+      <%#= render("framework_requests/school_pickers/#{side}", edit: verb == :patch) %>
+    </div>
+  <% end %>
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @form, scope: :mat_school_picker_form, url: energy_mat_school_picker_path, method: :post, id: "framework-support-form"  do |form| %>
+      <%#= form.govuk_error_summary %>
+
+      <%#= render "framework_requests/school_pickers/form", form: form %>
+      <%= form.govuk_radio_buttons_fieldset :mat_schools, legend: { text: I18n.t("energy.mat_school_picker.subtitle"), size: "s", tag: "h2" } do %>
+        <% @mat_schools.each do |school| %>
+          <%= form.govuk_radio_button :mat_school_urn, school.urn, label: { text: school.name }, link_errors: true %>
+        <% end %>
+      <% end %>
+
+      <%= form.submit I18n.t("generic.button.next"), class: "govuk-button", role: "button" %>
+    <% end %>
+  </div>
+</div>
+
+<% if Rails.env.development? %>
+  <%= render "framework_requests/debug" %>
+<% end %>
