@@ -1443,7 +1443,7 @@ en:
       doc_title: Create a specification is closing
       page_title: Sorry, Create a specification is closing
       p1: Create a specification is no longer accepting new cases.
-      p2: 'Use <a href="/energy/start" class="govuk-link">Get help buying for schools</a> to:'
+      p2: 'Use <a href="https://get-help-buying-for-schools.education.gov.uk/" class="govuk-link">Get help buying for schools</a> to:'
       list:
       - find DfE-approved buying options
       - request support with procurements
