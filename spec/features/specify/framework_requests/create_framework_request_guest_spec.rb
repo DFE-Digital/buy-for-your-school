@@ -106,7 +106,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(find("h1.govuk-heading-l")).to have_text "Is this the academy trust or federation you're buying for?"
 
         expect(values[0]).to have_text "Testing Multi Academy Trust"
-        expect(values[1]).to have_text "Boundary House Shr, 91 Charter House Street, EC1M 6HR"
+        expect(values[1]).to have_text "Boundary House Shr, 91 Charter House Street, London, EC1M 6HR"
       end
 
       it "doesn't include archived schools in the dropdown" do
@@ -369,7 +369,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(values[0]).to have_text "Testing Multi Academy Trust"
 
         expect(keys[1]).to have_text "Address"
-        expect(values[1]).to have_text "Boundary House Shr, 91 Charter House Street, EC1M 6HR"
+        expect(values[1]).to have_text "Boundary House Shr, 91 Charter House Street, London, EC1M 6HR"
 
         expect(keys[2]).to have_text "Group type"
         expect(values[2]).to have_text "Multi-academy Trust"
