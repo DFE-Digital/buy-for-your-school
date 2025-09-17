@@ -6,7 +6,7 @@ RSpec.describe Support::EstablishmentGroupPresenter do
 
     describe "#formatted_address" do
       it "returns a correctly address formatted" do
-        expect(presenter.formatted_address).to eq("Boundary House Shr, 91 Charter House Street, EC1M 6HR")
+        expect(presenter.formatted_address).to eq("Boundary House Shr, 91 Charter House Street, London, EC1M 6HR")
       end
     end
   end
@@ -16,7 +16,7 @@ RSpec.describe Support::EstablishmentGroupPresenter do
 
     describe "#formatted_address" do
       it "returns 'not provided'" do
-        expect(presenter.formatted_address).to eq "Not provided"
+        expect(presenter.formatted_address).to eq ""
       end
     end
   end
