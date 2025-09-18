@@ -9,6 +9,18 @@
   padding-top: govuk-spacing(2);
   padding-bottom: govuk-spacing(2);
   border-bottom: 1px solid $govuk-border-colour;
+
+  &.dz-error {
+    color: #d4351c;
+    border-color: #d4351c;
+
+    .progress-status-container {
+      display: none;
+    }
+    .govuk-link--no-visited-state {
+      color: #d4351c;
+    }
+  }
 }
 
 .case-files__file-name {
