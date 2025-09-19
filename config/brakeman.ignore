@@ -229,29 +229,30 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "60e826a1a47702235c7c1d4b7d104b6fe7f3805f58a5510f26769ddcb93c938a",
+      "fingerprint": "7b626cf917f6eb123c72612cc71a981fcf7ecc1d44773d6e0230d8602e3d3c5c",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/support/management/email_templates/template_manager/templates/_template.html.erb",
-      "line": 53,
+      "line": 54,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "(Unresolved Model).new.body_parsed",
       "render_path": [
         {
-          "type": "template",
-          "name": "support/management/email_templates/template_manager/_template_manager",
-          "line": 11,
-          "file": "app/views/support/management/email_templates/template_manager/_template_manager.html.erb",
+          "type": "controller",
+          "class": "Support::Management::SchoolsEmails::SchoolsEmailsTemplates::TemplatesController",
+          "method": "index",
+          "line": 10,
+          "file": "app/controllers/support/management/schools_emails/schools_emails_templates/templates_controller.rb",
           "rendered": {
-            "name": "support/management/email_templates/template_manager/_templates",
-            "file": "app/views/support/management/email_templates/template_manager/_templates.erb"
+            "name": "support/management/schools_emails/schools_emails_templates/templates/index",
+            "file": "app/views/support/management/schools_emails/schools_emails_templates/templates/index.html.erb"
           }
         },
         {
           "type": "template",
-          "name": "support/management/email_templates/template_manager/_templates",
-          "line": 8,
-          "file": "app/views/support/management/email_templates/template_manager/_templates.erb",
+          "name": "support/management/schools_emails/schools_emails_templates/templates/index",
+          "line": 31,
+          "file": "app/views/support/management/schools_emails/schools_emails_templates/templates/index.html.erb",
           "rendered": {
             "name": "support/management/email_templates/template_manager/templates/_template",
             "file": "app/views/support/management/email_templates/template_manager/templates/_template.html.erb"
@@ -266,8 +267,7 @@
       "confidence": "High",
       "cwe_id": [
         79
-      ],
-      "note": ""
+      ]
     },
     {
       "warning_type": "Cross-Site Scripting",
