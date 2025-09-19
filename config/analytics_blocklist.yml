@@ -1050,8 +1050,6 @@
   - roles
   - archived
   :users:
-  - id
-  - dfe_sign_in_uid
   - created_at
   - updated_at
   - email
