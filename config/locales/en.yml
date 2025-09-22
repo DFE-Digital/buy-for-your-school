@@ -2891,3 +2891,15 @@ en:
         other: Other
       question: What did you use the service for today?
       usage_reason_other: Tell us how else this service has helped you
+  cms:
+    signin:
+      page_title: Case management system
+      overview_purpose: "This system is for GHBS operational teams to support school users with complex school procurements or onboard them to specific schemes, like Energy for Schools. You'll be able to:"
+      overview_purpose_list:
+      - view support requests
+      - email school users with advice and instructions
+      - update cases as they progress
+      - share files and contracts with school users
+      contact_line_manager: Contact your line manager if you do not have access.
+      sign_in: Sign in
+
