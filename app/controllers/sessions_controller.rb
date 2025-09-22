@@ -123,6 +123,6 @@ private
       return framework_requests_path
     end
 
-    root_path
+    cms_signin_path
   end
 end
