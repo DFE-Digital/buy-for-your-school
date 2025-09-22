@@ -15,11 +15,11 @@ describe "Case tasklist", :js do
         expect(page).to have_css(".govuk-task-list")
         expect(page).to have_link("Add evaluators")
 
-        expect(page).to have_text("Handover contract")
+        expect(page).to have_text("Share contract and handover document")
         expect(page).to have_link("Add contract recipients")
-        expect(page).to have_link("Upload contract handover pack")
-        expect(page).to have_text("Share handover pack")
-        expect(page).to have_text("Download contract handover pack")
+        expect(page).to have_link("Upload contract and handover document")
+        expect(page).to have_text("Share contract and handover document")
+        expect(page).to have_text("Download contract and handover document")
       end
     end
 
