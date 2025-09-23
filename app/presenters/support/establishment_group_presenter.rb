@@ -14,10 +14,9 @@ module Support
 
     # @return [String]
     def formatted_address
-      [address["street"], address["locality"], address["postcode"]]
-        .reject(&:blank?)
-        .to_sentence(last_word_connector: ", ", two_words_connector: ", ")
-        .presence || I18n.t("generic.not_provided")
+      %w[street locality town county postcode].map { |key|
+        address[key].presence unless address[key] == "Not recorded"
+      }.compact.join(", ")
     end
 
     def postcode
