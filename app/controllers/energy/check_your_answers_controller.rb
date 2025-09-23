@@ -1,6 +1,6 @@
 class Energy::CheckYourAnswersController < Energy::ApplicationController
   before_action :organisation_details
-  before_action { @back_url = energy_school_selection_path }
+  before_action { @back_url = energy_case_tasks_path }
 
   def show
     # There'll only be ONE for single flow, potentially many for MAT flow

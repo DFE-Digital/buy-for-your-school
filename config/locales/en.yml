@@ -312,7 +312,6 @@ en:
       mat_info:
       - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
       - Multi-academy trusts (MATs) can join the contract by filling in the <a class="govuk-link" href="%{form_url}">Register your interest form</a> and completing the process offline.
-      deadline: "<span class=\"govuk-!-font-weight-bold\">Apply by 5pm, 11 September 2025</span> to join the next available V30 contract in April 2026. You’ll be placed on an interim rate if your current contract expires before 31 March 2026."
       more_info: Get more information
     guidance:
       contents: Contents
@@ -1440,6 +1439,16 @@ en:
       requirements: Tell us about your access needs
       requirements_hint: For example, I have difficulty hearing so I cannot do video calls
   specifying:
+    closing:
+      doc_title: Create a specification is closing
+      page_title: Sorry, Create a specification is closing
+      p1: Create a specification is no longer accepting new cases.
+      p2: 'Use <a href="https://get-help-buying-for-schools.education.gov.uk/" class="govuk-link">Get help buying for schools</a> to:'
+      list:
+      - find DfE-approved buying options
+      - request support with procurements
+      - read procurement guidance
+      p3: If you have an existing specification which is in progress, select start to sign in to your DfE Sign-in account and complete and download the specification.
     start_page:
       before_you_start_body:
       - The service will guide you through what information to provide. Standard regulations and requirements that suppliers must comply with will be added automatically.
@@ -1624,8 +1633,10 @@ en:
             to: TO
           new_thread: Create a new message thread
           recipients: Recipients
-          reply_using_signatory_template: Reply using a signatory template
-          reply_with_template: Reply with an email template
+          reply_with_signature: Reply with signature
+          reply_with_template: Reply with template
+          forward_with_signature: Forward with signature
+          forward_with_template: Forward with template
           status: Status
           subject: Subject
           templated_messages: Templated messages
@@ -1643,6 +1654,9 @@ en:
             send_message: Send message
             send_reply: Send reply
             summary_text: Reply to message
+            warning: Warning
+            warning_body: You must upload your attachments again
+          forward:
             warning: Warning
             warning_body: You must upload your attachments again
           table:
@@ -1800,7 +1814,7 @@ en:
           unspecified: Not specified
         tasklist:
           complete_evaluation: Complete evaluation
-          handover_contract: Handover contract
+          handover_contract: Share contract and handover document
           item:
             add_evaluators: Add evaluators
             set_due_date: Set due date
@@ -1808,9 +1822,9 @@ en:
             email_evaluators: Email evaluators
             review_evaluations: Review evaluations
             add_contract_recipients: Add contract recipients
-            upload_contract_handover_pack: Upload contract handover pack
-            share_handover_pack: Share handover pack
-            download_contract_handover_pack: Download contract handover pack
+            upload_contract_handover_pack: Upload contract and handover document
+            share_handover_pack: Share contract and handover document
+            download_contract_handover_pack: Download contract and handover document
           status:
             to_do: To do
             in_progress: In progress
