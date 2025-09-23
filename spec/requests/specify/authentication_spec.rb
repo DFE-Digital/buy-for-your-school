@@ -72,14 +72,14 @@ RSpec.describe "Authentication", type: :request do
     it "tells UserSession to delete session data" do
       expect_any_instance_of(UserSession).to receive(:delete!)
       delete "/auth/dfe/signout"
-      expect(response).to redirect_to "/"
+      expect(response).to redirect_to cms_signin_path
     end
 
     context "when there is no sign out token" do
       it "redirects the user to the root path" do
         allow_any_instance_of(UserSession).to receive(:should_be_signed_out_of_dsi?).and_return(false)
         delete "/auth/dfe/signout"
-        expect(response).to redirect_to "/"
+        expect(response).to redirect_to cms_signin_path
       end
     end
 
