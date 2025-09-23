@@ -11,7 +11,7 @@ feature "Sign out" do
       it "logs the user out and returns them to the home page" do
         click_on "Sign out"
         expect(page).to have_content "You have been signed out"
-        expect(page).to have_current_path "/"
+        expect(page).to have_current_path cms_signin_path
       end
     end
   end
