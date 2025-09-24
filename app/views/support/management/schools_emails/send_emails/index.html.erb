@@ -1,0 +1,40 @@
+<%= content_for :title, "CMS Management | #{I18n.t("support.management.energy_for_schools.header")} | #{I18n.t("support.management.energy_for_schools.links.#{params[:schools_email_type]}")}" %>
+
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.base.header"), portal_management_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.energy_for_schools.header"), portal_management_energy_for_schools_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= I18n.t("support.management.energy_for_schools.links.#{params[:schools_email_type]}") %>
+    </li>
+  </ol>
+</nav>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @energy_email_template, 
+          scope: :school_emails, 
+          url: support_management_schools_email_send_emails_path(schools_email_type: params[:schools_email_type]),
+          method: :post do |form| %>
+
+      <%= form.govuk_error_summary %>
+
+      <%= form.govuk_text_area :to_email_ids,
+        value: @energy_email_template.to_email_ids,
+        class: "govuk-textarea",
+        rows: 5,
+        label: { text: I18n.t("support.management.energy_for_schools.links.#{params[:schools_email_type]}"), size: "l" },
+        hint: { text: I18n.t("support.management.energy_for_schools.hint") }
+      %>
+
+      <div class="govuk-button-group flex-align-center">
+      <%= form.submit I18n.t("support.management.energy_for_schools.save_return"), class: "govuk-button" %>
+      <%= link_to I18n.t("generic.button.cancel"), portal_management_energy_for_schools_path, class: "govuk-link govuk-link--no-visited-state" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<%= content_for :title, "CMS Management | #{I18n.t("support.management.energy_for_schools.header")}" %>
+
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.base.header"), portal_management_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.energy_for_schools.header"), portal_management_energy_for_schools_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+  </ol>
+</nav>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= I18n.t("support.management.energy_for_schools.header") %></h1>
+    <p class="govuk-body"><%= I18n.t("support.management.energy_for_schools.configure_email_options") %></p>
+    <% electricity_supplier_email = @electricity_supplier_email.is_a?(Array) ? @electricity_supplier_email.join('<br>').html_safe : @electricity_supplier_email %>
+    <% gas_supplier_email = @gas_supplier_email.is_a?(Array) ? @gas_supplier_email.join('<br>').html_safe : @gas_supplier_email %>
+    <%= render "summary_card", title: I18n.t("support.management.energy_for_schools.electricity.title"), rows: [
+      { key: I18n.t("support.management.energy_for_schools.electricity.email_to"), value: electricity_supplier_email, link_path: support_management_schools_email_send_emails_path(schools_email_type: :electricity) },
+      { key: I18n.t("support.management.energy_for_schools.electricity.submitted_template"), value: @electricity_supplier_submitted_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :electricity, schools_emails_template_type: :electricity_supplier_submitted_template) },
+      { key: I18n.t("support.management.energy_for_schools.electricity.direct_debit"), value: @electricity_supplier_direct_debit_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :electricity, schools_emails_template_type: :electricity_supplier_direct_debit_template) },
+      { key: I18n.t("support.management.energy_for_schools.electricity.vat"), value: @electricity_supplier_vat_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :electricity, schools_emails_template_type: :electricity_supplier_vat_template) },
+      { key: I18n.t("support.management.energy_for_schools.electricity.direct_debit_vat"), value: @electricity_supplier_direct_debit_vat_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :electricity, schools_emails_template_type: :electricity_supplier_direct_debit_vat_template) }
+    ] %>
+
+    <%= render "summary_card", title: I18n.t("support.management.energy_for_schools.gas.title"), rows: [
+      { key: I18n.t("support.management.energy_for_schools.gas.email_to"), value: gas_supplier_email, link_path: support_management_schools_email_send_emails_path(schools_email_type: :gas) },
+      { key: I18n.t("support.management.energy_for_schools.gas.submitted_template"), value: @gas_supplier_submitted_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :gas, schools_emails_template_type: :gas_supplier_submitted_template) },
+      { key: I18n.t("support.management.energy_for_schools.gas.direct_debit"), value: @gas_supplier_direct_debit_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :gas, schools_emails_template_type: :gas_supplier_direct_debit_template) },
+      { key: I18n.t("support.management.energy_for_schools.gas.vat"), value: @gas_supplier_vat_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :gas, schools_emails_template_type: :gas_supplier_vat_template) },
+      { key: I18n.t("support.management.energy_for_schools.gas.direct_debit_vat"), value: @gas_supplier_direct_debit_vat_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :gas, schools_emails_template_type: :gas_supplier_direct_debit_vat_template) }
+    ] %>
+
+    <%= render "summary_card", title: I18n.t("support.management.energy_for_schools.schools.title"), rows: [
+      { key: I18n.t("support.management.energy_for_schools.schools.electricity_direct_debit_template"), value: @school_electricity_direct_debit_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :electricity, schools_emails_template_type: :school_electricity_direct_debit_template) },
+      { key: I18n.t("support.management.energy_for_schools.schools.gas_direct_debit_template"), value: @school_gas_direct_debit_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :gas, schools_emails_template_type: :school_gas_direct_debit_template) },
+      { key: I18n.t("support.management.energy_for_schools.schools.electricity_vat"), value: @school_electricity_vat_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :electricity, schools_emails_template_type: :school_electricity_vat_template) },
+      { key: I18n.t("support.management.energy_for_schools.schools.gas_vat"), value: @school_gas_vat_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :gas, schools_emails_template_type: :school_gas_vat_template) },
+      { key: I18n.t("support.management.energy_for_schools.schools.electricity_direct_debit_vat"), value: @school_electricity_direct_debit_vat_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :electricity, schools_emails_template_type: :school_electricity_direct_debit_vat_template) },
+      { key: I18n.t("support.management.energy_for_schools.schools.gas_direct_debit_vat"), value: @school_gas_direct_debit_vat_template, link_path: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: :gas, schools_emails_template_type: :school_gas_direct_debit_vat_template) }
+    ] %>
+  </div>
+</div>
