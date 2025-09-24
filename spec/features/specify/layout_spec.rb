@@ -4,16 +4,16 @@ RSpec.feature "Common layout element" do
   end
 
   describe "header" do
-    scenario "logo links back to gov.uk" do
+    scenario "logo links back to homepage" do
       within ".govuk-header__logo" do
         expect(page).to have_link href: "https://www.gov.uk", class: "govuk-header__link--homepage"
       end
     end
 
     scenario "service name links back to the landing page" do
-      within(".govuk-header__content") do
+      within(".govuk-service-navigation__container") do
         # app.name
-        expect(page).to have_link "Get help buying for schools", href: "/", class: "govuk-header__service-name"
+        expect(page).to have_link "Get help buying for schools", href: "/", class: "govuk-service-navigation__link"
       end
     end
   end
