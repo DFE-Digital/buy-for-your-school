@@ -82,6 +82,7 @@ RSpec.configure do |config|
     Flipper.enable(:sc_tasklist_case)
     Flipper.enable(:usability_surveys)
     Flipper.enable(:energy)
+    Flipper.enable(:auto_email_vat_dd)
   end
 
   config.after do
