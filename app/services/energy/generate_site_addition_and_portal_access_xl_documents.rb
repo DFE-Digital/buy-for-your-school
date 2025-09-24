@@ -54,11 +54,11 @@ module Energy
     end
 
     def send_email_to_supplier_with_documents
-      if Flipper.enabled?(:auto_send_siteAdditions_power) && (switching_electricity? || switching_both?)
+      if Flipper.enabled?(:auto_send_siteAdditions_power) && (switching_electricity? || switching_both?) && electricity_supplier_email_address.present?
         electricity_documents = documents.values_at(:site_addition_electricity, :portal_access_electricity)
         Energy::Emails::ElectricitySiteAdditionAndPortalAccessMailer.new(onboarding_case:, to_recipients: electricity_supplier_email_address, documents: electricity_documents).call
       end
-      if Flipper.enabled?(:auto_send_siteAdditions_gas) && (switching_gas? || switching_both?)
+      if Flipper.enabled?(:auto_send_siteAdditions_gas) && (switching_gas? || switching_both?) && gas_supplier_email_address.present?
         gas_documents = documents.values_at(:site_addition_gas, :portal_access_gas)
         Energy::Emails::GasSiteAdditionAndPortalAccessMailer.new(onboarding_case:, to_recipients: gas_supplier_email_address, documents: gas_documents).call
       end
@@ -90,11 +90,11 @@ module Energy
     end
 
     def gas_supplier_email_address
-      current_user.email # Placeholder: replace system table lookup when available
+      Energy::EmailTemplateConfiguration.find_by(energy_type: :gas, configure_option: :gas_supplier_email)&.to_email_ids
     end
 
     def electricity_supplier_email_address
-      current_user.email # Placeholder: replace system table lookup when available
+      Energy::EmailTemplateConfiguration.find_by(energy_type: :electricity, configure_option: :electricity_supplier_email)&.to_email_ids
     end
   end
 end
