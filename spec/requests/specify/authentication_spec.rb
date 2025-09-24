@@ -38,29 +38,29 @@ RSpec.describe "Authentication", type: :request do
     it "users cannot access the new journey path" do
       category = create(:category, :catering)
       post journeys_path(category.id)
-      expect(response).to redirect_to "/"
+      expect(response).to redirect_to cms_signin_path
     end
 
     it "users cannot access an existing journey" do
       journey = create(:journey)
       get journey_path(journey)
-      expect(response).to redirect_to "/"
+      expect(response).to redirect_to cms_signin_path
     end
 
     it "users cannot edit an answer" do
       answer = create(:radio_answer)
       get edit_journey_step_path(answer.step.journey, answer.step)
-      expect(response).to redirect_to "/"
+      expect(response).to redirect_to cms_signin_path
     end
 
     it "users cannot see the design page" do
       get design_index_path
-      expect(response).to redirect_to "/"
+      expect(response).to redirect_to cms_signin_path
     end
 
     it "users cannot see the preview endpoints" do
       get preview_entry_path("an-entry-id")
-      expect(response).to redirect_to "/"
+      expect(response).to redirect_to cms_signin_path
     end
   end
 
