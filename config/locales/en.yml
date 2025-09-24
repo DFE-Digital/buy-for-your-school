@@ -461,6 +461,8 @@ en:
       caption: About your school
       subtitle: Select a school
       title: Which school in your academy trust or federation will be involved in this procurement?
+      errors:
+        must_pick_a_school: You must pick a school
     authorisation:
       heading: Are you authorised to switch energy suppliers for these schools?
       page_title: Do you have authorisation?
