@@ -14,7 +14,12 @@ module Energy
     def default_email_subject = "Case #{@support_case.ref} - send your VAT certificate for gas: Energy for Schools"
 
     def email_template
-      @email_template ||= Support::EmailTemplate.find_by(title: NON_DIRECT_DEBIT_VAT_TOTAL_EMAIL_TEMPLATE, archived: false)
+      config_template = Energy::EmailTemplateConfiguration.find_by(energy_type: :gas, configure_option: :school_gas_vat_template)
+      @email_template ||= if config_template
+                            Support::EmailTemplate.find(config_template.support_email_template_id)
+                          else
+                            Support::EmailTemplate.find_by(title: NON_DIRECT_DEBIT_VAT_TOTAL_EMAIL_TEMPLATE, archived: false)
+                          end
     end
 
     def default_email_template
