@@ -19,7 +19,7 @@ describe "Agent can add attachments to replies", :js, :with_csrf_protection do
 
       within("#messages-frame") do
         click_on "View"
-        click_on "Reply using a signatory template"
+        click_on "Reply with signature"
         fill_in_editor "Your message", with: "This is a test reply"
       end
     end

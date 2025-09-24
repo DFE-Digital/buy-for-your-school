@@ -1,6 +1,6 @@
-<%= form.hidden_field :to_recipients, value: @reply_form.to_recipients.to_s %>
-<%= form.hidden_field :cc_recipients, value: @reply_form.cc_recipients.to_s %>
-<%= form.hidden_field :bcc_recipients, value: @reply_form.bcc_recipients.to_s %>
+<%= form.hidden_field :to_recipients, value: email_draft.to_recipients.to_s %>
+<%= form.hidden_field :cc_recipients, value: email_draft.cc_recipients.to_s %>
+<%= form.hidden_field :bcc_recipients, value: email_draft.bcc_recipients.to_s %>
 
 <%= form.govuk_text_field :subject, label: { text: I18n.t("support.case.label.message_threads.new.enter_subject"), size: "m" }, class: "subject-input" %>
 
@@ -68,16 +68,19 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <table id="<%= unique_id %>_to" class="govuk-table added_recipients_table" data-row-label="TO" hidden="true">
+      <th></th>
       <tbody class="govuk-table__body">
         <% # to be populated by javascript %>
       </tbody>
     </table>
     <table id="<%= unique_id %>_cc" class="govuk-table added_recipients_table" data-row-label="CC" hidden="true">
+      <th></th>
       <tbody class="govuk-table__body">
         <% # to be populated by javascript %>
       </tbody>
     </table>
     <table id="<%= unique_id %>_bcc" class="govuk-table added_recipients_table" data-row-label="BCC" hidden="true">
+      <th></th>
       <tbody class="govuk-table__body">
         <% # to be populated by javascript %>
       </tbody>

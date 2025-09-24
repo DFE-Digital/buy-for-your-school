@@ -266,6 +266,9 @@ Rails.application.routes.draw do
             resources :replies, only: %i[create edit] do
               post "submit", on: :member
             end
+            resources :forwards, only: %i[create edit] do
+              post "submit", on: :member
+            end
           end
         end
         resources :email_templates, only: %i[index]
@@ -343,6 +346,17 @@ Rails.application.routes.draw do
       resource :category_detection, only: %i[new create]
       resources :all_cases_surveys, only: %i[index create]
       resources :sync_frameworks, only: %i[index create]
+      resources :energy_for_schools, only: %i[index edit update new create]
+      resources :schools_emails, only: %i[index create], param: "type" do
+        scope module: :schools_emails do
+          resources :send_emails, only: %i[index create]
+          resources :schools_emails_templates, only: %i[index create], param: "type" do
+            scope module: :schools_emails_templates do
+              resources :templates, only: %i[index create]
+            end
+          end
+        end
+      end
     end
   end
 

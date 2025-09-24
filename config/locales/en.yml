@@ -1439,6 +1439,16 @@ en:
       requirements: Tell us about your access needs
       requirements_hint: For example, I have difficulty hearing so I cannot do video calls
   specifying:
+    closing:
+      doc_title: Create a specification is closing
+      page_title: Sorry, Create a specification is closing
+      p1: Create a specification is no longer accepting new cases.
+      p2: 'Use <a href="https://get-help-buying-for-schools.education.gov.uk/" class="govuk-link">Get help buying for schools</a> to:'
+      list:
+      - find DfE-approved buying options
+      - request support with procurements
+      - read procurement guidance
+      p3: If you have an existing specification which is in progress, select start to sign in to your DfE Sign-in account and complete and download the specification.
     start_page:
       before_you_start_body:
       - The service will guide you through what information to provide. Standard regulations and requirements that suppliers must comply with will be added automatically.
@@ -1623,8 +1633,10 @@ en:
             to: TO
           new_thread: Create a new message thread
           recipients: Recipients
-          reply_using_signatory_template: Reply using a signatory template
-          reply_with_template: Reply with an email template
+          reply_with_signature: Reply with signature
+          reply_with_template: Reply with template
+          forward_with_signature: Forward with signature
+          forward_with_template: Forward with template
           status: Status
           subject: Subject
           templated_messages: Templated messages
@@ -1642,6 +1654,9 @@ en:
             send_message: Send message
             send_reply: Send reply
             summary_text: Reply to message
+            warning: Warning
+            warning_body: You must upload your attachments again
+          forward:
             warning: Warning
             warning_body: You must upload your attachments again
           table:
@@ -1799,7 +1814,7 @@ en:
           unspecified: Not specified
         tasklist:
           complete_evaluation: Complete evaluation
-          handover_contract: Handover contract
+          handover_contract: Share contract and handover document
           item:
             add_evaluators: Add evaluators
             set_due_date: Set due date
@@ -1807,9 +1822,9 @@ en:
             email_evaluators: Email evaluators
             review_evaluations: Review evaluations
             add_contract_recipients: Add contract recipients
-            upload_contract_handover_pack: Upload contract handover pack
-            share_handover_pack: Share handover pack
-            download_contract_handover_pack: Download contract handover pack
+            upload_contract_handover_pack: Upload contract and handover document
+            share_handover_pack: Share contract and handover document
+            download_contract_handover_pack: Download contract and handover document
           status:
             to_do: To do
             in_progress: In progress
@@ -2662,6 +2677,57 @@ en:
         - Click <strong>Synchronise</strong> to trigger the task manually.
         header: Synchronise frameworks
         sync: Synchronise
+      energy_for_schools:
+        header: Energy for Schools
+        configure_email_options: Configure email options
+        links:
+          electricity: Send electricity emails to
+          gas: Send gas emails to
+        hint: Use a semi-colon (;) to separate multiple email addresses
+        save_return: Save and return
+        choose_email_template: Choose email template
+        not_provided: Not provided
+        not_selected: Not selected
+        flash:
+          updated: Email configuration updated successfully
+        templates:
+          electricity_supplier_submitted_template: Electricity supplier Form submitted
+          electricity_supplier_direct_debit_template: Electricity supplier Direct debit
+          electricity_supplier_vat_template: Electricity supplier VAT details
+          electricity_supplier_direct_debit_vat_template: Electricity supplier Direct debit and VAT
+          gas_supplier_submitted_template: Gas supplier Form submitted
+          gas_supplier_direct_debit_template: Gas supplier Direct debit
+          gas_supplier_vat_template: Gas supplier VAT details
+          gas_supplier_direct_debit_vat_template: Gas supplier Direct debit and VAT
+          school_electricity_direct_debit_template: Schools - Electricity Direct Debit setup template
+          school_gas_direct_debit_template: Schools - Gas Direct Debit setup template
+          school_electricity_vat_template: Schools - Electricity VAT details
+          school_gas_vat_template: Schools - Gas VAT details
+          school_electricity_direct_debit_vat_template: Schools - Electricity VAT & DD details template
+          school_gas_direct_debit_vat_template: Schools - Gas VAT & DD details template
+        electricity:
+          title: Electricity supplier emails
+          email_to: Send to
+          submitted_template: Form submitted
+          direct_debit: Direct debit
+          vat: VAT details
+          direct_debit_vat: Direct debit and VAT
+        gas:
+          title: Gas supplier emails
+          email_to: Send to
+          submitted_template: Form submitted
+          direct_debit: Direct debit
+          vat: VAT details
+          direct_debit_vat: Direct debit and VAT
+        schools:
+          title: Schools emails
+          email_to: send emails to
+          electricity_direct_debit_template: Electricity Direct Debit setup template
+          gas_direct_debit_template: Gas Direct Debit setup template
+          electricity_vat: Electricity VAT details
+          gas_vat: Gas VAT details
+          electricity_direct_debit_vat: Electricity VAT & DD details template
+          gas_direct_debit_vat: Gas VAT & DD details template
     organisation_statuses:
       closed: Closed
       closing: Open, but proposed to close %{date}
