@@ -12,9 +12,11 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @form, scope: :mat_school_picker_form, url: energy_mat_school_picker_path, method: :post, id: "framework-support-form"  do |form| %>
+      <%= form.govuk_error_summary %>
+      <%= form.hidden_field :mat_school_urn, value: nil %>
       <%= form.govuk_radio_buttons_fieldset :mat_schools, legend: { text: I18n.t("energy.mat_school_picker.subtitle"), size: "s", tag: "h2" } do %>
         <% @mat_schools.each do |school| %>
-          <%= form.govuk_radio_button :mat_school_urn, school.urn, label: { text: school.name }, link_errors: true %>
+          <%= form.govuk_radio_button :mat_school_urn, school.urn, label: { text: school.name }, link_errors: false %>
         <% end %>
       <% end %>
 
