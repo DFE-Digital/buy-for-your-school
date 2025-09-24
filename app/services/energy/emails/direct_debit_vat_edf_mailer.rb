@@ -13,7 +13,12 @@ module Energy
     def default_email_subject = "Case #{@support_case.ref} - send your VAT and Direct Debit instructions for electricity: Energy for Schools"
 
     def email_template
-      @email_template ||= Support::EmailTemplate.find_by(title: DD_VAT_EDF_EMAIL_TEMPLATE, archived: false)
+      config_template = Energy::EmailTemplateConfiguration.find_by(energy_type: :electricity, configure_option: :school_electricity_direct_debit_vat_template)
+      @email_template ||= if config_template
+                            Support::EmailTemplate.find(config_template.support_email_template_id)
+                          else
+                            Support::EmailTemplate.find_by(title: DD_VAT_EDF_EMAIL_TEMPLATE, archived: false)
+                          end
     end
 
     def default_email_template
