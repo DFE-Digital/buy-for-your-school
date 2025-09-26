@@ -24,7 +24,7 @@ module Energy
           Company: input_values[:company_name],
           "Address-1": input_values[:address_line1],
           "Address-2": input_values[:address_line2],
-          "Address-3": input_values[:city],
+          "Address-3": input_values[:town_county],
           "Post Code 1": input_values[:postcode],
           MPR: is_multi_mprn? ? nil : input_values[:mprn],
         }.merge(is_multi_mprn? ? build_mprns : {})
@@ -35,7 +35,7 @@ module Energy
           company_name: @organisation.name,
           address_line1:,
           address_line2:,
-          city:,
+          town_county:,
           postcode:,
           mprn: single_mprn,
           mprn1: mprns[0],
@@ -58,8 +58,8 @@ module Energy
         address[:locality]
       end
 
-      def city
-        address[:town]
+      def town_county
+        [address[:town], address[:county].presence].compact.join(", ")
       end
 
       def postcode
