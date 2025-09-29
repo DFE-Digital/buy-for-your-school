@@ -32,7 +32,7 @@ module Energy
 
       def input_values
         @input_values ||= {
-          company_name: @organisation.name,
+          company_name: @onboarding_case_organisation.name,
           address_line1:,
           address_line2:,
           town_county:,
