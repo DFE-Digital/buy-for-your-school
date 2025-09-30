@@ -15,7 +15,7 @@ module Energy
     def email_template
       config_template = Energy::EmailTemplateConfiguration.find_by(energy_type: :gas, configure_option: :school_gas_direct_debit_vat_template)
       @email_template ||= if config_template
-                            Support::EmailTemplate.find(config_template.support_email_template_id)
+                            Support::EmailTemplate.find(config_template.support_email_templates_id)
                           else
                             Support::EmailTemplate.find_by(title: DD_VAT_TOTAL_EMAIL_TEMPLATE, archived: false)
                           end
