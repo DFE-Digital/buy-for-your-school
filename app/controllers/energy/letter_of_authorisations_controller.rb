@@ -57,6 +57,7 @@ module Energy
       )
     end
 
+    # This 2 methods should be deleted with associated jobs and classes
     def generate_site_addition_xl_documents
       Energy::GenerateSiteAdditionXlDocumentsJob.perform_now(
         onboarding_case_id: onboarding_case.id,
@@ -72,7 +73,7 @@ module Energy
     end
 
     def generate_site_addition_and_portal_access_xl_documents
-      Energy::GenerateSiteAdditionAndPortalAccessXlDocumentsJob.perform_now(
+      Energy::GenerateSiteAdditionAndPortalAccessXlDocumentsJob.perform_later(
         onboarding_case_id: onboarding_case.id,
         current_user_id: current_user.id,
       )
