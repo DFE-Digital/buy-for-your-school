@@ -10,6 +10,9 @@ outcome_achieveds = "outcome_achieveds"
 inferrable = "inferrable"
 SME = "SME"
 MIS = "MIS"
+TUPE = "TUPE"
+notifyable = "notifyable"
+permissable = "permissable"
 
 [files]
 extend-exclude = ["Gemfile", "spec/lib/specify/school/mapper_call_spec.rb"]
