@@ -78,7 +78,7 @@ module Energy
     end
 
     def going_to_tasks?
-      params[:commit] != I18n.t("generic.button.save_continue")
+      params[:commit] != I18n.t("generic.button.save_continue") && !params[:js_form_submit]
     end
 
     def gas_single_meter?
