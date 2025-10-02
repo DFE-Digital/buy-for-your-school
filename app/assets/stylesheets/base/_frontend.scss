@@ -1,9 +1,10 @@
 $govuk-assets-path: "/assets/";
 $govuk-images-path: "/assets/images/";
-$govuk-fonts-path: "/assets/fonts/";
+$govuk-font-family: 'Inter', sans-serif;
 $govuk-new-organisation-colours: true;
 
-@import "govuk-frontend/dist/govuk/all";
+@import "govuk-frontend/dist/govuk/index";
+@import url('https://rsms.me/inter/inter.css');
 
 .govuk-table__row.borderless .govuk-table__cell,
 .borderless {

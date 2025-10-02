@@ -5,3 +5,5 @@
 //= link tick.svg
 //= link mpan.png
 //= link mpan-half-hourly.png
+//= link department-for-education_white.png
+//= link department-for-education_black.png
