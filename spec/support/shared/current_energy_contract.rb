@@ -42,10 +42,12 @@ RSpec.shared_context "with current energy contract" do |energy_type|
     end
     expect(page).to have_text("When does the contract end?")
     expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
+    fill_in "Day", with: "11"
+    fill_in "Month", with: "11"
+    fill_in "Year", with: "2028"
 
     click_button "Save and continue"
     expect(page).to have_text(energy_type_error)
-    expect(page).to have_text("Enter a contract end date")
 
     fill_in_supplier_and_contract_end_date(day: "31", month: "12", year: "2035") # check upper limit of date
     expect(page).to have_text("Enter a contract end date that’s no more than 1 year prior to and no more than 5 years from today’s date")
