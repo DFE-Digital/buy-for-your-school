@@ -108,9 +108,5 @@ module Energy
     def electricity_usage_details
       @onboarding_case_organisation.electricity_meters.all
     end
-
-    def set_register_your_interest_form_url
-      @register_your_interest_form_url = "https://submit.forms.service.gov.uk/form/8895/multi-academy-trusts-register-your-interest-in-energy-for-schools/1049539"
-    end
   end
 end

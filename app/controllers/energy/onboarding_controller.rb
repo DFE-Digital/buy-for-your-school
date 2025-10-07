@@ -2,7 +2,6 @@
 class Energy::OnboardingController < Energy::ApplicationController
   skip_before_action :authenticate_user!, :check_if_submitted
   before_action :remember_onboarding
-  before_action :set_register_your_interest_form_url, only: %i[start guidance]
 
   def start; end
 
