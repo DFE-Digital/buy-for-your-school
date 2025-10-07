@@ -60,7 +60,7 @@
     ) %>
 
     <h2 class="govuk-heading-m" id="how_to_join"><%= I18n.t("energy.guidance.how_to_join.title") %></h2>
-    <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.how_to_join.body", register_your_interest_form_url: @register_your_interest_form_url)) %>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.how_to_join.body", register_your_interest_form_url: register_your_interest_form_url)) %>
     <%= govuk_list I18n.t("energy.guidance.how_to_join.list"), type: :bullet %>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.how_to_join.body2")) %>
 
