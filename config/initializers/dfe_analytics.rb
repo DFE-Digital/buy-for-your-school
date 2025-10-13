@@ -9,7 +9,7 @@ DfE::Analytics.configure do |config|
 
   # Which ActiveJob queue to put events on
   #
-  # config.queue = :dfe_analytics
+  config.queue = :analytics
 
   # The name of the BigQuery table we’re writing to.
   #
@@ -30,7 +30,7 @@ DfE::Analytics.configure do |config|
 
   # Passed directly to the retries: option on the BigQuery client
   #
-  # config.bigquery_retries = 3
+  config.bigquery_retries = 3
 
   # Passed directly to the timeout: option on the BigQuery client
   #
