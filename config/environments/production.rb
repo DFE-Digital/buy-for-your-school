@@ -147,8 +147,15 @@ Rails.application.configure do
   end
 
   # hosts setup
+  config.middleware.use DomainRedirector
+
+  application_urls = ENV["APPLICATION_URL"].to_s.split(",").map(&:strip)
+
+  application_urls.each do |url|
+    config.hosts << url.split("://").last if url.present?
+  end
+
   [
-    ENV["APPLICATION_URL"],
     ENV["CONTAINER_APP_HOSTNAME"],
   ].each do |hostname|
     config.hosts << hostname.split("://").last if hostname.present?
