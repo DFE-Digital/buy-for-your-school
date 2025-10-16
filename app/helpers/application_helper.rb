@@ -55,4 +55,8 @@ module ApplicationHelper
       :create_a_spec
     end
   end
+
+  def register_your_interest_form_url
+    "https://submit.forms.service.gov.uk/form/8895/multi-academy-trusts-register-your-interest-in-energy-for-schools/1049539"
+  end
 end
