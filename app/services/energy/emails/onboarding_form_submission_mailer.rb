@@ -1,65 +1,29 @@
 module Energy
-  class Emails::OnboardingFormSubmissionMailer
+  class Emails::OnboardingFormSubmissionMailer < Energy::Emails::BaseMailer
     FORM_SUBMISSION_EMAIL_TEMPLATE = "Email notification of Energy for Schools form completed".freeze
-
-    def initialize(onboarding_case:, to_recipients:, documents: [])
-      @onboarding_case = onboarding_case
-      @onboarding_case_organisation = @onboarding_case.onboarding_case_organisations.first
-      @support_case = @onboarding_case.support_case
-      @to_recipients = to_recipients
-      @documents = documents
-    end
-
-    def default_template
-      ApplicationController.renderer.render(
-        partial: "energy/letter_of_authorisations/onboarding_form_submission_email_template",
-      )
-    end
-
-    def call
-      draft = Email::Draft.new(
-        default_content: default_email_template,
-        default_subject: default_email_subject,
-        template_id: email_template&.id,
-        ticket: @support_case.to_model,
-        to_recipients: @to_recipients.to_json,
-      ).save_draft!
-
-      @email_draft = Email::Draft.find(draft.id)
-      @email_draft.attributes = { html_content: email_template.body } if email_template
-
-      parse_template
-      attach_documents if @documents.any?
-
-      @email_draft.save_draft!
-      @email_draft.deliver_as_new_message
-    end
+    FORM_SUBMISSION_EMAIL_TEMPLATE_NEW = "AUTO usage: Email notification of Energy for Schools form completed".freeze
 
   private
 
     def default_email_subject = "Case #{@support_case.ref} - form submission: Energy for Schools"
 
     def email_template
-      @email_template ||= Support::EmailTemplate.find_by(title: FORM_SUBMISSION_EMAIL_TEMPLATE, archived: false)
+      cms_template = Flipper.enabled?(:auto_email_vat_dd) ? FORM_SUBMISSION_EMAIL_TEMPLATE_NEW : FORM_SUBMISSION_EMAIL_TEMPLATE
+      @email_template ||= Support::EmailTemplate.find_by(title: cms_template, archived: false)
     end
 
     def default_email_template
-      ApplicationController.renderer.render(
-        partial: "energy/letter_of_authorisations/onboarding_form_submission_email_template",
-      )
+      ruby_template = if Flipper.enabled?(:auto_email_vat_dd)
+                        "energy/letter_of_authorisations/onboarding_form_submission_email_template_new"
+                      else
+                        "energy/letter_of_authorisations/onboarding_form_submission_email_template"
+                      end
+
+      ApplicationController.renderer.render(partial: ruby_template)
     end
 
     def parse_template
       @email_draft.html_content = Energy::Emails::OnboardingFormSubmissionVariableParser.new(@support_case, @onboarding_case_organisation, @email_draft).parse_template
-    end
-
-    def attach_documents
-      @documents.each do |document|
-        @email_draft.email.attachments.create!(file: document)
-      end
-    rescue StandardError => e
-      Rails.logger.error("Error attaching documents: #{e.message}")
-      raise e
     end
   end
 end
