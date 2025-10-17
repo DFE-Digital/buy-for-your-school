@@ -74,6 +74,7 @@ module Support
         description: faf[:description],
         source: 2,
         status: new_status,
+        provider_reference: faf[:provider_reference],
       )
     end
 
@@ -87,6 +88,7 @@ module Support
           provider_end_date: Date.parse(framework["expiry"]),
           url: framework["url"],
           description: framework["descr"],
+          provider_reference: framework["provider_reference"],
         }
       end
     end
