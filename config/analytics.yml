@@ -10,4 +10,3 @@ shared:
     - deleted_at
     - current_organisation_ukprn
     - user_type
-

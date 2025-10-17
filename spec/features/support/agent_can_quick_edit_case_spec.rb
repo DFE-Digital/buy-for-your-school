@@ -36,4 +36,10 @@ describe "Agent can quick edit a case", :js do
       expect(support_case.reload.with_school).to eq(true)
     end
   end
+
+  context "when the case level is 1 to 5" do
+    it "Level 6 should be disabled" do
+      expect(page.find("#case-quick-edit-support-level-l6-field")[:disabled]).to eq("true")
+    end
+  end
 end

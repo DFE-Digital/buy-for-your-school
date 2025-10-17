@@ -29,7 +29,7 @@ describe "Agent can change case summary", :js do
       fill_in "Description of next key date", with: "Key event"
       click_button "Continue"
       click_button "Save"
-      sleep 0.1
+      sleep 0.5
     end
 
     it "persists the changes" do
@@ -105,12 +105,82 @@ describe "Agent can change case summary", :js do
       fill_in "Description of next key date", with: "Key event"
       click_button "Continue"
       click_button "Save"
-      sleep 0.1
+      sleep 0.5
     end
 
     it "persists the changes" do
       expect(support_case.reload.support_level).to eq("L6")
       expect(support_case.reload.state).to eq("on_hold")
+    end
+  end
+
+  context "when case with a sub-category of ‘DfE Energy for Schools service’" do
+    let!(:energy_case) { create(:support_case, support_level: :L7, value: nil, source: :energy_onboarding, project: "test project", category: dfe_energy_for_schools_service_category, procurement_stage: onboarding_form_stage) }
+    let!(:onboarding_case) { create(:onboarding_case, support_case: energy_case) }
+
+    before do
+      visit edit_support_case_summary_path(energy_case)
+    end
+
+    def expect_fields_disabled(fields)
+      fields.each do |field|
+        expect(page.find(field)["disabled"]).to eq("true")
+      end
+    end
+
+    it "request type, case level and stage cannot be changed for an un-submitted Onboarding case" do
+      expect(page).to have_content("Update case summary")
+      expect(energy_case.energy_onboarding_case?).to eq(true)
+      expect(energy_case.reload.source).to eq("energy_onboarding")
+
+      selected_option = page.find("#select_request_details_category_id").find("option[selected]")
+      expect(selected_option.text).to eq("DfE Energy for Schools service")
+
+      disabled_fields = [
+        "#case-summary-request-type-true-field",
+        "#select_request_details_category_id",
+        "#case-summary-request-type-field",
+        "#case-summary-support-level-l1-field",
+        "#case-summary-support-level-l2-field",
+        "#case-summary-support-level-l3-field",
+        "#case-summary-support-level-l4-field",
+        "#case-summary-support-level-l5-field",
+        "#case-summary-support-level-l6-field",
+        "#case-summary-support-level-l7-field",
+        "#case-summary-procurement-stage-id-field",
+      ]
+      expect_fields_disabled(disabled_fields)
+    end
+
+    it "request type and case level cannot be changed and stage can be change for an submitted Onboarding case" do
+      onboarding_case.update!(submitted_at: Time.current)
+      visit edit_support_case_summary_path(energy_case)
+
+      disabled_fields = [
+        "#case-summary-request-type-true-field",
+        "#select_request_details_category_id",
+        "#case-summary-request-type-field",
+        "#case-summary-support-level-l1-field",
+        "#case-summary-support-level-l2-field",
+        "#case-summary-support-level-l3-field",
+        "#case-summary-support-level-l4-field",
+        "#case-summary-support-level-l5-field",
+        "#case-summary-support-level-l6-field",
+        "#case-summary-support-level-l7-field",
+      ]
+      expect_fields_disabled(disabled_fields)
+
+      expect(page.find("#case-summary-procurement-stage-id-field")["disabled"]).to eq("false")
+    end
+
+    it "show only onboarding stages" do
+      onboarding_case.update!(submitted_at: Time.current)
+
+      select_box = page.find("#case-summary-procurement-stage-id-field")
+      option_group_6 = select_box.all("optgroup").find { |group| group[:label] == "STAGE 6" }
+      option_group_1 = select_box.all("optgroup").find { |group| group[:label] == "STAGE 1" }
+      expect(option_group_6).not_to be_nil
+      expect(option_group_1).to be_nil
     end
   end
 end

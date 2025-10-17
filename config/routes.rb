@@ -266,6 +266,9 @@ Rails.application.routes.draw do
             resources :replies, only: %i[create edit] do
               post "submit", on: :member
             end
+            resources :forwards, only: %i[create edit] do
+              post "submit", on: :member
+            end
           end
         end
         resources :email_templates, only: %i[index]
@@ -332,7 +335,7 @@ Rails.application.routes.draw do
 
     namespace :management do
       get "/", to: "base#index"
-      resources :agents, only: %i[index edit update new create]
+      resources :agents
       resources :categories, only: %i[index update]
       resources :email_templates do
         get "/attachment-list", to: "email_templates#attachment_list", on: :member
@@ -343,6 +346,17 @@ Rails.application.routes.draw do
       resource :category_detection, only: %i[new create]
       resources :all_cases_surveys, only: %i[index create]
       resources :sync_frameworks, only: %i[index create]
+      resources :energy_for_schools, only: %i[index edit update new create]
+      resources :schools_emails, only: %i[index create], param: "type" do
+        scope module: :schools_emails do
+          resources :send_emails, only: %i[index create]
+          resources :schools_emails_templates, only: %i[index create], param: "type" do
+            scope module: :schools_emails_templates do
+              resources :templates, only: %i[index create]
+            end
+          end
+        end
+      end
     end
   end
 
@@ -389,7 +403,7 @@ Rails.application.routes.draw do
 
     namespace :management do
       get "/", to: "base#index"
-      resources :agents, only: %i[index edit update new create]
+      resources :agents
     end
   end
 
@@ -606,6 +620,8 @@ Rails.application.routes.draw do
         get "closures", to: "/support/cases/closures#index", as: :closures
         post "closures/confirm", to: "/support/cases/closures#confirm", as: :closures_confirm
         post "closures", to: "/support/cases/closures#create", as: :closures_post
+        get "contact_details/edit", to: "/support/cases/contact_details#edit", as: :edit_contact_details
+        patch "contact_details", to: "/support/cases/contact_details#update", as: :update_contact_details
       end
     end
 

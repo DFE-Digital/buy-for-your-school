@@ -9,7 +9,6 @@
     <%= render ParagraphComponent.new(text: I18n.t("energy.join.benefits.text")) %>
     <%= govuk_list I18n.t("energy.join.benefits.list"), type: :bullet %>
     <%= render ParagraphComponent.new(text: I18n.t("energy.join.mat_info", form_url: @register_your_interest_form_url)) %>
-    <%= render ParagraphComponent.new(text: I18n.t("energy.join.deadline").html_safe) %>
 
     <%= govuk_start_button(text: I18n.t("generic.button.start"), href: energy_before_you_start_path) %>
     <%= govuk_list [

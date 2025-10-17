@@ -92,6 +92,12 @@ module MicrosoftGraph
       Transformer::UpdateMessage.transform(response, into: Resource::Message)
     end
 
+    # https://learn.microsoft.com/en-us/graph/api/message-createforward?view=graph-rest-1.0&tabs=http
+    def create_forward_message(user_id:, forward_to_id:, http_headers: {})
+      response = client_session.graph_api_post("users/#{user_id}/messages/#{forward_to_id}/createForward", nil, http_headers)
+      Transformer::UpdateMessage.transform(response, into: Resource::Message)
+    end
+
     # https://docs.microsoft.com/en-us/graph/api/user-post-messages?view=graph-rest-1.0&tabs=http
     def create_message(user_id:, request_body: {}, http_headers: {})
       response = client_session.graph_api_post(
@@ -149,6 +155,11 @@ module MicrosoftGraph
       add_content_and_send_message(draft, user_id: mailbox.user_id, message_id: draft_message.id, details: details_for_reply(draft, draft_message))
     end
 
+    def create_and_forward_new_message(mailbox:, draft:)
+      draft_message = create_forward_message(user_id: mailbox.user_id, forward_to_id: draft.forward_to_id, http_headers: DEFAULT_EMAIL_HEADERS)
+      add_content_and_send_message(draft, user_id: mailbox.user_id, message_id: draft_message.id, details: details_for_forward(draft, draft_message))
+    end
+
   private
 
     def add_content_and_send_message(draft, user_id:, message_id:, details:)
@@ -194,6 +205,23 @@ module MicrosoftGraph
           "content" => "<html><body>#{draft.body}</body></html>#{draft_message.body.content}",
         },
       }
+    end
+
+    def details_for_forward(draft, draft_message)
+      {
+        subject: draft.subject,
+        body: {
+          "ContentType" => "HTML",
+          "content" => "<html><body>#{draft.body}</body></html>#{draft_message.body.content}",
+        },
+        toRecipients: email_addresses(draft.to_recipients),
+        ccRecipients: email_addresses(draft.cc_recipients),
+        bccRecipients: email_addresses(draft.bcc_recipients),
+      }
+    end
+
+    def email_addresses(recipients)
+      recipients.map { |email| { "emailAddress" => { "address" => email } } }
     end
 
     def format_query(query_parts)

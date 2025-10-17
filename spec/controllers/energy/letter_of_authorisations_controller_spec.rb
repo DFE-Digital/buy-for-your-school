@@ -40,6 +40,7 @@ RSpec.describe Energy::LetterOfAuthorisationsController, type: :controller do
 
         expect(onboarding_case.reload).to be_submitted
         expect(onboarding_case.reload.support_case.procurement_stage).to eq(form_review_stage)
+        expect(onboarding_case.reload.support_case.state).to eq("opened")
       end
     end
   end

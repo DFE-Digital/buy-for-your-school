@@ -20,7 +20,7 @@ describe "Cec agent can add attachments to replies", :js, :with_csrf_protection 
 
       within("#messages-frame") do
         click_on "View"
-        click_on "Reply using a signatory template"
+        click_on "Reply with signature"
         fill_in_editor "Your message", with: "This is a test reply"
       end
     end
