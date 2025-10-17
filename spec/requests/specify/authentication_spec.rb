@@ -38,29 +38,29 @@ RSpec.describe "Authentication", type: :request do
     it "users cannot access the new journey path" do
       category = create(:category, :catering)
       post journeys_path(category.id)
-      expect(response).to redirect_to "/"
+      expect(response).to redirect_to cms_signin_path
     end
 
     it "users cannot access an existing journey" do
       journey = create(:journey)
       get journey_path(journey)
-      expect(response).to redirect_to "/"
+      expect(response).to redirect_to cms_signin_path
     end
 
     it "users cannot edit an answer" do
       answer = create(:radio_answer)
       get edit_journey_step_path(answer.step.journey, answer.step)
-      expect(response).to redirect_to "/"
+      expect(response).to redirect_to cms_signin_path
     end
 
     it "users cannot see the design page" do
       get design_index_path
-      expect(response).to redirect_to "/"
+      expect(response).to redirect_to cms_signin_path
     end
 
     it "users cannot see the preview endpoints" do
       get preview_entry_path("an-entry-id")
-      expect(response).to redirect_to "/"
+      expect(response).to redirect_to cms_signin_path
     end
   end
 
@@ -72,14 +72,14 @@ RSpec.describe "Authentication", type: :request do
     it "tells UserSession to delete session data" do
       expect_any_instance_of(UserSession).to receive(:delete!)
       delete "/auth/dfe/signout"
-      expect(response).to redirect_to "/"
+      expect(response).to redirect_to cms_signin_path
     end
 
     context "when there is no sign out token" do
       it "redirects the user to the root path" do
         allow_any_instance_of(UserSession).to receive(:should_be_signed_out_of_dsi?).and_return(false)
         delete "/auth/dfe/signout"
-        expect(response).to redirect_to "/"
+        expect(response).to redirect_to cms_signin_path
       end
     end
 

@@ -5,7 +5,7 @@ RSpec.feature "Specification dashboard" do
     end
 
     it "redirects to the hompage" do
-      expect(page).to have_current_path "/"
+      expect(page).to have_current_path cms_signin_path
       expect(page).to have_content "You must sign in"
     end
   end
