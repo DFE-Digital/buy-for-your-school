@@ -49,18 +49,20 @@ module Energy
 
       if ALLOWED_CLASSES.include?(onboardable_type)
         @organisation_detail = onboardable_type.safe_constantize.find(@onboarding_case_organisation.onboardable_id)
-        user_has_access_to_organisation?
+        check_user_has_access_to_organisation(@organisation_detail)
       else
         render("errors/not_found", status: :not_found)
       end
     end
 
-    def user_has_access_to_organisation?
+    def check_user_has_access_to_organisation(support_org)
       valid_orgs = current_user.orgs.pluck("urn", "uid").flatten.compact
 
-      if @organisation_detail.respond_to?(:urn) && !valid_orgs.include?(@organisation_detail.urn)
-        render("errors/not_found", status: :not_found)
-      elsif @organisation_detail.respond_to?(:uid) && !valid_orgs.include?(@organisation_detail.uid)
+      access_to_single_school = support_org.respond_to?(:urn) && valid_orgs.include?(support_org.urn)
+      access_to_trust = support_org.respond_to?(:uid) && valid_orgs.include?(support_org.uid)
+      access_to_school_in_trust = support_org.respond_to?(:trust_code) && valid_orgs.include?(support_org.trust_code)
+
+      unless access_to_single_school || access_to_trust || access_to_school_in_trust
         render("errors/not_found", status: :not_found)
       end
     end
