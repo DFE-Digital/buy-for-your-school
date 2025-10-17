@@ -1,2 +1,12 @@
----
-shared: {}
+shared:
+  dfe_sign_in_users:
+
+    - id
+    - dfe_sign_in_id
+    - organisation_name
+    - created_at
+    - updated_at
+    - role_codes
+    - deleted_at
+    - current_organisation_ukprn
+    - user_type
