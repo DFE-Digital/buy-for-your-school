@@ -30,6 +30,8 @@ Click on `add feature` and enter the name you have used for your feature flag. Y
 ## Current Flags
 |Flag name|Description|Status|Actions|
 |--|--|--|--|
+|auto_send_siteAdditions_gas|Site addition and portal access forms email goes to gas supplier (Total)|DISABLED|To be enabled when required
+|auto_send_siteAdditions_power|Site addition and portal access forms email goes to electric supplier (EDF)|DISABLED|DO NOT ENABLE
 |customer_satisfaction_survey|Replace the exit survey with the new customer satisfaction survey.|ENABLED|Feature now live, flag to be removed|
 |energy|Energy for Schools|ENABLED|Feature now live, flag to be removed|
 |maintenance_mode|Prevent user access to the application. Intended for infrastructure or data maintenance.|DISABLED|To be enabled when required|
