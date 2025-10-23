@@ -22,7 +22,7 @@ class Email::Draft
 
   validates :html_content, presence: { message: "The email body cannot be blank" }
   validates :subject, presence: { message: "The subject cannot be blank" }, on: :new_message
-  validates :to_recipients, email_recipients: { at_least_one: true, message: "The TO recipients contains an invalid email address" }, on: :new_message
+  validates :to_recipients, email_recipients: { at_least_one: true, message: "The TO recipients contains an invalid email address" }, on: %i[new_message forward_email]
   validates :cc_recipients, email_recipients: { message: "The CC recipients contains an invalid email address" }, on: :new_message
   validates :bcc_recipients, email_recipients: { message: "The BCC recipients contain an invalid email address" }, on: :new_message
   validate :attachment_size, if: -> { email.present? && email.attachments.present? }
