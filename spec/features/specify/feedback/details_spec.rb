@@ -16,7 +16,7 @@ RSpec.feature "User feedback details" do
     context "when logged in" do
       let(:user) { create(:user) }
 
-      it "persists the user's details and loggged in status" do
+      it "persists the user's details and logged in status" do
         user_is_signed_in(user:)
         feedback_user_details
 

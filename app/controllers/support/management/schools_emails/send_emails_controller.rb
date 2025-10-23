@@ -23,7 +23,7 @@ module Support
 
     def set_energy_type_and_option
       @energy_type = Energy::EmailTemplateConfiguration.energy_types[params[:schools_email_type]&.to_sym]
-      @configure_option = params[:schools_email_type] == "electricity" ? 0 : 3
+      @configure_option = params[:schools_email_type] == "electricity" ? 0 : 5
     end
 
     def find_or_initialize_email_template

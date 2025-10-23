@@ -96,7 +96,8 @@ module Engagement
 
     def agent_form_params
       params.require(:agent).permit(:email, :first_name, :last_name, roles: [])
-        .merge(policy: policy(:cms_portal))
+            .merge(policy: policy(:cms_portal))
+            .tap { |p| p[:email] = p[:email].strip if p[:email].present? }
     end
 
     def authorize_agent_scope = [super, :manage_agents?]
