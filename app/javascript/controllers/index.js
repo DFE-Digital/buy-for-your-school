@@ -93,3 +93,6 @@ application.register("dfe_analytics_engagement_tracking", DfeAnalyticsEngagement
 
 import DfeAnalyticsLinksController from "./dfe_analytics_links_controller"
 application.register("dfe_analytics_links", DfeAnalyticsLinksController);
+
+import GovukDetailsComponentAccessibilityController from "./details_component_accessibility_controller"
+application.register("details_component_accessibility", GovukDetailsComponentAccessibilityController);
