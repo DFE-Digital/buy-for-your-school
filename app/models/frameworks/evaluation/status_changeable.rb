@@ -39,7 +39,7 @@ module Frameworks::Evaluation::StatusChangeable
     scope :active, -> { where(status: %i[draft in_progress]) }
     scope :other_active_evaluations_for, ->(evaluation) { active.where.not(id: evaluation.id).where(framework: evaluation.framework) }
 
-    validate :framework_has_no_other_active_evaliations
+    validate :framework_has_no_other_active_evaluations
   end
 
   def permissible_status_change_options(prepend_current_status: false)
@@ -58,7 +58,7 @@ module Frameworks::Evaluation::StatusChangeable
 
 private
 
-  def framework_has_no_other_active_evaliations
+  def framework_has_no_other_active_evaluations
     errors.add(:framework, "Framework is already in active evaluation") if self.class.other_active_evaluations_for(self).any?
   end
 

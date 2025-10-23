@@ -26,6 +26,7 @@ describe Support::SyncFrameworks do
             expiry: "2026-08-31T00:00:00.000Z",
             url: testurl1,
             descr: "Desc",
+            provider_reference: "PR-1",
           },
           {
             provider: { initials: "ABC", title: "ABC" },
@@ -35,6 +36,7 @@ describe Support::SyncFrameworks do
             expiry: "2026-06-30T00:00:00.000Z",
             url: testurl2,
             descr: "Desc",
+            provider_reference: "PR-2",
           },
         ].to_json
       end
@@ -65,6 +67,7 @@ describe Support::SyncFrameworks do
           expect(new_framework.url).to eq(testurl2)
           expect(new_framework.source).to eq("faf_import")
           expect(new_framework.status).to eq("dfe_approved")
+          expect(new_framework.provider_reference).to eq("PR-2")
         end
       end
 
