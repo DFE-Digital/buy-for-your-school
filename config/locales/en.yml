@@ -412,7 +412,7 @@ en:
         title: How to join
         body:
         - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
-        - Multi-academy trusts (MATs) can join the contract by filling in the <a href="https://submit.forms.service.gov.uk/form/7281/register-your-interest-in-energy-for-schools" class="govuk-link">Register your interest form</a> and completing the process offline.
+        - Multi-academy trusts (MATs) can join the contract by filling in the <a href="%{register_your_interest_form_url}" class="govuk-link">Register your interest form</a> and completing the process offline.
         - "Depending on which supply you're switching, you'll need to provide:"
         list:
         - your contract end date

@@ -500,10 +500,13 @@ Rails.application.routes.draw do
 
   resources :usability_surveys, only: %i[new create]
 
-  if Rails.env.development?
-    require "sidekiq/web"
-    mount Sidekiq::Web, at: "/sidekiq"
+  require "sidekiq/web"
+  if Rails.env.production?
+    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+      username == ENV["SIDEKIQ_USERNAME"] && password == ENV["SIDEKIQ_PASSWORD"]
+    end
   end
+  mount Sidekiq::Web, at: "/sidekiq"
 
   flipper_app = Flipper::UI.app do |builder|
     if Rails.env.production?
