@@ -1,0 +1,16 @@
+<% total_email = Energy::Emails::NonDirectDebitVatTotalMailer::TOTAL_ENERGIES_VAT_EMAIL %>
+<p>Dear {{ case_creator_full_name }},</p>
+
+<p>Your new gas contract is about to start.</p>
+
+<p>You’ve indicated that your school is eligible for VAT relief. To ensure the correct percentage VAT is applied to your gas invoice, sign the attached certificate and send it to
+  <a href="<%= "mailto:#{total_email}" %>"><%= "#{total_email}" %></a>
+</p>
+
+<p>Your new gas supplier, Total Energies, accepts wet or digital signatures.</p>
+
+<p>If you’re not eligible for VAT relief, ignore these instructions.</p>
+
+<p>Kind regards,</p>
+<p>DfE Energy for Schools Team</p>
+<p>&nbsp;</p>
