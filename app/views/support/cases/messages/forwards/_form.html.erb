@@ -14,7 +14,15 @@
       "data-draft-email-update-endpoint-value" => messages_path(message_id: params[:id], unique_id: unique_id),
       "data-draft-email-target" => "form"
     } do |form| %>
-  <%= form.govuk_error_summary %>
+  
+  <%=
+    form.govuk_error_summary
+        &.to_s
+        &.gsub("to-recipients-field-error", "to-field")
+        &.gsub("html-content-field-error", "html-content-field-error_ifr")
+        &.html_safe
+  %>
+
   <%= form.hidden_field :template_id %>
   <% if @email_draft.template.present? %>
     <div class="govuk-inset-text">

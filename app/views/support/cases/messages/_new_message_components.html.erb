@@ -4,22 +4,37 @@
 
 <%= form.govuk_text_field :subject, label: { text: I18n.t("support.case.label.message_threads.new.enter_subject"), size: "m" }, class: "subject-input" %>
 
-<p class="govuk-label govuk-label--m"><%= I18n.t("support.case.label.message_threads.new.add_recipients") %></p>
-<span class="recipient-input-group">
-  <%= form.govuk_text_field :to,
-        label: nil,
-        prefix_text: I18n.t("support.case.label.message_threads.new.to"),
-        placeholder: I18n.t("support.case.label.message_threads.new.press_enter_to_add_recipients"),
-        "data-collection" => "message_reply_form_#{unique_id}[to_recipients]",
-        "data-table" => "#{unique_id}_to" %>
-  <button class="govuk-button"
-          data-module="govuk-button"
-          data-component="add-recipients"
-          data-input-field=<%= "message_reply_form_#{unique_id}[to]" %>
-          type="button">
-    <%= I18n.t("support.case.label.message_threads.new.add_to") %>
-  </button>
-</span>
+<% has_error = form.object.errors[:to_recipients].any? %>
+<div class="govuk-form-group <%= 'govuk-form-group--error' if has_error %>">
+  <label class="govuk-label govuk-label--m">
+    <%= I18n.t("support.case.label.message_threads.new.add_recipients") %>
+  </label>
+
+  <% if has_error %>
+    <p class="govuk-error-message">
+      <span class="govuk-visually-hidden"></span>
+      <%= form.object.errors[:to_recipients].first %>
+    </p>
+  <% end %>
+
+  <span class="recipient-input-group">
+    <%= form.govuk_text_field :to,
+          label: nil,
+          prefix_text: I18n.t("support.case.label.message_threads.new.to"),
+          placeholder: I18n.t("support.case.label.message_threads.new.press_enter_to_add_recipients"),
+          class: has_error ? "govuk-input govuk-input--error" : "govuk-input",
+          "data-collection" => "message_reply_form_#{unique_id}[to_recipients]",
+          "data-table" => "#{unique_id}_to" %>
+    <button class="govuk-button"
+            data-module="govuk-button"
+            data-component="add-recipients"
+            data-input-field="<%= "message_reply_form_#{unique_id}[to]" %>"
+            type="button">
+      <%= I18n.t("support.case.label.message_threads.new.add_to") %>
+    </button>
+  </span>
+</div>
+
 <div class="govuk-!-display-none" data-draft-email-target="ccField">
   <span class="recipient-input-group">
     <%= form.govuk_text_field :cc,
