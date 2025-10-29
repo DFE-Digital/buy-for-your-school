@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get "cms", to: "cms_entry_points#start", as: :cms_entrypoint
   get "cms/no_roles_assigned", to: "cms_entry_points#no_roles_assigned", as: :cms_no_roles_assigned
   get "cms/not_authorized", to: "cms_entry_points#not_authorized", as: :cms_not_authorized
+  get "cms/sign-in", to: "cms/signin#show", as: :cms_signin
 
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in

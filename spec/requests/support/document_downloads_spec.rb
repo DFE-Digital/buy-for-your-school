@@ -5,9 +5,9 @@ describe "Document downloads" do
 
   describe "Accessing an email attachment" do
     context "when agent is not logged in" do
-      it "redirects home" do
+      it "redirects to the CMS login page" do
         get support_document_download_path(email_attachment, type: "Support::EmailAttachment")
-        expect(response).to redirect_to("/")
+        expect(response).to redirect_to("/cms/sign-in")
       end
     end
   end

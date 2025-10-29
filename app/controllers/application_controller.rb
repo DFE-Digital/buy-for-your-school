@@ -43,7 +43,7 @@ protected
     return unless current_user.guest?
 
     session.delete(:dfe_sign_in_uid)
-    redirect_to root_path, notice: I18n.t("banner.session.visitor")
+    redirect_to cms_signin_path, notice: I18n.t("banner.session.visitor")
   end
 
   # @return [Journey]
