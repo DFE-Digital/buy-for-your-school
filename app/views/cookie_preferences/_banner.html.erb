@@ -14,23 +14,24 @@
             <p class="govuk-body"><%= text %></p>
           <% end %>
         </div>
+      
+        <div class="govuk-button-group">
+          <%= button_to I18n.t("cookies.banner.actions.accept"), cookie_preferences_path,
+                method: :patch,
+                remote: true,
+                params: { "cookie_preferences_form[accepted_or_rejected]" => "accepted" },
+                class: "govuk-button" %>
+
+          <%= button_to I18n.t("cookies.banner.actions.reject"), cookie_preferences_path,
+                method: :patch,
+                remote: true,
+                params: { "cookie_preferences_form[accepted_or_rejected]" => "rejected" },
+                class: "govuk-button" %>
+
+          <%= link_to I18n.t("cookies.banner.actions.view_cookies"), cookie_preferences_path, class: "govuk-link" %>
+        </div>
+      
       </div>
-    </div>
-
-    <div class="govuk-button-group flex-align-center">
-      <%= button_to I18n.t("cookies.banner.actions.accept"), cookie_preferences_path,
-            method: :patch,
-            remote: true,
-            params: { "cookie_preferences_form[accepted_or_rejected]" => "accepted" },
-            class: "govuk-button" %>
-
-      <%= button_to I18n.t("cookies.banner.actions.reject"), cookie_preferences_path,
-            method: :patch,
-            remote: true,
-            params: { "cookie_preferences_form[accepted_or_rejected]" => "rejected" },
-            class: "govuk-button" %>
-
-      <%= link_to I18n.t("cookies.banner.actions.view_cookies"), cookie_preferences_path, class: "govuk-link" %>
     </div>
   </div>
 
