@@ -24,7 +24,8 @@ module Evaluation
     end
 
     def set_current_case
-      @current_case = Support::Case.find(params[:id])
+      # @current_case = Support::Case.find(params[:id])
+      @current_case = Support::Case.first
       @evaluation_due_date = @current_case.evaluation_due_date? ? @current_case.evaluation_due_date.strftime("%d %B %Y") : nil
     end
 
@@ -61,7 +62,7 @@ module Evaluation
       session.delete(:school_buyer_signin_link)
       session[:email_evaluator_link] = evaluation_task_path(id: params[:id], host: request.host)
       session[:evaluator_signin_link] = evaluation_signin_path(id: params[:id])
-      redirect_to evaluation_signin_path(id: params[:id]), notice: I18n.t("banner.session.visitor")
+      redirect_to evaluation_signin_path(id: params[:id])
     end
 
     def uploaded_evaluation_files

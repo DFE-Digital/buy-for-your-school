@@ -41,7 +41,7 @@ module MyProcurements
       session.delete(:evaluator_signin_link)
       session[:email_school_buyer_link] = my_procurements_task_path(id: params[:id], host: request.host)
       session[:school_buyer_signin_link] = my_procurements_signin_path(id: params[:id])
-      redirect_to my_procurements_signin_path(id: params[:id]), notice: I18n.t("banner.session.visitor")
+      redirect_to my_procurements_signin_path(id: params[:id])
     end
 
     def set_uploaded_handover_packs
