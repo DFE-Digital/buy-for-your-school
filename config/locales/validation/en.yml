@@ -222,6 +222,13 @@ en:
                 less_than: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
             maximum_mpan_per_organisation: Maximum number of MPANs reached
             error_unique: This MPAN is already registered with Energy for Schools. Contact dfe-energy.services-team@education.gov.uk to resolve the matter
+        energy/email_template_configuration:
+          attributes:
+            to_email_ids:
+              blank: Enter at least one email address
+            support_email_templates_id:
+              blank: Select any one email template
+          invalid_email_ids: Please enter valid email addresses separated by semicolons
 
   request:
     rules:

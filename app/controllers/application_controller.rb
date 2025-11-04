@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!, except: %i[health_check maintenance]
   before_action :set_current_request_id
+  before_action :track_button_click
 
   protect_from_forgery
 
@@ -42,7 +43,7 @@ protected
     return unless current_user.guest?
 
     session.delete(:dfe_sign_in_uid)
-    redirect_to root_path, notice: I18n.t("banner.session.visitor")
+    redirect_to cms_signin_path, notice: I18n.t("banner.session.visitor")
   end
 
   # @return [Journey]
@@ -145,4 +146,16 @@ protected
   def tracking_base_properties = { user_id: current_user.id }
 
   def set_current_request_id = Current.request_id = request.request_id
+
+  def track_button_click
+    return unless %w[POST PATCH DELETE].include?(request.method)
+
+    event = DfE::Analytics::Event.new
+      .with_type("button_click")
+      .with_request_details(request)
+      .with_response_details(response)
+      .with_data(text: params[:commit])
+
+    DfE::Analytics::SendEvents.do([event])
+  end
 end

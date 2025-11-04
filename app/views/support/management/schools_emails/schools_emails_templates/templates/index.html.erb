@@ -1,0 +1,44 @@
+<%= content_for :title, "CMS Management | #{I18n.t("support.management.energy_for_schools.header")} | #{I18n.t("support.management.energy_for_schools.choose_email_template")}" %>
+
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.base.header"), portal_management_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= link_to I18n.t("support.management.energy_for_schools.header"), portal_management_energy_for_schools_path, class: "govuk-breadcrumbs__link" %>
+    </li>
+    <li class="govuk-breadcrumbs__list-item">
+      <%= I18n.t("support.management.energy_for_schools.choose_email_template") %>
+    </li>
+  </ol>
+</nav>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%=  I18n.t("support.management.energy_for_schools.templates.#{params[:schools_emails_template_type]}") %></h1>
+
+    <%= form_with model: @energy_email_template, scope: :school_email_template_form, url: support_management_schools_email_schools_emails_template_templates_path(schools_email_type: params[:schools_email_type], schools_emails_template_type: params[:schools_emails_template_type]), method: :post do |form| %>
+
+      <%= form.govuk_error_summary %>
+
+      <%= form.hidden_field :support_email_templates_id, value: form.object.support_email_templates_id  %>
+
+      <div class="template-manager__templates ">
+        <ul>
+        <%= form.govuk_radio_buttons_fieldset(:support_email_templates_id, legend: nil) do %>
+          <%= render partial: "support/management/email_templates/template_manager/templates/template", collection: @templates, as: :template, locals: { mode: :select, form:, hide_tag: true } %>
+        <% end %>
+        </ul>
+      </div>
+
+      <div class="govuk-button-group flex-align-center">
+      <%= form.submit I18n.t("support.management.energy_for_schools.save_return"), class: "govuk-button" %>
+      <%= link_to I18n.t("generic.button.cancel"), portal_management_energy_for_schools_path, class: "govuk-link govuk-link--no-visited-state" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= render "components/pagination", records: @templates %>

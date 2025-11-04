@@ -47,6 +47,7 @@ module Support
 
       @evaluator.destroy!
       log_evaluator_removed
+      update_action_required
       redirect_to support_case_evaluators_path(case_id: @current_case),
                   notice: I18n.t("support.case_evaluators.flash.destroyed", name: @evaluator.name)
     end
@@ -77,6 +78,13 @@ module Support
 
     def log_evaluator_removed
       Support::EvaluationJourneyTracking.new(:evaluator_removed, @evaluator).call
+    end
+
+    def update_action_required
+      pending_evaluations = @current_case.evaluators.reload.where(has_uploaded_documents: true, evaluation_approved: false).any?
+      unread_emails = Support::Email.where(ticket_id: @current_case.id, folder: 0, is_read: false).where.not(outlook_conversation_id: nil).any?
+      action_required = pending_evaluations || unread_emails
+      @current_case.update!(action_required:)
     end
   end
 end

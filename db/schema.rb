@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_16_154247) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_01_083344) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -223,6 +223,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_16_154247) do
     t.string "meter_operator"
     t.string "electricity_usage"
     t.index ["energy_onboarding_case_organisation_id"], name: "idx_on_energy_onboarding_case_organisation_id_8c71bc911c"
+  end
+
+  create_table "energy_email_template_configurations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "energy_type"
+    t.integer "configure_option"
+    t.uuid "support_email_templates_id"
+    t.string "to_email_ids", default: [], array: true
+    t.string "cc_email_ids", default: [], array: true
+    t.string "bcc_email_ids", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["support_email_templates_id"], name: "idx_on_support_email_templates_id_c5d66ec2a8"
   end
 
   create_table "energy_gas_meters", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -609,6 +621,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_16_154247) do
     t.boolean "internal", default: false, null: false
     t.uuid "support_tower_id"
     t.string "roles", default: [], array: true
+    t.boolean "archived", default: false
     t.index ["dsi_uid"], name: "index_support_agents_on_dsi_uid"
     t.index ["email"], name: "index_support_agents_on_email", unique: true
     t.index ["support_tower_id"], name: "index_support_agents_on_support_tower_id"

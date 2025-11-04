@@ -60,4 +60,32 @@ describe "Agent can add evaluators", :js do
     expect(page).to have_text "Evaluator Momo Taro changed to Oni Baba by Procurement Specialist"
     expect(page).to have_text "Evaluator Oni Baba removed by Procurement Specialist"
   end
+
+  specify "Action flag status update when evaluator deletes" do
+    support_case.update!(action_required: true, evaluation_due_date: Date.tomorrow, has_uploaded_documents: true)
+    support_case.evaluators.create!(first_name: "Momo", last_name: "Taro", email: "email@address", has_uploaded_documents: true, evaluation_approved: true)
+    support_case.evaluators.create!(first_name: "Oni", last_name: "Baba", email: "email2@address", has_uploaded_documents: true)
+
+    visit support_case_evaluators_path(case_id: support_case)
+
+    expect(page).to have_text("Evaluators")
+
+    within(".govuk-table__body > tr:nth-child(2)") do
+      click_link "Change"
+    end
+
+    expect(page).to have_text("Update evaluator details")
+
+    click_link "Remove"
+
+    expect(page).to have_text("Are you sure you want to remove Oni Baba?")
+
+    click_link "Remove"
+
+    expect(page).to have_text("Evaluators")
+
+    support_case.reload
+
+    expect(support_case.action_required).to be(false)
+  end
 end

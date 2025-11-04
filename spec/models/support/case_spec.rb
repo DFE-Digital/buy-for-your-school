@@ -142,4 +142,50 @@ RSpec.describe Support::Case, type: :model do
       end
     end
   end
+
+  describe "re_used_meter_numbers?" do
+    before do
+      support_case.update!(state: "closed")
+
+      create(:energy_gas_meter, :with_valid_data, onboarding_case_organisation: ob_org, mprn:)
+      create(:energy_electricity_meter, :with_valid_data, onboarding_case_organisation: ob_org, mpan:)
+    end
+
+    let(:ob_case) { create(:onboarding_case, support_case:) }
+    let(:ob_org) { create(:energy_onboarding_case_organisation, onboarding_case: ob_case, onboardable: support_case.organisation) }
+    let(:mprn) { "123456789" }
+    let(:mpan) { "0123456789123" }
+
+    context "when another active onboarding case is using a meter ref" do
+      before do
+        create(:energy_gas_meter, :with_valid_data, onboarding_case_organisation: other_onboarding_case_organisation, mprn:)
+        create(:energy_electricity_meter, :with_valid_data, onboarding_case_organisation: other_onboarding_case_organisation, mpan:)
+      end
+
+      let(:other_onboarding_case) { create(:onboarding_case, support_case: other_support_case) }
+      let(:other_onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case: other_onboarding_case, onboardable: other_support_case.organisation) }
+
+      context "when the state is not closed" do
+        let(:other_support_case) { create(:support_case) }
+
+        it "returns true" do
+          expect(support_case.re_used_meter_numbers?).to eq(true)
+        end
+      end
+
+      context "when the state is closed" do
+        let(:other_support_case) { create(:support_case, state: "closed") }
+
+        it "returns false" do
+          expect(support_case.re_used_meter_numbers?).to eq(false)
+        end
+      end
+    end
+
+    context "when no other active onboarding cases are using a meter ref" do
+      it "returns false" do
+        expect(support_case.re_used_meter_numbers?).to eq(false)
+      end
+    end
+  end
 end

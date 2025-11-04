@@ -3,10 +3,12 @@
     <%= link_to "Back to case files list", support_case_files_path(@current_case, page: params[:redirect_page]), class: "govuk-back-link pull-up" %>
 
     <%= form_with model: @file_uploader, scope: :file_uploader, url: support_case_files_path,
-          html: { "data-controller" => "case-files" } do |form| %>
+          html: { "data-controller" => "case-files", "data-case-files-error-summary-outlet"=>".govuk-error-summary" } do |form| %>
       <%= form.govuk_error_summary %>
 
       <h2 class="govuk-heading-l"><%= I18n.t("support.case.label.case_files.new.heading") %></h2>
+
+      <%= render "components/file_upload_errors" %>
 
       <span class="govuk-button govuk-button--secondary" role="button"
         data-case-files-target="btnDisplayFileDialog">
@@ -26,6 +28,7 @@
                       <a class="govuk-link govuk-link--no-visited-state" href="#" data-dz-remove><%= I18n.t("support.generic.remove") %></a>
                     </span>
                   </div>
+                  <%= render "components/file_upload_progress_status" %>
                 </div>
               </div>
             </div>

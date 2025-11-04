@@ -1,7 +1,7 @@
 # rubocop:disable Layout/AccessModifierIndentation
-class Energy::OnboardingController < ApplicationController
-  skip_before_action :authenticate_user!
-  before_action :check_flag, :remember_onboarding
+class Energy::OnboardingController < Energy::ApplicationController
+  skip_before_action :authenticate_user!, :check_if_submitted
+  before_action :remember_onboarding
 
   def start; end
 
@@ -11,12 +11,10 @@ class Energy::OnboardingController < ApplicationController
 
   private
 
-  # Remove this and before_action reference when flag removed
-  def check_flag
-    render "errors/not_found", status: :not_found unless Flipper.enabled?(:energy)
-  end
-
   def remember_onboarding
+    session.delete(:email_evaluator_link)
+    session.delete(:email_school_buyer_link)
+    session.delete(:faf_referrer)
     session[:energy_onboarding] = true
   end
 end

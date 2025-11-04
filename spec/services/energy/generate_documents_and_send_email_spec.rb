@@ -19,7 +19,7 @@ RSpec.describe Energy::GenerateDocumentsAndSendEmail do
     allow(Energy::Emails::OnboardingFormSubmissionMailer).to receive(:new).and_return(mailer)
   end
 
-  describe "#call d" do
+  describe "#call" do
     context "when an error occurs during document generation" do
       before do
         allow(loa_pdf).to receive(:call).and_raise(StandardError.new("generation failed"))

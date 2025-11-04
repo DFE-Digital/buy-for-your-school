@@ -660,6 +660,16 @@
   - form_started_email_sent
   - form_submitted_email_sent
   - submitted_at
+  :energy_email_template_configurations:
+  - id
+  - energy_type
+  - configure_option
+  - support_email_templates_id
+  - to_email_ids
+  - cc_email_ids
+  - bcc_email_ids
+  - created_at
+  - updated_at
   :energy_gas_meters:
   - id
   - energy_onboarding_case_organisation_id
@@ -1048,9 +1058,8 @@
   - internal
   - support_tower_id
   - roles
+  - archived
   :users:
-  - id
-  - dfe_sign_in_uid
   - created_at
   - updated_at
   - email

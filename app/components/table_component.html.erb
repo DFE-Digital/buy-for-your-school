@@ -11,7 +11,7 @@
     <% @rows.each do |row| %>
       <% tb.with_row do |tr| %>
         <% row.each_with_index do |cell, i| %>
-          <% tr.with_cell(header: i == 0, text: cell) %>
+          <% tr.with_cell(text: cell) %>
         <% end %>
       <% end %>
     <% end %>

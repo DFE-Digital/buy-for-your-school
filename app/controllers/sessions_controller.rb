@@ -84,9 +84,7 @@ private
   # @return [String]
   def entry_path(user)
     if session[:energy_onboarding] == true
-      session.delete(:energy_onboarding)
       energy_case_tasks_path = session[:energy_case_tasks_path]
-      session.delete(:energy_case_tasks_path)
       energy_case_tasks_path.presence || energy_school_selection_path
     elsif user.internal?
       # proc ops / internal team members go to case management
@@ -100,6 +98,12 @@ private
 
   # @return [String]
   def exit_path
+    if session[:energy_onboarding]
+      session.delete(:energy_case_tasks_path)
+      session.delete(:energy_onboarding)
+      return energy_start_path
+    end
+
     if session[:evaluator_signin_link]
       evaluator_signin_link = session[:evaluator_signin_link]
       session.delete(:email_evaluator_link)
@@ -119,6 +123,6 @@ private
       return framework_requests_path
     end
 
-    root_path
+    cms_signin_path
   end
 end

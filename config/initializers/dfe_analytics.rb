@@ -9,7 +9,7 @@ DfE::Analytics.configure do |config|
 
   # Which ActiveJob queue to put events on
   #
-  # config.queue = :dfe_analytics
+  config.queue = :analytics
 
   # The name of the BigQuery table we’re writing to.
   #
@@ -30,7 +30,7 @@ DfE::Analytics.configure do |config|
 
   # Passed directly to the retries: option on the BigQuery client
   #
-  # config.bigquery_retries = 3
+  config.bigquery_retries = 3
 
   # Passed directly to the timeout: option on the BigQuery client
   #
@@ -96,7 +96,81 @@ DfE::Analytics.configure do |config|
 
   # Translation missing: en.dfe.analytics.config.excluded_paths.description
   #
-  config.excluded_paths = ["/health_check"]
+  config.excluded_paths = [
+    "/health",
+    "/status",
+    %r{\.sql(\.(zip|tar\.gz|bz2|xz|rar|7z|z))?$},
+    %r{\.php(\.|$)},
+    %r{\.php7(\.|$)},
+    %r{\.json(\.|$)},
+    %r{\.js(\.|$)},
+    %r{\.yaml(\.|$)},
+    %r{\.yml(\.|$)},
+    %r{\.axd(\.|$)},
+    %r{\.cfc(\.|$)},
+    %r{\.jsf(\.|$)},
+    %r{\.jspa(\.|$)},
+    %r{\.aspx(\.|$)},
+    %r{\.ashx(\.|$)},
+    %r{\.xml(\.|$)},
+    %r{\.docx(\.|$)},
+    %r{\.html(\.|$)},
+    %r{\.htm(\.|$)},
+    %r{\.css(\.|$)},
+    %r{\.txt(\.|$)},
+    %r{\.BshServlet(\.|$)},
+    %r{\.action(\.|$)},
+    %r{\.osx(\.|$)},
+    %r{\.ico(\.|$)},
+    %r{\.icw(\.|$)},
+    %r{\.cgi(\.|$)},
+    %r{\.xsi(\.|$)},
+    %r{\.conf(\.|$)},
+    %r{\.env(\.|$)},
+    %r{\.map(\.|$)},
+    %r{\.do(\.|$)},
+    %r{\.sql(\.|$)},
+    %r{\.exe(\.|$)},
+    %r{\.ini(\.|$)},
+    %r{\.db(\.|$)},
+    %r{^/admin/},
+    %r{^/conf/},
+    %r{^/wp-},
+    %r{^/tmp/},
+    %r{^/backups?/},
+    %r{^/inc/},
+    %r{^/ajax/},
+    %r{^/uploadify/},
+    %r{^/package\.},
+    %r{^/data\.},
+    %r{oast\.me},
+    %r{^/\.git/},
+    %r{^/api/},
+    %r{^/virtualems/},
+    %r{^/admin/},
+    %r{^/calendarix/},
+    %r{^/dotnetnuke/},
+    %r{^/desktopmodules/},
+    %r{^/DesktopModules/},
+    %r{^/administrator/},
+    %r{^/\.well-known/},
+    %r{^/wp-content/},
+    %r{^/assets/},
+    %r{^/images/},
+    %r{^/img/},
+    %r{^/imgs/},
+    %r{^/static/},
+    %r{^/statics/},
+    %r{^/themes/},
+    %r{^/cgi-bin/},
+    %r{^/swagger/},
+    %r{^/scripts/},
+    %r{^/html/},
+    %r{^/ssl/},
+    %r{^/weaver/},
+    %r{^/certificates/},
+    %r{^/\..+},
+  ]
 
   # A proc which will be called during model initialization. It allows to disable models
   # which should not be used. Each model is passed to bloc and if bloc returns true for the model,

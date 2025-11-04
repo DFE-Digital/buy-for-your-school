@@ -32,7 +32,8 @@ module Engagement
 
       if @agent.valid?
         @agent.save!
-        redirect_to support_management_agents_path
+        @agent.update!(archived: false)
+        redirect_to engagement_management_agents_path
       else
         render :new
       end
@@ -43,13 +44,31 @@ module Engagement
 
       if @agent.valid?
         @agent.update!(agent_form_params)
-        redirect_to support_management_agents_path
+        redirect_to engagement_management_agents_path
       else
         render :edit
       end
     end
 
+    def destroy
+      @agent = Support::Management::AgentForm.find(params[:id])
+      return unless params[:confirm]
+
+      destroy_params = { policy: policy(:cms_portal) }
+      destroy_params[:roles] = []
+      destroy_params[:archived] = true
+
+      @agent.update!(destroy_params)
+
+      redirect_to engagement_management_agents_path,
+                  notice: I18n.t("support.management.agents.destroyed", name: @agent.full_name, email: @agent.email)
+    end
+
   private
+
+    helper_method def redirect_path
+      engagement_management_agents_path
+    end
 
     helper_method def is_user_cec_agent?
       (current_agent.roles & %w[cec cec_admin]).any?
@@ -67,13 +86,18 @@ module Engagement
       send("#{portal_namespace}_management_agents_path")
     end
 
+    helper_method def portal_management_agent_path(agent, additional_params = {})
+      send("#{portal_namespace}_management_agent_path", agent, additional_params)
+    end
+
     helper_method def portal_management_path
       send("#{portal_namespace}_management_path")
     end
 
     def agent_form_params
       params.require(:agent).permit(:email, :first_name, :last_name, roles: [])
-        .merge(policy: policy(:cms_portal))
+            .merge(policy: policy(:cms_portal))
+            .tap { |p| p[:email] = p[:email].strip if p[:email].present? }
     end
 
     def authorize_agent_scope = [super, :manage_agents?]

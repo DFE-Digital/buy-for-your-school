@@ -1,6 +1,6 @@
 module Energy
   class ApplicationController < ::ApplicationController
-    before_action :check_flag, :check_if_submitted, :set_routing_flags
+    before_action :check_flag, :set_accessibility_link, :check_if_submitted, :set_routing_flags
 
     ALLOWED_CLASSES = [
       "Support::Organisation",
@@ -10,6 +10,10 @@ module Energy
     MAX_METER_COUNT = 5
 
   private
+
+    def set_accessibility_link
+      @energy_accessibility_link = "https://accessibility-statements.education.gov.uk/s/29"
+    end
 
     def check_flag
       render "errors/not_found", status: :not_found unless Flipper.enabled?(:energy)
@@ -74,7 +78,7 @@ module Energy
     end
 
     def going_to_tasks?
-      params[:commit] != I18n.t("generic.button.save_continue")
+      params[:commit] != I18n.t("generic.button.save_continue") && !params[:js_form_submit]
     end
 
     def gas_single_meter?

@@ -26,7 +26,16 @@ export default class extends Controller {
       });
   
       if (isValid) {
-        this.dateValidationTarget.querySelector('form').submit();
+        const form = this.dateValidationTarget.querySelector('form');
+
+        // Add a hidden input field with the value you want to post
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'js_form_submit';
+        hiddenInput.value = 'true';
+        form.appendChild(hiddenInput);
+
+        form.submit();
       }
     });
   }

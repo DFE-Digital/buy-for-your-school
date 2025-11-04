@@ -42,6 +42,17 @@ RSpec.feature "Case closure" do
         click_button "Reject case"
         expect(page).to have_content("Case has been rejected")
       end
+
+      context "when the case is an onboarding case" do
+        before do
+          allow_any_instance_of(Support::Case).to receive(:energy_onboarding_case?).and_return(true) # rubocop:disable RSpec/AnyInstance
+          visit cec_onboarding_case_path(support_case)
+        end
+
+        it "does not show Reject option" do
+          expect(page).not_to have_content("Reject case")
+        end
+      end
     end
 
     context "when the case is resolved" do

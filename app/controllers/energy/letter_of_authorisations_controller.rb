@@ -13,12 +13,11 @@ module Energy
         ActiveRecord::Base.transaction do
           @onboarding_case_organisation.update!(**form.data)
           onboarding_case.update!(submitted_at: Time.zone.now)
-          onboarding_case.support_case.update!(procurement_stage: Support::ProcurementStage.find_by(key: "form_review"))
+          onboarding_case.support_case.update!(procurement_stage: Support::ProcurementStage.find_by(key: "form_review"), state: :opened)
         end
 
         send_form_submission_email_with_documents_to_school
-        generate_site_addition_xl_documents
-        generate_portal_access_xl_documents
+        generate_site_addition_and_portal_access_xl_documents
 
         redirect_to energy_case_confirmation_path
       else
@@ -58,6 +57,7 @@ module Energy
       )
     end
 
+    # This 2 methods should be deleted with associated jobs and classes
     def generate_site_addition_xl_documents
       Energy::GenerateSiteAdditionXlDocumentsJob.perform_now(
         onboarding_case_id: onboarding_case.id,
@@ -67,6 +67,13 @@ module Energy
 
     def generate_portal_access_xl_documents
       Energy::GeneratePortalAccessXlDocumentsJob.perform_now(
+        onboarding_case_id: onboarding_case.id,
+        current_user_id: current_user.id,
+      )
+    end
+
+    def generate_site_addition_and_portal_access_xl_documents
+      Energy::GenerateSiteAdditionAndPortalAccessXlDocumentsJob.perform_later(
         onboarding_case_id: onboarding_case.id,
         current_user_id: current_user.id,
       )

@@ -3,6 +3,9 @@
 Rails.application.routes.draw do
   root to: "specify/create_a_specification#show"
 
+  # DfE analytics
+  post "/dfe_analytics_events", to: "dfe_analytics_events#create"
+
   # Misc
   get "health_check" => "application#health_check"
   get "maintenance" => "application#maintenance"
@@ -14,6 +17,7 @@ Rails.application.routes.draw do
   get "cms", to: "cms_entry_points#start", as: :cms_entrypoint
   get "cms/no_roles_assigned", to: "cms_entry_points#no_roles_assigned", as: :cms_no_roles_assigned
   get "cms/not_authorized", to: "cms_entry_points#not_authorized", as: :cms_not_authorized
+  get "cms/sign-in", to: "cms/signin#show", as: :cms_signin
 
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in
@@ -263,6 +267,9 @@ Rails.application.routes.draw do
             resources :replies, only: %i[create edit] do
               post "submit", on: :member
             end
+            resources :forwards, only: %i[create edit] do
+              post "submit", on: :member
+            end
           end
         end
         resources :email_templates, only: %i[index]
@@ -329,7 +336,7 @@ Rails.application.routes.draw do
 
     namespace :management do
       get "/", to: "base#index"
-      resources :agents, only: %i[index edit update new create]
+      resources :agents
       resources :categories, only: %i[index update]
       resources :email_templates do
         get "/attachment-list", to: "email_templates#attachment_list", on: :member
@@ -340,6 +347,17 @@ Rails.application.routes.draw do
       resource :category_detection, only: %i[new create]
       resources :all_cases_surveys, only: %i[index create]
       resources :sync_frameworks, only: %i[index create]
+      resources :energy_for_schools, only: %i[index edit update new create]
+      resources :schools_emails, only: %i[index create], param: "type" do
+        scope module: :schools_emails do
+          resources :send_emails, only: %i[index create]
+          resources :schools_emails_templates, only: %i[index create], param: "type" do
+            scope module: :schools_emails_templates do
+              resources :templates, only: %i[index create]
+            end
+          end
+        end
+      end
     end
   end
 
@@ -386,7 +404,7 @@ Rails.application.routes.draw do
 
     namespace :management do
       get "/", to: "base#index"
-      resources :agents, only: %i[index edit update new create]
+      resources :agents
     end
   end
 
@@ -483,10 +501,13 @@ Rails.application.routes.draw do
 
   resources :usability_surveys, only: %i[new create]
 
-  if Rails.env.development?
-    require "sidekiq/web"
-    mount Sidekiq::Web, at: "/sidekiq"
+  require "sidekiq/web"
+  if Rails.env.production?
+    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+      username == ENV["SIDEKIQ_USERNAME"] && password == ENV["SIDEKIQ_PASSWORD"]
+    end
   end
+  mount Sidekiq::Web, at: "/sidekiq"
 
   flipper_app = Flipper::UI.app do |builder|
     if Rails.env.production?
@@ -603,6 +624,8 @@ Rails.application.routes.draw do
         get "closures", to: "/support/cases/closures#index", as: :closures
         post "closures/confirm", to: "/support/cases/closures#confirm", as: :closures_confirm
         post "closures", to: "/support/cases/closures#create", as: :closures_post
+        get "contact_details/edit", to: "/support/cases/contact_details#edit", as: :edit_contact_details
+        patch "contact_details", to: "/support/cases/contact_details#update", as: :update_contact_details
       end
     end
 
