@@ -19,6 +19,7 @@ module Energy
         attach_documents_to_support_case
       end
       send_email_to_supplier_with_documents
+      update_case_state_and_procurement_stage
     ensure
       delete_temp_files
     end
@@ -62,6 +63,25 @@ module Energy
         gas_documents = documents.values_at(:site_addition_gas, :portal_access_gas)
         Energy::Emails::GasSiteAdditionAndPortalAccessMailer.new(onboarding_case:, to_recipients: gas_supplier_email_address, documents: gas_documents).call
       end
+    end
+
+    def update_case_state_and_procurement_stage
+      gas_flag_on = Flipper.enabled?(:auto_send_siteAdditions_gas)
+      power_flag_on = Flipper.enabled?(:auto_send_siteAdditions_power)
+      form_review = { state: :opened, procurement_stage: Support::ProcurementStage.find_by(key: :form_review) }
+      with_supplier = { state: :resolved, procurement_stage: Support::ProcurementStage.find_by(key: :with_supplier) }
+
+      new_state = if gas_flag_on && power_flag_on
+                    with_supplier
+                  elsif gas_flag_on && !power_flag_on
+                    switching_gas? ? with_supplier : form_review
+                  elsif !gas_flag_on && power_flag_on
+                    switching_electricity? ? with_supplier : form_review
+                  else
+                    form_review
+                  end
+
+      @support_case.update!(new_state)
     end
 
     def attach_documents_to_support_case
