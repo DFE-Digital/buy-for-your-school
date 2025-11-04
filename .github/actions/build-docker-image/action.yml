@@ -69,7 +69,7 @@ runs:
       with:
         context: .
         builder: ${{ steps.buildx.outputs.name }}
-        push: true
+        push: ${{ github.actor != 'dependabot[bot]' }}
         target: ${{ inputs.target }}
         tags: ${{ steps.prep.outputs.tags_to_push }}
         cache-from: type=gha
