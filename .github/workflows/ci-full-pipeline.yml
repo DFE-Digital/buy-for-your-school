@@ -26,6 +26,7 @@ jobs:
       - uses: ./.github/actions/build-docker-image
         name: Build docker image
         id: build
+        if: github.actor != 'dependabot[bot]'
         with:
           target: test
           ghcr_username: ${{ github.actor }}
@@ -43,6 +44,7 @@ jobs:
       - uses: ./.github/actions/build-docker-image
         name: Build docker image
         id: build
+        if: github.actor != 'dependabot[bot]'
         with:
           target: app
           ghcr_username: ${{ github.actor }}
