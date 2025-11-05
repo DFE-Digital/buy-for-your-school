@@ -774,7 +774,7 @@ GEM
     uber (0.1.0)
     unicode-display_width (2.6.0)
     uniform_notifier (1.16.0)
-    uri (0.13.1)
+    uri (0.13.2)
     useragent (0.16.11)
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
