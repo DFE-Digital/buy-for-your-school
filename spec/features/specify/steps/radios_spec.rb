@@ -12,7 +12,9 @@ RSpec.feature "Radio Question" do
       expect(page).not_to have_text "No further information"
 
       # Default the hidden label to something understandable for screen readers
-      expect(find("span.govuk-visually-hidden")).to have_text "Optional further information"
+      within ".govuk-fieldset" do
+        expect(find("span.govuk-visually-hidden")).to have_text "Optional further information"
+      end
 
       fill_in "answer[catering_further_information]", with: "The school needs the kitchen cleaned once a day"
 

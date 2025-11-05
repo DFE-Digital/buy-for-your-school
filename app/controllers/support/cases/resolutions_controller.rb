@@ -18,13 +18,17 @@ module Support
 
         record_action(case_id: current_case.id, action: "resolve_case")
 
-        redirect_to support_case_path(current_case), notice: I18n.t("support.case_resolution.flash.created")
+        update_action_required
+
+        redirect_to redirect_path, notice: I18n.t("support.case_resolution.flash.created")
       else
         render :new
       end
     end
 
   private
+
+    def authorize_agent_scope = :access_individual_cases?
 
     def validation
       CaseResolutionFormSchema.new.call(**case_resolution_form_params)
@@ -35,9 +39,24 @@ module Support
     end
 
     def send_exit_survey
-      unless current_case.exit_survey_sent
+      unless current_case.exit_survey_sent || current_case.energy_onboarding_case?
         SendExitSurveyJob.start(@current_case.ref)
       end
+    end
+
+    def redirect_path
+      is_user_cec_agent? ? cec_onboarding_case_path(current_case) : support_case_path(current_case)
+    end
+
+    helper_method def portal_case_resolution_path(current_case)
+      send("#{agent_portal_namespace}_case_resolution_path", current_case)
+    end
+
+    def update_action_required
+      pending_evaluations = @current_case.evaluators.where(has_uploaded_documents: true, evaluation_approved: false).any?
+      unread_emails = Support::Email.where(ticket_id: @current_case.id, folder: 0, is_read: false).where.not(outlook_conversation_id: nil).any?
+      action_required = pending_evaluations || unread_emails
+      @current_case.update!(action_required:)
     end
   end
 end

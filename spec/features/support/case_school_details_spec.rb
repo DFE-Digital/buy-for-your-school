@@ -75,4 +75,8 @@ describe "Case school details", :js do
       end
     end
   end
+
+  context "when the case is an energy for schools case" do
+    it_behaves_like "with energy inquiry case"
+  end
 end

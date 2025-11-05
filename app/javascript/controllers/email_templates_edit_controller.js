@@ -7,11 +7,17 @@ export default class extends Controller {
     "subgroupWrapper",
     "subgroupSelect",
     "variableWarning",
+    "stageSelect"
   ];
   static values = { subgroupUrl: String };
 
   populateSubgroups(e) {
     const groupId = e.target.value;
+
+    const groupText = e.target.options[e.target.selectedIndex].text;
+    const stageOptions = this.stageToOptions(groupText, "Select stage");
+    this.stageSelectTarget.replaceChildren(...stageOptions);
+    
     if (!groupId) {
       this.clearSubgroups();
       return;
@@ -58,5 +64,49 @@ export default class extends Controller {
   displayVariablesWarning(e) {
     const body = tinymce.activeEditor.getContent();
     display(this.variableWarningTarget, body.indexOf("{{caseworker_full_name}}") > -1);
+  }
+
+  stageToOptions(groupText, selectText) {
+    const defaultStages = [
+      { id: 0, title: "Stage 0" },
+      { id: 1, title: "Stage 1" },
+      { id: 2, title: "Stage 2" },
+      { id: 3, title: "Stage 3" },
+      { id: 4, title: "Stage 4" }
+    ]
+
+    const cecStages = [
+      { id: 5, title: "Enquiry" },
+      { id: 6, title: "Onboarding form" },
+      { id: 7, title: "Form review" },
+      { id: 8, title: "With supplier" },
+      { id: 9, title: "Objection" },
+      { id: 10, title: "Awaiting contract start" },
+      { id: 11, title: "Interim rate customer" },
+      { id: 12, title: "V30 Rate Customer" }
+    ]
+
+    const allStages = [...defaultStages, ...cecStages];
+
+    let stageOptions;
+    if (groupText == 'CEC') {
+      stageOptions = cecStages;
+    } else if (groupText == 'System') {
+      stageOptions = allStages;
+    } else {
+      stageOptions = defaultStages;
+    }
+    const options = stageOptions.map(stage => {
+      const option = document.createElement("option");
+      option.setAttribute("value", stage.id);
+      option.textContent = stage.title;
+      return option;
+    });
+    const selectOption = document.createElement("option");
+    selectOption.textContent = selectText;
+    selectOption.setAttribute("value", "");
+    options.unshift(selectOption);
+
+    return options;
   }
 }

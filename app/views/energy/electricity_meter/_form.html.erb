@@ -1,0 +1,66 @@
+<%= form_with(
+      model: @electricity_meter_detail,
+      url: @electricity_meter_detail.new_record? ? energy_case_org_electricity_meter_index_path(**@routing_flags)
+                                  : energy_case_org_electricity_meter_path(id: params[:id], **@routing_flags),
+    ) do |form| %>
+    <%= form.govuk_error_summary %>
+
+    <% add_mpan_label = @onboarding_case_organisation.electricity_meter_type_multi? ? I18n.t("energy.electricity_meter.mpan_label") : I18n.t("energy.electricity_meter.mpan_label_single") %>
+    <%= form.govuk_text_field :mpan,
+        label: { text: add_mpan_label, size: "s", tag: "h2" },
+        hint: -> do
+              I18n.t("energy.electricity_meter.mpan_details").html_safe +
+              tag.br +
+              tag.img(
+                src: image_path("mpan.png"),
+                alt: I18n.t("energy.electricity_meter.mpan_image_alt_text1"),
+                width: "30%",
+              )
+        end,
+        width: 10,
+        class: "govuk-input--width-10" %>
+
+    <%= form.govuk_radio_buttons_fieldset :is_half_hourly,
+        legend: { tag: "h2", text: I18n.t("energy.electricity_meter.half_hourly_label"), class: "govuk-label govuk-label--s" },
+        hint: { text: I18n.t("energy.electricity_meter.half_hourly_hint") } do %>
+        <img src="<%=image_path('mpan-half-hourly.png') %>" alt="<%= I18n.t("energy.electricity_meter.mpan_image_alt_text2") %>" width="30%">
+      <%= form.govuk_radio_button :is_half_hourly, true, label: { text: 'Yes' }, link_errors: true do %>
+        <div class="govuk-form-group">
+          <%= form.govuk_text_field :supply_capacity,
+              label: { text: I18n.t("energy.electricity_meter.supplier_capacity_label"), class: 'govuk-label' },
+              suffix_text: I18n.t("energy.electricity_meter.supplier_capacity_suffix"),
+              width: 5 %>
+          <%= form.govuk_text_field :data_aggregator,
+              label: { text: I18n.t("energy.electricity_meter.data_aggregator_label"), class: 'govuk-label' },
+              width: 20 %>
+          <%= form.govuk_text_field :data_collector,
+              label: { text: I18n.t("energy.electricity_meter.data_collector_label"), class: 'govuk-label' },
+              width: 20 %>
+          <%= form.govuk_text_field :meter_operator,
+              label: { text: I18n.t("energy.electricity_meter.meter_operator_label"), class: 'govuk-label' },
+              width: 20 %>
+        </div>
+      <% end %>
+      <%= form.govuk_radio_button :is_half_hourly, false, label: { text: 'No' } %>
+    <% end %>
+
+    <%= form.govuk_text_field :electricity_usage,
+      label: { text: I18n.t("energy.electricity_meter.electricity_usage_label"), class: 'govuk-label govuk-label govuk-label--s', tag: "h2" },
+      suffix_text: I18n.t("energy.electricity_meter.electricity_usage_suffix"),
+      width: 5,
+      hint: -> do
+          content_tag(:div) do
+            tag.details(class: "govuk-details", data: { module: "govuk-details" }) do
+              tag.summary(class: "govuk-details__summary") do
+                tag.span(I18n.t("energy.electricity_meter.electricity_usage_details_link"), class: "govuk-details__summary-text")
+              end +
+              tag.div(class: "govuk-details__text") do
+              I18n.t("energy.electricity_meter.electricity_usage_details").html_safe
+              end
+            end
+          end
+        end %>
+
+    <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags)%>
+
+<% end %>

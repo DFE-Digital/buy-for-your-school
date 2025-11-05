@@ -4,7 +4,7 @@ module Support
 
   protected
 
-    helper_method :current_url_b64, :url_b64, :notifications_unread?
+    helper_method :current_url_b64, :url_b64, :notifications_unread?, :is_user_cec_agent?
 
     def record_action(case_id:, action:, data: {})
       Support::RecordAction.new(
@@ -34,6 +34,14 @@ module Support
       return if back_to.blank?
 
       Base64.decode64(back_to)
+    end
+
+    def is_user_cec_agent?
+      (current_agent&.roles & %w[cec cec_admin]).any?
+    end
+
+    def agent_portal_namespace
+      (current_agent&.roles & %w[cec cec_admin]).any? ? "cec" : "support"
     end
 
     def pundit_user = current_agent

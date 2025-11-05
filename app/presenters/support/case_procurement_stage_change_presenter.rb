@@ -11,7 +11,20 @@ module Support
 
   private
 
-    def agent_full_name = agent_id.nil? ? "unknown" : Support::AgentPresenter.new(Support::Agent.find(agent_id)).full_name
+    def agent_full_name
+      agent_id ? Support::AgentPresenter.new(Support::Agent.find(agent_id)).full_name : case_owner_name
+    end
+
+    def energy_case?
+      Energy::OnboardingCase.exists?(support_case_id: case_id)
+    end
+
+    def case_owner_name
+      return "unknown" unless energy_case?
+
+      kase = Support::Case.find_by(id: case_id)
+      kase ? "#{kase.first_name} #{kase.last_name}" : "unknown"
+    end
 
     def stage_title(id)
       return "none" if id.nil?

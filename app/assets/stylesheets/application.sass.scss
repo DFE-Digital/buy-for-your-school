@@ -44,6 +44,10 @@
    vertical-align: middle;
 }
 
+.govuk-table__cell.no-wrap {
+  white-space: nowrap;
+}
+
 .case-status-badge {
    white-space: nowrap !important;
 }
@@ -70,4 +74,10 @@
   .govuk-tabs-overflow-fix .govuk-tabs__list-item {
     padding: 10px 15px;
   }
+}
+
+// line from the prototype
+.govuk-prototype-kit-common-templates-related-items {
+  border-top: 2px solid #1d70b8;
+  padding-top: 10px;
 }

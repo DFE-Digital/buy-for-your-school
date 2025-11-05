@@ -1,0 +1,33 @@
+<div data-controller="date_validation">
+    <div data-date_validation-target="dateValidation" 
+        date-validation-error-messages='<%= [I18n.t("gas_supplier_form.errors.rules.gas_current_contract_end_date.invalid_date")].to_json %>'
+     >
+<%= form_with model: @form, scope: :gas_supplier_form, url: @form_url, method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.hidden_field :gas_current_supplier, value: form.object.gas_current_supplier %>
+
+  <%= form.govuk_radio_buttons_fieldset :gas_current_supplier, legend: { text: I18n.t("energy.current_contract.gas.current_supplier"), size: "s", tag: "h2" } do %>
+    <% form.object.current_supplier_options.each_with_index do |supplier, i| %>
+      <% if supplier == :other %>
+        <%= form.govuk_radio_divider %>
+        <%= form.govuk_radio_button :gas_current_supplier, supplier, id: "gas-current-supplier-other-radio", label: { for: "gas-current-supplier-other-radio", text: I18n.t("energy.suppliers.#{supplier}") } do %>
+          <%= form.govuk_text_field :gas_current_supplier_other,
+            maxlength: "60",
+            width: "one-third",
+            label: { text: I18n.t("energy.current_contract.gas.other_supplier") } %>
+        <% end %>
+      <% elsif i.zero? %>
+        <%= form.govuk_radio_button :gas_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") }, link_errors: true %>
+      <% else %>
+        <%= form.govuk_radio_button :gas_current_supplier, supplier, label: { text: I18n.t("energy.suppliers.#{supplier}") } %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= form.govuk_date_field :gas_current_contract_end_date, legend: { text: I18n.t("energy.current_contract.when_contract_ends"), size: "s", tag: "h2"}, hint: { text: I18n.t("energy.current_contract.date_for_example") } %>
+
+  <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags, additional_classes: "validate_date") %>
+<% end %>
+    </div>
+</div>

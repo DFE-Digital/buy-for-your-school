@@ -156,3 +156,4 @@ yarn-debug.log*
 specification*.docx
 
 *.env
+.solargraph.yml

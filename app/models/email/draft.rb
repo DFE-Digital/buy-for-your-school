@@ -7,6 +7,7 @@ class Email::Draft
   attribute :mailbox, default: -> { Email.default_mailbox }
   attribute :microsoft_graph, default: -> { MicrosoftGraph.client }
   attribute :reply_to_email
+  attribute :forward_to_email
   attribute :ticket
   attribute :template_id
   attribute :template_parser, default: -> { Email::TemplateParser.new }
@@ -21,7 +22,7 @@ class Email::Draft
 
   validates :html_content, presence: { message: "The email body cannot be blank" }
   validates :subject, presence: { message: "The subject cannot be blank" }, on: :new_message
-  validates :to_recipients, email_recipients: { at_least_one: true, message: "The TO recipients contains an invalid email address" }, on: :new_message
+  validates :to_recipients, email_recipients: { at_least_one: true, message: "The TO recipients contains an invalid email address" }, on: %i[new_message forward_email]
   validates :cc_recipients, email_recipients: { message: "The CC recipients contains an invalid email address" }, on: :new_message
   validates :bcc_recipients, email_recipients: { message: "The BCC recipients contain an invalid email address" }, on: :new_message
   validate :attachment_size, if: -> { email.present? && email.attachments.present? }
@@ -48,6 +49,10 @@ class Email::Draft
 
   def delivery_as_reply
     email.cache_message(microsoft_graph.create_and_send_new_reply(mailbox:, draft: self), folder: "SentItems")
+  end
+
+  def deliver_as_forward
+    email.cache_message(microsoft_graph.create_and_forward_new_message(mailbox:, draft: self), folder: "SentItems")
   end
 
   def save_draft!
@@ -95,6 +100,10 @@ class Email::Draft
 
   def reply_to_id
     reply_to_email.outlook_id
+  end
+
+  def forward_to_id
+    forward_to_email.outlook_id
   end
 
 private

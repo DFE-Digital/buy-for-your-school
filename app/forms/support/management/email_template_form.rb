@@ -79,7 +79,15 @@ module Support
       end
 
       def stage_options
-        Support::EmailTemplate.stages.map { |stage| ["#{I18n.t('support.management.email_templates.common.stage')} #{stage}", stage] }
+        stages = case @group&.title
+                 when "CEC"
+                   Support::EmailTemplate.cec_stages
+                 when "System"
+                   Support::EmailTemplate.all_stages
+                 else
+                   Support::EmailTemplate.stages
+                 end
+        stages.map { |stage| [I18n.t(stage, scope: "support.management.email_templates.stages").to_s, stage] }
       end
 
       def email_template

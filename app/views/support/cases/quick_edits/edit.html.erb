@@ -2,7 +2,7 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with model: @case_quick_edit,
       scope: :case_quick_edit,
-      url: support_case_quick_edit_path,
+      url: portal_case_quick_edit_path,
       method: :patch,
       html: { "data-controller" => "case-quick-edit",
               "data-case-quick-edit-show-procurement-stage-value" => @case_quick_edit.procurement_case?,

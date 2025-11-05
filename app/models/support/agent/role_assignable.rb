@@ -11,6 +11,8 @@ module Support::Agent::RoleAssignable
     analyst: "Data Analyst",
     framework_evaluator: "Framework Evaluator",
     framework_evaluator_admin: "Framework Evaluator Admin",
+    cec: "CEC Staff Member",
+    cec_admin: "CEC Admin",
   }.freeze
 
   included do
@@ -25,6 +27,7 @@ module Support::Agent::RoleAssignable
         framework_evaluator_admin
       ])
     }
+    scope :cec_staff, -> { by_role(%w[cec cec_admin]) }
   end
 
   def labelled_roles = roles.map { |role| ROLES[role.to_sym] }

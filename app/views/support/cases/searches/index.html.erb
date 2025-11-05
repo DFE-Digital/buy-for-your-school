@@ -15,8 +15,8 @@
     <%= render "support/cases/forms/filter_cases_form",
                form: @form,
                scope: :search_case_form,
-               filter_url: support_case_search_index_path,
-               clear_url: new_support_case_search_path,
+               filter_url: portal_case_search_index_path,
+               clear_url: portal_new_case_search_path,
                tab: "all-cases",
                search_term: @form.search_term %>
 
@@ -60,7 +60,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= link_to I18n.t("support.case.search.button"), new_support_case_search_path, class: "govuk-button govuk-!-margin-top-4", "role" => "button" %>
+    <%= link_to I18n.t("support.case.search.button"), portal_new_case_search_path, class: "govuk-button govuk-!-margin-top-4", "role" => "button" %>
   </div>
 </div>
 

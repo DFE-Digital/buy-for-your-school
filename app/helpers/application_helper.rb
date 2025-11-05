@@ -7,7 +7,16 @@ module ApplicationHelper
   end
 
   def banner_message
-    I18n.t("banner.beta.message", feedback_link: link_to(I18n.t("banner.beta.feedback_link"), banner_feedback_link, class: "govuk-link", target: "_blank", rel: :noopener))
+    I18n.t(
+      "banner.beta.message",
+      feedback_link: link_to(
+        "#{I18n.t('banner.beta.feedback_link')}<span class=\"govuk-visually-hidden\"> opens in new tab</span>".html_safe,
+        banner_feedback_link,
+        class: "govuk-link",
+        target: "_blank",
+        rel: :noopener,
+      ),
+    )
   end
 
   def dsi_url(**args)
@@ -22,8 +31,9 @@ module ApplicationHelper
     on_cases_index = current_page?(support_cases_path) || current_page?("/support")
     on_frameworks = request.path.starts_with?("/frameworks")
     on_eando_index = current_page?(engagement_cases_path) || current_page?("/engagement")
+    on_cec_index = current_page?(cec_onboarding_cases_path) || current_page?("/cec")
 
-    on_cases_index || on_frameworks || on_eando_index
+    on_cases_index || on_frameworks || on_eando_index || on_cec_index
   end
 
   def banner_feedback_link
@@ -39,8 +49,14 @@ module ApplicationHelper
       :supported_journey
     elsif request.path.starts_with?("/procurement-support")
       :request_for_help_form
+    elsif request.path.starts_with?("/energy")
+      :energy_for_schools
     else
       :create_a_spec
     end
+  end
+
+  def register_your_interest_form_url
+    "https://submit.forms.service.gov.uk/form/8895/multi-academy-trusts-register-your-interest-in-energy-for-schools/1049539"
   end
 end

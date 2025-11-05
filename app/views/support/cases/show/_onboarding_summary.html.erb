@@ -1,0 +1,26 @@
+<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="onboarding-summary">
+  <h2 class="govuk-heading-l">
+    <%= I18n.t("support.case.header.onboarding_summary") %>
+  </h2>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <% if organisation_task_lists.nil? %>
+        <p><%= I18n.t("energy.check_your_answers.no_data") %></p>
+      <% else %>
+        <% @organisation_task_lists.each do |org_task_list| %>
+            <% org_task_list.sections.each do |sec| %>
+              <%= govuk_summary_card(title: I18n.t("energy.check_your_answers.#{sec.title}.title")) do |card|
+                card.with_summary_list(rows: sec.summary.map { |row|
+                  {
+                    key: {text: I18n.t("energy.check_your_answers.#{sec.title}.#{row[0]}")},
+                    value: {text: row[2] || row[1]},
+                  }
+                })
+              end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+

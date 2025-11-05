@@ -1,0 +1,13 @@
+<%= form_with model: @form, scope: :site_contact_details_form, url: @form_url, method: :patch do |form| %>
+    <%= form.govuk_error_summary %>
+
+    <%= form.govuk_text_field :site_contact_first_name, label: { text: I18n.t("energy.site_contact_details.first_name") }, width: 20 %>
+
+    <%= form.govuk_text_field :site_contact_last_name, label: { text: I18n.t("energy.site_contact_details.last_name") }, width: 20 %>
+
+    <%= form.govuk_text_field :site_contact_email, label: { text: I18n.t("energy.site_contact_details.email") }, width: 20 %>
+
+    <%= form.govuk_text_field :site_contact_phone, label: { text: I18n.t("energy.site_contact_details.telephone") }, width: 20 %>
+
+    <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags) %>
+<% end %>

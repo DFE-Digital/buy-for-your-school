@@ -18,7 +18,7 @@ describe "Agent can quick edit a case", :js do
     before do
       fill_in "Add a note to case 000001", with: "New note"
       choose "5 - DfE buying by getting quotes or bids"
-      select "Tender preparation", from: "Procurement stage"
+      select "Tender preparation", from: "Stage"
       fill_in "Day", with: "10"
       fill_in "Month", with: "08"
       fill_in "Year", with: "2023"
@@ -34,6 +34,12 @@ describe "Agent can quick edit a case", :js do
       expect(support_case.reload.next_key_date).to eq(Date.parse("2023-08-10"))
       expect(support_case.reload.next_key_date_description).to eq("Key event")
       expect(support_case.reload.with_school).to eq(true)
+    end
+  end
+
+  context "when the case level is 1 to 5" do
+    it "Level 6 should be disabled" do
+      expect(page.find("#case-quick-edit-support-level-l6-field")[:disabled]).to eq("true")
     end
   end
 end

@@ -13,25 +13,26 @@
       <% if mode == :edit %>
         <div class="govuk-grid-column-one-quarter">
           <div class="template-manager__template-actions">
-            <%= link_to I18n.t("support.management.email_templates.index.template_manager.templates.edit"), edit_support_management_email_template_path(template), class: "govuk-link govuk-link--no-visited-state" %>
-            <%= link_to I18n.t("support.management.email_templates.index.template_manager.templates.delete"), support_management_email_template_path(template), method: :delete, data: { confirm: I18n.t("support.management.email_templates.index.template_manager.templates.delete_confirmation") }, class: "govuk-link govuk-link--no-visited-state" %>
+            <%= link_to I18n.t("support.management.email_templates.index.template_manager.templates.edit"), portal_edit_management_email_template_path(template), class: "govuk-link govuk-link--no-visited-state" %>
+            <%= link_to I18n.t("support.management.email_templates.index.template_manager.templates.delete"), portal_delete_management_email_template_path(template), method: :delete, data: { confirm: I18n.t("support.management.email_templates.index.template_manager.templates.delete_confirmation") }, class: "govuk-link govuk-link--no-visited-state" %>
           </div>
         </div>
       <% end %>
     </div>
 
     <div <%= tag.attributes class: "template-manager__template-attributes-#{mode}" %>>
+      <% unless hide_tag %>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
           <%= simple_format(template.description, wrapper_tag: "p", class: "govuk-body") %>
         </div>
       </div>
-
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
           <%= render "support/management/email_templates/template_manager/templates/template_tags", template: %>
         </div>
       </div>
+      <% end %>
 
       <% if template.subject.present? %>
         <div class="govuk-grid-row">

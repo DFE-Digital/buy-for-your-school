@@ -1,18 +1,26 @@
+<% energy_case = @current_case && @current_case.energy_onboarding_case? ? true : false %>
+<% onboarding_form = form.object.support_level == "L7" ? true : false %>
+<% field_disabled = @current_case && @current_case.support_level.in?(%w[L6 L7]) %>
+<% energy_case_submitted =  @current_case && @current_case.energy_onboarding_case? && @current_case.energy_onboarding_case&.submitted_at.present? ? true : false %>
 <div class="case-stage-fields" data-controller="case-stage">
   <%= form.govuk_radio_buttons_fieldset :support_level, legend: { text: I18n.t("support.case_summary.edit.support_level.label") } do %>
+    <%= form.hidden_field :support_level, value: form.object.support_level %>  
     <div class="govuk-radios">
       <% Support::Case.support_levels.each do |level| %>
-        <%= form.govuk_radio_button :support_level, level.first, label: { text: I18n.t("support.case.label.support_level.#{level.first}") }, "data-action": "case-stage#toggleProcurementStageEnabled" %>
+        <% energy_form = level.first == "L7" ? true : false %>
+        <% quick_edit_disable = params[:controller].include?("quick_edits") && form.object.support_level.in?(%w[L1 L2 L3 L4 L5]) && level.first == "L6" %>
+        <%= form.govuk_radio_button :support_level, level.first, disabled: field_disabled || energy_form || quick_edit_disable, label: { text: I18n.t("support.case.label.support_level.#{level.first}") }, "data-action": "case-stage#toggleProcurementStageEnabled" %>
       <% end %>
-      <%= form.govuk_radio_button :support_level, "", label: { text: I18n.t("support.case.label.support_level.unspecified") }, "data-action": "case-stage#toggleProcurementStageEnabled" %>
+      <%= form.govuk_radio_button :support_level, "", disabled: field_disabled, label: { text: I18n.t("support.case.label.support_level.unspecified") }, "data-action": "case-stage#toggleProcurementStageEnabled" %>
     </div>
   <% end %>
 
+  <%= form.hidden_field :procurement_stage_id, value: form.object.procurement_stage_id %>  
   <%= form.govuk_select :procurement_stage_id,
-                        grouped_options_for_select(procurement_stage_grouped_options(selected_procurement_stage_id: form.object.procurement_stage_id)),
+                        grouped_options_for_select(procurement_stage_grouped_options(selected_procurement_stage_id: form.object.procurement_stage_id, energy_case:, onboarding_form:)),
                         class: "case-summary__procurement-stages",
                         label: { text: I18n.t("support.case.label.procurement_stage"), size: "m" },
                         "data-case-stage-target": "procurementStage",
                         form_group: { "data-case-stage-target" => "procurementStageWrapper" },
-                        disabled: !form.object.support_level.in?(%w[L4 L5]) %>
+                        disabled: !form.object.support_level.in?(%w[L4 L5 L6 L7]) || (energy_case && !energy_case_submitted && form.object.support_level == "L7") %>
 </div>

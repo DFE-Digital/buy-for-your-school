@@ -9,8 +9,8 @@ export default class extends Controller {
       e.preventDefault();
       this.removeErrorFieldStyle();
       let isValid = true;
-      e.target.blur()
-  
+      e.target.blur();
+
       this.dateValidationTarget.querySelectorAll('.govuk-form-group .govuk-date-input').forEach((dateGroup, index) => {
 
         const day = parseInt(dateGroup.querySelectorAll('.govuk-date-input__input')[0].value, 10);
@@ -24,9 +24,18 @@ export default class extends Controller {
           this.setErrorFieldStyle(dateGroup, index);
         }
       });
-
+  
       if (isValid) {
-        this.dateValidationTarget.querySelector('form').submit();
+        const form = this.dateValidationTarget.querySelector('form');
+
+        // Add a hidden input field with the value you want to post
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'js_form_submit';
+        hiddenInput.value = 'true';
+        form.appendChild(hiddenInput);
+
+        form.submit();
       }
     });
   }

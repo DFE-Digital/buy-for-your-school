@@ -1,0 +1,19 @@
+<% first_unchecked_found = false %>
+
+<%= form_with model: @form, scope: :letter_of_authorisation_form, url: energy_case_letter_of_authorisation_path, method: :patch do |form| %>
+  <%= form.govuk_error_summary %>
+
+  <%= form.govuk_check_boxes_fieldset :loa_agreed, legend: nil do %>
+    <% ['agreement1', 'agreement2', 'agreement3'].each do |agreement| %>
+      <% is_checked = Array(@form.loa_agreed)&.include?(agreement) %>
+      <% link_errors = !is_checked && !first_unchecked_found %>
+      <% first_unchecked_found ||= link_errors %>
+
+      <%= form.govuk_check_box :loa_agreed, agreement,
+            label: { text: I18n.t(agreement, scope: "energy.letter_of_authorisation.agreement") },
+            link_errors: link_errors %>
+    <% end %>
+  <% end %>
+
+  <%= render SubmitButtonComponent.new(form) %>
+<% end %>

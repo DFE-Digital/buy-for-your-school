@@ -1,0 +1,9 @@
+<%= content_for :title, "#{@form.errors.any? ? 'Error: ' : ''}#{I18n.t("energy.gas_single_multi.page_title")} - #{I18n.t('energy.service_name')}" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-caption-l"><%= @organisation_detail.name%>: <%= I18n.t("energy.gas_meter_details.title")%></p>
+
+    <%= render "form" %>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<%= content_for :title, I18n.t("specifying.start_page.page_title") %>
+
+<h1 class="govuk-heading-xl">
+  <%= I18n.t("specifying.start_page.page_title") %>
+</h1>
+
+<p class="govuk-body">
+  <%= I18n.t("specifying.start_page.overview_purpose") %>
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <% I18n.t("specifying.start_page.overview_supported_category_list").each do |list_item| %>
+    <li><%= list_item %></li>
+  <% end %>
+</ul>
+
+<p class="govuk-body">
+  <%= I18n.t("specifying.start_page.overview_download") %>
+</p>
+
+<p class="govuk-body"><%= I18n.t("specifying.start_page.who_can_use_body") %></p>
+<ul class="govuk-list govuk-list--bullet">
+  <% I18n.t("specifying.start_page.who_can_use_list").each do |list_item| %>
+    <li><%= list_item %></li>
+  <% end %>
+</ul>
+
+<%= render "start_button" %>
+
+<h2 class="govuk-heading-m">
+  <%= I18n.t("specifying.start_page.before_you_start_title") %>
+</h2>
+
+<% I18n.t("specifying.start_page.before_you_start_body").each do |paragraph| %>
+  <p class="govuk-body"><%= paragraph %></p>
+<% end %>

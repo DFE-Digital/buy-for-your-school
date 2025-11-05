@@ -6,7 +6,8 @@
   <div role="tabpanel" aria-labelledby="tab_case-details" id="case_details_sections">
     <h3 class="govuk-heading-m">
       <%= I18n.t("support.case.case_details.case_summary.heading") %>
-      - <%= link_to I18n.t("support.case.link.change"), edit_support_case_summary_path(current_case), class: "govuk-link govuk-link--no-visited-state" %>
+      <% edit_summary_link = (current_agent.roles & %w[cec cec_admin]).any? ? cec_case_edit_summary_path(current_case) : edit_support_case_summary_path(current_case) %>
+      - <%= link_to I18n.t("support.case.link.change"), edit_summary_link, class: "govuk-link govuk-link--no-visited-state" %>
     </h3>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
       <% if current_case.category.present? %>
@@ -47,30 +48,34 @@
         </div>
       <% end %>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.case_value") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= current_case.value %>
-        </dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
+      <% unless @current_case.energy_onboarding_case? %>  
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case.label.case_value") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= current_case.value %>
+          </dd>
+          <dd class="govuk-summary-list__actions"></dd>
+        </div>
+      <% end %>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.discovery_method.field") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-					<% if current_case.discovery_method.present? %>
-            <%= I18n.t("support.case.label.discovery_method.#{current_case.discovery_method}") %>
-						<%= if current_case.other? && !current_case.discovery_method_other_text.empty? then "- #{current_case.discovery_method_other_text}" end %>
-					<% else %>
-						<%= "Unknown" %>
-					<% end %>
-        </dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
+      <% unless @current_case.energy_onboarding_case? %>  
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case.label.discovery_method.field") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <% if current_case.discovery_method.present? %>
+              <%= I18n.t("support.case.label.discovery_method.#{current_case.discovery_method}") %>
+              <%= if current_case.other? && !current_case.discovery_method_other_text.empty? then "- #{current_case.discovery_method_other_text}" end %>
+            <% else %>
+              <%= "Unknown" %>
+            <% end %>
+          </dd>
+          <dd class="govuk-summary-list__actions"></dd>
+        </div>
+      <% end %>
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -86,29 +91,33 @@
         <dd class="govuk-summary-list__actions"></dd>
       </div>
 
-      <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= I18n.t("support.case.label.project.header") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <% if current_case.project.present? %>
-          <%= current_case.project %>
-        <% else %>
-          <%= I18n.t("support.case.label.project.unspecified") %>
-        <% end %>
-      </dd>
-      <dd class="govuk-summary-list__actions"></dd>
-    </div>
+      <% unless @current_case.energy_onboarding_case? %>  
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case.label.project.header") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <% if current_case.project.present? %>
+              <%= current_case.project %>
+            <% else %>
+              <%= I18n.t("support.case.label.project.unspecified") %>
+            <% end %>
+          </dd>
+          <dd class="govuk-summary-list__actions"></dd>
+        </div>
+      <% end %>  
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.problem_description") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= simple_format(current_case.request_text, class: "govuk-body") %>
-        </dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
+      <% unless @current_case.energy_onboarding_case? %>  
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case.label.problem_description") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= simple_format(current_case.request_text, class: "govuk-body") %>
+          </dd>
+          <dd class="govuk-summary-list__actions"></dd>
+        </div>
+      <% end %>  
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
@@ -122,6 +131,7 @@
       </div>
     </dl>
 
+    <% unless @current_case.energy_onboarding_case? %>
     <h3 id="procurement-details-procurement" class="govuk-heading-m">
       <%= I18n.t("support.case.header.procurement_detail") %>
       <% if current_case.procurement %>
@@ -214,7 +224,9 @@
         <dd class="govuk-summary-list__actions"></dd>
       </div>
     </dl>
+    <% end %>
 
+    <% unless @current_case.energy_onboarding_case? %>
     <h3 id="pd-existing-contract" class="govuk-heading-m">
       Existing contract details -
       <%= link_to I18n.t("support.case.link.change"), edit_support_case_contract_path(current_case, current_case.existing_contract), class: "govuk-link govuk-link--no-visited-state" %>
@@ -308,7 +320,9 @@
         <dd class="govuk-summary-list__actions"></dd>
       </div>
     </dl>
+    <% end %>
 
+    <% unless @current_case.energy_onboarding_case? %>
     <h3 id="pd-savings" class="govuk-heading-m">
       <%= I18n.t("support.case_savings.show.header") %> - <%= link_to I18n.t("support.case_savings.show.link"), edit_support_case_savings_path(current_case), class: "govuk-link"%>
     </h3>
@@ -359,5 +373,7 @@
         <dd class="govuk-summary-list__actions"></dd>
       </div>
     </dl>
+    <% end %>
+
   </div>
 </div>

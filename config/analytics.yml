@@ -1,0 +1,4 @@
+shared:
+  users:
+    - id
+    - dfe_sign_in_uid

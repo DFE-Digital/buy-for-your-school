@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root to: "specify/home#show"
+  root to: "specify/create_a_specification#show"
+
+  # DfE analytics
+  post "/dfe_analytics_events", to: "dfe_analytics_events#create"
 
   # Misc
   get "health_check" => "application#health_check"
@@ -14,6 +17,7 @@ Rails.application.routes.draw do
   get "cms", to: "cms_entry_points#start", as: :cms_entrypoint
   get "cms/no_roles_assigned", to: "cms_entry_points#no_roles_assigned", as: :cms_no_roles_assigned
   get "cms/not_authorized", to: "cms_entry_points#not_authorized", as: :cms_not_authorized
+  get "cms/sign-in", to: "cms/signin#show", as: :cms_signin
 
   # DfE Sign In
   get "/auth/dfe/callback", to: "sessions#create", as: :sign_in
@@ -64,6 +68,7 @@ Rails.application.routes.draw do
   # Specify
   scope module: :specify do
     get "dashboard", to: "dashboard#show"
+    get "create_a_specification", to: "create_a_specification#show"
 
     resources :feedback, only: %i[new show create edit update]
     get "profile", to: "profile#show"
@@ -262,6 +267,9 @@ Rails.application.routes.draw do
             resources :replies, only: %i[create edit] do
               post "submit", on: :member
             end
+            resources :forwards, only: %i[create edit] do
+              post "submit", on: :member
+            end
           end
         end
         resources :email_templates, only: %i[index]
@@ -292,6 +300,7 @@ Rails.application.routes.draw do
         get "closures/", to: "closures#index", as: "closures"
         post "closures/", to: "closures#create", as: "support_case_closures"
         post "closures/confirm", to: "closures#confirm", as: "closures_confirm"
+        resource :onboarding_summary, only: %i[show]
       end
     end
 
@@ -327,7 +336,7 @@ Rails.application.routes.draw do
 
     namespace :management do
       get "/", to: "base#index"
-      resources :agents, only: %i[index edit update new create]
+      resources :agents
       resources :categories, only: %i[index update]
       resources :email_templates do
         get "/attachment-list", to: "email_templates#attachment_list", on: :member
@@ -338,6 +347,17 @@ Rails.application.routes.draw do
       resource :category_detection, only: %i[new create]
       resources :all_cases_surveys, only: %i[index create]
       resources :sync_frameworks, only: %i[index create]
+      resources :energy_for_schools, only: %i[index edit update new create]
+      resources :schools_emails, only: %i[index create], param: "type" do
+        scope module: :schools_emails do
+          resources :send_emails, only: %i[index create]
+          resources :schools_emails_templates, only: %i[index create], param: "type" do
+            scope module: :schools_emails_templates do
+              resources :templates, only: %i[index create]
+            end
+          end
+        end
+      end
     end
   end
 
@@ -384,7 +404,7 @@ Rails.application.routes.draw do
 
     namespace :management do
       get "/", to: "base#index"
-      resources :agents, only: %i[index edit update new create]
+      resources :agents
     end
   end
 
@@ -479,10 +499,15 @@ Rails.application.routes.draw do
     end
   end
 
-  if Rails.env.development?
-    require "sidekiq/web"
-    mount Sidekiq::Web, at: "/sidekiq"
+  resources :usability_surveys, only: %i[new create]
+
+  require "sidekiq/web"
+  if Rails.env.production?
+    Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+      username == ENV["SIDEKIQ_USERNAME"] && password == ENV["SIDEKIQ_PASSWORD"]
+    end
   end
+  mount Sidekiq::Web, at: "/sidekiq"
 
   flipper_app = Flipper::UI.app do |builder|
     if Rails.env.production?
@@ -492,6 +517,137 @@ Rails.application.routes.draw do
     end
   end
   mount flipper_app, at: "/flipper"
+
+  # Energy
+  # Pre-sign-in
+  get "/energy/start", to: "energy/onboarding#start", as: "energy_start"
+  get "/energy/guidance", to: "energy/onboarding#guidance", as: "energy_guidance"
+  get "/energy/before-you-start", to: "energy/onboarding#before_you_start", as: "energy_before_you_start"
+
+  # School selection
+  get "/energy/which-school-buying-for", to: "energy/school_selections#show", as: "energy_school_selection"
+  patch "/energy/which-school-buying-for", to: "energy/school_selections#update"
+  get "/energy/school-selection-unavailable(/:id)", to: "energy/service_availability#show", as: "energy_service_availability"
+
+  # Authorisation
+  get "/energy/authorisation/:id/:type", to: "energy/authorisation#show", as: "school_type_energy_authorisation"
+  patch "/energy/authorisation/:id/:type", to: "energy/authorisation#update"
+
+  # rubocop:disable Layout/SpaceInsideArrayPercentLiteral
+  # Case level
+  [
+    #  Slug (0)                 Controller (1)                Helper name (2)
+    %w[which-energy-supply      switch_energies               energy_case_switch_energy], # FIXME: Should be org level
+    %w[gas-contract             gas_suppliers                 energy_case_gas_supplier], # FIXME: Should be org level
+    %w[electricity-contract     electric_suppliers            energy_case_electric_supplier], # FIXME: Should be org level
+    %w[task-list                tasks                         energy_case_tasks],
+    %w[letter-of-authority      letter_of_authorisations      energy_case_letter_of_authorisation],
+  ].each do |vals|
+    get "/energy/#{vals[0]}/:case_id", to: "energy/#{vals[1]}#show", as: vals[2]
+    patch "/energy/#{vals[0]}/:case_id", to: "energy/#{vals[1]}#update"
+  end
+
+  get "/energy/check-answers/:case_id", to: "energy/check_your_answers#show", as: "energy_case_check_your_answers"
+  get "/energy/information-submitted/:case_id", to: "energy/confirmations#show", as: "energy_case_confirmation"
+
+  # Org level
+  [
+    #  Slug (0)                 Controller (1)                Helper name (2)
+    %w[gas-multi-single         gas_single_multis             energy_case_org_gas_single_multi],
+    %w[gas-bill                 gas_bill_consolidations       energy_case_org_gas_bill_consolidation],
+    %w[electricity-multi-single electricity_meter_types       energy_case_org_electricity_meter_type],
+    %w[electricity-bill         electric_bill_consolidations  energy_case_org_electric_bill_consolidation],
+    %w[site-contact             site_contact_details          energy_case_org_site_contact_details],
+    %w[vat-rate                 vat_rate_charges              energy_case_org_vat_rate_charge],
+    %w[vat-contact              vat_person_responsibles       energy_case_org_vat_person_responsible],
+    %w[vat-contact-manual       vat_alt_person_responsibles   energy_case_org_vat_alt_person_responsible],
+    %w[vat-certificate          vat_certificates              energy_case_org_vat_certificate],
+    %w[billing-preferences      billing_preferences           energy_case_org_billing_preferences],
+    %w[billing-address          billing_address_confirmations energy_case_org_billing_address_confirmation],
+  ].each do |vals|
+    get "/energy/#{vals[0]}/:case_id/:org_id", to: "energy/#{vals[1]}#show", as: vals[2]
+    patch "/energy/#{vals[0]}/:case_id/:org_id", to: "energy/#{vals[1]}#update"
+  end
+
+  # Meter level
+  [
+    #  Slug (0)          ID name (1) Controller (2)    Helper name root (3)
+    %w[gas-meter         mprn        gas_meter         gas_meter],
+    %w[electricity-meter mpan        electricity_meter electricity_meter],
+  ].each do |vals|
+    get "/energy/#{vals[0]}/:case_id/:org_id", to: "energy/#{vals[2]}#new", as: "new_energy_case_org_#{vals[3]}"
+    get "/energy/#{vals[0]}-summary/:case_id/:org_id", to: "energy/#{vals[2]}#index", as: "energy_case_org_#{vals[3]}_index"
+    post "/energy/#{vals[0]}-summary/:case_id/:org_id", to: "energy/#{vals[2]}#create" # FIXME: -summary?
+    get "/energy/#{vals[0]}/:case_id/:org_id/:id", to: "energy/#{vals[2]}#edit", as: "edit_energy_case_org_#{vals[3]}"
+    patch "/energy/#{vals[0]}/:case_id/:org_id/:id", to: "energy/#{vals[2]}#update", as: "energy_case_org_#{vals[3]}"
+    delete "/energy/remove-#{vals[1]}/:case_id/:org_id/:id", to: "energy/#{vals[2]}#destroy", as: "delete_energy_case_org_#{vals[3]}"
+  end
+  # rubocop:enable Layout/SpaceInsideArrayPercentLiteral
+
+  # Cec
+  namespace :cec do
+    root to: "onboarding_cases#index"
+    resources :onboarding_cases, only: %i[index show]
+    get "cases/find-a-case/new", to: "/support/cases/searches#new", as: :case_search_new
+    get "cases/find-a-case", to: "/support/cases/searches#index", as: :case_search_index
+
+    get "notifications", to: "/support/notifications#index", as: :notifications
+    post "notifications/mark_all_read", to: "/support/notifications/mark_all_reads#create", as: :notifications_mark_all_read
+    post "notifications/:notification_id/read", to: "/support/notifications/reads#create", as: :notification_read
+    delete "notifications/:notification_id/read", to: "/support/notifications/reads#destroy", as: :destroy_notification_read
+    post "management/agents", to: "/support/management/agents#create", as: :management_agents
+    patch "management/agents/:id", to: "/support/management/agents#update", as: :management_agent
+    patch "email_read_status/:email_id", to: "/support/email_read_status#update", as: :email_read_status
+    post "management/email_templates", to: "/support/management/email_templates#create", as: :management_email_templates
+    get "management/email_templates", to: "/support/management/email_templates#index", as: :management_email_templates_index
+    get "management/email_templates/new", to: "/support/management/email_templates#new", as: :new_management_email_template
+    get "management/email_templates/:id/edit", to: "/support/management/email_templates#edit", as: :edit_management_email_template
+    patch "management/email_templates/:id", to: "/support/management/email_templates#update", as: :update_management_email_template
+    delete "management/email_templates/:id", to: "/support/management/email_templates#destroy", as: :delete_management_email_template
+    get "management/email_template_groups/subgroups/(:group_id)", to: "/support/management/email_template_groups#subgroups", as: :subgroups_management_email_template_groups
+
+    resources :cases, only: %i[index show] do
+      scope module: :cases do
+        get "assignments/new", to: "/support/cases/assignments#new", as: :assignment_new
+        post "assignments", to: "/support/cases/assignments#create", as: :assignments
+        get "message_threads/:id", to: "/support/cases/message_threads#show", as: :message_thread
+        post "message_threads", to: "/support/cases/message_threads#create", as: :message_threads
+        get "message_threads", to: "/support/cases/message_threads#index", as: :message_threads_index
+        get "message_threads/logged_contacts", to: "/support/cases/message_threads#logged_contacts", as: :logged_contacts
+        get "interactions/new", to: "/support/interactions#new", as: :new_interaction
+        post "interactions", to: "/support/interactions#create", as: :interactions
+        post "on_hold", to: "/support/cases/on_holds#create", as: :on_hold
+        post "opening", to: "/support/cases/openings#create", as: :opening
+        get "opening/new", to: "/support/cases/openings#new", as: :new_opening
+        get "resolution/new", to: "/support/cases/resolutions#new", as: :new_resolution
+        post "resolution", to: "/support/cases/resolutions#create", as: :resolution
+        get "closures", to: "/support/cases/closures#index", as: :closures
+        post "closures/confirm", to: "/support/cases/closures#confirm", as: :closures_confirm
+        post "closures", to: "/support/cases/closures#create", as: :closures_post
+        get "contact_details/edit", to: "/support/cases/contact_details#edit", as: :edit_contact_details
+        patch "contact_details", to: "/support/cases/contact_details#update", as: :update_contact_details
+      end
+    end
+
+    resources :cases, only: %i[index show] do
+      scope module: :cases do
+        get "summary/edit", to: "/support/cases/summaries#edit", as: :edit_summary
+        patch "summary", to: "/support/cases/summaries#update", as: :update_summary
+      end
+    end
+
+    resources :cases, only: %i[index show] do
+      scope module: :cases do
+        get "quick_edit/edit", to: "/support/cases/quick_edits#edit", as: :edit_quick_edit
+        patch "quick_edit", to: "/support/cases/quick_edits#update", as: :quick_edit
+      end
+    end
+
+    namespace :management do
+      get "/", to: "base#index"
+      resources :agents, only: %i[index edit update new create]
+    end
+  end
 
   # Routes any/all Contentful Pages that are mirrored in t.pages
   get ":slug", to: "pages#show"

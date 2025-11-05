@@ -2,43 +2,47 @@
 
   <ul class="govuk-list case-actions">
     <li>
-      <%= link_to I18n.t("support.case.label.add_note"), new_support_case_interaction_path(@current_case, option: :note), class: "govuk-link" unless @current_case.closed? %>
+      <%= link_to I18n.t("support.case.label.add_note"), portal_new_case_interaction_path(@current_case, option: :note), class: "govuk-link" unless @current_case.closed? %>
     </li>
+    <% unless @current_case.energy_onboarding_case? && (current_agent&.roles & %w[cec cec_admin]).any? %>
     <li>
       <%= link_to I18n.t("support.case.label.move_email"), support_case_move_emails_path(@current_case), class: "govuk-link govuk-link--no-visited-state" unless @current_case.closed?%>
     </li>
+    <% end %>
     <% if @current_case.opened? %>
       <li>
-        <%= link_to I18n.t("support.case.label.change_owner"), new_support_case_assignment_path(@current_case), class: "govuk-link" %>
+        <%= link_to I18n.t("support.case.label.change_owner"), portal_new_case_assignments_path(@current_case), class: "govuk-link" %>
       </li>
       <li>
-        <%= link_to I18n.t("support.case.label.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link" %>
+        <%= link_to I18n.t("support.case.label.add_interaction"), portal_new_case_interaction_path(@current_case, option: :contact), class: "govuk-link" %>
       </li>
        <li>
-        <%= link_to I18n.t("support.case.label.place_on_hold"), support_case_on_hold_path(@current_case), method: :post, class: "govuk-link" %>
+        <%= link_to I18n.t("support.case.label.place_on_hold"), portal_case_on_hold_path(@current_case), method: :post, class: "govuk-link" %>
       </li>
        <li>
-        <%= link_to I18n.t("support.case.label.resolve"), new_support_case_resolution_path(@current_case), class: "govuk-link" %>
+        <%= link_to I18n.t("support.case.label.resolve"), portal_new_case_resolution_path(@current_case), class: "govuk-link" %>
       </li>
       <li>
-        <%= link_to I18n.t("support.case_closures.action"), support_case_closures_path(@current_case), class: "govuk-link" %>
+        <% unless @current_case.energy_onboarding_case? && (current_agent&.roles & %w[procops procops_admin cec_admin]).none? %>
+          <%= link_to I18n.t("support.case_closures.action"), portal_case_closures_path(@current_case), class: "govuk-link" %>
+        <% end %>
       </li>
     <% else %>
       <li>
-        <%= link_to I18n.t("support.case.label.assign_to_agent"), new_support_case_assignment_path(@current_case), class: "govuk-link" unless @current_case.closed?%>
+        <%= link_to I18n.t("support.case.label.assign_to_agent"), portal_new_case_assignments_path(@current_case), class: "govuk-link" unless @current_case.closed?%>
       </li>
     <% end %>
 
      <% if @current_case.on_hold? %>
       <li>
-        <%= link_to I18n.t("support.case.label.reopen"), support_case_opening_path(@current_case), method: :post, class: "govuk-link" %>
+        <%= link_to I18n.t("support.case.label.reopen"), portal_case_opening_path(@current_case), method: :post, class: "govuk-link" %>
       </li>
     <% end %>
     <% if @current_case.resolved? || @current_case.closed?%>
       <li>
-        <%= link_to I18n.t("support.case.label.reopen"), new_support_case_opening_path(@current_case), class: "govuk-link" %>
+        <%= link_to I18n.t("support.case.label.reopen"), portal_new_case_opening_path(@current_case), class: "govuk-link" %>
       </li>
-      
+
     <% end %>
 
     <% if @current_case.initial? %>
@@ -46,13 +50,13 @@
         <%= link_to I18n.t("support.case.label.actions.transfer_to_framework_evaluation"), support_case_transfer_to_framework_evaluation_path(@current_case), class: "govuk-link govuk-link--no-visited-state" %>
       </li>
       <li>
-        <%= link_to I18n.t("support.case.label.add_interaction"), new_support_case_interaction_path(@current_case, option: :contact), class: "govuk-link" %>
+        <%= link_to I18n.t("support.case.label.add_interaction"), portal_new_case_interaction_path(@current_case, option: :contact), class: "govuk-link" %>
       </li>
     <% end  %>
 
     <% if @current_case.initial? && @current_case.incoming_email? %>
       <li>
-        <%= link_to I18n.t("support.case_closures.action"), support_case_closures_path(@current_case), class: "govuk-link" %>
+        <%= link_to I18n.t("support.case_closures.action"), portal_case_closures_path(@current_case), class: "govuk-link" %>
       </li>
     <% end %>
   </ul>

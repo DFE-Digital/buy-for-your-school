@@ -11,7 +11,7 @@ module Support
 
     def new
       @interaction = InteractionPresenter.new(current_case.interactions.build)
-      @back_url = back_link_param || support_case_path(current_case)
+      @back_url = set_back_url
       render :new, locals: { option: safe_interaction }
     end
 
@@ -24,7 +24,7 @@ module Support
         redirect_to determine_redirect_path(@interaction.event_type),
                     notice: I18n.t("support.interaction.message.created_flash", type: @interaction.event_type).humanize
       else
-        @back_url = back_link_param(back_to_param) || support_case_path(current_case)
+        @back_url = set_back_url
 
         render :new, locals: { option: safe_interaction }
       end
@@ -55,7 +55,7 @@ module Support
 
       case event_type
       when "note"
-        support_case_path(current_case, anchor: "case-history")
+        is_user_cec_agent? ? cec_onboarding_case_path(current_case, anchor: "case-history") : support_case_path(current_case, anchor: "case-history")
       else
         logged_contacts_support_case_message_threads_path(current_case)
       end
@@ -69,5 +69,23 @@ module Support
         body: @interaction.body,
       )
     end
+
+    def set_back_url
+      back_link_param || (is_user_cec_agent? ? cec_onboarding_case_path(current_case) : support_case_path(current_case))
+    end
+
+    helper_method def portal_case_interactions_path
+      send("#{agent_portal_namespace}_case_interactions_path")
+    end
+
+    helper_method def portal_case_logged_contacts_path(current_case)
+      if is_user_cec_agent?
+        send("cec_case_logged_contacts_path", current_case)
+      else
+        send("logged_contacts_support_case_message_threads_path", current_case)
+      end
+    end
+
+    def authorize_agent_scope = :access_individual_cases?
   end
 end

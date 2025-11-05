@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "messages-frame" do %>
-  <%= link_to I18n.t("support.case.label.message_threads.back"), support_case_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
+  <%= link_to I18n.t("support.case.label.message_threads.back"), back_link_message_threads_path(back_to: Base64.encode64(@back_url)), class: "govuk-back-link pull-up" %>
 
   <h3 class="govuk-heading-m"><%= @subject %></h3>
 
@@ -16,10 +16,26 @@
         <%= turbo_frame_tag "reply-frame", src: @reply_frame_url.presence do %>
           <div class="govuk-button-group flex-align-center">
             <%= link_to I18n.t("support.case.label.message_threads.reply_with_template"), support_case_email_templates_path(thread_id: @current_thread.id, message_id: @last_received_reply, back_to: Base64.encode64(@back_url)), class: "govuk-button govuk-button--secondary", data: { turbo_frame: "messages-frame" }, role: "button" %>
-            <%= button_to I18n.t("support.case.label.message_threads.reply_using_signatory_template"), support_case_message_replies_path(message_id: @last_received_reply), class: "govuk-button govuk-button--secondary" %>
+            <%= button_to I18n.t("support.case.label.message_threads.reply_with_signature"), support_case_message_replies_path(message_id: @last_received_reply), class: "govuk-button govuk-button--secondary" %>
           </div>
         <% end %>
       </div>
     </details>
   <% end %>
+
+  <details class="govuk-details govuk-!-margin-top-5" open="true">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">
+        Forward message
+      </span>
+    </summary>
+    <div class="govuk-details__text">
+      <%= turbo_frame_tag "forward-frame", src: "" do %>
+        <div class="govuk-button-group flex-align-center">
+          <%= link_to I18n.t("support.case.label.message_threads.forward_with_template"), support_case_email_templates_path(thread_id: @current_thread.id, message_id: @messages.first.id, back_to: Base64.encode64(@back_url)), class: "govuk-button govuk-button--secondary", data: { turbo_frame: "messages-frame" }, role: "button" %>
+          <%= button_to I18n.t("support.case.label.message_threads.forward_with_signature"), support_case_message_forwards_path(message_id: @messages.first.id), class: "govuk-button govuk-button--secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </details>
 <% end %>

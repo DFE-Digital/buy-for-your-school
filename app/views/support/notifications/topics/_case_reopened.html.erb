@@ -1,10 +1,18 @@
 <div class="notification-details">
   <div class="major">
-    <span class="action">
-      <%= link_to(support_notification_read_path(notification, redirect_to: support_case_path(notification.support_case, notification.subject.ref, back_to: Base64.encode64(support_notifications_path))), method: :post, class: "govuk-link--no-visited-state") do %>
-        Case Reopened - <%= notification.subject.ref %>
-      <% end %>
-    </span>
+    <% if cec_portal? || (support_portal? && (current_agent.roles & %w[cec cec_admin]).any?) %>
+      <span class="action">
+        <%= link_to(cec_notification_read_path(notification, redirect_to: cec_onboarding_case_path(notification.support_case, notification.subject.ref, back_to: Base64.encode64(cec_notifications_path))), method: :post, class: "govuk-link--no-visited-state") do %>
+          Case Reopened - <%= notification.subject.ref %>
+        <% end %>
+      </span>
+    <% else %>
+      <span class="action">
+        <%= link_to(support_notification_read_path(notification, redirect_to: support_case_path(notification.support_case, notification.subject.ref, back_to: Base64.encode64(support_notifications_path))), method: :post, class: "govuk-link--no-visited-state") do %>
+          Case Reopened - <%= notification.subject.ref %>
+        <% end %>
+      </span>
+    <% end %>
     <span class="by">from <%= notification.subject.agent.first_name %></span>
   </div>
 </div>

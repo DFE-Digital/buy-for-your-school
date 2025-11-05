@@ -183,13 +183,59 @@ en:
               too_long: "First name must be %{count} characters or fewer"
             last_name:
               too_long: "Last name must be %{count} characters or fewer"
+        energy/gas_meter:
+            attributes:
+              mprn:
+                blank: Enter a Meter Point Reference Number
+                invalid: Enter an MPRN between 6 and 12 digits, like 12345678
+              gas_usage:
+                blank: Enter the estimated annual usage in kilowatt hours
+                not_a_number: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
+                greater_than_or_equal_to: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
+                less_than: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
+            maximum_mprn_per_organisation: Maximum number of MPRNs reached
+            error_unique: This MPRN is already registered with Energy for Schools. Contact dfe-energy.services-team@education.gov.uk to resolve the matter
+        energy/electricity_meter:
+            attributes:
+              mpan:
+                blank: Enter an MPAN
+                invalid: Enter an MPAN that's 13 digits long, like 1234567891011
+              is_half_hourly:
+                inclusion: Select whether your meter is half hourly or not
+              supply_capacity:
+                blank: Enter the supply capacity
+                invalid: Supply capacity must be a number, like 100
+                not_a_number: Supply capacity must be a number, like 100
+              data_aggregator:
+                blank: Enter the data aggregator
+                invalid: Enter the name of your data aggregator
+              data_collector:
+                blank: Enter the data collector
+                invalid: Enter the name of your data collector
+              meter_operator:
+                blank: Enter the meter operator
+                invalid: Enter the name of your meter operator
+              electricity_usage:
+                blank: Enter the estimated annual usage in kilowatt hours
+                not_a_number: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
+                greater_than_or_equal_to: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
+                less_than: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
+            maximum_mpan_per_organisation: Maximum number of MPANs reached
+            error_unique: This MPAN is already registered with Energy for Schools. Contact dfe-energy.services-team@education.gov.uk to resolve the matter
+        energy/email_template_configuration:
+          attributes:
+            to_email_ids:
+              blank: Enter at least one email address
+            support_email_templates_id:
+              blank: Select any one email template
+          invalid_email_ids: Please enter valid email addresses separated by semicolons
 
   request:
     rules:
       procurement_amount: "" # Omitted
       special_requirements_choice: "" # Omitted
       special_requirements: "" # Omitted
-    
+
     errors:
       rules:
         procurement_amount:
@@ -213,7 +259,7 @@ en:
         procurement_amount:
           invalid: Enter a valid number
           too_large: The amount cannot be larger than 99,999,999.99
-  
+
   support_request:
     rules:
       phone_number: Your phone number
@@ -272,13 +318,13 @@ en:
         email:
           missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
           format?: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
-  
+
   # New journey form
   new_journey:
     rules:
       category: "" # Omitted
       name: "" # Omitted
-    
+
     errors:
       rules:
         category:
@@ -291,13 +337,13 @@ en:
   edit_journey:
     rules:
       name: "" # Omitted
-    
+
     errors:
       rules:
         name:
           missing: Enter a name for your specification
-          max_size?: The name must be 30 characters or less  
- 
+          max_size?: The name must be 30 characters or less
+
   # Exit survey form
   exit_survey:
     rules:
@@ -311,7 +357,7 @@ en:
       satisfaction_level: "" # Omitted
       satisfaction_text: "" # Omitted
       saved_time: "" # Omitted
-      
+
     errors:
       rules:
         better_quality:
@@ -335,6 +381,173 @@ en:
           missing: Enter why you felt this way about the service you received.
         saved_time:
           missing: Select whether you agree or disagree that using the service helped save you or your school time.
-         
 
-
+  school_selection_form:
+    rules:
+      select_school: ""
+    errors:
+      rules:
+        select_school:
+          missing: Select the school you are buying for
+  switch_energy_form:
+    rules:
+      switching_energy_type: ""
+    errors:
+      rules:
+        switching_energy_type:
+          missing: Select which supply you're switching
+  gas_supplier_form:
+    rules:
+      gas_current_supplier: ""
+      gas_current_supplier_other: ""
+      gas_current_contract_end_date: ""
+    errors:
+      rules:
+        gas_current_supplier:
+          missing: Select a gas supplier
+        gas_current_supplier_other:
+          missing: Enter a supplier name
+        gas_current_contract_end_date:
+          missing: Enter a contract end date
+          invalid_date: Enter a valid date
+          invalid_range: Enter a contract end date that’s no more than 1 year prior to and no more than 5 years from today’s date
+  electric_supplier_form:
+    rules:
+      electric_current_supplier: ""
+      electric_current_supplier_other: ""
+      electric_current_contract_end_date: ""
+    errors:
+      rules:
+        electric_current_supplier:
+          missing: Select an electricity supplier
+        electric_current_supplier_other:
+          missing: Enter a supplier name
+        electric_current_contract_end_date:
+          missing: Enter a contract end date
+          invalid_date: Enter a valid date
+          invalid_range: Enter a contract end date that’s no more than 1 year prior to and no more than 5 years from today’s date
+  gas_bill_consolidation_form:
+    rules:
+      gas_bill_consolidation: ""
+    errors:
+      rules:
+        gas_bill_consolidation:
+          missing: Select yes if you'd like your meters consolidated on one bill
+  electric_bill_consolidation_form:
+    rules:
+      is_electric_bill_consolidated: ""
+    errors:
+      rules:
+        is_electric_bill_consolidated:
+          missing: Select yes if you'd like your meters consolidated on one bill
+  electricity_meter_type_form:
+    rules:
+      electricity_meter_type: ""
+    errors:
+      rules:
+        electricity_meter_type:
+          missing: Select whether your school is single or multi meter
+  gas_single_multi:
+    rules:
+      gas_single_multi: ""
+    errors:
+      rules:
+        gas_single_multi:
+          missing: Select whether your school is single or multi meter
+  vat_rate_charge:
+    rules:
+      vat_rate: ""
+      vat_lower_rate_percentage: ""
+      vat_lower_rate_reg_no: ""
+    errors:
+      rules:
+        vat_rate:
+          missing: Select a VAT rate
+        vat_lower_rate_percentage:
+          missing: Enter the percentage qualifying for reduced VAT
+          invalid_range: The percentage must be a number between 1 and 100 and rounded up to the nearest whole number. For example, 35%
+        vat_lower_rate_reg_no:
+          invalid: Enter a VAT registration number that's 9 digits long, like 123456789
+  site_contact_details_form:
+    rules:
+      site_contact_first_name: ""
+      site_contact_last_name: ""
+      site_contact_email: ""
+      site_contact_phone: ""
+    errors:
+      rules:
+        site_contact_first_name:
+          missing: Enter a first name
+          max_size?: First name must be 60 characters or fewer
+        site_contact_last_name:
+          missing: Enter a last name
+          max_size?: Last name must be 60 characters or fewer
+        site_contact_email:
+          missing: Enter an email address
+          format?: Enter an email address in the correct format, like jo.wade@school.org.uk
+        site_contact_phone:
+          missing: Enter a telephone number
+          format?: Enter a telephone number, like 07155487611
+  vat_person_responsible:
+    rules:
+      vat_person_correct_details: ""
+    errors:
+      rules:
+        vat_person_correct_details:
+          missing: Select yes if these are the correct details for VAT purposes
+  vat_certificate_form:
+    rules:
+      vat_certificate_declared: ""
+    errors:
+      rules:
+        vat_certificate_declared:
+          select_all: Select all boxes to continue
+  billing_preferences:
+    rules:
+      billing_payment_method: ""
+      billing_payment_terms: ""
+      billing_invoicing_method: ""
+      billing_invoicing_email: ""
+    errors:
+      rules:
+        billing_payment_method:
+          missing: Select your preferred method of payment
+        billing_payment_terms:
+          missing: Select your payment terms
+        billing_invoicing_method:
+          missing: Select how you'd like to be invoiced
+        billing_invoicing_email:
+          missing: Enter an email address in the correct format, like jo.wade@school.org.uk
+          invalid: Enter an email address in the correct format, like jo.wade@school.org.uk
+  billing_address_confirmation:
+    rules:
+      billing_invoice_address_source_id: ""
+    errors:
+      rules:
+        billing_invoice_address_source_id:
+          missing: Select a billing address
+  vat_alt_person_responsible:
+    rules:
+      vat_alt_person_first_name: ""
+      vat_alt_person_last_name: ""
+      vat_alt_person_phone: ""
+      vat_alt_person_address: ""
+    errors:
+      rules:
+        vat_alt_person_first_name:
+          missing: Enter a name
+          max_size?: First name must be 60 characters or fewer
+        vat_alt_person_last_name:
+          max_size?: Last name must be 60 characters or fewer
+        vat_alt_person_phone:
+          missing: Enter a telephone number
+          format?: Enter a telephone number, like 07155487611
+        vat_alt_person_address:
+          missing: Select an address
+  letter_of_authorisation_form:
+    rules:
+      loa_agreed: ""
+    errors:
+      rules:
+        loa_agreed:
+          select_all: Select all boxes to continue

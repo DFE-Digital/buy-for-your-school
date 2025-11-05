@@ -1,6 +1,6 @@
 module Support
   class Cases::SummariesController < ::Support::Cases::ApplicationController
-    before_action :set_back_url
+    before_action :set_back_url, :form_url
 
     include HasDateParams
 
@@ -20,7 +20,12 @@ module Support
 
         @case_summary.save!
 
-        redirect_to support_case_path(@current_case, anchor: "case-details")
+        # set status to ‘On hold’ when case level is L6
+        if @case_summary.support_case.support_level == "L6"
+          change_case_state(to: :on_hold)
+        end
+        # putting a redirect path in based on roles for now - this may change if a new form for CEC is created
+        redirect_path
       else
         render :edit
       end
@@ -30,14 +35,36 @@ module Support
 
     def set_back_url
       @back_url = if submit_action == "confirm"
-                    edit_support_case_summary_path(@current_case, case_summary: form_params)
+                    if (current_agent.roles & %w[cec cec_admin]).any?
+                      cec_case_edit_summary_path(@current_case, case_summary: form_params)
+                    else
+                      edit_support_case_summary_path(@current_case, case_summary: form_params)
+                    end
+                  elsif (current_agent.roles & %w[cec cec_admin]).any?
+                    cec_onboarding_case_path(@current_case, anchor: "case-details")
                   else
                     support_case_path(@current_case, anchor: "case-details")
                   end
     end
 
+    def form_url
+      @form_url = if (current_agent.roles & %w[cec cec_admin]).any?
+                    cec_case_update_summary_path(@current_case)
+                  else
+                    support_case_summary_path(@current_case)
+                  end
+    end
+
     def submit_action
       params[:button]
+    end
+
+    def redirect_path
+      if (current_agent.roles & %w[cec cec_admin]).any?
+        redirect_to cec_onboarding_case_path(@current_case, anchor: "case-details")
+      else
+        redirect_to support_case_path(@current_case, anchor: "case-details")
+      end
     end
 
     def fields_pre_filled_in_params?

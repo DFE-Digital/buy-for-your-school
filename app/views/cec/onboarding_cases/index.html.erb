@@ -1,0 +1,13 @@
+<div class="govuk-tabs" data-module="govuk-tabs" data-component="select-tab">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <%= link_to I18n.t("support.case.list.my_cases"), "#my-cases", class: "govuk-tabs__tab" %>
+    </li>
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <%= link_to "All cases", "#all-cases", class: "govuk-tabs__tab" %>
+    </li>
+  </ul>
+
+  <%= render "cec/onboarding_cases/index/tab_my_cases" %>
+  <%= render "cec/onboarding_cases/index/tab_all_cases" %>
+</div>

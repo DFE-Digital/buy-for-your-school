@@ -1,10 +1,19 @@
 require "rails_helper"
 
 describe "Filling out a customer satisfaction survey" do
+  let(:post_params) { { service: "create_a_spec" } }
+  let!(:survey) do
+    post customer_satisfaction_surveys_path, params: post_params
+    CustomerSatisfactionSurveyResponse.last
+  end
+
   describe "Starting a new survey" do
     it "creates a new survey and redirects to the first question" do
-      expect { post customer_satisfaction_surveys_path }.to change(CustomerSatisfactionSurveyResponse, :count).by(1)
-      expect(response).to redirect_to(edit_customer_satisfaction_surveys_satisfaction_level_path(CustomerSatisfactionSurveyResponse.last))
+      expect {
+        post customer_satisfaction_surveys_path, params: post_params
+      }.to change(CustomerSatisfactionSurveyResponse, :count).by(1)
+
+      expect(response).to redirect_to(edit_customer_satisfaction_surveys_recommendation_likelihood_path(CustomerSatisfactionSurveyResponse.last))
 
       survey = CustomerSatisfactionSurveyResponse.last
       expect(survey.in_progress?).to eq(true)
@@ -15,7 +24,7 @@ describe "Filling out a customer satisfaction survey" do
   describe "Accessing a completed survey" do
     let!(:survey) { create(:customer_satisfaction_survey_response, status: :completed) }
 
-    before { get edit_customer_satisfaction_surveys_satisfaction_level_path(survey) }
+    before { get edit_customer_satisfaction_surveys_recommendation_likelihood_path(survey) }
 
     it "redirects to the final page with a notice" do
       expect(response).to redirect_to(customer_satisfaction_surveys_thank_you_path)
@@ -53,10 +62,6 @@ describe "Filling out a customer satisfaction survey" do
             expect(survey.reload.satisfaction_level).to eq("neither")
             expect(survey.reload.satisfaction_text).to eq("reason")
           end
-
-          it "redirects to the next question" do
-            expect(response).to redirect_to(edit_customer_satisfaction_surveys_easy_to_use_rating_path(survey))
-          end
         end
       end
 
@@ -79,8 +84,9 @@ describe "Filling out a customer satisfaction survey" do
         expect(survey.reload.satisfaction_text).to eq("reasons")
       end
 
-      it "redirects to the next question" do
-        expect(response).to redirect_to(edit_customer_satisfaction_surveys_easy_to_use_rating_path(survey))
+      it "completes the survey" do
+        expect(survey.reload.completed?).to eq(true)
+        expect(survey.reload.survey_completed_at).to be_within(1.second).of(Time.zone.now)
       end
     end
 
@@ -94,10 +100,6 @@ describe "Filling out a customer satisfaction survey" do
 
         it "persists the answer" do
           expect(survey.reload.easy_to_use_rating).to eq("disagree")
-        end
-
-        it "redirects to the next question" do
-          expect(response).to redirect_to(edit_customer_satisfaction_surveys_helped_how_path(survey))
         end
       end
 
@@ -122,10 +124,6 @@ describe "Filling out a customer satisfaction survey" do
         it "persists the answer" do
           expect(survey.reload.helped_how).to eq(%w[saved_money saved_time])
         end
-
-        it "redirects to the next question" do
-          expect(response).to redirect_to(edit_customer_satisfaction_surveys_clear_to_use_rating_path(survey))
-        end
       end
 
       context "when invalid" do
@@ -148,10 +146,6 @@ describe "Filling out a customer satisfaction survey" do
 
         it "persists the answer" do
           expect(survey.reload.clear_to_use_rating).to eq("agree")
-        end
-
-        it "redirects to the next question" do
-          expect(response).to redirect_to(edit_customer_satisfaction_surveys_recommendation_likelihood_path(survey))
         end
       end
 
@@ -176,10 +170,6 @@ describe "Filling out a customer satisfaction survey" do
         it "persists the answer" do
           expect(survey.reload.recommendation_likelihood).to eq(7)
         end
-
-        it "redirects to the next question" do
-          expect(response).to redirect_to(edit_customer_satisfaction_surveys_improvements_path(survey))
-        end
       end
 
       context "when invalid" do
@@ -200,10 +190,6 @@ describe "Filling out a customer satisfaction survey" do
       it "persists the answer" do
         expect(survey.reload.improvements).to eq("various improvements")
       end
-
-      it "redirects to the next question" do
-        expect(response).to redirect_to(edit_customer_satisfaction_surveys_research_opt_in_path(survey))
-      end
     end
 
     describe "Answering 'Would you like to participate in research?'" do
@@ -218,24 +204,6 @@ describe "Filling out a customer satisfaction survey" do
           expect(survey.reload.research_opt_in).to eq(false)
           expect(survey.reload.research_opt_in_email).to be_nil
           expect(survey.reload.research_opt_in_job_title).to be_nil
-        end
-
-        it "redirects to the final page" do
-          expect(response).to redirect_to(customer_satisfaction_surveys_thank_you_path)
-        end
-
-        it "completes the survey" do
-          expect(survey.reload.completed?).to eq(true)
-          expect(survey.reload.survey_completed_at).to be_within(1.second).of(Time.zone.now)
-        end
-      end
-
-      context "when invalid" do
-        let(:params) { {} }
-
-        it "renders the same page" do
-          expect(response).not_to redirect_to(customer_satisfaction_surveys_thank_you_path)
-          expect(response).to render_template("edit")
         end
       end
     end

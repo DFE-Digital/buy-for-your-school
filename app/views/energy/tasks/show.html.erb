@@ -1,0 +1,33 @@
+<%= content_for :title, "#{flash[:tasklist_not_complete_error] ? 'Error: ' : ''}#{I18n.t("energy.tasks.heading")} - #{I18n.t('energy.service_name')}" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l"><%= @organisation_detail.name%>: <%= I18n.t("energy.tasks.page_title") %></span>
+    <h1 class="govuk-heading-xl"><%= I18n.t("energy.tasks.heading") %></h1>
+
+    <h2 class="govuk-heading-m"><%= @organisation_detail.name%></h2>
+
+    <ul class="govuk-task-list">
+      <% @task_list.each_with_index do |task, index| %>
+        <li class="govuk-task-list__item govuk-task-list__item--with-link">
+          <div class="govuk-task-list__name-and-hint">
+            <a class="govuk-link govuk-task-list__link" href=<%= task.path %> id="energy-task-<%= index + 1 %>-link" aria-describedby="energy-task-<%= index + 1 %>-status" >
+                        <%= I18n.t("energy.tasks.task_list.item.#{task.title}") %>
+            </a>
+          </div>
+          <div class="govuk-task-list__status" id="energy-task-<%= index + 1 %>-status">
+            <%=govuk_tag(text: I18n.t("energy.tasks.task_list.status.#{task.status}"), colour: task.status_colour)%>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+
+    <div class="govuk-button-group flex-align-center">
+        <%= link_to I18n.t("generic.button.continue"),
+          energy_case_tasks_path,
+          method: :patch,
+          class: "govuk-button" 
+        %>
+    </div>
+  </div>
+</div>

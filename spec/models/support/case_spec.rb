@@ -27,9 +27,9 @@ RSpec.describe Support::Case, type: :model do
     end
   end
 
-  it { is_expected.to define_enum_for(:support_level).with_values(%i[L1 L2 L3 L4 L5]) }
+  it { is_expected.to define_enum_for(:support_level).with_values(%i[L1 L2 L3 L4 L5 L6 L7]) }
   it { is_expected.to define_enum_for(:state).with_values(%i[initial opened resolved on_hold closed pipeline no_response]) }
-  it { is_expected.to define_enum_for(:source).with_values(%i[digital nw_hub sw_hub incoming_email faf engagement_and_outreach schools_commercial_team engagement_and_outreach_cms]) }
+  it { is_expected.to define_enum_for(:source).with_values(%i[digital nw_hub sw_hub incoming_email faf engagement_and_outreach schools_commercial_team engagement_and_outreach_cms energy_onboarding]) }
 
   describe "#generate_ref" do
     context "when no cases exist" do
@@ -81,6 +81,111 @@ RSpec.describe Support::Case, type: :model do
 
     it "returns level 3, 4 and 5 cases" do
       expect(described_class.high_level.map(&:support_level)).to match_array(%w[L3 L4 L5])
+    end
+  end
+
+  describe "search by_mpan_or_mprn" do
+    let(:support_case2) { create(:support_case) }
+    let(:onboarding_case) { create(:onboarding_case, support_case:) }
+    let(:onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_case.organisation) }
+    let(:gas_meter) { create(:energy_gas_meter, :with_valid_data, onboarding_case_organisation:, mprn:) }
+    let(:electricity_meter) { create(:energy_electricity_meter, :with_valid_data, onboarding_case_organisation:, mpan:) }
+
+    let(:mprn) { "123456789" }
+    let(:mpan) { "0123456789123" }
+
+    context "with gas meter only" do
+      before do
+        gas_meter
+      end
+
+      it "finds case by mprn (gas meter)" do
+        results = described_class.by_mpan_or_mprn(mprn)
+        expect(results).to include(support_case)
+        expect(results).not_to include(support_case2)
+      end
+    end
+
+    context "with electricity meter only" do
+      before do
+        electricity_meter
+      end
+
+      it "finds case by mpan (electricity meter)" do
+        results = described_class.by_mpan_or_mprn(mpan)
+        expect(results).to include(support_case)
+        expect(results).not_to include(support_case2)
+      end
+    end
+
+    context "with both gas and electricity meters" do
+      before do
+        gas_meter
+        electricity_meter
+      end
+
+      it "finds case by mprn (gas meter)" do
+        results = described_class.by_mpan_or_mprn(mprn)
+        expect(results).to include(support_case)
+        expect(results).not_to include(support_case2)
+      end
+
+      it "finds case by mpan (electricity meter)" do
+        results = described_class.by_mpan_or_mprn(mpan)
+        expect(results).to include(support_case)
+        expect(results).not_to include(support_case2)
+      end
+
+      it "returns empty when term doesn't match" do
+        results = described_class.by_mpan_or_mprn("000000000")
+        expect(results).to be_empty
+      end
+    end
+  end
+
+  describe "re_used_meter_numbers?" do
+    before do
+      support_case.update!(state: "closed")
+
+      create(:energy_gas_meter, :with_valid_data, onboarding_case_organisation: ob_org, mprn:)
+      create(:energy_electricity_meter, :with_valid_data, onboarding_case_organisation: ob_org, mpan:)
+    end
+
+    let(:ob_case) { create(:onboarding_case, support_case:) }
+    let(:ob_org) { create(:energy_onboarding_case_organisation, onboarding_case: ob_case, onboardable: support_case.organisation) }
+    let(:mprn) { "123456789" }
+    let(:mpan) { "0123456789123" }
+
+    context "when another active onboarding case is using a meter ref" do
+      before do
+        create(:energy_gas_meter, :with_valid_data, onboarding_case_organisation: other_onboarding_case_organisation, mprn:)
+        create(:energy_electricity_meter, :with_valid_data, onboarding_case_organisation: other_onboarding_case_organisation, mpan:)
+      end
+
+      let(:other_onboarding_case) { create(:onboarding_case, support_case: other_support_case) }
+      let(:other_onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case: other_onboarding_case, onboardable: other_support_case.organisation) }
+
+      context "when the state is not closed" do
+        let(:other_support_case) { create(:support_case) }
+
+        it "returns true" do
+          expect(support_case.re_used_meter_numbers?).to eq(true)
+        end
+      end
+
+      context "when the state is closed" do
+        let(:other_support_case) { create(:support_case, state: "closed") }
+
+        it "returns false" do
+          expect(support_case.re_used_meter_numbers?).to eq(false)
+        end
+      end
+    end
+
+    context "when no other active onboarding cases are using a meter ref" do
+      it "returns false" do
+        expect(support_case.re_used_meter_numbers?).to eq(false)
+      end
     end
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include DfE::Analytics::Requests
   include ActiveStorage::SetCurrent
   include Pundit::Authorization
   include InsightsTrackable
@@ -10,6 +11,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!, except: %i[health_check maintenance]
   before_action :set_current_request_id
+  before_action :track_button_click
 
   protect_from_forgery
 
@@ -25,7 +27,7 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  helper_method :current_user, :cookie_policy, :internal_portal?, :google_analytics_id, :hosted_development?, :hosted_production?, :hosted_staging?, :record_ga?, :engagement_portal?, :support_portal?, :frameworks_portal?, :current_url_b64, :header_link
+  helper_method :current_user, :cookie_policy, :internal_portal?, :google_analytics_id, :hosted_development?, :hosted_production?, :hosted_staging?, :record_ga?, :engagement_portal?, :support_portal?, :frameworks_portal?, :cec_portal?, :current_url_b64, :header_link
 
   # @return [User, Guest]
   #
@@ -41,7 +43,7 @@ protected
     return unless current_user.guest?
 
     session.delete(:dfe_sign_in_uid)
-    redirect_to root_path, notice: I18n.t("banner.session.visitor")
+    redirect_to cms_signin_path, notice: I18n.t("banner.session.visitor")
   end
 
   # @return [Journey]
@@ -79,6 +81,10 @@ protected
     portal_namespace.to_s.inquiry.procurement_support?
   end
 
+  def cec_portal?
+    portal_namespace.to_s.inquiry.cec?
+  end
+
   def portal_namespace
     :none
   end
@@ -94,7 +100,7 @@ protected
   end
 
   def internal_portal?
-    support_portal? || engagement_portal? || frameworks_portal?
+    support_portal? || engagement_portal? || frameworks_portal? || cec_portal?
   end
 
   def hosted_development?
@@ -140,4 +146,16 @@ protected
   def tracking_base_properties = { user_id: current_user.id }
 
   def set_current_request_id = Current.request_id = request.request_id
+
+  def track_button_click
+    return unless %w[POST PATCH DELETE].include?(request.method)
+
+    event = DfE::Analytics::Event.new
+      .with_type("button_click")
+      .with_request_details(request)
+      .with_response_details(response)
+      .with_data(text: params[:commit])
+
+    DfE::Analytics::SendEvents.do([event])
+  end
 end

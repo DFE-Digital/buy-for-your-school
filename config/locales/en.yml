@@ -70,7 +70,7 @@ en:
   banner:
     beta:
       feedback_link: feedback
-      message: This is a new service – your %{feedback_link} will help us to improve it.
+      message: This is a new service – your %{feedback_link} will help us to improve it
       tag: Beta
     design: "%{env} Environment"
     session:
@@ -119,17 +119,17 @@ en:
         view_cookies: View cookies
       description:
       - We use some essential cookies to make this service work.
-      - We’d also like to use analytics cookies so we can understand how you use the service and make improvements.
+      - We'd also like to use analytics cookies so we can understand how you use the service and make improvements.
       header: Cookies on Get Help Buying for Schools
       rejected:
         action_link: change your cookie settings
         hide: Hide cookie message
-        message: You’ve rejected analytics cookies. %{action_link} at any time.
+        message: You've rejected analytics cookies. %{action_link} at any time.
     information:
       analytics_cookies:
-        _ga_description: Checks if you’ve visited Get Help Buying for Schools before. This helps us count how many people visit our site.
+        _ga_description: Checks if you've visited Get Help Buying for Schools before. This helps us count how many people visit our site.
         _gat_ua__description: Used to throttle request rate to Google Analytics.
-        _gid_description: Checks if you’ve visited Get Help Buying for Schools before. This helps us count how many people visit our site.
+        _gid_description: Checks if you've visited Get Help Buying for Schools before. This helps us count how many people visit our site.
         action:
           choice_no: 'No'
           choice_yes: 'Yes'
@@ -287,6 +287,509 @@ en:
     thank_you:
       body: We will use your feedback to make our services better.
       heading: Thank you for your feedback
+  energy:
+    generic:
+      change: Change
+    related_actions:
+      title: Related actions
+      join: Join Energy for Schools
+      guidance_page: Energy for Schools guidance
+      find_a_buying_solution: Find a buying solution
+      request_support: Request support
+    join:
+      title: Join Energy for Schools
+      explanations:
+      - Energy for Schools helps state-funded schools and trusts switch to the same energy contract used by the Department for Education.
+      - Schools and trusts that use the service are added to the Department for Education's V30 energy contract with Crown Commercial Service (CCS). The CCS buys energy for this particular contract over a long period of time, reducing the risk to customers of substantial fluctuations in price.
+      benefits:
+        title: Benefits
+        text: "Schools could save on average 36% on their energy bills, based on DfE’s estimates. The service also helps:"
+        list:
+        - protect schools from market volatility and high prices
+        - save time spent on procurement process
+        - remove risk associated with unregulated energy brokers
+        - comply with procurement regulations
+      mat_info:
+      - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
+      - Multi-academy trusts (MATs) can join the contract by filling in the <a class="govuk-link" href="%{form_url}">Register your interest form</a> and completing the process offline.
+      more_info: Get more information
+    guidance:
+      contents: Contents
+      email: dfe-energy.services-team@education.gov.uk
+      title: Energy for Schools Guidance
+      intro: How state-funded schools and trusts can join Energy for Schools, an alternative to energy procurement, which may save time and money.
+      applies: Applies to England
+      about:
+        title: About Energy for Schools
+        body:
+        - Energy for Schools offers schools a simpler, safer way to manage their energy needs by helping schools switch to the same energy contract as the Department for Education (DfE).
+        - DfE manages the contract on behalf of schools through procurement specialists Crown Commercial Service (CCS). On the current contract, referred to as V30 or the V30 basket, electricity is supplied by EDF, and gas is supplied by TotalEnergies.
+        - This service differs from other frameworks because it allows schools to benefit from the bulk purchasing power of a government-wide contract. It also saves schools from pouring over complex energy contracts because DfE handles the paperwork.
+      benefits:
+        title: Benefits
+        body:
+        - All central government departments use V30 to compliantly procure their energy supply.
+        - Customers are protected from market volatility and soaring prices because the CCS buys some of the energy up front, during the 30 months prior to delivery, and then during the delivery period itself. This helps to level out the peaks and troughs in price variances.
+        - V30 could save schools money on their bills. According to a price comparison exercise carried out by DfE, schools could've saved on average 36% on their energy bills in the financial year ending 2024 had they been on V30.
+        - If your school joins Energy for Schools, DfE will handle certain contractual responsibilities and administrative paperwork with the new energy suppliers.
+        - "This means schools:"
+        list:
+        - save time by using our simplified onboarding process
+        - don't have to deal with complex energy contracts
+        - eliminates the usual requirements around procurement
+        body2:
+        - This process is free to access and use.
+      v30contract:
+        title: The contract
+        body:
+        - The V30 basket with CCS is a low-risk variable rate contract.
+        - Prices can go up and down, but changes are less drastic than other variable rates. It's the most stable variable rate contract available to schools, although it may not always give you the lowest price.
+        - CCS cannot provide potential customers with energy prices before they join due to commercial sensitivity.
+        - To get an estimate of prices, email <a class="govuk-link" href="mailto:%{email}">%{email}</a> and request DfE’s benchmarking service. We’ll provide a price comparison based on your energy bills from the last financial year.
+        - This is a rolling contract, meaning your school will remain on V30 until you give notice to exit. 30 months' notice is required.
+      start_date:
+        title: Start date
+        body:
+        - New customers are added to the V30 basket every April, although you can join at any time. Your application date and current contract's expiry date will determine which year you'll join V30, and whether you'll be placed on an interim rate contract.
+        table:
+          headings:
+          - Application deadline
+          - V30 start dates
+          rows:
+            -
+              - 11 September 2025
+              - 1 April 2026
+            -
+              - September 2026
+              - 1 April 2027
+            -
+              - September 2027
+              - 1 April 2028
+        body2:
+        - Check your current contract's termination terms and notice period. You'll need to serve out your notice period and inform your supplier if you join Energy for Schools. DfE cannot do this for you.
+        - If your school’s energy contract is already through CCS, DfE will transfer (novate) you onto the new account. In this instance, you’ll not need to give notice to your current supplier.
+      interim_rate:
+        title: Interim rate
+        body:
+        - An interim rate contract is a temporary arrangement. You'll be placed on an interim rate if there's a gap between your current contract's expiry date and the next available start date for V30.
+        - For example, if you apply in October 2025 and your current contract ends on 31 December 2025, you'll join the V30 on 1 April 2027 and be placed on an interim rate between 1 January 2026 and 31 March 2027.
+        - You'll still benefit from all framework protections, including procurement compliance, social value commitments and data security measures.
+        - Interim rates are available on request.
+        - You'll automatically move onto the next available V30 when your interim contract ends.
+        - If you're out of contract and need an immediate energy supply, you'll be placed on interim rates.
+      billing:
+        title: Billing
+        body:
+        - Your electricity and gas invoices will be issued separately by the relevant suppliers.
+        - Once your contract begins, DfE will keep you updated via email on forecast rates for the following year. You'll also be granted portal access, which allows you to view a breakdown of your energy consumption.
+      compliance:
+        title: Compliance
+        body:
+        - Energy for Schools is a contract and not a procurement process. By joining, you’ll be switching to the CCS framework used by DfE.
+        - The CCS framework complies with the Public Contracts Regulation 2015, the legislation in place at the time the framework was established. It is therefore procurement compliant. Any future changes to the CCS framework will comply with the new Procurement Act.
+        - Schools joining the framework will have complied with DfE’s Buying Procedures and Procurement Law for Schools.
+        - That means you're exempt from the procurement protocol of securing 3 quotes or going out to market.
+      considerations:
+        title: Considerations
+      vat_declaration:
+        title: VAT declaration
+        body:
+        - You’ll be asked to declare your VAT status when joining Energy for Schools. This is to ensure you’re charged the correct amount of VAT on your energy supplies.
+        - If you’re unsure how much VAT you’re currently charged for gas and electricity, check with your tax advisor. If you’re a local authority-maintained school, check with your local authority.
+      renewable_energy:
+        title: Renewable energy
+        body:
+        - The energy supply is from the supplier's standard 'Brown' product. Everyone who uses this supply gets 30-40% renewable energy through the UK power grid. This percentage is increasing as more renewable energy sources are added to the grid.
+        - You can choose to pay more for a product that contains more renewable energy. Email <a class="govuk-link" href="mailto:%{email}">%{email}</a> to discuss renewable options.
+        - Energy savings made through renewable energy, such as solar panels, are not factored into this contract. You should continue your current arrangement or contact EDF about setting up a Smart Export Guarantee if you wish to export energy back to the grid.
+      objections:
+        title: Objections
+        body:
+        - In some cases, the current energy supplier may raise an objection to switching contracts. Common reasons for objections include unpaid invoices, incorrect meter numbers or insufficient notice given to terminate the current contract.
+        - DfE will inform you if an objection is raised. You'll need to contact your existing supplier to resolve the issue so that you can switch contracts - DfE does not have the authority to do this for you.
+        - For queries about Energy for Schools or help joining, email <a class="govuk-link" href="mailto:%{email}">%{email}</a>
+      how_to_join:
+        title: How to join
+        body:
+        - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
+        - Multi-academy trusts (MATs) can join the contract by filling in the <a href="%{register_your_interest_form_url}" class="govuk-link">Register your interest form</a> and completing the process offline.
+        - "Depending on which supply you're switching, you'll need to provide:"
+        list:
+        - your contract end date
+        - who your supplier is
+        - how many meters you have on site, and their numbers (MPRN/ MPAN)
+        - estimated annual usage per meter in kWh
+        - your data aggregator, data collector and meter operator, if you have half-hourly meters (ask your current supplier if you're unsure)
+        - your VAT details, if you pay 5% VAT
+        body2:
+        - DfE will share your information with the new suppliers and send you a confirmation email with details of what happens next.
+      button:
+        primary: Join Energy for Schools
+        secondary: Request support
+
+    service_name: Energy for Schools
+    before_you_start:
+      title: Energy for Schools
+      subtitle: Before you start
+      need: 'You will need:'
+      need_list:
+      - authorisation from your school or trust to switch energy supplier
+      - your electricity and/or gas meter numbers and estimated annual usage in kilowatt hours per meter (you can calculate this from your bills)
+      - your electricity and/or gas contract end date
+      - the percentage VAT your school is charged for energy, and the percentage of total consumption qualifying if you pay 5% VAT
+      half_hourly_electricity: "If you have a half hourly electricity meter, you will also need to know:"
+      half_hourly_electricity_list:
+      - supply capacity (kVA)
+      - data aggregator
+      - data collector
+      - meter operator
+      time_required:
+        - Ask your current supplier or broker if you need help finding this information.
+        - This form may take up to 20 minutes to complete, providing you have the required information to hand. Allow longer if you're using assistive technology, like a screen reader.
+        - We'll send you an email with a link once you've started the form. We'll also save the answers on each page you complete. If you need to exit the form, use the email link to return and complete it at a later date.
+    school_selections:
+      title: About your school
+      heading: Which school are you buying for?
+    authorisation:
+      heading: Are you authorised to switch energy suppliers for these schools?
+      page_title: Do you have authorisation?
+      warning: Please seek appropriate authorisation to switch energy suppliers. There is no cooling off period once you’ve submitted this form.
+      alerts:
+        multiple_cases: There are multiple cases for this organisation
+        click_here: click here to email support
+        email_subject: "Help request: %{org_name} - multiple concurrent Energy for Schools applications"
+    switching_electricity:
+      heading: Are you switching electricity, gas or both?
+      page_title: Which energy supply are you switching?
+      energy_type:
+        electricity: Electricity only
+        gas: Gas only
+        gas_electricity: Gas and electricity
+    gas_single_multi:
+      heading: Is this a single or multi meter site?
+      page_title: Is this a single gas meter site?
+      hint: If your site is multi meter, your bill will have more than one meter number in the readings section.
+      single: Single meter
+      multi: Multi meter
+    tasks:
+      error: Complete all sections of the task list before continuing
+      heading: Provide information about your schools
+      page_title: Task list
+      task_list:
+        item:
+          gas_contract_information: Gas contract information
+          gas_meters_and_usage: Gas meter and usage
+          electric_contract_information: Electricity contract information
+          electric_meters_and_usage: Electricity meter and usage
+          site_contact_details: Site contact details
+          vat_declaration: VAT declaration
+          billing_preferences: Billing preferences
+        status:
+            to_do: To do
+            in_progress: In progress
+            complete: Complete
+            not_started: Not started
+    gas_meter_details:
+      title: Gas meters and usage
+      page_title: Gas meter summary
+      heading: Gas meter details
+      heading_info: You can usually find this information on your gas bill. Please check all pages.
+      mprn_label: Add the Meter Point Reference Number (MPRN)
+      mprn_multi_label: Add a Meter Point Reference Number (MPRN)
+      mprn_hint: This is a 6 to 12 digit number on your gas bill. It may also be called MPR or M number.
+      gas_usage_label: Estimated annual gas usage for this meter, in kilowatt hours (kWh)
+      gas_usage_hint_link: Where can I find annual gas usage?
+      gas_usage_hint: If your annual estimated usage for this meter is not on your bill, add up the kWh for this meter from your last 12 gas bills to calculate your total usage.
+      gas_usage_suffix: kWh
+      list_item:
+        heading: MPRN summary
+        total_mprn: 'You have added %{total} MPRNs'
+        one_mprn: 'You have added 1 MPRN'
+        mprn: MPRN
+        gas_usage: Estimated annual gas usage
+        add_another_mprn: Add another MPRN
+      remove_page:
+        heading: Are you sure you want to remove this MPRN?
+        remove_mprn: Remove MPRN
+        removed: MPRN successfully removed
+      alert:
+        limit_reached: Maximum number of MPRNs reached
+    suppliers:
+      british_gas: British Gas
+      edf_energy: EDF Energy
+      eon_next: E.ON Next
+      scottish_power: Scottish Power
+      ovo_energy: OVO Energy
+      octopus_energy: Octopus Energy
+      other: Other
+    or: or
+    current_contract:
+      gas:
+        heading: Current gas supplier
+        contract: Gas contract
+        current_supplier: Who currently supplies your gas?
+        other_supplier: Gas supplier
+      electric:
+        heading: Current electricity supplier
+        contract: Electricity contract
+        current_supplier: Who currently supplies your electricity?
+        other_supplier: Electricity supplier
+      when_contract_ends: When does the contract end?
+      date_for_example: For example, 27 3 2025
+      end_day: Day
+      end_month: Month
+      end_year: Year
+    gas_bill_consolidation:
+      title: Gas meters and usage
+      option_heading: Do you want your MPRNs consolidated on one bill?
+      radio_buttons:
+        option_yes: "Yes"
+        option_no: "No, I want a separate bill for each MPRN"
+    electric_bill_consolidation:
+      title: Electricity meters and usage
+      option_heading: Do you want your MPANs consolidated on one bill?
+      radio_buttons:
+        option_yes: "Yes"
+        option_no: "No, I want a separate bill for each MPAN"
+    electricity_meter_type:
+      title: Electricity meters and usage
+      page_title: Is this a single electricity meter site?
+      question: Is this a single or multi meter site?
+      hint: If your site is multi meter, your bill will have more than one meter number in the readings section.
+      meter_types:
+        single: Single meter
+        multi: Multi meter
+    electricity_meter:
+      title: Electricity meters and usage
+      page_title: Electricity meter summary
+      heading: Electricity meter details
+      mpan_label: Add an MPAN
+      mpan_label_single: Add the MPAN
+      mpan_image_alt_text1: Image of a 21-digit Supply number with the final 13 digits highlighted, to represent the MPAN
+      mpan_image_alt_text2: Image of an MPAN highlighting the first 2 digits on the top row as 00 indicating this is a half hourly MPAN
+      mpan_details: Your MPAN is on your electricity bill. It’s the last 13 digits of the Supply number.
+      half_hourly_label: Is this a half-hourly meter?
+      half_hourly_hint: Your meter is half hourly if your Supply number begins with 00. Your Supply number is on your electricity bill.
+      half_hourly_yes_text: Half-hourly meters are sometimes managed by a separate company. Ask your electricity supplier if you need help answering the following questions.
+      supplier_capacity_label: What is the supply capacity, in kilovolt-amperes (kVA)?
+      supplier_capacity_suffix: kVA
+      data_aggregator_label: Who is the data aggregator?
+      data_collector_label: Who is the data collector?
+      meter_operator_label: Who is the meter operator?
+      electricity_usage_label: Estimated annual electricity usage, in kilowatt hours (kWh)
+      electricity_usage_suffix: kWh
+      electricity_usage_details_link: Where can I find annual electricity usage?
+      electricity_usage_details: If your annual estimated usage for this meter is not on your bill, add up the kWh for this meter from your last 12 electricity bills to calculate your total usage.
+      list_item:
+        heading: MPAN summary
+        total_mpan: 'You have added %{total} MPANs'
+        one_mpan: 'You have added 1 MPAN'
+        mpan: MPAN
+        is_half_hourly: Half-hourly
+        electricity_usage: Estimated annual electricity usage
+        add_another_mpan: Add another MPAN
+      remove_page:
+        heading: Are you sure you want to remove this MPAN?
+        remove_mpan: Remove MPAN
+        removed: MPAN successfully removed
+      alert:
+        limit_reached: Maximum number of MPANs reached
+    vat_rate_charge:
+      title: "About your schools: VAT declaration"
+      heading: Which VAT rate are you charged?
+      hint: If you're unsure, check your bills. Or, if relevant, ask your local authority or chief financial officer.
+      normal: 20%
+      lower: 5%
+      lower_rate_percentage: Percentage of total consumption qualifying for reduced rate of VAT
+      lower_rate_reg_no: VAT registration number (optional)
+    site_contact_details:
+      title: Site contact details
+      heading: Who manages site access and maintenance?
+      sub_title: This is in case the supplier needs access to the site or meter equipment, or in case of emergency.
+      first_name: First name
+      last_name: Last name (optional)
+      email: Email
+      telephone: Telephone
+    vat_person_responsible:
+      title: VAT declaration
+      heading: Are these the correct details for VAT purposes?
+      hint: This information will be used to generate a VAT certificate which will be shared with the new suppliers.
+      option_yes: "Yes"
+      option_no: "No"
+      name: Name
+      address: Address
+      tel: Telephone number
+    vat_certificate:
+      title: VAT declaration
+      heading: VAT certificate of declaration
+      sub_title: This information will be used to generate a VAT certificate which will be shared with the new suppliers.
+      declaration:
+        declaration1: I certify that the information given is correct and complete and it will remain valid until I inform the supplier in writing of any significant changes in circumstances
+        declaration2: I undertake to inform the supplier of any change in the qualifying use
+        declaration3: I understand that any incorrect statement may make me liable for a financial penalty under the Value Added Tax Act (as amended from time to time)
+    billing_preferences:
+      title: Billing preferences
+      heading: Billing preferences
+      payment_method:
+        legend: How will the bills be paid?
+        bacs: BACS
+        direct_debit: Direct Debit
+      terms:
+        legend: Payment terms
+        days14: 14 days
+        days21: 21 days
+        days28: 28 days
+        days30: 30 days
+      invoicing:
+        legend: How do you want to be invoiced?
+        email: Email
+        email_address: Email address
+        paper: Paper
+    billing_address_confirmation:
+      title: Billing preferences
+      heading: Billing address
+    vat_alt_person_responsible:
+      title: VAT declaration
+      heading: VAT contact information
+      first_name: First name
+      last_name: Last name (optional)
+      telephone: Telephone number
+      address: Select an address
+    confirmation:
+      title: Information submitted on %{date}
+      case_reference_number: Case reference number
+      paragraph_one: "We’ve sent an email to <strong>%{email}</strong> containing a copy of this form and details about your new contract."
+      paragraph_two: Depending on your contract’s end date, you may be placed on an interim rate to ensure continued supply to your school.
+      paragraph_three: Check your current contract's termination terms and notice period to find out how much notice you need to provide to switch suppliers. You must provide notice to your current supplier in writing. DfE cannot do this for you.
+      takes_five_minutes: (takes 5 minutes)
+      link:
+        label: What did you think of this service?
+        url: /customer_satisfaction_surveys/new?service=energy_for_schools&source=confirmation_screen
+    service_availability:
+      heading: Service only available for individual schools
+      body:
+      - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
+      - Multi-academy trusts (MATs) can join the contract by filling in the <a class="govuk-link" href="%{form_url}">Register your interest form</a> and completing the process offline.
+    check_your_answers:
+      title: Check your answers
+      not_provided: Not provided
+      notes:
+      - By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.
+      - You cannot change your answers once you’ve submitted the form.
+      gas_contract_information:
+        title: Current contract details
+        gas_current_supplier: Current gas supplier
+        gas_current_supplier_other: Current gas supplier
+        gas_current_contract_end_date: When does your contract end
+      gas_meters_and_usage:
+        title: Gas meters and usage
+        gas_single_multi: Is this a single meter or multi meter site?
+        single: Single meter
+        multi: Multi meter
+        mprn: Meter Point Reference Number
+        gas_usage: Estimated annual gas usage
+        gas_bill_consolidation: Do you want your MPRNs consolidated on one bill?
+      electric_contract_information:
+        title: Current contract details
+        electric_current_supplier: Current electricity supplier
+        electric_current_supplier_other: Current electricity supplier
+        electric_current_contract_end_date: When does your contract end
+      electric_meters_and_usage:
+        title: Electricity meters and usage
+        electricity_meter_type: Is this a single meter or multi meter site?
+        single: Single meter
+        multi: Multi meter
+        mpan: MPAN
+        supply_capacity: What is the supply capacity?
+        is_half_hourly: Is this a half-hourly MPAN?
+        data_aggregator: Data aggregator
+        data_collector: Data collector
+        meter_operator: Meter operator
+        electricity_usage: Estimated annual electricity usage, in kilowatt hours (kWh)
+        is_electric_bill_consolidated: Do you want your MPANs consolidated on one bill?
+      site_contact_details:
+        title: Site contact details
+        site_contact_first_name: Contact name
+        site_contact_email: Email
+        site_contact_phone: Telephone
+      vat_declaration:
+        title: VAT Declaration
+        vat_rate: VAT rate
+        vat_lower_rate_percentage: Percentage of total consumption qualifying for reduced rate of VAT
+        vat_lower_rate_reg_no: VAT registration number (optional)
+        vat_person_first_name: Contact name
+        vat_person_phone: Telephone number
+        vat_person_address: Address
+        vat_alt_person_first_name: Contact name
+        vat_alt_person_phone: Telephone number
+        vat_alt_person_address: Address
+        vat_certificate_declared: VAT certificate of declaration agreed?
+      billing_preferences:
+        title: Billing preferences
+        billing_payment_method: How will you pay your bills?
+        bacs: BACS
+        direct_debit: Direct debit
+        billing_payment_terms: Payment terms
+        days14: 14 days
+        days21: 21 days
+        days28: 28 days
+        days30: 30 days
+        billing_invoicing_method: How would you like to receive your bills?
+        billing_invoicing_email: Email for invoice
+        billing_invoice_address: Address for invoice
+      no_data: No onboarding data available for this case
+      summary_pdf:
+        title: "DfE Energy for Schools submission summary: %{date}"
+    letter_of_authorisation:
+      title: Agree to the Energy for Schools letter of authority
+      pdf_title: DfE Energy for Schools letter of authority
+      page_title: Letter of authority
+      paragraphs:
+        paragraph1: "This letter of authority sets out the arrangements agreed between the Department for Education ('DfE')and %{school_name} (the 'Education Provider') in connection with the provision of energy supplies."
+        paragraph2: This letter supersedes and replaces all previous agreements between DfE and the Education Provider in relation to the supply of gas and/or electricity.
+        paragraph3: DfE has entered into and/or will enter into one or more Framework Agreements with various suppliers for the provision of gas and/or electricity to DfE and to various sites identified by DfE. Each such energy supplier is referred to in this letter as a 'Supplier'. Under the Framework Agreements, DfE is entitled to request a Supplier to provide gas and/or electricity to locations identified by DfE.
+        paragraph4: "The Education Provider has requested and DfE has agreed to arrange for the supply of gas and/or electricity to the following Site(s):"
+      appointment:
+        title: Appointment
+        paragraph_one: The Education Provider appoints and authorises DfE to act on behalf of the Education Provider to negotiate and conclude arrangements with the relevant Supplier for the supply of gas and/or electricity to the Site(s).
+        paragraph_two: "The Education Provider acknowledges that DfE's appointment includes:"
+        first_list:
+          item1: obtaining consumption and billing data for the purposes of conducting consumption and cost analysis
+          item2: obtaining contractual details (contract durations and terms) for existing energy supplies
+          item3: notifying energy suppliers of or initiating 'Change of Tenancies' (COT’s) or Novations
+          item4: notifying energy suppliers of or initiating 'Change of Address' for any of the Education provider's accounts or billing addresses
+          item5: providing annual trading reports and monthly consolidated data reports to help budget forecasting
+          item6: taking responsibility for the contractual arrangements between DfE and the Suppliers
+        paragraph_three: "but does not include:"
+        second_list:
+          item1: terminating existing supply contracts
+          item2: obtaining supply price quotations from energy suppliers for consideration or acceptance by the Education Provider
+          item3: claiming or obtaining refunds from Suppliers on billing 'over-charges' following analysis
+          item4: undertaking any public procurement activities or notices
+      responsibilities:
+        title: Responsibilities
+        paragraph_one: "The Education Provider acknowledges and agrees that it is responsible for:"
+        list:
+          item1: paying the charges (and any interest) for the gas and/or electricity supplied (as set out above)
+          item2: notifying the Supplier as soon as reasonably practicable if it believes that there has been any damage or change to, or interference with any metering equipment used for the supply of energy and/or recording of energy consumption
+          item3: protecting the metering equipment against weather damage, physical damage and any unauthorised third party interference or adjustment
+          item4: where required, providing meter readings to the Supplier for the purposes of calculating energy consumption and the associated charges
+          item5: providing safe and reasonable access to the Supplier, its employees and agents for purposes related to the supply of gas and/or electricity including inspecting, testing, maintaining, repairing and replacing any metering equipment
+      invoices_and_billing:
+        title: Invoices and billing
+        paragraph_one: The Education Provider acknowledges and agrees that DfE shall direct the relevant Supplier to issue invoices directly to the Education Provider in relation to the gas and/or electricity consumed at the Site(s).
+        paragraph_two: The Education Provider agrees that it will be responsible for and shall pay the charges set out in the relevant invoices in accordance with the payment terms agreed between the relevant energy supplier and the Education Provider. In the case of any late payments, the Education Provider shall be liable for interest in accordance with the payment terms advised by the relevant Supplier.
+      non_payment_of_invoices:
+        title: Non-payment of invoices and right to deduct funding
+        paragraph_one: If, because of the Education Provider not paying any invoiced charges on time or at all in accordance with this letter, DfE is required to make payment of any sums to the Supplier, then DfE shall be entitled to deduct and retain an equivalent sum of money from any funding payable by DfE to the Education Provider under the relevant DfE Conditions of Funding/Funding Agreement. This right is without prejudice to and in addition to any other rights of DfE to withhold or suspend payment under the relevant conditions of funding, funding agreement or funding rules.
+      agreement:
+        agreement1: I confirm that I am authorised by the Education Provider to switch the supply of gas and/or electricity at the Site(s) to the Energy for Schools contract
+        agreement2: I confirm that I have read this letter of authority and the Education Provider agrees to its terms and conditions
+        agreement3: I understand that my name will be used as the authorised signatory for this letter of authority
+      signed:
+        signed_by_school: "Signed on behalf of %{school_name} by:"
+        signed_by_dfe: "Signed on behalf of the Department for Education by:"
+        signed_by_dfe_user: Annette Harrison
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
@@ -341,7 +844,7 @@ en:
       page_title: An unexpected error occurred
   evaluation:
     tasks:
-      not_permitted: "You aren’t an evaluator for this procurement"
+      not_permitted: "You aren't an evaluator for this procurement"
       header: "Evaluator task list"
     task_list:
       item:
@@ -362,7 +865,7 @@ en:
       page_body_text2: The procurement lead will either approve the evaluation or request changes. You will receive an email in both cases. The evaluation and any changes must be complete by the due date shown on task list.
   my_procurements:
     tasks:
-      not_permitted: "You aren’t a school buying professional for this procurement" 
+      not_permitted: "You aren't a school buying professional for this procurement"
       header: "Procurement task list"
     task_list:
       item:
@@ -657,7 +1160,7 @@ en:
           p1: This search lists academy trusts and federations. %{search_for_a_school_link}
           p2:
             list:
-            - you want to find your academy trust or federation’s UID or UKPRN to help with the search
+            - you want to find your academy trust or federation's UID or UKPRN to help with the search
             - you cannot find your academy trust or federation in the search and want to check that the DfE has the correct details
         search_for_a_school_link: Search for a single school instead.
       heading: Search for an academy trust or federation
@@ -668,7 +1171,7 @@ en:
           p1: This search lists single schools in England, such as local authority maintained schools, or an academy in a single or multi-academy trust. %{search_for_a_group_link}
           p2:
             list:
-            - you want to find your school’s URN to help with the search
+            - you want to find your school's URN to help with the search
             - you cannot find your school in the search and want to check that the DfE has the correct details
         search_for_a_group_link: Search for an academy trust or federation instead.
       heading: Search for your school
@@ -688,13 +1191,13 @@ en:
       our_specialists: 'Our specialists may also offer to help run more complex or high value procurements. Some of the reasons they may offer to do this are:'
       our_specialists_points:
       - when contracts are long term or multi-year
-      - you’re buying for multiple schools
+      - you're buying for multiple schools
       - the value is above the <a class="govuk-link" href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy#when-to-run-a-pcr-compliant-buying-process">public contracts regulations (PCR) threshold</a>
       - the procurement requires inclusion of transferring personnel contracts under the Transfer of Undertakings (Protection of Employment) regulations (TUPE)
       - you're new or not experienced in running these types of procurements
       - there are problems with supply or prices change regularly, for example energy costs
       - it's challenging to find suppliers
-      overview_purpose: Use this service if you’re a state-funded school in England and need free help with your school procurement.
+      overview_purpose: Use this service if you're a state-funded school in England and need free help with your school procurement.
       tools_and_guidance: Tools and guidance
       tools_and_guidance_also: 'You can also:'
       tools_and_guidance_points:
@@ -704,7 +1207,7 @@ en:
       - <a href="/" class="govuk-link">create a specification</a> for catering or multi-functional devices if you don't have one yet
       we_can_offer: 'Our team of procurement specialists can:'
       we_can_offer_points:
-      - offer advice and guidance to make sure you’re buying compliantly at any point, even if your procurement process is already in progress
+      - offer advice and guidance to make sure you're buying compliantly at any point, even if your procurement process is already in progress
       - review your documents to make sure they're complete and compliant. This includes advice on specification documents, tender documents and evaluation criteria
       - support you on choosing or using a framework agreement for your procurement
       - advise when you need to seek legal advice
@@ -820,6 +1323,7 @@ en:
       cancel: Cancel
       change_answer: Change
       delete: Delete
+      discard_go_to_task_list: Discard and go to task list
       next: Continue
       remove: Remove
       save: Save
@@ -828,6 +1332,8 @@ en:
       submit: Submit
       update: Update
       continue: Continue
+      save_continue: Save and continue
+      save_go_to_tasks: Save and go to tasks
     label:
       what_is: What is %{label}?
     link:
@@ -933,6 +1439,16 @@ en:
       requirements: Tell us about your access needs
       requirements_hint: For example, I have difficulty hearing so I cannot do video calls
   specifying:
+    closing:
+      doc_title: Create a specification is closing
+      page_title: Sorry, Create a specification is closing
+      p1: Create a specification is no longer accepting new cases.
+      p2: 'Use <a href="https://get-help-buying-for-schools.education.gov.uk/" class="govuk-link">Get help buying for schools</a> to:'
+      list:
+      - find DfE-approved buying options
+      - request support with procurements
+      - read procurement guidance
+      p3: If you have an existing specification which is in progress, select start to sign in to your DfE Sign-in account and complete and download the specification.
     start_page:
       before_you_start_body:
       - The service will guide you through what information to provide. Standard regulations and requirements that suppliers must comply with will be added automatically.
@@ -995,6 +1511,7 @@ en:
         case_files: Files
         case_history: Case history
         messages: Messages
+        onboarding_summary: Onboarding summary
         procurement_detail: Procurement details
         request: Request
         request_details: Request details
@@ -1116,8 +1633,10 @@ en:
             to: TO
           new_thread: Create a new message thread
           recipients: Recipients
-          reply_using_signatory_template: Reply using a signatory template
-          reply_with_template: Reply with an email template
+          reply_with_signature: Reply with signature
+          reply_with_template: Reply with template
+          forward_with_signature: Forward with signature
+          forward_with_template: Forward with template
           status: Status
           subject: Subject
           templated_messages: Templated messages
@@ -1135,6 +1654,9 @@ en:
             send_message: Send message
             send_reply: Send reply
             summary_text: Reply to message
+            warning: Warning
+            warning_body: You must upload your attachments again
+          forward:
             warning: Warning
             warning_body: You must upload your attachments again
           table:
@@ -1191,7 +1713,7 @@ en:
           start_date: Start date
           supplier: Supplier
           supplier_is_sme: Supplier is a SME
-        procurement_stage: Procurement stage
+        procurement_stage: Stage
         procurement_value: Procurement value
         project:
           header: Project
@@ -1254,6 +1776,7 @@ en:
           digital: Specify case
           engagement_and_outreach: Engagement and Outreach (E&O)
           engagement_and_outreach_cms: E&O CMS
+          energy_onboarding: Energy Onboarding
           faf: Find a Framework
           header: Source
           incoming_email: Email
@@ -1285,11 +1808,13 @@ en:
           L3: 3 - Support with buying
           L4: 4 - DfE buying through a framework
           L5: 5 - DfE buying by getting quotes or bids
+          L6: 6 - DfE Energy for Schools support case
+          L7: 7 - DfE Energy for Schools onboarding case
           header: Case level
           unspecified: Not specified
         tasklist:
           complete_evaluation: Complete evaluation
-          handover_contract: Handover contract
+          handover_contract: Share contract and handover document
           item:
             add_evaluators: Add evaluators
             set_due_date: Set due date
@@ -1297,14 +1822,14 @@ en:
             email_evaluators: Email evaluators
             review_evaluations: Review evaluations
             add_contract_recipients: Add contract recipients
-            upload_contract_handover_pack: Upload contract handover pack
-            share_handover_pack: Share handover pack
-            download_contract_handover_pack: Download contract handover pack
+            upload_contract_handover_pack: Upload contract and handover document
+            share_handover_pack: Share contract and handover document
+            download_contract_handover_pack: Download contract and handover document
           status:
             to_do: To do
             in_progress: In progress
             complete: Complete
-            cannot_start: Cannot start  
+            cannot_start: Cannot start
         transfer_to_framework_evaluation:
           body: This action will close this case and create a new framework evaluation case.
           cancel: Cancel
@@ -1350,7 +1875,7 @@ en:
         button: Start a new search
         count: "%{count} cases found containing '%{term}'"
         heading: Find a case
-        hint: Enter the case ID, contact email, organisation name, establishment unique reference number (URN) or case owner.
+        hint: Enter the Case ID, contact email, organisation name, establishment group, establishment unique reference number (URN), MPRN, MPAN or case owner.
         results: Search results
     case_additional_contact:
       organisation:
@@ -1362,7 +1887,7 @@ en:
           lead: Lead
     case_assignment:
       agent_id:
-        label: Search for caseworker name
+        label: Search for case worker name
       flash:
         created: Agent assigned to case successfully
       header: Assign to case worker
@@ -1395,6 +1920,7 @@ en:
           out_of_scope: Out of scope
           spam: Spam
           test_case: Test case
+          objections: Objections resulted in cancellation
         submit: Save and reject case
       flash:
         created: Case rejected successfully
@@ -1642,6 +2168,7 @@ en:
     case_opening:
       flash:
         error: Case cannot be reopened
+        re_used_meter_numbers: Case cannot be reopened because one or more meter numbers are in use in other cases
         reopened: Case reopened successfully
     case_openings:
       new:
@@ -1659,6 +2186,7 @@ en:
             out_of_scope: Out of scope
             spam: Spam
             test_case: Test case
+            objections: Objections resulted in cancellation
           request_category: Sub-category
           status: Status
     case_organisation:
@@ -1795,6 +2323,8 @@ en:
         L3: 3
         L4: 4
         L5: 5
+        L6: 6
+        L7: 7
         unspecified: Unspecified
       support_levels_by_tower:
         header: Overview by case levels by tower
@@ -2020,6 +2550,8 @@ en:
     management:
       agents:
         header: Agents
+        delete_confirmation: Are you sure you want to remove %{name} (%{email})?
+        destroyed: "%{name} (%{email}) successfully removed"
         table:
           actions: Actions
           admin: Admin
@@ -2036,6 +2568,8 @@ en:
             tab_heading: Current staff
           former_accounts:
             tab_heading: Former staff
+        role_error: "Other roles cannot be included when 'CEC Staff Member' and/or 'CEC Admin' is selected"
+        procops_user_error: This user cannot be given CEC roles as they are already a Proc-ops user
       all_cases_surveys:
         eligible_cases:
           hint: List of case references that will receive the survey
@@ -2076,6 +2610,20 @@ en:
           stage: Stage
           unsafe_attachments: One or more attachments contain a virus
           variable_warning: "'{{caseworker_full_name}}' will be replaced by the name of the caseworker sending the email."
+        stages:
+          0: Stage 0
+          1: Stage 1
+          2: Stage 2
+          3: Stage 3
+          4: Stage 4
+          5: Enquiry
+          6: Onboarding form
+          7: Form review
+          8: With supplier
+          9: Objection
+          10: Awaiting contract start
+          11: Interim rate customer
+          12: V30 Rate Customer
         create:
           notice: Your template has been saved
         destroy:
@@ -2129,6 +2677,57 @@ en:
         - Click <strong>Synchronise</strong> to trigger the task manually.
         header: Synchronise frameworks
         sync: Synchronise
+      energy_for_schools:
+        header: Energy for Schools
+        configure_email_options: Configure email options
+        links:
+          electricity: Send electricity emails to
+          gas: Send gas emails to
+        hint: Use a semi-colon (;) to separate multiple email addresses
+        save_return: Save and return
+        choose_email_template: Choose email template
+        not_provided: Not provided
+        not_selected: Not selected
+        flash:
+          updated: Email configuration updated successfully
+        templates:
+          electricity_supplier_submitted_template: Electricity supplier Form submitted
+          electricity_supplier_direct_debit_template: Electricity supplier Direct debit
+          electricity_supplier_vat_template: Electricity supplier VAT details
+          electricity_supplier_direct_debit_vat_template: Electricity supplier Direct debit and VAT
+          gas_supplier_submitted_template: Gas supplier Form submitted
+          gas_supplier_direct_debit_template: Gas supplier Direct debit
+          gas_supplier_vat_template: Gas supplier VAT details
+          gas_supplier_direct_debit_vat_template: Gas supplier Direct debit and VAT
+          school_electricity_direct_debit_template: Schools - Electricity Direct Debit setup template
+          school_gas_direct_debit_template: Schools - Gas Direct Debit setup template
+          school_electricity_vat_template: Schools - Electricity VAT details
+          school_gas_vat_template: Schools - Gas VAT details
+          school_electricity_direct_debit_vat_template: Schools - Electricity VAT & DD details template
+          school_gas_direct_debit_vat_template: Schools - Gas VAT & DD details template
+        electricity:
+          title: Electricity supplier emails
+          email_to: Send to
+          submitted_template: Form submitted
+          direct_debit: Direct debit
+          vat: VAT details
+          direct_debit_vat: Direct debit and VAT
+        gas:
+          title: Gas supplier emails
+          email_to: Send to
+          submitted_template: Form submitted
+          direct_debit: Direct debit
+          vat: VAT details
+          direct_debit_vat: Direct debit and VAT
+        schools:
+          title: Schools emails
+          email_to: send emails to
+          electricity_direct_debit_template: Electricity Direct Debit setup template
+          gas_direct_debit_template: Gas Direct Debit setup template
+          electricity_vat: Electricity VAT details
+          gas_vat: Gas VAT details
+          electricity_direct_debit_vat: Electricity VAT & DD details template
+          gas_direct_debit_vat: Gas VAT & DD details template
     organisation_statuses:
       closed: Closed
       closing: Open, but proposed to close %{date}
@@ -2274,3 +2873,33 @@ en:
   time:
     formats:
       compact: "%d %b %y"
+  usability_survey:
+    body: Please could you let us know how easy it was to use this service. Your feedback helps us make our service better.
+    heading: Before you go
+    improvements: How could we improve this service?
+    send: Send feedback
+    service_helpful: Did this service help you get what you were looking for?
+    service_not_helpful_reason: Tell us why not
+    skip: Skip survey
+    usage_reasons:
+      hint: Select all options that are relevant to you
+      options:
+        browsing: Browsing
+        finding_a_framework: Finding a framework
+        guidance: Guidance
+        request_for_help: Request for help
+        other: Other
+      question: What did you use the service for today?
+      usage_reason_other: Tell us how else this service has helped you
+  cms:
+    signin:
+      page_title: Case management system
+      overview_purpose: "This system is for GHBS operational teams to support school users with complex school procurements or onboard them to specific schemes, like Energy for Schools. You'll be able to:"
+      overview_purpose_list:
+      - view support requests
+      - email school users with advice and instructions
+      - update cases as they progress
+      - share files and contracts with school users
+      contact_line_manager: Contact your line manager if you do not have access.
+      sign_in: Sign in
+

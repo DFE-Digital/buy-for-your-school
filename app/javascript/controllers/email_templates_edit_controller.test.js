@@ -17,6 +17,7 @@ describe("EmailTemplatesEditController", () => {
     subject.subgroupSelectTarget = document.createElement("select");
     subject.subgroupWrapperTarget = document.createElement("div");
     subject.variableWarningTarget = document.createElement("div");
+    subject.stageSelectTarget = document.createElement("select");
   });
 
   afterAll(() => {
@@ -71,7 +72,16 @@ describe("EmailTemplatesEditController", () => {
       let clearSubgroupsSpy;
 
       beforeEach(() => {
-        event = { target: { value: "" } };
+        event =  {
+          target: {
+            value: "",
+            options: [
+              { text: "Group 1" },
+              { text: "Group 2" },
+            ],
+            selectedIndex: 0,
+          },
+        };
         clearSubgroupsSpy = jest.spyOn(subject, "clearSubgroups").mockImplementation(() => {});
       });
 
@@ -86,7 +96,7 @@ describe("EmailTemplatesEditController", () => {
       let subgroupSourceSpy;
       let groupsToOptionsSpy;
       const options = [createOption("", "Select group"), createOption("1", "Group 1"), createOption("2", "Group 2")];
-      const csrf_token = "token";      
+      const csrf_token = "token";
 
       beforeAll(() => {
         const meta = document.createElement("meta");
@@ -96,7 +106,16 @@ describe("EmailTemplatesEditController", () => {
       })
 
       beforeEach(() => {
-        event = { target: { value: "1" } };
+        event = {
+          target: {
+            value: "1",
+            options: [
+              { text: "Group 1" },
+              { text: "Group 2" },
+            ],
+            selectedIndex: 1,
+          },
+        };
         subgroupSourceSpy = jest.spyOn(subject, "subgroupSource").mockImplementation(() => "https://test-url.com/123");
         groupsToOptionsSpy = jest.spyOn(subject, "groupsToOptions").mockImplementation(() => options);
 
@@ -161,7 +180,7 @@ describe("EmailTemplatesEditController", () => {
       beforeEach(() => {
         textContent = "hi {{caseworker_full_name}}";
         displaySpy = jest.spyOn(utilities, "display").mockImplementation(() => {});
-        
+
         subject.displayVariablesWarning(null);
       });
 
@@ -174,7 +193,7 @@ describe("EmailTemplatesEditController", () => {
       beforeEach(() => {
         textContent = "this is test content";
         displaySpy = jest.spyOn(utilities, "display").mockImplementation(() => {});
-        
+
         subject.displayVariablesWarning(null);
       });
 

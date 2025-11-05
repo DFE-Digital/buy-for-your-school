@@ -1,3 +1,10 @@
+<% if (current_agent.roles & %w[cec cec_admin]).any?
+    portal_case_contact_details_path = cec_case_edit_contact_details_path(@current_case)
+  else
+    portal_case_contact_details_path = edit_support_case_contact_details_path(@current_case)
+  end 
+%>
+
 <%= turbo_frame_tag "school-details-frame" do %>
   <h2 class="govuk-heading-l">
     <%= I18n.t("support.case.header.school_detail") %>
@@ -12,12 +19,13 @@
         <%= @current_case.full_name %>
       </dd>
       <dd class="govuk-summary-list__actions">
-        <% unless @current_case.closed? %>
-          <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
+        <% unless @current_case.closed? || (@current_case.energy_onboarding_case? && @current_case.support_level == "L7") %>
+          <%= link_to "Change", portal_case_contact_details_path, class: "govuk-link", target: "_top" %>
         <% end %>
       </dd>
     </div>
-
+    
+    <% unless @current_case.energy_onboarding_case? %>
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
         <%= I18n.t("support.case.label.contact_phone") %>
@@ -27,11 +35,13 @@
       </dd>
       <dd class="govuk-summary-list__actions">
         <% unless @current_case.closed? %>
-          <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
+          <%= link_to "Change", portal_case_contact_details_path, class: "govuk-link", target: "_top" %>
         <% end %>
       </dd>
     </div>
+    <% end %>
 
+    <% unless @current_case.energy_onboarding_case? %>
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
         <%= I18n.t("support.case.label.contact_extension_number") %>
@@ -41,10 +51,11 @@
       </dd>
       <dd class="govuk-summary-list__actions">
         <% unless @current_case.closed? %>
-          <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
+          <%= link_to "Change", portal_case_contact_details_path, class: "govuk-link", target: "_top" %>
         <% end %>
       </dd>
     </div>
+    <% end %>
 
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
@@ -54,12 +65,13 @@
         <%= @current_case.email %>
       </dd>
       <dd class="govuk-summary-list__actions">
-        <% unless @current_case.closed? %>
-          <%= link_to "Change", edit_support_case_contact_details_path(@current_case), class: "govuk-link", target: "_top" %>
+        <% unless @current_case.closed? || (@current_case.energy_onboarding_case? && @current_case.support_level == "L7") %>
+          <%= link_to "Change", portal_case_contact_details_path, class: "govuk-link", target: "_top" %>
         <% end %>
       </dd>
     </div>
 
+    <% unless @current_case.energy_onboarding_case? %>
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
         <%= I18n.t("support.case.label.case_additional_contact") %>
@@ -73,6 +85,7 @@
         <% end %>
       </dd>
     </div>
+    <% end %>
 
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
@@ -82,7 +95,7 @@
         <%= @current_case.organisation_name if @current_case.organisation.present? %>
       </dd>
       <dd class="govuk-summary-list__actions">
-        <% unless @current_case.closed? %>
+        <% unless @current_case.closed? || (@current_case.energy_onboarding_case? && @current_case.support_level == "L7") %>
           <%= link_to @current_case.organisation.present? ? "Change" : "Add",
             edit_support_case_organisation_path(@current_case), class: "govuk-link", target: "_top" %>
         <% end %>
@@ -99,18 +112,20 @@
       </dd>
     </div>
 
-    <% if @current_case.eligible_for_school_picker? %>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= I18n.t("support.case.label.participating_schools") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= @current_case.participating_schools.count %>
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <%= link_to I18n.t("support.generic.view"), support_case_school_details_participating_schools_path(@current_case), class: "govuk-link" %>
-        </dd>
-      </div>
+    <% unless @current_case.energy_onboarding_case? %>
+      <% if @current_case.eligible_for_school_picker? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= I18n.t("support.case.label.participating_schools") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= @current_case.participating_schools.count %>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <%= link_to I18n.t("support.generic.view"), support_case_school_details_participating_schools_path(@current_case), class: "govuk-link" %>
+          </dd>
+        </div>
+      <% end %>
     <% end %>
 
   <% if @current_case.organisation.present? %>
@@ -123,10 +138,12 @@
           %>
         </li>
       <% end %>
-      <% if other_cases_by_case_org_exist?(@current_case.organisation) %>
-        <li>
-          <%= govuk_link_to I18n.t("support.case.label.view_all_cases"), other_cases_by_case_org_path(@current_case.organisation, back_to: url_b64(support_case_path(@current_case, back_to: params[:back_to]))), no_visited_state: true, "target" => "_top" %>
-        </li>
+      <% unless @current_case.energy_onboarding_case? %>
+        <% if other_cases_by_case_org_exist?(@current_case.organisation) %>
+          <li>
+            <%= govuk_link_to I18n.t("support.case.label.view_all_cases"), other_cases_by_case_org_path(@current_case.organisation, back_to: url_b64(support_case_path(@current_case, back_to: params[:back_to]))), no_visited_state: true, "target" => "_top" %>
+          </li>
+        <% end %>
       <% end %>
     </ul>
   <% end %>
