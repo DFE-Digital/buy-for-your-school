@@ -41,7 +41,7 @@ describe "Agent can message from within an evaluation", :js do
         click_link "View"
       end
       click_button "Reply to message"
-
+      expect(page).to have_selector(".tox-tinymce")
       fill_in_editor "Your message", with: "This is a test reply"
       click_button "Send reply"
       expect(page).to have_css(".message-preview", text: "This is a test reply")
@@ -57,7 +57,7 @@ describe "Agent can message from within an evaluation", :js do
       visit frameworks_evaluation_path(evaluation)
       go_to_tab "Messages"
       click_button "Create a new message thread"
-
+      expect(page).to have_selector(".tox-tinymce")
       expect(page).to have_field "Enter an email subject", with: "[FE123] - DfE Get help buying for schools"
       expect(page).to have_css '[data-row-label="TO"]', text: "contact@email.com"
 
