@@ -58,31 +58,16 @@ describe "Evaluator can see uploaded documents", :js do
     click_button "Continue"
 
     support_case.reload
-    sleep 5
 
     visit evaluation_task_path(support_case)
 
-    # expect(find("#evaluator_task-1-status")).to have_text("Complete")
-
     expect(page).to have_selector(
       "#evaluator_task-1-status",
-      text: I18n.t("task_list.status.to_do", default: "To do"),
-    )
-    # Assert the two per-file download interactions exist (order-independent)
-    download_bodies = Support::Interaction
-      .where("body LIKE '%downloaded by evaluator%'")
-      .pluck(:body)
-
-    expect(download_bodies).to include(
-      "text-file.txt downloaded by evaluator Momo Taro",
-      "another-text-file.txt downloaded by evaluator Momo Taro",
+      text: I18n.t("task_list.status.complete", default: "Complete"),
     )
 
-    # Total interactions: 2 added by PS + 2 downloaded by evaluator = 4
-    expect(Support::Interaction.count).to eq(4)
-
-    # expect(Support::Interaction.count).to eq(5)
-    # expect(Support::Interaction.all[0].body).to eq("All documents downloaded by evaluator Momo Taro")
-    # expect(Support::Interaction.all[1].body).to eq("another-text-file.txt downloaded by evaluator Momo Taro")
+    expect(Support::Interaction.count).to eq(5)
+    expect(Support::Interaction.all[0].body).to eq("All documents downloaded by evaluator Momo Taro")
+    expect(Support::Interaction.all[1].body).to eq("another-text-file.txt downloaded by evaluator Momo Taro")
   end
 end
