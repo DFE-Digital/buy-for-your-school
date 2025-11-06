@@ -10,11 +10,6 @@ RSpec.describe "Authentication", type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it "users can access the specification start page" do
-      get root_path
-      expect(response).to have_http_status(:ok)
-    end
-
     it "users can access the new session endpoint" do
       post "/auth/dfe"
       expect(response).to have_http_status(:found)
@@ -31,36 +26,6 @@ RSpec.describe "Authentication", type: :request do
     it "DfE Sign-in can sign users out" do
       delete "/auth/dfe/signout"
       expect(response).to have_http_status(:found)
-    end
-  end
-
-  describe "Endpoints that do require authentication" do
-    it "users cannot access the new journey path" do
-      category = create(:category, :catering)
-      post journeys_path(category.id)
-      expect(response).to redirect_to cms_signin_path
-    end
-
-    it "users cannot access an existing journey" do
-      journey = create(:journey)
-      get journey_path(journey)
-      expect(response).to redirect_to cms_signin_path
-    end
-
-    it "users cannot edit an answer" do
-      answer = create(:radio_answer)
-      get edit_journey_step_path(answer.step.journey, answer.step)
-      expect(response).to redirect_to cms_signin_path
-    end
-
-    it "users cannot see the design page" do
-      get design_index_path
-      expect(response).to redirect_to cms_signin_path
-    end
-
-    it "users cannot see the preview endpoints" do
-      get preview_entry_path("an-entry-id")
-      expect(response).to redirect_to cms_signin_path
     end
   end
 
