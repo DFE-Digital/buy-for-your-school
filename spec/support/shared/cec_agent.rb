@@ -12,7 +12,6 @@ RSpec.shared_context "with a cec agent" do |roles: %w[cec]|
   before do
     Current.actor = agent
     user_exists_in_dfe_sign_in(user:)
-    visit "/"
-    click_start
+    visit "/cms"
   end
 end
