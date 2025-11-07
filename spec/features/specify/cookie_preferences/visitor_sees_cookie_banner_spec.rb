@@ -10,7 +10,7 @@ describe "Visitor to GHBS service sees cookie banner", :js do
 protected
 
   def_Given :"I am a new visitor to the GHBS service" do
-    visit "/"
+    visit "/cms"
   end
 
   def_When :"I accept the tracking of cookies" do
