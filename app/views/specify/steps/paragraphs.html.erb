@@ -1,7 +1,0 @@
-<%= content_for :title, @step.title %>
-
-<h1 class="govuk-heading-xl"><%= @step.title %></h1>
-<div class="static-content">
-  <%= simple_format(@step.body, wrapper_tag: "p", class: "govuk-body") %>
-</div>
-<%= link_to @step.primary_call_to_action_text, journey_path(@journey), class: "govuk-button", role: "button" %>

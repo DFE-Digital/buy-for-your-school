@@ -51,8 +51,6 @@ module ApplicationHelper
       :request_for_help_form
     elsif request.path.starts_with?("/energy")
       :energy_for_schools
-    else
-      :create_a_spec
     end
   end
 
