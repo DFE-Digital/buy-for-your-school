@@ -66,22 +66,18 @@ module Energy
     end
 
     def update_case_state_and_procurement_stage
-      gas_flag_on = Flipper.enabled?(:auto_send_siteAdditions_gas)
+      gas_flag_on   = Flipper.enabled?(:auto_send_siteAdditions_gas)
       power_flag_on = Flipper.enabled?(:auto_send_siteAdditions_power)
-      form_review = { state: :opened, procurement_stage: Support::ProcurementStage.find_by(key: :form_review) }
-      with_supplier = { state: :resolved, procurement_stage: Support::ProcurementStage.find_by(key: :with_supplier) }
 
-      new_state = if gas_flag_on && power_flag_on
-                    with_supplier
-                  elsif gas_flag_on && !power_flag_on
-                    switching_gas? ? with_supplier : form_review
-                  elsif !gas_flag_on && power_flag_on
-                    switching_electricity? ? with_supplier : form_review
-                  else
-                    form_review
-                  end
+      return unless gas_flag_on || power_flag_on
 
-      @support_case.update!(new_state)
+      should_resolve =
+        (gas_flag_on && power_flag_on) ||
+        (gas_flag_on && switching_gas?) ||
+        (power_flag_on && switching_electricity?)
+
+      procurement_stage = Support::ProcurementStage.find_by(key: :with_supplier)
+      @support_case.update!(state: :resolved, procurement_stage:) if should_resolve
     end
 
     def attach_documents_to_support_case

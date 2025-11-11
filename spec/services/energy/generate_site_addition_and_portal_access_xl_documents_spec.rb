@@ -118,6 +118,7 @@ RSpec.describe Energy::GenerateSiteAdditionAndPortalAccessXlDocuments do
       before do
         with_supplier
         form_review
+        support_case.update!(procurement_stage: form_review, state: :opened)
       end
 
       shared_examples "opened and form_review state" do
