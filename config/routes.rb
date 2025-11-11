@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root to: redirect(ENV.fetch("FABS_URL"), status: 301)
+  root to: redirect(ENV.fetch("GHBS_HOMEPAGE_URL"), status: 301)
 
   # DfE analytics
   post "/dfe_analytics_events", to: "dfe_analytics_events#create"
@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   # Referrals
   namespace :referrals do
     get "/rfh/:referral_path", to: "referrals#rfh"
-    get "/specify/:referral_path", to: redirect(ENV.fetch("FABS_URL"), status: 301)
+    get "/specify/:referral_path", to: redirect(ENV.fetch("GHBS_HOMEPAGE_URL"), status: 301)
     get "/faf/:referral_path", to: "referrals#faf"
   end
 
@@ -73,11 +73,11 @@ Rails.application.routes.draw do
       profile
       submit
     ].each do |path|
-      match "/#{path}(*rest)", to: redirect(ENV.fetch("FABS_URL"), status: 301), via: :all
+      match "/#{path}(*rest)", to: redirect(ENV.fetch("GHBS_HOMEPAGE_URL"), status: 301), via: :all
     end
 
     match "/:prefix/*rest",
-          to: redirect(ENV.fetch("FABS_URL"), status: 301),
+          to: redirect(ENV.fetch("GHBS_HOMEPAGE_URL"), status: 301),
           via: :all,
           constraints: { prefix: /(journeys|support-requests|support-request-submissions|preview|feedback)/ }
   end
