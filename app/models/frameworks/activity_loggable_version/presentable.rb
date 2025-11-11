@@ -8,7 +8,10 @@ module Frameworks::ActivityLoggableVersion::Presentable
   def display_field_version(field:, value:)
     display_value =
       if field.ends_with?("_id")
-        display_field_version_for_association(association: field.split("_id").first, id: value)
+        association_name = field.split("_id").first
+        if item.class.reflections[association_name].present?
+          display_field_version_for_association(association: association_name, id: value)
+        end
       else
         item.try("display_field_version_#{field}", value)
       end
