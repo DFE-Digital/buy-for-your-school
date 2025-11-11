@@ -578,6 +578,7 @@
   - faf_category
   - faf_archived_at
   - is_archived
+  - contentful_id
   :frameworks_evaluations:
   - id
   - reference
