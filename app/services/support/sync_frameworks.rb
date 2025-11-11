@@ -67,6 +67,7 @@ module Support
 
     def update_record(record, faf, new_status)
       record.update(
+        contentful_id: faf[:contentful_id],
         faf_slug_ref: faf[:faf_slug_ref],
         faf_category: faf[:faf_category],
         provider_end_date: faf[:provider_end_date],
@@ -82,6 +83,7 @@ module Support
       frameworks.select { |framework| framework["expiry"].present? }.map do |framework|
         {
           name: framework["title"],
+          contentful_id: framework["id"],
           faf_slug_ref: framework["ref"],
           provider_id: existing_provider(framework["provider"].try(:[], "initials"), framework["provider"].try(:[], "title")),
           faf_category: framework["cat"].try(:[], "title"),
