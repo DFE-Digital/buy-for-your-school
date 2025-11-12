@@ -67,7 +67,7 @@ module Energy
 
     def update_case_state_and_procurement_stage
       gas_flag_on   = Flipper.enabled?(:auto_send_siteAdditions_gas)
-      power_flag_on = Flipper.enabled?(:auto_send_siteAdditions_power)
+      power_flag_on = Flipper.enabled?(:auto_send_siteAdditions_power) # this should be OFF
 
       return unless gas_flag_on || power_flag_on
 
