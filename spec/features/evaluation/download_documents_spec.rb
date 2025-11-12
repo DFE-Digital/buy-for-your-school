@@ -61,7 +61,10 @@ describe "Evaluator can see uploaded documents", :js do
 
     visit evaluation_task_path(support_case)
 
-    expect(find("#evaluator_task-1-status")).to have_text("Complete")
+    expect(page).to have_selector(
+      "#evaluator_task-1-status",
+      text: I18n.t("task_list.status.complete", default: "Complete"),
+    )
 
     expect(Support::Interaction.count).to eq(5)
     expect(Support::Interaction.all[0].body).to eq("All documents downloaded by evaluator Momo Taro")
