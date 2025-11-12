@@ -34,13 +34,11 @@ module Support
       prepared_frameworks = prepare_frameworks(@frameworks)
 
       prepared_frameworks.each do |faf|
-        records = ::Frameworks::Framework.where("LOWER(name) = LOWER(?) AND provider_id = ?", faf[:name].strip, faf[:provider_id])
+        record = find_framework(faf)
 
-        if records.exists?
-          records.each do |record|
-            new_status = determine_new_status(record, faf, records.count)
-            update_record(record, faf, new_status)
-          end
+        if record
+          new_status = determine_new_status(record, faf)
+          update_record(record, faf, new_status)
         else
           record = ::Frameworks::Framework.new(name: faf[:name].strip, provider_id: faf[:provider_id])
           update_record(record, faf, statuses["dfe_approved"])
@@ -54,12 +52,23 @@ module Support
       update_archive_status(prepared_frameworks)
     end
 
-    def determine_new_status(record, faf, record_count)
+    def find_framework(faf)
+      # First try to match by contentful_id (authoritative)
+      if faf[:contentful_id].present?
+        record = ::Frameworks::Framework.find_by(contentful_id: faf[:contentful_id])
+        return record if record
+      end
+
+      # Fall back to name + provider for legacy records without contentful_id
+      ::Frameworks::Framework.where("LOWER(name) = LOWER(?) AND provider_id = ?", faf[:name].strip, faf[:provider_id]).first
+    end
+
+    def determine_new_status(record, faf)
       case record.status
       when "dfe_approved"
         get_framework_status(record.status, faf[:provider_end_date])
       when "not_approved"
-        record_count > 1 ? statuses["archived"] : statuses["dfe_approved"]
+        statuses["dfe_approved"]
       else
         record.status
       end
@@ -67,6 +76,7 @@ module Support
 
     def update_record(record, faf, new_status)
       record.update(
+        name: faf[:name].strip,
         contentful_id: faf[:contentful_id],
         faf_slug_ref: faf[:faf_slug_ref],
         faf_category: faf[:faf_category],
@@ -132,15 +142,18 @@ module Support
 
       cms_frameworks.each do |cms_framework|
         exists = prepared_frameworks.any? do |faf_framework|
-          cms_framework.name.strip.casecmp?(faf_framework[:name].strip) && cms_framework.provider_id == faf_framework[:provider_id]
+          # Match by contentful_id if available (authoritative)
+          if cms_framework.contentful_id.present? && faf_framework[:contentful_id].present?
+            cms_framework.contentful_id == faf_framework[:contentful_id]
+          else
+            # Fall back to name + provider for legacy records
+            cms_framework.name.strip.casecmp?(faf_framework[:name].strip) && cms_framework.provider_id == faf_framework[:provider_id]
+          end
         end
 
         next if exists
 
-        ::Frameworks::Framework.find_by!(
-          name: cms_framework.name,
-          provider_id: cms_framework.provider_id,
-        ).update!(
+        cms_framework.update!(
           status: statuses["archived"],
           is_archived: true,
           faf_archived_at: Time.zone.today,
