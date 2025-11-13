@@ -9,6 +9,15 @@ RSpec.describe Support::OrganisationPresenter do
         expect(presenter.formatted_address).to eq("St James's Passage, Duke's Place, London, EC3A 5DE")
       end
     end
+
+    describe "#formatted_address_with_name" do
+      let(:school_name) { "St James's Primary School" }
+      let(:organisation) { create(:support_organisation, :with_address, name: school_name) }
+
+      it "returns a correctly address formatted with school name" do
+        expect(presenter.formatted_address_with_name).to eq("#{school_name}, St James's Passage, Duke's Place, London, EC3A 5DE")
+      end
+    end
   end
 
   context "with no address defined" do

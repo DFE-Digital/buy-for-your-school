@@ -1,5 +1,6 @@
 module Support
   class EstablishmentGroupPresenter < ::Support::BasePresenter
+    include Concerns::AddressFormatting
     # @return [String] Combines URN and name
     # :nocov:
     def urn_and_name
@@ -11,13 +12,6 @@ module Support
       "#{uid} - #{name}"
     end
     # :nocov:
-
-    # @return [String]
-    def formatted_address
-      %w[street locality town county postcode].map { |key|
-        address[key].presence unless address[key] == "Not recorded"
-      }.compact.join(", ")
-    end
 
     def postcode
       address["postcode"]
