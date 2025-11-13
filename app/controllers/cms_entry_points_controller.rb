@@ -26,4 +26,11 @@ private
 
     cms_no_roles_assigned_path
   end
+
+  def authenticate_user!
+    return unless current_user.guest?
+
+    session.delete(:dfe_sign_in_uid)
+    redirect_to cms_signin_path
+  end
 end
