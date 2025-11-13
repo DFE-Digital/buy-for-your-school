@@ -159,6 +159,7 @@ jobs:
             -e SUPPORT_EMAIL=email@example.gov.uk \
             -e FAF_FRAMEWORK_ENDPOINT=http://faf.test \
             -e FAF_WEBHOOK_SECRET=test \
+            -e GHBS_HOMEPAGE_URL=https://example.com \
             -e CI_NODE_TOTAL=${{ matrix.ci_node_total }} \
             -e CI_NODE_INDEX=${{ matrix.ci_node_index }} \
             ${{ needs.build_test.outputs.docker_image }} \
@@ -237,6 +238,7 @@ jobs:
             -e SUPPORT_EMAIL=email@example.gov.uk \
             -e FAF_FRAMEWORK_ENDPOINT=http://faf.test \
             -e FAF_WEBHOOK_SECRET=test \
+            -e GHBS_HOMEPAGE_URL=https://example.com \
             ${{ needs.build_test.outputs.docker_image }} \
             bash -c "bundle exec rspec --tag flaky || bundle exec rspec --only-failure"
       - name: Get coverage from container
@@ -376,6 +378,7 @@ jobs:
             -e SUPPORT_EMAIL=email@example.gov.uk \
             -e FAF_FRAMEWORK_ENDPOINT=http://faf.test \
             -e FAF_WEBHOOK_SECRET=test \
+            -e GHBS_HOMEPAGE_URL=https://example.com \
             ${{ needs.build_test.outputs.docker_image }} \
             bash -c "RAILS_ENV=test bundle exec rake enums:check"
 
