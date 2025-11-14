@@ -9,6 +9,15 @@ RSpec.describe Support::EstablishmentGroupPresenter do
         expect(presenter.formatted_address).to eq("Boundary House Shr, 91 Charter House Street, London, EC1M 6HR")
       end
     end
+
+    describe "#formatted_address_with_name" do
+      let(:trust_name) { "ST JAMES'S TRSUT" }
+      let(:establishment_group) { create(:support_establishment_group, :with_address, name: trust_name) }
+
+      it "returns a correctly address formatted with trust name" do
+        expect(presenter.formatted_address_with_name).to eq("#{trust_name}, Boundary House Shr, 91 Charter House Street, London, EC1M 6HR")
+      end
+    end
   end
 
   context "with no address defined" do

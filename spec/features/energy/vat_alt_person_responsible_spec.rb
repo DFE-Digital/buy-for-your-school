@@ -57,6 +57,9 @@ describe "VAT Alt person responsible", :js do
       expect(page).to have_text("Enter a telephone number")
       expect(page).to have_text("Select an address")
 
+      expect(page).to have_field(support_organisation.name, type: "radio")
+      expect(page).to have_field(support_establishment_group.name, type: "radio")
+
       fill_in "First name", with: "Jon"
       fill_in "Telephone number", with: "01632 960 001"
       find('input[type="radio"][value*="Boundary House"]', match: :first).click

@@ -6,9 +6,9 @@
     legend: { size: "l", text: I18n.t("energy.billing_address_confirmation.heading"), tag: "h1" } do %>
     <% @address_orgs.each_with_index do |address, i| %>
       <% if i.zero? %>
-        <%= form.govuk_radio_button :billing_invoice_address_source_id, address[0], label: { text: address[1].formatted_address }, link_errors: true %>
+        <%= form.govuk_radio_button :billing_invoice_address_source_id, address[0], label: { text: address[1].formatted_address_with_name }, link_errors: true %>
       <% else %>
-        <%= form.govuk_radio_button :billing_invoice_address_source_id, address[0], label: { text: address[1].formatted_address } %>
+        <%= form.govuk_radio_button :billing_invoice_address_source_id, address[0], label: { text: address[1].formatted_address_with_name } %>
       <% end %>
     <% end %>
   <% end %>
