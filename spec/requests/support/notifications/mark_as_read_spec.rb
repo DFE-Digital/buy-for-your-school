@@ -38,8 +38,8 @@ describe "Marking notifications as read/unread" do
 
     context "when redirection param is for a path the system does recognise" do
       it "redirects to the specified path" do
-        post support_notification_read_path(notification, redirect_to: root_path)
-        expect(response).to redirect_to(root_path)
+        post support_notification_read_path(notification, redirect_to: support_root_path)
+        expect(response).to redirect_to(support_root_path)
       end
     end
   end

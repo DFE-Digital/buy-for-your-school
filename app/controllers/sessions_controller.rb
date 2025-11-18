@@ -76,7 +76,7 @@ private
   end
 
   def external_user_path
-    session[:email_evaluator_link].presence || session[:email_school_buyer_link].presence || dashboard_path
+    session[:email_evaluator_link].presence || session[:email_school_buyer_link].presence || root_path
   end
 
   # Routing logic for users after authentication
