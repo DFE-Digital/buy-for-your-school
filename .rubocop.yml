@@ -16,3 +16,6 @@ require: rubocop-performance
 
 AllCops:
   TargetRubyVersion: 3.1.2
+
+Lint/CommentedCode:
+  Enabled: true
