@@ -19,6 +19,7 @@ describe Support::SyncFrameworks do
       let(:body) do
         [
           {
+            id: "contentful-id-1",
             provider: { initials: "ABC", title: "ABC" },
             cat: { ref: "energy", title: "Energy" },
             ref: "ref-1",
@@ -29,6 +30,7 @@ describe Support::SyncFrameworks do
             provider_reference: "PR-1",
           },
           {
+            id: "contentful-id-2",
             provider: { initials: "ABC", title: "ABC" },
             cat: { ref: "catering", title: "Catering" },
             ref: "ref-2",
@@ -52,6 +54,7 @@ describe Support::SyncFrameworks do
         it "creates new frameworks and updates existing ones" do
           expect { service.call }.to change(Frameworks::Framework, :count).from(1).to(2)
             .and(change { existing_framework.reload.provider_end_date }.from(Date.parse("2025-11-15")).to(Date.parse("2026-08-31")))
+            .and(change { existing_framework.reload.contentful_id }.from(nil).to("contentful-id-1"))
 
           unchanged_attributes = %i[name provider_id faf_slug_ref faf_category url description source status]
 
@@ -61,6 +64,7 @@ describe Support::SyncFrameworks do
 
           new_framework = Frameworks::Framework.find_by(name: "Framework 2")
           expect(new_framework.provider_id).to eq(provider_detail.id)
+          expect(new_framework.contentful_id).to eq("contentful-id-2")
           expect(new_framework.faf_slug_ref).to eq("ref-2")
           expect(new_framework.faf_category).to eq("Catering")
           expect(new_framework.provider_end_date).to eq(Date.parse("2026-06-30"))
