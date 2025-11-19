@@ -65,6 +65,9 @@ module BuyForYourSchool
     require "middleware/maintenance_mode"
     config.middleware.insert_before 0, MaintenanceMode
 
+    require "middleware/domain_redirector"
+    config.middleware.insert_after MaintenanceMode, DomainRedirector
+
     config.active_support.cache_format_version = 7.1
 
     config.flipper.strict = false
