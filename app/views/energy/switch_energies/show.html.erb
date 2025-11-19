@@ -1,5 +1,3 @@
 <%= content_for :title, "#{@form.errors.any? ? 'Error: ' : ''}#{I18n.t("energy.switching_electricity.heading")} - #{I18n.t('energy.service_name')}" %>
 
-<p class="govuk-caption-l"><%= @organisation_detail.name %></p>
-
 <%= render "form" %>

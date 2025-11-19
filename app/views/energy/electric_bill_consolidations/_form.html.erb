@@ -1,5 +1,6 @@
 <%= form_with model: @form, scope: :electric_bill_consolidation_form, url: energy_case_org_electric_bill_consolidation_path(**@routing_flags), method: :patch do |form| %>
     <%= form.govuk_error_summary %>
+    <span class="govuk-caption-l"><%= @organisation_detail.name %>: <%= I18n.t("energy.electric_bill_consolidation.title") %></span>
     <%= form.hidden_field :is_electric_bill_consolidated, value: '' %>
     <%= form.govuk_collection_radio_buttons :is_electric_bill_consolidated,
           [

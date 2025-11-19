@@ -1,6 +1,7 @@
 <%= form_with(model: @gas_meter_detail, url: @form_url) do |form| %>
     <%= form.govuk_error_summary %>
-
+    <span class="govuk-caption-l"><%= @organisation_detail.name%>: <%= I18n.t("energy.gas_meter_details.title") %></span>
+    <h1 class="govuk-heading-l"><%= I18n.t("energy.gas_meter_details.heading") %></h1>
     <% add_mprn_label = @onboarding_case_organisation.gas_single_multi_multi? ? I18n.t("energy.gas_meter_details.mprn_multi_label") : I18n.t("energy.gas_meter_details.mprn_label") %>
 
     <%= form.govuk_text_field :mprn,

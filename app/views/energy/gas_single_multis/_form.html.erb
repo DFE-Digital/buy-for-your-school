@@ -1,5 +1,6 @@
 <%= form_with model: @form, scope: :gas_single_multi, url: @form_url, method: :patch do |form| %>
   <%= form.govuk_error_summary %>
+  <p class="govuk-caption-l"><%= @organisation_detail.name%>: <%= I18n.t("energy.gas_meter_details.title")%></p>
   <%= form.hidden_field :gas_single_multi, value: form.object.gas_single_multi %>
 
   <%= form.govuk_radio_buttons_fieldset :gas_single_multi,

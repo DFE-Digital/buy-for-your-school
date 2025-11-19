@@ -1,5 +1,6 @@
 <%= form_with model: @form, scope: :billing_address_confirmation, url: @form_url, method: :patch do |form| %>
   <%= form.govuk_error_summary %>
+  <p class="govuk-caption-l"><%= @organisation_detail.name%>: <%= I18n.t("energy.billing_address_confirmation.title")%></p>
   <%= form.hidden_field :billing_invoice_address_source_id, value: form.object.billing_invoice_address_source_id %>
 
   <%= form.govuk_radio_buttons_fieldset :billing_invoice_address_source_id,

@@ -1,6 +1,20 @@
 <%= form_with model: @form, scope: :site_contact_details_form, url: @form_url, method: :patch do |form| %>
     <%= form.govuk_error_summary %>
 
+    <p class="govuk-caption-l"><%= @organisation_detail.name %>: <%= I18n.t("energy.site_contact_details.title") %></p>
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset" aria-describedby="site-contact-details-hint">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">
+            <%= I18n.t("energy.site_contact_details.heading") %>
+          </h1>
+        </legend>
+        <div id="site-contact-details-hint" class="govuk-hint">
+          <%= I18n.t("energy.site_contact_details.sub_title") %>
+        </div>
+      </fieldset>
+    </div>
+
     <%= form.govuk_text_field :site_contact_first_name, label: { text: I18n.t("energy.site_contact_details.first_name") }, width: 20 %>
 
     <%= form.govuk_text_field :site_contact_last_name, label: { text: I18n.t("energy.site_contact_details.last_name") }, width: 20 %>

@@ -4,6 +4,8 @@
                                   : energy_case_org_electricity_meter_path(id: params[:id], **@routing_flags),
     ) do |form| %>
     <%= form.govuk_error_summary %>
+    <span class="govuk-caption-l"><%= @organisation_detail.name%>: <%= I18n.t("energy.electricity_meter.title") %></span>
+    <h1 class="govuk-heading-l"><%= I18n.t("energy.electricity_meter.heading") %></h1>
 
     <% add_mpan_label = @onboarding_case_organisation.electricity_meter_type_multi? ? I18n.t("energy.electricity_meter.mpan_label") : I18n.t("energy.electricity_meter.mpan_label_single") %>
     <%= form.govuk_text_field :mpan,
