@@ -1,6 +1,6 @@
 <%= form_with model: @form, scope: :electricity_meter_type_form, url: energy_case_org_electricity_meter_type_path(**@routing_flags), method: :patch do |form| %>
     <%= form.govuk_error_summary %>
-
+    <p class="govuk-caption-l"><%= @organisation_detail.name %>: <%= I18n.t("energy.electricity_meter_type.title") %></p>
     <%= form.hidden_field :electricity_meter_type, value: '' %>
 
     <%= form.govuk_radio_buttons_fieldset :electricity_meter_type,
