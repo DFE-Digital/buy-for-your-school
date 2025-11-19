@@ -5,6 +5,9 @@
 <%= form_with model: @form, scope: :electric_supplier_form, url: @form_url, method: :patch do |form| %>
   <%= form.govuk_error_summary %>
 
+  <span class="govuk-caption-l"><%= @organisation_detail.name %>: <%= I18n.t("energy.current_contract.electric.heading") %></span>
+  <h1 class="govuk-heading-l"><%= I18n.t("energy.current_contract.electric.contract") %></h1>
+
   <%= form.hidden_field :electric_current_supplier, value: form.object.electric_current_supplier %>
 
   <%= form.govuk_radio_buttons_fieldset :electric_current_supplier, legend: { text: I18n.t("energy.current_contract.electric.current_supplier"), size: "s", tag: "h2" } do %>

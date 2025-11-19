@@ -1,6 +1,5 @@
 <%= content_for :title, "#{@form.errors.any? ? 'Error: ' : ''}#{I18n.t('energy.school_selections.heading')} - #{I18n.t('energy.service_name')}" %>
 
 <%= govuk_back_link(href: energy_before_you_start_path) %>
-<p class="govuk-caption-l"><%= I18n.t("energy.school_selections.title") %></p>
 
 <%= render "form" %>
