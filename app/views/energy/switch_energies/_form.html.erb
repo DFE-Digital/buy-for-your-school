@@ -1,6 +1,6 @@
 <%= form_with model: @form, scope: :energy_type_form, url: energy_case_switch_energy_path, method: :patch do |form| %>
     <%= form.govuk_error_summary %>
-
+    <p class="govuk-caption-l"><%= @organisation_detail.name %></p>
     <%= form.hidden_field :switching_energy_type, value: form.object.switching_energy_type %>
 
     <%= form.govuk_radio_buttons_fieldset :switching_energy_type, legend: { text: I18n.t("energy.switching_electricity.heading"), tag: "h1", size: "l" } do %>
