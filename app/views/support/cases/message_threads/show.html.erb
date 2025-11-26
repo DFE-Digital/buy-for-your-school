@@ -32,7 +32,6 @@
     <div class="govuk-details__text">
       <%= turbo_frame_tag "forward-frame", src: "" do %>
         <div class="govuk-button-group flex-align-center">
-          <%= link_to I18n.t("support.case.label.message_threads.forward_with_template"), support_case_email_templates_path(thread_id: @current_thread.id, message_id: @messages.first.id, back_to: Base64.encode64(@back_url)), class: "govuk-button govuk-button--secondary", data: { turbo_frame: "messages-frame" }, role: "button" %>
           <%= button_to I18n.t("support.case.label.message_threads.forward_with_signature"), support_case_message_forwards_path(message_id: @messages.first.id), class: "govuk-button govuk-button--secondary" %>
         </div>
       <% end %>
