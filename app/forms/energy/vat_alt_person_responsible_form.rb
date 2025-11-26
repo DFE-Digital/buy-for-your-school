@@ -10,11 +10,11 @@ class Energy::VatAltPersonResponsibleForm < Energy::Form
 
     @vat_alt_address_options ||= {
       org_address: {
-        short: Support::OrganisationPresenter.new(organisation)&.formatted_address,
+        short: Support::OrganisationPresenter.new(organisation)&.formatted_address_with_name,
         full: organisation.address,
       },
       group_address: {
-        short: Support::EstablishmentGroupPresenter.new(establishment_group)&.formatted_address,
+        short: Support::EstablishmentGroupPresenter.new(establishment_group)&.formatted_address_with_name,
         full: establishment_group.address,
       },
     }
