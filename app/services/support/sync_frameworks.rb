@@ -64,7 +64,7 @@ module Support
     end
 
     def find_framework_by_contentful_id(faf)
-      return nil unless faf[:contentful_id].present?
+      return nil if faf[:contentful_id].blank?
 
       ::Frameworks::Framework.find_by(contentful_id: faf[:contentful_id])
     end

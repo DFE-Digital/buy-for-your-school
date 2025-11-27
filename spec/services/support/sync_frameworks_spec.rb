@@ -113,16 +113,16 @@ describe Support::SyncFrameworks do
         end
         let!(:existing_framework) do
           create(:frameworks_framework,
-            name: "Old Framework Name",
-            provider_id: provider_detail.id,
-            contentful_id: "contentful-id-1",
-            faf_slug_ref: "ref-1",
-            faf_category: "Energy",
-            provider_end_date: Date.parse("2025-11-15"),
-            url: testurl1,
-            description: "Desc",
-            source: 2,
-            status: "dfe_approved")
+                 name: "Old Framework Name",
+                 provider_id: provider_detail.id,
+                 contentful_id: "contentful-id-1",
+                 faf_slug_ref: "ref-1",
+                 faf_category: "Energy",
+                 provider_end_date: Date.parse("2025-11-15"),
+                 url: testurl1,
+                 description: "Desc",
+                 source: 2,
+                 status: "dfe_approved")
         end
 
         before do
@@ -143,17 +143,17 @@ describe Support::SyncFrameworks do
         let(:provider_detail) { create(:frameworks_provider, short_name: "ABC") }
         let!(:existing_framework) do
           create(:frameworks_framework,
-            name: "Framework 3",
-            provider_id: provider_detail.id,
-            contentful_id: "contentful-id-3",
-            faf_slug_ref: "ref-3",
-            faf_category: "Energy",
-            provider_end_date: Date.parse("2026-08-31"),
-            url: testurl1,
-            description: "Desc",
-            source: 2,
-            status: "dfe_approved",
-            faf_archived_at: nil)
+                 name: "Framework 3",
+                 provider_id: provider_detail.id,
+                 contentful_id: "contentful-id-3",
+                 faf_slug_ref: "ref-3",
+                 faf_category: "Energy",
+                 provider_end_date: Date.parse("2026-08-31"),
+                 url: testurl1,
+                 description: "Desc",
+                 source: 2,
+                 status: "dfe_approved",
+                 faf_archived_at: nil)
         end
 
         it "archives framework not in API response" do
