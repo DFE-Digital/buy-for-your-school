@@ -542,6 +542,7 @@
   - faf_end_date
   - categories
   - has_evaluation
+  - contentful_id
   :frameworks_framework_categories:
   - id
   - support_category_id
