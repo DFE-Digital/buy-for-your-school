@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!
-  before_action :redirect_non_page_requests
+  before_action :render_not_found_if_page_missing
   before_action :set_breadcrumbs, only: :show
 
   def show
@@ -14,8 +14,8 @@ class PagesController < ApplicationController
 
 private
 
-  def redirect_non_page_requests
-    redirect_to "/404" if page.blank?
+  def render_not_found_if_page_missing
+    render "errors/not_found", status: :not_found if page.blank?
   end
 
   def page
