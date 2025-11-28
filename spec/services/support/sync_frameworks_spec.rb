@@ -8,7 +8,11 @@ describe Support::SyncFrameworks do
   let(:testurl2) { "https://localhost:3000/nf2" }
   let(:contentful_id_1) { "contentful-id-1" }
   let(:contentful_id_2) { "contentful-id-2" }
+  let(:framework_1_expiry) { "2026-08-31" }
+  let(:framework_2_expiry) { "2026-06-30" }
   let(:old_expiry_date) { "2025-11-15" }
+  let(:framework_1_name) { "Framework 1" }
+  let(:framework_2_name) { "Framework 2" }
 
   before do
     http = double("http")
@@ -26,7 +30,7 @@ describe Support::SyncFrameworks do
             provider: { initials: "ABC", title: "ABC" },
             cat: { ref: "energy", title: "Energy" },
             ref: "ref-1",
-            title: "Framework 1",
+            title: framework_1_name,
             expiry: "2026-08-31T00:00:00.000Z",
             url: testurl1,
             descr: "Desc",
@@ -37,7 +41,7 @@ describe Support::SyncFrameworks do
             provider: { initials: "ABC", title: "ABC" },
             cat: { ref: "catering", title: "Catering" },
             ref: "ref-2",
-            title: "Framework 2",
+            title: framework_2_name,
             expiry: "2026-06-30T00:00:00.000Z",
             url: testurl2,
             descr: "Desc",
@@ -52,11 +56,11 @@ describe Support::SyncFrameworks do
 
       context "when there are frameworks to update" do
         let(:provider_detail) { create(:frameworks_provider, short_name: "ABC") }
-        let!(:existing_framework) { create(:frameworks_framework, name: "Framework 1", provider_id: provider_detail.id, faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse(old_expiry_date), url: testurl1, description: "Desc", source: 2, status: "dfe_approved") }
+        let!(:existing_framework) { create(:frameworks_framework, name: framework_1_name, provider_id: provider_detail.id, faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse(old_expiry_date), url: testurl1, description: "Desc", source: 2, status: "dfe_approved") }
 
         it "creates new frameworks and updates existing ones" do
           expect { service.call }.to change(Frameworks::Framework, :count).from(1).to(2)
-            .and(change { existing_framework.reload.provider_end_date }.from(Date.parse(old_expiry_date)).to(Date.parse("2026-08-31")))
+            .and(change { existing_framework.reload.provider_end_date }.from(Date.parse(old_expiry_date)).to(Date.parse(framework_1_expiry)))
             .and(change { existing_framework.reload.contentful_id }.from(nil).to(contentful_id_1))
 
           unchanged_attributes = %i[name provider_id faf_slug_ref faf_category url description source status]
@@ -65,12 +69,12 @@ describe Support::SyncFrameworks do
             expect { existing_framework.reload }.to(not_change { existing_framework.send(attribute) })
           end
 
-          new_framework = Frameworks::Framework.find_by(name: "Framework 2")
+          new_framework = Frameworks::Framework.find_by(name: framework_2_name)
           expect(new_framework.provider_id).to eq(provider_detail.id)
           expect(new_framework.contentful_id).to eq(contentful_id_2)
           expect(new_framework.faf_slug_ref).to eq("ref-2")
           expect(new_framework.faf_category).to eq("Catering")
-          expect(new_framework.provider_end_date).to eq(Date.parse("2026-06-30"))
+          expect(new_framework.provider_end_date).to eq(Date.parse(framework_2_expiry))
           expect(new_framework.url).to eq(testurl2)
           expect(new_framework.source).to eq("faf_import")
           expect(new_framework.status).to eq("dfe_approved")
@@ -80,8 +84,8 @@ describe Support::SyncFrameworks do
 
       context "when there are no frameworks to update" do
         let(:provider_detail) { create(:frameworks_provider, short_name: "ABC") }
-        let!(:existing_framework1) { create(:frameworks_framework, name: "Framework 1", provider_id: provider_detail.id, contentful_id: contentful_id_1, faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse("2026-08-31"), url: testurl1, description: "Desc", source: 2, status: "dfe_approved") }
-        let!(:existing_framework2) { create(:frameworks_framework, name: "Framework 2", provider_id: provider_detail.id, contentful_id: contentful_id_2, faf_slug_ref: "ref-2", faf_category: "Catering", provider_end_date: Date.parse("2026-06-30"), url: testurl2, description: "Desc", source: 2, status: "dfe_approved") }
+        let!(:existing_framework1) { create(:frameworks_framework, name: framework_1_name, provider_id: provider_detail.id, contentful_id: contentful_id_1, faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse(framework_1_expiry), url: testurl1, description: "Desc", source: 2, status: "dfe_approved") }
+        let!(:existing_framework2) { create(:frameworks_framework, name: framework_2_name, provider_id: provider_detail.id, contentful_id: contentful_id_2, faf_slug_ref: "ref-2", faf_category: "Catering", provider_end_date: Date.parse(framework_2_expiry), url: testurl2, description: "Desc", source: 2, status: "dfe_approved") }
 
         it "makes no changes to existing frameworks" do
           frameworks = [existing_framework1, existing_framework2]
@@ -106,7 +110,7 @@ describe Support::SyncFrameworks do
               provider: { initials: "ABC", title: "ABC" },
               cat: { ref: "energy", title: "Energy" },
               ref: "ref-1",
-              title: "Framework 1",
+              title: framework_1_name,
               expiry: "2026-08-31T00:00:00.000Z",
               url: testurl1,
               descr: "Desc",
@@ -136,9 +140,9 @@ describe Support::SyncFrameworks do
           expect { service.call }.to not_change(Frameworks::Framework, :count)
 
           existing_framework.reload
-          expect(existing_framework.name).to eq("Framework 1") # name updated from API
+          expect(existing_framework.name).to eq(framework_1_name) # name updated from API
           expect(existing_framework.contentful_id).to eq(contentful_id_1) # still the same
-          expect(existing_framework.provider_end_date).to eq(Date.parse("2026-08-31"))
+          expect(existing_framework.provider_end_date).to eq(Date.parse(framework_1_expiry))
         end
       end
 
@@ -151,7 +155,7 @@ describe Support::SyncFrameworks do
                  contentful_id: "contentful-id-3",
                  faf_slug_ref: "ref-3",
                  faf_category: "Energy",
-                 provider_end_date: Date.parse("2026-08-31"),
+                 provider_end_date: Date.parse(framework_1_expiry),
                  url: testurl1,
                  description: "Desc",
                  source: 2,
@@ -176,7 +180,7 @@ describe Support::SyncFrameworks do
             provider_id: provider_detail.id,
             faf_slug_ref: "ref-1",
             faf_category: "Energy",
-            provider_end_date: Date.parse("2026-08-31"),
+            provider_end_date: Date.parse(framework_1_expiry),
             url: testurl1,
             description: "Desc",
             source: 2,
