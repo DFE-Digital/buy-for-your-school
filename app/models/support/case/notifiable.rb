@@ -42,7 +42,6 @@ module Support::Case::Notifiable
       assigned_by_system: true,
       subject_id: email.id,
       subject_type: "Email",
-      created_at: updated_at,
     )
   end
 
