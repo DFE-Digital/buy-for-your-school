@@ -1,15 +1,9 @@
 module Support
   class OrganisationPresenter < BasePresenter
+    include Concerns::AddressFormatting
     # @return [String] Combines URN and name
     def urn_and_name
       "#{urn} - #{name}"
-    end
-
-    # @return [String]
-    def formatted_address
-      %w[street locality town county postcode].map { |key|
-        address[key].presence unless address[key] == "Not recorded"
-      }.compact.join(", ")
     end
 
     def postcode
