@@ -34,6 +34,12 @@ describe SessionsController do
       end
     end
 
+    context "when user logging in from Specify" do
+      it "redirects to dashboard_path" do
+        expect(response).to redirect_to(dashboard_path)
+      end
+    end
+
     context "when user is invalid" do
       let(:user) { :invalid }
 

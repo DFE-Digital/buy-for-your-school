@@ -8,6 +8,13 @@ describe Referrals::ReferralsController, type: :controller do
     end
   end
 
+  describe "specify" do
+    it "redirects to /" do
+      get(:specify, params:)
+      expect(response).to redirect_to root_path
+    end
+  end
+
   describe "faf" do
     context "when in production" do
       before { allow(Rails.env).to receive(:production?).and_return(true) }

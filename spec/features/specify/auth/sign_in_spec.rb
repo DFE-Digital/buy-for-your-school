@@ -1,16 +1,16 @@
-feature "DfE Sign-in" do
+RSpec.feature "DfE Sign-in" do
   context "with valid DfE Sign In credentials" do
-    let(:user) { create(:user, :caseworker, first_name: "Generic", last_name: "User") }
+    let(:user) { create(:user, first_name: "Generic", last_name: "User") }
 
     before do
-      Support::Agent.find_or_create_by_user(user).tap { |agent| agent.update!(roles: %w[procops]) }
       user_exists_in_dfe_sign_in(user:)
-      user_is_signed_in(user:)
-      visit support_cases_path
+      visit "/"
+      click_start
     end
 
-    it "signs in and shows CMS" do
+    it "signs in and goes to dashboard" do
       expect(page).to have_content "Signed in as Generic User"
+      expect(page).to have_title "Specifications dashboard"
     end
   end
 end

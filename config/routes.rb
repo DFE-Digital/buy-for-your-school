@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root to: redirect(ENV.fetch("GHBS_HOMEPAGE_URL"), status: 301)
+  root to: "specify/create_a_specification#show"
 
   # DfE analytics
   post "/dfe_analytics_events", to: "dfe_analytics_events#create"
@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   # Referrals
   namespace :referrals do
     get "/rfh/:referral_path", to: "referrals#rfh"
-    get "/specify/:referral_path", to: redirect(ENV.fetch("GHBS_HOMEPAGE_URL"), status: 301)
+    get "/specify/:referral_path", to: "referrals#specify"
     get "/faf/:referral_path", to: "referrals#faf"
   end
 
@@ -65,21 +65,33 @@ Rails.application.routes.draw do
     end
   end
 
-  # Create a specification (Specify) decommissioned → group all redirects to FABS
-  scope do
-    %w[
-      dashboard
-      create_a_specification
-      profile
-      submit
-    ].each do |path|
-      match "/#{path}(*rest)", to: redirect(ENV.fetch("GHBS_HOMEPAGE_URL"), status: 301), via: :all
+  # Specify
+  scope module: :specify do
+    get "dashboard", to: "dashboard#show"
+    get "create_a_specification", to: "create_a_specification#show"
+
+    resources :feedback, only: %i[new show create edit update]
+    get "profile", to: "profile#show"
+
+    resources :support_requests, except: %i[destroy], path: "support-requests"
+    resources :support_request_submissions, only: %i[update show], path: "support-request-submissions"
+    post "/submit", to: "api/support/requests#create", as: :submit_request
+
+    # NB: guard against use of back button after form validation errors
+    get "/journeys/:journey/steps/:step/answers", to: redirect("/journeys/%{journey}/steps/%{step}")
+    resources :journeys, only: %i[new show create destroy edit update] do
+      resource :specification, only: %i[create show] do
+        get :download, to: "specifications#new"
+      end
+      resources :steps, only: %i[new show edit update] do
+        resources :answers, only: %i[create update]
+      end
+      resources :tasks, only: [:show]
     end
 
-    match "/:prefix/*rest",
-          to: redirect(ENV.fetch("GHBS_HOMEPAGE_URL"), status: 301),
-          via: :all,
-          constraints: { prefix: /(journeys|support-requests|support-request-submissions|preview|feedback)/ }
+    namespace :preview do
+      resources :entries, only: [:show]
+    end
   end
 
   # Request for help

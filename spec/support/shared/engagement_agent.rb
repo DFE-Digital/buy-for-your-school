@@ -17,7 +17,7 @@ RSpec.shared_context "with an engagement agent" do |roles: %w[e_and_o]|
   before do
     Support::Agent.find_or_create_by_user(user).tap { |agent| agent.update!(roles: given_roles) }
     user_exists_in_dfe_sign_in(user:)
-    user_is_signed_in(user:)
-    visit "/cms"
+    visit "/"
+    click_start
   end
 end

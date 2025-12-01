@@ -10,8 +10,8 @@ feature "User authentication filter" do
       dsi_client = instance_double(::Dsi::Client)
       allow(Dsi::Client).to receive(:new).and_return(dsi_client)
       allow(dsi_client).to receive(:orgs).and_raise(::Dsi::Client::ApiError)
-      visit "/cms"
-      click_button "Sign in"
+      visit "/"
+      click_start
     end
 
     it "informs the user" do
@@ -25,8 +25,8 @@ feature "User authentication filter" do
     let(:user) { build(:user, :no_supported_schools) }
 
     before do
-      visit "/cms"
-      click_button "Sign in"
+      visit "/"
+      click_start
     end
 
     it "informs the user" do

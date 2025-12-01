@@ -1,6 +1,6 @@
 RSpec.feature "To alert users to the current stage of development" do
   before do
-    visit "/cms"
+    visit "/"
   end
 
   it "renders a beta phase banner with a link to the customer satisfaction survey" do

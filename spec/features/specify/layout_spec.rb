@@ -1,6 +1,6 @@
 RSpec.feature "Common layout element" do
   before do
-    visit "/cms"
+    visit "/"
   end
 
   describe "header" do
