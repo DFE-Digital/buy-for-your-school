@@ -144,6 +144,7 @@ RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_pr
     click_button "Continue"
 
     expect(Support::Notification.count).to eq(1)
+    expect(support_case.notifications.evaluation_documents_uploaded.first.created_at).to be_within(2.seconds).of(Time.current)
 
     expect(Email.count).to eq(2)
 

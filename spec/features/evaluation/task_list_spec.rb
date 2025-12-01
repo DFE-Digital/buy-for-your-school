@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe "Evaluator can see task list", :js do
+  let!(:support_case_first) { create(:support_case, ref: "000001") }
   let(:support_case) { create(:support_case) }
   let(:user) { create(:user) }
   let(:file_1) { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
@@ -23,6 +24,8 @@ describe "Evaluator can see task list", :js do
 
     visit evaluation_task_path(support_case)
 
+    expect(page).to have_text(support_case.ref)
+    expect(page).not_to have_text(support_case_first.ref)
     expect(page).to have_text("Evaluator task list")
     expect(page).to have_text("Download documents")
     expect(page).to have_text("Upload evaluation scoring document")
@@ -47,6 +50,7 @@ describe "Evaluator can see task list", :js do
     visit evaluation_verify_evaluators_unique_link_path(support_case)
 
     expect(page).to have_text("Evaluator task list")
+    expect(page).not_to have_text("You aren't an evaluator for this procurement")
   end
 
   specify "Verify evaluation unique link when evaluator not authenticated" do
@@ -56,6 +60,18 @@ describe "Evaluator can see task list", :js do
     visit evaluation_verify_evaluators_unique_link_path(support_case)
 
     expect(page).to have_text("Complete procurement evaluation")
+    expect(page).not_to have_text("Evaluator task list")
+  end
+
+  specify "Verify evaluation unique link when evaluator authenticated and on a different case" do
+    Current.user = user
+    user_exists_in_dfe_sign_in(user:)
+    user_is_signed_in(user:)
+
+    visit evaluation_verify_evaluators_unique_link_path(support_case_first)
+
+    expect(page).to have_text("Complete procurement evaluation")
+    expect(page).to have_text("You aren't an evaluator for this procurement")
     expect(page).not_to have_text("Evaluator task list")
   end
 
