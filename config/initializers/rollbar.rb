@@ -1,3 +1,51 @@
+# Bot URL patterns to ignore for 404 reporting
+BOT_URL_PATTERNS = %w[
+  .php
+  .aspx
+  .asp
+  .jsp
+  .cgi
+  .env
+  .git
+  .gitignore
+  .well-known
+  wp-admin
+  wp-content
+  wp-json
+  wp-includes
+  wp-login
+  wlwmanifest
+  telerik
+  DialogHandler
+  RadEditorProvider
+  DesktopModules
+  App_Themes
+  phpunit
+  htmlawed
+  administrator
+  .xml
+  .txt
+  .bak
+  .sql
+  .config
+  .ini
+  cgi-bin
+  dana-na
+  dana-cached
+  jenkins
+  securityRealm
+  sitecore
+  joomla
+  geoserver
+  __/firebase
+  OA_HTML
+  owa/
+  ecp/
+  graphql
+  crx/packmgr
+  bin/querybuilder
+].freeze
+
 Rollbar.configure do |config|
   # Without configuration, Rollbar is enabled in all environments.
   # To disable in specific environments, set config.enabled=false.
@@ -68,4 +116,14 @@ Rollbar.configure do |config|
   # setup for Heroku. See:
   # https://devcenter.heroku.com/articles/deploying-to-a-custom-rails-environment
   config.environment = ENV.fetch("ROLLBAR_ENV", nil).presence || Rails.env
+
+  # Don't report bot/scanner 404s
+  config.before_process << proc do |options|
+    exception = options[:exception]
+    request_url = options.dig(:request_data, :url) || ""
+
+    if exception.is_a?(ActionController::RoutingError) && BOT_URL_PATTERNS.any? { |pattern| request_url.include?(pattern) }
+      throw(:ignore)
+    end
+  end
 end
