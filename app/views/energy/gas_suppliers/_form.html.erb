@@ -1,9 +1,12 @@
-<div data-controller="date_validation">
-    <div data-date_validation-target="dateValidation" 
+<div data-controller="date-validation">
+    <div data-date-validation-target="dateValidation" 
         date-validation-error-messages='<%= [I18n.t("gas_supplier_form.errors.rules.gas_current_contract_end_date.invalid_date")].to_json %>'
      >
 <%= form_with model: @form, scope: :gas_supplier_form, url: @form_url, method: :patch do |form| %>
   <%= form.govuk_error_summary %>
+
+  <span class="govuk-caption-l"><%= @organisation_detail.name %>: <%= I18n.t("energy.current_contract.gas.heading") %></span>
+  <h1 class="govuk-heading-l"><%= I18n.t("energy.current_contract.gas.contract") %></h1>
 
   <%= form.hidden_field :gas_current_supplier, value: form.object.gas_current_supplier %>
 

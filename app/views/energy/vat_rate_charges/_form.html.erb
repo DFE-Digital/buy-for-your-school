@@ -1,5 +1,6 @@
 <%= form_with model: @form, scope: :vat_rate_charge, url: @form_url, method: :patch do |form| %>
   <%= form.govuk_error_summary %>
+  <p class="govuk-caption-l"><%= I18n.t("energy.vat_rate_charge.title")%></p>
   <%= form.hidden_field :vat_rate, value: form.object.vat_rate %>
 
   <%= form.govuk_radio_buttons_fieldset :vat_rate,
