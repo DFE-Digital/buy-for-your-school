@@ -161,7 +161,7 @@ describe "'Check your answers' flows", :js do
         end
 
         # Go to confirm screen
-        expect(page).to have_text("Are you sure you want to remove this MPRN?")
+        expect(page).to have_text("Are you sure you want to remove the MPRN #{gas_meter_numbers.first}?")
         find(".remove_meter").click
 
         # Back to MPRN summary
@@ -295,7 +295,7 @@ describe "'Check your answers' flows", :js do
         end
 
         # Go to confirm screen
-        expect(page).to have_text("Are you sure you want to remove this MPAN?")
+        expect(page).to have_text("Are you sure you want to remove the MPAN #{electricity_meter_numbers.first}?")
         click_on "Remove MPAN"
 
         # Back to MPAN summary

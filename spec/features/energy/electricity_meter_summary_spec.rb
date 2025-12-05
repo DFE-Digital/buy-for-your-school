@@ -2,6 +2,7 @@ require "rails_helper"
 
 describe "User can update electricity meters and usage", :js do
   include_context "with energy suppliers"
+  let(:another_mpan) { "1234567890555" }
 
   specify "Adding electricity usage" do
     Current.user = user
@@ -42,7 +43,7 @@ describe "User can update electricity meters and usage", :js do
 
     click_link "Add another MPAN"
 
-    fill_in "Add an MPAN", with: "1234567890555"
+    fill_in "Add an MPAN", with: another_mpan
 
     choose "No"
 
@@ -50,16 +51,14 @@ describe "User can update electricity meters and usage", :js do
 
     click_button "Save and continue"
 
-    expect(page).to have_text("1234567890555")
+    expect(page).to have_text(another_mpan)
 
-    within(:xpath, "//tr[contains(., '1234567890555')]") do
+    within(:xpath, "//tr[contains(., '#{another_mpan}')]") do
       click_link "Remove"
     end
 
-    expect(page).to have_text("Are you sure you want to remove this MPAN?")
-
+    expect(page).to have_text("Are you sure you want to remove the MPAN #{another_mpan}?")
     click_link "Remove MPAN"
-
     expect(page).to have_text("MPAN successfully removed")
   end
 end
