@@ -20,6 +20,7 @@ describe "User can update electricity meters and usage", :js do
     visit new_energy_case_org_electricity_meter_path(onboarding_case, case_organisation)
 
     expect(page).to have_text("Electricity meter details")
+    expect(page.title).to have_text("Electricity meter details - Energy for Schools")
     expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
 
     click_button "Save and continue"

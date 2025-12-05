@@ -491,7 +491,7 @@ en:
             not_started: Not started
     gas_meter_details:
       title: Gas meters and usage
-      page_title: Gas meter summary
+      page_title: MPRN summary
       heading: Gas meter details
       heading_info: You can usually find this information on your gas bill. Please check all pages.
       mprn_label: Add the Meter Point Reference Number (MPRN)
@@ -509,7 +509,7 @@ en:
         gas_usage: Estimated annual gas usage
         add_another_mprn: Add another MPRN
       remove_page:
-        heading: Are you sure you want to remove this MPRN?
+        heading: Are you sure you want to remove the MPRN
         remove_mprn: Remove MPRN
         removed: MPRN successfully removed
       alert:
@@ -561,7 +561,7 @@ en:
         multi: Multi meter
     electricity_meter:
       title: Electricity meters and usage
-      page_title: Electricity meter summary
+      page_title: MPAN summary
       heading: Electricity meter details
       mpan_label: Add an MPAN
       mpan_label_single: Add the MPAN
@@ -589,7 +589,7 @@ en:
         electricity_usage: Estimated annual electricity usage
         add_another_mpan: Add another MPAN
       remove_page:
-        heading: Are you sure you want to remove this MPAN?
+        heading: Are you sure you want to remove the MPAN
         remove_mpan: Remove MPAN
         removed: MPAN successfully removed
       alert:
