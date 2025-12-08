@@ -42,7 +42,12 @@ module Support
           update_record(record, faf, new_status)
         else
           # Fall back to name + provider matching (preserves old multi-record behavior)
-          records = ::Frameworks::Framework.where("LOWER(name) = LOWER(?) AND provider_id = ?", faf[:name].strip, faf[:provider_id])
+          # BUT exclude records that already have a contentful_id (they should only match by ID)
+          records = ::Frameworks::Framework.where(
+            "LOWER(name) = LOWER(?) AND provider_id = ? AND contentful_id IS NULL",
+            faf[:name].strip,
+            faf[:provider_id],
+          )
 
           if records.exists?
             records.each do |record|
