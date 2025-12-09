@@ -299,7 +299,7 @@ jobs:
     name: Comment coverage on PR
     needs: collate_test_coverage
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' }}
     steps:
       - name: Download coverage from current run
         uses: actions/download-artifact@v4
