@@ -471,5 +471,6 @@ jobs:
             -e DOCKER=true \
             -e SECRET_KEY_BASE=production \
             -e APPLICATION_URL=https://www.get-help-buying-for-schools.service.gov.uk \
+            -e GHBS_HOMEPAGE_URL=https://get-help-buying-for-schools.education.gov.uk \
             ${{ needs.build_release.outputs.docker_image }} \
             bash -c "bundle exec rails db:migrate"      
