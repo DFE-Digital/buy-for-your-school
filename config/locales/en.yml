@@ -312,6 +312,12 @@ en:
       mat_info:
       - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
       - Multi-academy trusts (MATs) can join the contract by filling in the <a class="govuk-link" href="%{form_url}">Register your interest form</a> and completing the process offline.
+      eligibility:
+        title: Eligibility
+        body:
+        - All state-funded schools and trusts in England can join Energy for Schools.
+        - Individual schools, like local authority-maintained schools and single academy trusts, can join using the online service.
+        - Multi-academy trusts (MATs) can join by filling in the <a class="govuk-link" href="%{register_your_interest_form_url}">Register your interest form</a>. A member of the DfE team will then contact you and help you complete the process offline.
       more_info: Get more information
     guidance:
       contents: Contents
@@ -411,8 +417,9 @@ en:
       how_to_join:
         title: How to join
         body:
-        - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
-        - Multi-academy trusts (MATs) can join the contract by filling in the <a href="%{register_your_interest_form_url}" class="govuk-link">Register your interest form</a> and completing the process offline.
+        - All state-funded schools and trusts in England can join Energy for Schools.
+        - Individual schools, like local authority-maintained schools and single academy trusts, can join using the online service.
+        - Multi-academy trusts (MATs) can join by filling in the <a class="govuk-link" href="%{register_your_interest_form_url}">Register your interest form</a>. A member of the DfE team will then contact you and help you complete the process offline.
         - "Depending on which supply you're switching, you'll need to provide:"
         list:
         - your contract end date
