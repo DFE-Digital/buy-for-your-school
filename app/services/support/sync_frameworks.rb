@@ -34,17 +34,31 @@ module Support
       prepared_frameworks = prepare_frameworks(@frameworks)
 
       prepared_frameworks.each do |faf|
-        records = ::Frameworks::Framework.where("LOWER(name) = LOWER(?) AND provider_id = ?", faf[:name].strip, faf[:provider_id])
+        # First try to match by contentful_id (authoritative - single record)
+        record = find_framework_by_contentful_id(faf)
 
-        if records.exists?
-          records.each do |record|
-            new_status = determine_new_status(record, faf, records.count)
-            update_record(record, faf, new_status)
-          end
+        if record
+          new_status = determine_new_status(record, faf)
+          update_record(record, faf, new_status)
         else
-          record = ::Frameworks::Framework.new(name: faf[:name].strip, provider_id: faf[:provider_id])
-          update_record(record, faf, statuses["dfe_approved"])
-          record.save!
+          # Fall back to name + provider matching (preserves old multi-record behavior)
+          # BUT exclude records that already have a contentful_id (they should only match by ID)
+          records = ::Frameworks::Framework.where(
+            "LOWER(name) = LOWER(?) AND provider_id = ? AND contentful_id IS NULL",
+            faf[:name].strip,
+            faf[:provider_id],
+          )
+
+          if records.exists?
+            records.each do |record|
+              new_status = determine_new_status(record, faf, records.count)
+              update_record(record, faf, new_status)
+            end
+          else
+            record = ::Frameworks::Framework.new(name: faf[:name].strip, provider_id: faf[:provider_id])
+            update_record(record, faf, statuses["dfe_approved"])
+            record.save!
+          end
         end
       end
 
@@ -54,7 +68,13 @@ module Support
       update_archive_status(prepared_frameworks)
     end
 
-    def determine_new_status(record, faf, record_count)
+    def find_framework_by_contentful_id(faf)
+      return nil if faf[:contentful_id].blank?
+
+      ::Frameworks::Framework.find_by(contentful_id: faf[:contentful_id])
+    end
+
+    def determine_new_status(record, faf, record_count = 1)
       case record.status
       when "dfe_approved"
         get_framework_status(record.status, faf[:provider_end_date])
@@ -67,6 +87,8 @@ module Support
 
     def update_record(record, faf, new_status)
       record.update(
+        name: faf[:name].strip,
+        contentful_id: faf[:contentful_id],
         faf_slug_ref: faf[:faf_slug_ref],
         faf_category: faf[:faf_category],
         provider_end_date: faf[:provider_end_date],
@@ -82,6 +104,7 @@ module Support
       frameworks.select { |framework| framework["expiry"].present? }.map do |framework|
         {
           name: framework["title"],
+          contentful_id: framework["id"],
           faf_slug_ref: framework["ref"],
           provider_id: existing_provider(framework["provider"].try(:[], "initials"), framework["provider"].try(:[], "title")),
           faf_category: framework["cat"].try(:[], "title"),
@@ -130,15 +153,18 @@ module Support
 
       cms_frameworks.each do |cms_framework|
         exists = prepared_frameworks.any? do |faf_framework|
-          cms_framework.name.strip.casecmp?(faf_framework[:name].strip) && cms_framework.provider_id == faf_framework[:provider_id]
+          # Match by contentful_id if available (authoritative)
+          if cms_framework.contentful_id.present? && faf_framework[:contentful_id].present?
+            cms_framework.contentful_id == faf_framework[:contentful_id]
+          else
+            # Fall back to name + provider for legacy records
+            cms_framework.name.strip.casecmp?(faf_framework[:name].strip) && cms_framework.provider_id == faf_framework[:provider_id]
+          end
         end
 
         next if exists
 
-        ::Frameworks::Framework.find_by!(
-          name: cms_framework.name,
-          provider_id: cms_framework.provider_id,
-        ).update!(
+        cms_framework.update!(
           status: statuses["archived"],
           is_archived: true,
           faf_archived_at: Time.zone.today,

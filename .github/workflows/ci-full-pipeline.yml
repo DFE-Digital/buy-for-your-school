@@ -28,8 +28,8 @@ jobs:
         id: build
         with:
           target: test
-          ghcr_username: ${{ github.actor }}
-          ghcr_password: ${{ secrets.GITHUB_TOKEN }}
+          ghcr_username: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_USERNAME || github.actor }}
+          ghcr_password: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_PAT || secrets.GITHUB_TOKEN }}
 
   build_release:
     name: Build (Release)
@@ -45,8 +45,8 @@ jobs:
         id: build
         with:
           target: app
-          ghcr_username: ${{ github.actor }}
-          ghcr_password: ${{ secrets.GITHUB_TOKEN }}
+          ghcr_username: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_USERNAME || github.actor }}
+          ghcr_password: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_PAT || secrets.GITHUB_TOKEN }}
 
   brakeman:
     name: Checks - Brakeman
@@ -299,7 +299,7 @@ jobs:
     name: Comment coverage on PR
     needs: collate_test_coverage
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' }}
     steps:
       - name: Download coverage from current run
         uses: actions/download-artifact@v4
@@ -471,5 +471,6 @@ jobs:
             -e DOCKER=true \
             -e SECRET_KEY_BASE=production \
             -e APPLICATION_URL=https://www.get-help-buying-for-schools.service.gov.uk \
+            -e GHBS_HOMEPAGE_URL=https://get-help-buying-for-schools.education.gov.uk \
             ${{ needs.build_release.outputs.docker_image }} \
             bash -c "bundle exec rails db:migrate"      
