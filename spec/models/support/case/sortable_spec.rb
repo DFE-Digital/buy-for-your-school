@@ -294,14 +294,20 @@ describe Support::Case::Sortable do
 
     describe ".sort_by_contract_start_date" do
       context "without interactions" do
+        # Cases with NULL started_at: 000504, 000507, 000508, 000509
+        # Cases with dates: 000503 (Apr), 000500 (May), 000501 (Jun), 000502 (Jul), 000505 (Jan 2025), 000506 (Feb 2025)
+        let(:null_date_refs) { %w[000504 000507 000508 000509] }
+        let(:dated_refs_ascending) { %w[000503 000500 000501 000502 000505 000506] }
+
         context "when ascending" do
           let(:order) { "ASC" }
 
           it "sorts in ascending order" do
             results = Support::Case.sort_by_contract_start_date(order).map(&:ref)
-            expect(results).to eq(%w[
-              000503 000500 000501 000502 000505 000506 000504 000507 000508 000509
-            ])
+
+            # Dated records should appear first in date order, NULL records last (in any order)
+            expect(results.first(6)).to eq(dated_refs_ascending)
+            expect(results.last(4)).to match_array(null_date_refs)
           end
         end
 
@@ -310,9 +316,10 @@ describe Support::Case::Sortable do
 
           it "sorts in descending order" do
             results = Support::Case.sort_by_contract_start_date(order).map(&:ref)
-            expect(results).to eq(%w[
-              000509 000508 000507 000504 000506 000505 000502 000501 000500 000503
-            ])
+
+            # NULL records appear first (in any order), dated records last in reverse date order
+            expect(results.first(4)).to match_array(null_date_refs)
+            expect(results.last(6)).to eq(dated_refs_ascending.reverse)
           end
         end
       end
