@@ -892,7 +892,6 @@ DEPENDENCIES
   pry-rails
   puma (~> 7)
   pundit
-  rackup (= 1.0.0)
   rails (~> 7)
   rails-controller-testing
   rails_layout
