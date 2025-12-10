@@ -25,7 +25,7 @@ export default class extends Controller {
         previewsContainer: this.attachmentPreviewTarget,
         autoProcessQueue: false,
         clickable: this.btnDisplayFileDialogTarget,
-        maxFilesize: 30,
+        maxFilesize: 80,
         parallelUploads: 100,
         maxFiles: 100,
         uploadMultiple: true,

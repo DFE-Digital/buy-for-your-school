@@ -247,7 +247,7 @@ describe('EnergyBillUploadController', () => {
 
       it('alerts the user to fix errors before they can move on', () => {
         subject.continueToPageTwo()
-        expect(errorSummarySpy).toHaveBeenCalledWith('Please remove any invalid files marked in red')
+        expect(errorSummarySpy).toHaveBeenCalledWith('Please remove any invalid files marked in red. Each file must be under 80MB.')
       })
     })
 
