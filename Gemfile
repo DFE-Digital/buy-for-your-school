@@ -17,7 +17,7 @@ gem "coffee-rails", "~> 5.0" # TODO: remove coffee-rails, only used for google a
 gem "contentful", "~> 2.19"
 gem "crawler_detect"
 gem "cssbundling-rails", "~> 1.1"
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.6"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.12"
 gem "dry-struct"
 gem "dry-transformer"
 gem "dry-validation"
