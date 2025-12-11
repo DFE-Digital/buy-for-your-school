@@ -35,7 +35,7 @@ export default class extends Controller {
   }
 
   errorSummaryOutletConnected(outlet) {
-    this.errorInvalidFiles = new ErrorMessage(outlet, 'Please remove any invalid files marked in red. Each file must be under 80MB.')
+    this.errorInvalidFiles = new ErrorMessage(outlet, 'Please remove any invalid files marked in red')
     this.errorSelectFiles = new ErrorMessage(outlet, 'Please select one or more files to upload')
   }
 
