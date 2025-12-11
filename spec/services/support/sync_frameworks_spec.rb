@@ -320,6 +320,53 @@ describe Support::SyncFrameworks do
         end
       end
 
+      context "when multiple legacy records match the same contentful entry by name+provider" do
+        let(:provider_detail) { create(:frameworks_provider, short_name: "ABC") }
+        let!(:legacy_framework_1) do
+          create(:frameworks_framework,
+                 name: framework_1_name,
+                 provider_id: provider_detail.id,
+                 contentful_id: nil,
+                 status: "dfe_approved")
+        end
+        let!(:legacy_framework_2) do
+          create(:frameworks_framework,
+                 name: framework_1_name,
+                 provider_id: provider_detail.id,
+                 contentful_id: nil,
+                 status: "dfe_approved")
+        end
+        let(:body_single_framework) do
+          [
+            {
+              id: contentful_id_1,
+              provider: { initials: "ABC", title: "ABC" },
+              cat: { ref: "energy", title: "Energy" },
+              ref: "ref-1",
+              title: framework_1_name,
+              expiry: "2026-08-31T00:00:00.000Z",
+              url: testurl1,
+              descr: "Desc",
+              provider_reference: "PR-1",
+            },
+          ].to_json
+        end
+
+        before do
+          allow(http_response).to receive(:body).and_return(body_single_framework)
+        end
+
+        it "assigns contentful_id only to the first matching record" do
+          expect { service.call }.to not_change(Frameworks::Framework, :count)
+
+          legacy_framework_1.reload
+          legacy_framework_2.reload
+
+          expect(legacy_framework_1.contentful_id).to eq(contentful_id_1)
+          expect(legacy_framework_2.contentful_id).to be_nil
+        end
+      end
+
       context "when new solution is created with same name as expired/archived framework" do
         let(:provider_detail) { create(:frameworks_provider, short_name: "ABC") }
         let!(:archived_framework) do
