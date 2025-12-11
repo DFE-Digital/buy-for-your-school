@@ -1,6 +1,7 @@
 module Energy
   class MatSchoolPickerController < ApplicationController
     before_action :back_url, :mat_schools, :form
+    before_action :check_mat_feature_enabled
     skip_before_action :check_if_submitted
 
     # GET /energy/which-mat-schools-buying-for/:uid
@@ -31,6 +32,12 @@ module Energy
     def mat_schools
       @group ||= Support::EstablishmentGroup.find_by(uid: params[:uid])
       @mat_schools ||= @group.organisations_for_multi_school_picker.order(:name)
+    end
+
+    def check_mat_feature_enabled
+      unless Flipper.enabled?(:allow_mat_flow)
+        redirect_to energy_service_availability_path
+      end
     end
   end
 end

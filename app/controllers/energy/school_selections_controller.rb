@@ -19,7 +19,11 @@ module Energy
           redirect_to school_type_energy_authorisation_path(id:, type: "single")
         when "uid"
           # User has selected a Trust so show MAT school picker
-          redirect_to energy_mat_school_picker_path(uid: id)
+          if Flipper.enabled?(:allow_mat_flow)
+            redirect_to energy_mat_school_picker_path(uid: id)
+          else
+            redirect_to energy_service_availability_path(id:)
+          end
         else
           redirect_to energy_school_selection_path
         end
