@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_11_120000) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_27_160000) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -1337,7 +1337,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_11_120000) do
           CASE
               WHEN (evals.has_evaluation IS NOT NULL) THEN 'Yes'::text
               ELSE 'No'::text
-          END AS has_evaluation
+          END AS has_evaluation,
+      ff.contentful_id
      FROM ((((((frameworks_frameworks ff
        LEFT JOIN frameworks_providers fp ON ((ff.provider_id = fp.id)))
        LEFT JOIN frameworks_provider_contacts fpc ON ((ff.provider_contact_id = fpc.id)))
