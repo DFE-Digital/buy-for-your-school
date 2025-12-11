@@ -14,7 +14,7 @@ gem "aws-sdk-s3", require: false
 gem "azure-storage-blob", git: "https://github.com/honeyankit/azure-storage-ruby", ref: "patch-1", require: false
 gem "bootsnap", ">= 1.1.0", require: false
 gem "coffee-rails", "~> 5.0" # TODO: remove coffee-rails, only used for google analytics
-gem "contentful", "~> 2.17"
+gem "contentful", "~> 2.19"
 gem "crawler_detect"
 gem "cssbundling-rails", "~> 1.1"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.6"
