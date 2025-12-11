@@ -52,7 +52,11 @@ module Support
           if records.exists?
             records.each do |record|
               new_status = determine_new_status(record, faf, records.count)
-              update_record(record, faf, new_status)
+              begin
+                update_record(record, faf, new_status)
+              rescue ActiveRecord::RecordNotUnique => e
+                Rollbar.warning(e, contentful_id: faf[:contentful_id], framework_id: record.id)
+              end
             end
           else
             record = ::Frameworks::Framework.new(name: faf[:name].strip, provider_id: faf[:provider_id])
@@ -86,9 +90,8 @@ module Support
     end
 
     def update_record(record, faf, new_status)
-      record.update(
+      attrs = {
         name: faf[:name].strip,
-        contentful_id: faf[:contentful_id],
         faf_slug_ref: faf[:faf_slug_ref],
         faf_category: faf[:faf_category],
         provider_end_date: faf[:provider_end_date],
@@ -97,7 +100,14 @@ module Support
         source: 2,
         status: new_status,
         provider_reference: faf[:provider_reference],
-      )
+      }
+
+      # Only assign contentful_id if no other record already has it
+      if faf[:contentful_id].present? && !::Frameworks::Framework.exists?(contentful_id: faf[:contentful_id])
+        attrs[:contentful_id] = faf[:contentful_id]
+      end
+
+      record.update!(attrs)
     end
 
     def prepare_frameworks(frameworks)
