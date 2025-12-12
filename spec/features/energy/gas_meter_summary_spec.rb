@@ -6,6 +6,7 @@ describe "User can update gas usage details", :js do
   let(:support_case) { create(:support_case, organisation: support_organisation) }
   let(:onboarding_case) { create(:onboarding_case, support_case:) }
   let(:case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_organisation) }
+  let(:another_mprn) { "6543210" }
 
   specify "Adding gas usage" do
     Current.user = user
@@ -44,19 +45,19 @@ describe "User can update gas usage details", :js do
 
     click_link "Add another MPRN"
 
-    fill_in "Add a Meter Point Reference Number (MPRN)", with: "6543210"
+    fill_in "Add a Meter Point Reference Number (MPRN)", with: another_mprn
 
     fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "3000"
 
     click_button "Save and continue"
 
-    expect(page).to have_text("6543210")
+    expect(page).to have_text(another_mprn)
 
-    within(:xpath, "//tr[contains(., '6543210')]") do
+    within(:xpath, "//tr[contains(., '#{another_mprn}')]") do
       click_link "Remove"
     end
 
-    expect(page).to have_text("Are you sure you want to remove this MPRN?")
+    expect(page).to have_text("Are you sure you want to remove the MPRN #{another_mprn}?")
 
     click_link "Remove MPRN"
 

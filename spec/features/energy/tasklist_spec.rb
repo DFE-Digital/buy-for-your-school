@@ -178,7 +178,7 @@ describe "Tasklist flows", :js do
         end
 
         # Go to confirm screen
-        expect(page).to have_text("Are you sure you want to remove this MPRN?")
+        expect(page).to have_text("Are you sure you want to remove the MPRN #{gas_meter_numbers.first}?")
         find(".remove_meter").click
 
         # Back to MPRN summary
@@ -212,6 +212,7 @@ describe "Tasklist flows", :js do
     context "when a multi meter has already been specified but there are no meter details" do
       let(:gas_single_multi) { "multi" }
       let(:gas_meter_numbers) { [] }
+      let(:mprn) { "654321" }
 
       it "navigates to the single/multi meter choice page, then the meter details page, then the MPRN summary, then through adding more numbers, then bill consolidation, then back to the tasklist" do
         expect(page).to have_text("Gas meter and usage")
@@ -226,7 +227,7 @@ describe "Tasklist flows", :js do
         # Go to meter details
         expect(page).to have_text("Gas meter details")
         expect(page).to have_link("Discard and go to task list")
-        fill_in "Add a Meter Point Reference Number (MPRN)", with: "654321"
+        fill_in "Add a Meter Point Reference Number (MPRN)", with: mprn
         fill_in "Estimated annual gas usage for this meter, in kilowatt hours", with: "123"
         click_button "Save and continue"
 
@@ -253,7 +254,7 @@ describe "Tasklist flows", :js do
         end
 
         # Go to confirm screen
-        expect(page).to have_text("Are you sure you want to remove this MPRN?")
+        expect(page).to have_text("Are you sure you want to remove the MPRN #{mprn}?")
         find(".remove_meter").click
 
         # Back to MPRN summary
@@ -402,7 +403,7 @@ describe "Tasklist flows", :js do
         end
 
         # Go to confirm screen
-        expect(page).to have_text("Are you sure you want to remove this MPAN?")
+        expect(page).to have_text("Are you sure you want to remove the MPAN #{electricity_meter_numbers.first}?")
         click_on "Remove MPAN"
 
         # Back to MPAN summary
@@ -436,6 +437,7 @@ describe "Tasklist flows", :js do
     context "when a multi meter has already been specified but there are no meter details" do
       let(:electricity_meter_type) { "multi" }
       let(:electricity_meter_numbers) { [] }
+      let(:mpan) { "1234567890123" }
 
       it "navigates to the single/multi meter choice page, then electric meter details, then the MPAN summary, then through adding more numbers, then bill consolidation, then back to the tasklist" do
         click_link("Electricity meter and usage")
@@ -449,7 +451,7 @@ describe "Tasklist flows", :js do
         # Go to meter details
         expect(page).to have_text("Electricity meter details")
         expect(page).to have_link("Discard and go to task list")
-        fill_in "Add an MPAN", with: "1234567890123"
+        fill_in "Add an MPAN", with: mpan
         choose "No"
         fill_in "Estimated annual electricity usage", with: "1234"
         click_button "Save and continue"
@@ -478,7 +480,7 @@ describe "Tasklist flows", :js do
         end
 
         # Go to confirm screen
-        expect(page).to have_text("Are you sure you want to remove this MPAN?")
+        expect(page).to have_text("Are you sure you want to remove the MPAN #{mpan}?")
         click_on "Remove MPAN"
 
         # Back to MPAN summary

@@ -15,6 +15,7 @@ describe "User can update gas usage details", :js do
 
     visit new_energy_case_org_gas_meter_path(onboarding_case, case_organisation)
 
+    expect(page.title).to have_text("Gas meter details - Energy for Schools")
     expect(page).to have_text("Gas meter details")
     expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
 
