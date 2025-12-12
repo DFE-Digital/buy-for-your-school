@@ -15,11 +15,15 @@ module Energy
         urn_uid, id = form_params[:select_school].split("_", 2)
         case urn_uid
         when "urn"
+          # User has selected a single school
           redirect_to school_type_energy_authorisation_path(id:, type: "single")
         when "uid"
-          # TODO: Update this when MAT service is available
-          # redirect_to school_type_energy_authorisation_path(id: id, type: "mat")
-          redirect_to energy_service_availability_path(id:)
+          # User has selected a Trust so show MAT school picker
+          if Flipper.enabled?(:allow_mat_flow)
+            redirect_to energy_mat_school_picker_path(uid: id)
+          else
+            redirect_to energy_service_availability_path(id:)
+          end
         else
           redirect_to energy_school_selection_path
         end
