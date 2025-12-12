@@ -1,5 +1,6 @@
 <%= form_with model: @form, scope: :school_selection_form, url: energy_school_selection_path, method: :patch do |form| %>
     <%= form.govuk_error_summary %>
+    <p class="govuk-caption-l"><%= I18n.t("energy.school_selections.title") %></p>
 
     <%= form.hidden_field :select_school, value: '' %>
 

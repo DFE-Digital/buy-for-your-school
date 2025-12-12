@@ -1,5 +1,8 @@
 <%= form_with model: @form, scope: :billing_preferences, url: @form_url, method: :patch do |form| %>
   <%= form.govuk_error_summary %>
+  <p class="govuk-caption-l"><%= @organisation_detail.name%>: <%= I18n.t("energy.billing_preferences.title")%></p>
+  <h1 class="govuk-heading-l"><%= I18n.t("energy.billing_preferences.heading") %></h1>
+
   <%= form.hidden_field :billing_payment_method, value: form.object.billing_payment_method %>
   <%= form.hidden_field :billing_payment_terms, value: form.object.billing_payment_terms %>
   <%= form.hidden_field :billing_invoicing_method, value: form.object.billing_invoicing_method %>

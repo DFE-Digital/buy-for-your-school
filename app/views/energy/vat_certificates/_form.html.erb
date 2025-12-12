@@ -2,6 +2,7 @@
 
 <%= form_with model: @form, scope: :vat_certificate_form, url: @form_url, method: :patch do |form| %>
   <%= form.govuk_error_summary %>
+  <p class="govuk-caption-l"><%= @organisation_detail.name %>: <%= I18n.t("energy.vat_certificate.title") %></p>
 
   <%= form.govuk_check_boxes_fieldset :vat_certificate_declared,
         legend: { text: I18n.t("energy.vat_certificate.heading"), tag: :h1, size: "l" },

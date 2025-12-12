@@ -1,5 +1,7 @@
 <%= form_with model: @form, scope: :vat_alt_person_responsible, url: @form_url, method: :patch do |form| %>
   <%= form.govuk_error_summary %>
+  <p class="govuk-caption-l"><%= @organisation_detail.name%>: <%= I18n.t("energy.vat_alt_person_responsible.title")%></p>
+  <h1 class="govuk-heading-l"><%= I18n.t("energy.vat_alt_person_responsible.heading") %></h1>
   <%= form.govuk_text_field :vat_alt_person_first_name, label: { text: I18n.t("energy.vat_alt_person_responsible.first_name") }, width: "two-thirds" %>
   <%= form.govuk_text_field :vat_alt_person_last_name, label: { text: I18n.t("energy.vat_alt_person_responsible.last_name") }, width: "two-thirds" %>
   <%= form.govuk_text_field :vat_alt_person_phone, label: { text: I18n.t("energy.vat_alt_person_responsible.telephone") }, width: "two-thirds" %>

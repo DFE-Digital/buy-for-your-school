@@ -2,52 +2,6 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
-    <h1 class="govuk-heading-l"><%= I18n.t("energy.letter_of_authorisation.title") %></h1>
-    <p class="govuk-body"><%= I18n.t("energy.letter_of_authorisation.paragraphs.paragraph1", school_name: @organisation_detail.name) %></p>
-    <% I18n.t("energy.letter_of_authorisation.paragraphs").drop(1).each do |key, value| %>
-      <p class="govuk-body"><%= value %></p>
-    <% end %>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li><%= @organisation_detail.name %>, <%= Support::OrganisationPresenter.new(@organisation_detail)&.formatted_address %></li>
-    </ul>
-
-    <h2 class="govuk-heading-m"><%= I18n.t("energy.letter_of_authorisation.appointment.title") %></h2>
-    <p class="govuk-body"><%= I18n.t("energy.letter_of_authorisation.appointment.paragraph_one") %></p>
-
-    <p class="govuk-body"><%= I18n.t("energy.letter_of_authorisation.appointment.paragraph_two") %></p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <% I18n.t("energy.letter_of_authorisation.appointment.first_list").each do |key, value| %>
-        <li><%= value %></li>
-      <% end %>
-    </ul>
-
-    <p class="govuk-body"><%= I18n.t("energy.letter_of_authorisation.appointment.paragraph_three") %></p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <% I18n.t("energy.letter_of_authorisation.appointment.second_list").each do |key, value| %>
-        <li><%= value %></li>
-      <% end %>
-    </ul>
-
-    <h2 class="govuk-heading-m"><%= I18n.t("energy.letter_of_authorisation.responsibilities.title") %></h2>
-    <p class="govuk-body"><%= I18n.t("energy.letter_of_authorisation.responsibilities.paragraph_one.") %></p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <% I18n.t("energy.letter_of_authorisation.responsibilities.list").each do |key, value| %>
-        <li><%= value %></li>
-      <% end %>
-    </ul>
-
-    <h2 class="govuk-heading-m"><%= I18n.t("energy.letter_of_authorisation.invoices_and_billing.title") %></h2>
-    <p class="govuk-body"><%= I18n.t("energy.letter_of_authorisation.invoices_and_billing.paragraph_one") %></p>
-    <p class="govuk-body"><%= I18n.t("energy.letter_of_authorisation.invoices_and_billing.paragraph_two") %></p>
-
-    <h2 class="govuk-heading-m"><%= I18n.t("energy.letter_of_authorisation.non_payment_of_invoices.title") %></h2>
-    <p class="govuk-body"><%= I18n.t("energy.letter_of_authorisation.non_payment_of_invoices.paragraph_one") %></p>
-
     <%= render "form" %>
   </div>
 </div>
