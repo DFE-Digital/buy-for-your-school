@@ -1,4 +1,4 @@
-RSpec.feature "Filter cases", :js, bullet: :skip do
+RSpec.feature "Filter cases", :js do
   include_context "with an agent"
 
   let(:catering_cat) { create(:support_category, title: "Catering") }

@@ -1,4 +1,4 @@
-describe Support::Case::Filterable, bullet: :skip do
+describe Support::Case::Filterable do
   subject(:filterable) { Support::Case }
 
   let(:ict_tower) { create(:support_tower, title: "ICT") }

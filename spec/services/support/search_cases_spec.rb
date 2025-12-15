@@ -1,4 +1,4 @@
-RSpec.describe Support::SearchCases, bullet: :skip do
+RSpec.describe Support::SearchCases do
   subject(:service) do
     described_class
   end

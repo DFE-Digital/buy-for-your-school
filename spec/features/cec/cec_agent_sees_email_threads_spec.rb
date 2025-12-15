@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Cec agent sees email threads", :js, bullet: :skip do
+describe "Cec agent sees email threads", :js do
   include_context "with a cec agent"
 
   let(:dfe_energy_category) { create(:support_category, title: "DfE Energy for Schools service") }

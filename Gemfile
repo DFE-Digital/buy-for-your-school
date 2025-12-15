@@ -101,7 +101,6 @@ end
 
 group :test do
   gem "brakeman"
-  gem "bullet"
   gem "capybara", ">= 2.15"
   gem "climate_control"
   gem "database_cleaner"

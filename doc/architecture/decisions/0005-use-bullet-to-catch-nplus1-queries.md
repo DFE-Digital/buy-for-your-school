@@ -4,7 +4,9 @@ Date: 2019-09-19
 
 ## Status
 
-![Accepted](https://img.shields.io/badge/adr-accepted-green)
+![Superseded](https://img.shields.io/badge/adr-superseded-orange)
+
+Superseded by [ADR-0032](0032-remove-bullet-gem.md)
 
 ## Context
 

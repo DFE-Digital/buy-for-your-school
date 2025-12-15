@@ -77,16 +77,11 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.before do
-    Bullet.enable = false
     Flipper.enable(:customer_satisfaction_survey)
     Flipper.enable(:sc_tasklist_case)
     Flipper.enable(:usability_surveys)
     Flipper.enable(:energy)
     Flipper.enable(:auto_email_vat_dd)
-  end
-
-  config.after do
-    Bullet.enable = true
   end
 
   config.before(:each, type: :feature) do

@@ -1,7 +1,7 @@
 # FIXME: bullet sometimes alerts you to an unoptimised query due to eager loading on Support::Case
 # in the SupportCase controller. This should be fixed at some point, but for now we just need to test
 # the functionality of the pagination.
-RSpec.feature "Case management dashboard pagination", bullet: :skip do
+RSpec.feature "Case management dashboard pagination" do
   include_context "with an agent"
 
   describe "#my-cases" do

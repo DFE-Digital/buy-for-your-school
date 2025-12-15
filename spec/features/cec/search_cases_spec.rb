@@ -1,4 +1,4 @@
-RSpec.feature "Search cases", bullet: :skip do
+RSpec.feature "Search cases" do
   include_context "with a cec agent"
   let(:support_organisation) { create(:support_organisation, urn: 100_253, name: "Old Town Primary School") }
   let(:dfe_category) { create(:support_category, title: "DfE Energy for Schools service") }

@@ -58,23 +58,6 @@ Rails.application.configure do
   # Set a css_compressor so sassc-rails does not overwrite the compressor when running the tests
   config.assets.css_compressor = nil
 
-  config.after_initialize do
-    Bullet.enable = true
-    Bullet.bullet_logger = true
-    Bullet.raise = true # raise an error if n+1 query occurs
-    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :radio_answer
-    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :short_text_answer
-    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :long_text_answer
-    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :single_date_answer
-    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :checkbox_answers
-    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :number_answer
-    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :currency_answer
-    Bullet.add_safelist type: :unused_eager_loading, class_name: "Step", association: :task
-    Bullet.add_safelist type: :unused_eager_loading, class_name: "Support::MessageThread", association: :messages
-    Bullet.add_safelist type: :unused_eager_loading, class_name: "Support::Email", association: :in_reply_to
-    Bullet.add_safelist type: :unused_eager_loading, class_name: "Support::Email", association: :template
-  end
-
   # Set active storage location
   config.active_storage.service = :local
 

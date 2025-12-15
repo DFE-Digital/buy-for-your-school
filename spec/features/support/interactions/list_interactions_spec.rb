@@ -1,7 +1,7 @@
 #
 # Assert complex case history behaviour
 #
-RSpec.feature "Support request case history", bullet: :skip do
+RSpec.feature "Support request case history" do
   include_context "with an agent"
 
   let(:support_case) do
