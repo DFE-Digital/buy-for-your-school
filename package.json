@@ -32,7 +32,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "jest-environment-jsdom": "^30.2.0",
-    "webpack-dev-server": "^5.2.1"
+    "webpack-dev-server": "^5.2.2"
   },
   "babel": {
     "presets": [
