@@ -13,7 +13,6 @@ gem "aws-sdk-s3", require: false
 # gem "azure-storage-blob", "~> 2.0", require: false
 gem "azure-storage-blob", git: "https://github.com/honeyankit/azure-storage-ruby", ref: "patch-1", require: false
 gem "bootsnap", ">= 1.1.0", require: false
-gem "coffee-rails", "~> 5.0" # TODO: remove coffee-rails, only used for google analytics
 gem "contentful", "~> 2.19"
 gem "crawler_detect"
 gem "cssbundling-rails", "~> 1.1"
@@ -90,13 +89,11 @@ group :development do
   gem "binding_of_caller"
   gem "foreman"
   gem "listen", ">= 3.8", "< 3.10"
-  gem "rails_layout"
   gem "spring"
   gem "spring-commands-rspec"
   # Incompatible with spring 3.0 and higher
   # gem "spring-watcher-listen", "~> 2.0.0"
   gem "web-console", ">= 3.3.0"
-  gem "yard-junk"
 end
 
 group :test do
