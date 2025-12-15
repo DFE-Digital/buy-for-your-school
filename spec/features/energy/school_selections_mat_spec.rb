@@ -17,11 +17,10 @@ describe "School selection", :js do
   def start_flow
     visit energy_school_selection_path
 
-    expect(page).to have_text("Which school are you buying for?")
+    expect(page).to have_text("Which school or trust are you buying for?")
     expect(page).to have_text("Specialist School for Testing")
     click_button "Continue"
 
-    expect(page).to have_text("Select the school you are buying for")
     choose "Testing Multi Academy Trust"
     click_button "Continue"
   end
@@ -32,7 +31,7 @@ describe "School selection", :js do
     it "authenticates and completes MAT flow" do
       start_flow
 
-      expect(page).to have_text("Which school in your academy trust")
+      expect(page).to have_text("Which school are you buying for?")
       choose "Hogwarts"
       click_button "Continue"
 

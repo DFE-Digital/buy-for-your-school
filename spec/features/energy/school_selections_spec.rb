@@ -12,7 +12,7 @@ describe "School selection", :js do
 
     visit energy_school_selection_path
 
-    expect(page).to have_text("Which school are you buying for?")
+    expect(page).to have_text("Which school or trust are you buying for?")
 
     expect(page).to have_text("Specialist School for Testing")
 
