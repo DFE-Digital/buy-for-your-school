@@ -1,4 +1,4 @@
-RSpec.feature "Case worker assignment", :js, bullet: :skip do
+RSpec.feature "Case worker assignment", :js do
   include_context "with a cec agent"
 
   context "when re-assigning an agent to a case" do

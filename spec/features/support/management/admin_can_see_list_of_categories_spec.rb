@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Admin can see a list of Categories", bullet: :skip do
+describe "Admin can see a list of Categories" do
   include_context "with an agent", roles: %w[global_admin]
 
   before do

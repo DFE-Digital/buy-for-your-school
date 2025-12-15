@@ -1,5 +1,5 @@
 NAVIGATED_TO_MESSAGE_VIEW = "with navigated to messages view".freeze
-describe "Agent can reply to incoming emails", :js, bullet: :skip do
+describe "Agent can reply to incoming emails", :js do
   include_context "with an agent"
   include_context "with a support case and email"
 

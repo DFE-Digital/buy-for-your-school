@@ -1,4 +1,4 @@
-RSpec.feature "Search cases", bullet: :skip do
+RSpec.feature "Search cases" do
   include_context "with an agent"
 
   before do
