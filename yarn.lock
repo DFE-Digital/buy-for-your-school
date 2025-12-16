@@ -1055,44 +1055,44 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.6.3.tgz#f13c7c205915eb91ae54c557f5e92bddd8be0e83"
   integrity sha512-4B4OijXeVNOPZlYA2oEwWOTkzyltLao+xbotHQeqN++Rv27Y6s818+n2Qkp8q+Fxhn0t/5lA5X1Mxktud8eayQ==
 
-"@hods/date-display@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@hods/date-display/-/date-display-0.4.0.tgz#90744e8c79e30080021c07494c3586208429bf2f"
-  integrity sha512-FLIDugJDPrgaCwggDlUB0I8ZDVGzIIQ62VghK/r1UVmRnv0Q/rNgTBvkeFSaj3jqh1m4KKGmzPZJPu3w/zmhRg==
+"@hods/date-display@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@hods/date-display/-/date-display-0.5.1.tgz#225e0c8e78f9c6bbb5cbcdba17529687e6b23fde"
+  integrity sha512-ArjlSfZvFbfne3Ba7Axdx7EULu5WmfZPdj6eLjyZXAvfbsmXrpua7pzy/wPAhyriQDroJaHgI5y7gzjMUFAmxQ==
   dependencies:
-    "@not-govuk/component-helpers" "^0.7.2"
+    "@not-govuk/component-helpers" "^0.15.2"
 
-"@hods/date-time@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@hods/date-time/-/date-time-0.4.0.tgz#2ffe0b4612ca38f74c7a930dbdb7114f82f5c801"
-  integrity sha512-KrK33UHtBeMbTO3qO5SwA8SSn1z0UCKKN5wGrRgPFBN9630q+njdo+4tb38+J6GoyzeQ1ou0Dx8E+xLpAaOTkg==
+"@hods/date-time@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@hods/date-time/-/date-time-0.5.1.tgz#d3cf9352f3a584711cbd17d4bb79c3f948f45b3a"
+  integrity sha512-+VFozKgVQWTVSD60RuQ2XveccMmQE4hQLMCl0B+GQSjLrdEpkrTOFPbjVbmE9itPpKbEYUxMNBrIzv8WBXqvwA==
   dependencies:
-    "@hods/date-display" "^0.4.0"
-    "@hods/time" "^0.4.0"
-    "@not-govuk/component-helpers" "^0.7.2"
+    "@hods/date-display" "^0.5.1"
+    "@hods/time" "^0.5.1"
+    "@not-govuk/component-helpers" "^0.15.2"
 
-"@hods/sass-base@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@hods/sass-base/-/sass-base-0.4.0.tgz#4e1f853f9e8108ff70beb8355328522554d99130"
-  integrity sha512-wl7l2obwuCblNn9IazIv+j1WjLn13DcjRV+pXxP+A1OVjIT1ua+52Kf4sxEL/ZbnUR/wrwPSg7Rv+DL6Ti2EEg==
+"@hods/sass-base@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@hods/sass-base/-/sass-base-0.5.1.tgz#bf43e944bb5be9329eed854cf87b48f3c9f6f799"
+  integrity sha512-FeYJ2tzoQ016cM0Jc4Iy3Yo6deZctvyd8JceBGw6Mlx9gkDbH8hPan8K0aMb/CrnUP5DlSIA6vcEBLThA7YR3w==
   dependencies:
-    "@not-govuk/sass-base" "^0.7.2"
+    "@not-govuk/sass-base" "^0.15.2"
 
-"@hods/time@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@hods/time/-/time-0.4.0.tgz#f4581396dd95509150b560939b06939b2628e738"
-  integrity sha512-UnUt7n/1ygIB13hRn/A1IrVJ4781/6+B4JPs9b++w680UWQe0ZR3XGY5jrzSojmlayM0/NKxybx7kBG2QZWt9g==
+"@hods/time@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@hods/time/-/time-0.5.1.tgz#07951a0db8b5138d277cdc82dec40973fb7a246a"
+  integrity sha512-17FsBBcVuo6MbAlBrkJD2H7SAekNa4N7mFwla6bf5HL2XJL6kag869mSQ8Y0L2zy5PgQlBS9h6pHRmU9Y0cVbg==
   dependencies:
-    "@not-govuk/component-helpers" "^0.7.2"
+    "@not-govuk/component-helpers" "^0.15.2"
 
-"@hods/timeline@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@hods/timeline/-/timeline-0.4.0.tgz#bb23320e549fa0b845d68b8573d35c49d21832a8"
-  integrity sha512-bJg08blYkPbNahv+caNuSVwWepMr21Cgn2JCnC26MsaEwXwTNP3tr0HmwB2L3LFa2FBwYyEZscfenL+KxHD5Lg==
+"@hods/timeline@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@hods/timeline/-/timeline-0.5.1.tgz#61a3b71d0fd0bbadaf342172c6c432ff7adbc80f"
+  integrity sha512-XK7CgZX5OO0AMw6XwgEtS8emRT+hY7mvBojNvJQJY1zCc8M9JAbjSAeNZWU/kFmQES1jcC3E13H3GtXqLjLEhw==
   dependencies:
-    "@hods/date-time" "^0.4.0"
-    "@hods/sass-base" "^0.4.0"
-    "@not-govuk/component-helpers" "^0.7.2"
+    "@hods/date-time" "^0.5.1"
+    "@hods/sass-base" "^0.5.1"
+    "@not-govuk/component-helpers" "^0.15.2"
 
 "@hotwired/stimulus@^3.2.2":
   version "3.2.2"
@@ -1501,17 +1501,17 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.5.tgz#4fc56c15c580b9adb7dc3c333a134e540b44bfb1"
   integrity sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==
 
-"@not-govuk/component-helpers@^0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@not-govuk/component-helpers/-/component-helpers-0.7.2.tgz#9d9100d0302d4836305ea367a2c96506052acd5c"
-  integrity sha512-hVCUelN8tZIpGoAMf/Ey3RAaCQeP7g1wYM0Ksyou76jbwy8CDEQBFQMXkP9Q/yxj9wtZIE5tqDeVCaNApq7KbQ==
+"@not-govuk/component-helpers@^0.15.2":
+  version "0.15.14"
+  resolved "https://registry.yarnpkg.com/@not-govuk/component-helpers/-/component-helpers-0.15.14.tgz#6700c8577f28a37cf7e7a8792045cc6514e836e8"
+  integrity sha512-2gvoAnAXh1I0uVLDmKdyOELpBgTUevDVDXNN/HuwYv6y8iZyq3hZcwJfEWcuuuLt/T0E1Zbn4y1/ES7FqpN7dw==
 
-"@not-govuk/sass-base@^0.7.2":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@not-govuk/sass-base/-/sass-base-0.7.2.tgz#0b766b59a5b360a125b8f6d4d8c61588cd6db7ca"
-  integrity sha512-84bvYI73yt5f2nD26bMfwiOeLUq0bVdIkMnO2jPNGFEqKiqTSqGWjx1PeLJdrkUeZDKdZM+ByE/n6QcCexCvnA==
+"@not-govuk/sass-base@^0.15.2":
+  version "0.15.14"
+  resolved "https://registry.yarnpkg.com/@not-govuk/sass-base/-/sass-base-0.15.14.tgz#65db12d3c9545952feb35ee2b4cd2c0f54d89af4"
+  integrity sha512-EMLArPnTSA5Jkwaj82fYW6vS1JUGIe1whAxdCvMZ4E8kZeYnZL4RelinZVMqMDV2/UVZ1q+tI3Tz5wSHSKwmOQ==
   dependencies:
-    govuk-frontend "4.4.1"
+    govuk-frontend "5.9.0"
 
 "@parcel/watcher-android-arm64@2.5.1":
   version "2.5.1"
@@ -3226,10 +3226,10 @@ gopd@^1.2.0:
   resolved "https://registry.yarnpkg.com/gopd/-/gopd-1.2.0.tgz#89f56b8217bdbc8802bd299df6d7f1081d7e51a1"
   integrity sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==
 
-govuk-frontend@4.4.1:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.4.1.tgz#88857c4ad8508255a4e983030a3964d6e1674107"
-  integrity sha512-Jm1LUWiH9vy47b6HSH/ksSb4ueBrtTTgyLBk+3X2qqAmmFUc1AXWLSYHid07YYu1tvn9RnodWk5Bac5Ywqk6tA==
+govuk-frontend@5.9.0:
+  version "5.9.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-5.9.0.tgz#4064ac692019e60f030d6311c49330a6454a5689"
+  integrity sha512-8NzmyoDtRFYyHs413DfNPR8Zo6qw6Q02Mruxml/Yfy+EueaOI/JZ4gVM8d0pqzJmTiMcJuHhvxqYEgBRmqeoyA==
 
 govuk-frontend@^5.13.0:
   version "5.13.0"
