@@ -5,7 +5,6 @@ module Energy
 
     def show
       @case_ref_no = onboarding_case.support_case.ref
-      @trust_code = @organisation_detail.trust_code
     end
   end
 end

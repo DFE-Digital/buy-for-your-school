@@ -674,11 +674,12 @@ en:
       title: Information submitted on %{date}
       case_reference_number: Case reference number
       next_steps: Next steps
-      paragraph_one: "We’ve sent a confirmation email to <strong>%{email}</strong> containing a copy of this form and information about what happens next."
-      paragraph_two: Depending on your contract’s end date, you may be placed on an interim rate to ensure continued supply to your school.
-      paragraph_three: Check your current contract’s termination terms and notice period to find out how much notice you need to provide to switch suppliers. You must provide notice to your current supplier in writing. DfE cannot do this for you.
-      paragraph_four: Use this service again to switch another school in your MAT to the energy contract.
-      paragraph_five: Alternatively, fill in the <a class="govuk-link" href="%{register_your_interest_form_url}">Register your interest form</a>. and complete the paperwork for any additional schools offline.
+      paragraph_one_new: "We've sent a confirmation email to <strong>%{email}</strong> containing a copy of this form and information about what happens next."
+      paragraph_one_old: "We've sent an email to <strong>%{email}</strong> containing a copy of this form and details about your new contract."
+      paragraph_two: Depending on your contract's end date, you may be placed on an interim rate to ensure continued supply to your school.
+      paragraph_three: Check your current contract's termination terms and notice period to find out how much notice you need to provide to switch suppliers. You must provide notice to your current supplier in writing. DfE cannot do this for you.
+      paragraph_four: Use this service again to switch another school to the energy contract if you're a multi-academy trust.
+      paragraph_five: Alternatively, fill in the <a class="govuk-link" href="%{register_your_interest_form_url}">Register your interest form</a> and complete the paperwork for any additional schools offline.
       switch_another_school: Switch another school
       takes_five_minutes: (takes 5 minutes)
       link:
