@@ -12,9 +12,10 @@
       </div>
     </div>
 
+    <p class="govuk-body"><%= I18n.t("energy.confirmation.paragraph_one", email: @onboarding_case.support_case&.email).html_safe %></p>
+    <p class="govuk-body"><%= I18n.t("energy.confirmation.paragraph_two") %></p>
+
     <% if Flipper.enabled?(:allow_mat_flow) %>
-      <p class="govuk-body"><%= I18n.t("energy.confirmation.paragraph_one_new", email: @onboarding_case.support_case&.email).html_safe %></p>
-      <p class="govuk-body"><%= I18n.t("energy.confirmation.paragraph_two") %></p>
       <h2 class="govuk-heading-m"><%= I18n.t("energy.confirmation.next_steps") %></h2>
       <p class="govuk-body"><%= I18n.t("energy.confirmation.paragraph_three") %></p>
       <p class="govuk-body"><%= I18n.t("energy.confirmation.paragraph_four") %></p>
@@ -25,8 +26,6 @@
       </div>
       <%= render ParagraphComponent.new(text: I18n.t("energy.confirmation.paragraph_five", register_your_interest_form_url: register_your_interest_form_url)) %>
     <% else %>
-      <p class="govuk-body"><%= I18n.t("energy.confirmation.paragraph_one_old", email: @onboarding_case.support_case&.email).html_safe %></p>
-      <p class="govuk-body"><%= I18n.t("energy.confirmation.paragraph_two") %></p>
       <p class="govuk-body"><%= I18n.t("energy.confirmation.paragraph_three") %></p>
     <% end %>
       

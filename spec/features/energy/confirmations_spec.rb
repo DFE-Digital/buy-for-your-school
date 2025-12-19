@@ -12,6 +12,7 @@ describe "School selection", :js do
   specify "Information submitted screen" do
     visit energy_case_confirmation_path(case_id: case_organisation.energy_onboarding_case_id)
     expect(page).to have_text("Information submitted")
+    expect(page).to have_text("We've sent a confirmation email to #{onboarding_case.support_case&.email} containing a copy of this form and information about what happens next.")
     expect(page).to have_text("Depending on your contract's end date, you may be placed on an interim rate to ensure continued supply to your school.")
     expect(page).to have_text("Check your current contract's termination terms and notice period to find out how much notice you need to provide to switch suppliers. You must provide notice to your current supplier in writing. DfE cannot do this for you.")
   end
@@ -23,7 +24,6 @@ describe "School selection", :js do
     end
 
     it "shows Information submitted screen for single school" do
-      expect(page).to have_text("We've sent an email to #{onboarding_case.support_case&.email} containing a copy of this form and details about your new contract.")
       click_link "What did you think of this service?"
       expect(page).to have_text("Get help buying for schools feedback")
       expect(page).to have_text("Thank you for taking the time to give us your feedback.")
@@ -45,7 +45,6 @@ describe "School selection", :js do
     end
 
     it "shows Information submitted screen for mat schools" do
-      expect(page).to have_text("We've sent a confirmation email to #{onboarding_case.support_case&.email} containing a copy of this form and information about what happens next.")
       expect(page).to have_text("Use this service again to switch another school to the energy contract if you're a multi-academy trust.")
       expect(page).to have_link("Switch another school")
       expect(page).to have_text("Alternatively, fill in the Register your interest form and complete the paperwork for any additional schools offline.")
