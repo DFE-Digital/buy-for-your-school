@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ActivityLog::Types::CategoryRemovedComponent < ViewComponent::Base
+  include ActivityLog::Types::BasicActivityDetails
   def initialize(activity_log_item:)
     @activity_log_item = activity_log_item
   end
