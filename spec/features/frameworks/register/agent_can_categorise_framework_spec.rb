@@ -7,7 +7,7 @@ describe "Agent can categorise framework" do
 
   before { define_basic_categories }
 
-  it "assigns the categories" do
+  it "assigns and removes the categories" do
     visit edit_frameworks_framework_categorisations_path(framework)
     check "Laptops"
     check "Electricity"
@@ -20,6 +20,19 @@ describe "Agent can categorise framework" do
     within "#framework-activity" do
       expect(page).to have_content("Category Laptops added")
       expect(page).to have_content("Category Electricity added")
+    end
+
+    visit edit_frameworks_framework_categorisations_path(framework)
+    uncheck "Laptops"
+    click_on "Save changes"
+
+    within ".govuk-summary-card", text: "Basic Details" do
+      expect(page).to have_content("Electricity")
+      expect(page).not_to have_content("Laptops")
+    end
+
+    within "#framework-activity" do
+      expect(page).to have_content("Category Laptops removed")
     end
   end
 end
