@@ -13,7 +13,14 @@ module ClamavRest
       status, _description = parse_response(response)
 
       status == "OK"
-    rescue StandardError
+    rescue StandardError => e
+      Rollbar.error(
+        "ClamAV scan failed",
+        error: e.class.name,
+        message: e.message,
+        backtrace: e.backtrace&.first(5),
+        service_url: configuration.service_url,
+      )
       false
     end
 
