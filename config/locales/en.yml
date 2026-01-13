@@ -411,6 +411,17 @@ en:
         - The energy supply is from the supplier's standard 'Brown' product. Everyone who uses this supply gets 30-40% renewable energy through the UK power grid. This percentage is increasing as more renewable energy sources are added to the grid.
         - You can choose to pay more for a product that contains more renewable energy. Email <a class="govuk-link" href="mailto:%{email}">%{email}</a> to discuss renewable options.
         - Energy savings made through renewable energy, such as solar panels, are not factored into this contract. You should continue your current arrangement or contact EDF about setting up a Smart Export Guarantee if you wish to export energy back to the grid.
+      smart_meter_installation:
+        title: Smart meter installation
+        body:
+        - Schools and trusts that join Energy for Schools must have smart meters installed if they do not already have them.  
+        - "Smart meters provide several benefits, including:"
+        list:
+        - more accurate billing 
+        - improved energy management 
+        - automated meter readings 
+        body2:
+        - Your new energy supplier will contact you a few weeks before supply starts to arrange installation. 
       objections:
         title: Objections
         body:

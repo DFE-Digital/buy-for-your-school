@@ -51,6 +51,11 @@
 
     <h2 class="govuk-heading-m" id="considerations"><%= I18n.t("energy.guidance.considerations.title") %></h2>
 
+    <h3 class="govuk-heading-s"><%= I18n.t("energy.guidance.smart_meter_installation.title") %></h3>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.smart_meter_installation.body")) %>
+    <%= govuk_list I18n.t("energy.guidance.smart_meter_installation.list"), type: :bullet %>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.smart_meter_installation.body2")) %>
+
     <h3 class="govuk-heading-s"><%= I18n.t("energy.guidance.vat_declaration.title") %></h3>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.vat_declaration.body")) %>
 
