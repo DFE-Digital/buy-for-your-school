@@ -60,7 +60,14 @@
     ) %>
 
     <h2 class="govuk-heading-m" id="how_to_join"><%= I18n.t("energy.guidance.how_to_join.title") %></h2>
-    <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.how_to_join.body", register_your_interest_form_url: register_your_interest_form_url)) %>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.how_to_join.body")) %>
+    <% if Flipper.enabled?(:allow_mat_flow) %>
+      <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.how_to_join.multi_school", register_your_interest_form_url: register_your_interest_form_url)) %>
+    <% else %>
+      <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.how_to_join.single_school", register_your_interest_form_url: register_your_interest_form_url)) %>
+    <% end %>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.how_to_join.depending")) %>
+
     <%= govuk_list I18n.t("energy.guidance.how_to_join.list"), type: :bullet %>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.how_to_join.body2")) %>
 

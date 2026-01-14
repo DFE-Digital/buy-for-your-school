@@ -317,7 +317,10 @@ en:
         body:
         - All state-funded schools and trusts in England can join Energy for Schools.
         - Individual schools, like local authority-maintained schools and single academy trusts, can join using the online service.
-        - Multi-academy trusts (MATs) can join by filling in the <a class="govuk-link" href="%{register_your_interest_form_url}">Register your interest form</a>. A member of the DfE team will then contact you and help you complete the process offline.
+        single_school: Multi-academy trusts (MATs) can join by filling in <a class="govuk-link" href="%{register_your_interest_form_url}">Register your interest form</a> and completing the process offline. A member of the DfE team will then contact you and help you complete the process offline.
+        multi_school:
+        - Multi-academy trusts (MATs) can join by repeating the online process for each school that's switching to the energy contract.
+        - Alternatively, MATs can fill in the <a class="govuk-link" href="%{register_your_interest_form_url}">Register your interest form</a> and complete the paperwork offline. This may benefit MATs that are ready to switch 6 or more schools to the energy deal.
       more_info: Get more information
     guidance:
       contents: Contents
@@ -419,8 +422,11 @@ en:
         body:
         - All state-funded schools and trusts in England can join Energy for Schools.
         - Individual schools, like local authority-maintained schools and single academy trusts, can join using the online service.
-        - Multi-academy trusts (MATs) can join by filling in the <a class="govuk-link" href="%{register_your_interest_form_url}">Register your interest form</a>. A member of the DfE team will then contact you and help you complete the process offline.
-        - "Depending on which supply you're switching, you'll need to provide:"
+        single_school: Multi-academy trusts (MATs) can join by filling in <a class="govuk-link" href="%{register_your_interest_form_url}">Register your interest form</a> and completing the process offline. A member of the DfE team will then contact you and help you complete the process offline.
+        multi_school:
+        - Multi-academy trusts (MATs) can join by repeating the online process for each school that's switching to the energy contract.
+        - Alternatively, MATs can fill in the <a class="govuk-link" href="%{register_your_interest_form_url}">Register your interest form</a> and complete the paperwork offline. This may benefit MATs that are ready to switch 6 or more schools to the energy deal.
+        depending: "Depending on which supply you're switching, you'll need to provide:"
         list:
         - your contract end date
         - who your supplier is
@@ -456,7 +462,14 @@ en:
         - We'll send you an email with a link once you've started the form. We'll also save the answers on each page you complete. If you need to exit the form, use the email link to return and complete it at a later date.
     school_selections:
       title: About your school
-      heading: Which school are you buying for?
+      heading: Which school or trust are you buying for?
+    mat_school_picker:
+      caption: About your school
+      subtitle: Select a school
+      title: Which school are you buying for?
+      paragraph_one: If you're a multi-academy trust, you must complete a separate online form for each school. Alternatively, fill in the <a class="govuk-link" href="%{register_your_interest_form_url}">Register your interest form</a> and complete the paperwork offline.
+      errors:
+        must_pick_a_school: You must pick a school
     authorisation:
       heading: Are you authorised to switch energy suppliers for these schools?
       page_title: Do you have authorisation?
@@ -665,13 +678,17 @@ en:
     confirmation:
       title: Information submitted on %{date}
       case_reference_number: Case reference number
-      paragraph_one: "We’ve sent an email to <strong>%{email}</strong> containing a copy of this form and details about your new contract."
-      paragraph_two: Depending on your contract’s end date, you may be placed on an interim rate to ensure continued supply to your school.
+      next_steps: Next steps
+      paragraph_one: "We've sent a confirmation email to <strong>%{email}</strong> containing a copy of this form and information about what happens next."
+      paragraph_two: Depending on your contract's end date, you may be placed on an interim rate to ensure continued supply to your school.
       paragraph_three: Check your current contract's termination terms and notice period to find out how much notice you need to provide to switch suppliers. You must provide notice to your current supplier in writing. DfE cannot do this for you.
+      paragraph_four: Use this service again to switch another school to the energy contract if you're a multi-academy trust.
+      paragraph_five: Alternatively, fill in the <a class="govuk-link" href="%{register_your_interest_form_url}">Register your interest form</a> and complete the paperwork for any additional schools offline.
+      switch_another_school: Switch another school
       takes_five_minutes: (takes 5 minutes)
       link:
         label: What did you think of this service?
-        url: /customer_satisfaction_surveys/new?service=energy_for_schools&source=confirmation_screen
+        url: /customer_satisfaction_surveys/new?service=energy_for_schools&source=confirmation_screenton_screen
     service_availability:
       heading: Service only available for individual schools
       body:
@@ -1219,7 +1236,7 @@ en:
       - support you on choosing or using a framework agreement for your procurement
       - advise when you need to seek legal advice
     user_organisation:
-      header: Which school are you buying for?
+      header: Which school are you buying for? 
     user_query:
       caption: About your request
       hint: Describe how we can help in a few sentences.

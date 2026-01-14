@@ -9,7 +9,13 @@
     <%= render ParagraphComponent.new(text: I18n.t("energy.join.benefits.text")) %>
     <%= govuk_list I18n.t("energy.join.benefits.list"), type: :bullet %>
     <h2 class="govuk-heading-m"><%= I18n.t("energy.join.eligibility.title") %></h2>
-    <%= render ParagraphComponent.new(text: I18n.t("energy.join.eligibility.body", register_your_interest_form_url: register_your_interest_form_url)) %>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.join.eligibility.body")) %>
+
+    <% if Flipper.enabled?(:allow_mat_flow) %>
+      <%= render ParagraphComponent.new(text: I18n.t("energy.join.eligibility.multi_school", register_your_interest_form_url: register_your_interest_form_url)) %>
+    <% else %>
+      <%= render ParagraphComponent.new(text: I18n.t("energy.join.eligibility.single_school", register_your_interest_form_url: register_your_interest_form_url)) %>
+    <% end %>
 
     <%= govuk_start_button(text: I18n.t("generic.button.start"), href: energy_before_you_start_path) %>
     <%= govuk_list [
