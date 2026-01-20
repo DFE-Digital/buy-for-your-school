@@ -8,6 +8,7 @@ describe "Guidance page", :js do
     expect(page).to have_text("Individual schools, like local authority-maintained schools and single academy trusts, can join using the online service.")
     expect(page).to have_link("Register your interest form", href: "https://submit.forms.service.gov.uk/form/8895/multi-academy-trusts-register-your-interest-in-energy-for-schools/1049539")
     expect(page).to have_text("Smart meter installation")
+    expect(page).to have_text("12pm, 15 September 2026")
   end
 
   context "when allow_mat_flow feature flag is OFF" do
