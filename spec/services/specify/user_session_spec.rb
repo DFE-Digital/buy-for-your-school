@@ -111,4 +111,10 @@ RSpec.describe UserSession do
       end
     end
   end
+
+  describe "Session store configuration" do
+    it "sets expire_after to 8 hours" do
+      expect(Rails.application.config.session_options[:expire_after]).to eq(8.hours)
+    end
+  end
 end
