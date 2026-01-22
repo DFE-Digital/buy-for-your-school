@@ -124,12 +124,26 @@ module ApplicationHelper
     safe_url(uri.to_s)
   end
 
-  def format_date(date_string)
-    return "" if date_string.blank?
+  def format_date(date_input)
+    return "" if date_input.blank?
 
-    I18n.l(Date.parse(date_string), format: :standard)
-  rescue Date::Error => e
-    Rollbar.error(e, date_string: date_string)
+    # Handle FABS case: date_input is a String or Date/DateTime from Contentful
+    if date_input.is_a?(String)
+      I18n.l(Date.parse(date_input), format: :standard)
+    elsif date_input.is_a?(Date) || date_input.is_a?(DateTime) || date_input.is_a?(Time)
+      I18n.l(date_input.to_date, format: :standard)
+    # Handle BFYS case: date_input is a Hash with :day, :month, :year
+    elsif date_input.is_a?(Hash)
+      date_parts = date_input.values_at(:day, :month, :year)
+      return "" unless date_parts.all?(&:present?)
+
+      day, month, year = date_parts.map(&:to_i)
+      I18n.l(Date.new(year, month, day), format: :standard)
+    else
+      ""
+    end
+  rescue Date::Error, ArgumentError => e
+    Rollbar.error(e, date_input: date_input) if defined?(Rollbar)
     ""
   end
 
