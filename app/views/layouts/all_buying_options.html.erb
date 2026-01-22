@@ -3,7 +3,7 @@
 
   <div class="page-header <%= @page_header_class %>">
     <div class="main-container dfe-width-container">
-       <%= render partial: "shared/breadcrumbs", locals: { govuk_breadcrumb_builder: govuk_breadcrumb_builder} %>
+       <%= render partial: "layouts/breadcrumbs" %>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
           <div class="govuk-caption-m "><%= @page_section_title %></div>
