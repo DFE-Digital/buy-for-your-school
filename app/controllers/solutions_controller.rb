@@ -1,6 +1,4 @@
 class SolutionsController < ApplicationController
-  include BreadcrumbsOnRails::ActionController
-  
   skip_before_action :authenticate_user!
   before_action :enable_search_in_header
 
@@ -17,7 +15,7 @@ class SolutionsController < ApplicationController
     @page_description = t(".all_buying_options_description")
     @page_back_link = request.referer
 
-    add_breadcrumb home_breadcrumb_name, home_breadcrumb_path
+    add_breadcrumb :home_breadcrumb_name, :home_breadcrumb_path
     render layout: "all_buying_options"
   end
 
@@ -30,11 +28,11 @@ class SolutionsController < ApplicationController
     @page_title = @solution.title
     @page_description = @solution.description
     @page_header_class = "details-header"
-    add_breadcrumb home_breadcrumb_name, home_breadcrumb_path
+    add_breadcrumb :home_breadcrumb_name, :home_breadcrumb_path
     @canonical_url = category_solution_url(@primary_category.slug, @solution.slug)
 
     if params[:category_slug].present? && @category.present?
-      add_breadcrumb category_breadcrumb_name, category_breadcrumb_path
+      add_breadcrumb :category_breadcrumb_name, :category_breadcrumb_path
     elsif @primary_category
       add_breadcrumb :primary_category_breadcrumb_name, :primary_category_breadcrumb_path
     end
