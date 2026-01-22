@@ -2,9 +2,7 @@ $govuk-global-styles: true;
 $govuk-new-link-styles: true;
 $govuk-assets-path: "/govuk-frontend/";
 
-@use "../node_modules/govuk-frontend/dist/govuk/all" as govuk;
-@use "../node_modules/dfe-frontend/packages/dfefrontend" as dfefrontend;
-
+@import "govuk-frontend/dist/govuk/index";
 
 @import url('https://rsms.me/inter/inter.css');
 $govuk-font-family: 'Inter', sans-serif;
@@ -324,7 +322,7 @@ footer {
 
 .dfe-header {
   color: #fff;
-  background-color: govuk.$govuk-brand-colour;
+  background-color: #1d70b8;
   padding-bottom: 0px;
 }
 
@@ -448,7 +446,7 @@ a:focus {
   }
 
   .dfe-search__submit {
-    background: govuk.$govuk-brand-colour;
+    background: #1d70b8;
   }
 }
 
@@ -678,7 +676,7 @@ a.all-buying-options-link {
 
 .dfe-card:hover,
 .dfe-card:focus-within {
-  background-color: govuk.$govuk-brand-colour;
+  background-color: #1d70b8;
 }
 
 .dfe-card.dfe-card--featured {
@@ -1027,7 +1025,7 @@ a.all-buying-options-link {
 
 .dfe-header__search-toggle {
   background-color: transparent;
-  border: 1px solid govuk.$govuk-brand-colour;
+  border: 1px solid #1d70b8;
   color: #ffffff;
   cursor: pointer;
   min-height: 40px;
@@ -1132,7 +1130,7 @@ a.all-buying-options-link {
   float: right;
   width: 61px;
 
-  background-color: govuk.$govuk-brand-colour;
+  background-color: #1d70b8;
   margin-right: -5px;
 }
 
@@ -1159,7 +1157,7 @@ a.all-buying-options-link {
   height: 27px;
   /* [3] */
   width: 27px;
-  background-color: govuk.$govuk-brand-colour;
+  background-color: #1d70b8;
 }
 
 .dfe-icon__search_hompage {
@@ -1226,7 +1224,7 @@ a.all-buying-options-link {
   /* [3] */
   width: 30px;
   padding: 0px;
-  background-color: govuk.$govuk-brand-colour;
+  background-color: #1d70b8;
 }
 
 .search-header_background {
