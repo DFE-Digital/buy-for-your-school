@@ -67,6 +67,9 @@ en:
       title: Thank you - Get help buying for schools feedback
   app:
     name: Get help buying for schools
+  header_description: A free and compliant service to help you buy for your school,
+    trust or academy
+  header_title: Get help buying for schools
   banner:
     beta:
       feedback_link: feedback
@@ -222,11 +225,33 @@ en:
       body: Continue with a draft specification, and review completed specifications.
       header: Existing specifications
     header: Specifications dashboard
+  breadcrumbs:
+    offers: Offers
+  categories:
+    filter_labels:
+      active_filters: Active filters
+      clear_all_filters: Clear all filters
+      remove_filter: Remove filter
+    index:
+      offers_title: DfE featured
+      procurement_support: I need something else (opens in a new tab)
+      title: DfE-approved buying options by category
+    show:
+      apply: Apply
+      dfe_standfirst: These DfE buying options provide compliant, best value for schools
+      dfe_title: DfE buying options
+      filter: Filter
+      other_standfirst: All these DfE-approved buying options are compliant
+      other_title: Other buying options
+      section_title: Buying category
+      standfirst: All buying options are DfE-approved and listed alphabetically.
+      title: Buying options
   date:
     formats:
       compact: "%d %b %y"
       default: "%-d %b %Y"
       presenter: "%e %B %Y"
+      standard: "%e %B %Y"
   datetime:
     distance_in_words:
       about_x_hours:
@@ -2937,7 +2962,57 @@ en:
       - share files and contracts with school users
       contact_line_manager: Contact your line manager if you do not have access.
       sign_in: Sign in
+  offers:
+    index:
+      description: Browse time-limited offers negotiated by DfE for you, so you can
+        get best value.
+      expires_on: Expires on
+      section_title: ''
+      title: Offers
+    show:
+      cta: Link to the offer
+      section_title: Offers
+  results:
+    count:
+      one: 1 result
+      other: "%{count} results"
+      zero: No results
+    section:
+      title:
+        type:
+          category: Categories
+          solution: Buying options
+  search:
+    errors:
+      contentful_error: We couldn't process your search. Try again with a different
+        query.
+      empty: Enter a search term.
+      too_long: Your search query is too long. Use less than 2000 characters.
+      too_many_words: Your search query has too many words. Use less than 25 words.
+    header_title: Search Get help buying for schools
+    no_results:
+      cta: Visit Get Help Buying Home page
+      description: It looks like there are no results for your search keyword.
+      title: No search results
+    title: Search
+  service:
+    name: Get help buying for schools
+    navigation:
+      about: About this service
+      menu: Menu
   shared:
+    dfe_footer:
+      accessibility_statement: Accessibility statement
+      crown_copyright: "© Crown copyright"
+      feedback: Feedback
+      licensing_html: All content is available under the %{ogl3}, except where otherwise
+        stated.
+      ogl3: Open Government Licence v3.0
+      privacy_notice: Privacy notice
+      procurement_support: Request help and support for your procurement
+      terms_and_conditions: Terms and conditions
+    dfe_homepage_header:
+      view_all_buying_options: Browse a list of all DfE-approved buying options
     dfe_search:
       close_search: Close search
       data_close: click->search-toggle#toggleClose
@@ -2947,4 +3022,22 @@ en:
     dfe_search_homepage:
       search: Search
       search_this_website: Search this website
+    dfe_sidebar:
+      related_content: Related content
+    external_link:
+      opens_in_new_tab: opens in new tab
+    provider_and_expires:
+      expires: 'Expires:'
+      provider: 'Provider:'
+    provider_reference:
+      provider_reference: 'Provider Reference:'
+  solutions:
+    index:
+      all_buying_options_description: Use a DfE-approved buying option to make sure
+        your procurement is compliant
+      all_buying_options_section_title: DfE-approved
+      all_buying_options_title: All buying options
+    show:
+      cta: Visit the provider's website
+      section_title: Buying option
 
