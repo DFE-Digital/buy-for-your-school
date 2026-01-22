@@ -144,6 +144,8 @@ GEM
       msgpack (~> 1.2)
     brakeman (6.1.2)
       racc
+    breadcrumbs_on_rails (4.1.0)
+      railties (>= 5.0)
     builder (3.3.0)
     byebug (12.0.0)
     capybara (3.40.0)
@@ -405,6 +407,8 @@ GEM
       base64
     knapsack (4.0.0)
       rake
+    kramdown (2.5.2)
+      rexml (>= 3.4.4)
     language_server-protocol (3.17.0.5)
     libv8-node (24.1.0.0-arm64-darwin)
     libv8-node (24.1.0.0-x86_64-darwin)
@@ -492,6 +496,9 @@ GEM
       tzinfo
       validate_url
       webfinger (~> 2.0)
+    opensearch-ruby (3.4.0)
+      faraday (>= 1.0, < 3)
+      multi_json (>= 1.0)
     os (1.1.4)
     ostruct (0.6.1)
     pagy (9.1.1)
@@ -535,6 +542,8 @@ GEM
     raabro (1.4.0)
     racc (1.8.1)
     rack (2.2.21)
+    rack-attack (6.8.0)
+      rack (>= 1.0, < 4)
     rack-oauth2 (2.2.1)
       activesupport
       attr_required
@@ -634,7 +643,7 @@ GEM
     request_store_rails (2.0.0)
       concurrent-ruby (~> 1.0)
     retriable (3.1.2)
-    rexml (3.4.2)
+    rexml (3.4.4)
     rollbar (3.7.0)
     rouge (4.2.1)
     rspec (3.13.0)
@@ -841,6 +850,7 @@ DEPENDENCIES
   binding_of_caller
   bootsnap (>= 1.1.0)
   brakeman
+  breadcrumbs_on_rails
   byebug
   capybara (>= 2.15)
   climate_control
@@ -871,6 +881,7 @@ DEPENDENCIES
   jsbundling-rails
   jwt
   knapsack
+  kramdown
   liquid
   listen (>= 3.8, < 3.10)
   loaf
@@ -880,6 +891,7 @@ DEPENDENCIES
   omniauth
   omniauth-rails_csrf_protection
   omniauth_openid_connect
+  opensearch-ruby
   pandoc-ruby
   paper_trail
   pdf-forms
@@ -889,6 +901,7 @@ DEPENDENCIES
   pry-rails
   puma (~> 7)
   pundit
+  rack-attack (~> 6.8)
   rails (~> 7)
   rails-controller-testing
   rake
