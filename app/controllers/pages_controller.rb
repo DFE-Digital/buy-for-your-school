@@ -6,7 +6,7 @@ class PagesController < ApplicationController
   def show
     # Try Contentful Page first (FABS), then DB-backed Page (BFYS)
     contentful_page = begin
-      Page.find_by_slug!(params[:slug]) if defined?(Page) && Page.respond_to?(:find_by_slug!)
+      FABS::Page.find_by_slug!(params[:slug])
     rescue ContentfulRecordNotFoundError
       nil
     end
@@ -35,7 +35,7 @@ private
 
   def contentful_page_exists?
     begin
-      Page.find_by_slug!(params[:slug]) if defined?(Page) && Page.respond_to?(:find_by_slug!)
+      FABS::Page.find_by_slug!(params[:slug])
       true
     rescue ContentfulRecordNotFoundError
       false
@@ -64,10 +64,10 @@ private
       trail << node
 
       case node
-      when Category
+      when FABS::Category
         @category = node
         break
-      when Page
+      when FABS::Page
         node = node.parent
       else
         break
@@ -76,9 +76,9 @@ private
 
     trail.reverse_each do |n|
       case n
-      when Category
+      when FABS::Category
         add_breadcrumb :category_breadcrumb_name, :category_breadcrumb_path
-      when Page
+      when FABS::Page
         add_breadcrumb n.title, page_path(n.slug)
       end
     end
