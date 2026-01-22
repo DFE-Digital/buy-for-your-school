@@ -25,6 +25,64 @@ $govuk-font-family: 'Inter', sans-serif;
   }
 }
 
+// Main container
+.main-container {
+  padding: 0;
+}
+
+// DfE Grid system (similar to GOV.UK grid)
+.dfe-grid-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+.dfe-grid-column-two-thirds {
+  width: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 40.0625em) {
+  .dfe-grid-column-two-thirds {
+    width: 66.6667%;
+  }
+}
+
+.dfe-grid-column-full-width {
+  width: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+// DfE Typography
+.dfe-heading-xl {
+  font-size: 32px;
+  line-height: 1.09375;
+  font-weight: 700;
+  margin: 0;
+}
+
+@media (min-width: 40.0625em) {
+  .dfe-heading-xl {
+    font-size: 48px;
+    line-height: 1.04167;
+  }
+}
+
+.dfe-body-l {
+  font-size: 18px;
+  line-height: 1.66667;
+  margin: 0;
+}
+
+@media (min-width: 40.0625em) {
+  .dfe-body-l {
+    font-size: 24px;
+    line-height: 1.5;
+  }
+}
+
 * {
   font-family: 'Inter', sans-serif !important;
 }
