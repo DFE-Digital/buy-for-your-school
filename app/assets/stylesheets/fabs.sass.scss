@@ -641,6 +641,10 @@ a.all-buying-options-link {
   overflow: hidden;
   display: flex;
   align-items: flex-start;
+  padding: 20px;
+  border: 1px solid #b1b4b6;
+  background-color: #ffffff;
+  margin-bottom: 0;
 
   .title {
     height: 50px;
@@ -666,6 +670,15 @@ a.all-buying-options-link {
     -webkit-box-orient: vertical;
     word-wrap: break-word;
   }
+
+  a.govuk-link {
+    color: #1d70b8;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .dfe-card-container {
@@ -677,6 +690,21 @@ a.all-buying-options-link {
 .dfe-card:hover,
 .dfe-card:focus-within {
   background-color: #1d70b8;
+  border-color: #1d70b8;
+
+  a.govuk-link {
+    color: #ffffff;
+
+    &:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+  }
+
+  .title,
+  .description {
+    color: #ffffff;
+  }
 }
 
 .dfe-card.dfe-card--featured {
