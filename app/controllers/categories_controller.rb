@@ -22,7 +22,5 @@ class CategoriesController < ApplicationController
     @page_title = @category.title
     @page_description = @category.description
     @category_slug = @category.slug
-    
-    render layout: "all_buying_options"
   end
 end
