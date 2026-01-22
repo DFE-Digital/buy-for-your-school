@@ -7,6 +7,24 @@ $govuk-assets-path: "/govuk-frontend/";
 @import url('https://rsms.me/inter/inter.css');
 $govuk-font-family: 'Inter', sans-serif;
 
+// DfE width container - page width for the grid system
+.dfe-width-container {
+  margin: 0 16px;
+  max-width: 1200px;
+}
+
+@media (min-width: 48.0625em) {
+  .dfe-width-container {
+    margin: 0 32px;
+  }
+}
+
+@media (min-width: 1264px) {
+  .dfe-width-container {
+    margin: 0 auto;
+  }
+}
+
 * {
   font-family: 'Inter', sans-serif !important;
 }
