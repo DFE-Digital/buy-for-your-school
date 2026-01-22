@@ -1,4 +1,5 @@
 class SearchController < ApplicationController
+  skip_before_action :authenticate_user!
   # These are the limits for the Contentful search API
   MAX_QUERY_LENGTH = 150
   MAX_WORDS = 25
