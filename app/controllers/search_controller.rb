@@ -1,4 +1,6 @@
 class SearchController < ApplicationController
+  include BreadcrumbsOnRails::ActionController
+  
   skip_before_action :authenticate_user!
   # These are the limits for the Contentful search API
   MAX_QUERY_LENGTH = 150
