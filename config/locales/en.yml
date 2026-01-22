@@ -2937,4 +2937,14 @@ en:
       - share files and contracts with school users
       contact_line_manager: Contact your line manager if you do not have access.
       sign_in: Sign in
+  shared:
+    dfe_search:
+      close_search: Close search
+      data_close: click->search-toggle#toggleClose
+      data_open: click->search-toggle#toggleOpen
+      search: Search
+      search_this_website: Search this website
+    dfe_search_homepage:
+      search: Search
+      search_this_website: Search this website
 
