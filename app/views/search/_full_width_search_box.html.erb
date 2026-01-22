@@ -1,0 +1,22 @@
+<div class="search-container">
+  <form class="search-form" action="/search" method="get" role="search">
+    <div class="search-input-container">
+      <label class="govuk-visually-hidden" for="search-main"><%= t("shared.dfe_search.search_this_website") %></label>
+      <input 
+        class="govuk-input search-input govuk-body"
+        id="search-main" 
+        name="query" 
+        type="search" 
+        value="<%= params[:query] %>"
+        placeholder="<%= t('search.title') %>"
+        autocomplete="off"
+      >
+      <button class="search-button" type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+          <path d="M19.71 18.29l-4.11-4.1a7 7 0 1 0-1.41 1.41l4.1 4.11a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42zM5 10a5 5 0 1 1 5 5 5 5 0 0 1-5-5z" fill="white"/>
+        </svg>
+        <span class="govuk-visually-hidden"><%= t("shared.dfe_search.search") %></span>
+      </button>
+    </div>
+  </form>
+</div>

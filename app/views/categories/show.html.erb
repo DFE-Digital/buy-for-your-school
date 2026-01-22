@@ -1,0 +1,60 @@
+<% content_for :pre_main do %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <% if @category.banner.present? %>
+        <%= render partial: "shared/content_banner", locals: { 
+          title: @category.banner.title, 
+          description: @category.banner.description,
+          url: @category.banner.url
+        } %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% unless @subcategories.empty? %>
+  <div class="subcategory-filters-container">
+    <div class="filters-top-row">
+      <div class="subcategory-filters">
+        <%= govuk_details(summary_text: t(".filter"), open: params[:subcategory_slugs].presence) do %>
+          <%= form_with url: category_path(@category), method: :get  do |f| %>
+            <fieldset class="govuk-fieldset">
+              <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes" checked="checked">
+                <%= f.collection_check_boxes :subcategory_slugs, @subcategories, :slug, :title,
+                checked: params[:subcategory_slugs] do |b| %>
+                  <div class="govuk-checkboxes__item">
+                    <%= b.check_box(class: "govuk-checkboxes__input") %>
+                    <%= b.label(class: "govuk-label govuk-checkboxes__label") do %>
+                      <%= b.text %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </fieldset>
+            <button type="submit" class="govuk-button" data-module="govuk-button">
+              <%= t(".apply") %>
+            </button>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="results-count">
+        <%= t("results.count", count: @solutions.count) %>
+      </div>
+    </div>
+
+    <% unless params.fetch(:subcategory_slugs, []).compact_blank.blank? %>
+      <%= render "categories/filter_labels" %>
+    <% end %>
+  </div>
+<% end %>
+
+<% if @dfe_solutions.present? %>
+  <%= render partial: "shared/solution_section", locals: { title_key: t(".dfe_title"), standfirst_key: t(".dfe_standfirst"), solutions: @dfe_solutions, category_slug: @category_slug  } %>
+  <%= render partial: "shared/solution_section", locals: { title_key: t(".other_title"), standfirst_key: t(".other_standfirst"), solutions: @other_solutions, category_slug: @category_slug  } %>
+<% else  %>
+  <%= render partial: "shared/solution_section", locals: { title_key: t(".title"), standfirst_key: t(".standfirst"), solutions: @solutions, category_slug: @category_slug  } %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <%= render partial: "shared/related_content", locals: { related_content: @category.related_content } %>
+<% end %>

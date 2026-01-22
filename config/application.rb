@@ -54,6 +54,8 @@ module BuyForYourSchool
 
     config.middleware.use RealIp
 
+    config.middleware.use Rack::Attack
+
     # detect bots in order to keep user journey data clean
     config.middleware.use Rack::CrawlerDetect
 

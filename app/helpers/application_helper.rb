@@ -2,6 +2,9 @@
 
 # ApplicationHelper provides banner and footer tags.
 module ApplicationHelper
+  include MarkdownHelper
+  require "date"
+
   def banner_tag
     I18n.t("banner.beta.tag")
   end
@@ -58,5 +61,71 @@ module ApplicationHelper
 
   def register_your_interest_form_url
     "https://submit.forms.service.gov.uk/form/8895/multi-academy-trusts-register-your-interest-in-energy-for-schools/1049539"
+  end
+
+  def fabs_govuk_link_to(link_text, url, **options)
+    safe_url = safe_url(url)
+    external_attrs = external_link_attributes(url)
+    if is_external_link?(url)
+      link_text = "#{h(link_text)}<span class=\"govuk-visually-hidden\"> #{h(t('shared.external_link.opens_in_new_tab'))}</span>".html_safe
+    end
+
+    govuk_link_to(link_text, safe_url, **options.merge(external_attrs))
+  end
+
+  def is_external_link?(url)
+    return false unless url.is_a?(String)
+
+    begin
+      uri = URI.parse(url)
+      return false unless uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)
+
+      uri.host != request.host
+    rescue URI::InvalidURIError
+      false
+    end
+  end
+
+  def external_link_attributes(url)
+    is_external_link?(url) ? { target: "_blank", rel: "noopener noreferrer" } : {}
+  end
+
+  def safe_url(url)
+    return "#" unless url.is_a?(String)
+
+    uri = URI.parse(url)
+    uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS) ? url : "#"
+  rescue URI::InvalidURIError => e
+    Rollbar.error(e, url: url)
+    "#"
+  end
+
+  def format_date(date_string)
+    return "" if date_string.blank?
+
+    I18n.l(Date.parse(date_string), format: :standard)
+  rescue Date::Error => e
+    Rollbar.error(e, date_string: date_string)
+    ""
+  end
+
+  def page_title(page_title = nil)
+    page_title.present? ? "#{h(page_title.strip)} - #{t('service.name')}" : t("service.name")
+  end
+
+  def service_navigation_items
+    items = []
+    items << { path: "/about-this-service", text: t("service.navigation.about") }
+    items
+  end
+
+private
+
+  def service_navigation_active?(path)
+    request.path == path
+  end
+
+  def service_navigation_any_active?
+    service_navigation_items.any? { |item| service_navigation_active?(item[:path]) }
   end
 end
