@@ -11,7 +11,7 @@
           </p>
           <% if offer.expiry.present? %>
              <p class="expires govuk-secondary-text-colour">
-              <%= t(".expires_on") %> <%= format_date(offer.expiry) %>
+              <%= t(".expires_on") %> <%= fabs_format_date(offer.expiry) %>
             </p>
           <% end %>
         </div>
