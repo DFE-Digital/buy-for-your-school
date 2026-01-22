@@ -36,5 +36,7 @@ class SolutionsController < ApplicationController
     elsif @primary_category
       add_breadcrumb :primary_category_breadcrumb_name, :primary_category_breadcrumb_path
     end
+    
+    render layout: "fabs_application"
   end
 end

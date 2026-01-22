@@ -18,6 +18,8 @@ class SearchController < ApplicationController
       @categories = FABS::Category.search(query: query)
       @results_count = @solutions.count + @categories.count
     end
+    
+    render layout: "fabs_application"
   rescue Contentful::BadRequest
     @validation_error = :contentful_error
   end
