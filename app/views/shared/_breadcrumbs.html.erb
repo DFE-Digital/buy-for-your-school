@@ -1,5 +1,3 @@
-<% if breadcrumbs.any? %>
-  <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
-    <%= render_breadcrumbs(builder: govuk_breadcrumb_builder, separator: " / ") %>
-  </nav>
-<% end %>
+<nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+  <%= render_breadcrumbs(builder: govuk_breadcrumb_builder) %>
+</nav>
