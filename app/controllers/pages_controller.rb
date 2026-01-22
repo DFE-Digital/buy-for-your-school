@@ -14,7 +14,7 @@ class PagesController < ApplicationController
     if contentful_page
       @page = contentful_page
       @page_title = @page.title
-      add_breadcrumb :home_breadcrumb_name, :home_breadcrumb_path
+      add_breadcrumb home_breadcrumb_name, home_breadcrumb_path
       build_page_breadcrumbs(@page)
     else
       # Fall back to DB-backed page
@@ -77,7 +77,7 @@ private
     trail.reverse_each do |n|
       case n
       when FABS::Category
-        add_breadcrumb :category_breadcrumb_name, :category_breadcrumb_path
+        add_breadcrumb category_breadcrumb_name, category_breadcrumb_path
       when FABS::Page
         add_breadcrumb n.title, page_path(n.slug)
       end
