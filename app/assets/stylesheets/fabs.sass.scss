@@ -639,9 +639,18 @@ a.all-buying-options-link {
 }
 
 .dfe-card {
-  overflow: hidden;
+  position: relative;
   display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 1px solid #b1b4b6;
+  max-width: 400px;
+  overflow: hidden;
   align-items: flex-start;
+
+  @media (max-width: 40.0525em) {
+    max-width: 100%;
+  }
 
   .title {
     height: 50px;
