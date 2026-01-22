@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
   before_action :enable_search_in_header, except: :index
 
   def index
-    @categories = Category.all
+    @categories = FABS::Category.all
     @featured_offers = Offer.featured_offers.select { |offer| offer.sort_order.present? }.first(3)
     @energy_banner = Banner.find_by_slug(ENV.fetch("HOMEPAGE_BANNER_SLUG", "homepage-banner"))
     render layout: "homepage"
@@ -11,7 +11,7 @@ class CategoriesController < ApplicationController
   def show
     add_breadcrumb :home_breadcrumb_name, :home_breadcrumb_path
 
-    @category = Category.find_by_slug!(params[:slug])
+    @category = FABS::Category.find_by_slug!(params[:slug])
     @subcategories = @category.subcategories
     @selected_subcategories = @subcategories.select { params[:subcategory_slugs]&.include?(it.slug) }
     @solutions = @category.filtered_solutions(subcategory_slugs: params[:subcategory_slugs]&.compact_blank)
