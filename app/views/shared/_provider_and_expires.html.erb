@@ -5,6 +5,6 @@
 <% end %>
 <% if solution.expiry.present? %>
   <p class="expires govuk-secondary-text-colour">
-    <%= t(".expires") %> <%= format_date(solution.expiry) %>
+    <%= t(".expires") %> <%= fabs_format_date(solution.expiry) %>
   </p>
 <% end %>
