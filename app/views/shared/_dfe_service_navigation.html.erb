@@ -12,7 +12,7 @@
           <% service_navigation_items.each do |item| %>
             <% is_active = service_navigation_active?(item[:path]) %>
             <li class="govuk-service-navigation__item <%= ' govuk-service-navigation__item--active' if is_active %>">
-              <%= link_to item[:path], class: "govuk-service-navigation__link", **({ "aria-current": "true" } if is_active) do %>
+              <%= link_to item[:path], class: "govuk-service-navigation__link", **(is_active ? { "aria-current": "true" } : {}) do %>
                 <% if is_active %>
                   <strong class="govuk-service-navigation__active-fallback"><%= item[:text] %></strong>
                 <% else %>
