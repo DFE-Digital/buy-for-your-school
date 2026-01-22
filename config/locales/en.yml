@@ -227,16 +227,6 @@ en:
     header: Specifications dashboard
   breadcrumbs:
     offers: Offers
-  loaf:
-    breadcrumbs:
-      home_breadcrumb_name: Home
-      home_breadcrumb_path: /
-      category_breadcrumb_name: Category
-      category_breadcrumb_path: /
-      primary_category_breadcrumb_name: Category
-      primary_category_breadcrumb_path: /
-      offers_breadcrumb_name: Offers
-      offers_breadcrumb_path: /offers
   categories:
     filter_labels:
       active_filters: Active filters
