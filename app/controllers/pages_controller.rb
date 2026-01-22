@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  include BreadcrumbsOnRails::ActionController
+  
   skip_before_action :authenticate_user!
   before_action :redirect_non_page_requests
   before_action :set_breadcrumbs, only: :show
