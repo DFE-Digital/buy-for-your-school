@@ -12,7 +12,7 @@ module FABS
       @title = entry.fields[:title]
       @description = entry.fields[:description]
       @slug = entry.fields[:slug]
-      @subcategories = entry.fields.fetch(:subcategories, []).map { Subcategory.new(it) }.sort_by(&:title)
+      @subcategories = entry.fields.fetch(:subcategories, []).map { Subcategory.new(entry) }.sort_by(&:title)
       @banner = entry.fields[:banner] ? Banner.new(entry.fields[:banner]) : nil
       super
     end
@@ -33,7 +33,7 @@ module FABS
         include: 1,
       }
 
-      ContentfulClient.entries(params).map { new(it) }
+      ContentfulClient.entries(params).map { |entry| new(entry) }
     end
 
     def self.search(query: "")
@@ -42,7 +42,7 @@ module FABS
         query: query,
         select: "sys.id,fields.title,fields.description,fields.slug,fields.banner",
         include: 1
-      ).map { new(it) }
+      ).map { |entry| new(entry) }
     end
 
     def self.rehydrate_from_search(result)
