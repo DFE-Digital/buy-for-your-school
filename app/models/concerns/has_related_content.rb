@@ -6,6 +6,6 @@ module HasRelatedContent
   end
 
   def initialize(entry)
-    @related_content = entry.fields.fetch(:related_content, []).map { RelatedContent.new(it) }
+    @related_content = entry.fields.fetch(:related_content, []).map { |content| RelatedContent.new(content) }
   end
 end

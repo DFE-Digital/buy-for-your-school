@@ -66,7 +66,7 @@ class Offer
       ].join(","),
       order: "fields.sort_order",
     }
-    ContentfulClient.entries(params).map { new(it) }
+    ContentfulClient.entries(params).map { |entry| new(entry) }
   end
 
   def self.featured_offers

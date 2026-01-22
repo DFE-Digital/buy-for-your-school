@@ -52,7 +52,7 @@ class Solution
       order: "fields.title",
       "fields.categories.sys.id[in]": category_id,
     }.compact
-    ContentfulClient.entries(params).map { new(it) }
+    ContentfulClient.entries(params).map { |entry| new(entry) }
   end
 
   def self.search(query: "")
