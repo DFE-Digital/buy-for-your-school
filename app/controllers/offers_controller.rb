@@ -1,6 +1,4 @@
 class OffersController < ApplicationController
-  include BreadcrumbsOnRails::ActionController
-  
   skip_before_action :authenticate_user!
   before_action :enable_search_in_header
 
@@ -13,7 +11,7 @@ class OffersController < ApplicationController
     @page_header_class = "category-header"
     @page_back_link = request.referer
 
-    add_breadcrumb home_breadcrumb_name, home_breadcrumb_path
+    add_breadcrumb :home_breadcrumb_name, :home_breadcrumb_path
     render layout: "all_offers"
   end
 
@@ -24,9 +22,9 @@ class OffersController < ApplicationController
     @page_title = @offer.title
     @page_description = @offer.description
     @page_header_class = "details-header"
-    add_breadcrumb home_breadcrumb_name, home_breadcrumb_path
+    add_breadcrumb :home_breadcrumb_name, :home_breadcrumb_path
 
-    add_breadcrumb offers_breadcrumb_name, offers_breadcrumb_path
+    add_breadcrumb :offers_breadcrumb_name, :offers_breadcrumb_path
     
     render layout: "fabs_application"
   end
