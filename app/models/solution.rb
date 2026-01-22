@@ -65,7 +65,7 @@ class Solution
         content_type: "solution",
         query: query,
         select: "sys.id,fields.title,fields.summary,fields.description,fields.slug,fields.provider_name,fields.buying_option_type,fields.provider_initials,fields.primary_category,fields.provider_reference"
-      ).map { new(it) }
+      ).map { |entry| new(entry) }
     end
   end
 

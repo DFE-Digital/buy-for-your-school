@@ -14,7 +14,7 @@ class CategoriesController < ApplicationController
 
     @category = FABS::Category.find_by_slug!(params[:slug])
     @subcategories = @category.subcategories
-    @selected_subcategories = @subcategories.select { params[:subcategory_slugs]&.include?(it.slug) }
+    @selected_subcategories = @subcategories.select { |subcategory| params[:subcategory_slugs]&.include?(subcategory.slug) }
     @solutions = @category.filtered_solutions(subcategory_slugs: params[:subcategory_slugs]&.compact_blank)
     @dfe_solutions, @other_solutions = @solutions.partition(&:buying_option_type)
     @page_section_title = t(".section_title")
