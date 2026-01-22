@@ -20,7 +20,7 @@ class SolutionsController < ApplicationController
 
   def show
     @solution = Solution.find_by_slug!(params[:slug])
-    @category = Category.find_by_slug!(params[:category_slug])
+    @category = FABS::Category.find_by_slug!(params[:category_slug])
     @primary_category = @solution.primary_category
 
     @page_section_title = t(".section_title")
