@@ -113,7 +113,10 @@ module ApplicationHelper
   end
 
   def customer_satisfaction_survey_url(source)
-    uri = URI.join(ENV["GHBS_SERVER_URL"], "/customer_satisfaction_surveys/new")
+    base_url = ENV["GHBS_SERVER_URL"] || ENV["APPLICATION_URL"] || ""
+    return "#" if base_url.blank?
+
+    uri = URI.join(base_url, "/customer_satisfaction_surveys/new")
     uri.query = {
       service: "find_a_buying_solution",
       source: source,
