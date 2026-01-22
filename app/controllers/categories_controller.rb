@@ -1,4 +1,6 @@
 class CategoriesController < ApplicationController
+  include BreadcrumbsOnRails::ActionController
+  
   skip_before_action :authenticate_user!
   before_action :enable_search_in_header, except: :index
 
