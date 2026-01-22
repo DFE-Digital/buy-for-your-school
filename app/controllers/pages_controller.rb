@@ -16,6 +16,8 @@ class PagesController < ApplicationController
       @page_title = @page.title
       add_breadcrumb home_breadcrumb_name, home_breadcrumb_path
       build_page_breadcrumbs(@page)
+      
+      render layout: "fabs_application"
     else
       # Fall back to DB-backed page
       @page = PagePresenter.new(page)
