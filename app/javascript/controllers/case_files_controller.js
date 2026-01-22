@@ -36,7 +36,6 @@ export default class extends Controller {
         previewsContainer: this.filePreviewTarget,
         autoProcessQueue: false,
         clickable: this.btnDisplayFileDialogTarget,
-        maxFilesize: 80,
         parallelUploads: 100,
         maxFiles: 100,
         uploadMultiple: true,
@@ -59,7 +58,7 @@ export default class extends Controller {
   }
 
   errorSummaryOutletConnected(outlet) {
-    this.errorInvalidFiles = new ErrorMessage(outlet, 'Please remove any invalid files marked in red. Each file must be under 80MB.')
+    this.errorInvalidFiles = new ErrorMessage(outlet, 'Please remove any invalid files marked in red.')
   }
 
   onFileAdded(file) {
