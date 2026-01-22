@@ -1,5 +1,5 @@
 <% if solutions.present? %>
   <h2 class="govuk-!-margin-top-6 govuk-!-margin-bottom-2 govuk-heading-m"><%= title_key %></h2>
   <p class="govuk-body"><%= standfirst_key %></p>
-  <%= render partial: "shared/solutions", locals: { solutions: solutions, category_slug: @category_slug } %>
+  <%= render partial: "shared/solutions", locals: { solutions: solutions, category_slug: category_slug } %>
 <% end %>
