@@ -10,6 +10,7 @@ Rails.application.config.assets.version = "1.0"
 
 # JS-bundling
 Rails.application.config.assets.paths << Rails.root.join("app/javascript")
+Rails.application.config.assets.paths << Rails.root.join("app/assets/builds")
 
 # Add the GOVUK Frontend assets paths
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand")
