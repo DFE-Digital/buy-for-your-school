@@ -169,16 +169,16 @@ git checkout -b feature/add-ghbs-public-frontend-flag
 
 #### Step 2: Add Feature Flag Infrastructure
 
-1. **Create a base controller** for public-facing routes (similar to `Energy::ApplicationController`):
+1. **Create a base controller** for FABS routes (similar to `Energy::ApplicationController`):
    ```ruby
-   # app/controllers/public/application_controller.rb
-   class Public::ApplicationController < ApplicationController
+   # app/controllers/fabs/application_controller.rb
+   class Fabs::ApplicationController < ApplicationController
      skip_before_action :authenticate_user!
-     before_action :check_public_frontend_flag
+     before_action :check_fabs_flag
      
      private
      
-     def check_public_frontend_flag
+     def check_fabs_flag
        # If flag is disabled, redirect to external site
        unless Flipper.enabled?(:ghbs_public_frontend)
          redirect_to ENV.fetch("FABS_EXTERNAL_URL", "https://find-a-buying-solution.education.gov.uk"), status: :temporary_redirect
@@ -190,6 +190,8 @@ git checkout -b feature/add-ghbs-public-frontend-flag
      end
    end
    ```
+   
+   **Note**: Using `Fabs::` namespace is temporary - aligns with current temporary FABS namespacing. Will be removed during unification phase.
 
 2. **Add route constraints** (routes can be stubs initially, or added when FABS code merges):
    ```ruby
@@ -239,11 +241,13 @@ git merge feature/add-ghbs-public-frontend-flag
 #### Step 5: Update Controllers to Use Flag
 
 When FABS code is merged, update controllers to inherit from base controller:
-- `CategoriesController` → `Public::CategoriesController < Public::ApplicationController`
-- `SolutionsController` → `Public::SolutionsController < Public::ApplicationController`
-- `OffersController` → `Public::OffersController < Public::ApplicationController`
-- `SearchController` → `Public::SearchController < Public::ApplicationController`
-- `PagesController` → `Public::PagesController < Public::ApplicationController`
+- `CategoriesController` → `Fabs::CategoriesController < Fabs::ApplicationController`
+- `SolutionsController` → `Fabs::SolutionsController < Fabs::ApplicationController`
+- `OffersController` → `Fabs::OffersController < Fabs::ApplicationController`
+- `SearchController` → `Fabs::SearchController < Fabs::ApplicationController`
+- `PagesController` → `Fabs::PagesController < Fabs::ApplicationController`
+   
+   **Note**: This temporary `Fabs::` namespace will be removed during the unification phase.
 
 #### Step 6: Rollout Strategy
 
@@ -438,10 +442,11 @@ The end state is a unified GHBS codebase with no "FABS" terminology.
    end
    ```
 
-3. **Remove sync job**:
-   - Disable cron job in `config/schedule.yml`
-   - Keep `SyncFrameworks` service for manual sync if needed (via admin UI)
-   - Or remove entirely if webhooks handle all updates
+3. **Refactor sync job as fallback**:
+   - Keep `SyncFrameworks` service but refactor to call Contentful directly instead of external API
+   - Disable automatic cron job in `config/schedule.yml` (webhooks handle real-time updates)
+   - Keep manual sync option available via admin UI for fallback scenarios (e.g., if webhooks are down or broken)
+   - This provides resilience: webhooks for real-time updates, manual sync as backup
 
 #### Option 2: Internal API Call (Fallback)
 
@@ -467,21 +472,62 @@ The end state is a unified GHBS codebase with no "FABS" terminology.
 **Migration Steps**:
 1. **Extend webhook handler** to update `Frameworks::Framework` records
 2. **Test webhook updates** in dev environment
-3. **Disable sync cron job** once webhooks are verified
-4. **Keep manual sync option** in admin UI for one-time fixes if needed
+3. **Refactor `SyncFrameworks` service** to call Contentful directly instead of external API endpoint
+4. **Disable automatic cron job** in `config/schedule.yml` once webhooks are verified (keep manual sync available)
 5. **Remove `FAF_FRAMEWORK_ENDPOINT` env var** once external API is no longer called
-6. **Update documentation** to reflect new real-time update mechanism
+6. **Update documentation** to reflect new real-time update mechanism with manual fallback
 
 **Files to modify**:
 - `app/controllers/contentful_webhooks_controller.rb` - Add framework sync logic
-- `config/schedule.yml` - Disable `sync_frameworks` cron job
-- `app/services/support/sync_frameworks.rb` - Keep for manual sync or remove
+- `config/schedule.yml` - Disable automatic `sync_frameworks` cron job (keep manual sync available)
+- `app/services/support/sync_frameworks.rb` - Refactor to call Contentful directly instead of external API
 - `.env.example` - Remove `FAF_FRAMEWORK_ENDPOINT` (or mark as deprecated)
 
 **Timeline**:
 - **Before unification**: Keep sync job running (external API still needed)
-- **During unification**: Implement webhook-based updates in parallel
-- **After unification**: Disable sync job, remove external API dependency 
+- **During unification**: Implement webhook-based updates in parallel, refactor sync service
+- **After unification**: Disable automatic cron job, keep manual sync as fallback, remove external API dependency
+
+### 5. Remove Rack Attack
+
+**Current State**: Both FABS and BFYS have rate limiting/bot protection:
+- **FABS**: Uses `rack-attack` gem with in-code configuration
+- **BFYS**: Uses Azure Web Application Firewall (WAF) policies
+
+**Why remove rack-attack**:
+- Azure WAF is more robust and provides environment-specific configuration
+- No need for duplicate protection mechanisms
+- WAF is already in place and working for BFYS
+
+**Action Items** (✅ **COMPLETED**):
+1. ✅ **Removed gem** from `Gemfile` - `gem "rack-attack", "~> 6.8"` deleted
+2. ✅ **Deleted initializer** - `config/initializers/rack_attack.rb` removed
+3. ✅ **Removed middleware** from `config/application.rb` - `config.middleware.use Rack::Attack` deleted
+4. ⚠️ **TODO**: Run `bundle install` to update `Gemfile.lock` (will remove rack-attack from lock file)
+
+**Status**: Removed from codebase. Protection now relies solely on Azure WAF.
+
+### 6. Remove UrlVerifier
+
+**Current State**: `UrlVerifier` service exists in BFYS (`app/services/url_verifier.rb`)
+
+**Purpose**: URL signing for external redirects between FABS and BFYS websites (specifically for survey links)
+
+**Why remove**:
+- Once applications are merged, surveys will be within the same application
+- No external redirects needed, so URL signing is no longer necessary
+- Reduces complexity
+
+**Action Items**:
+1. **Remove service**: Delete `app/services/url_verifier.rb`
+2. **Update controllers**: Remove `UrlVerifier` usage from:
+   - `app/controllers/usability_surveys_controller.rb`
+   - Any other controllers using it
+3. **Update helpers**: Remove `UrlVerifier.generate()` calls from helpers
+4. **Remove tests**: Delete `spec/services/url_verifier_spec.rb` (if exists)
+5. **Remove env var**: Remove `FAF_WEBHOOK_SECRET` from `.env.example` (if only used for UrlVerifier)
+
+**Timeline**: Can be done after merge is complete and surveys are integrated into unified application 
 
 
 ## Files Modified
