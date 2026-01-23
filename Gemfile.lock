@@ -542,8 +542,6 @@ GEM
     raabro (1.4.0)
     racc (1.8.1)
     rack (2.2.21)
-    rack-attack (6.8.0)
-      rack (>= 1.0, < 4)
     rack-oauth2 (2.2.1)
       activesupport
       attr_required
@@ -901,7 +899,6 @@ DEPENDENCIES
   pry-rails
   puma (~> 7)
   pundit
-  rack-attack (~> 6.8)
   rails (~> 7)
   rails-controller-testing
   rake
