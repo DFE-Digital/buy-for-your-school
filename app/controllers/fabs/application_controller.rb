@@ -16,7 +16,7 @@ private
     # existing behaviour (serving the current external GHBS/FABS site).
     return if Flipper.enabled?(:ghbs_public_frontend)
 
-    redirect_to ENV.fetch("GHBS_HOMEPAGE_URL"), status: :temporary_redirect
+    redirect_to ENV.fetch("GHBS_HOMEPAGE_URL"), status: :redirect
   end
 end
 
