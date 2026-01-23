@@ -1,6 +1,6 @@
 $govuk-global-styles: true;
 $govuk-new-link-styles: true;
-$govuk-assets-path: "/govuk-frontend/";
+$govuk-assets-path: "/assets/govuk-frontend/";
 
 @use "../node_modules/govuk-frontend/dist/govuk/all" as govuk;
 @use "../node_modules/dfe-frontend/packages/dfefrontend" as dfefrontend;
@@ -747,10 +747,15 @@ a.all-buying-options-link {
   background-color: #f4f8fb;
 }
 
+.govuk-footer__licence-logo {
+  display: block;
+  margin-bottom: 20px;
+}
+
 .govuk-footer__crown-icon {
   height: 30px;
   width: auto;
-  margin-bottom: 20px;
+  display: block;
 }
 
 .govuk-footer__inline-list{
