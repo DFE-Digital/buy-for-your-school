@@ -251,7 +251,7 @@ en:
       compact: "%d %b %y"
       default: "%-d %b %Y"
       presenter: "%e %B %Y"
-      standard: "%e %B %Y"
+      standard: "%d %B %Y"
   datetime:
     distance_in_words:
       about_x_hours:

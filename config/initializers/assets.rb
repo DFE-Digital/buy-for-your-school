@@ -12,6 +12,9 @@ Rails.application.config.assets.version = "1.0"
 Rails.application.config.assets.paths << Rails.root.join("app/javascript")
 Rails.application.config.assets.paths << Rails.root.join("app/assets/builds")
 
+# Ensure images directory is in asset paths (should be default, but being explicit)
+Rails.application.config.assets.paths << Rails.root.join("app/assets/images")
+
 # Add the GOVUK Frontend assets paths
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand")
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand/images")
@@ -37,6 +40,8 @@ Rails.application.config.assets.precompile += [
   "images/govuk-icon-192.png",
   "images/govuk-icon-512.png",
   "images/govuk-icon-mask.svg",
+  "images/govuk-frontend/govuk-footer-crown.svg",
+  "images/govuk-frontend/govuk-crest.svg",
 ]
 
 # Add Yarn node_modules folder to the asset load path.
