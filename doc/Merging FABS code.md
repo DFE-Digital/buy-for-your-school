@@ -179,35 +179,25 @@ git checkout -b feature/add-ghbs-public-frontend-flag
      private
      
      def check_fabs_flag
-       # If flag is disabled, redirect to external site
-       unless Flipper.enabled?(:ghbs_public_frontend)
-         redirect_to ENV.fetch("FABS_EXTERNAL_URL", "https://find-a-buying-solution.education.gov.uk"), status: :temporary_redirect
-         return
-       end
-       
-       # If flag is enabled but routes don't exist yet, that's fine
-       # The routes will be added when FABS code is merged
+       # If flag is disabled, keep existing behaviour and send users to the
+       # current live GHBS site.
+       return if Flipper.enabled?(:ghbs_public_frontend)
+
+       redirect_to ENV.fetch("GHBS_HOMEPAGE_URL"), status: :redirect
      end
    end
    ```
    
-   **Note**: Using `Fabs::` namespace is temporary - aligns with current temporary FABS namespacing. Will be removed during unification phase.
+   **Notes**:
+   - Using `Fabs::` namespace is **temporary** – it just matches the temporary FABS namespacing we’re using during the merge. It will be removed during the unification phase.
+   - On this **feature-flag branch off `main`**, nothing inherits from `Fabs::ApplicationController` yet, so this class is effectively unused until the combined GHBS branch wires controllers to it.
 
-2. **Add route constraints** (routes can be stubs initially, or added when FABS code merges):
-   ```ruby
-   # config/routes.rb
-   constraints ->(request) { Flipper.enabled?(:ghbs_public_frontend) } do
-     # These routes will be added when FABS code is merged
-     # For now, this constraint block can be empty or contain stubs
-   end
-   ```
-
-3. **Add environment variable** to `.env.example`:
+2. **Add environment variable** to `.env.example` (already present in BFYS):
    ```
    FABS_EXTERNAL_URL=https://find-a-buying-solution.education.gov.uk
    ```
 
-4. **Add to feature flags documentation** (`doc/feature-flags.md`):
+3. **Add to feature flags documentation** (`doc/feature-flags.md`):
    ```
    |ghbs_public_frontend|Enable unified GHBS public-facing frontend. When disabled, redirects to external FABS site.|DISABLED|Enable in dev for testing|
    ```
@@ -216,8 +206,17 @@ git checkout -b feature/add-ghbs-public-frontend-flag
 
 - Deploy to production with flag **DISABLED** by default
 - Verify flag infrastructure works (can toggle in Flipper UI at `/flipper`)
-- No behavior change since flag is off - all existing functionality continues to work
+- No behavior change since flag is off **and no controllers use `Fabs::ApplicationController` yet** – all existing functionality continues to work
 - This is a low-risk deployment (just adds infrastructure, doesn't change behavior)
+
+**Important clarification**:
+- On this infrastructure branch (off `main`), **deploying the feature flag does nothing by itself**:
+  - There are **no FABS/GHBS public controllers or routes on `main`**.
+  - No controller inherits from `Fabs::ApplicationController`.
+  - Toggling `:ghbs_public_frontend` ON or OFF has **no effect** on behaviour.
+- The purpose of this branch is to:
+  - Register the flag name (`ghbs_public_frontend`) across environments.
+  - Provide a base controller that the combined GHBS branch can later use.
 
 #### Step 4: Merge FABS Code
 
@@ -256,8 +255,10 @@ When FABS code is merged, update controllers to inherit from base controller:
 - **Production**: Enable gradually (maybe percentage-based rollout via Flipper groups)
 
 **Default behavior when flag is OFF**:
-- Redirect root and public routes to external FABS site (via `ENV["FABS_EXTERNAL_URL"]`)
-- Keep BFYS case management functionality unaffected (always accessible to authenticated users)
+- On the **infrastructure-only branch** (off `main`): no effect (no controllers inherit from `Fabs::ApplicationController` yet).
+- On the **combined GHBS branch** (after rebase on main and wiring controllers):
+  - Any public-facing controller inheriting from `Fabs::ApplicationController` will redirect to `ENV["GHBS_HOMEPAGE_URL"]` when the flag is OFF (preserving current external GHBS behaviour).
+  - BFYS case management functionality remains unaffected (still behind authentication and not using this base controller).
 
 **Benefits**:
 - Can test thoroughly in dev without affecting other environments
