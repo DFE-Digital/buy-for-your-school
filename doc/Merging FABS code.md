@@ -150,11 +150,28 @@ The end goal is a single unified codebase with:
 
 **Important**: The feature flag controls the **unified GHBS public-facing frontend** (not "FABS integration"). When disabled, users are redirected to the old separate FABS site.
 
-**Implementation Approach**:
+**Recommended Branching Strategy**: **Create feature flag infrastructure on a separate branch from main**
+
+**Why separate branch?**
+- Lower risk: Deploy flag infrastructure (small, isolated change) before FABS code
+- Production-ready: Flag available in production before FABS code is merged
+- Flexibility: Can enable/disable flag immediately when FABS code merges
+- Testing: Can test flag infrastructure independently
+
+**Implementation Steps**:
+
+#### Step 1: Create Feature Flag Infrastructure Branch
+
+```bash
+git checkout main
+git checkout -b feature/add-ghbs-public-frontend-flag
+```
+
+#### Step 2: Add Feature Flag Infrastructure
 
 1. **Create a base controller** for public-facing routes (similar to `Energy::ApplicationController`):
    ```ruby
-   # app/controllers/public/application_controller.rb (or ghbs/public/application_controller.rb)
+   # app/controllers/public/application_controller.rb
    class Public::ApplicationController < ApplicationController
      skip_before_action :authenticate_user!
      before_action :check_public_frontend_flag
@@ -162,44 +179,81 @@ The end goal is a single unified codebase with:
      private
      
      def check_public_frontend_flag
+       # If flag is disabled, redirect to external site
        unless Flipper.enabled?(:ghbs_public_frontend)
-         # Redirect to old FABS site
          redirect_to ENV.fetch("FABS_EXTERNAL_URL", "https://find-a-buying-solution.education.gov.uk"), status: :temporary_redirect
+         return
        end
+       
+       # If flag is enabled but routes don't exist yet, that's fine
+       # The routes will be added when FABS code is merged
      end
    end
    ```
 
-2. **Update public-facing controllers** to inherit from this base:
-   - `CategoriesController` → `Public::CategoriesController < Public::ApplicationController`
-   - `SolutionsController` → `Public::SolutionsController < Public::ApplicationController`
-   - `OffersController` → `Public::OffersController < Public::ApplicationController`
-   - `SearchController` → `Public::SearchController < Public::ApplicationController`
-   - `PagesController` → `Public::PagesController < Public::ApplicationController`
-
-3. **Wrap routes conditionally** (alternative approach if you want route-level control):
+2. **Add route constraints** (routes can be stubs initially, or added when FABS code merges):
    ```ruby
    # config/routes.rb
    constraints ->(request) { Flipper.enabled?(:ghbs_public_frontend) } do
-     root "categories#index"
-     resources :categories, only: %i[show index], param: :slug
-     # ... other public routes
+     # These routes will be added when FABS code is merged
+     # For now, this constraint block can be empty or contain stubs
    end
    ```
 
-4. **Default behavior when flag is OFF**:
-   - Redirect root and public routes to external FABS site (via `ENV["FABS_EXTERNAL_URL"]`)
-   - Keep BFYS case management functionality unaffected (always accessible to authenticated users)
+3. **Add environment variable** to `.env.example`:
+   ```
+   FABS_EXTERNAL_URL=https://find-a-buying-solution.education.gov.uk
+   ```
 
-5. **Rollout strategy**:
-   - **Dev**: Enable flag immediately for testing
-   - **Staging**: Enable after dev validation
-   - **Production**: Enable gradually (maybe percentage-based rollout via Flipper groups)
-
-6. **Add to feature flags documentation** (`doc/feature-flags.md`):
+4. **Add to feature flags documentation** (`doc/feature-flags.md`):
    ```
    |ghbs_public_frontend|Enable unified GHBS public-facing frontend. When disabled, redirects to external FABS site.|DISABLED|Enable in dev for testing|
    ```
+
+#### Step 3: Deploy Flag Infrastructure Branch
+
+- Deploy to production with flag **DISABLED** by default
+- Verify flag infrastructure works (can toggle in Flipper UI at `/flipper`)
+- No behavior change since flag is off - all existing functionality continues to work
+- This is a low-risk deployment (just adds infrastructure, doesn't change behavior)
+
+#### Step 4: Merge FABS Code
+
+**Option A: Merge FABS code into flag branch**
+```bash
+git checkout feature/add-ghbs-public-frontend-flag
+git merge combined-ghbs
+# Resolve any conflicts
+# Flag is already in production, just needs to be enabled
+```
+
+**Option B: Merge flag branch into FABS code branch**
+```bash
+git checkout combined-ghbs
+git merge feature/add-ghbs-public-frontend-flag
+# Flag infrastructure is now part of FABS code branch
+```
+
+**Recommendation**: Use Option A - merge FABS code into flag branch, then merge flag branch to main. This keeps the flag infrastructure as the "base" that FABS code builds on.
+
+#### Step 5: Update Controllers to Use Flag
+
+When FABS code is merged, update controllers to inherit from base controller:
+- `CategoriesController` → `Public::CategoriesController < Public::ApplicationController`
+- `SolutionsController` → `Public::SolutionsController < Public::ApplicationController`
+- `OffersController` → `Public::OffersController < Public::ApplicationController`
+- `SearchController` → `Public::SearchController < Public::ApplicationController`
+- `PagesController` → `Public::PagesController < Public::ApplicationController`
+
+#### Step 6: Rollout Strategy
+
+- **Dev**: Enable flag immediately for testing
+- **Staging**: Enable after dev validation
+- **Production**: Enable gradually (maybe percentage-based rollout via Flipper groups)
+
+**Default behavior when flag is OFF**:
+- Redirect root and public routes to external FABS site (via `ENV["FABS_EXTERNAL_URL"]`)
+- Keep BFYS case management functionality unaffected (always accessible to authenticated users)
 
 **Benefits**:
 - Can test thoroughly in dev without affecting other environments
