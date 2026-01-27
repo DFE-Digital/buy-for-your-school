@@ -1,76 +1,84 @@
 # High-Level Architecture
 
 ```mermaid
-graph TD
-    %% ── User types ──
-    Public["Public Users"]
-    School["School Staff"]
-    Internal["Internal Staff<br/>(Proc-Ops / E&O / CEC)"]
-    FWAdmin["Framework Admins"]
-    ExtEval["External Evaluators"]
-    ExtBuyer["School Buyers"]
+graph LR
+    %% ── Users ──
+    subgraph Users
+        direction TB
+        Public["Public Users"]
+        School["School Staff"]
+        Internal["Procurement Operations<br/>(ProcOps)"]
+        ExtAccess["Evaluators &<br/>School Buyers"]
+    end
 
     %% ── Rails Monolith ──
-    subgraph Monolith["Rails Monolith — Buy for Your School"]
-        FABS["FABS<br/>Browse Frameworks & Solutions"]
-        ProcSupport["Procurement Support<br/>Framework Requests"]
-        EnergyPortal["Energy for Schools<br/>Energy Procurement"]
-        SupportPortal["Support Portal<br/>Case Management"]
-        EngagementPortal["Engagement Portal<br/>E&O Cases"]
-        FWPortal["Frameworks Portal<br/>Evaluation & Providers"]
-        CECPortal["CEC Portal<br/>Onboarding Cases"]
-        EvalPortal["Evaluation Portal<br/>Evaluator Tasks"]
-        MyProc["My Procurements<br/>Handover Packs"]
-        Surveys["Surveys<br/>Exit / Satisfaction / Usability"]
-        Sidekiq["Sidekiq Workers<br/>Background Jobs"]
+    subgraph Monolith["Rails Monolith"]
+        direction TB
+
+        subgraph PublicPortals["Public-Facing"]
+            GHBS["GHBS Website"]
+        end
+
+        subgraph SchoolPortals["School Journeys"]
+            ProcSupport["Procurement Support"]
+            EnergyPortal["Energy for Schools"]
+            Surveys["Surveys"]
+        end
+
+        subgraph InternalPortals["Internal Portals"]
+            CMS["Case Management System<br/>(ProcOps / E&O / CEC Energy)"]
+            FWPortal["Frameworks<br/>Eval & Providers"]
+        end
+
+        subgraph ExtPortals["External Access"]
+            EvalPortal["Evaluation"]
+            MyProc["My Procurements"]
+        end
+
+        Sidekiq["Sidekiq<br/>Background Jobs"]
     end
 
     %% ── External Services ──
-    DfESI["DfE Sign In<br/>OpenID Connect"]
-    Contentful["Contentful CMS"]
-    Notify["GOV.UK Notify<br/>Email & SMS"]
-    OpenSearch["OpenSearch<br/>Full-Text Search"]
-    Outlook["Microsoft Graph<br/>Outlook Email"]
-    S3["AWS S3 /<br/>Azure Blob Storage"]
-    Rollbar["Rollbar<br/>Error Tracking"]
-    ClamAV["ClamAV<br/>Virus Scanning"]
+    subgraph Services["External Services"]
+        direction TB
+        DfESI["DfE Sign In"]
+        Contentful["Contentful CMS"]
+        Notify["GOV.UK Notify"]
+        OpenSearch["OpenSearch"]
+        Outlook["Microsoft Graph<br/>Outlook"]
+        S3["AWS S3 / Azure Blob"]
+        Rollbar["Rollbar"]
+        ClamAV["ClamAV"]
+    end
 
-    %% ── Infrastructure ──
-    Postgres[("PostgreSQL")]
-    Redis[("Redis<br/>Cache & Sessions")]
+    %% ── Data Stores ──
+    subgraph Data["Data Stores"]
+        direction TB
+        Postgres[("PostgreSQL")]
+        Redis[("Redis")]
+    end
 
-    %% ── User → Portal connections ──
-    Public --> FABS
+    %% ── User → Portal ──
+    Public --> GHBS
     School --> ProcSupport
     School --> EnergyPortal
-    Internal --> SupportPortal
-    Internal --> EngagementPortal
-    Internal --> CECPortal
-    FWAdmin --> FWPortal
-    ExtEval -.->|email link| EvalPortal
-    ExtBuyer -.->|email link| MyProc
+    Internal --> CMS
+    Internal --> FWPortal
+    ExtAccess -.->|email link| EvalPortal
+    ExtAccess -.->|email link| MyProc
 
-    %% ── Portal → External Service connections ──
-    FABS --> Contentful
-    FABS --> OpenSearch
-    ProcSupport --> Notify
-    EnergyPortal --> Notify
-    SupportPortal --> Outlook
-    SupportPortal --> Notify
-    FWPortal --> Notify
-    Surveys --> Notify
-
-    %% ── Auth ──
+    %% ── Monolith → Services ──
+    GHBS --> Contentful
+    GHBS --> OpenSearch
+    CMS --> Outlook
     Monolith --> DfESI
-
-    %% ── Shared services ──
+    Monolith --> Notify
     Monolith --> S3
     Monolith --> ClamAV
     Monolith --> Rollbar
 
-    %% ── Infrastructure connections ──
+    %% ── Monolith → Data ──
     Monolith --> Postgres
     Monolith --> Redis
     Sidekiq --> Redis
-    Sidekiq --> Postgres
 ```
