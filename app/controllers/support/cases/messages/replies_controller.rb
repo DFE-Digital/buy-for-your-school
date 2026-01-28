@@ -12,6 +12,7 @@ module Support
       super
       @draft.reply_to_email = current_email
       @draft = @draft.save_draft!
+      Rollbar.warning("Warnning reply_to_email: #{current_email}")
 
       redirect_to redirect_url
     end
