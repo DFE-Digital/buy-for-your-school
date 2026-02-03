@@ -1,0 +1,14 @@
+<h1><%= @page.title %></h1>
+
+<p>
+  <%= @page.description %>
+</p>
+
+
+<div>
+  <%= render_markdown_to_html(@page.body) %>
+</div>
+
+<% content_for :sidebar do %>
+  <%= render partial: "shared/related_content", locals: { related_content: @page.related_content } %>
+<% end %>
