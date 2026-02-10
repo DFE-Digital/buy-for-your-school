@@ -7,13 +7,7 @@ class Support::Case::EmailTicketable::ExistingCase
       last_name: email.sender_last_name,
     ).call
 
-    begin
-      Support::Case::UpdateEmailSubject.new(email:, kase:).call
-    rescue StandardError => e
-      Rails.logger.error(
-        "UpdateEmailSubject failed for case=#{kase.ref} email=#{email.id}: #{e.message}",
-      )
-    end
+    Support::UpdateEmailSubjectJob.perform_later(email_id: email.id, case_id: kase.id)
 
     kase
   end
