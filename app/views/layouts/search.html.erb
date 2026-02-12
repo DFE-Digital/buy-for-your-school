@@ -1,0 +1,20 @@
+<%= render "shared/dfe_base" do %>
+  <%= render "shared/dfe_header" %>
+
+  <div>
+    <div class="dfe-width-container">
+       <%= render partial: "shared/breadcrumbs", locals: { govuk_breadcrumb_builder: govuk_breadcrumb_builder} %>
+    </div>
+  </div>
+
+  <div class="page-with-sidebar">
+    <div class="dfe-width-container">
+      <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0 govuk-!-margin-bottom-7">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+
+  <%= render "shared/dfe_footer" %>
+ <% end %>
+

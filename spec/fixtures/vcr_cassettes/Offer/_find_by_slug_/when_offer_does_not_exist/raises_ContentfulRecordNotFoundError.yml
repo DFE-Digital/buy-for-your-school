@@ -1,0 +1,179 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://cdn.contentful.com/spaces/FAKE_SPACE_ID/environments/master/entries?content_type=offer&fields.slug=non-existent&include=1
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      X-Contentful-User-Agent:
+      - sdk contentful.rb/2.19.0; platform ruby/3.4.7; os macOS/24;
+      Authorization:
+      - Bearer FAKE_API_KEY
+      Content-Type:
+      - application/vnd.contentful.delivery.v1+json
+      Accept-Encoding:
+      - gzip
+      Connection:
+      - close
+      Host:
+      - cdn.contentful.com
+      User-Agent:
+      - http.rb/5.3.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '67'
+      Content-Type:
+      - application/vnd.contentful.delivery.v1+json
+      Cf-Space-Id:
+      - FAKE_SPACE_ID
+      Cf-Environment-Id:
+      - master
+      Cf-Environment-Uuid:
+      - 6d47d495-0492-4e8e-8148-17f0a9a6d541
+      Cf-Organization-Id:
+      - 3za11RVJBwLIPn20QJ67Gq
+      X-Contentful-Route:
+      - "/spaces/:space/environments/:environment/entries"
+      Etag:
+      - '"13397941486963817118"'
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - Contentful
+      X-Contentful-Region:
+      - us-east-1
+      Contentful-Api:
+      - cda
+      Via:
+      - 1.1 varnish, 1.1 varnish
+      Accept-Ranges:
+      - bytes
+      Age:
+      - '0'
+      Date:
+      - Mon, 19 Jan 2026 14:23:32 GMT
+      X-Served-By:
+      - cache-ewr-kewr1740090-EWR, cache-lon4252-LON
+      X-Cache-Hits:
+      - 0, 0
+      X-Timer:
+      - S1768832612.436985,VS0,VE289
+      Access-Control-Allow-Headers:
+      - accept,accept-language,authorization,cache-control,content-length,content-range,content-type,dnt,destination,expires,if-match,if-modified-since,if-none-match,keep-alive,last-modified,origin,pragma,range,user-agent,x-http-method-override,x-mx-reqtoken,x-requested-with,x-contentful-content-type,x-contentful-enable-alpha-feature,x-contentful-organization,x-contentful-resource-resolution,x-contentful-skip-transformation,x-contentful-user-agent,x-contentful-version
+      Access-Control-Allow-Methods:
+      - GET,HEAD,OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '86400'
+      Access-Control-Expose-Headers:
+      - etag
+      Strict-Transport-Security:
+      - max-age=15768000
+      X-Cache:
+      - MISS
+      X-Contentful-Request-Id:
+      - b6cae7c2-b150-4624-8f38-d50cc20e2cb0
+    body:
+      encoding: ASCII-8BIT
+      string: '{"sys":{"type":"Array"},"total":0,"skip":0,"limit":100,"items":[]}
+
+        '
+  recorded_at: Mon, 19 Jan 2026 14:23:35 GMT
+- request:
+    method: get
+    uri: https://cdn.contentful.com/spaces/FAKE_SPACE_ID/environments/master/entries?content_type=offer&fields.slug=non-existent&include=1&select=fields.title,fields.description,fields.summary,fields.slug,fields.url,fields.call_to_action,fields.image,fields.featured_on_homepage,fields.related_content,fields.expiry,fields.sort_order,sys
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      X-Contentful-User-Agent:
+      - sdk contentful.rb/2.19.0; platform ruby/3.4.7; os macOS/24;
+      Authorization:
+      - Bearer FAKE_API_KEY
+      Content-Type:
+      - application/vnd.contentful.delivery.v1+json
+      Accept-Encoding:
+      - gzip
+      Connection:
+      - close
+      Host:
+      - cdn.contentful.com
+      User-Agent:
+      - http.rb/5.3.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '67'
+      Content-Type:
+      - application/vnd.contentful.delivery.v1+json
+      Cf-Space-Id:
+      - FAKE_SPACE_ID
+      Cf-Environment-Id:
+      - master
+      Cf-Environment-Uuid:
+      - 6d47d495-0492-4e8e-8148-17f0a9a6d541
+      Cf-Organization-Id:
+      - 3za11RVJBwLIPn20QJ67Gq
+      X-Contentful-Route:
+      - "/spaces/:space/environments/:environment/entries"
+      Etag:
+      - '"13397941486963817118"'
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - Contentful
+      X-Contentful-Region:
+      - us-east-1
+      Contentful-Api:
+      - cda
+      Via:
+      - 1.1 varnish, 1.1 varnish
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 19 Jan 2026 14:28:36 GMT
+      Age:
+      - '18'
+      X-Served-By:
+      - cache-ewr-kewr1740028-EWR, cache-lhr-egll1980087-LHR
+      X-Cache-Hits:
+      - 0, 1
+      X-Timer:
+      - S1768832917.722134,VS0,VE1
+      Access-Control-Allow-Headers:
+      - accept,accept-language,authorization,cache-control,content-length,content-range,content-type,dnt,destination,expires,if-match,if-modified-since,if-none-match,keep-alive,last-modified,origin,pragma,range,user-agent,x-http-method-override,x-mx-reqtoken,x-requested-with,x-contentful-content-type,x-contentful-enable-alpha-feature,x-contentful-organization,x-contentful-resource-resolution,x-contentful-skip-transformation,x-contentful-user-agent,x-contentful-version
+      Access-Control-Allow-Methods:
+      - GET,HEAD,OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '86400'
+      Access-Control-Expose-Headers:
+      - etag
+      Strict-Transport-Security:
+      - max-age=15768000
+      X-Cache:
+      - HIT
+      X-Contentful-Request-Id:
+      - d4d9326e-524f-498d-a32b-5d6d3e8af6d5
+    body:
+      encoding: ASCII-8BIT
+      string: '{"sys":{"type":"Array"},"total":0,"skip":0,"limit":100,"items":[]}
+
+        '
+  recorded_at: Mon, 19 Jan 2026 14:28:39 GMT
+recorded_with: VCR 6.4.0

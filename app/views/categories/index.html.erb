@@ -1,0 +1,25 @@
+
+<div class="govuk-!-margin-top-4">
+  <% if @energy_banner %>
+    <%= render partial: 'energy_banner', locals: { banner: @energy_banner } %>
+  <% end %>
+  <% if @featured_offers.present? %>
+    <h2 class="govuk-heading-m"><%= t(".offers_title") %></h2>
+    <div class="dfe-grid-container offers-grid-container">
+      <% @featured_offers.each do |offer| %>
+        <%= render partial: "offers/offer", locals: { offer: offer } %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <h2 class="govuk-heading-m"><%= t(".title") %></h2>
+  <div class="dfe-grid-container">
+    <% @categories.each do |category| %>
+      <%= render "category", category: category %>
+    <% end %>
+  </div>
+
+  <p class="govuk-body">
+    <%= govuk_link_to t(".procurement_support"), "https://www.get-help-buying-for-schools.service.gov.uk/procurement-support", target: "_blank", rel: "noopener noreferrer" %>
+  </p>
+</div>
