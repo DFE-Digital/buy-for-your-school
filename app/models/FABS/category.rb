@@ -39,9 +39,9 @@ module FABS
     def self.search(query: "")
       ContentfulClient.entries(
         content_type: "category",
-        query: query,
+        query:,
         select: "sys.id,fields.title,fields.description,fields.slug,fields.banner",
-        include: 1
+        include: 1,
       ).map { |entry| new(entry) }
     end
 
@@ -50,7 +50,7 @@ module FABS
 
       new(OpenStruct.new(
             id: result["id"],
-            fields: { title: result["title"], slug: result["slug"] }
+            fields: { title: result["title"], slug: result["slug"] },
           ))
     end
 
@@ -62,10 +62,10 @@ module FABS
       entry = ContentfulClient.entries(
         content_type: "category",
         'fields.slug': slug,
-        include: 1
+        include: 1,
       ).first
 
-      raise ContentfulRecordNotFoundError.new("Category not found", slug: slug) unless entry
+      raise ContentfulRecordNotFoundError.new("Category not found", slug:) unless entry
 
       new(entry)
     end

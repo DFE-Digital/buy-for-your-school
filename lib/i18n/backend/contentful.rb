@@ -14,7 +14,7 @@ module I18n
         ::ContentfulClient.configure(
           space: ENV.fetch("CONTENTFUL_SPACE_ID") { "FAKE_SPACE_ID" },
           access_token: ENV.fetch("CONTENTFUL_ACCESS_TOKEN") { "FAKE_API_KEY" },
-          environment: ENV.fetch("CONTENTFUL_ENVIRONMENT", "master")
+          environment: ENV.fetch("CONTENTFUL_ENVIRONMENT", "master"),
         )
         load_translations
       end
@@ -84,7 +84,7 @@ module I18n
           # If not in cache, fetch from Contentful
           entries = ::ContentfulClient.entries(
             content_type: "translation",
-            limit: 1000
+            limit: 1000,
           )
 
           cached_translations = I18n::Utils.unflatten_translations(entries)

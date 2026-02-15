@@ -31,7 +31,7 @@ class ContentfulClient
     @client ||= Contentful::Client.new(
       space: @space,
       access_token: @access_token,
-      environment: @environment
+      environment: @environment,
     )
   end
 

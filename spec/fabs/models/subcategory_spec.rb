@@ -7,7 +7,7 @@ RSpec.describe Subcategory, :vcr, type: :model do
     let(:entry) do
       ContentfulClient.entries(
         content_type: "subcategory",
-        "fields.slug": "software"
+        "fields.slug": "software",
       ).first
     end
 
@@ -15,7 +15,7 @@ RSpec.describe Subcategory, :vcr, type: :model do
       expect(subcategory).to have_attributes(
         id: be_present,
         title: be_present,
-        slug: be_present
+        slug: be_present,
       )
     end
   end

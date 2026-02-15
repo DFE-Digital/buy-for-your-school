@@ -22,9 +22,9 @@ module FABS
       entry = ContentfulClient.entries(
         content_type: "page",
         'fields.slug': slug,
-        include: 4
+        include: 4,
       ).first
-      raise ContentfulRecordNotFoundError.new("Page not found", slug: slug) unless entry
+      raise ContentfulRecordNotFoundError.new("Page not found", slug:) unless entry
 
       new(entry)
     end

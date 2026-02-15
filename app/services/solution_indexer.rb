@@ -13,7 +13,7 @@ class SolutionIndexer
   def index_document
     return false if entry.nil?
 
-    response = client.index(index: INDEX, id: id, body: body)
+    response = client.index(index: INDEX, id:, body:)
 
     return true if index_created?(response["result"])
 
@@ -21,7 +21,7 @@ class SolutionIndexer
   end
 
   def delete_document
-    response = client.delete(index: INDEX, id: id)
+    response = client.delete(index: INDEX, id:)
     return true if index_deleted?(response["result"])
 
     false
@@ -32,7 +32,7 @@ class SolutionIndexer
   def find_document
     client.get(
       index: "solution-data",
-      id: id
+      id:,
     )
   rescue OpenSearch::Transport::Transport::Errors::NotFound
     nil
@@ -60,7 +60,7 @@ private
       summary: entry.summary,
       slug: entry.slug,
       provider_reference: entry.provider_reference,
-      primary_category: primary_category,
+      primary_category:,
     }
   end
 

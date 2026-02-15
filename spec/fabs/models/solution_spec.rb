@@ -7,7 +7,7 @@ RSpec.describe Solution, :vcr, type: :model do
     let(:entry) do
       ContentfulClient.entries(
         content_type: "solution",
-        "fields.slug": "technology-products-and-associated-services"
+        "fields.slug": "technology-products-and-associated-services",
       ).first
     end
 
@@ -19,7 +19,7 @@ RSpec.describe Solution, :vcr, type: :model do
         description: be_present,
         slug: be_present,
         suffix: be_present,
-        provider_name: be_present
+        provider_name: be_present,
       )
     end
   end
@@ -40,7 +40,7 @@ RSpec.describe Solution, :vcr, type: :model do
     context "when filtering by category_id" do
       let(:category) { FABS::Category.find_by_slug!("it") }
       let(:category_id) { category.id }
-      let(:solutions) { described_class.all(category_id: category_id) }
+      let(:solutions) { described_class.all(category_id:) }
 
       it "returns only solutions from the specified category" do
         solutions.each do |solution|
@@ -52,7 +52,7 @@ RSpec.describe Solution, :vcr, type: :model do
   end
 
   describe ".search" do
-    subject(:search) { described_class.search(query: query) }
+    subject(:search) { described_class.search(query:) }
 
     before do
       allow(ENV).to receive(:fetch).and_call_original
@@ -68,7 +68,7 @@ RSpec.describe Solution, :vcr, type: :model do
         title: be_present,
         summary: be_present,
         description: be_present,
-        slug: be_present
+        slug: be_present,
       )
     end
   end
@@ -128,7 +128,7 @@ RSpec.describe Solution, :vcr, type: :model do
       params =
         OpenStruct.new(
           id: "ID",
-          fields: minimal_attrs
+          fields: minimal_attrs,
         )
       expect(described_class.new(params)).to be_presentable
     end
@@ -137,7 +137,7 @@ RSpec.describe Solution, :vcr, type: :model do
       params =
         OpenStruct.new(
           id: "ID",
-          fields: minimal_attrs.merge(title: "")
+          fields: minimal_attrs.merge(title: ""),
         )
       expect(described_class.new(params)).not_to be_presentable
     end
@@ -146,7 +146,7 @@ RSpec.describe Solution, :vcr, type: :model do
       params =
         OpenStruct.new(
           id: "ID",
-          fields: minimal_attrs.merge(slug: "")
+          fields: minimal_attrs.merge(slug: ""),
         )
       expect(described_class.new(params)).not_to be_presentable
     end
@@ -155,7 +155,7 @@ RSpec.describe Solution, :vcr, type: :model do
       params =
         OpenStruct.new(
           id: "ID",
-          fields: minimal_attrs.merge(primary_category: nil)
+          fields: minimal_attrs.merge(primary_category: nil),
         )
       expect(described_class.new(params)).not_to be_presentable
     end

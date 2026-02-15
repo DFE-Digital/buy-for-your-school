@@ -17,11 +17,11 @@ class Banner
     entry = ContentfulClient.entries(
       content_type: "banner",
       'fields.slug': slug,
-      limit: 1
+      limit: 1,
     ).first
     entry ? new(entry) : nil
   rescue ContentfulRecordNotFoundError => e
-    Rollbar.error(e, slug: slug)
+    Rollbar.error(e, slug:)
     nil
   end
 end

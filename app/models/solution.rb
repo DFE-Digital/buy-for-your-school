@@ -59,12 +59,12 @@ class Solution
     # binding.break
     use_opensearch = ENV.fetch("USE_OPENSEARCH", false)
     if use_opensearch
-      SolutionSearcher.new(query: query).search
+      SolutionSearcher.new(query:).search
     else
       ContentfulClient.entries(
         content_type: "solution",
-        query: query,
-        select: "sys.id,fields.title,fields.summary,fields.description,fields.slug,fields.provider_name,fields.buying_option_type,fields.provider_initials,fields.primary_category,fields.provider_reference"
+        query:,
+        select: "sys.id,fields.title,fields.summary,fields.description,fields.slug,fields.provider_name,fields.buying_option_type,fields.provider_initials,fields.primary_category,fields.provider_reference",
       ).map { |entry| new(entry) }
     end
   end
@@ -90,10 +90,10 @@ class Solution
         fields.buying_option_type
         fields.provider_reference
         fields.primary_category
-      ].join(",")
+      ].join(","),
     ).find { |solution| solution.fields[:slug] == slug }
 
-    raise ContentfulRecordNotFoundError.new("Solution not found", slug: slug) unless entry
+    raise ContentfulRecordNotFoundError.new("Solution not found", slug:) unless entry
 
     new(entry)
   end
@@ -119,10 +119,10 @@ class Solution
         fields.buying_option_type
         fields.provider_reference
         fields.primary_category
-      ].join(",")
+      ].join(","),
     ).find { |solution| solution.sys[:id] == id }
 
-    raise ContentfulRecordNotFoundError.new("Solution not found", id: id) unless entry
+    raise ContentfulRecordNotFoundError.new("Solution not found", id:) unless entry
 
     new(entry)
   end
@@ -130,7 +130,7 @@ class Solution
   def self.unique_category_ids
     ContentfulClient.entries(
       content_type: "solution",
-      select: "fields.categories"
+      select: "fields.categories",
     ).flat_map { |solution| solution.fields[:categories]&.map(&:id) }.compact.uniq
   end
 
@@ -142,7 +142,7 @@ class Solution
       .transform_keys(&:to_sym)
       .merge(primary_category: category)
 
-    new(OpenStruct.new(id: result["id"], fields: fields))
+    new(OpenStruct.new(id: result["id"], fields:))
   end
 
   def ==(other)
@@ -152,7 +152,7 @@ class Solution
 
   def as_json(_options = {})
     {
-      id: id,
+      id:,
       provider: {
         initials: provider_initials,
         title: provider_name,
@@ -168,16 +168,16 @@ class Solution
         }
       end,
       ref: slug,
-      title: title,
-      url: url,
+      title:,
+      url:,
       descr: description,
-      expiry: expiry,
+      expiry:,
       body: summary,
       primary_category: {
         title: primary_category&.title,
         ref: primary_category&.slug,
       },
-      provider_reference: provider_reference,
+      provider_reference:,
     }
   end
 

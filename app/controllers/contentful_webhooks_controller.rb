@@ -5,13 +5,13 @@ class ContentfulWebhooksController < ApplicationController
     unless valid_signature?
       Rollbar.error("Contentful webhook signature validation failed", {
         headers: request.headers.to_h.select { |k, _| k.start_with?("X-Contentful") },
-        has_secret: secret.present?
+        has_secret: secret.present?,
       })
       return head :unauthorized
     end
 
     if id.present?
-      result = SolutionIndexer.new(id: id).index_document
+      result = SolutionIndexer.new(id:).index_document
 
       if result
         render json: { message: "Webhook for entry #{id} processed successfully." }, status: :ok
@@ -19,7 +19,7 @@ class ContentfulWebhooksController < ApplicationController
         Rollbar.error("Failed to index document in OpenSearch", {
           entry_id: id,
           webhook_topic: request.headers["X-Contentful-Topic"],
-          webhook_name: request.headers["X-Contentful-Webhook-Name"]
+          webhook_name: request.headers["X-Contentful-Webhook-Name"],
         })
         render json: { error: "Failed to index the document for id #{id}." }, status: :unprocessable_content
       end
@@ -34,7 +34,7 @@ class ContentfulWebhooksController < ApplicationController
         sys_id: params.dig("sys", "id"),
         webhook_topic: request.headers["X-Contentful-Topic"],
         webhook_name: request.headers["X-Contentful-Webhook-Name"],
-        request_body_keys: body_data&.keys || []
+        request_body_keys: body_data&.keys || [],
       })
       render json: { error: "The 'entityId' is missing from the request." }, status: :bad_request
     end
@@ -42,14 +42,14 @@ class ContentfulWebhooksController < ApplicationController
     Rollbar.error("Contentful webhook JSON parse error", {
       error: e.message,
       entry_id: id,
-      webhook_topic: request.headers["X-Contentful-Topic"]
+      webhook_topic: request.headers["X-Contentful-Topic"],
     })
     render json: { error: "Invalid request format." }, status: :bad_request
   rescue StandardError => e
     Rollbar.error(e, {
       entry_id: id,
       webhook_topic: request.headers["X-Contentful-Topic"],
-      action: "create"
+      action: "create",
     })
     render json: { error: "Internal server error processing webhook." }, status: :internal_server_error
   end
@@ -58,13 +58,13 @@ class ContentfulWebhooksController < ApplicationController
     unless valid_signature?
       Rollbar.error("Contentful webhook signature validation failed (delete)", {
         headers: request.headers.to_h.select { |k, _| k.start_with?("X-Contentful") },
-        has_secret: secret.present?
+        has_secret: secret.present?,
       })
       return head :unauthorized
     end
 
     if id.present?
-      result = SolutionIndexer.new(id: id).delete_document
+      result = SolutionIndexer.new(id:).delete_document
 
       if result
         render json: { message: "Webhook for entry #{id} deletion processed successfully." }, status: :ok
@@ -72,7 +72,7 @@ class ContentfulWebhooksController < ApplicationController
         Rollbar.error("Failed to delete document from OpenSearch", {
           entry_id: id,
           webhook_topic: request.headers["X-Contentful-Topic"],
-          webhook_name: request.headers["X-Contentful-Webhook-Name"]
+          webhook_name: request.headers["X-Contentful-Webhook-Name"],
         })
         render json: { error: "Failed to delete the document for id #{id}." }, status: :unprocessable_content
       end
@@ -80,7 +80,7 @@ class ContentfulWebhooksController < ApplicationController
       Rollbar.error("Contentful webhook missing entityId (delete)", {
         params_keys: params.keys,
         sys_id: params.dig("sys", "id"),
-        webhook_topic: request.headers["X-Contentful-Topic"]
+        webhook_topic: request.headers["X-Contentful-Topic"],
       })
       render json: { error: "The 'entityId' is missing from the request." }, status: :bad_request
     end
@@ -88,7 +88,7 @@ class ContentfulWebhooksController < ApplicationController
     Rollbar.error(e, {
       entry_id: id,
       webhook_topic: request.headers["X-Contentful-Topic"],
-      action: "destroy"
+      action: "destroy",
     })
     render json: { error: "Internal server error processing webhook." }, status: :internal_server_error
   end

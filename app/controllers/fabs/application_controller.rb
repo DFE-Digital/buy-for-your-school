@@ -19,4 +19,3 @@ private
     redirect_to ENV.fetch("GHBS_HOMEPAGE_URL"), status: :redirect
   end
 end
-

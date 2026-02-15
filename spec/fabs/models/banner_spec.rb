@@ -7,7 +7,7 @@ RSpec.describe Banner, :vcr, type: :model do
     let(:entry) do
       ContentfulClient.entries(
         content_type: "banner",
-        "fields.slug": "energy-for-schools"
+        "fields.slug": "energy-for-schools",
       ).first
     end
 
@@ -19,7 +19,7 @@ RSpec.describe Banner, :vcr, type: :model do
         call_to_action: be_present,
         url: be_present,
         slug: be_present,
-        image: be_present
+        image: be_present,
       )
     end
   end

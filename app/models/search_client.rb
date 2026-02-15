@@ -12,10 +12,10 @@ private
 
   def build_client
     url = %w[OPENSEARCH_URL BONSAI_URL]
-      .map { |key| ENV[key] }.find { |url| url }
+      .map { |key| ENV[key] }.find { |value| value }
     return DummyClient.new unless url
 
-    ::OpenSearch::Client.new(url: url)
+    ::OpenSearch::Client.new(url:)
   end
 
   class DummyClient

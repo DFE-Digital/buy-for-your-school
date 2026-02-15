@@ -7,7 +7,7 @@ RSpec.describe FABS::Page, :vcr, type: :model do
     let(:entry) do
       ContentfulClient.entries(
         content_type: "page",
-        "fields.slug": "dynamic-purchasing-systems"
+        "fields.slug": "dynamic-purchasing-systems",
       ).first
     end
 
@@ -18,7 +18,7 @@ RSpec.describe FABS::Page, :vcr, type: :model do
         body: be_present,
         description: be_present,
         slug: be_present,
-        related_content: be_present
+        related_content: be_present,
       )
     end
   end

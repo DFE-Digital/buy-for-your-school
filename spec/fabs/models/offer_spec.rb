@@ -7,7 +7,7 @@ RSpec.describe Offer, :vcr, type: :model do
     let(:entry) do
       ContentfulClient.entries(
         content_type: "offer",
-        "fields.slug": "energy-for-schools"
+        "fields.slug": "energy-for-schools",
       ).first
     end
 
@@ -17,7 +17,7 @@ RSpec.describe Offer, :vcr, type: :model do
         title: be_present,
         description: be_present,
         slug: be_present,
-        url: be_present
+        url: be_present,
       )
     end
   end

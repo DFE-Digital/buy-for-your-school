@@ -25,7 +25,7 @@ class OffersController < ApplicationController
     add_breadcrumb :home_breadcrumb_name, :home_breadcrumb_path
 
     add_breadcrumb :offers_breadcrumb_name, :offers_breadcrumb_path
-    
+
     render layout: "fabs_application"
   end
 end

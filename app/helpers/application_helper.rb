@@ -96,7 +96,7 @@ module ApplicationHelper
     uri = URI.parse(url)
     uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS) ? url : "#"
   rescue URI::InvalidURIError => e
-    Rollbar.error(e, url: url)
+    Rollbar.error(e, url:)
     "#"
   end
 
@@ -119,7 +119,7 @@ module ApplicationHelper
     uri = URI.join(base_url, "/customer_satisfaction_surveys/new")
     uri.query = {
       service: "find_a_buying_solution",
-      source: source,
+      source:,
     }.to_query
     safe_url(uri.to_s)
   end
@@ -129,7 +129,7 @@ module ApplicationHelper
 
     I18n.l(Date.parse(date_string), format: :standard)
   rescue Date::Error => e
-    Rollbar.error(e, date_string: date_string)
+    Rollbar.error(e, date_string:)
     ""
   end
 

@@ -39,10 +39,10 @@ class Offer
         fields.expiry
         fields.sort_order
       ].join(","),
-      include: 1
+      include: 1,
     ).find { |offer| offer.fields[:slug] == slug }
 
-    raise ContentfulRecordNotFoundError.new("Offer not found", slug: slug) unless entry
+    raise ContentfulRecordNotFoundError.new("Offer not found", slug:) unless entry
 
     new(entry)
   end

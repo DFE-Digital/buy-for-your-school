@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe SolutionIndexer do
-  subject(:indexer) { described_class.new(id: id) }
+  subject(:indexer) { described_class.new(id:) }
 
   let(:solution_index) { "solution-data" }
   let(:id) { "solution-123" }
@@ -12,7 +12,7 @@ RSpec.describe SolutionIndexer do
       Category,
       id: "mock_id",
       title: "mock title",
-      slug: " mock slug"
+      slug: " mock slug",
     )
   end
 
@@ -33,7 +33,7 @@ RSpec.describe SolutionIndexer do
       summary: "A summary.",
       slug: "test-solution",
       provider_reference: "ref-123",
-      primary_category: primary_category
+      primary_category:,
     )
   end
 
@@ -47,7 +47,7 @@ RSpec.describe SolutionIndexer do
       it "calls the search client's index method" do
         allow(es_client_mock).to receive(:index).with(
           index: solution_index,
-          id: id,
+          id:,
           body: {
             id: solution_entry.id,
             title: solution_entry.title,
@@ -56,7 +56,7 @@ RSpec.describe SolutionIndexer do
             slug: solution_entry.slug,
             provider_reference: solution_entry.provider_reference,
             primary_category: primary_category_hash,
-          }
+          },
         ).and_return("result" => "created")
         expect(indexer.index_document).to be true
       end
@@ -86,7 +86,7 @@ RSpec.describe SolutionIndexer do
       it "calls the search client's delete method and returns true" do
         allow(es_client_mock).to receive(:delete).with(
           index: solution_index,
-          id: id
+          id:,
         ).and_return("result" => "deleted")
         expect(indexer.delete_document).to be true
       end
@@ -114,7 +114,7 @@ RSpec.describe SolutionIndexer do
       it "calls the search client's get method and returns the document" do
         allow(es_client_mock).to receive(:get).with(
           index: solution_index,
-          id: id
+          id:,
         ).and_return(found_doc)
         expect(indexer.find_document).to eq(found_doc)
       end

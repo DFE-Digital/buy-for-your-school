@@ -7,7 +7,7 @@ RSpec.describe FABS::Category, :vcr, type: :model do
     let(:entry) do
       ContentfulClient.entries(
         content_type: "category",
-        "fields.slug": "it"
+        "fields.slug": "it",
       ).first
     end
 
@@ -18,7 +18,7 @@ RSpec.describe FABS::Category, :vcr, type: :model do
         description: be_present,
         slug: be_present,
         subcategories: be_an(Array),
-        related_content: be_an(Array)
+        related_content: be_an(Array),
       )
     end
   end
@@ -29,7 +29,7 @@ RSpec.describe FABS::Category, :vcr, type: :model do
     let(:entry) do
       ContentfulClient.entries(
         content_type: "category",
-        "fields.slug": "it"
+        "fields.slug": "it",
       ).first
     end
 
@@ -65,7 +65,7 @@ RSpec.describe FABS::Category, :vcr, type: :model do
       ContentfulClient.entries(
         content_type: "category",
         "fields.slug": "it",
-        include: 1
+        include: 1,
       ).first
     end
 
@@ -82,13 +82,13 @@ RSpec.describe FABS::Category, :vcr, type: :model do
       ContentfulClient.entries(
         content_type: "category",
         "fields.slug": "it",
-        include: 2
+        include: 2,
       ).first
     end
 
     it "filters solutions by subcategory slugs" do
       subcategory_slugs = %w[hardware software]
-      filtered = category.filtered_solutions(subcategory_slugs: subcategory_slugs)
+      filtered = category.filtered_solutions(subcategory_slugs:)
       expected_solution_slugs = %w[audio-visual-solutions corporate-software electronic-catering-management-and-payment-solutions ict-procurement g-cloud it-hardware microsoft-shape-the-future outsourced-ict software-application-solutions software-licenses sustainable-hardware-asset-recycling-and-data-destruction technology-products-and-associated-services-2]
 
       expect(filtered).to be_an(Array)
@@ -110,7 +110,7 @@ RSpec.describe FABS::Category, :vcr, type: :model do
 
     it "excludes solutions that don't match any of the specified subcategory slugs" do
       subcategory_slugs = %w[hardware]
-      filtered = category.filtered_solutions(subcategory_slugs: subcategory_slugs)
+      filtered = category.filtered_solutions(subcategory_slugs:)
       expect(filtered.map(&:slug)).not_to include("software-licenses")
     end
   end
@@ -135,7 +135,7 @@ RSpec.describe FABS::Category, :vcr, type: :model do
       ContentfulClient.entries(
         content_type: "category",
         "fields.slug": "it",
-        include: 2
+        include: 2,
       ).first
     end
 
@@ -158,7 +158,7 @@ RSpec.describe FABS::Category, :vcr, type: :model do
   end
 
   describe ".search" do
-    subject(:search) { described_class.search(query: query) }
+    subject(:search) { described_class.search(query:) }
 
     let(:query) { "catering" }
 
@@ -168,7 +168,7 @@ RSpec.describe FABS::Category, :vcr, type: :model do
         id: be_present,
         title: be_present,
         description: be_present,
-        slug: be_present
+        slug: be_present,
       )
     end
   end
@@ -180,7 +180,7 @@ RSpec.describe FABS::Category, :vcr, type: :model do
       ContentfulClient.entries(
         content_type: "category",
         "fields.slug": "it",
-        include: 2
+        include: 2,
       ).first
     end
 

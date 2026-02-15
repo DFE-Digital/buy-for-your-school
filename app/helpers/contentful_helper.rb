@@ -77,8 +77,8 @@ module_function
     translation_type = environment.content_types.find("translation")
     # rubocop:disable Rails/SaveBang
     new_entry = translation_type.entries.create(
-      key: key,
-      value: value
+      key:,
+      value:,
     )
     # rubocop:enable Rails/SaveBang
     new_entry.publish

@@ -89,7 +89,7 @@ RSpec.describe I18n::Utils do
               },
             },
           },
-          "en.date.formats.standard": "%d %B %Y"
+          "en.date.formats.standard": "%d %B %Y",
         )
       end
     end

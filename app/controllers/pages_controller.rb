@@ -16,7 +16,7 @@ class PagesController < ApplicationController
       @page_title = @page.title
       add_breadcrumb :home_breadcrumb_name, :home_breadcrumb_path
       build_page_breadcrumbs(@page)
-      
+
       render "fabs_show", layout: "fabs_application"
     else
       # Fall back to DB-backed page
@@ -36,12 +36,10 @@ private
   end
 
   def contentful_page_exists?
-    begin
-      FABS::Page.find_by_slug!(params[:slug])
-      true
-    rescue ContentfulRecordNotFoundError
-      false
-    end
+    FABS::Page.find_by_slug!(params[:slug])
+    true
+  rescue ContentfulRecordNotFoundError
+    false
   end
 
   def page

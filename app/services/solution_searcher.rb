@@ -24,7 +24,7 @@ private
     @search_body ||= {
       query: {
         multi_match: {
-          query: query,
+          query:,
           fields: %w[title description summary slug provider_reference],
         },
       },
