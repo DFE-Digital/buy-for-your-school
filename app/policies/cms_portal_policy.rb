@@ -38,8 +38,8 @@ class CmsPortalPolicy
   def grant_analyst_role? = allow_any_of(%w[global_admin])
   def grant_framework_evaluator_admin_role? = allow_any_of(%w[global_admin])
   def grant_framework_evaluator_role? = allow_any_of(%w[global_admin framework_evaluator_admin])
-  def grant_cec_role? = allow_any_of(%w[global_admin cec_admin])
-  def grant_cec_admin_role? = allow_any_of(%w[global_admin cec_admin])
+  def grant_cec_role? = allow_any_of(%w[global_admin cec_admin procops_admin])
+  def grant_cec_admin_role? = allow_any_of(%w[global_admin cec_admin procops_admin])
 
 private
 
