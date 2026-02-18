@@ -7,8 +7,7 @@ class Support::Case::EmailTicketable::ExistingCase
       last_name: email.sender_last_name,
     ).call
 
-    Support::UpdateEmailSubjectJob.perform_later(email_id: email.id, case_id: kase.id)
-
+    Support::UpdateEmailSubjectJob.perform_later(email_ids: [email.id], to_case_id: kase.id)
     kase
   end
 
