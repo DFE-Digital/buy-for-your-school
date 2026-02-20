@@ -792,6 +792,7 @@ GEM
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
+    vcr (6.4.0)
     view_component (3.16.0)
       activesupport (>= 5.2.0, < 8.0)
       concurrent-ruby (~> 1.0)
@@ -930,6 +931,7 @@ DEPENDENCIES
   thor
   turbo-rails
   tzinfo-data
+  vcr
   web-console (>= 3.3.0)
   webmock
   wicked_pdf

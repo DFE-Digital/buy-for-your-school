@@ -113,5 +113,6 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov"
+  gem "vcr"
   gem "webmock"
 end
