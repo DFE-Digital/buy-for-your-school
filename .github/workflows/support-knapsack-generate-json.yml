@@ -52,6 +52,8 @@ jobs:
             -e CONTENTFUL_PREVIEW_TOKEN=123 \
             -e CONTENTFUL_ENTRY_CACHING=false \
             -e CONTENTFUL_WEBHOOK_API_KEY=test \
+            -e CONTENTFUL_SPACE_ID=test \
+            -e CONTENTFUL_ACCESS_TOKEN=123 \
             -e NOTIFY_API_KEY=development_team-12345678-1234-1234-1234-abcd12345678-12345678-1234-1234-1234-abcd12345678 \
             -e MS_GRAPH_TENANT=test \
             -e MS_GRAPH_CLIENT_ID=test \
