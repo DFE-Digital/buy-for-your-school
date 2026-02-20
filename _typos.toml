@@ -15,4 +15,4 @@ notifyable = "notifyable"
 permissable = "permissable"
 
 [files]
-extend-exclude = ["Gemfile", "spec/lib/specify/school/mapper_call_spec.rb"]
+extend-exclude = ["Gemfile", "spec/lib/specify/school/mapper_call_spec.rb", "spec/fixtures/vcr_cassettes/"]
