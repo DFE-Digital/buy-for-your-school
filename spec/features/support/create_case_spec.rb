@@ -90,6 +90,24 @@ RSpec.feature "Create case", :js do
     end
   end
 
+  context "with invalid data for procurement_amount" do
+    it "shows validation errors for procurement amount" do
+      valid_form_data
+      fill_in "case_request[procurement_amount]", with: 100_000_000
+      click_on "Save and continue"
+      expect(page).to have_content("The amount entered exceeds the maximum procurement value. Enter a number less than 99,999,999")
+    end
+  end
+
+  context "with maximum amount for procurement_amount" do
+    it "allow user to continue without errors" do
+      valid_form_data
+      fill_in "case_request[procurement_amount]", with: 99_999_999.99
+      click_on "Save and continue"
+      expect(page).not_to have_content("There is a problem")
+    end
+  end
+
   def valid_form_data_without_organisation
     fill_in "case_request[first_name]", with: "first_name"
     fill_in "case_request[last_name]", with: "last_name"
