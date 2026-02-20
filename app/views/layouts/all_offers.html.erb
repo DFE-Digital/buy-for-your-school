@@ -1,0 +1,30 @@
+<%= render "shared/dfe_base" do %>
+  <%= render "shared/dfe_header" %>
+
+  <div class="page-header <%= @page_header_class %>">
+    <div class="main-container dfe-width-container">
+      <%= render partial: "shared/breadcrumbs", locals: { govuk_breadcrumb_builder: govuk_breadcrumb_builder} %>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <div class="govuk-caption-m "><%= @page_section_title %></div>
+          <h1 class="govuk-heading-l"><%= @page_title %></h1>
+          <p class="govuk-body-l">
+            <%= @page_description %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-with-sidebar">
+    <div class="dfe-width-container">
+      <%= yield :pre_main %>
+      <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0 govuk-!-margin-top-0 govuk-!-margin-bottom-7">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+
+  <%= render "shared/dfe_footer" %>
+<% end %>
+

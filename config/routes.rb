@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root to: redirect(ENV.fetch("GHBS_HOMEPAGE_URL"), status: 301)
+  root "categories#index"
 
   # DfE analytics
   post "/dfe_analytics_events", to: "dfe_analytics_events#create"
@@ -642,6 +642,26 @@ Rails.application.routes.draw do
     end
   end
 
+  # FABS routes
+  resources :categories, only: %i[show], param: :slug do
+    resources :solutions, only: %i[show], param: :slug, path: ""
+  end
+
+  resources :categories, only: %i[index], param: :slug
+  resources :solutions, only: %i[show index], param: :slug
+  resources :offers, only: %i[index show], param: :slug
+
+  resources :contentful_webhooks, only: %i[create]
+  post "delete_contentful_entry", to: "contentful_webhooks#destroy"
+
+  get "/search", to: "search#index"
+  post "/events", to: "events#create"
+
+  namespace :bfys do
+    resources :solutions, only: [:index]
+  end
+
   # Routes any/all Contentful Pages that are mirrored in t.pages
-  get ":slug", to: "pages#show"
+  # Keep this route at the bottom so that it doesn't override the other routes
+  get ":slug", to: "pages#show", as: :page
 end

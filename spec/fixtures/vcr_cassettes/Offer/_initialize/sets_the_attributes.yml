@@ -1,0 +1,180 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://cdn.contentful.com/spaces/FAKE_SPACE_ID/environments/master/entries?content_type=offer&fields.slug=energy-for-schools-used-by-spec-test
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      X-Contentful-User-Agent:
+      - sdk contentful.rb/2.19.0; platform ruby/3.4.7; os macOS/24;
+      Authorization:
+      - Bearer FAKE_API_KEY
+      Content-Type:
+      - application/vnd.contentful.delivery.v1+json
+      Accept-Encoding:
+      - gzip
+      Connection:
+      - close
+      Host:
+      - cdn.contentful.com
+      User-Agent:
+      - http.rb/5.3.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '67'
+      Content-Type:
+      - application/vnd.contentful.delivery.v1+json
+      Cf-Space-Id:
+      - FAKE_SPACE_ID
+      Cf-Environment-Id:
+      - master
+      Cf-Environment-Uuid:
+      - 6d47d495-0492-4e8e-8148-17f0a9a6d541
+      Cf-Organization-Id:
+      - 3za11RVJBwLIPn20QJ67Gq
+      X-Contentful-Route:
+      - "/spaces/:space/environments/:environment/entries"
+      Etag:
+      - '"13397941486963817118"'
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - Contentful
+      X-Contentful-Region:
+      - us-east-1
+      Contentful-Api:
+      - cda
+      Via:
+      - 1.1 varnish, 1.1 varnish
+      Accept-Ranges:
+      - bytes
+      Age:
+      - '0'
+      Date:
+      - Mon, 19 Jan 2026 14:23:31 GMT
+      X-Served-By:
+      - cache-ewr-kewr1740043-EWR, cache-lon4260-LON
+      X-Cache-Hits:
+      - 0, 0
+      X-Timer:
+      - S1768832612.539169,VS0,VE133
+      Access-Control-Allow-Headers:
+      - accept,accept-language,authorization,cache-control,content-length,content-range,content-type,dnt,destination,expires,if-match,if-modified-since,if-none-match,keep-alive,last-modified,origin,pragma,range,user-agent,x-http-method-override,x-mx-reqtoken,x-requested-with,x-contentful-content-type,x-contentful-enable-alpha-feature,x-contentful-organization,x-contentful-resource-resolution,x-contentful-skip-transformation,x-contentful-user-agent,x-contentful-version
+      Access-Control-Allow-Methods:
+      - GET,HEAD,OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '86400'
+      Access-Control-Expose-Headers:
+      - etag
+      Strict-Transport-Security:
+      - max-age=15768000
+      X-Cache:
+      - MISS
+      X-Contentful-Request-Id:
+      - ac3209c9-dae0-450f-b2d2-d087c5124009
+    body:
+      encoding: ASCII-8BIT
+      string: '{"sys":{"type":"Array"},"total":0,"skip":0,"limit":100,"items":[]}
+
+        '
+  recorded_at: Mon, 19 Jan 2026 14:23:34 GMT
+- request:
+    method: get
+    uri: https://cdn.contentful.com/spaces/FAKE_SPACE_ID/environments/master/entries?content_type=offer&fields.slug=energy-for-schools
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      X-Contentful-User-Agent:
+      - sdk contentful.rb/2.19.0; platform ruby/3.4.7; os macOS/24;
+      Authorization:
+      - Bearer FAKE_API_KEY
+      Content-Type:
+      - application/vnd.contentful.delivery.v1+json
+      Accept-Encoding:
+      - gzip
+      Connection:
+      - close
+      Host:
+      - cdn.contentful.com
+      User-Agent:
+      - http.rb/5.3.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - close
+      Content-Length:
+      - '1746'
+      Content-Type:
+      - application/vnd.contentful.delivery.v1+json
+      Cf-Space-Id:
+      - FAKE_SPACE_ID
+      Cf-Environment-Id:
+      - master
+      Cf-Environment-Uuid:
+      - 6d47d495-0492-4e8e-8148-17f0a9a6d541
+      Cf-Organization-Id:
+      - 3za11RVJBwLIPn20QJ67Gq
+      X-Contentful-Route:
+      - "/spaces/:space/environments/:environment/entries"
+      Etag:
+      - W/"16178371428349930043"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - Contentful
+      X-Contentful-Region:
+      - us-east-1
+      Contentful-Api:
+      - cda
+      Content-Encoding:
+      - gzip
+      Via:
+      - 1.1 varnish, 1.1 varnish
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 19 Jan 2026 14:28:36 GMT
+      Age:
+      - '57'
+      X-Served-By:
+      - cache-ewr-kewr1740065-EWR, cache-lhr-egll1980094-LHR
+      X-Cache-Hits:
+      - 0, 1
+      X-Timer:
+      - S1768832916.220049,VS0,VE1
+      Access-Control-Allow-Headers:
+      - accept,accept-language,authorization,cache-control,content-length,content-range,content-type,dnt,destination,expires,if-match,if-modified-since,if-none-match,keep-alive,last-modified,origin,pragma,range,user-agent,x-http-method-override,x-mx-reqtoken,x-requested-with,x-contentful-content-type,x-contentful-enable-alpha-feature,x-contentful-organization,x-contentful-resource-resolution,x-contentful-skip-transformation,x-contentful-user-agent,x-contentful-version
+      Access-Control-Allow-Methods:
+      - GET,HEAD,OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '86400'
+      Access-Control-Expose-Headers:
+      - etag
+      Strict-Transport-Security:
+      - max-age=15768000
+      X-Cache:
+      - HIT
+      X-Contentful-Request-Id:
+      - 57190d76-4942-4168-bf6a-59204b9179fd
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+  recorded_at: Mon, 19 Jan 2026 14:28:39 GMT
+recorded_with: VCR 6.4.0

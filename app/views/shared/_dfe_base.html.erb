@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template--rebranded">
+<head>
+  <title><%= page_title(@page_title) %></title>
+  <%= favicon_link_tag "govuk-frontend/favicon.svg", rel: "shortcut icon", type: "image/x-icon" %>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= tag :link, href: @canonical_url, rel: 'canonical' %>
+
+  <%= stylesheet_link_tag "application" %>
+
+  <%= javascript_include_tag "application", defer: true %>
+
+  <% if ENV["MS_CLARITY_PROJECT_ID"] %>
+    <%= render "shared/ms_clarity" %>
+  <% end %>
+</head>
+
+<body class="govuk-template__body" data-controller="external-link-tracking engagement-tracking">
+  <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+  <%= yield %>
+</body>
+</html>

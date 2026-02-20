@@ -1,0 +1,29 @@
+<div class="page-with-sidebar">
+  <div class="dfe-width-container">
+    <div class="govuk-grid-row">
+      <div class="sidebar govuk-grid-column-one-third govuk-!-margin-top-4 govuk-!-margin-bottom-7">
+          <nav role="navigation" aria-label="Contents">
+            <ol class="govuk-list govuk-list--dash">
+              <% @sorted_categories.each_with_index do |(category_slug, category_data), index| %>
+                <li>
+                  <%= link_to category_slug, "##{category_slug.parameterize}", class: "govuk-body-s govuk-link" %>
+                </li>
+              <% end %>
+            </ol>
+          </nav>
+      </div>
+
+      <div class="all-buying-options govuk-grid-column-two-thirds govuk-!-margin-top-4 govuk-!-margin-bottom-7">
+        <% @sorted_categories.each do |category_slug, category_data| %>
+          <div class="all-buying-options-category govuk-!-margin-bottom-7">
+            <h2 class="govuk-heading-m" id="<%= category_slug.parameterize %>"><%= category_data[:slug] %></h2>
+            <p><%= category_data[:description] %></p>
+            <%= render partial: "shared/solutions", locals: { solutions: category_data[:solutions], category_slug: category_data[:cat_slug] } %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+
+</div>
