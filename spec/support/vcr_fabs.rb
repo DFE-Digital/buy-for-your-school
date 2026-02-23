@@ -3,6 +3,16 @@ VCR.configure do |config|
   config.hook_into :webmock
   config.configure_rspec_metadata!
 
+  # Capybara pings the local server with /__identify__ to make sure it booted.
+  # These requests aren't part of any external API interaction so we let them
+  # bypass VCR/WebMock entirely.
+  capybara_hosts = [
+    "127.0.0.1",
+    "localhost",
+    (Capybara.server_host if defined?(Capybara)),
+  ].compact.uniq
+  config.ignore_hosts(*capybara_hosts) if capybara_hosts.any?
+
   config.filter_sensitive_data("FAKE_API_KEY") { ENV["CONTENTFUL_ACCESS_TOKEN"] }
   config.filter_sensitive_data("FAKE_SPACE_ID") { ENV["CONTENTFUL_SPACE_ID"] }
   config.filter_sensitive_data("FAKE_OPENSEARCH_URL") { ENV["OPENSEARCH_URL"] }
