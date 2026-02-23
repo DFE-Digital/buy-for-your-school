@@ -8,7 +8,7 @@ VCR.configure do |config|
   # bypass VCR/WebMock entirely.
   selenium_hub_host = begin
     hub_url = ENV["SELENIUM_HUB_URL"]
-    URI(hub_url).host if hub_url && !hub_url.empty?
+    URI(hub_url).host if hub_url.present?
   rescue URI::InvalidURIError
     nil
   end
