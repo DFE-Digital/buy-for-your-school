@@ -71,5 +71,21 @@ module BuyForYourSchool
     config.active_support.cache_format_version = 7.1
 
     config.flipper.strict = false
+
+    config.x.public_frontend_translation_namespaces = %w[
+      breadcrumbs
+      categories
+      date
+      header_description
+      header_title
+      offers
+      results
+      search
+      service
+      shared
+      solutions
+    ]
+
+    config.x.public_frontend_contentful_enabled = true
   end
 end

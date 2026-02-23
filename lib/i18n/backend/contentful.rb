@@ -71,17 +71,15 @@ module I18n
         end
 
         Rails.logger.debug "No translation found for #{key}"
-        nil
+        raise I18n::MissingTranslationData.new(locale, key, options)
       end
 
     private
 
       def load_translations
-        # Fetch from Redis first
         cached_translations = Rails.cache.read(CACHE_KEY)
 
         if cached_translations.nil?
-          # If not in cache, fetch from Contentful
           entries = ::ContentfulClient.entries(
             content_type: "translation",
             limit: 1000,
@@ -95,6 +93,9 @@ module I18n
         @translations = I18n::Utils.deep_merge!(@translations, cached_translations)
         set_available_locales
 
+        @translations
+      rescue StandardError => e
+        Rails.logger.warn "Contentful translations unavailable: #{e.message}"
         @translations
       end
 
