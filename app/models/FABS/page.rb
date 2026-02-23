@@ -19,17 +19,25 @@ module FABS
     end
 
     def self.find_by_slug!(slug)
-      entry = ContentfulClient.entries(
-        content_type: "page",
-        'fields.slug': slug,
-        include: 4,
-      ).first
+      entry = fetch_page_entry(slug)
       raise ContentfulRecordNotFoundError.new("Page not found", slug:) unless entry
 
       new(entry)
     end
 
   private
+
+    def self.fetch_page_entry(slug)
+      ContentfulClient.entries(
+        content_type: "page",
+        'fields.slug': slug,
+        include: 4,
+      ).first
+    rescue Contentful::NotFound
+      raise ContentfulRecordNotFoundError.new("Page not found", slug:)
+    end
+
+    private_class_method :fetch_page_entry
 
     def build_parent_from_entry(parent_entry)
       return nil unless parent_entry
