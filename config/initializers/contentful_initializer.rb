@@ -38,7 +38,7 @@ private
       limit: 1000,
     )
 
-    I18n::Utils.unflatten_translations(entries)
+    I18n::Backend::Contentful.unflatten_translations(entries)
   end
 end
 

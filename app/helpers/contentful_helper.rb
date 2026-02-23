@@ -8,7 +8,7 @@ module_function
     translations = YAML.load_file(file_path)
     raise "Error: No translations found in #{file_path}" if translations["en"].nil?
 
-    I18n::Utils.flatten_translations(translations["en"])
+    I18n::Backend::Contentful.flatten_translations(translations["en"])
   end
 
   # Publishes an entry in Contentful
