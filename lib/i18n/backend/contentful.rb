@@ -74,6 +74,13 @@ module I18n
         raise I18n::MissingTranslationData.new(locale, key, options)
       end
 
+    protected
+
+      def lookup(locale, key, scope = [], options = {})
+        split_keys = I18n.normalize_keys(locale, key, scope, options[:separator])
+        translations[split_keys.join(".").to_sym]
+      end
+
     private
 
       def load_translations

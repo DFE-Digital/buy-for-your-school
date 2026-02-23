@@ -5,9 +5,10 @@ require_relative "contentful"
 module I18n
   module Backend
     class GhbsContentful < Contentful
-      def initialize(namespaces:)
+      def initialize(namespaces:, fallback_backend:)
         super()
         @namespaces = Array(namespaces).map(&:to_s)
+        @fallback_backend = fallback_backend
       end
 
       def translate(locale, key, options = EMPTY_HASH)
@@ -20,9 +21,8 @@ module I18n
         throw(:exception, e)
       end
 
-      def store_translations(*)
-        # Contentful data is read-only here; allow other backends in the chain
-        # to handle storing by doing nothing instead of raising.
+      def store_translations(locale, data, options = {})
+        @fallback_backend.store_translations(locale, data, options)
       end
 
     private
