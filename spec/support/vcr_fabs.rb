@@ -6,12 +6,20 @@ VCR.configure do |config|
   # Capybara pings the local server with /__identify__ to make sure it booted.
   # These requests aren't part of any external API interaction so we let them
   # bypass VCR/WebMock entirely.
-  capybara_hosts = [
+  selenium_hub_host = begin
+    hub_url = ENV["SELENIUM_HUB_URL"]
+    URI(hub_url).host if hub_url && !hub_url.empty?
+  rescue URI::InvalidURIError
+    nil
+  end
+
+  ignored_hosts = [
     "127.0.0.1",
     "localhost",
     (Capybara.server_host if defined?(Capybara)),
+    selenium_hub_host,
   ].compact.uniq
-  config.ignore_hosts(*capybara_hosts) if capybara_hosts.any?
+  config.ignore_hosts(*ignored_hosts) if ignored_hosts.any?
 
   config.filter_sensitive_data("FAKE_API_KEY") { ENV["CONTENTFUL_ACCESS_TOKEN"] }
   config.filter_sensitive_data("FAKE_SPACE_ID") { ENV["CONTENTFUL_SPACE_ID"] }
