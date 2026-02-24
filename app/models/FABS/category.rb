@@ -12,7 +12,7 @@ module FABS
       @title = entry.fields[:title]
       @description = entry.fields[:description]
       @slug = entry.fields[:slug]
-      @subcategories = entry.fields.fetch(:subcategories, []).map { Subcategory.new(entry) }.sort_by(&:title)
+      @subcategories = entry.fields.fetch(:subcategories, []).map { |subcat| Subcategory.new(subcat) }.sort_by(&:title)
       @banner = entry.fields[:banner] ? Banner.new(entry.fields[:banner]) : nil
       super
     end
