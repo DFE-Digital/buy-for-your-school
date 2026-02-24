@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   before_action :set_current_request_id
   before_action :track_button_click
   before_action :enable_search_in_header, :set_default_back_link, :canonical_url
-  before_action :reload_translations
+  before_action :reload_translations, if: -> { Rails.configuration.x.public_frontend_contentful_enabled }
 
   protect_from_forgery
 
