@@ -1,0 +1,11 @@
+<% if breadcrumb_trail.any? %>
+  <nav class="govuk-breadcrumbs" aria-label="Breadcrumb">
+    <ol class="govuk-breadcrumbs__list">
+      <% breadcrumb_trail.each do |crumb| %>
+        <li class="govuk-breadcrumbs__list-item" <%= "aria-current=page" if crumb.current? %>>
+          <%= link_to crumb.name, crumb.url, class: "govuk-breadcrumbs__link" %>
+        </li>
+      <% end %>
+    </ol>
+  </nav>
+<% end %>

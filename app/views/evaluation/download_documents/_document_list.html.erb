@@ -4,7 +4,7 @@
     <% @documents.each do |document| %>
       <div class="govuk-summary-list__row">
         <dd class="govuk-summary-list__value">
-          <%= link_to document.file_name, evaluation_download_document_path(@current_case, document_type: document.class, document_id: document.id), method: :put, class: "govuk-link" %>
+          <%= link_to document.file_name, evaluation_download_document_path(@current_case, document_type: document.class, document_id: document.id), method: :put, class: "govuk-link", data: { turbo: false } %>
         </dd>
       </div>
     <% end %>

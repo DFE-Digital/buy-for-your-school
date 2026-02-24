@@ -68,4 +68,5 @@ Rails.application.configure do
   # config.action_view.annotate_rendered_view_with_filenames = true
 
   config.flipper.memoize = false
+  config.x.public_frontend_contentful_enabled = false
 end

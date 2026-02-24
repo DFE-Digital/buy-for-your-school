@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
   include InsightsTrackable
   include ExceptionDataPrepareable
+  include Breadcrumbs
 
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
@@ -158,4 +159,5 @@ protected
 
     DfE::Analytics::SendEvents.do([event])
   end
+
 end

@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  layout "application"
+
   skip_before_action :authenticate_user!
   before_action :redirect_non_page_requests
   before_action :set_breadcrumbs, only: :show
@@ -7,7 +9,6 @@ class PagesController < ApplicationController
     @page = PagePresenter.new(page)
   end
 
-  # TODO: remove this once pages are dynamic
   def self.bypass_dsi?
     Rails.env.development? && (ENV["DFE_SIGN_IN_ENABLED"] == "false")
   end
@@ -22,7 +23,6 @@ private
     @page ||= Page.find_by(slug: params[:slug])
   end
 
-  # Apply Contentful breadcrumbs in the format "title, path"
   def set_breadcrumbs
     page&.breadcrumbs&.each { |item| breadcrumb(*item.split(",")) }
   end

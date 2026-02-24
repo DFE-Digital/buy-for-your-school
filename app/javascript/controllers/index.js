@@ -93,3 +93,12 @@ application.register("dfe_analytics_engagement_tracking", DfeAnalyticsEngagement
 
 import DfeAnalyticsLinksController from "./dfe_analytics_links_controller"
 application.register("dfe_analytics_links", DfeAnalyticsLinksController);
+
+import EngagementTrackingController from "./engagement_tracking_controller"
+application.register("engagement-tracking", EngagementTrackingController);
+
+import ExternalLinkTrackingController from "./external_link_tracking_controller"
+application.register("external-link-tracking", ExternalLinkTrackingController);
+
+import SearchToggleController from "./search_toggle_controller"
+application.register("search-toggle", SearchToggleController);

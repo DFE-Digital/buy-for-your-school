@@ -46,6 +46,9 @@ module BuyForYourSchool
     config.i18n.default_locale = :en
     config.i18n.enforce_available_locales = false
 
+    # Autoload lib directory for FABS files
+    config.autoload_paths << Rails.root.join("lib")
+
     # Custom exception page handling
     config.exceptions_app = routes
 
@@ -68,5 +71,21 @@ module BuyForYourSchool
     config.active_support.cache_format_version = 7.1
 
     config.flipper.strict = false
+
+    config.x.public_frontend_translation_namespaces = %w[
+      breadcrumbs
+      categories
+      date
+      header_description
+      header_title
+      offers
+      results
+      search
+      service
+      shared
+      solutions
+    ]
+
+    config.x.public_frontend_contentful_enabled = true
   end
 end

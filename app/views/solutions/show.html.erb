@@ -1,0 +1,16 @@
+<div class="govuk-!-margin-top-9">
+  <%= render_markdown_to_html(@solution.summary) %>
+
+  <% if @solution.suffix&.description.present? %>
+    <%= render_markdown_to_html(@solution.suffix.description) %>
+  <% end %>
+
+  <%= render partial: "shared/provider_and_expires", locals: { solution: @solution } %>
+  <%= render partial: "shared/provider_reference", locals: { solution: @solution } %>
+
+  <%= fabs_govuk_link_to h(solution_cta(@solution)), @solution.url, class: "cta govuk-button" %>
+
+  <% content_for :sidebar do %>
+    <%= render partial: "shared/related_content", locals: { related_content: @solution.related_content } %>
+  <% end %>
+</div>
