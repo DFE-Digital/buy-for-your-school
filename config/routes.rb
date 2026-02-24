@@ -661,7 +661,9 @@ Rails.application.routes.draw do
     resources :solutions, only: [:index]
   end
 
-  # Routes any/all Contentful Pages that are mirrored in t.pages
-  # Keep this route at the bottom so that it doesn't override the other routes
-  get ":slug", to: "pages#show", as: :page
+  # DB-backed pages (BFYS) — checked first via constraint
+  get ":slug", to: "pages#show", as: :page, constraints: ->(req) { Page.exists?(slug: req.params[:slug]) }
+
+  # Contentful-backed pages (FABS) — fallback
+  get ":slug", to: "fabs/pages#show", as: :fabs_page
 end

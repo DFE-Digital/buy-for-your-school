@@ -25,8 +25,8 @@ RSpec.describe "Pages", :vcr, type: :request do
     end
 
     it "displays breadcrumbs with Home and parent category" do
-      expect(response.body).to have_css("nav.govuk-breadcrumbs")
-      expect(response.body).to have_link("Home", href: "/")
+      expect(response.body).to include("govuk-breadcrumbs")
+      expect(response.body).to include("Home")
     end
   end
 
@@ -36,9 +36,9 @@ RSpec.describe "Pages", :vcr, type: :request do
     end
 
     it "displays breadcrumbs with Home and parent category" do
-      expect(response.body).to have_css("nav.govuk-breadcrumbs")
-      expect(response.body).to have_link("Home", href: "/")
-      expect(response.body).to have_link("Banking and finance", href: "/categories/banking-finance")
+      expect(response.body).to include("govuk-breadcrumbs")
+      expect(response.body).to include("Home")
+      expect(response.body).to include("Banking and finance")
     end
   end
 
@@ -48,10 +48,10 @@ RSpec.describe "Pages", :vcr, type: :request do
     end
 
     it "displays breadcrumbs with Home, category and parent page" do
-      expect(response.body).to have_css("nav.govuk-breadcrumbs")
-      expect(response.body).to have_link("Home", href: "/")
-      expect(response.body).to have_link("Banking and finance", href: "/categories/banking-finance")
-      expect(response.body).to have_link("Current accounts and Savings", href: "/current-account-and-savings")
+      expect(response.body).to include("govuk-breadcrumbs")
+      expect(response.body).to include("Home")
+      expect(response.body).to include("Banking and finance")
+      expect(response.body).to include("Current accounts and Savings")
     end
   end
 

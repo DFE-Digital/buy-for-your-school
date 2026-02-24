@@ -165,7 +165,7 @@ protected
   end
 
   def record_not_found
-    render file: Rails.root.join("public/404.html"), status: :not_found, layout: false
+    render "errors/not_found", status: :not_found
   end
 
   def enable_search_in_header
