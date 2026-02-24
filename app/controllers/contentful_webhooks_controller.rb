@@ -1,4 +1,5 @@
 class ContentfulWebhooksController < ApplicationController
+  skip_before_action :authenticate_user!
   # codeql[rb/rails/csrf-disabled] Webhooks authenticate via Contentful signature validation instead of session-based CSRF tokens.
   skip_before_action :verify_authenticity_token
 

@@ -92,7 +92,7 @@ RSpec.describe "ContentfulWebhooks", :vcr, type: :request do
 
       it "returns a 422 Unprocessable Entity status" do
         post delete_contentful_entry_path, params: valid_params, headers: valid_headers
-        expect(response).to have_http_status(:unprocessable_content)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it "returns an error message" do
