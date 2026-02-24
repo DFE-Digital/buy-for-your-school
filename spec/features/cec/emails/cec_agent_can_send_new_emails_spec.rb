@@ -21,6 +21,9 @@ describe "Agent can send new emails", :js do
       template = create(:support_email_template, title: "CEC template", subject: "about cec", body: "cec body", group: cec_group)
       create(:support_email_template_attachment, template:)
 
+      # Re-visit so the CEC group link is rendered with the correct group_id
+      visit cec_onboarding_case_path(support_case)
+      click_on "Messages"
       first("span", text: "Create a new message thread").click
     end
 

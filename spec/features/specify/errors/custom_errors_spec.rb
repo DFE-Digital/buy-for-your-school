@@ -12,7 +12,7 @@ RSpec.feature "Custom Errors" do
     end
 
     it "shows the expected error message" do
-      visit "/foo"
+      visit "/nonexistent/path"
       # errors.not_found.page_title
       expect(find("h2.govuk-heading-xl", text: "Page not found")).to be_present
       # errors.not_found.page_body

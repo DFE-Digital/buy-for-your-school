@@ -1,5 +1,4 @@
-class Fabs::PagesController < ApplicationController
-  skip_before_action :authenticate_user!
+class Fabs::PagesController < Fabs::ApplicationController
 
   def show
     @page = FABS::Page.find_by_slug!(params[:slug])

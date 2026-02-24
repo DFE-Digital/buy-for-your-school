@@ -1,5 +1,5 @@
-class EventsController < ApplicationController
-  skip_before_action :authenticate_user!
+class EventsController < Fabs::ApplicationController
+  skip_before_action :check_fabs_flag
   EVENT_ALLOWLIST = {
     external_link_clicked: %i[text href],
     page_engagement: %i[engaged_time_ms page_path page_title session_duration_ms timestamp],

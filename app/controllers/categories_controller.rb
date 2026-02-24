@@ -1,6 +1,5 @@
-class CategoriesController < ApplicationController
-  skip_before_action :authenticate_user!
-  before_action :enable_search_in_header, except: :index
+class CategoriesController < Fabs::ApplicationController
+  before_action :disable_search_in_header, only: :index
 
   def index
     @categories = FABS::Category.all
@@ -24,5 +23,11 @@ class CategoriesController < ApplicationController
     @category_slug = @category.slug
 
     render layout: "fabs_application"
+  end
+
+private
+
+  def disable_search_in_header
+    @show_search_in_header = false
   end
 end

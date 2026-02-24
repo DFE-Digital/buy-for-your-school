@@ -1,7 +1,4 @@
-class SolutionsController < ApplicationController
-  skip_before_action :authenticate_user!
-  before_action :enable_search_in_header
-
+class SolutionsController < Fabs::ApplicationController
   def index
     @solutions = Solution.all
     @sorted_categories = @solutions.each_with_object({}) { |solution, hash|

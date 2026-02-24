@@ -1,7 +1,4 @@
-class OffersController < ApplicationController
-  skip_before_action :authenticate_user!
-  before_action :enable_search_in_header
-
+class OffersController < Fabs::ApplicationController
   def index
     @offers = Offer.all
 

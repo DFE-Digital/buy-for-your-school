@@ -31,4 +31,21 @@ VCR.configure do |config|
   }
 end
 
-WebMock.disable_net_connect!
+# Prevent FABS Contentful calls from leaking into non-FABS specs.
+# FABS specs use :vcr metadata and have VCR cassettes for Contentful calls.
+# Non-FABS specs should never hit Contentful.
+RSpec.configure do |config|
+  config.before(:each) do |example|
+    unless example.metadata[:vcr]
+      allow(ContentfulClient).to receive(:entries).and_return([])
+    end
+  end
+
+  # Enable the FABS feature flag for specs in spec/fabs/.
+  # This is scoped to avoid side effects on non-FABS tests (e.g. evaluation).
+  config.before(:each) do |example|
+    if example.metadata[:absolute_file_path]&.include?("/spec/fabs/")
+      Flipper.enable(:ghbs_public_frontend)
+    end
+  end
+end
