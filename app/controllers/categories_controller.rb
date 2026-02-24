@@ -10,7 +10,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    add_breadcrumb :home_breadcrumb_name, :root_path
+    add_breadcrumb home_breadcrumb_name, root_path
 
     @category = FABS::Category.find_by_slug!(params[:slug])
     @subcategories = @category.subcategories
