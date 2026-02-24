@@ -31,7 +31,7 @@ a.underlined {
   margin-bottom:10px;
 }
 
-header_description {
+.header_description {
   color: #ccd8e1;
   font-weight: 700;
   font-size: 24px;
@@ -206,7 +206,7 @@ h1.govuk-heading {
 }
 
 .beta {
-  color: #fff;
+  color: #ffffff;
   background-color: #347CA9;
   padding: 0px 5px;
 }
@@ -322,7 +322,7 @@ footer {
 }
 
 .dfe-header {
-  color: #fff;
+  color: #ffffff;
   background-color: #1d70b8;
   padding-bottom: 0px;
 }
@@ -356,10 +356,10 @@ footer {
     .govuk-service-navigation__link:link,
     .govuk-service-navigation__link:visited,
     .govuk-service-navigation__active-fallback {
-      color: #fff;
+      color: #ffffff;
 
       &:hover {
-        color: #fff;
+        color: #ffffff;
       }
 
       &:focus {
@@ -368,12 +368,12 @@ footer {
     }
 
     .govuk-service-navigation__toggle {
-      color: #fff;
-      border-color: #fff;
+      color: #ffffff;
+      border-color: #ffffff;
 
       &:hover {
-        color: #fff;
-        border-color: #fff;
+        color: #ffffff;
+        border-color: #ffffff;
       }
 
       &:focus {
@@ -384,21 +384,21 @@ footer {
 
     .govuk-service-navigation__service-name.govuk-service-navigation__item--active,
     .govuk-service-navigation__item.govuk-service-navigation__item--active {
-      border-bottom-color: #fff;
-      border-color: #fff;
+      border-bottom-color: #ffffff;
+      border-color: #ffffff;
 
       &::after {
-        background-color: #fff;
-        border-color: #fff;
+        background-color: #ffffff;
+        border-color: #ffffff;
       }
 
       .govuk-service-navigation__link {
-        border-bottom-color: #fff;
-        border-color: #fff;
+        border-bottom-color: #ffffff;
+        border-color: #ffffff;
 
         &::after {
-          background-color: #fff;
-          border-color: #fff;
+          background-color: #ffffff;
+          border-color: #ffffff;
         }
       }
     }
@@ -623,7 +623,7 @@ a.all-buying-options-link {
 }
 
 .dfe-page-hero {
-   color: #fff;
+   color: #ffffff;
    .hero-text-container{
       @media (max-width: 640px) {
         margin-left: 0px;
