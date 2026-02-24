@@ -54,7 +54,7 @@ RSpec.describe "Solutions pages", :vcr, type: :feature do
   context "when displaying call to action button" do
     it "displays the default CTA text when no custom CTA is provided" do
       visit solution_path("it-hardware")
-      expect(page).to have_link("Visit the provider’s website", class: "govuk-button")
+      expect(page).to have_link("Visit the provider's website", class: "govuk-button")
     end
 
     it "displays the custom CTA text when provided" do
