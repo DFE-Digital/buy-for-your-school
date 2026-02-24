@@ -363,7 +363,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_25_175422) do
     t.uuid "user_id"
     t.boolean "group", default: false
     t.string "org_id"
-    t.decimal "procurement_amount", precision: 9, scale: 2
+    t.decimal "procurement_amount", precision: 10, scale: 2
     t.integer "confidence_level"
     t.string "special_requirements"
     t.boolean "is_energy_request"

@@ -34,16 +34,29 @@ describe FrameworkRequests::ProcurementAmountForm, type: :model do
     end
 
     context "when the procurement amount is too large" do
-      subject(:form) { described_class.new(procurement_amount: "10000000") }
+      subject(:form) { described_class.new(procurement_amount: "100000000") }
 
       before do
-        # allow(validator).to receive(:invalid_number?).and_return(false)
         allow(validator).to receive(:too_large?).and_return(true)
       end
 
       it "returns the right error message" do
         expect(form).not_to be_valid
-        expect(form.errors.messages[:procurement_amount]).to eq ["The amount cannot be larger than 99,999,999.99"]
+        expect(form.errors.messages[:procurement_amount]).to eq ["The amount entered exceeds the maximum procurement value. Enter a number less than 99,999,999"]
+        expect(validator).to have_received(:too_large?).once
+      end
+    end
+
+    describe "max procurement_amount" do
+      subject(:form) { described_class.new(procurement_amount: "10000000") }
+
+      before do
+        allow(validator).to receive(:too_large?).and_return(true)
+      end
+
+      it "returns the right error message" do
+        expect(form).not_to be_valid
+        expect(form.errors.messages[:procurement_amount]).to eq ["The amount entered exceeds the maximum procurement value. Enter a number less than 99,999,999"]
         expect(validator).to have_received(:too_large?).once
       end
     end
