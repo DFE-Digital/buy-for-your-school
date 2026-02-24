@@ -18,7 +18,7 @@ module Support
       def too_large?
         return false if @amount.blank?
 
-        Float(@amount) >= 10**7
+        Float(@amount) >= 10**8
       rescue ArgumentError
         false
       end

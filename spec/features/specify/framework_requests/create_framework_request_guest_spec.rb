@@ -283,6 +283,29 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         expect(page).to have_button "Continue"
       end
+
+      it "checks empty value" do
+        click_continue
+        expect(page).to have_text "Enter how much the school will be spending. The number must be greater than 0."
+      end
+
+      it "checks 0 value of procurement amount" do
+        fill_in "framework_support_form[procurement_amount]", with: "0"
+        click_continue
+        expect(page).to have_text "The number must be greater than 0"
+      end
+
+      it "checks the maximum value of procurement amount" do
+        fill_in "framework_support_form[procurement_amount]", with: "100000000"
+        click_continue
+        expect(page).to have_text "The amount entered exceeds the maximum procurement value. Enter a number less than 99,999,999"
+      end
+
+      it "checks allowed maximum amount" do
+        fill_in "framework_support_form[procurement_amount]", with: "99999999.99"
+        click_continue
+        expect(page).not_to have_text "There is a problem"
+      end
     end
 
     describe "the special requirements page", :js do
