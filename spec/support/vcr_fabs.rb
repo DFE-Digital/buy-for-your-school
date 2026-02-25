@@ -7,7 +7,7 @@ VCR.configure do |config|
   # These requests aren't part of any external API interaction so we let them
   # bypass VCR/WebMock entirely.
   selenium_hub_host = begin
-    hub_url = ENV["SELENIUM_HUB_URL"]
+    hub_url = ENV.fetch("SELENIUM_HUB_URL", nil)
     URI(hub_url).host if hub_url.present?
   rescue URI::InvalidURIError
     nil
@@ -21,9 +21,9 @@ VCR.configure do |config|
   ].compact.uniq
   config.ignore_hosts(*ignored_hosts) if ignored_hosts.any?
 
-  config.filter_sensitive_data("FAKE_API_KEY") { ENV["CONTENTFUL_ACCESS_TOKEN"] }
-  config.filter_sensitive_data("FAKE_SPACE_ID") { ENV["CONTENTFUL_SPACE_ID"] }
-  config.filter_sensitive_data("FAKE_OPENSEARCH_URL") { ENV["OPENSEARCH_URL"] }
+  config.filter_sensitive_data("FAKE_API_KEY") { ENV.fetch("CONTENTFUL_ACCESS_TOKEN", "") }
+  config.filter_sensitive_data("FAKE_SPACE_ID") { ENV.fetch("CONTENTFUL_SPACE_ID", "") }
+  config.filter_sensitive_data("FAKE_OPENSEARCH_URL") { ENV.fetch("OPENSEARCH_URL", "") }
   config.default_cassette_options = {
     record: (ENV["RECORD_VCR"] == "1" ? :all : :once),
     match_requests_on: %i[method uri body],
