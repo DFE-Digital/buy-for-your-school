@@ -2,6 +2,22 @@ class Offer
   include ActiveModel::Model
   include HasRelatedContent
 
+  CONTENT_TYPE = "offer"
+  SELECT_FIELDS = %w[
+    sys.id
+    fields.title
+    fields.description
+    fields.summary
+    fields.slug
+    fields.url
+    fields.call_to_action
+    fields.image
+    fields.featured_on_homepage
+    fields.related_content
+    fields.expiry
+    fields.sort_order
+  ].join(",").freeze
+
   attr_reader :id, :title, :description, :summary,
               :slug, :url, :call_to_action,
               :image, :featured_on_homepage, :expiry, :sort_order
@@ -23,22 +39,9 @@ class Offer
 
   def self.find_by_slug!(slug)
     entry = ContentfulClient.entries(
-      content_type: "offer",
+      content_type: CONTENT_TYPE,
       'fields.slug': slug,
-      select: %w[
-        sys.id
-        fields.title
-        fields.description
-        fields.summary
-        fields.slug
-        fields.url
-        fields.call_to_action
-        fields.image
-        fields.featured_on_homepage
-        fields.related_content
-        fields.expiry
-        fields.sort_order
-      ].join(","),
+      select: SELECT_FIELDS,
       include: 1,
     ).find { |offer| offer.fields[:slug] == slug }
 
@@ -49,21 +52,8 @@ class Offer
 
   def self.all
     params = {
-      content_type: "offer",
-      select: %w[
-        sys.id
-        fields.title
-        fields.description
-        fields.summary
-        fields.slug
-        fields.url
-        fields.call_to_action
-        fields.image
-        fields.featured_on_homepage
-        fields.related_content
-        fields.expiry
-        fields.sort_order
-      ].join(","),
+      content_type: CONTENT_TYPE,
+      select: SELECT_FIELDS,
       order: "fields.sort_order",
     }
     ContentfulClient.entries(params).map { |entry| new(entry) }
@@ -71,20 +61,8 @@ class Offer
 
   def self.featured_offers
     params = {
-      content_type: "offer",
-      select: %w[
-        sys.id
-        fields.title
-        fields.description
-        fields.summary
-        fields.slug
-        fields.url
-        fields.call_to_action
-        fields.image
-        fields.featured_on_homepage
-        fields.expiry
-        fields.sort_order
-      ].join(","),
+      content_type: CONTENT_TYPE,
+      select: SELECT_FIELDS,
       "fields.featured_on_homepage": true,
       order: "fields.sort_order",
     }
