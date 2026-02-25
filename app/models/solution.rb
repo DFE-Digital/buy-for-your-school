@@ -4,7 +4,7 @@ class Solution
   include ActiveModel::Model
   include HasRelatedContent
 
-  CONTENT_TYPE = "solution"
+  CONTENT_TYPE = "solution".freeze
   SELECT_FIELDS = %w[
     sys.id
     fields.title

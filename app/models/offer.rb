@@ -2,7 +2,7 @@ class Offer
   include ActiveModel::Model
   include HasRelatedContent
 
-  CONTENT_TYPE = "offer"
+  CONTENT_TYPE = "offer".freeze
   SELECT_FIELDS = %w[
     sys.id
     fields.title

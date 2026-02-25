@@ -5,8 +5,8 @@ module FABS
     include ActiveModel::Model
     include HasRelatedContent
 
-    CONTENT_TYPE = "category"
-    SUMMARY_SELECT = "sys.id,fields.title,fields.description,fields.slug,fields.banner"
+    CONTENT_TYPE = "category".freeze
+    SUMMARY_SELECT = "sys.id,fields.title,fields.description,fields.slug,fields.banner".freeze
 
     attr_reader :id, :title, :description, :slug, :subcategories, :banner
 
