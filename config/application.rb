@@ -42,6 +42,9 @@ module BuyForYourSchool
 
     config.active_job.queue_adapter = :sidekiq
 
+    # Autoload lib directory for FABS files
+    config.autoload_paths << Rails.root.join("lib")
+
     config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
     config.i18n.default_locale = :en
     config.i18n.enforce_available_locales = false
@@ -66,6 +69,22 @@ module BuyForYourSchool
     config.middleware.insert_before 0, MaintenanceMode
 
     config.active_support.cache_format_version = 7.1
+
+    config.x.public_frontend_translation_namespaces = %w[
+      breadcrumbs
+      categories
+      date
+      header_description
+      header_title
+      offers
+      results
+      search
+      service
+      shared
+      solutions
+    ]
+
+    config.x.public_frontend_contentful_enabled = true
 
     config.flipper.strict = false
   end
