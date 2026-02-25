@@ -49,8 +49,6 @@ module FABS
         FABS::Category.new(parent_entry)
       when "page"
         FABS::Page.new(parent_entry)
-      else
-        nil
       end
     end
   end
