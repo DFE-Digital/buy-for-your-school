@@ -4,6 +4,56 @@ class Solution
   include ActiveModel::Model
   include HasRelatedContent
 
+  CONTENT_TYPE = "solution"
+  SELECT_FIELDS = %w[
+    sys.id
+    fields.title
+    fields.description
+    fields.expiry
+    fields.related_content
+    fields.summary
+    fields.slug
+    fields.suffix
+    fields.provider_name
+    fields.provider_initials
+    fields.call_to_action
+    fields.url
+    fields.buying_option_type
+    fields.provider_reference
+    fields.primary_category
+  ].join(",").freeze
+
+  LIST_SELECT_FIELDS = %w[
+    sys.id
+    fields.title
+    fields.description
+    fields.expiry
+    fields.slug
+    fields.categories
+    fields.subcategories
+    fields.url
+    fields.provider_name
+    fields.provider_initials
+    fields.related_content
+    fields.summary
+    fields.buying_option_type
+    fields.provider_reference
+    fields.primary_category
+  ].join(",").freeze
+
+  SEARCH_SELECT_FIELDS = [
+    "sys.id",
+    "fields.title",
+    "fields.summary",
+    "fields.description",
+    "fields.slug",
+    "fields.provider_name",
+    "fields.buying_option_type",
+    "fields.provider_initials",
+    "fields.primary_category",
+    "fields.provider_reference",
+  ].join(",").freeze
+
   attr_reader :id, :title, :description, :expiry, :summary,
               :slug, :provider_name, :provider_initials, :url,
               :categories, :subcategories, :suffix, :call_to_action,
@@ -33,22 +83,8 @@ class Solution
 
   def self.all(category_id: nil)
     params = {
-      content_type: "solution",
-      select: %w[sys.id
-                 fields.title
-                 fields.description
-                 fields.expiry
-                 fields.slug
-                 fields.categories
-                 fields.subcategories
-                 fields.url
-                 fields.provider_name
-                 fields.provider_initials
-                 fields.related_content
-                 fields.summary
-                 fields.buying_option_type
-                 fields.provider_reference
-                 fields.primary_category].join(","),
+      content_type: CONTENT_TYPE,
+      select: LIST_SELECT_FIELDS,
       order: "fields.title",
       "fields.categories.sys.id[in]": category_id,
     }.compact
@@ -56,41 +92,24 @@ class Solution
   end
 
   def self.search(query: "")
-    # binding.break
-    use_opensearch = ENV.fetch("USE_OPENSEARCH", false)
-    if use_opensearch
+    use_opensearch = ENV.fetch("USE_OPENSEARCH", "false")
+    if use_opensearch == "true"
       SolutionSearcher.new(query:).search
     else
       ContentfulClient.entries(
-        content_type: "solution",
+        content_type: CONTENT_TYPE,
         query:,
-        select: "sys.id,fields.title,fields.summary,fields.description,fields.slug,fields.provider_name,fields.buying_option_type,fields.provider_initials,fields.primary_category,fields.provider_reference",
+        select: SEARCH_SELECT_FIELDS,
       ).map { |entry| new(entry) }
     end
   end
 
   def self.find_by_slug!(slug)
     entry = ContentfulClient.entries(
-      content_type: "solution",
+      content_type: CONTENT_TYPE,
       'fields.slug': slug,
       include: 1,
-      select: %w[
-        sys.id
-        fields.title
-        fields.description
-        fields.expiry
-        fields.related_content
-        fields.summary
-        fields.slug
-        fields.suffix
-        fields.provider_name
-        fields.provider_initials
-        fields.call_to_action
-        fields.url
-        fields.buying_option_type
-        fields.provider_reference
-        fields.primary_category
-      ].join(","),
+      select: SELECT_FIELDS,
     ).find { |solution| solution.fields[:slug] == slug }
 
     raise ContentfulRecordNotFoundError.new("Solution not found", slug:) unless entry
@@ -100,26 +119,10 @@ class Solution
 
   def self.find_by_id!(id)
     entry = ContentfulClient.entries(
-      content_type: "solution",
+      content_type: CONTENT_TYPE,
       'sys.id': id,
       include: 1,
-      select: %w[
-        sys.id
-        fields.title
-        fields.description
-        fields.expiry
-        fields.related_content
-        fields.summary
-        fields.slug
-        fields.suffix
-        fields.provider_name
-        fields.provider_initials
-        fields.call_to_action
-        fields.url
-        fields.buying_option_type
-        fields.provider_reference
-        fields.primary_category
-      ].join(","),
+      select: SELECT_FIELDS,
     ).find { |solution| solution.sys[:id] == id }
 
     raise ContentfulRecordNotFoundError.new("Solution not found", id:) unless entry
@@ -129,7 +132,7 @@ class Solution
 
   def self.unique_category_ids
     ContentfulClient.entries(
-      content_type: "solution",
+      content_type: CONTENT_TYPE,
       select: "fields.categories",
     ).flat_map { |solution| solution.fields[:categories]&.map(&:id) }.compact.uniq
   end

@@ -5,6 +5,9 @@ module FABS
     include ActiveModel::Model
     include HasRelatedContent
 
+    CONTENT_TYPE = "category"
+    SUMMARY_SELECT = "sys.id,fields.title,fields.description,fields.slug,fields.banner"
+
     attr_reader :id, :title, :description, :slug, :subcategories, :banner
 
     def initialize(entry)
@@ -26,8 +29,8 @@ module FABS
       return [] if category_ids.blank?
 
       params = {
-        content_type: "category",
-        select: "sys.id,fields.title,fields.description,fields.slug,fields.banner",
+        content_type: CONTENT_TYPE,
+        select: SUMMARY_SELECT,
         order: "fields.title",
         "sys.id[in]" => category_ids.join(","),
         include: 1,
@@ -38,9 +41,9 @@ module FABS
 
     def self.search(query: "")
       ContentfulClient.entries(
-        content_type: "category",
+        content_type: CONTENT_TYPE,
         query:,
-        select: "sys.id,fields.title,fields.description,fields.slug,fields.banner",
+        select: SUMMARY_SELECT,
         include: 1,
       ).map { |entry| new(entry) }
     end
@@ -60,7 +63,7 @@ module FABS
 
     def self.find_by_slug!(slug)
       entry = ContentfulClient.entries(
-        content_type: "category",
+        content_type: CONTENT_TYPE,
         'fields.slug': slug,
         include: 1,
       ).first

@@ -28,9 +28,9 @@ private
 
   def fetch_and_unflatten_contentful_translations
     contentful_client = Contentful::Client.new(
-      space: ENV["CONTENTFUL_SPACE_ID"],
-      access_token: ENV["CONTENTFUL_ACCESS_TOKEN"],
-      environment: ENV["CONTENTFUL_ENVIRONMENT"] || "master",
+      space: ENV.fetch("CONTENTFUL_SPACE_ID", "FAKE_SPACE_ID"),
+      access_token: ENV.fetch("CONTENTFUL_ACCESS_TOKEN", "FAKE_API_KEY"),
+      environment: ENV.fetch("CONTENTFUL_ENVIRONMENT", "master"),
     )
 
     entries = contentful_client.entries(
