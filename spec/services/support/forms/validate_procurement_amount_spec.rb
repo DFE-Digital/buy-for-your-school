@@ -37,7 +37,7 @@ RSpec.describe Support::Forms::ValidateProcurementAmount do
     end
 
     context "when the amount is too large" do
-      let(:amount) { "10000000" }
+      let(:amount) { "100000000" }
 
       it "returns true" do
         expect(service.too_large?).to eq true
