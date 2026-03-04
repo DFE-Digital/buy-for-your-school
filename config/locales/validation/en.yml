@@ -129,6 +129,7 @@ en:
             procurement_amount:
               blank: Enter how much the school will be spending. The number must be greater than 0.
               greater_than: The number must be greater than 0
+              less_than_or_equal_to: The amount entered exceeds the maximum procurement value. Enter a number less than 99,999,999
               not_a_number: Enter a valid number
             other_category:
               blank: Enter the procurement category

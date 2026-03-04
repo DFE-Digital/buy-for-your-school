@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_02_24_115631) do
+ActiveRecord::Schema[7.2].define(version: 2026_02_25_175422) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -106,7 +106,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_24_115631) do
     t.uuid "query_id"
     t.string "other_category"
     t.string "other_query"
-    t.decimal "procurement_amount", precision: 9, scale: 2
+    t.decimal "procurement_amount", precision: 10, scale: 2
     t.string "school_urns", default: [], array: true
     t.integer "discovery_method"
     t.string "discovery_method_other_text"
@@ -710,7 +710,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_24_115631) do
     t.string "extension_number"
     t.string "other_category"
     t.string "other_query"
-    t.decimal "procurement_amount", precision: 9, scale: 2
+    t.decimal "procurement_amount", precision: 10, scale: 2
     t.string "confidence_level"
     t.string "special_requirements"
     t.uuid "query_id"

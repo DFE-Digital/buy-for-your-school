@@ -24,7 +24,7 @@ class CaseRequest < ApplicationRecord
   validate :discovery_method_validation
   validates :discovery_method_other_text, presence: true, if: -> { discovery_method == Support::Case.discovery_methods[:other] }
   validate :request_type_validation
-  validates :procurement_amount, presence: true, numericality: { greater_than: 0.99 }
+  validates :procurement_amount, presence: true, numericality: { greater_than: 0.99, less_than_or_equal_to: 99_999_999.99 }
   validates :other_category, presence: true, if: -> { category_id == Support::Category.other_category_id }
   validates :other_query, presence: true, if: -> { query_id == Support::Query.other_query_id }
 
