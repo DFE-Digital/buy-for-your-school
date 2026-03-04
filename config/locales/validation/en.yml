@@ -259,7 +259,7 @@ en:
           group: Select whether this is the Group or Trust you're buying for
         procurement_amount:
           invalid: Enter a valid number
-          too_large: The amount cannot be larger than 99,999,999.99
+          too_large: The amount entered exceeds the maximum procurement value. Enter a number less than 99,999,999
 
   support_request:
     rules:
