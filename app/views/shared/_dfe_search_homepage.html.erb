@@ -1,0 +1,14 @@
+  <div class="dfe-header__search govuk-!-margin-left-0">
+    <div class="homepage_search dfe-header__search-wrap" id="wrap-search">
+      <form class="dfe-header__search-form" id="search" action="/search" method="get" role="search">
+        <label class="govuk-visually-hidden" for="search-field"><%= t(".search_this_website") %></label>
+        <input class="dfe-search__input dfe-search__input_no_broder govuk-body" id="homepage-search-field" name="query" type="search" placeholder="Search" autocomplete="off" value="<%= params[:query] %>">
+        <button class="dfe-search__submit dfe-search__submit_homepage" type="submit">
+          <svg class="dfe-icon dfe-icon__search dfe-icon__search_hompage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="27" height="27">
+            <path d="M19.71 18.29l-4.11-4.1a7 7 0 1 0-1.41 1.41l4.1 4.11a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42zM5 10a5 5 0 1 1 5 5 5 5 0 0 1-5-5z"></path>
+          </svg>
+          <span class="govuk-visually-hidden"><%= t(".search") %></span>
+        </button>
+      </form>
+    </div>
+  </div>
