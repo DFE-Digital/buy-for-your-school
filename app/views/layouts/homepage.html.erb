@@ -1,0 +1,9 @@
+<%= render "shared/dfe_base" do %>
+  <%= render "shared/dfe_homepage_header" %>
+  <div class="main-container dfe-width-container">
+    <div class="govuk-!-margin-top-7 govuk-!-margin-bottom-7">
+      <%= yield %>
+    </div>
+  </div>
+  <%= render "shared/dfe_footer" %>
+<% end %>
