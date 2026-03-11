@@ -1,0 +1,27 @@
+<header class="dfe-header dfe-header--homepage" data-module="govuk-header">
+  <%= render "shared/dfe_logo_and_menu" %>
+  <%= render "shared/dfe_search_box"%>
+  <%= render "shared/dfe_service_navigation" %>
+</header>
+
+<section class="dfe-page-hero dfe-header govuk-!-padding-top-6">
+    <div class="dfe-width-container hero-text-container">
+      <div class="dfe-grid-row">
+        <div class="dfe-grid-column-two-thirds">
+          <h1 class="dfe-heading-xl homepage-heading homepage-heading-search-open">
+            <%= t('header_title') %>
+          </h1>
+          <p class="dfe-body-l header_description">
+            <%= t('header_description') %>
+          </p>
+          <%= render "shared/dfe_search_homepage" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="dfe-width-container all-buying-options-link-container govuk-!-margin-top-0 govuk-!-margin-bottom-1 govuk-!-padding-bottom-1">
+      <p class="govuk-body">
+        <%= link_to  t(".view_all_buying_options"), solutions_path, class:"all-buying-options-link govuk-body underlined" %>
+      </p>
+    </div>
+</section>
