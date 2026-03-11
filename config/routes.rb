@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root to: redirect(ENV.fetch("GHBS_HOMEPAGE_URL"), status: 301)
+  root "categories#index"
 
   # DfE analytics
   post "/dfe_analytics_events", to: "dfe_analytics_events#create"
@@ -641,6 +641,10 @@ Rails.application.routes.draw do
       resources :agents, only: %i[index edit update new create]
     end
   end
+
+  # FABS routes
+  resources :categories, only: %i[index show], param: :slug
+  resources :solutions, only: %i[index], param: :slug
 
   # Routes any/all Contentful Pages that are mirrored in t.pages
   get ":slug", to: "pages#show"
