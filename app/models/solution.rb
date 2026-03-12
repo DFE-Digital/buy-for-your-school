@@ -5,53 +5,66 @@ class Solution
   include HasRelatedContent
 
   CONTENT_TYPE = "solution".freeze
-  SELECT_FIELDS = %w[
-    sys.id
-    fields.title
-    fields.description
-    fields.expiry
-    fields.related_content
-    fields.summary
-    fields.slug
-    fields.suffix
-    fields.provider_name
-    fields.provider_initials
-    fields.call_to_action
-    fields.url
-    fields.buying_option_type
-    fields.provider_reference
-    fields.primary_category
+
+  # Contentful field identifiers
+  SYS_ID = "sys.id".freeze
+  FIELD_TITLE = "fields.title".freeze
+  FIELD_DESCRIPTION = "fields.description".freeze
+  FIELD_SUMMARY = "fields.summary".freeze
+  FIELD_SLUG = "fields.slug".freeze
+  FIELD_PROVIDER_NAME = "fields.provider_name".freeze
+  FIELD_PROVIDER_INITIALS = "fields.provider_initials".freeze
+  FIELD_BUYING_OPTION_TYPE = "fields.buying_option_type".freeze
+  FIELD_PROVIDER_REFERENCE = "fields.provider_reference".freeze
+  FIELD_PRIMARY_CATEGORY = "fields.primary_category".freeze
+
+  SELECT_FIELDS = [
+    SYS_ID,
+    FIELD_TITLE,
+    FIELD_DESCRIPTION,
+    "fields.expiry",
+    "fields.related_content",
+    FIELD_SUMMARY,
+    FIELD_SLUG,
+    "fields.suffix",
+    FIELD_PROVIDER_NAME,
+    FIELD_PROVIDER_INITIALS,
+    "fields.call_to_action",
+    "fields.url",
+    FIELD_BUYING_OPTION_TYPE,
+    FIELD_PROVIDER_REFERENCE,
+    FIELD_PRIMARY_CATEGORY,
   ].join(",").freeze
 
-  LIST_SELECT_FIELDS = %w[
-    sys.id
-    fields.title
-    fields.description
-    fields.expiry
-    fields.slug
-    fields.categories
-    fields.subcategories
-    fields.url
-    fields.provider_name
-    fields.provider_initials
-    fields.related_content
-    fields.summary
-    fields.buying_option_type
-    fields.provider_reference
-    fields.primary_category
+  LIST_SELECT_FIELDS = [
+    SYS_ID,
+    FIELD_TITLE,
+    FIELD_DESCRIPTION,
+    "fields.expiry",
+    FIELD_SLUG,
+    "fields.categories",
+    "fields.subcategories",
+    "fields.url",
+    FIELD_PROVIDER_NAME,
+    FIELD_PROVIDER_INITIALS,
+    "fields.related_content",
+    FIELD_SUMMARY,
+    FIELD_BUYING_OPTION_TYPE,
+    FIELD_PROVIDER_REFERENCE,
+    FIELD_PRIMARY_CATEGORY,
   ].join(",").freeze
 
   SEARCH_SELECT_FIELDS = [
-    "sys.id",
-    "fields.title",
-    "fields.summary",
-    "fields.description",
-    "fields.slug",
-    "fields.provider_name",
-    "fields.buying_option_type",
-    "fields.provider_initials",
-    "fields.primary_category",
-    "fields.provider_reference",
+    SYS_ID,
+    FIELD_TITLE,
+    FIELD_SUMMARY,
+    FIELD_DESCRIPTION,
+    FIELD_SLUG,
+    FIELD_PROVIDER_NAME,
+    FIELD_BUYING_OPTION_TYPE,
+    FIELD_PROVIDER_INITIALS,
+    FIELD_PRIMARY_CATEGORY,
+    FIELD_PROVIDER_REFERENCE,
   ].join(",").freeze
 
   attr_reader :id, :title, :description, :expiry, :summary,
@@ -85,7 +98,7 @@ class Solution
     params = {
       content_type: CONTENT_TYPE,
       select: LIST_SELECT_FIELDS,
-      order: "fields.title",
+      order: FIELD_TITLE,
       "fields.categories.sys.id[in]": category_id,
     }.compact
     ContentfulClient.entries(params).map { |entry| new(entry) }
