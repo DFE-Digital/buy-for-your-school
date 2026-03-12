@@ -71,7 +71,7 @@ RSpec.feature "Case summary", :js do
 
   context "when the case is created" do
     it "has action links" do
-      within "ul.govuk-list" do
+      within "ul.case-actions" do
         expect(page).to have_link "Assign to case worker", href: "/support/cases/#{support_case.id}/assignments/new", class: "govuk-link"
         expect(page).to have_link "Move emails to existing case", href: "/support/cases/#{support_case.id}/move_emails", class: "govuk-link"
       end
@@ -82,7 +82,7 @@ RSpec.feature "Case summary", :js do
     let(:support_case) { create(:support_case, state: "opened") }
 
     it "has action links" do
-      within "ul.govuk-list" do
+      within "ul.case-actions" do
         expect(page).to have_link "Change case owner", href: "/support/cases/#{support_case.id}/assignments/new", class: "govuk-link"
         expect(page).to have_link "Add a case note", href: "/support/cases/#{support_case.id}/interactions/new?option=note", class: "govuk-link"
         expect(page).to have_link "Log contact with school", href: "/support/cases/#{support_case.id}/interactions/new?option=contact", class: "govuk-link"
@@ -94,7 +94,7 @@ RSpec.feature "Case summary", :js do
     let(:support_case) { create(:support_case, state: "resolved") }
 
     it "has action links" do
-      within "ul.govuk-list" do
+      within "ul.case-actions" do
         expect(page).to have_link "Reopen case", href: "/support/cases/#{support_case.id}/opening/new", class: "govuk-link"
       end
     end
