@@ -13,7 +13,7 @@ private
   def check_fabs_flag
     return if Flipper.enabled?(:ghbs_public_frontend)
 
-    redirect_to ENV.fetch("GHBS_HOMEPAGE_URL"), status: :moved_permanently
+    redirect_to ENV.fetch("GHBS_HOMEPAGE_URL"), status: :moved_permanently, allow_other_host: true
   end
 
   def record_not_found
