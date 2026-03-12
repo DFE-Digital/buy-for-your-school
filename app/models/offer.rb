@@ -3,19 +3,20 @@ class Offer
   include HasRelatedContent
 
   CONTENT_TYPE = "offer".freeze
-  SELECT_FIELDS = %w[
-    sys.id
-    fields.title
-    fields.description
-    fields.summary
-    fields.slug
-    fields.url
-    fields.call_to_action
-    fields.image
-    fields.featured_on_homepage
-    fields.related_content
-    fields.expiry
-    fields.sort_order
+  SORT_ORDER_FIELD = "fields.sort_order".freeze
+  SELECT_FIELDS = [
+    "sys.id",
+    "fields.title",
+    "fields.description",
+    "fields.summary",
+    "fields.slug",
+    "fields.url",
+    "fields.call_to_action",
+    "fields.image",
+    "fields.featured_on_homepage",
+    "fields.related_content",
+    "fields.expiry",
+    SORT_ORDER_FIELD,
   ].join(",").freeze
 
   attr_reader :id, :title, :description, :summary,
@@ -54,7 +55,7 @@ class Offer
     params = {
       content_type: CONTENT_TYPE,
       select: SELECT_FIELDS,
-      order: "fields.sort_order",
+      order: SORT_ORDER_FIELD,
     }
     ContentfulClient.entries(params).map { |entry| new(entry) }
   end
@@ -64,7 +65,7 @@ class Offer
       content_type: CONTENT_TYPE,
       select: SELECT_FIELDS,
       "fields.featured_on_homepage": true,
-      order: "fields.sort_order",
+      order: SORT_ORDER_FIELD,
     }
     ContentfulClient.entries(params).map { |entry| new(entry) }
   end
