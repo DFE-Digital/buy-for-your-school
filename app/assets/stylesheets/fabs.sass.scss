@@ -328,6 +328,10 @@ footer {
 }
 
 .govuk-service-navigation {
+  border-top: 1px solid #8eb8dc;
+  position: relative;
+  z-index: 10;
+
   .govuk-service-navigation__link:link,
   .govuk-service-navigation__link:visited,
   .govuk-service-navigation__active-fallback {
@@ -384,7 +388,6 @@ footer {
 
     .govuk-service-navigation__service-name.govuk-service-navigation__item--active,
     .govuk-service-navigation__item.govuk-service-navigation__item--active {
-      border-bottom-color: #ffffff;
       border-color: #ffffff;
 
       &::after {
@@ -393,7 +396,6 @@ footer {
       }
 
       .govuk-service-navigation__link {
-        border-bottom-color: #ffffff;
         border-color: #ffffff;
 
         &::after {
@@ -442,6 +444,13 @@ a:focus {
 }
 
 .dfe-header__search_narrow  {
+  border-color: #000000;
+  vertical-align: middle;
+  float: right;
+  width: 61px;
+  background-color: #1d70b8;
+  margin-right: -5px;
+
   .dfe-search__input {
   width: 300px;
   }
@@ -534,6 +543,7 @@ a:focus {
 
 .dfe-search__submit {
   background: #1d70b8;
+  flex-shrink: 0;
 }
 
 .dfe-header__search-form {
@@ -543,10 +553,6 @@ a:focus {
 
 .dfe-search__input {
   flex: 1;
-}
-
-.dfe-search__submit {
-  flex-shrink: 0;
 }
 
 .js-show .narrow-search {
@@ -1046,12 +1052,6 @@ a.all-buying-options-link {
   padding-bottom: 1px;
 }
 
-.govuk-service-navigation{
-  border-top: 1px solid #8eb8dc;
-  position: relative;
-  z-index: 10;
-}
-
 .govuk-header__link .govuk-header__logotype{
   height: 30px;
 }
@@ -1073,15 +1073,9 @@ a.all-buying-options-link {
   color: #ffffff;
   cursor: pointer;
   min-height: 40px;
-  /* [2] */
   padding: 4px 8px 0;
-  // position: fixed;
-  // position: absolute;
   right: 0;
   top: 0;
-  // margin-top: 28px;
-  // margin-right: 50px;
-  // float: right;
 }
 
 @media (max-width: 40000.0525em) {
@@ -1174,18 +1168,6 @@ a.all-buying-options-link {
     display: none;
   }
 }
-
-.dfe-header__search_narrow {
-
-  border-color: #000000;
-  vertical-align: middle;
-  float: right;
-  width: 61px;
-
-  background-color: #1d70b8;
-  margin-right: -5px;
-}
-
 
 @media (min-width: 40.0625em) {
   .dfe-header__search_narrow {
@@ -1348,6 +1330,12 @@ a.all-buying-options-link {
   display: block;
   height: 40px;
   width: 44px;
+  border: 0;
+  float: right;
+  font-size: inherit;
+  line-height: inherit;
+  outline: none;
+  padding: 0;
 }
 
 .top-icon__search {
@@ -1356,7 +1344,6 @@ a.all-buying-options-link {
   height: 27px;
   width: 27px;
 }
-
 
 @media (min-width: 40.0625em) {
   .top-icon__search {
@@ -1374,15 +1361,6 @@ a.all-buying-options-link {
   }
 }
 
-
-@media (max-width: 40.0525em) {
-  .dfe-search__submit .dfe-icon__search .top-icon__search {
-    background-color: #1d70b8;
-    fill: black;
-    height: 27px;
-    width: 27px;
-  }
-}
 @media (max-width: 40.0525em) {
   .dfe-search__submit .dfe-icon__search {
     background-color: #d2e2f1;
@@ -1391,18 +1369,12 @@ a.all-buying-options-link {
     width: 27px;
   }
 }
-@media (max-width: 768px) { /* Adjust this breakpoint as needed for your definition of "mobile" */
-  .top_search_label {
-    display: inline-block; /* Makes the label take up the full width, forcing the input to a new line */
-    margin-bottom: 5px; /* Add some space below the label */
-  }
-}
 
-.top-icon__search {
-  background-color: #1d70b8;
-  fill: #ffffff;
-  height: 27px;
-  width: 27px;
+@media (max-width: 768px) {
+  .top_search_label {
+    display: inline-block;
+    margin-bottom: 5px;
+  }
 }
 
 .top-search__input {
@@ -1461,36 +1433,6 @@ a.all-buying-options-link {
       height: 40px;
       width: 244px;
   }
-}
-
-@media (min-width: 40.0625em) {
-  .top-icon__search {
-    height: 27px;
-    width: 27px;
-  }
-}
-
-@media (max-width: 40.0525em) {
-  .dfe-search__submit .dfe-icon__search .top-icon__search {
-    background-color: #1d70b8;
-    fill: black;
-    height: 27px;
-    width: 27px;
-  }
-}
-
-.top-search__submit {
-  background: #1d70b8;
-  background-color: #1d70b8;
-  display: block;
-  height: 40px;
-  width: 44px;
-  border: 0;
-  float: right;
-  font-size: inherit;
-  line-height: inherit;
-  outline: none;
-  padding: 0;
 }
 
 @media (min-width: 40.0625em) {
