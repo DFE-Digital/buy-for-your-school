@@ -28,4 +28,4 @@ Use Rollbar (free tier) for application error monitoring, with email and Microso
 - Email and Microsoft Teams notifications mean errors are surfaced in the channels the team already uses, reducing the risk of issues going unnoticed
 - The free tier is sufficient for our current needs given the application's traffic levels
 - If error volume grows significantly, we may need to revisit whether the free tier remains adequate
-- Rollbar is an external dependency; if their service is unavailable, we lose their easy error visibility, however we sitll have access to Azure Application Insights and the full application logs.
+- Rollbar is an external dependency; if their service is unavailable, we lose their easy error visibility, however we still have access to Azure Application Insights and the full application logs.
