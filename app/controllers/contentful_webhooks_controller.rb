@@ -5,7 +5,7 @@ class ContentfulWebhooksController < Fabs::ApplicationController
     return head :unauthorized unless valid_signature?
 
     if id.present?
-      result = SolutionIndexer.new(id: id).index_document
+      result = SolutionIndexer.new(id:).index_document
 
       if result
         render json: { message: "Webhook for entry #{id} processed successfully." }, status: :ok
@@ -21,7 +21,7 @@ class ContentfulWebhooksController < Fabs::ApplicationController
     return head :unauthorized unless valid_signature?
 
     if id.present?
-      result = SolutionIndexer.new(id: id).delete_document
+      result = SolutionIndexer.new(id:).delete_document
 
       if result
         render json: { message: "Webhook for entry #{id} deletion processed successfully." }, status: :ok
@@ -35,7 +35,6 @@ class ContentfulWebhooksController < Fabs::ApplicationController
 
 private
 
-
   def id
     params["entityId"]
   end
@@ -45,7 +44,7 @@ private
   end
 
   def secret
-    ENV["CONTENTFUL_WEBHOOK_SECRET"]
+    ENV.fetch("CONTENTFUL_WEBHOOK_SECRET")
   end
 
   def signature

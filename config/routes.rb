@@ -643,11 +643,10 @@ Rails.application.routes.draw do
   end
 
   # FABS routes
-  resources :categories, only: %i[show], param: :slug do
+  resources :categories, only: %i[index show], param: :slug do
     resources :solutions, only: %i[show], param: :slug, path: ""
   end
 
-  resources :categories, only: %i[index], param: :slug
   resources :solutions, only: %i[show index], param: :slug
   resources :offers, only: %i[index show], param: :slug
 
@@ -661,9 +660,9 @@ Rails.application.routes.draw do
     resources :solutions, only: [:index]
   end
 
- # DB-backed pages (BFYS) — checked first via constraint
-  get ":slug", to: "pages#show", as: :page, constraints: ->(req) { Page.exists?(slug: req.params[:slug]) }
-  
+  # DB-backed pages (BFYS) — checked first via constraint
+  get ":slug", to: "pages#show"
+
   # Contentful-backed pages (FABS) — fallback
-  get ":slug", to: "fabs/pages#show", as: :fabs_page
+  # get ":slug", to: "fabs/pages#show", as: :fabs_page
 end

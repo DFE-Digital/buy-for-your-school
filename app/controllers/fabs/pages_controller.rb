@@ -1,5 +1,4 @@
 class Fabs::PagesController < Fabs::ApplicationController
-
   def show
     @page = FABS::Page.find_by_slug!(params[:slug])
     @page_title = @page.title
