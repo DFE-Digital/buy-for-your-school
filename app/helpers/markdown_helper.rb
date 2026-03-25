@@ -1,3 +1,5 @@
+# TODO: consider deprecating use of this class in favour of Support::Markdown - this was introduced
+# from FABS codebase. Contentful content formatting and markdown -> HTML conversion should be standardised
 module MarkdownHelper
   ALLOWED_TAGS = %w[p h1 h2 h3 h4 h5 h6 a ul ol li strong em br img].freeze
   ALLOWED_ATTRIBUTES = %w[href src alt target rel class id].freeze
