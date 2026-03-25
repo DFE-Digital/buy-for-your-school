@@ -15,6 +15,7 @@
 
   <%= javascript_include_tag "application", defer: true %>
 
+  <%# TODO: this was only used on fabs-ur environment so is most likely redundant %>
   <% if ENV["MS_CLARITY_PROJECT_ID"] %>
     <%= render "shared/ms_clarity" %>
   <% end %>
