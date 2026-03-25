@@ -10,6 +10,7 @@ Rails.application.config.assets.version = "1.0"
 
 # JS-bundling
 Rails.application.config.assets.paths << Rails.root.join("app/javascript")
+# TODO: this is here to allow the fabs.css file to be included in main stylesheet. This needs some cleanup
 Rails.application.config.assets.paths << Rails.root.join("app/assets/builds")
 
 # Add the GOVUK Frontend assets paths
