@@ -2970,8 +2970,6 @@ en:
       view_all_buying_options: Browse a list of all DfE-approved buying options
     dfe_search:
       close_search: Close search
-      data_close: click->search-toggle#toggleClose
-      data_open: click->search-toggle#toggleOpen
       search: Search
       search_this_website: Search this website
     dfe_search_homepage:
