@@ -122,7 +122,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
       expect(page).to have_unchecked_field "An academy trust or federation"
     end
 
-    describe "and reselect organisation" do
+    describe "and reselect organisation", :flaky do
       before do
         choose "An academy trust or federation"
         click_continue

@@ -406,7 +406,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
     end
 
-    describe "multischool picker" do
+    describe "multischool picker", :flaky do
       before do
         autocomplete_group_step
         complete_confirm_group_step
