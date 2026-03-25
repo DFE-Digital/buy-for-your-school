@@ -1,3 +1,5 @@
+// TODO: this duplicates existing functionality in dfe_analytics_engagement_tracking_controller. This should be removed
+// along with the corresponding events controller and route, plus refactor any usage of this stimulus controller.
 import { Controller } from '@hotwired/stimulus'
 
 const EVENTS = ['mousedown', 'mousemove', 'keypress', 'keydown', 'input', 'scroll', 'touchstart', 'click', 'wheel', 'pointermove']
