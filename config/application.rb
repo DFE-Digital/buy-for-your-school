@@ -84,6 +84,7 @@ module BuyForYourSchool
       solutions
     ]
 
+    # TODO: figure out why this config setting is needed, and ideally remove it once FABS feature flags are promoted
     config.x.public_frontend_contentful_enabled = true
 
     config.flipper.strict = false

@@ -67,6 +67,9 @@ en:
       title: Thank you - Get help buying for schools feedback
   app:
     name: Get help buying for schools
+  header_description: A free and compliant service to help you buy for your school,
+    trust or academy
+  header_title: Get help buying for schools
   banner:
     beta:
       feedback_link: feedback
@@ -77,6 +80,13 @@ en:
       destroy: You have been signed out.
       failure: Sign in failed unexpectedly, please try again.
       visitor: You must sign in.
+  breadcrumbs:
+    offers: Offers
+  categories:
+    index:
+      offers_title: DfE featured
+      procurement_support: I need something else (opens in a new tab)
+      title: DfE-approved buying options by category
   case_requests:
     validation:
       discovery_method: Case origin is missing
@@ -2937,4 +2947,34 @@ en:
       - share files and contracts with school users
       contact_line_manager: Contact your line manager if you do not have access.
       sign_in: Sign in
+  search:
+    header_title: Search Get help buying for schools
+    title: Search
+  service:
+    name: Get help buying for schools
+    navigation:
+      about: About this service
+      menu: Menu
+  shared:
+    dfe_footer:
+      accessibility_statement: Accessibility statement
+      crown_copyright: "\u00A9 Crown copyright"
+      feedback: Feedback
+      licensing_html: All content is available under the %{ogl3}, except where otherwise
+        stated.
+      ogl3: Open Government Licence v3.0
+      privacy_notice: Privacy notice
+      procurement_support: Request help and support for your procurement
+      terms_and_conditions: Terms and conditions
+    dfe_homepage_header:
+      view_all_buying_options: Browse a list of all DfE-approved buying options
+    dfe_search:
+      close_search: Close search
+      search: Search
+      search_this_website: Search this website
+    dfe_search_homepage:
+      search: Search
+      search_this_website: Search this website
+    external_link:
+      opens_in_new_tab: opens in new tab
 

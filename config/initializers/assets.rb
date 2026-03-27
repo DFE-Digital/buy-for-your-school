@@ -10,6 +10,8 @@ Rails.application.config.assets.version = "1.0"
 
 # JS-bundling
 Rails.application.config.assets.paths << Rails.root.join("app/javascript")
+# TODO: this is here to allow the fabs.css file to be included in main stylesheet. This needs some cleanup
+Rails.application.config.assets.paths << Rails.root.join("app/assets/builds")
 
 # Add the GOVUK Frontend assets paths
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand")
@@ -36,6 +38,8 @@ Rails.application.config.assets.precompile += [
   "images/govuk-icon-192.png",
   "images/govuk-icon-512.png",
   "images/govuk-icon-mask.svg",
+  "images/govuk-frontend/govuk-footer-crown.svg",
+  "images/govuk-frontend/govuk-crest.svg",
 ]
 
 # Add Yarn node_modules folder to the asset load path.

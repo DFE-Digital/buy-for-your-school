@@ -1,0 +1,18 @@
+<div class="search-area">
+  <div class="dfe-width-container">
+    <div class="dfe-header__search-wrap" id="wrap-search">
+        <form class="narrow-search dfe-header__search-form" id="search" action="/search" method="get" role="search">
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label--m" for="search-field"><%= t("search.header_title") %></label>
+            <input class="govuk-input dfe-search__input top-search__input" id="search-field" name="query" placeholder="Search" type="search" autocomplete="off" value="<%= params[:query] %>">
+            <button class="top-search__submit" type="submit">
+              <svg class="dfe-icon dfe-icon__search top-icon__search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="27" height="27">
+                <path d="M19.71 18.29l-4.11-4.1a7 7 0 1 0-1.41 1.41l4.1 4.11a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42zM5 10a5 5 0 1 1 5 5 5 5 0 0 1-5-5z"></path>
+              </svg>
+              <span class="govuk-visually-hidden"><%= t("shared.dfe_search.search") %></span>
+            </button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
