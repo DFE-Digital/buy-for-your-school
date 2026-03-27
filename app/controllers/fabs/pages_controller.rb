@@ -5,7 +5,7 @@ class Fabs::PagesController < Fabs::ApplicationController
     add_breadcrumb home_breadcrumb_name, home_breadcrumb_path
     build_page_breadcrumbs(@page)
 
-    render layout: "fabs_application"
+    render layout: "pages"
   end
 
 private
