@@ -660,11 +660,6 @@ Rails.application.routes.draw do
     resources :solutions, only: [:index]
   end
 
-  # DB-backed pages (BFYS) — checked first via constraint
-  get ":slug", to: "pages#show", constraints: lambda { |req|
-    Page.exists?(slug: req.params[:slug])
-  }
-
-  # Contentful-backed pages (FABS) — fallback
-  get ":slug", to: "fabs/pages#show", as: :fabs_page
+  # DB-backed pages (BFYS) and Contentful-backed pages (FABS)
+  get ":slug", to: "pages#show"
 end
