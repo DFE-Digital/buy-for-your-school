@@ -12,7 +12,7 @@ class PagesController < ApplicationController
       @page = fabs_page
 
       @page_title = @page.title
-      add_breadcrumb(home_breadcrumb_name, home_breadcrumb_path)
+      add_breadcrumb_on_rails(home_breadcrumb_name, home_breadcrumb_path)
       build_page_breadcrumbs(@page)
       render "fabs/pages/show", layout: "pages"
     else
@@ -66,9 +66,9 @@ private
     trail.reverse_each do |n|
       case n
       when FABS::Category
-        add_breadcrumb category_breadcrumb_name, category_breadcrumb_path
+        add_breadcrumb_on_rails :category_breadcrumb_name, :category_breadcrumb_path
       when FABS::Page
-        add_breadcrumb n.title, page_path(n.slug)
+        add_breadcrumb_on_rails n.title, page_path(n.slug)
       end
     end
   end

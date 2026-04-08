@@ -9,7 +9,7 @@ class SearchController < Fabs::ApplicationController
     @solutions = []
     @categories = []
     @results_count = 0
-    add_breadcrumb home_breadcrumb_name, home_breadcrumb_path
+    add_breadcrumb_on_rails home_breadcrumb_name, home_breadcrumb_path
     @page_title = "Search results - #{helpers.strip_tags(params[:query])}"
     unless invalid_query?(params[:query])
       query = params[:query].strip
@@ -18,7 +18,7 @@ class SearchController < Fabs::ApplicationController
       @results_count = @solutions.count + @categories.count
     end
 
-    render layout: "fabs_application"
+    render layout: "search"
   rescue Contentful::BadRequest
     @validation_error = :contentful_error
   end
