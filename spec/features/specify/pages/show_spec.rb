@@ -11,7 +11,7 @@ RSpec.feature "Showing a Page" do
 
     it "shows the not found page" do
       visit "/non-existent-page"
-      expect(find("h2.govuk-heading-xl")).to have_text("Page not found")
+      expect(find("h1.govuk-heading-xl")).to have_text("Page not found")
     end
   end
 

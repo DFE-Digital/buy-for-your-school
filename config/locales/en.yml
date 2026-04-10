@@ -83,6 +83,10 @@ en:
   breadcrumbs:
     offers: Offers
   categories:
+    filter_labels:
+      active_filters: Active filters
+      clear_all_filters: Clear all filters
+      remove_filter: Remove filter
     index:
       offers_title: DfE featured
       procurement_support: I need something else (opens in a new tab)
@@ -2947,8 +2951,38 @@ en:
       - share files and contracts with school users
       contact_line_manager: Contact your line manager if you do not have access.
       sign_in: Sign in
+  offers:
+    index:
+      description: Browse time-limited offers negotiated by DfE for you, so you can
+        get best value.
+      expires_on: Expires on
+      section_title: ''
+      title: Offers
+    show:
+      cta: Link to the offer
+      section_title: Offers
+  results:
+    count:
+      one: 1 result
+      other: "%{count} results"
+      zero: No results
+    section:
+      title:
+        type:
+          category: Categories
+          solution: Buying options
   search:
+    errors:
+      contentful_error: We couldn't process your search. Try again with a different
+        query.
+      empty: Enter a search term.
+      too_long: Your search query is too long. Use less than 2000 characters.
+      too_many_words: Your search query has too many words. Use less than 25 words.
     header_title: Search Get help buying for schools
+    no_results:
+      cta: Visit Get Help Buying Home page
+      description: It looks like there are no results for your search keyword.
+      title: No search results
     title: Search
   service:
     name: Get help buying for schools
@@ -2958,7 +2992,7 @@ en:
   shared:
     dfe_footer:
       accessibility_statement: Accessibility statement
-      crown_copyright: "\u00A9 Crown copyright"
+      crown_copyright: "© Crown copyright"
       feedback: Feedback
       licensing_html: All content is available under the %{ogl3}, except where otherwise
         stated.
@@ -2977,4 +3011,12 @@ en:
       search_this_website: Search this website
     external_link:
       opens_in_new_tab: opens in new tab
-
+  solutions:
+    index:
+      all_buying_options_description: Use a DfE-approved buying option to make sure
+        your procurement is compliant
+      all_buying_options_section_title: DfE-approved
+      all_buying_options_title: All buying options
+    show:
+      cta: Visit the provider’s website
+      section_title: Buying option

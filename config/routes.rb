@@ -643,9 +643,23 @@ Rails.application.routes.draw do
   end
 
   # FABS routes
-  resources :categories, only: %i[index show], param: :slug
-  resources :solutions, only: %i[index], param: :slug
+  resources :categories, only: %i[index show], param: :slug do
+    resources :solutions, only: %i[show], param: :slug, path: ""
+  end
 
-  # Routes any/all Contentful Pages that are mirrored in t.pages
-  get ":slug", to: "pages#show"
+  resources :solutions, only: %i[show index], param: :slug
+  resources :offers, only: %i[index show], param: :slug
+
+  resources :contentful_webhooks, only: %i[create]
+  post "delete_contentful_entry", to: "contentful_webhooks#destroy"
+
+  get "/search", to: "search#index"
+  post "/events", to: "events#create"
+
+  namespace :bfys do
+    resources :solutions, only: [:index]
+  end
+
+  # DB-backed pages (BFYS) and Contentful-backed pages (FABS)
+  get ":slug", to: "pages#show", as: :page
 end
