@@ -661,5 +661,5 @@ Rails.application.routes.draw do
   end
 
   # DB-backed pages (BFYS) and Contentful-backed pages (FABS)
-  get ":slug", to: "pages#show"
+  get ":slug", to: "pages#show", as: :page
 end
