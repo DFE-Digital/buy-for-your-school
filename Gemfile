@@ -15,6 +15,7 @@ gem "azure-storage-blob", git: "https://github.com/honeyankit/azure-storage-ruby
 gem "bootsnap", ">= 1.1.0", require: false
 gem "breadcrumbs_on_rails"
 gem "contentful", "~> 2.19"
+gem "contentful-management", require: false
 gem "crawler_detect"
 gem "cssbundling-rails", "~> 1.4"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.12"
@@ -41,6 +42,7 @@ gem "notifications-ruby-client"
 gem "omniauth"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
+gem "opensearch-ruby"
 gem "pandoc-ruby"
 gem "paper_trail"
 gem "pdf-forms"

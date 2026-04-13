@@ -24,6 +24,7 @@
 - [Notify](notify.md)
 - [Release process](release-process.md)
 - [Roles and Portals](roles-and-portals.md)
+- [Search](search.md)
 - [Supported Buying Case Management](case-management.md)
 - [Using Git](git.md)
 - [Webhooks](webhooks.md)
