@@ -1,6 +1,6 @@
 # Solution search
 
-Find a buying solution search can use OpenSearch to search indexed Contentful solutions, or a direct search via the Contentful API. The OpenSearch approach is prefered and yield a better search experience. Categories are always searched directly via the Contentful API and are not indexed in OpenSearch.
+Find a buying solution search can use OpenSearch to search indexed Contentful solutions, or a direct search via the Contentful API. The OpenSearch approach is preferred and yield a better search experience. Categories are always searched directly via the Contentful API and are not indexed in OpenSearch.
 
 ## Enabling OpenSearch
 
