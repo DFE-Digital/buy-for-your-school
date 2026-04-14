@@ -166,6 +166,10 @@ GEM
     contentful (2.19.0)
       http (> 0.8, < 6.0)
       multi_json (~> 1.15)
+    contentful-management (3.12.1)
+      http (~> 5.0)
+      json (>= 1.8, < 3.0)
+      multi_json (~> 1.15)
     crack (1.0.0)
       bigdecimal
       rexml
@@ -496,6 +500,9 @@ GEM
       tzinfo
       validate_url
       webfinger (~> 2.0)
+    opensearch-ruby (3.4.0)
+      faraday (>= 1.0, < 3)
+      multi_json (>= 1.0)
     os (1.1.4)
     ostruct (0.6.1)
     pagy (9.1.1)
@@ -851,6 +858,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   climate_control
   contentful (~> 2.19)
+  contentful-management
   crawler_detect
   cssbundling-rails (~> 1.4)
   database_cleaner
@@ -887,6 +895,7 @@ DEPENDENCIES
   omniauth
   omniauth-rails_csrf_protection
   omniauth_openid_connect
+  opensearch-ruby
   pandoc-ruby
   paper_trail
   pdf-forms
