@@ -7,11 +7,6 @@ RSpec.describe "Search tasks" do
   describe "search:index" do
     subject(:invoke_task) { Rake::Task["search:index"].invoke }
 
-    let(:search_client_class) do
-      Class.new do
-        def self.instance; end
-      end
-    end
     let(:search_client) { double("search client", indices:) }
     let(:indices) { double("indices") }
     let(:category) { instance_double(FABS::Category, id: "category-id", title: "ICT", slug: "ict") }
@@ -42,8 +37,6 @@ RSpec.describe "Search tasks" do
     let(:entries) { [solution_with_category, solution_without_category] }
 
     before do
-      stub_const("SearchClient", search_client_class)
-
       allow(SearchClient).to receive(:instance).and_return(search_client)
       allow(Solution).to receive(:all).and_return(entries)
       allow(indices).to receive(:exists?).with(index: "solution-data").and_return(false)
