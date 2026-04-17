@@ -14,15 +14,17 @@ describe Support::SyncFrameworks do
   let(:framework_1_name) { "Framework 1" }
   let(:framework_2_name) { "Framework 2" }
 
-  before do
-    http = double("http")
-    allow(Net::HTTP).to receive(:start).and_yield(http)
-    allow(http).to receive(:request).with(an_instance_of(Net::HTTP::Get)).and_return(http_response)
-  end
+  # let(:framworks) { Solution.all }
+
+  # before do
+  #   http = double("http")
+  #   allow(Net::HTTP).to receive(:start).and_yield(http)
+  #   allow(http).to receive(:request).with(an_instance_of(Net::HTTP::Get)).and_return(http_response)
+  # end
 
   describe "#call" do
     context "when the request is authorized" do
-      let(:http_response) { Net::HTTPSuccess.new(1.0, "200", "OK") }
+      # let(:http_response) { Net::HTTPSuccess.new(1.0, "200", "OK") }
       let(:body) do
         [
           {
@@ -59,6 +61,7 @@ describe Support::SyncFrameworks do
         let!(:existing_framework) { create(:frameworks_framework, name: framework_1_name, provider_id: provider_detail.id, faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse(old_expiry_date), url: testurl1, description: "Desc", source: 2, status: "dfe_approved") }
 
         it "creates new frameworks and updates existing ones" do
+          binding.pry
           expect { service.call }.to change(Frameworks::Framework, :count).from(1).to(2)
             .and(change { existing_framework.reload.provider_end_date }.from(Date.parse(old_expiry_date)).to(Date.parse(framework_1_expiry)))
             .and(change { existing_framework.reload.contentful_id }.from(nil).to(contentful_id_1))
