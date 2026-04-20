@@ -5,7 +5,7 @@ module Support
     delegate :statuses, to: ::Frameworks::Framework
 
     def call
-      @frameworks = Solution.all
+      @frameworks = Solution.all.as_json
       update_frameworks if @frameworks.present?
     end
 
