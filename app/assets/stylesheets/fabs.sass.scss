@@ -1,12 +1,5 @@
 @use "../node_modules/dfe-frontend/packages/dfefrontend" as dfefrontend;
 
-@import url('https://rsms.me/inter/inter.css');
-$govuk-font-family: 'Inter', sans-serif;
-
-* {
-  font-family: 'Inter', sans-serif !important;
-}
-
 a.underlined {
   text-decoration: underline;
 }
