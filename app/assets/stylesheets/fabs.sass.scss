@@ -1,6 +1,5 @@
 $govuk-global-styles: true;
 $govuk-new-link-styles: true;
-$govuk-assets-path: "/assets/govuk-frontend/";
 
 @use "../node_modules/govuk-frontend/dist/govuk/all" as govuk;
 @use "../node_modules/dfe-frontend/packages/dfefrontend" as dfefrontend;
@@ -173,7 +172,7 @@ h1.govuk-heading {
 }
 
 .govuk-footer__copyright-logo {
-  background-image: url("#{$govuk-assets-path}govuk-crest.svg");
+  background-image: url(govuk-crest.svg);
   display: inline-block;
   min-width: 125px;
   padding-top: 112px;
@@ -184,9 +183,9 @@ h1.govuk-heading {
   white-space: nowrap;
   &::before {
     padding-top: 0px;
-    background-image: url("#{$govuk-assets-path}govuk-crest.svg");
-    -webkit-mask-image: url("#{$govuk-assets-path}govuk-crest.svg");
-    mask-image: url("#{$govuk-assets-path}govuk-crest.svg");
+    background-image: url(govuk-crest.svg);
+    -webkit-mask-image: url(govuk-crest.svg);
+    mask-image: url(govuk-crest.svg);
   }
 }
 
