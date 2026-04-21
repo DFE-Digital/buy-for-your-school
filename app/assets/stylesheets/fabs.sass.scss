@@ -1,18 +1,3 @@
-.govuk-list--dash li {
-  margin-left: 30px;
-  position: relative;
-}
-
-.govuk-list--dash li:before {
-  position: absolute;
-  content: "—";
-  left: -30px
-}
-
-.govuk-markdown ul>li,.govuk-markdown ol>li,.govuk-list>li {
-  margin-bottom:10px;
-}
-
 .chevron-card-list {
   list-style: none;
   margin: 0 -15px;

@@ -1,0 +1,10 @@
+.govuk-list--dash li {
+  margin-left: 30px;
+  position: relative;
+}
+
+.govuk-list--dash li:before {
+  position: absolute;
+  content: "—";
+  left: -30px
+}
