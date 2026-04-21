@@ -106,7 +106,6 @@ h1.govuk-heading {
   }
 }
 
-
 @media (max-width: 640px) {
   .dfe-page-hero .hero-text-container {
     margin-left: 0px;
@@ -448,13 +447,13 @@ a:focus {
 }
 
 @media (min-width: 53em) {
-  .dfe-search__input_no_broder {
+  .dfe-search__input_no_border {
     border: 2px solid #ffffff
   }
 }
 
 @media (min-width: 75em) {
-  .dfe-search__input_no_broder {
+  .dfe-search__input_no_border {
     border: 2px solid #ffffff
   }
 }
@@ -478,7 +477,7 @@ a:focus {
   }
 }
 
-.dfe-search__input_no_broder {
+.dfe-search__input_no_border {
   border: 2px solid #ffffff
 }
 
@@ -1173,7 +1172,7 @@ a.all-buying-options-link {
   background-color: #1d70b8;
 }
 
-.dfe-icon__search_hompage {
+.dfe-icon__search_homepage {
   background-color: #d2e2f1;
   fill: black;
 }
