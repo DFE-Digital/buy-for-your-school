@@ -1,0 +1,17 @@
+.govuk-footer__copyright-logo {
+  background-image: url(govuk-crest.svg);
+  display: inline-block;
+  min-width: 125px;
+  padding-top: 112px;
+  background-repeat: no-repeat;
+  background-position: 50% 0%;
+  background-size: 125px 102px;
+  text-align: center;
+  white-space: nowrap;
+  &::before {
+    padding-top: 0px;
+    background-image: url(govuk-crest.svg);
+    -webkit-mask-image: url(govuk-crest.svg);
+    mask-image: url(govuk-crest.svg);
+  }
+}
