@@ -82,3 +82,8 @@
     @extend .govuk-link--no-visited-state;
   }
 }
+
+.page-with-sidebar {
+  background-color: #fff !important;
+  flex-direction: column;
+}
