@@ -1,7 +1,3 @@
-$govuk-global-styles: true;
-$govuk-new-link-styles: true;
-
-@use "../node_modules/govuk-frontend/dist/govuk/all" as govuk;
 @use "../node_modules/dfe-frontend/packages/dfefrontend" as dfefrontend;
 
 @import url('https://rsms.me/inter/inter.css');
