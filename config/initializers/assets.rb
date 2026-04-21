@@ -38,7 +38,6 @@ Rails.application.config.assets.precompile += [
   "images/govuk-icon-192.png",
   "images/govuk-icon-512.png",
   "images/govuk-icon-mask.svg",
-  "images/govuk-frontend/govuk-footer-crown.svg",
   "images/govuk-frontend/govuk-crest.svg",
 ]
 
