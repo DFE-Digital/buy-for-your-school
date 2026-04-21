@@ -11,3 +11,10 @@
     padding-top: 10px;
   }
 }
+
+@media (max-width: 640px) {
+  .dfe-page-hero .hero-text-container {
+    margin-left: 0px;
+    margin-top: 10px;
+  }
+}
