@@ -1,0 +1,13 @@
+.homepage-heading {
+  margin-bottom: 10px;
+}
+
+.homepage-heading-search-open{
+   padding-top: 1px;
+}
+
+@media (max-width: 40.0525em) {
+  .homepage-heading-search-open{
+    padding-top: 10px;
+  }
+}
