@@ -314,7 +314,7 @@ en:
       title: Join Energy for Schools
       explanations:
       - Energy for Schools helps state-funded schools and trusts switch to the same energy contract used by the Department for Education.
-      - Schools and trusts that use the service are added to the Department for Education's V30 energy contract with Crown Commercial Service (CCS). The CCS buys energy for this particular contract over a long period of time, reducing the risk to customers of substantial fluctuations in price.
+      - Schools that join Energy for Schools are added to DfE’s V30 energy contract with Government Commercial Agency (GCA), formerly Crown Commercial Service. GCA buys energy for this particular contract over a long period of time, reducing the risk to customers of substantial fluctuations in price.
       benefits:
         title: Benefits
         text: "Schools could save on average 36% on their energy bills, based on DfE’s estimates. The service also helps:"
@@ -349,13 +349,13 @@ en:
         title: About Energy for Schools
         body:
         - Energy for Schools offers schools a simpler, safer way to manage their energy needs by helping schools switch to the same energy contract as the Department for Education (DfE).
-        - DfE manages the contract on behalf of schools through procurement specialists Crown Commercial Service (CCS). On the current contract, referred to as V30 or the V30 basket, electricity is supplied by EDF, and gas is supplied by TotalEnergies.
+        - DfE manages the contract on behalf of schools through procurement specialists Government Commercial Agency (GCA), formerly Crown Commercial Service. On the current contract, referred to as V30 or the V30 basket, electricity is supplied by EDF, and gas is supplied by TotalEnergies.
         - This service differs from other frameworks because it allows schools to benefit from the bulk purchasing power of a government-wide contract. It also saves schools from pouring over complex energy contracts because DfE handles the paperwork.
       benefits:
         title: Benefits
         body:
         - All central government departments use V30 to compliantly procure their energy supply.
-        - Customers are protected from market volatility and soaring prices because the CCS buys some of the energy up front, during the 30 months prior to delivery, and then during the delivery period itself. This helps to level out the peaks and troughs in price variances.
+        - Customers are protected from market volatility and soaring prices because the GCA buys some of the energy up front, during the 30 months prior to delivery, and then during the delivery period itself. This helps to level out the peaks and troughs in price variances.
         - V30 could save schools money on their bills. According to a price comparison exercise carried out by DfE, schools could've saved on average 36% on their energy bills in the financial year ending 2024 had they been on V30.
         - If your school joins Energy for Schools, DfE will handle certain contractual responsibilities and administrative paperwork with the new energy suppliers.
         - "This means schools:"
@@ -368,9 +368,9 @@ en:
       v30contract:
         title: The contract
         body:
-        - The V30 basket with CCS is a low-risk variable rate contract.
+        - The V30 basket with GCA is a low-risk variable rate contract.
         - Prices can go up and down, but changes are less drastic than other variable rates. It's the most stable variable rate contract available to schools, although it may not always give you the lowest price.
-        - CCS cannot provide potential customers with energy prices before they join due to commercial sensitivity.
+        - GCA cannot provide potential customers with energy prices before they join due to commercial sensitivity.
         - To get an estimate of prices, email <a class="govuk-link" href="mailto:%{email}">%{email}</a> and request DfE’s benchmarking service. We’ll provide a price comparison based on your energy bills from the last financial year.
         - This is a rolling contract, meaning your school will remain on V30 until you give notice to exit. 30 months' notice is required.
       start_date:
@@ -390,7 +390,7 @@ en:
               - 1 April 2028
         body2:
         - Check your current contract's termination terms and notice period. You'll need to serve out your notice period and inform your supplier if you join Energy for Schools. DfE cannot do this for you.
-        - If your school’s energy contract is already through CCS, DfE will transfer (novate) you onto the new account. In this instance, you’ll not need to give notice to your current supplier.
+        - If your school’s energy contract is already through GCA, DfE will transfer (novate) you onto the new account. In this instance, you’ll not need to give notice to your current supplier.
       interim_rate:
         title: Interim rate
         body:
@@ -408,8 +408,8 @@ en:
       compliance:
         title: Compliance
         body:
-        - Energy for Schools is a contract and not a procurement process. By joining, you’ll be switching to the CCS framework used by DfE.
-        - The CCS framework complies with the Public Contracts Regulation 2015, the legislation in place at the time the framework was established. It is therefore procurement compliant. Any future changes to the CCS framework will comply with the new Procurement Act.
+        - Energy for Schools is a contract and not a procurement process. By joining, you’ll be switching to the GCA framework used by DfE.
+        - The GCA framework complies with the Public Contracts Regulation 2015, the legislation in place at the time the framework was established. It is therefore procurement compliant. Any future changes to the GCA framework will comply with the new Procurement Act.
         - Schools joining the framework will have complied with DfE’s Buying Procedures and Procurement Law for Schools.
         - That means you're exempt from the procurement protocol of securing 3 quotes or going out to market.
       considerations:
