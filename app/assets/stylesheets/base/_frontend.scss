@@ -4,6 +4,7 @@ $govuk-font-family: 'Inter', sans-serif;
 $govuk-new-organisation-colours: true;
 
 @import "govuk-frontend/dist/govuk/index";
+@import "dfe-frontend/dist/dfefrontend";
 @import url('https://rsms.me/inter/inter.css');
 
 .govuk-table__row.borderless .govuk-table__cell,
