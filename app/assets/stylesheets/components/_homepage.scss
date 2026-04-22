@@ -18,3 +18,13 @@
     margin-top: 10px;
   }
 }
+
+.dfe-header--homepage {
+  .govuk-service-navigation {
+    @extend .govuk-service-navigation--inverse;
+    .dfe-width-container {
+      border-top: 1px solid rgba(255, 255, 255);
+      border-bottom: 1px solid rgba(255, 255, 255);
+    }
+  }
+}
