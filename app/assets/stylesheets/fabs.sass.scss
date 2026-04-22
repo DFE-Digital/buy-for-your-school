@@ -364,38 +364,7 @@ a.all-buying-options-link {
   padding-bottom: 1px;
 }
 
-.govuk-header__link .govuk-header__logotype{
-  height: 30px;
-}
-
-.govuk-header__link:focus .govuk-header__logotype{
-  content: url(department-for-education_white.png);
-  height: 30px;
-}
-
-.govuk-header__logo {
-  width: 70%;
-  float: left;
-  padding-bottom: 0px;
-}
-
-.dfe-header__container {
-  padding-top: 24px;
-}
-
-@media (max-width: 40.0525em) {
-  .dfe-header__container {
-    margin: 0;
-    padding-top: 8px;
-  }
-}
-
-.govuk-template--rebranded .govuk-header__logo {
-  margin-bottom: 0;
-  padding-top: 16px;
-  padding-bottom: 0px;
-}
-
+// RFH Homepage Button
 .no-margin {
   margin-bottom: 0;
 }

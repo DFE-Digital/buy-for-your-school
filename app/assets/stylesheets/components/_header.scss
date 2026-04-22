@@ -1,0 +1,18 @@
+.govuk-template--rebranded .govuk-header__logo {
+  padding-bottom: 0px;
+}
+
+.govuk-service-navigation {
+  .govuk-service-navigation__link:link,
+  .govuk-service-navigation__link:visited,
+  .govuk-service-navigation__active-fallback {
+    color: #1d70b8;
+    font-weight: normal;
+  }
+
+  .govuk-service-navigation__item--active .govuk-service-navigation__link,
+  .govuk-service-navigation__service-name.govuk-service-navigation__item--active .govuk-service-navigation__link,
+  .govuk-service-navigation__active-fallback {
+    font-weight: bold;
+  }
+}
