@@ -155,7 +155,6 @@ jobs:
             -e PROC_OPS_TEAM="DSI Caseworkers" \
             -e QUALTRICS_SURVEY_URL=https://dferesearch.fra1.qualtrics.com \
             -e SUPPORT_EMAIL=email@example.gov.uk \
-            -e FAF_FRAMEWORK_ENDPOINT=http://faf.test \
             -e FAF_WEBHOOK_SECRET=test \
             -e GHBS_HOMEPAGE_URL=https://example.com \
             -e CI_NODE_TOTAL=${{ matrix.ci_node_total }} \
@@ -234,7 +233,6 @@ jobs:
             -e PROC_OPS_TEAM="DSI Caseworkers" \
             -e QUALTRICS_SURVEY_URL=https://dferesearch.fra1.qualtrics.com \
             -e SUPPORT_EMAIL=email@example.gov.uk \
-            -e FAF_FRAMEWORK_ENDPOINT=http://faf.test \
             -e FAF_WEBHOOK_SECRET=test \
             -e GHBS_HOMEPAGE_URL=https://example.com \
             ${{ needs.build_test.outputs.docker_image }} \
@@ -374,7 +372,6 @@ jobs:
             -e PROC_OPS_TEAM="DSI Caseworkers" \
             -e QUALTRICS_SURVEY_URL=https://dferesearch.fra1.qualtrics.com \
             -e SUPPORT_EMAIL=email@example.gov.uk \
-            -e FAF_FRAMEWORK_ENDPOINT=http://faf.test \
             -e FAF_WEBHOOK_SECRET=test \
             -e GHBS_HOMEPAGE_URL=https://example.com \
             ${{ needs.build_test.outputs.docker_image }} \

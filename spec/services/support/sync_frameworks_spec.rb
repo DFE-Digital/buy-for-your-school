@@ -14,16 +14,9 @@ describe Support::SyncFrameworks do
   let(:framework_1_name) { "Framework 1" }
   let(:framework_2_name) { "Framework 2" }
 
-  before do
-    http = double("http")
-    allow(Net::HTTP).to receive(:start).and_yield(http)
-    allow(http).to receive(:request).with(an_instance_of(Net::HTTP::Get)).and_return(http_response)
-  end
-
   describe "#call" do
     context "when the request is authorized" do
-      let(:http_response) { Net::HTTPSuccess.new(1.0, "200", "OK") }
-      let(:body) do
+      let(:mock_data) do
         [
           {
             id: contentful_id_1,
@@ -47,11 +40,11 @@ describe Support::SyncFrameworks do
             descr: "Desc",
             provider_reference: "PR-2",
           },
-        ].to_json
+        ]
       end
 
       before do
-        allow(http_response).to receive(:body).and_return(body)
+        allow(Solution).to receive(:all).and_return(mock_data)
       end
 
       context "when there are frameworks to update" do
@@ -60,8 +53,8 @@ describe Support::SyncFrameworks do
 
         it "creates new frameworks and updates existing ones" do
           expect { service.call }.to change(Frameworks::Framework, :count).from(1).to(2)
-            .and(change { existing_framework.reload.provider_end_date }.from(Date.parse(old_expiry_date)).to(Date.parse(framework_1_expiry)))
-            .and(change { existing_framework.reload.contentful_id }.from(nil).to(contentful_id_1))
+          .and(change { existing_framework.reload.provider_end_date }.from(Date.parse(old_expiry_date)).to(Date.parse(framework_1_expiry)))
+          .and(change { existing_framework.reload.contentful_id }.from(nil).to(contentful_id_1))
 
           unchanged_attributes = %i[name provider_id faf_slug_ref faf_category url description source status]
 
@@ -97,11 +90,11 @@ describe Support::SyncFrameworks do
               descr: "Desc",
               provider_reference: "PR-1",
             },
-          ].to_json
+          ]
         end
 
         before do
-          allow(http_response).to receive(:body).and_return(body_new_framework)
+          allow(Solution).to receive(:all).and_return(body_new_framework)
         end
 
         it "creates activity log with creation date of today and contentful_id in created event" do
@@ -155,7 +148,7 @@ describe Support::SyncFrameworks do
               descr: "Desc",
               provider_reference: "PR-1",
             },
-          ].to_json
+          ]
         end
         let!(:existing_framework) do
           create(:frameworks_framework,
@@ -172,7 +165,7 @@ describe Support::SyncFrameworks do
         end
 
         before do
-          allow(http_response).to receive(:body).and_return(body_single_framework)
+          allow(Solution).to receive(:all).and_return(body_single_framework)
         end
 
         it "matches by contentful_id even when name has changed" do
@@ -303,11 +296,11 @@ describe Support::SyncFrameworks do
               descr: "Desc",
               provider_reference: "PR-1",
             },
-          ].to_json
+          ]
         end
 
         before do
-          allow(http_response).to receive(:body).and_return(body_single_framework)
+          allow(Solution).to receive(:all).and_return(body_single_framework)
         end
 
         it "matches legacy record by name+provider and populates contentful_id (does not create duplicate)" do
@@ -349,11 +342,11 @@ describe Support::SyncFrameworks do
               descr: "Desc",
               provider_reference: "PR-1",
             },
-          ].to_json
+          ]
         end
 
         before do
-          allow(http_response).to receive(:body).and_return(body_single_framework)
+          allow(Solution).to receive(:all).and_return(body_single_framework)
         end
 
         it "assigns contentful_id only to the first matching record" do
@@ -397,11 +390,11 @@ describe Support::SyncFrameworks do
               descr: "Desc",
               provider_reference: "PR-1",
             },
-          ].to_json
+          ]
         end
 
         before do
-          allow(http_response).to receive(:body).and_return(body_new_framework)
+          allow(Solution).to receive(:all).and_return(body_new_framework)
         end
 
         it "creates new framework instead of updating archived one" do

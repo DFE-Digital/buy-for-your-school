@@ -656,10 +656,6 @@ Rails.application.routes.draw do
   get "/search", to: "search#index"
   post "/events", to: "events#create"
 
-  namespace :bfys do
-    resources :solutions, only: [:index]
-  end
-
   # DB-backed pages (BFYS) and Contentful-backed pages (FABS)
   get ":slug", to: "pages#show", as: :page
 end
