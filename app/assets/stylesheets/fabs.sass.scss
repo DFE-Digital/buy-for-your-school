@@ -48,10 +48,6 @@
   color: #505a5f;
 }
 
-footer {
-  clear:both;
-}
-
 .filters-remove {
   padding-top: 10px;
   border-top: 1px solid #b1b4b6;
@@ -253,37 +249,6 @@ a.all-buying-options-link {
       text-decoration: none;
     }
   }
-}
-
-.govuk-footer {
-  border-top: 10px solid #1d70b8;
-  background-color: #f4f8fb;
-}
-
-.govuk-footer__licence-logo {
-  display: block;
-  margin-bottom: 20px;
-}
-
-.govuk-footer__crown-icon {
-  height: 30px;
-  width: auto;
-  display: block;
-}
-
-.govuk-footer__inline-list{
-  max-width: 800px;
-}
-.govuk-footer__list--inline {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.govuk-footer__licence-description {
-  margin-top: 10px;
-  max-width: 500px;
-  text-wrap: auto;
 }
 
 .all-buying-options-solution h4 {
