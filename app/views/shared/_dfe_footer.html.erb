@@ -34,7 +34,9 @@
         </div>
       </div>
       <div class="govuk-footer__meta-item">
-        <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/" target="_blank" rel="noopener noreferrer"><%= t(".crown_copyright") %><span class="govuk-visually-hidden"> <%= t("shared.external_link.opens_in_new_tab") %></span></a>
+        <a class="govuk-footer__link __govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/" target="_blank" rel="noopener noreferrer">
+          <%= image_tag("govuk-frontend/govuk-crest.svg", alt: "Crown Logo") %><br>
+          <%= t(".crown_copyright") %><span class="govuk-visually-hidden"> <%= t("shared.external_link.opens_in_new_tab") %></span></a>
       </div>
     </div>
   </div>
