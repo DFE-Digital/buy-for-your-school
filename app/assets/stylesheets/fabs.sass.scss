@@ -199,15 +199,6 @@ footer {
   }
 }
 
-.dfe-header__link:focus,
-a:focus {
-  outline: 3px solid transparent;
-  color: #0b0c0c;
-  background-color: #fd0;
-  box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
-  text-decoration: none;
-}
-
 .dfe-header__navigation.js-show .dfe-header__navigation-item.dfe-header__navigation-item--current a {
   color: #003a69;
   font-weight: 700;

@@ -88,3 +88,7 @@
   border-bottom: 1px solid $govuk-border-colour;
   margin-bottom: govuk-spacing(4);
 }
+
+a:focus {
+  @include govuk-focused-text;
+}
