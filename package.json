@@ -7,7 +7,7 @@
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
-    "@hods/timeline": "^0.4.0",
+    "@hods/timeline": "^0.5.1",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.20",
     "@rails/ujs": "^7.1.600",
