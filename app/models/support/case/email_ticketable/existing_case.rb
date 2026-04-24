@@ -1,11 +1,14 @@
 class Support::Case::EmailTicketable::ExistingCase
   def self.create_by(email)
-    Support::CreateCase.new(
+    kase = Support::CreateCase.new(
       source: :incoming_email,
       email: email.sender_email,
       first_name: email.sender_first_name,
       last_name: email.sender_last_name,
     ).call
+
+    Support::UpdateEmailSubjectJob.perform_later(email_ids: [email.id], to_case_id: kase.id)
+    kase
   end
 
   def self.find_by(email)
