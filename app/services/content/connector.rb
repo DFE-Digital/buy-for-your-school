@@ -41,7 +41,8 @@ class Content::Connector
       api_url:,
       space: space_id,
       access_token:,
-      environment: ENV["CONTENTFUL_ENVIRONMENT"],
+      # Allow default environment value to be overridden for GHBS environment
+      environment: ENV.fetch("CONTENTFUL_GHBS_ENVIRONMENT", ENV.fetch("CONTENTFUL_ENVIRONMENT", "master")),
       raise_errors: true,
       application_name: "DfE: Buy For Your School",
       application_version: "1.0.0",

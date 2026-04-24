@@ -11,7 +11,7 @@ RSpec.describe Content::Connector, ".instance" do
   around do |example|
     ClimateControl.modify(
       CONTENTFUL_SPACE: space_id,
-      CONTENTFUL_ENVIRONMENT: environment,
+      CONTENTFUL_GHBS_ENVIRONMENT: environment,
       CONTENTFUL_DELIVERY_TOKEN: delivery_token,
       CONTENTFUL_PREVIEW_TOKEN: preview_token,
     ) do
