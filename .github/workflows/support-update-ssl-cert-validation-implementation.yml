@@ -7,6 +7,10 @@ on:
         required: true
         type: string
 
+      domain_family:
+        required: true
+        type: string
+
 env:
   RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
   AZURE_CORE_USE_MSAL_HTTP_CACHE: "false"
@@ -15,7 +19,7 @@ jobs:
   check_need_for_validation_update:
     runs-on: ubuntu-latest
 
-    environment: ${{ inputs.chosen_environment == 'az-production' && 'az-production-read-only' ||  inputs.chosen_environment }}
+    environment: ${{ inputs.chosen_environment == 'az-production' && 'az-production-read-only' || inputs.chosen_environment }}
 
     outputs:
       customDomainName: ${{ steps.vars.outputs.customDomainName }}
@@ -31,17 +35,37 @@ jobs:
           # are based on convention and therefor can be built programmatically
 
           if [[ "${{ inputs.chosen_environment }}" == "az-dev" ]]; then
-            customDomainName="devghbscustom-domain0"
             profileName="devghbscdn"
-            zoneName="dev.get-help-buying-for-schools.service.gov.uk"
+
+            if [[ "${{ inputs.domain_family }}" == "service" ]]; then
+              customDomainName="devghbscustom-domain0"
+              zoneName="dev.get-help-buying-for-schools.service.gov.uk"
+            else
+              customDomainName="devghbscustom-domain1"
+              zoneName="dev.get-help-buying-for-schools.education.gov.uk"
+            fi
+
           elif [[ "${{ inputs.chosen_environment }}" == "az-staging" ]]; then
-            customDomainName="stagghbscustom-domain0"
             profileName="stagghbscdn"
-            zoneName="staging.get-help-buying-for-schools.service.gov.uk"
+
+            if [[ "${{ inputs.domain_family }}" == "service" ]]; then
+              customDomainName="stagghbscustom-domain0"
+              zoneName="staging.get-help-buying-for-schools.service.gov.uk"
+            else
+              customDomainName="stagghbscustom-domain1"
+              zoneName="staging.get-help-buying-for-schools.education.gov.uk"
+            fi
+
           elif [[ "${{ inputs.chosen_environment }}" == "az-production" ]]; then
-            customDomainName="prodghbscustom-domain0"
             profileName="prodghbscdn"
-            zoneName="www.get-help-buying-for-schools.service.gov.uk"
+
+            if [[ "${{ inputs.domain_family }}" == "service" ]]; then
+              customDomainName="prodghbscustom-domain0"
+              zoneName="www.get-help-buying-for-schools.service.gov.uk"
+            else
+              customDomainName="prodghbscustom-domain1"
+              zoneName="www.get-help-buying-for-schools.education.gov.uk"
+            fi
           fi
 
           echo customDomainName=$customDomainName >> $GITHUB_OUTPUT
@@ -65,7 +89,12 @@ jobs:
               --custom-domain-name ${{ steps.vars.outputs.customDomainName }} \
               --only-show-errors | jq --raw-output .domainValidationState)
 
-            needsToReEvaluate=$([ -z "$(echo $domainValidationState | grep "PendingRevalidation")" ] && echo "no" || echo "yes")
+            needsToReEvaluate=$(
+              [ -z "$(echo $domainValidationState | grep "PendingRevalidation")" ] \
+              && echo "no" \
+              || echo "yes"
+            )
+
             echo needsToReEvaluate=$needsToReEvaluate >> $GITHUB_OUTPUT
 
   update_validation:
