@@ -17,7 +17,7 @@ RSpec.describe "Contentful webhooks", type: :request do
     it "returns success when indexing succeeds" do
       allow(indexer).to receive(:index_document).and_return(true)
 
-      post contentful_webhooks_path, params: { entityId: entity_id }, headers: headers
+      post(contentful_webhooks_path, params: { entityId: entity_id }, headers:)
 
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to eq("message" => "Webhook for entry #{entity_id} processed successfully.")
@@ -26,14 +26,14 @@ RSpec.describe "Contentful webhooks", type: :request do
     it "returns unprocessable_content when indexing fails" do
       allow(indexer).to receive(:index_document).and_return(false)
 
-      post contentful_webhooks_path, params: { entityId: entity_id }, headers: headers
+      post(contentful_webhooks_path, params: { entityId: entity_id }, headers:)
 
       expect(response.status).to eq(422)
       expect(JSON.parse(response.body)).to eq("error" => "Failed to index the document for id #{entity_id}.")
     end
 
     it "returns bad_request when entityId is missing" do
-      post contentful_webhooks_path, params: {}, headers: headers
+      post(contentful_webhooks_path, params: {}, headers:)
 
       expect(response).to have_http_status(:bad_request)
       expect(JSON.parse(response.body)).to eq("error" => "The 'entityId' is missing from the request.")
@@ -42,7 +42,7 @@ RSpec.describe "Contentful webhooks", type: :request do
     it "returns bad_request when only sys.id is provided" do
       allow(indexer).to receive(:index_document)
 
-      post contentful_webhooks_path, params: { sys: { id: entity_id } }, headers: headers
+      post(contentful_webhooks_path, params: { sys: { id: entity_id } }, headers:)
 
       expect(response).to have_http_status(:bad_request)
       expect(indexer).not_to have_received(:index_document)
@@ -59,7 +59,7 @@ RSpec.describe "Contentful webhooks", type: :request do
     it "returns success when deletion succeeds" do
       allow(indexer).to receive(:delete_document).and_return(true)
 
-      post delete_contentful_entry_path, params: { entityId: entity_id }, headers: headers
+      post(delete_contentful_entry_path, params: { entityId: entity_id }, headers:)
 
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to eq("message" => "Webhook for entry #{entity_id} deletion processed successfully.")
@@ -68,14 +68,14 @@ RSpec.describe "Contentful webhooks", type: :request do
     it "returns unprocessable_content when deletion fails" do
       allow(indexer).to receive(:delete_document).and_return(false)
 
-      post delete_contentful_entry_path, params: { entityId: entity_id }, headers: headers
+      post(delete_contentful_entry_path, params: { entityId: entity_id }, headers:)
 
       expect(response.status).to eq(422)
       expect(JSON.parse(response.body)).to eq("error" => "Failed to delete the document for id #{entity_id}.")
     end
 
     it "returns bad_request when entityId is missing" do
-      post delete_contentful_entry_path, params: {}, headers: headers
+      post(delete_contentful_entry_path, params: {}, headers:)
 
       expect(response).to have_http_status(:bad_request)
       expect(JSON.parse(response.body)).to eq("error" => "The 'entityId' is missing from the request.")
@@ -84,7 +84,7 @@ RSpec.describe "Contentful webhooks", type: :request do
     it "returns bad_request when only sys.id is provided" do
       allow(indexer).to receive(:delete_document)
 
-      post delete_contentful_entry_path, params: { sys: { id: entity_id } }, headers: headers
+      post(delete_contentful_entry_path, params: { sys: { id: entity_id } }, headers:)
 
       expect(response).to have_http_status(:bad_request)
       expect(indexer).not_to have_received(:delete_document)

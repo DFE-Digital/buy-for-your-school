@@ -72,9 +72,7 @@ RSpec.describe "FABS solutions", type: :request do
     end
 
     it "omits blank expiry and provider reference and uses custom CTA text when present" do
-      allow(solution).to receive(:expiry).and_return(nil)
-      allow(solution).to receive(:provider_reference).and_return(nil)
-      allow(solution).to receive(:call_to_action).and_return("Apply now")
+      allow(solution).to receive_messages(expiry: nil, provider_reference: nil, call_to_action: "Apply now")
 
       get category_solution_path("banking-finance", "audit-and-financial-services")
 

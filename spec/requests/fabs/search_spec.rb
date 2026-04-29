@@ -76,7 +76,7 @@ RSpec.describe "FABS search", type: :request do
   end
 
   it "shows the too_many_words validation error" do
-    get search_path(query: (["word"] * 26).join(" "))
+    get search_path(query: (%w[word] * 26).join(" "))
 
     expect(response.body).to include(I18n.t("search.errors.too_many_words"))
   end

@@ -3,16 +3,17 @@ require "rails_helper"
 RSpec.describe "API Contentful entries", type: :request do
   let(:api_key) { "contentful-api-key" }
   let(:headers) { { "Authorization" => ActionController::HttpAuthentication::Token.encode_credentials(api_key) } }
+  let(:tracker) { instance_double(InsightsTracker, track_event: nil) }
 
   before do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with("CONTENTFUL_WEBHOOK_API_KEY").and_return(api_key)
     allow(Cache).to receive(:delete)
-    allow_any_instance_of(Api::Contentful::EntriesController).to receive(:track_event)
+    allow(InsightsTracker).to receive(:new).and_return(tracker)
   end
 
   it "deletes the cache entry and returns ok for an authenticated request" do
-    post "/api/contentful/entry_updated", params: { entityId: "entry-123" }, headers: headers
+    post("/api/contentful/entry_updated", params: { entityId: "entry-123" }, headers:)
 
     expect(response).to have_http_status(:ok)
     expect(JSON.parse(response.body)).to eq("status" => "OK")

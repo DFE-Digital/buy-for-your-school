@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe RealIp do
   subject(:middleware) { described_class.new(app) }
 
-  let(:app) { ->(env) { [200, env, ["OK"]] } }
+  let(:app) { ->(env) { [200, env, %w[OK]] } }
   let(:request) { instance_double(ActionDispatch::Request, remote_ip:) }
   let(:remote_ip) { "203.0.113.10" }
 

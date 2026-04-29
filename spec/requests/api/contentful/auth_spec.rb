@@ -10,7 +10,7 @@ RSpec.describe "API Contentful auth", type: :request do
   end
 
   it "returns ok with a valid token" do
-    post "/api/contentful/auth", headers: headers
+    post("/api/contentful/auth", headers:)
 
     expect(response).to have_http_status(:ok)
     expect(JSON.parse(response.body)).to eq("status" => "OK")

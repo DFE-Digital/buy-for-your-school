@@ -3,11 +3,12 @@ require "rails_helper"
 RSpec.describe "API Contentful categories", type: :request do
   let(:api_key) { "contentful-api-key" }
   let(:headers) { { "Authorization" => ActionController::HttpAuthentication::Token.encode_credentials(api_key) } }
+  let(:tracker) { instance_double(InsightsTracker, track_event: nil) }
 
   before do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with("CONTENTFUL_WEBHOOK_API_KEY").and_return(api_key)
-    allow_any_instance_of(Api::Contentful::CategoriesController).to receive(:track_event)
+    allow(InsightsTracker).to receive(:new).and_return(tracker)
   end
 
   it "upserts the category from Contentful and returns ok" do
@@ -24,7 +25,7 @@ RSpec.describe "API Contentful categories", type: :request do
     allow(GetCategory).to receive(:new).with(category_entry_id: "category-123").and_return(getter)
     allow(Category).to receive(:upsert).and_return([OpenStruct.new])
 
-    post "/api/contentful/category", params: { sys: { id: "category-123" } }, headers: headers
+    post("/api/contentful/category", params: { sys: { id: "category-123" } }, headers:)
 
     expect(response).to have_http_status(:ok)
     expect(JSON.parse(response.body)).to eq("status" => "OK")

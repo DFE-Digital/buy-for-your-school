@@ -1,7 +1,20 @@
 require "rails_helper"
 
 RSpec.describe "FABS category pages", type: :request do
-  before { Flipper.enable(:ghbs_public_frontend) }
+  before do
+    Flipper.enable(:ghbs_public_frontend)
+    allow(FABS::Category).to receive(:find_by_slug!).with("it").and_return(category)
+    allow(category).to receive(:filtered_solutions) do |subcategory_slugs:|
+      case subcategory_slugs
+      when nil, []
+        [dfe_solution, other_solution, filtered_solution]
+      when %w[software]
+        [dfe_solution, other_solution]
+      else
+        [dfe_solution, other_solution]
+      end
+    end
+  end
 
   let(:banner) do
     instance_double(
@@ -61,20 +74,6 @@ RSpec.describe "FABS category pages", type: :request do
     )
   end
 
-  before do
-    allow(FABS::Category).to receive(:find_by_slug!).with("it").and_return(category)
-    allow(category).to receive(:filtered_solutions) do |subcategory_slugs:|
-      case subcategory_slugs
-      when nil, []
-        [dfe_solution, other_solution, filtered_solution]
-      when ["software"]
-        [dfe_solution, other_solution]
-      else
-        [dfe_solution, other_solution]
-      end
-    end
-  end
-
   def document
     Capybara.string(response.body)
   end
@@ -118,7 +117,7 @@ RSpec.describe "FABS category pages", type: :request do
   end
 
   it "shows only matching solutions when subcategory filters are selected" do
-    get category_path("it"), params: { subcategory_slugs: ["software"] }
+    get category_path("it"), params: { subcategory_slugs: %w[software] }
 
     expect(response).to be_successful
     expect(response.body).to include("Everything ICT")
