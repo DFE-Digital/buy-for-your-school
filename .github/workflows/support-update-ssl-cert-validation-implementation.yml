@@ -7,6 +7,10 @@ on:
         required: true
         type: string
 
+      domain_family:
+        required: true
+        type: string
+
 env:
   RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
   AZURE_CORE_USE_MSAL_HTTP_CACHE: "false"
@@ -15,7 +19,7 @@ jobs:
   check_need_for_validation_update:
     runs-on: ubuntu-latest
 
-    environment: ${{ inputs.chosen_environment == 'az-production' && 'az-production-read-only' ||  inputs.chosen_environment }}
+    environment: ${{ inputs.chosen_environment == 'az-production' && 'az-production-read-only' || inputs.chosen_environment }}
 
     outputs:
       customDomainName: ${{ steps.vars.outputs.customDomainName }}
@@ -26,22 +30,46 @@ jobs:
     steps:
       - name: Setup variables
         id: vars
+        env:
+          # Supports "service" and "education" values for *.service.gov.uk and *.education.gov.uk domains
+          DOMAIN_FAMILY: ${{ inputs.domain_family }}
         run: |
           # To avoid adding multiple variables into the environment when the names
           # are based on convention and therefor can be built programmatically
 
           if [[ "${{ inputs.chosen_environment }}" == "az-dev" ]]; then
-            customDomainName="devghbscustom-domain0"
             profileName="devghbscdn"
-            zoneName="dev.get-help-buying-for-schools.service.gov.uk"
+
+            if [[ "$DOMAIN_FAMILY" == "service" ]]; then
+              customDomainName="devghbscustom-domain0"
+              zoneName="dev.get-help-buying-for-schools.service.gov.uk"
+            else
+              customDomainName="dev-get-help-buying-for-schools-education-gov-uk-ab1b"
+              zoneName="dev.get-help-buying-for-schools.education.gov.uk"
+            fi
+
           elif [[ "${{ inputs.chosen_environment }}" == "az-staging" ]]; then
-            customDomainName="stagghbscustom-domain0"
             profileName="stagghbscdn"
-            zoneName="staging.get-help-buying-for-schools.service.gov.uk"
+
+            if [[ "$DOMAIN_FAMILY" == "service" ]]; then
+              customDomainName="stagghbscustom-domain0"
+              zoneName="staging.get-help-buying-for-schools.service.gov.uk"
+            else
+              customDomainName="staging-get-help-buying-for-schools-education-gov-uk-c932"
+              zoneName="staging.get-help-buying-for-schools.education.gov.uk"
+            fi
+
           elif [[ "${{ inputs.chosen_environment }}" == "az-production" ]]; then
-            customDomainName="prodghbscustom-domain0"
             profileName="prodghbscdn"
-            zoneName="www.get-help-buying-for-schools.service.gov.uk"
+
+            if [[ "$DOMAIN_FAMILY" == "service" ]]; then
+              customDomainName="prodghbscustom-domain0"
+              zoneName="www.get-help-buying-for-schools.service.gov.uk"
+            else
+              # prod customDomainName is not yet done. We need to update this 2026-04-29
+              customDomainName="get-help-buying-for-schools-education-gov-uk-ab1b"
+              zoneName="www.get-help-buying-for-schools.education.gov.uk"
+            fi
           fi
 
           echo customDomainName=$customDomainName >> $GITHUB_OUTPUT
@@ -65,7 +93,12 @@ jobs:
               --custom-domain-name ${{ steps.vars.outputs.customDomainName }} \
               --only-show-errors | jq --raw-output .domainValidationState)
 
-            needsToReEvaluate=$([ -z "$(echo $domainValidationState | grep "PendingRevalidation")" ] && echo "no" || echo "yes")
+            needsToReEvaluate=$(
+              [ -z "$(echo $domainValidationState | grep "PendingRevalidation")" ] \
+              && echo "no" \
+              || echo "yes"
+            )
+
             echo needsToReEvaluate=$needsToReEvaluate >> $GITHUB_OUTPUT
 
   update_validation:
