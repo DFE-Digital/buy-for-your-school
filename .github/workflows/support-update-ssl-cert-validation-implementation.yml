@@ -41,7 +41,7 @@ jobs:
               customDomainName="devghbscustom-domain0"
               zoneName="dev.get-help-buying-for-schools.service.gov.uk"
             else
-              customDomainName="devghbscustom-domain1"
+              customDomainName="dev-get-help-buying-for-schools-education-gov-uk-ab1b"
               zoneName="dev.get-help-buying-for-schools.education.gov.uk"
             fi
 
@@ -53,7 +53,7 @@ jobs:
               zoneName="staging.get-help-buying-for-schools.service.gov.uk"
             else
               customDomainName="stagghbscustom-domain1"
-              zoneName="staging.get-help-buying-for-schools.education.gov.uk"
+              zoneName="staging.get-help-buying-for-schools-education-gov-uk-ab1b"
             fi
 
           elif [[ "${{ inputs.chosen_environment }}" == "az-production" ]]; then
@@ -63,7 +63,7 @@ jobs:
               customDomainName="prodghbscustom-domain0"
               zoneName="www.get-help-buying-for-schools.service.gov.uk"
             else
-              customDomainName="prodghbscustom-domain1"
+              customDomainName="get-help-buying-for-schools-education-gov-uk-ab1b"
               zoneName="www.get-help-buying-for-schools.education.gov.uk"
             fi
           fi
