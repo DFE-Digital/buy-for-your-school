@@ -30,6 +30,9 @@ jobs:
     steps:
       - name: Setup variables
         id: vars
+        env:
+          # Supports "service" and "education" values for *.service.gov.uk and *.education.gov.uk domains
+          DOMAIN_FAMILY: ${{ inputs.domain_family }}
         run: |
           # To avoid adding multiple variables into the environment when the names
           # are based on convention and therefor can be built programmatically
@@ -37,7 +40,7 @@ jobs:
           if [[ "${{ inputs.chosen_environment }}" == "az-dev" ]]; then
             profileName="devghbscdn"
 
-            if [[ "${{ inputs.domain_family }}" == "service" ]]; then
+            if [[ "$DOMAIN_FAMILY" == "service" ]]; then
               customDomainName="devghbscustom-domain0"
               zoneName="dev.get-help-buying-for-schools.service.gov.uk"
             else
@@ -48,21 +51,22 @@ jobs:
           elif [[ "${{ inputs.chosen_environment }}" == "az-staging" ]]; then
             profileName="stagghbscdn"
 
-            if [[ "${{ inputs.domain_family }}" == "service" ]]; then
+            if [[ "$DOMAIN_FAMILY" == "service" ]]; then
               customDomainName="stagghbscustom-domain0"
               zoneName="staging.get-help-buying-for-schools.service.gov.uk"
             else
-              customDomainName="stagghbscustom-domain1"
-              zoneName="staging.get-help-buying-for-schools-education-gov-uk-ab1b"
+              customDomainName="staging-get-help-buying-for-schools-education-gov-uk-c932"
+              zoneName="staging.get-help-buying-for-schools.education.gov.uk"
             fi
 
           elif [[ "${{ inputs.chosen_environment }}" == "az-production" ]]; then
             profileName="prodghbscdn"
 
-            if [[ "${{ inputs.domain_family }}" == "service" ]]; then
+            if [[ "$DOMAIN_FAMILY" == "service" ]]; then
               customDomainName="prodghbscustom-domain0"
               zoneName="www.get-help-buying-for-schools.service.gov.uk"
             else
+              # prod customDomainName is not yet done. We need to update this 2026-04-29
               customDomainName="get-help-buying-for-schools-education-gov-uk-ab1b"
               zoneName="www.get-help-buying-for-schools.education.gov.uk"
             fi
