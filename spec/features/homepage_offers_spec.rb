@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Homepage Offers Section", :vcr, type: :feature do
+  before { Flipper.enable(:ghbs_public_frontend) }
+
   context "when visiting the homepage" do
     before do
       visit root_path

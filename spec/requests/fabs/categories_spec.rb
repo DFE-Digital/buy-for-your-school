@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Categories pages", :vcr, type: :request do
+  before { Flipper.enable(:ghbs_public_frontend) }
+
   describe "GET /" do
     before do
       get root_path
