@@ -130,7 +130,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
         select_autocomplete_option("2314")
         click_continue
 
-        expect(page).to have_text "Is this the academy trust or federation you're buying for?"
+        find("h1.govuk-heading-l", text: "Is this the academy trust or federation you're buying for?")
       end
 
       context "when confirmed" do
