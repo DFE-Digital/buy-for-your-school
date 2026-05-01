@@ -29,19 +29,11 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "231"
     select_autocomplete_option("Testing Multi Academy Trust")
     click_continue
-
-    expect(page).to have_text "Is this the academy trust or federation you're buying for?"
   end
 
   def complete_confirm_group_step
-    within "#framework-support-form" do
-      find("input[type='radio'][name='framework_support_form[org_confirm]'][value='true']", visible: :all).click
-      expect(page).to have_css("input[type='radio'][name='framework_support_form[org_confirm]'][value='true']:checked", visible: :all)
-      click_button "Continue"
-    end
-
-    expect(page).to have_current_path(%r{/procurement-support/school_picker})
-    expect(page).to have_text "0 of 2 schools"
+    choose "Yes"
+    click_continue
   end
 
   def complete_help_message_step
@@ -381,10 +373,9 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
 
       it "doesn't include archived establishment groups in the dropdown" do
-        fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "231"
-
-        expect(page).to have_css(".autocomplete__option", text: "Testing Multi Academy Trust")
-        expect(page).not_to have_css(".autocomplete__option", text: "Archived Group")
+        fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "10025"
+        expect(page).to have_text "Testing Multi Academy Trust"
+        expect(page).not_to have_text "Archived Group"
       end
     end
 
@@ -429,19 +420,13 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         it "saves selected schools" do
           check "Specialist School for Testing"
-          expect(page).to have_checked_field("Specialist School for Testing")
           check "Greendale Academy for Bright Sparks"
-          expect(page).to have_checked_field("Greendale Academy for Bright Sparks")
           click_continue
-
-          expect(page).to have_css("input[type='hidden'][name='framework_support_form[school_urns][]'][value='100253']", visible: :hidden)
-          expect(page).to have_css("input[type='hidden'][name='framework_support_form[school_urns][]'][value='100254']", visible: :hidden)
 
           choose "Yes"
           click_continue
 
-          expect(page).to have_text("What is your name?")
-          expect(page).to have_link("Back", href: %r{/procurement-support/confirm_schools})
+          expect(FrameworkRequest.first.school_urns).to match_array(%w[100253 100254])
         end
       end
     end

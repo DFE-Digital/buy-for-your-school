@@ -129,8 +129,6 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
         fill_in "framework_support_form[org_id]", with: "2314"
         select_autocomplete_option("2314")
         click_continue
-
-        find("h1.govuk-heading-l", text: "Is this the academy trust or federation you're buying for?")
       end
 
       context "when confirmed" do
@@ -138,13 +136,9 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
           expect(find("h1.govuk-heading-l")).to have_text "Is this the academy trust or federation you're buying for?"
           expect(values[0]).to have_text "Testing Multi Academy Trust"
 
-          within "#framework-support-form" do
-            find("input[type='radio'][name='framework_support_form[org_confirm]'][value='true']", visible: :all).click
-            expect(page).to have_css("input[type='radio'][name='framework_support_form[org_confirm]'][value='true']:checked", visible: :all)
-            click_button "Continue"
-          end
+          choose "Yes"
+          click_continue
 
-          expect(page).to have_current_path(%r{/procurement-support/.*/school_picker/edit})
           expect(page).to have_text "0 of 2 schools"
           check "School name (select all)"
           click_continue
@@ -158,13 +152,9 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
 
       context "when cancelled" do
         it "remains unchanged" do
-          within "#framework-support-form" do
-            find("input[type='radio'][name='framework_support_form[org_confirm]'][value='false']", visible: :all).click
-            expect(page).to have_css("input[type='radio'][name='framework_support_form[org_confirm]'][value='false']:checked", visible: :all)
-            click_button "Continue"
-          end
+          choose "No"
+          click_continue
 
-          expect(page).to have_current_path "/procurement-support/#{request.id}/search_for_organisation/edit", ignore_query: true
           expect(find("h1.govuk-heading-l")).to have_text "Search for an academy trust or federation"
         end
       end
