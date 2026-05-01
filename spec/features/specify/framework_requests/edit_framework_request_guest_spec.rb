@@ -129,6 +129,8 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
         fill_in "framework_support_form[org_id]", with: "2314"
         select_autocomplete_option("2314")
         click_continue
+
+        expect(page).to have_text "Is this the academy trust or federation you're buying for?"
       end
 
       context "when confirmed" do
@@ -139,6 +141,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
           choose "Yes"
           click_continue
 
+          expect(page).to have_text "0 of 2 schools"
           check "School name (select all)"
           click_continue
 
@@ -154,6 +157,7 @@ RSpec.feature "Editing a 'Find a Framework' request as a guest" do
           choose "No"
           click_continue
 
+          expect(page).to have_current_path "/procurement-support/#{request.id}/search_for_organisation/edit", ignore_query: true
           expect(find("h1.govuk-heading-l")).to have_text "Search for an academy trust or federation"
         end
       end
