@@ -35,7 +35,8 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
   def complete_confirm_group_step
     within "#framework-support-form" do
-      choose "Yes"
+      find("input[type='radio'][name='framework_support_form[org_confirm]'][value='true']", visible: :all).click
+      expect(page).to have_css("input[type='radio'][name='framework_support_form[org_confirm]'][value='true']:checked", visible: :all)
       click_button "Continue"
     end
 
