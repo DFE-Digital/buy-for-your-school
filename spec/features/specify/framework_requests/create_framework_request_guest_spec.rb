@@ -34,9 +34,12 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
   end
 
   def complete_confirm_group_step
-    choose "Yes"
-    click_continue
+    within "#framework-support-form" do
+      choose "Yes"
+      click_button "Continue"
+    end
 
+    expect(page).to have_current_path(%r{/procurement-support/school_picker})
     expect(page).to have_text "0 of 2 schools"
   end
 
