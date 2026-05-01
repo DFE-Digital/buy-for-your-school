@@ -372,7 +372,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
         expect(values[0]).to have_text "Greendale Academy for Bright Sparks, St James's Passage, Duke's Place, London, EC3A 5DE"
       end
 
-      it "doesn't include archived establishment groups in the dropdown", :flaky do
+      it "doesn't include archived establishment groups in the dropdown" do
         fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "10025"
         expect(page).to have_text "Testing Multi Academy Trust"
         expect(page).not_to have_text "Archived Group"
@@ -406,7 +406,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
     end
 
-    describe "multischool picker", :flaky do
+    describe "multischool picker" do
       before do
         autocomplete_group_step
         complete_confirm_group_step
@@ -420,13 +420,19 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
 
         it "saves selected schools" do
           check "Specialist School for Testing"
+          expect(page).to have_checked_field("Specialist School for Testing")
           check "Greendale Academy for Bright Sparks"
+          expect(page).to have_checked_field("Greendale Academy for Bright Sparks")
           click_continue
+
+          expect(page).to have_css("input[type='hidden'][name='framework_support_form[school_urns][]'][value='100253']", visible: false)
+          expect(page).to have_css("input[type='hidden'][name='framework_support_form[school_urns][]'][value='100254']", visible: false)
 
           choose "Yes"
           click_continue
 
-          expect(FrameworkRequest.first.school_urns).to match_array(%w[100253 100254])
+          expect(page).to have_text("What is your name?")
+          expect(page).to have_link("Back", href: %r{/procurement-support/confirm_schools})
         end
       end
     end
