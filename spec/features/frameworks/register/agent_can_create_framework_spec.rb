@@ -51,8 +51,11 @@ describe "Agent can create frameworks", :js do
     end
     click_on "Create framework"
 
-    expect(page).to have_css(".govuk-caption-l", text: "[F1] Framework")
     expect(page).to have_css(".govuk-heading-l", text: "New Framework 1")
+
+    # Framework reference is assigned from Postgres id so need to fetch that
+    framework = Frameworks::Framework.find_by!(name: "New Framework 1")
+    expect(page).to have_css(".govuk-caption-l", text: "[#{framework.reference}] Framework")
     expect(page).to have_css(".govuk-tag", text: "Not approved")
 
     expect(page).to have_summary("URL", "https://localhost:3000/nf1")
