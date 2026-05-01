@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can change case summary", :flaky, :js do
+describe "Agent can change case summary", :js do
   include_context "with an agent"
 
   let(:support_case) { create(:support_case, support_level: :L1, value: nil, source: "nw_hub", project: "test project", category: gas_category, procurement_stage: need_stage) }
@@ -85,9 +85,8 @@ describe "Agent can change case summary", :flaky, :js do
       it "shows the new project in case details" do
         click_button "Save"
 
-        within ".govuk-summary-list__row", text: "Project" do
-          expect(page).to have_content("brand new project")
-        end
+        expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
+        expect(support_case.reload.project).to eq("brand new project")
       end
     end
   end
