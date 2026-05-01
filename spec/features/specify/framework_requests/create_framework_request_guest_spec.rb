@@ -29,11 +29,15 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
     fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "231"
     select_autocomplete_option("Testing Multi Academy Trust")
     click_continue
+
+    expect(page).to have_text "Is this the academy trust or federation you're buying for?"
   end
 
   def complete_confirm_group_step
     choose "Yes"
     click_continue
+
+    expect(page).to have_text "0 of 2 schools"
   end
 
   def complete_help_message_step
@@ -373,9 +377,10 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
 
       it "doesn't include archived establishment groups in the dropdown" do
-        fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "10025"
-        expect(page).to have_text "Testing Multi Academy Trust"
-        expect(page).not_to have_text "Archived Group"
+        fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "231"
+
+        expect(page).to have_css(".autocomplete__option", text: "Testing Multi Academy Trust")
+        expect(page).not_to have_css(".autocomplete__option", text: "Archived Group")
       end
     end
 
