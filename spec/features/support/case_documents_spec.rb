@@ -10,7 +10,12 @@ describe "Case documents" do
     let(:bad_document) { create(:support_document, document_body: nil, case: support_case) }
 
     it "does not show it" do
-      expect { visit support_case_document_path(support_case, bad_document) }.to raise_error(ActiveRecord::RecordNotFound)
+      bad_document
+
+      visit support_case_request_details_path(support_case)
+
+      expect(page).to have_link(href: support_case_document_path(support_case, document))
+      expect(page).not_to have_link(href: support_case_document_path(support_case, bad_document))
     end
   end
 
