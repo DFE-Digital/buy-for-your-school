@@ -425,8 +425,8 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
           expect(page).to have_checked_field("Greendale Academy for Bright Sparks")
           click_continue
 
-          expect(page).to have_css("input[type='hidden'][name='framework_support_form[school_urns][]'][value='100253']", visible: false)
-          expect(page).to have_css("input[type='hidden'][name='framework_support_form[school_urns][]'][value='100254']", visible: false)
+          expect(page).to have_css("input[type='hidden'][name='framework_support_form[school_urns][]'][value='100253']", visible: :hidden)
+          expect(page).to have_css("input[type='hidden'][name='framework_support_form[school_urns][]'][value='100254']", visible: :hidden)
 
           choose "Yes"
           click_continue

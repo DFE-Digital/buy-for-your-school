@@ -30,10 +30,10 @@ RSpec.describe DocumentFormatter do
       pdf = "%PDF-1.4"
       formatter = described_class.new(content: md, from: :markdown, to: :pdf)
 
-      expect(PandocRuby)
-      .to receive(:convert)
-      .with(md, "--strip-comments", { from: :markdown, to: :pdf })
-      .and_return(pdf)
+      allow(PandocRuby)
+        .to receive(:convert)
+        .with(md, "--strip-comments", { from: :markdown, to: :pdf })
+        .and_return(pdf)
 
       expect(formatter.call).to eq(pdf)
     end
