@@ -843,15 +843,17 @@ en:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
       page_title: An unexpected error occurred
-    go_home: Back to the service
+    go_home: Visit Get Help Buying Home page
     internal_server_error:
-      page_body: Sorry, there is a problem with the service. Please try again later.
-      page_title: Internal server error
+      page_title: Sorry, there is a problem with the service
+      page_body: Try again later.
     missing_role:
       page_body: You do not have the required role to access this page.
       page_title: Missing user role
     not_found:
-      page_body: Page not found. If you typed the web address, check it is correct. If you pasted the web address, check you copied the entire address.
+      page_body:
+        - If you entered a web address, check it is correct.
+        - If you pasted the web address, check you copied the entire address.
       page_title: Page not found
     repeat_step_in_the_contentful_journey:
       page_body: 'One or more steps in the Contentful journey would leave the user in an infinite loop. This entry ID was presented more than once to the user: %{entry_id}'
