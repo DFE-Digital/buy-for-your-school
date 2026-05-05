@@ -3,6 +3,13 @@
   <% if @energy_banner %>
     <%= render partial: 'energy_banner', locals: { banner: @energy_banner } %>
   <% end %>
+
+  <div class="govuk-inset-text govuk-inset-text--thin">
+    <h1 class="govuk-heading-m no-margin"><%= t(".not_sure_title") %></h1>
+    <p class="govuk-body"><%= t(".not_sure_body") %></p>
+    <%= govuk_link_to(t(".expert_help_button"), 'https://www.get-help-buying-for-schools.service.gov.uk/procurement-support', class: "cta govuk-button") %>
+  </div>
+
   <% if @featured_offers.present? %>
     <h2 class="govuk-heading-m"><%= t(".offers_title") %></h2>
     <div class="dfe-grid-container offers-grid-container">

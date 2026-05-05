@@ -38,5 +38,12 @@ RSpec.describe "Categories pages", :vcr, type: :request do
     it "does not display categories without solutions" do
       expect(response.body).not_to include("category-without-any-solution")
     end
+
+    it "displays new request for help content", vcr: { cassette_name: "Categories_pages/GET_/sets_default_HTML_title_tag" } do
+      expect(response.body).to include("Not sure where to start?")
+      expect(response.body).to include("Our buying team can help you choose the right way to buy for your school")
+      expect(response.body).to include("Get expert buying help")
+      expect(response.body).to include("https://www.get-help-buying-for-schools.service.gov.uk/procurement-support")
+    end
   end
 end
