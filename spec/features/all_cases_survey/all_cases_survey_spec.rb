@@ -16,7 +16,7 @@ RSpec.feature "Completing the All Cases Survey" do
       expect(page).to have_link "Privacy notice", href: "/privacy"
     end
 
-    it "continues to the statisfaction page" do
+    it "continues to the satisfaction page" do
       click_continue
       expect(page).to have_text "How do you feel about the service you received?"
     end
@@ -53,7 +53,7 @@ RSpec.feature "Completing the All Cases Survey" do
         expect(page).to have_text "Get help buying for schools feedback"
       end
 
-      it "continues to the statisfaction reason page" do
+      it "continues to the satisfaction reason page" do
         choose "Satisfied"
         click_continue
         expect(page).to have_text "Tell us why you felt satisfied with the service?"
