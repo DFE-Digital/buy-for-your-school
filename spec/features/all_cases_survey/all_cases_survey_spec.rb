@@ -12,8 +12,8 @@ RSpec.feature "Completing the All Cases Survey" do
       expect(page).to have_text "Get help buying for schools feedback"
     end
 
-    it "links to the privacy policy" do
-      expect(page).to have_link "Privacy policy", href: "/privacy"
+    it "links to the privacy notice" do
+      expect(page).to have_link "Privacy notice", href: "/privacy"
     end
 
     it "continues to the statisfaction page" do
@@ -22,7 +22,7 @@ RSpec.feature "Completing the All Cases Survey" do
     end
   end
 
-  describe "satisfaciton page" do
+  describe "satisfaction page" do
     context "when the satisfaction_level param is provided" do
       let(:param) { "very_satisfied" }
 
@@ -61,7 +61,7 @@ RSpec.feature "Completing the All Cases Survey" do
     end
   end
 
-  describe "satisfaciton reason page" do
+  describe "satisfaction reason page" do
     before do
       visit "all_cases_survey/satisfaction_reason/#{all_cases_survey.id}/edit"
     end

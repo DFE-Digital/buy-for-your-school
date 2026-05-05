@@ -10,8 +10,8 @@ RSpec.feature "Completing the Exit Survey" do
       expect(page).to have_text "Get help buying for schools feedback"
     end
 
-    it "links to the privacy policy" do
-      expect(page).to have_link "Privacy policy", href: "/privacy"
+    it "links to the privacy notice" do
+      expect(page).to have_link "Privacy notice", href: "/privacy"
     end
 
     it "continues to the statisfaction page" do
