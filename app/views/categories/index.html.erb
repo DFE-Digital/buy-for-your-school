@@ -7,7 +7,7 @@
   <div class="govuk-inset-text govuk-inset-text--thin">
     <h1 class="govuk-heading-m no-margin"><%= t(".not_sure_title") %></h1>
     <p class="govuk-body"><%= t(".not_sure_body") %></p>
-    <%= govuk_link_to(t(".expert_help_button"), 'https://www.get-help-buying-for-schools.service.gov.uk/procurement-support', class: "cta govuk-button") %>
+    <%= govuk_link_to(t(".expert_help_button"), framework_requests_path, class: "cta govuk-button") %>
   </div>
 
   <% if @featured_offers.present? %>
@@ -27,6 +27,6 @@
   </div>
 
   <p class="govuk-body">
-    <%= govuk_link_to t(".procurement_support"), "https://www.get-help-buying-for-schools.service.gov.uk/procurement-support", target: "_blank", rel: "noopener noreferrer" %>
+    <%= govuk_link_to t(".procurement_support"), framework_requests_path, target: "_blank", rel: "noopener noreferrer" %>
   </p>
 </div>
