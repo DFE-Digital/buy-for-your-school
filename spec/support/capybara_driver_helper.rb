@@ -1,25 +1,24 @@
-JS_DRIVER = (ENV["GUI"] ? :chrome : :headless_chrome)
+require "capybara/cuprite"
 
-Capybara.register_driver :headless_chrome do |app|
-  chrome_options = Selenium::WebDriver::Chrome::Options.new
-  chrome_options.add_argument("no-sandbox")
-  chrome_options.add_argument("headless")
-  chrome_options.add_argument("disable-gpu")
-  chrome_options.add_argument("disable-dev-shm-usage")
-  chrome_options.add_argument("window-size=1920,1080")
-  # chrome_options.add_option("goog:loggingPrefs", browser: "ALL")
+JS_DRIVER = :cuprite
 
-  if ENV["SELENIUM_HUB_URL"]
-    # use remote chrome (docker default)
-    Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV["SELENIUM_HUB_URL"], options: chrome_options)
-  else
-    # use chromedriver (local setup - ensure your chrome, chromedriver and selenium-webdriver gem versions all match)
-    Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options)
-  end
-end
+Capybara.register_driver :cuprite do |app|
+  browser_options = {
+    "no-sandbox" => nil,
+    "disable-gpu" => nil,
+    "disable-dev-shm-usage" => nil,
+    "window-size" => "1920,1080",
+  }
 
-Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome)
+  Capybara::Cuprite::Driver.new(
+    app,
+    browser_path: ENV["CHROME_BINARY_PATH"].presence,
+    browser_options:,
+    headless: ENV["GUI"].blank?,
+    process_timeout: 20,
+    timeout: 10,
+    window_size: [1920, 1080],
+  )
 end
 
 Capybara.configure do |config|
@@ -42,20 +41,16 @@ end
 RSpec.configure do |config|
   config.before do |example|
     if example.metadata[:js]
-      # chromedriver is unforgiving of hidden form elements triggered by labels
-      # e.g. radio buttons
+      # Some feature specs interact with form controls via labels or hidden inputs
       Capybara.ignore_hidden_elements = false
       Capybara.current_driver = JS_DRIVER
 
-      # if ENV["SELENIUM_HUB_URL"]
       server = Capybara.current_session.server
       Capybara.app_host = "http://#{server.host}:#{server.port}"
-      # end
     end
   end
 
   config.after do
-    # reset to defaults
     Capybara.ignore_hidden_elements = true
     Capybara.use_default_driver
     Capybara.app_host = "http://www.example.com:3000"
