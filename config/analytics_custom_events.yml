@@ -1,4 +1,5 @@
 shared:
   - page_engagement
   - external_link_clicked
+  - internal_link_clicked
   - button_click
