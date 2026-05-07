@@ -91,6 +91,9 @@ en:
       offers_title: DfE featured
       procurement_support: I need something else (opens in a new tab)
       title: DfE-approved buying options by category
+      not_sure_title: Not sure where to start?
+      not_sure_body: Our buying team can help you choose the right way to buy for your school
+      expert_help_button: Get expert buying help
   case_requests:
     validation:
       discovery_method: Case origin is missing
