@@ -124,7 +124,7 @@ describe "Agent can change case summary", :flaky, :js do
 
     def expect_fields_disabled(fields)
       fields.each do |field|
-        expect(page.find(field)["disabled"]).to eq("true")
+        expect(page.find(field)).to be_disabled
       end
     end
 
@@ -170,7 +170,7 @@ describe "Agent can change case summary", :flaky, :js do
       ]
       expect_fields_disabled(disabled_fields)
 
-      expect(page.find("#case-summary-procurement-stage-id-field")["disabled"]).to eq("false")
+      expect(page.find("#case-summary-procurement-stage-id-field")).not_to be_disabled
     end
 
     it "show only onboarding stages" do
