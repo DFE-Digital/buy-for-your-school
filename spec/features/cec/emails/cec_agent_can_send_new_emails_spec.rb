@@ -18,7 +18,7 @@ describe "Agent can send new emails", :js do
     end
   end
 
-  describe "check CEC filter applies", :flaky, :js, :with_csrf_protection do
+  describe "check CEC filter applies", :js, :with_csrf_protection do
     before do
       first("span", text: "Create a new message thread").click
     end
