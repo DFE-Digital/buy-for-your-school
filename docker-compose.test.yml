@@ -11,7 +11,7 @@ services:
       DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-test
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
       DOCKER: "true"
-      CUPRITE_BROWSER_URL: http://chrome:3000
+      CUPRITE_BROWSER_URL: ws://chrome:3000/chrome
     depends_on:
       - chrome
 
@@ -26,6 +26,8 @@ services:
   chrome:
     container_name: ghbs_chrome
     image: ghcr.io/browserless/chrome:v2.38.2
+    environment:
+      EXTERNAL: ws://chrome:3000
     ports:
       - 3000:3000
     volumes:
