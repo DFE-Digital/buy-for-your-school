@@ -28,6 +28,7 @@ services:
     image: ghcr.io/browserless/chrome:v2.38.2
     environment:
       EXTERNAL: ws://chrome:3000
+      TIMEOUT: 600000
     ports:
       - 3000:3000
     volumes:
