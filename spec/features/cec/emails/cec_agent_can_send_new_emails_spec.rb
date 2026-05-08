@@ -3,11 +3,11 @@ describe "Agent can send new emails", :js do
 
   let(:support_case) { create(:support_case, email: "contact@email.com") }
   let!(:cec_group) { create(:support_email_template_group, title: "CEC") }
-  let!(:dfe_subgroup) { create(:support_email_template_group, title: "DfE Energy for Schools service", parent: cec_group) }
   let!(:template) { create(:support_email_template, title: "CEC template", subject: "about cec", body: "cec body", group: cec_group) }
-  let!(:template_attachment) { create(:support_email_template_attachment, template:) }
 
   before do
+    create(:support_email_template_group, title: "DfE Energy for Schools service", parent: cec_group)
+    create(:support_email_template_attachment, template:)
     visit cec_onboarding_case_path(support_case)
     click_on "Messages"
   end
