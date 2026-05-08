@@ -3,7 +3,7 @@ require "capybara/cuprite"
 JS_DRIVER = :cuprite
 
 def remote_browser_config
-  ENV["CUPRITE_BROWSER_URL"].present? ? { ws_url: ENV["CUPRITE_BROWSER_URL"] } : {}
+  ENV["CUPRITE_BROWSER_URL"].present? ? { url: ENV["CUPRITE_BROWSER_URL"] } : {}
 end
 
 Capybara.register_driver :cuprite do |app|
