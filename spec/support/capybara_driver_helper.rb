@@ -1,6 +1,7 @@
 require "capybara/cuprite"
 require "json"
 require "net/http"
+require "socket"
 require "uri"
 
 JS_DRIVER = :cuprite
@@ -9,18 +10,20 @@ def remote_browser_config
   browser_url = ENV["CUPRITE_BROWSER_URL"].presence
   return {} unless browser_url
 
-  { ws_url: remote_browser_ws_url(browser_url) }
+  { ws_url: (@remote_browser_ws_url ||= remote_browser_ws_url(browser_url)) }
 end
 
 def remote_browser_ws_url(browser_url)
   browser_uri = URI(browser_url)
+  resolved_host = IPSocket.getaddress(browser_uri.host)
   version_uri = URI.join(browser_url.end_with?("/") ? browser_url : "#{browser_url}/", "json/version")
+  version_uri.host = resolved_host
   response = JSON.parse(Net::HTTP.get(version_uri))
   ws_uri = URI(response.fetch("webSocketDebuggerUrl"))
 
-  if ws_uri.host.nil?
+  if ws_uri.host.nil? || %w[localhost 127.0.0.1].include?(ws_uri.host)
     ws_uri.scheme = "ws"
-    ws_uri.host = browser_uri.host
+    ws_uri.host = resolved_host
     ws_uri.port ||= browser_uri.port
   end
 
