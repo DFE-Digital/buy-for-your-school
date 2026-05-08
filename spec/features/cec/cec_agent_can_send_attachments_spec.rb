@@ -28,7 +28,9 @@ describe "Cec agent can add attachments to replies", :js, :with_csrf_protection 
     describe "allows agent to add attachments" do
       before do
         attach_file(Rails.root.join("spec/support/assets/support/email_attachments/attachment.txt"), class: "dz-hidden-input", make_visible: true)
-        sleep 0.5 # allow file to finish uploading
+        within("#reply-frame") do
+          expect(page).to have_text "Complete"
+        end
       end
 
       it "shows the attached file" do
