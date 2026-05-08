@@ -14,14 +14,15 @@ RSpec.feature "Custom Errors" do
     it "shows the expected error message" do
       visit "/foo"
       expect(find("h1.govuk-heading-xl", text: "Page not found")).to be_present
-      expect(find("p.govuk-body", text: "Page not found. If you typed the web address, check it is correct. If you pasted the web address, check you copied the entire address.")).to be_present
+      expect(find("p.govuk-body", text: "If you entered a web address, check it is correct.")).to be_present
+      expect(find("p.govuk-body", text: "If you pasted the web address, check you copied the entire address.")).to be_present
     end
   end
 
   it "the 500 error page shows the expected error message" do
     visit "/500"
-    expect(find("h1.govuk-heading-xl", text: "Internal server error")).to be_present
-    expect(find("p.govuk-body", text: "Sorry, there is a problem with the service. Please try again later.")).to be_present
+    expect(find("h1.govuk-heading-xl", text: "Sorry, there is a problem with the service")).to be_present
+    expect(find("p.govuk-body", text: "Try again later.")).to be_present
   end
 
   it "the 422 error page shows the expected error message" do
