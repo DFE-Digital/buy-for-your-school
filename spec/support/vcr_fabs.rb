@@ -8,8 +8,10 @@ VCR.configure do |config|
   # bypass VCR/WebMock entirely.
   remote_browser_host = begin
     browser_url = ENV.fetch("CUPRITE_BROWSER_URL", nil)
-    uri = URI(browser_url)
-    [uri.host, IPSocket.getaddress(uri.host)] if browser_url.present?
+    if browser_url.present?
+      uri = URI(browser_url)
+      [uri.host, IPSocket.getaddress(uri.host)]
+    end
   rescue URI::InvalidURIError
     nil
   rescue SocketError
