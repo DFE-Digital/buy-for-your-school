@@ -373,9 +373,9 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
 
       it "doesn't include archived establishment groups in the dropdown", :flaky do
-        fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "10025"
-        expect(page).to have_text "Testing Multi Academy Trust"
-        expect(page).not_to have_text "Archived Group"
+        fill_in "Enter name, Unique group identifier (UID) or UK Provider Reference Number (UKPRN)", with: "231"
+        expect(page).to have_css(".autocomplete__option", text: "Testing Multi Academy Trust")
+        expect(page).not_to have_css(".autocomplete__option", text: "Archived Group")
       end
     end
 
