@@ -9,8 +9,15 @@ describe "Case documents" do
   context "when a document has no body" do
     let(:bad_document) { create(:support_document, document_body: nil, case: support_case) }
 
+    before do
+      create(:support_interaction, :support_request, case: support_case, additional_data: { "message" => "Need help" })
+    end
+
     it "does not show it" do
-      expect { visit support_case_document_path(support_case, bad_document) }.to raise_error(ActiveRecord::RecordNotFound)
+      visit support_case_path(support_case, anchor: "case-history")
+
+      expect(page).to have_css("a[href='#{support_case_document_path(support_case, document)}']", visible: :all)
+      expect(page).not_to have_css("a[href='#{support_case_document_path(support_case, bad_document)}']", visible: :all)
     end
   end
 
