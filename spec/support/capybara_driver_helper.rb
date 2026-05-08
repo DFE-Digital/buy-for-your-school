@@ -1,9 +1,30 @@
 require "capybara/cuprite"
+require "json"
+require "net/http"
+require "uri"
 
 JS_DRIVER = :cuprite
 
 def remote_browser_config
-  ENV["CUPRITE_BROWSER_URL"].present? ? { url: ENV["CUPRITE_BROWSER_URL"] } : {}
+  browser_url = ENV["CUPRITE_BROWSER_URL"].presence
+  return {} unless browser_url
+
+  { ws_url: remote_browser_ws_url(browser_url) }
+end
+
+def remote_browser_ws_url(browser_url)
+  browser_uri = URI(browser_url)
+  version_uri = URI.join(browser_url.end_with?("/") ? browser_url : "#{browser_url}/", "json/version")
+  response = JSON.parse(Net::HTTP.get(version_uri))
+  ws_uri = URI(response.fetch("webSocketDebuggerUrl"))
+
+  if ws_uri.host.nil?
+    ws_uri.scheme = "ws"
+    ws_uri.host = browser_uri.host
+    ws_uri.port ||= browser_uri.port
+  end
+
+  ws_uri.to_s
 end
 
 Capybara.register_driver :cuprite do |app|
