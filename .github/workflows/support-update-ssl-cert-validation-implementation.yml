@@ -66,8 +66,7 @@ jobs:
               customDomainName="prodghbscustom-domain0"
               zoneName="www.get-help-buying-for-schools.service.gov.uk"
             else
-              # prod customDomainName is not yet done. We need to update this 2026-04-29
-              customDomainName="get-help-buying-for-schools-education-gov-uk-ab1b"
+              customDomainName="www-get-help-buying-for-schools-education-gov-uk-eed8"
               zoneName="www.get-help-buying-for-schools.education.gov.uk"
             fi
           fi
