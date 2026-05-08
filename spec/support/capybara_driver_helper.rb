@@ -19,6 +19,7 @@ Capybara.register_driver :cuprite do |app|
     browser_path: ENV["CHROME_BINARY_PATH"].presence,
     browser_options:,
     headless: ENV["GUI"].blank?,
+    incognito: false,
     process_timeout: 20,
     timeout: 10,
     window_size: [1920, 1080],
