@@ -8,8 +8,11 @@ VCR.configure do |config|
   # bypass VCR/WebMock entirely.
   remote_browser_host = begin
     browser_url = ENV.fetch("CUPRITE_BROWSER_URL", nil)
-    URI(browser_url).host if browser_url.present?
+    uri = URI(browser_url)
+    [uri.host, IPSocket.getaddress(uri.host)] if browser_url.present?
   rescue URI::InvalidURIError
+    nil
+  rescue SocketError
     nil
   end
 
@@ -18,7 +21,7 @@ VCR.configure do |config|
     "localhost",
     (Capybara.server_host if defined?(Capybara)),
     remote_browser_host,
-  ].compact.uniq
+  ].flatten.compact.uniq
   config.ignore_hosts(*ignored_hosts) if ignored_hosts.any?
 
   config.filter_sensitive_data("FAKE_API_KEY") { ENV.fetch("CONTENTFUL_ACCESS_TOKEN", "") }
