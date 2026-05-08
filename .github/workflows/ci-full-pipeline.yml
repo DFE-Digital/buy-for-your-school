@@ -116,9 +116,9 @@ jobs:
         ports:
           - 6379:6379
       chrome:
-        image: selenium/standalone-chrome:120.0
+        image: ghcr.io/browserless/chrome:v2.38.2
         ports:
-          - 4444:4444
+          - 3000:3000
 
     steps:
       - name: Run Rspec tests
@@ -131,7 +131,7 @@ jobs:
             -e DATABASE_URL=postgres://postgres:password@postgres:5432/buy-for-your-school-test \
             -e DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL="true" \
             -e DOCKER=true \
-            -e SELENIUM_HUB_URL=http://chrome:4444/wd/hub \
+            -e CUPRITE_BROWSER_URL=http://chrome:3000 \
             -e REDIS_URL=redis://redis:6379 \
             -e APPLICATION_URL=http://localhost:3000 \
             -e SECRET_KEY_BASE=test \
@@ -193,9 +193,9 @@ jobs:
         ports:
           - 6379:6379
       chrome:
-        image: selenium/standalone-chrome:120.0
+        image: ghcr.io/browserless/chrome:v2.38.2
         ports:
-          - 4444:4444
+          - 3000:3000
 
     steps:
       - name: Run Quarantined Rspec tests
@@ -209,7 +209,7 @@ jobs:
             -e DATABASE_URL=postgres://postgres:password@postgres:5432/buy-for-your-school-test \
             -e DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL="true" \
             -e DOCKER=true \
-            -e SELENIUM_HUB_URL=http://chrome:4444/wd/hub \
+            -e CUPRITE_BROWSER_URL=http://chrome:3000 \
             -e REDIS_URL=redis://redis:6379 \
             -e APPLICATION_URL=http://localhost:3000 \
             -e SECRET_KEY_BASE=test \
@@ -348,7 +348,7 @@ jobs:
             -e DATABASE_URL=postgres://postgres:password@postgres:5432/buy-for-your-school-test \
             -e DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL="true" \
             -e DOCKER=true \
-            -e SELENIUM_HUB_URL=http://chrome:4444/wd/hub \
+            -e CUPRITE_BROWSER_URL=http://chrome:3000 \
             -e REDIS_URL=redis://redis:6379 \
             -e APPLICATION_URL=http://localhost:3000 \
             -e SECRET_KEY_BASE=test \

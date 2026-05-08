@@ -2,6 +2,10 @@ require "capybara/cuprite"
 
 JS_DRIVER = :cuprite
 
+def remote_browser_config
+  ENV["CUPRITE_BROWSER_URL"].present? ? { url: ENV["CUPRITE_BROWSER_URL"] } : {}
+end
+
 Capybara.register_driver :cuprite do |app|
   browser_options = {
     "no-sandbox" => nil,
@@ -18,6 +22,7 @@ Capybara.register_driver :cuprite do |app|
     process_timeout: 20,
     timeout: 10,
     window_size: [1920, 1080],
+    **remote_browser_config,
   )
 end
 

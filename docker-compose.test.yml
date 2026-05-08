@@ -11,7 +11,7 @@ services:
       DATABASE_URL: postgres://postgres:password@db:5432/buy-for-your-school-test
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
       DOCKER: "true"
-      SELENIUM_HUB_URL: http://chrome:4444/wd/hub
+      CUPRITE_BROWSER_URL: http://chrome:3000
     depends_on:
       - chrome
 
@@ -25,7 +25,9 @@ services:
 
   chrome:
     container_name: ghbs_chrome
-    image: selenium/standalone-chrome:95.0-chromedriver-95.0
+    image: ghcr.io/browserless/chrome:v2.38.2
+    ports:
+      - 3000:3000
     volumes:
       - /dev/shm:/dev/shm
     networks:
