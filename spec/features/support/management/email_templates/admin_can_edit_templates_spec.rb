@@ -7,7 +7,7 @@ RSpec.feature "Admin can edit email templates", :js, :with_csrf_protection do
     energy = create(:support_email_template_group, title: "Energy")
     solar = create(:support_email_template_group, title: "Solar", parent: energy)
     create(:support_email_template_group, title: "General")
-    template = create(
+    create(
       :support_email_template,
       group: solar, stage: 3, title: "New template",
       description: "This is a new email template",

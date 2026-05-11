@@ -20,9 +20,9 @@ RSpec.feature "Case list navigation", :js do
         end
 
         within "#all-cases" do
-          expect(page).to have_link(target_case.ref)
-          expect(page).to have_text("Showing 11 to 13 of 13 results")
-          expect(page).to have_selector("em.current", text: "2")
+          find_link(target_case.ref)
+          find("em.current", text: "2")
+          find("*", text: "Showing 11 to 13 of 13 results")
           click_on target_case.ref
         end
       end
