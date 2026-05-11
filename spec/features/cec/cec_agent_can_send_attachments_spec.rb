@@ -29,7 +29,7 @@ describe "Cec agent can add attachments to replies", :js, :with_csrf_protection 
       before do
         attach_file(Rails.root.join("spec/support/assets/support/email_attachments/attachment.txt"), class: "dz-hidden-input", make_visible: true)
         within("#reply-frame") do
-          expect(page).to have_text "Complete"
+          find("*", text: "Complete")
         end
       end
 
