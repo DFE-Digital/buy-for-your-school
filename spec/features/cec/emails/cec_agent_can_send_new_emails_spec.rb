@@ -2,8 +2,12 @@ describe "Agent can send new emails", :js do
   include_context "with a cec agent"
 
   let(:support_case) { create(:support_case, email: "contact@email.com") }
+  let!(:cec_group) { create(:support_email_template_group, title: "CEC") }
+  let!(:template) { create(:support_email_template, title: "CEC template", subject: "about cec", body: "cec body", group: cec_group) }
 
   before do
+    create(:support_email_template_group, title: "DfE Energy for Schools service", parent: cec_group)
+    create(:support_email_template_attachment, template:)
     visit cec_onboarding_case_path(support_case)
     click_on "Messages"
   end
@@ -14,13 +18,8 @@ describe "Agent can send new emails", :js do
     end
   end
 
-  describe "check CEC filter applies", :flaky, :js, :with_csrf_protection do
+  describe "check CEC filter applies", :js, :with_csrf_protection do
     before do
-      cec_group = create(:support_email_template_group, title: "CEC")
-      create(:support_email_template_group, title: "DfE Energy for Schools service", parent: cec_group)
-      template = create(:support_email_template, title: "CEC template", subject: "about cec", body: "cec body", group: cec_group)
-      create(:support_email_template_attachment, template:)
-
       first("span", text: "Create a new message thread").click
     end
 

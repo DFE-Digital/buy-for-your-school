@@ -11,6 +11,9 @@ describe "Agent can create new framework evaluations", :js do
     click_on "Add Evaluation"
     select agent.full_name, from: "Case Owner"
 
-    expect { click_on "Create evaluation" }.to change { framework.reload.evaluations.count }.from(0).to(1)
+    click_on "Create evaluation"
+
+    expect(page).to have_current_path(%r{/frameworks/evaluations/})
+    expect(framework.reload.evaluations.count).to eq(1)
   end
 end

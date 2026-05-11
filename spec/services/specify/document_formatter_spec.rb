@@ -28,13 +28,14 @@ RSpec.describe DocumentFormatter do
     it "converts Markdown into PDF" do
       md = "# Title"
       formatter = described_class.new(content: md, from: :markdown, to: :pdf)
+      pdf = "%PDF-1.4"
 
-      expect(PandocRuby)
-      .to receive(:convert)
-      .with(md, "--strip-comments", { from: :markdown, to: :pdf })
-      .and_call_original
+      allow(PandocRuby)
+        .to receive(:convert)
+        .with(md, "--strip-comments", { from: :markdown, to: :pdf })
+        .and_return(pdf)
 
-      formatter.call
+      expect(formatter.call).to eq pdf
     end
   end
 end

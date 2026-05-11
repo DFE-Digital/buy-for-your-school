@@ -52,10 +52,9 @@ RSpec.feature "Filter cases", :js do
       within "#all-cases" do
         check "MFD"
         select "Status", from: "Sort by"
-        choose "Ascending"
-        expect(all(".case-list li").count).to eq(2)
-        row = all(".case-list li")
-        expect(row[0]).to have_text "On Hold"
+        find("input[type='radio'][value='ascending']", visible: :all).click
+        expect(page).to have_selector(".case-list li", count: 2)
+        expect(first(".case-list li")).to have_text "On Hold"
       end
     end
   end

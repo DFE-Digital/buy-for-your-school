@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can change case summary", :flaky, :js do
+describe "Agent can change case summary", :js do
   include_context "with an agent"
 
   let(:support_case) { create(:support_case, support_level: :L1, value: nil, source: "nw_hub", project: "test project", category: gas_category, procurement_stage: need_stage) }
@@ -124,7 +124,7 @@ describe "Agent can change case summary", :flaky, :js do
 
     def expect_fields_disabled(fields)
       fields.each do |field|
-        expect(page.find(field)["disabled"]).to eq("true")
+        expect(page.find(field)).to be_disabled
       end
     end
 
@@ -170,7 +170,7 @@ describe "Agent can change case summary", :flaky, :js do
       ]
       expect_fields_disabled(disabled_fields)
 
-      expect(page.find("#case-summary-procurement-stage-id-field")["disabled"]).to eq("false")
+      expect(page.find("#case-summary-procurement-stage-id-field")).not_to be_disabled
     end
 
     it "show only onboarding stages" do

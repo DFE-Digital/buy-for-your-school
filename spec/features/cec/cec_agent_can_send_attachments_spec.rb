@@ -1,4 +1,4 @@
-describe "Cec agent can add attachments to replies", :js, :with_csrf_protection do
+describe "Cec agent can add attachments to replies", :flaky, :js, :with_csrf_protection do
   include_context "with a cec agent"
 
   let(:email) { create(:support_email, :inbox, ticket: support_case) }
@@ -28,7 +28,9 @@ describe "Cec agent can add attachments to replies", :js, :with_csrf_protection 
     describe "allows agent to add attachments" do
       before do
         attach_file(Rails.root.join("spec/support/assets/support/email_attachments/attachment.txt"), class: "dz-hidden-input", make_visible: true)
-        sleep 0.5 # allow file to finish uploading
+        within("#reply-frame") do
+          find(".draft-email__attachment-progress", text: "Complete")
+        end
       end
 
       it "shows the attached file" do

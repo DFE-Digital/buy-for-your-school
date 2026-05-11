@@ -27,9 +27,9 @@ jobs:
         ports:
           - 6379:6379
       chrome:
-        image: selenium/standalone-chrome:95.0-chromedriver-95.0
+        image: chromedp/headless-shell:147.0.7727.102
         ports:
-          - 4444:4444
+          - 9222:9222
 
     steps:
       - uses: actions/checkout@v4
@@ -42,7 +42,7 @@ jobs:
             -e DATABASE_URL=postgres://postgres:password@postgres:5432/buy-for-your-school-test \
             -e DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL="true" \
             -e DOCKER=true \
-            -e SELENIUM_HUB_URL=http://chrome:4444/wd/hub \
+            -e CUPRITE_BROWSER_URL=http://chrome:9222 \
             -e REDIS_URL=redis://redis:6379 \
             -e APPLICATION_URL=http://localhost:3000 \
             -e SECRET_KEY_BASE=test \
