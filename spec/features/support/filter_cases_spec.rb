@@ -53,9 +53,8 @@ RSpec.feature "Filter cases", :js do
         check "MFD"
         select "Status", from: "Sort by"
         find_field("Ascending", visible: :all).choose
-        expect(all(".case-list li").count).to eq(2)
-        row = all(".case-list li")
-        expect(row[0]).to have_text "On Hold"
+        expect(page).to have_selector(".case-list li", count: 2)
+        expect(first(".case-list li")).to have_text "On Hold"
       end
     end
   end
