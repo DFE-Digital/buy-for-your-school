@@ -2,10 +2,13 @@ name: "Support - Update SSL Cert Validation"
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - development
   schedule:
     # At 09:00 on Monday. https://crontab.guru/#0_9_*_*_MON
     # - cron: '0 9 * * MON'
-    - cron: '0 12 * * MON' # At 12:00 This is test run before merge
+    - cron: '0 13 * * MON' # At 12:00 This is test run before merge
 
 env:
   AZURE_CORE_USE_MSAL_HTTP_CACHE: "false"
