@@ -5,7 +5,7 @@ on:
   schedule:
     # At 09:00 on Monday. https://crontab.guru/#0_9_*_*_MON
     # - cron: '0 9 * * MON'
-    - cron: '0 15 * * FRI' # At 15:00 This is test run before merge
+    - cron: '0 12 * * MON' # At 12:00 This is test run before merge
 
 env:
   AZURE_CORE_USE_MSAL_HTTP_CACHE: "false"
