@@ -28,7 +28,7 @@ RSpec.feature "Admin can edit email templates", :js, :with_csrf_protection do
     fill_in "Subject line for email (optional)", with: "Edited template subject"
     click_button "Save updates"
 
-    expect(page).to have_current_path(support_management_email_templates_path)
+    expect(page).to have_selector("h1.govuk-heading-l", text: "Email templates")
     expect(page).to have_content("Updates to your template have been saved")
     expect(page).to have_content("1 template")
 
@@ -43,7 +43,7 @@ RSpec.feature "Admin can edit email templates", :js, :with_csrf_protection do
 
     click_on "Edit"
     click_button "Save updates"
-    expect(page).to have_current_path(support_management_email_templates_path)
+    expect(page).to have_selector("h1.govuk-heading-l", text: "Email templates")
     expect(page).to have_content("Updates to your template have been saved")
     expect(template.reload.attachments.count).to eq(1)
   end
