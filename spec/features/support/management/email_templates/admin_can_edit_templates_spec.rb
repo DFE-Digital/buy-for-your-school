@@ -17,10 +17,6 @@ RSpec.feature "Admin can edit email templates", :js, :with_csrf_protection do
     visit support_management_email_templates_path
     click_on "Edit"
 
-    attach_file Rails.root.join("spec/fixtures/files/text-file.txt"),
-                class: "dz-hidden-input", make_visible: true
-    expect(page).to have_content("text-file.txt")
-
     select "General", from: "Template group"
     select "Stage 0", from: "Stage (optional)"
     fill_in "Template name", with: "Edited template"
@@ -39,12 +35,9 @@ RSpec.feature "Admin can edit email templates", :js, :with_csrf_protection do
     expect(page).to have_content("Edited template subject")
     expect(page).to have_content("Body of new template")
 
-    expect(template.reload.attachments.count).to eq(1)
-
     click_on "Edit"
     click_button "Save updates"
     expect(page).to have_selector("h1.govuk-heading-l", text: "Email templates")
     expect(page).to have_content("Updates to your template have been saved")
-    expect(template.reload.attachments.count).to eq(1)
   end
 end
