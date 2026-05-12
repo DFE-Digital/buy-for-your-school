@@ -13,7 +13,7 @@
     <%= link_to I18n.t("exit_survey.continue"), edit_exit_survey_satisfaction_path, class: "govuk-button", role: "button" %>
 
     <p class="govuk-body">
-      <%= link_to I18n.t("exit_survey.start.privacy_policy"), "/privacy", class: "govuk-link" %>
+      <%= govuk_link_to t("shared.privacy_notice"), "/privacy" %>
     </p>
   </div>
 </div>

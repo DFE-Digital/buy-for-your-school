@@ -3,7 +3,7 @@ class PagesController < ApplicationController
 
   include Breadcrumbs
 
-  DEPRECATED_GHBS_CONTENTFUL_PAGES = %w[foo].freeze
+  DEPRECATED_GHBS_CONTENTFUL_PAGES = %w[privacy].freeze
 
   def show
     if page.present?
