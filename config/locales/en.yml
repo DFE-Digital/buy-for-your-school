@@ -155,7 +155,7 @@ en:
         usage:
         - With your permission, we use Google Analytics to collect data about how you use Get Help Buying for Schools. This information helps us to improve our service.
         - Google is not allowed to use or share our analytics data with anyone.
-        - 'Google Analytics stores anonymised information about:'
+        - Google Analytics stores anonymised information about
         usage_stored:
         - how you got to Get Help Buying for Schools
         - the pages you visit on Get Help Buying for Schools and how long you spend on them
@@ -165,13 +165,13 @@ en:
         one_year: 1 year
         twenty_four_hours: 24 hours
         two_years: 2 years
-      header: Cookie policy
+      header: Cookies
       header_lead_text:
       - Cookies are small files saved on your phone, tablet or computer when you visit a website.
       - We use cookies to make Get Help Buying for Schools work and collect information about how you use our service.
       strictly_necessary_cookies:
         cookie_consent_desc: Saves your cookie consent settings
-        header: Strictly necessary cookies
+        header: Essential cookies
         header_lead_text: Essential cookies keep your information secure while you use Get Help Buying for Schools. We do not need to ask permission to use them.
       table:
         description: Description
