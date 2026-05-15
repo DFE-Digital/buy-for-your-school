@@ -7,10 +7,10 @@ describe Support::EstablishmentSearch do
     create(:support_organisation, :with_address, name: "Test Open School", urn: "1233", ukprn: "7", status: 1)
     create(:support_organisation, :with_address, name: "Test Archived School", urn: "1234", ukprn: "7", status: 1, archived: true)
     create(:support_establishment_group, :with_address, name: "Test MAT", uid: "1", ukprn: "8")
-    create(:local_authority, name: la_name)
+    create(:local_authority, name: la_name, la_code:)
   end
 
-  let(:la_code) { LocalAuthority.find_by(name: la_name).la_code }
+  let(:la_code) { "456" }
   let(:la_name) { "Camden" }
 
   describe "establishment search" do
