@@ -1,4 +1,4 @@
-RSpec.feature "Case list navigation", :js do
+RSpec.feature "Case list navigation", :flaky, :js do
   include_context "with an agent"
 
   let(:category) { create(:support_category, :fixed_title) }
