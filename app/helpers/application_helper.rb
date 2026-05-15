@@ -6,7 +6,7 @@ require "date"
 module ApplicationHelper
   include MarkdownHelper
 
-  PRIVACY_NOTICE_URL = "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-data-to-use-our-websites".freeze
+  PRIVACY_NOTICE_URL = "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-data-to-use-our-websites"
 
   def banner_tag
     I18n.t("banner.beta.tag")
