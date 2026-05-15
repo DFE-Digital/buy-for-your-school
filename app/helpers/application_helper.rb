@@ -6,6 +6,8 @@ require "date"
 module ApplicationHelper
   include MarkdownHelper
 
+  PRIVACY_NOTICE_URL = "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-data-to-use-our-websites".freeze
+
   def banner_tag
     I18n.t("banner.beta.tag")
   end
@@ -62,6 +64,10 @@ module ApplicationHelper
 
   def register_your_interest_form_url
     "https://submit.forms.service.gov.uk/form/8895/multi-academy-trusts-register-your-interest-in-energy-for-schools/1049539"
+  end
+
+  def privacy_link(link_text = t("shared.privacy_notice"), **options)
+    fabs_govuk_link_to(link_text, PRIVACY_NOTICE_URL, **options)
   end
 
   def fabs_govuk_link_to(link_text, url, **options)

@@ -1,4 +1,5 @@
 RSpec.feature "Completing the All Cases Survey" do
+  let(:privacy_notice_url) { ApplicationHelper::PRIVACY_NOTICE_URL }
   let(:all_cases_survey) { create(:all_cases_survey_response, case:) }
   let(:case) { create(:support_case, state:) }
   let(:state) { "resolved" }
@@ -13,7 +14,7 @@ RSpec.feature "Completing the All Cases Survey" do
     end
 
     it "links to the privacy notice" do
-      expect(page).to have_link "Privacy notice", href: "/privacy"
+      expect(page).to have_link "Privacy notice", href: privacy_notice_url
     end
 
     it "continues to the satisfaction page" do
