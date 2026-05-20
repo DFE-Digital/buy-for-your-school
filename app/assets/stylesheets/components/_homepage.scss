@@ -19,6 +19,15 @@
   }
 }
 
+.dfe-page-hero {
+   color: #ffffff;
+   .hero-text-container{
+      @media (max-width: 640px) {
+        margin-left: 0px;
+      }
+    }
+}
+
 .dfe-header--homepage {
   .govuk-service-navigation {
     @extend .govuk-service-navigation--inverse;
