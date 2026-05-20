@@ -42,20 +42,6 @@
   padding-bottom: 0px;
 }
 
-
-.all-buying-options-link-container {
-  @media (max-width: 640px) {
-    margin-left: 0px;
-    padding-top: 2px;
-    padding-bottom: 1px;
-  }
-}
-
-a.all-buying-options-link {
-  color: #ffffff;
-}
-
-
 .dfe-grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
