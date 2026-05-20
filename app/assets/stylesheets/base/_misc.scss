@@ -93,6 +93,10 @@ a:focus {
   @include govuk-focused-text;
 }
 
+.cta {
+  margin-top: 20px;
+}
+
 .govuk-secondary-text-colour {
   color: #505a5f;
 }
