@@ -92,3 +92,7 @@
 a:focus {
   @include govuk-focused-text;
 }
+
+.govuk-secondary-text-colour {
+  color: #505a5f;
+}
