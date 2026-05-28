@@ -74,7 +74,7 @@ RSpec.describe "FABS pages", type: :request do
     expect(document).to have_link("Home", href: "/")
     expect(document).to have_link("Banking and finance", href: "/categories/banking-finance")
     expect(document).to have_link("Current accounts and savings", href: "/current-account-and-savings")
-    expect(document).to have_link("Framework agreements", href: "#")
+    expect(document).to have_link("Framework agreements", href: "http://localhost:3000/framework-agreements")
   end
 
   it "omits related content when the page has none" do

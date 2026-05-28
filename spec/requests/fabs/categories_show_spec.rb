@@ -87,7 +87,7 @@ RSpec.describe "FABS category pages", type: :request do
     expect(response.body).to include("Buy IT and ICT equipment and services")
     expect(response.body).to include("Everything ICT")
     expect(response.body).to include("Related Content")
-    expect(document).to have_link("Plan technology for your school", href: "#")
+    expect(document).to have_link("Plan technology for your school", href: "http://localhost:3000/plan-technology")
     expect(document).to have_link("Home", href: "/")
   end
 

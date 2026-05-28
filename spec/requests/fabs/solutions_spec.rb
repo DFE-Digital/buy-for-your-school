@@ -67,7 +67,7 @@ RSpec.describe "FABS solutions", type: :request do
       expect(response.body).to include("31 December 2026")
       expect(response.body).to include("RM1234")
       expect(response.body).to include("Related Content")
-      expect(document).to have_link("Framework agreements", href: "#")
+      expect(document).to have_link("Framework agreements", href: "http://localhost:3000/framework-agreements")
       expect(document).to have_link(I18n.t("solutions.show.cta", title: "Audit and financial services"), href: "https://example.com/apply")
     end
 
