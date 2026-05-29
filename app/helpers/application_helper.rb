@@ -87,7 +87,7 @@ module ApplicationHelper
       uri = URI.parse(url)
       return false unless uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)
 
-      uri.host != request.host && uri.host != application_uri&.host
+      uri.host != request.host && uri.host != application_uri.host
     rescue URI::InvalidURIError
       false
     end
@@ -119,15 +119,10 @@ module ApplicationHelper
   end
 
   def application_url_for(path)
-    uri = application_uri
-    return "#" unless uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)
-
-    URI.join(uri.to_s, path).to_s
+    URI.join(application_uri.to_s, path).to_s
   end
 
   def application_uri
-    return if ENV["APPLICATION_URL"].blank?
-
     URI.parse(ENV.fetch("APPLICATION_URL"))
   end
 
