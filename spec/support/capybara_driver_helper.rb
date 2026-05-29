@@ -5,6 +5,7 @@ require "socket"
 require "uri"
 
 JS_DRIVER = :cuprite
+CUPRITE_TIMEOUT = ENV.fetch("CUPRITE_TIMEOUT", ENV["CUPRITE_BROWSER_URL"].present? ? 30 : 10).to_i
 
 def remote_browser_config
   browser_url = ENV["CUPRITE_BROWSER_URL"].presence
@@ -44,7 +45,7 @@ Capybara.register_driver :cuprite do |app|
     browser_options:,
     headless: ENV["GUI"].blank?,
     process_timeout: 20,
-    timeout: 10,
+    timeout: CUPRITE_TIMEOUT,
     window_size: [1920, 1080],
     **remote_browser_config,
   )
