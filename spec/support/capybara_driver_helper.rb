@@ -46,6 +46,7 @@ Capybara.register_driver :cuprite do |app|
     headless: ENV["GUI"].blank?,
     process_timeout: 20,
     timeout: CUPRITE_TIMEOUT,
+    url_blacklist: [%r{https://rsms\.me/.*}],
     window_size: [1920, 1080],
     **remote_browser_config,
   )
