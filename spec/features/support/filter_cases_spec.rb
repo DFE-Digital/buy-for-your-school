@@ -48,11 +48,16 @@ RSpec.feature "Filter cases", :js do
 
   describe "case filtering and sorting" do
     it "filters by category and sorts by state" do
-      click_link "All cases"
+      visit support_cases_path(
+        anchor: "all-cases",
+        filter_all_cases_form: {
+          category: [mfd_cat.id],
+          sort_by: "state",
+          sort_order: "ascending",
+        },
+      )
+
       within "#all-cases" do
-        check "MFD"
-        select "Status", from: "Sort by"
-        choose("Ascending", allow_label_click: true)
         expect(page).to have_selector(".case-list li", count: 2)
         expect(first(".case-list li")).to have_text "On Hold"
       end

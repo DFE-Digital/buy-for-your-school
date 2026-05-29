@@ -58,6 +58,7 @@ describe "Agent can forward an email", :js do
       context "without a valid recipient email address" do
         it "shows validation error when no recipient is added" do
           click_button "Send message"
+          expect(page).to have_css(".govuk-error-summary")
           expect(page).to have_content("At least one recipient must be specified")
         end
 
