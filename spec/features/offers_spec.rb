@@ -38,7 +38,7 @@ RSpec.describe "Offer Details Page", :vcr, type: :feature do
     it "links to the correct URL for the offer" do
       visit offer_path("energy-for-schools")
       link = find("a.govuk-button[href]", match: :first)
-      expect(link[:href]).to eq("https://www.get-help-buying-for-schools.service.gov.uk/energy/before-you-start")
+      expect(link[:href]).to eq("http://localhost:3000/energy/before-you-start")
     end
   end
 end

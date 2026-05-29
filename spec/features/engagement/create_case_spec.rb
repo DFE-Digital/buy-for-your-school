@@ -77,6 +77,7 @@ RSpec.feature "Create case", :js do
         expect(page).to have_text "2 of 3 schools"
 
         click_on "Create case"
+        expect(page).to have_current_path(engagement_cases_path, ignore_query: true)
         expect(Support::Case.last.organisation).to eq(group)
         expect(Support::Case.last.participating_schools.pluck(:name)).to contain_exactly("School #1", "School #2")
         expect(CaseRequest.last.same_supplier_used).to eq("yes")
@@ -105,6 +106,7 @@ RSpec.feature "Create case", :js do
         expect(page).to have_text "2 of 3 schools"
 
         click_on "Create case"
+        expect(page).to have_current_path(engagement_cases_path, ignore_query: true)
         expect(Support::Case.last.organisation).to eq(local_authority)
         expect(Support::Case.last.participating_schools.pluck(:name)).to contain_exactly("School #1", "School #2")
         expect(CaseRequest.last.same_supplier_used).to eq("yes")
