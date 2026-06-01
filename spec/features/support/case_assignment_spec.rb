@@ -11,9 +11,8 @@ RSpec.feature "Case worker assignment", :js do
       click_button "Assign"
     end
 
-    it "assigns the agent and redirects to the case" do
-      # TODO: Revisit if/when we switch to Playwright
-      skip "Flaky test of mature functionality"
+    # TODO: Revisit if/when we switch to Playwright
+    it "assigns the agent and redirects to the case", skip: "Flaky test of mature functionality" do
       expect(support_case.reload.agent).to eq(agent)
       expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
     end

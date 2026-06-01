@@ -72,8 +72,8 @@ module ApplicationHelper
 
   def fabs_govuk_link_to(link_text, url, **options)
     safe_url = safe_url(url)
-    external_attrs = external_link_attributes(url)
-    if is_external_link?(url)
+    external_attrs = external_link_attributes(safe_url)
+    if is_external_link?(safe_url)
       link_text = "#{h(link_text)}<span class=\"govuk-visually-hidden\"> #{h(t('shared.external_link.opens_in_new_tab'))}</span>".html_safe
     end
 
@@ -87,7 +87,7 @@ module ApplicationHelper
       uri = URI.parse(url)
       return false unless uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)
 
-      uri.host != request.host
+      uri.host != request.host && uri.host != application_uri.host
     rescue URI::InvalidURIError
       false
     end
@@ -101,34 +101,61 @@ module ApplicationHelper
     return "#" unless url.is_a?(String)
 
     uri = URI.parse(url)
+    return application_url_for(url) if relative_path?(uri, url)
+    return application_url_for(relative_url(uri)) if ghbs_host?(uri)
+
     uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS) ? url : "#"
   rescue URI::InvalidURIError => e
     Rollbar.error(e, url:)
     "#"
   end
 
+  def ghbs_host?(uri)
+    (uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)) && uri.host.to_s.include?("get-help-buying-for-schools")
+  end
+
+  def relative_path?(uri, url)
+    uri.relative? && uri.host.blank? && url.starts_with?("/")
+  end
+
+  def application_url_for(path)
+    URI.join(application_uri.to_s, path).to_s
+  end
+
+  def application_uri
+    URI.parse(ENV.fetch("APPLICATION_URL"))
+  end
+
+  def relative_url(uri)
+    relative_url = uri.path.presence || "/"
+    relative_url += "?#{uri.query}" if uri.query.present?
+    relative_url += "##{uri.fragment}" if uri.fragment.present?
+    relative_url
+  end
+
   def usability_survey_url(url)
-    base_url = "https://www.get-help-buying-for-schools.service.gov.uk/usability_surveys/new"
+    uri = application_uri
+    uri.path = "/usability_surveys/new"
+
     safe_url = safe_url(url)
     return_url = safe_url == "#" ? request.original_url : safe_url
 
-    params = {
+    uri.query = {
       service: "find_a_buying_solution",
       return_url: UrlVerifier.generate(return_url),
-    }
-    "#{base_url}?#{params.to_query}"
+    }.to_query
+    uri.to_s
   end
 
   def customer_satisfaction_survey_url(source)
-    base_url = ENV.fetch("GHBS_SERVER_URL", ENV.fetch("APPLICATION_URL", ""))
-    return "#" if base_url.blank?
+    uri = application_uri
+    uri.path = "/customer_satisfaction_surveys/new"
 
-    uri = URI.join(base_url, "/customer_satisfaction_surveys/new")
     uri.query = {
       service: "find_a_buying_solution",
       source:,
     }.to_query
-    safe_url(uri.to_s)
+    uri.to_s
   end
 
   def fabs_format_date(date_string)

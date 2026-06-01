@@ -52,7 +52,7 @@ RSpec.describe "FABS offers", type: :request do
       expect(response.body).to include("Energy for Schools")
       expect(document).to have_link("Home", href: "/")
       expect(document).to have_link("Offers", href: "/offers")
-      expect(document).to have_link(I18n.t("offers.show.cta", title: "Energy for Schools"), href: "https://www.get-help-buying-for-schools.service.gov.uk/energy/before-you-start")
+      expect(document).to have_link(I18n.t("offers.show.cta", title: "Energy for Schools"), href: "http://localhost:3000/energy/before-you-start")
     end
   end
 end
