@@ -5,9 +5,6 @@
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = "1.0"
 
-# Add additional assets to the asset load path.
-# Rails.application.config.assets.paths << Emoji.images_path
-
 # JS-bundling
 Rails.application.config.assets.paths << Rails.root.join("app/javascript")
 
@@ -24,14 +21,14 @@ Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-fro
 
 # Add GOVUK assets by name, these are assets not loaded via sass
 Rails.application.config.assets.precompile += [
-  "images/favicon.ico",
-  "images/favicon.svg",
-  "images/govuk-opengraph-image.png",
-  "images/govuk-icon-180.png",
-  "images/govuk-icon-192.png",
-  "images/govuk-icon-512.png",
-  "images/govuk-icon-mask.svg",
-  "images/govuk-crest.svg",
+  "favicon.ico",
+  "favicon.svg",
+  "govuk-opengraph-image.png",
+  "govuk-icon-180.png",
+  "govuk-icon-192.png",
+  "govuk-icon-512.png",
+  "govuk-icon-mask.svg",
+  "govuk-crest.svg",
 ]
 
 # Add Yarn node_modules folder to the asset load path.
