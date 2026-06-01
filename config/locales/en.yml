@@ -2994,8 +2994,8 @@ en:
       about: About this service
       menu: Menu
   shared:
+    accessibility_statement: Accessibility statement
     dfe_footer:
-      accessibility_statement: Accessibility statement
       crown_copyright: "© Crown copyright"
       feedback: Feedback
       licensing_html: All content is available under the %{ogl3}, except where otherwise

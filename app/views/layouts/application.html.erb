@@ -118,7 +118,7 @@
 
             <ul class="govuk-footer__inline-list">
               <li class="govuk-footer__inline-list-item">
-                <a href="<%= @energy_accessibility_link || "/accessibility-statement" %>" class="govuk-footer__link">Accessibility statement</a>
+                <%= accessibility_link(class: "govuk-footer__link") %>
               </li>
               <li class="govuk-footer__inline-list-item">
                 <%= link_to "Terms and Conditions", "/terms-and-conditions", class: "govuk-footer__link" %>

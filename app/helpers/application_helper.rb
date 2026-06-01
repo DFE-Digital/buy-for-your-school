@@ -6,6 +6,7 @@ require "date"
 module ApplicationHelper
   include MarkdownHelper
 
+  ACCESSIBILITY_STATEMENT_URL = "https://accessibility-statements.education.gov.uk/s/29"
   PRIVACY_NOTICE_URL = "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-data-to-use-our-websites"
 
   def banner_tag
@@ -64,6 +65,10 @@ module ApplicationHelper
 
   def register_your_interest_form_url
     "https://submit.forms.service.gov.uk/form/8895/multi-academy-trusts-register-your-interest-in-energy-for-schools/1049539"
+  end
+
+  def accessibility_link(link_text = t("shared.accessibility_statement"), **options)
+    fabs_govuk_link_to(link_text, ACCESSIBILITY_STATEMENT_URL, **options)
   end
 
   def privacy_link(link_text = t("shared.privacy_notice"), **options)
