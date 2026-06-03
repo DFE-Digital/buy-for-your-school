@@ -51,16 +51,6 @@
   background-color: #1d70b8;
   border-color: #1d70b8;
 
-  a.govuk-link {
-    color: #ffffff;
-    text-decoration: none;
-
-    &:hover {
-      color: #ffffff;
-      text-decoration: none;
-    }
-  }
-
   .title,
   .description {
     color: #ffffff;
@@ -69,35 +59,15 @@
 
 .dfe-card.dfe-card--featured {
   background-color: #f3f2f1;
-  a.govuk-link {
-    color: #0b0c0c;
-    text-decoration: none;
 
-    &:hover {
-      text-decoration: none;
-    }
-  }
   &:hover {
     border: 1px solid #505a5f;
     background-color: #505a5f;
-    a.govuk-link {
-      color: #ffffff;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: none;
-      }
-    }
   }
   &:focus,
   &:focus-within,
   &:focus-visible {
     border: 1px solid #505a5f;
     background-color: #505a5f;
-
-    a.govuk-link {
-      color: #0b0c0c;
-      text-decoration: none;
-    }
   }
 }
