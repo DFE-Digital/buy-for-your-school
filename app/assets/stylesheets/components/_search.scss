@@ -231,28 +231,24 @@
 
 .top-search__submit {
   background: #1d70b8;
-  border: 0;
-  display: block;
-  float: right;
-  font-size: inherit;
-  height: 40px;
-  line-height: inherit;
-  outline: none;
-  padding: 0;
-  width: 44px;
 
   @media (max-width: 40.0525em) {
     height: 40px;
-    margin: 0;
-    padding: 8px 8px 0;
+    width: 40px;
   }
-}
 
-.top-icon__search {
-  background-color: #1d70b8;
-  fill: #ffffff;
-  height: 27px;
-  width: 27px;
+  &:focus .top-icon__search {
+    background-color: $govuk-focus-colour;
+  }
+
+  .top-icon__search {
+    fill: #ffffff;
+
+    @media (max-width: 40.0525em) {
+      height: 27px;
+      width: 27px;
+    }
+  }
 }
 
 .top-search__input {
