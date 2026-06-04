@@ -28,6 +28,11 @@
     }
 }
 
+.govuk-service-navigation{
+  border-top: 1px solid #8eb8dc;
+  position: relative;
+}
+
 .dfe-header--homepage {
   .govuk-service-navigation {
     @extend .govuk-service-navigation--inverse;
