@@ -78,7 +78,7 @@
 
 .dfe-header__search-form {
   display: flex;
-  padding: 0;
+  padding: 30px 0 15px 0;
 
   @media (max-width: 40.0525em) {
     background-color: #f4f8fb;
@@ -88,10 +88,6 @@
 
 .search-area {
   background-color: #f4f8fb;
-
-  .dfe-header__search-wrap.js-show {
-    padding: 30px 0 10px 0;
-  }
 }
 
 .search-results-section {
