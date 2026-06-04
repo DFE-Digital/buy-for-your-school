@@ -1,7 +1,7 @@
 <div class="search-area">
   <div class="dfe-width-container">
     <div class="dfe-header__search-wrap" id="wrap-search">
-        <form class="narrow-search dfe-header__search-form" id="search" action="/search" method="get" role="search">
+        <form class="dfe-header__search-form" id="search" action="/search" method="get" role="search">
           <div class="govuk-form-group">
             <label class="govuk-label govuk-label--m" for="search-field"><%= t("search.header_title") %></label>
             <input class="govuk-input dfe-search__input top-search__input" id="search-field" name="query" placeholder="Search" type="search" autocomplete="off" value="<%= params[:query] %>">

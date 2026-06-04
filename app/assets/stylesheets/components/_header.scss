@@ -22,3 +22,10 @@
   background-color: #1d70b8;
   padding-bottom: 0px;
 }
+
+.dfe-header__container {
+  align-items: center;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
