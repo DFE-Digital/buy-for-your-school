@@ -196,7 +196,7 @@
 
 .search_close {
   align-items: center;
-  background-color: #f4f8fb;
+  background-color: #f4f8fb !important;
   border: 0;
   cursor: pointer;
   display: flex;
@@ -208,6 +208,12 @@
   outline: 1px solid #f4f8fb;
   padding: 0;
   width: 40px;
+  &:hover {
+    border: none;
+  }
+  &:focus {
+    background-color: $govuk-focus-colour !important;
+  }
 }
 
 .search_open {
@@ -223,6 +229,12 @@
   margin-top: 0;
   padding: 0;
   width: 40px;
+  &:hover {
+    border: none;
+  }
+  &:focus {
+    background-color: $govuk-focus-colour;
+  }
 }
 
 .search-header-background {
