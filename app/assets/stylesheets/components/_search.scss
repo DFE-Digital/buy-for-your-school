@@ -62,6 +62,10 @@
   .dfe-search__submit {
     height: 50px;
     width: 50px;
+
+    &:focus .dfe-icon__search {
+      background-color: $govuk-focus-colour;
+    }
   }
 
   .dfe-search__submit .dfe-icon__search {
