@@ -2994,16 +2994,17 @@ en:
       about: About this service
       menu: Menu
   shared:
-    accessibility_statement: Accessibility statement
     dfe_footer:
+      accessibility: Accessibility
+      cookies: Cookies
       crown_copyright: "© Crown copyright"
       feedback: Feedback
-      licensing_html: All content is available under the %{ogl3}, except where otherwise
-        stated.
+      licensing_html: All content is available under the %{ogl3}, except where otherwise stated.
       ogl3: Open Government Licence v3.0
-      procurement_support: Request help and support for your procurement
+      privacy: Privacy
+      procurement_help: Request procurement help
+      support_links: Support links
       terms_and_conditions: Terms and conditions
-      cookies: Cookies
     dfe_homepage_header:
       view_all_buying_options: Browse a list of all DfE-approved buying options
     dfe_search:
@@ -3015,7 +3016,6 @@ en:
       search_this_website: Search this website
     external_link:
       opens_in_new_tab: opens in new tab
-    privacy_notice: Privacy notice
   solutions:
     index:
       all_buying_options_description: Use a DfE-approved buying option to make sure
