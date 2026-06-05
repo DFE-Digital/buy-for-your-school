@@ -68,17 +68,9 @@
       </div>
     </section>
 
+    <%= render "shared/beta_banner", css_class: "govuk-width-container #{container_width_class}" %>
+
     <div class="govuk-width-container <%= container_width_class %>">
-      <div class="govuk-phase-banner">
-        <p class="govuk-phase-banner__content">
-          <strong class="govuk-tag govuk-phase-banner__content__tag">
-            <%= banner_tag %>
-          </strong>
-          <span class="govuk-phase-banner__text">
-            <%= banner_message.html_safe %>
-          </span>
-        </p>
-      </div>
       <%= render partial: "layouts/breadcrumbs" %>
       <main class="govuk-main-wrapper" id="main-content">
         <%= render partial: "layouts/messages" %>
