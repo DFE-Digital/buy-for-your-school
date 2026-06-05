@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+current_branch="$(git branch --show-current)"
+
+if [[ -z "$current_branch" ]]; then
+  echo "Error: not currently on a branch."
+  exit 1
+fi
+
+if [[ "$current_branch" == "main" || "$current_branch" == "development" ]]; then
+  echo "Error: run this from your feature branch, not $current_branch."
+  exit 1
+fi
+
+echo "Deploying feature branch '$current_branch' onto development..."
+
+git fetch
+git checkout development
+git reset --hard origin/development
+git rebase "$current_branch"
+git push --force-with-lease
+
+echo "Returning to $current_branch..."
+git checkout "$current_branch"
+
+echo "Done."
