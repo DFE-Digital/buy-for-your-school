@@ -262,10 +262,6 @@
     width: 40px;
   }
 
-  &:focus .top-icon__search {
-    background-color: $govuk-focus-colour;
-  }
-
   .top-icon__search {
     fill: #ffffff;
 
@@ -273,6 +269,11 @@
       height: 27px;
       width: 27px;
     }
+  }
+
+  &:focus .top-icon__search {
+    fill: $govuk-focus-text-colour;
+    background-color: $govuk-focus-colour;
   }
 }
 
