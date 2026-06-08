@@ -77,3 +77,9 @@
     padding: 15px;
   }
 }
+
+.content-banner__link {
+  &:focus {
+    color: $govuk-focus-text-colour;
+  }
+}
