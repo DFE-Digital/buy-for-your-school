@@ -18,6 +18,9 @@
   &:active {
     color: #003078;
   }
+  &:focus {
+    color: $govuk-focus-text-colour;
+  }
 }
 
 .related-content {
