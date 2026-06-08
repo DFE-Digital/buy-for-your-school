@@ -244,12 +244,13 @@
 
 .dfe-search__submit_homepage {
   background: #d2e2f1;
-}
-
-@media (min-width: 40.0625em) {
-  .dfe-search__submit_homepage:hover {
+  &:hover {
     background-color: #d2e2f1;
     border: 1px solid #ffffff;
+  }
+  &:focus {
+    background-color: $govuk-focus-colour;
+    border: none;
   }
 }
 
