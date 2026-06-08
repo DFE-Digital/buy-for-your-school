@@ -29,3 +29,9 @@
   flex-wrap: nowrap;
   justify-content: space-between;
 }
+
+.govuk-service-navigation__link {
+  &:focus {
+    color: $govuk-focus-text-colour !important;
+  }
+}
