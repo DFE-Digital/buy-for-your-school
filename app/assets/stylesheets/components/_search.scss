@@ -271,9 +271,13 @@
     }
   }
 
-  &:focus .top-icon__search {
-    fill: $govuk-focus-text-colour;
+  &:focus {
     background-color: $govuk-focus-colour;
+
+    .top-icon__search {
+      fill: $govuk-focus-text-colour;
+      background-color: $govuk-focus-colour;
+    }
   }
 }
 
