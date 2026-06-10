@@ -1,0 +1,30 @@
+.sidebar {
+  margin-top: 60px;
+  @media (max-width: 640px) {
+    margin-top: 0px;
+    padding: 0;
+  }
+}
+
+.sidebar > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar a {
+  color: #1d70b8;
+  &:hover,
+  &:active {
+    color: #003078;
+  }
+  &:focus {
+    color: $govuk-focus-text-colour;
+  }
+}
+
+.related-content {
+  border-top: 2px solid #1d70b8;
+  padding-top: 10px;
+  margin-top: 10px;
+}

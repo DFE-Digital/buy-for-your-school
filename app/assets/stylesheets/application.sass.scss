@@ -32,7 +32,15 @@
 @import "./components/supported/case-list";
 @import "./components/supported/case-files";
 @import "./components/draft-email-attachments";
-@import "./fabs.sass.scss";
+@import "./components/lists";
+@import "./components/card";
+@import "./components/chevron-card";
+@import "./components/homepage";
+@import "./components/sidebar";
+@import "./components/filter";
+@import "./components/header";
+@import "./components/search";
+@import "./components/banner";
 
 
 // Panel overrides
@@ -84,14 +92,14 @@
 }
 
 // govuk rebrand header personalisation for 'Signed in' as
-.govuk-header__container{
+.govuk-header__container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   align-content: space-between;
   flex-wrap: wrap;
 
-  .govuk-header__signed-in-user{
+  .govuk-header__signed-in-user {
     font-size: 16px;
     line-height: 1;
     flex-shrink: 0;
@@ -106,11 +114,11 @@
 }
 
 // dfe logo correct size and focus
-.govuk-header__link .govuk-header__logotype{
+.govuk-header__link .govuk-header__logotype {
   height: 30px;
 }
 
-.govuk-header__link:focus .govuk-header__logotype{
+.govuk-header__link:focus .govuk-header__logotype {
   content: url(department-for-education_black.png);
   height: 30px;
 }

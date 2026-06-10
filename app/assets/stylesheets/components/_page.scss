@@ -82,3 +82,28 @@
     @extend .govuk-link--no-visited-state;
   }
 }
+
+.page-with-sidebar {
+  background-color: #fff !important;
+  flex-direction: column;
+}
+
+.page-header {
+  background-color: #f6f6f6;
+}
+
+.category-header {
+  background-color: #d2e2f1;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.details-header {
+  background-color: #f4f8fb;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+footer {
+  clear:both;
+}

@@ -1,0 +1,20 @@
+.govuk-list--dash li {
+  margin-left: 30px;
+  position: relative;
+}
+
+.govuk-list--dash li:before {
+  position: absolute;
+  content: "—";
+  left: -30px
+}
+
+.gem-c-cards__list--one-column .gem-c-cards__list-item {
+  border-top: 1px solid #b1b4b6;
+  padding-top: 19px
+}
+
+.gem-c-cards__list--one-column .gem-c-cards__list-item:first-child {
+  border-top: 0;
+  padding-top: 0
+}

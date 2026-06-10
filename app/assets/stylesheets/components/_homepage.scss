@@ -1,0 +1,56 @@
+.homepage-heading {
+  margin-bottom: 10px;
+}
+
+.homepage-heading-search-open{
+   padding-top: 1px;
+}
+
+@media (max-width: 40.0525em) {
+  .homepage-heading-search-open{
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .dfe-page-hero .hero-text-container {
+    margin-left: 0px;
+    margin-top: 10px;
+  }
+}
+
+.dfe-page-hero {
+   color: #ffffff;
+   .hero-text-container{
+      @media (max-width: 640px) {
+        margin-left: 0px;
+      }
+    }
+}
+
+.govuk-service-navigation{
+  border-top: 1px solid #8eb8dc;
+  position: relative;
+}
+
+.dfe-header--homepage {
+  .govuk-service-navigation {
+    @extend .govuk-service-navigation--inverse;
+    .dfe-width-container {
+      border-top: 1px solid rgba(255, 255, 255);
+      border-bottom: 1px solid rgba(255, 255, 255);
+    }
+  }
+}
+
+.govuk-inset-text--thin {
+  border-left-width: 6px;
+}
+
+.all-buying-options-link-container {
+  @media (max-width: 640px) {
+    margin-left: 0px;
+    padding-top: 2px;
+    padding-bottom: 1px;
+  }
+}

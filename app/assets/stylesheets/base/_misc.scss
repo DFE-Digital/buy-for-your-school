@@ -88,3 +88,34 @@
   border-bottom: 1px solid $govuk-border-colour;
   margin-bottom: govuk-spacing(4);
 }
+
+a:focus {
+  @include govuk-focused-text;
+}
+
+.cta {
+  margin-top: 20px;
+}
+
+.govuk-secondary-text-colour {
+  color: #505a5f;
+}
+
+.results-count {
+  color: #505a5f;
+}
+
+.dfe-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 16px 0;
+}
+
+.provider {
+  margin: 10px 0 0;
+}
+
+.expires {
+  margin: 0;
+}

@@ -1,0 +1,85 @@
+.energy-banner {
+  display: flex;
+  background: #e8f1f8;
+
+  &.govuk-grid-row {
+    flex-direction: row;
+  }
+
+  &__content {
+    padding: 40px 60px;
+  }
+
+  &__description {
+    padding: 0;
+  }
+
+  &__call_to_action {
+    width: auto;
+  }
+
+  &__image {
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: var(--bg-image);
+    min-height: 200px;
+  }
+
+  @media (max-width: 640px) {
+    &.govuk-grid-row {
+      flex-direction: column-reverse;
+    }
+    &__content {
+      padding: 1.5rem;
+    }
+  }
+}
+
+.content-banner {
+  background: #f4f8fb;
+  padding: 20px;
+  border-left: 5px solid #1d70b8;
+  width: 100%;
+  box-sizing: border-box;
+
+  &__content {
+    max-width: 100%;
+  }
+
+  &__title {
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+
+  &__link {
+    text-decoration: underline;
+    color: #1d70b8;
+    font-weight: 600;
+
+    &:hover {
+      color: #003078;
+    }
+
+    &:visited {
+      color: #4c2c92;
+    }
+  }
+
+  &__description {
+    margin-bottom: 0;
+    color: #0b0c0c;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 640px) {
+    padding: 15px;
+  }
+}
+
+.content-banner__link {
+  &:focus {
+    color: $govuk-focus-text-colour;
+  }
+}

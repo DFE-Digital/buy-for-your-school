@@ -8,6 +8,4 @@
 //= link mpan-half-hourly.png
 //= link department-for-education_white.png
 //= link department-for-education_black.png
-
-//= link_tree ../images/govuk-frontend
-//= link_tree ../images/dfe-frontend
+//= link govuk-footer-crown.svg
