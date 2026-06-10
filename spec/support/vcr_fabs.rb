@@ -45,12 +45,4 @@ RSpec.configure do |config|
       allow(ContentfulClient).to receive(:entries).and_return([])
     end
   end
-
-  # Enable the FABS feature flag for specs in spec/fabs/.
-  # This is scoped to avoid side effects on non-FABS tests (e.g. evaluation).
-  config.before do |example|
-    if example.metadata[:absolute_file_path]&.include?("/spec/fabs/")
-      Flipper.enable(:ghbs_public_frontend)
-    end
-  end
 end

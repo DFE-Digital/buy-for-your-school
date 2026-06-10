@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe "FABS category pages", type: :request do
   before do
-    Flipper.enable(:ghbs_public_frontend)
     allow(FABS::Category).to receive(:find_by_slug!).with("it").and_return(category)
     allow(category).to receive(:filtered_solutions) do |subcategory_slugs:|
       case subcategory_slugs

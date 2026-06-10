@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe "FABS pages", type: :request do
   before do
-    Flipper.enable(:ghbs_public_frontend)
     allow(Page).to receive(:find_by).and_return(nil)
   end
 

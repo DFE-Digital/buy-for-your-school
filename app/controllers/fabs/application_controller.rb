@@ -4,17 +4,10 @@ class Fabs::ApplicationController < ApplicationController
   rescue_from ContentfulRecordNotFoundError, with: :record_not_found
 
   skip_before_action :authenticate_user!
-  before_action :check_fabs_flag
   before_action :enable_search_in_header, :page_back_link, :canonical_url
   before_action :reload_translations, if: -> { Rails.configuration.x.public_frontend_contentful_enabled }
 
 private
-
-  def check_fabs_flag
-    return if Flipper.enabled?(:ghbs_public_frontend)
-
-    redirect_to ENV.fetch("GHBS_HOMEPAGE_URL"), status: :moved_permanently, allow_other_host: true
-  end
 
   def record_not_found
     render "errors/not_found", status: :not_found
