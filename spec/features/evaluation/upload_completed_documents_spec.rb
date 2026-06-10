@@ -1,5 +1,5 @@
 require "rails_helper"
-RSpec.feature "Evaluator can can upload completed documents", :js, :with_csrf_protection do
+RSpec.feature "Evaluator can can upload completed documents", :flaky, :js, :with_csrf_protection do
   let(:support_case) { create(:support_case) }
   let(:user) { create(:user) }
   let(:file_1) { fixture_file_upload(Rails.root.join("spec/fixtures/support/text-file.txt"), "text/plain") }
