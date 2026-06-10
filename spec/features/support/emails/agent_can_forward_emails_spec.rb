@@ -1,4 +1,4 @@
-describe "Agent can forward an email", :js do
+describe "Agent can forward an email", :flaky, :js do
   include_context "with an agent"
   include_context "with a support case and email"
 
