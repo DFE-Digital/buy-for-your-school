@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe "FABS offers", type: :request do
   before do
-    Flipper.enable(:ghbs_public_frontend)
     I18n.backend.store_translations(:en, date: { formats: { standard: "%-d %B %Y" } })
   end
 

@@ -7,7 +7,6 @@ RSpec.describe "Contentful webhooks", type: :request do
   let(:indexer) { instance_double(SolutionIndexer) }
 
   before do
-    Flipper.enable(:ghbs_public_frontend)
     allow(ENV).to receive(:fetch).and_call_original
     allow(ENV).to receive(:fetch).with("CONTENTFUL_WEBHOOK_SECRET").and_return(secret)
     allow(SolutionIndexer).to receive(:new).with(id: entity_id).and_return(indexer)

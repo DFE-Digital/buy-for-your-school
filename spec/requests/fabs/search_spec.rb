@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe "FABS search", type: :request do
   before do
-    Flipper.enable(:ghbs_public_frontend)
     allow(ENV).to receive(:fetch).and_call_original
     allow(ENV).to receive(:fetch).with("USE_OPENSEARCH", "false").and_return("false")
   end
