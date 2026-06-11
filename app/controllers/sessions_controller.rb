@@ -29,10 +29,10 @@ class SessionsController < ApplicationController
   def failure
     # DSI: report the DSI user uid in the session if it exists
     track_event("Sessions/Failure", dfe_sign_in_uid: session[:dfe_sign_in_uid])
-
+    redirect_path = exit_path
     # DSI: users would need to signout manually to proceed otherwise
     if session.destroy
-      redirect_to root_path, notice: I18n.t("banner.session.failure")
+      redirect_to redirect_path, notice: I18n.t("banner.session.failure")
     end
   end
 
