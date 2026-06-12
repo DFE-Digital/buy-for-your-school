@@ -7,6 +7,7 @@ module Evaluation
       session.delete(:energy_onboarding)
       session.delete(:faf_referrer)
       session[:email_evaluator_link] = evaluation_task_path(id: params[:id], host: request.host)
+      session[:evaluator_signin_link] = evaluation_signin_path(id: params[:id])
     end
   end
 end

@@ -103,4 +103,29 @@ describe SessionsController do
       end
     end
   end
+
+  describe "#failure and flash messages" do
+    it "sets the failure flash message" do
+      get(:failure, session:)
+
+      expect(flash[:notice]).to eq(I18n.t("banner.session.failure"))
+    end
+
+    it "redirects to cms_signin_path when no other links are available on the session" do
+      expect(get(:failure, session:)).to redirect_to(cms_signin_path)
+    end
+
+    it "redirects to energy_start_path when energy_onboarding flag is present" do
+      session[:energy_onboarding] = true
+
+      expect(get(:failure, session:)).to redirect_to(energy_start_path)
+    end
+
+    it "redirects to evaluator_signin_link when evaluator_signin_link is present" do
+      evaluation_signin_path = evaluation_signin_path(id: "123")
+      session[:evaluator_signin_link] = evaluation_signin_path
+
+      expect(get(:failure, session:)).to redirect_to(evaluation_signin_path)
+    end
+  end
 end
