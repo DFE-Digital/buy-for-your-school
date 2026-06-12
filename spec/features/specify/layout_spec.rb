@@ -24,9 +24,9 @@ RSpec.feature "Common layout element" do
   describe "footer" do
     scenario "provides an email address for the service and expected links" do
       within("ul.govuk-footer__inline-list") do
-        expect(page).to have_link "Accessibility statement", href: accessibility_statement_url, class: "govuk-footer__link"
-        expect(page).to have_link "Terms and Conditions", href: "/terms-and-conditions", class: "govuk-footer__link"
-        expect(page).to have_link "Privacy notice", href: privacy_notice_url, class: "govuk-footer__link"
+        expect(page).to have_link "Accessibility", href: accessibility_statement_url, class: "govuk-footer__link"
+        expect(page).to have_link "Terms and conditions", href: "/terms-and-conditions", class: "govuk-footer__link"
+        expect(page).to have_link "Privacy", href: privacy_notice_url, class: "govuk-footer__link"
         expect(page).to have_link "Cookies", href: "/cookie_preferences", class: "govuk-footer__link"
       end
     end

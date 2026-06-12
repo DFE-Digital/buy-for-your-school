@@ -12,7 +12,7 @@ RSpec.feature "Completing the Exit Survey" do
     end
 
     it "links to the privacy notice" do
-      expect(page).to have_link "Privacy notice", href: privacy_notice_url
+      expect(page).to have_link "Privacy", href: privacy_notice_url
     end
 
     it "continues to the satisfaction page" do
