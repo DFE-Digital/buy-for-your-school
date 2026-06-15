@@ -9,8 +9,7 @@ Rails.application.config.assets.version = "1.0"
 Rails.application.config.assets.paths << Rails.root.join("app/javascript")
 
 # Add the GOVUK Frontend assets paths
-Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand")
-Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand/images")
+Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/images")
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/fonts")
 
 ### PLEASE NOTE - DUE TO THE WAY govuk-frontend WORKS THE PRODUCTION SERVER SERVES NON DIGESTED
