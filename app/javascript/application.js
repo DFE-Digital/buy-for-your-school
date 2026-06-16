@@ -1,5 +1,4 @@
 // Top level javascript resources
-
 import "core-js/stable"
 import "regenerator-runtime/runtime"
 
@@ -7,10 +6,17 @@ import Rails from "@rails/ujs"
 Rails.start()
 
 import { initAll } from "govuk-frontend/dist/govuk/govuk-frontend.min.js"
-(() => {
-    document.addEventListener('DOMContentLoaded', initAll);
-    document.addEventListener('turbo:frame-load', (event) => initAll({ scope: event.target }));
-})();
+import "govuk_publishing_components/initialise-vars"
+import "govuk_publishing_components/modules"
+import "govuk_publishing_components/components/layout-super-navigation-header"
+
+const initialiseFrontend = (scope = document) => {
+    initAll({ scope });
+    window.GOVUK.modules.start(scope);
+};
+
+document.addEventListener("DOMContentLoaded", () => initialiseFrontend());
+document.addEventListener("turbo:frame-load", (event) => initialiseFrontend(event.target));
 
 import { Turbo } from "@hotwired/turbo-rails"
 Turbo.StreamActions.redirect = function () {
