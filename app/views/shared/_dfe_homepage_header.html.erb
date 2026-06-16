@@ -1,8 +1,4 @@
-<header class="dfe-header dfe-header--homepage" data-module="govuk-header">
-  <%= render "shared/dfe_logo_and_menu" %>
-  <%= render "shared/dfe_search_box"%>
-  <%= render "shared/dfe_service_navigation" %>
-</header>
+<%= render "govuk_publishing_components/components/layout_super_navigation_header", { homepage: true, logo_link: "/" } %>
 
 <section class="dfe-page-hero dfe-header govuk-!-padding-top-6">
     <div class="dfe-width-container hero-text-container">
