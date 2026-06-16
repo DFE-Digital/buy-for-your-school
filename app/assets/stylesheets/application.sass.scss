@@ -1,4 +1,5 @@
 // Entry point for your Sass build
+@use "sass:color";
 
 @import "./base/frontend";
 @import "./base/misc";
@@ -38,10 +39,11 @@
 @import "./components/homepage";
 @import "./components/sidebar";
 @import "./components/filter";
-@import "./components/header";
-@import "./components/search";
 @import "./components/banner";
 
+@import "govuk_publishing_components/specific-components";
+@import "govuk_publishing_components/components/layout-super-navigation-header";
+@import "govuk_publishing_components/components/search";
 
 // Panel overrides
 .govuk-tabs__panel.borderless,
@@ -113,7 +115,7 @@
   }
 }
 
-// dfe logo correct size and focus
+// DfE logo correct size and focus styles
 .govuk-header__link .govuk-header__logotype {
   height: 30px;
 }
