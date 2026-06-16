@@ -36,7 +36,6 @@
 
   component_helper = GovukPublishingComponents::Presenters::ComponentWrapperHelper.new(local_assigns)
   component_helper.add_class("gem-c-layout-super-navigation-header")
-  component_helper.add_data_attribute({ module: "ga4-event-tracker ga4-link-tracker", ga4_expandable: "" })
 %>
 <%= tag.header(**component_helper.all_attributes) do %>
 <div class="gem-c-layout-super-navigation-header__nav-wrapper">
@@ -68,7 +67,7 @@
             label: logo_link_title,
           },
         } do %>
-          <%= render "govuk_publishing_components/components/govuk_logo/govuk_logo" %>
+          <%= image_tag 'department-for-education_white.png', class: 'govuk-header__logotype', alt: 'Department for Education' %>
         <% end %>
       <% end %>
       <h2 id="super-navigation-menu-heading" class="govuk-visually-hidden">
@@ -243,32 +242,22 @@
               <%= tag.form(
                 class: "gem-c-layout-super-navigation-header__search-form",
                 id: "search",
-                data: {
-                  module: "ga4-search-tracker",
-                  ga4_search_type: "header menu bar",
-                  ga4_search_url: "/search/all",
-                  ga4_search_section: "Search GOV.UK",
-                  ga4_search_index_section: 3,
-                  ga4_search_index_section_count: 3,
-                },
-                action: "/search/all",
+                action: "/search",
                 method: "get",
                 role: "search",
                 aria: {
                   label: "Site-wide",
                 },
               ) do %>
-                <%= render "govuk_publishing_components/components/search_with_autocomplete", {
-                  name: "keywords",
+                <%= render "govuk_publishing_components/components/search", {
+                  name: "query",
+                  value: params[:query],
                   inline_label: false,
                   label_size: "m",
                   label_text: search_text,
                   label_custom_class: "gem-c-layout-super-navigation-header__search-label--large-navbar",
                   size: "large",
                   margin_bottom: 0,
-                  disable_corrections: true,
-                  source_url: [Plek.new.website_root, "/api/search/autocomplete.json"].join,
-                  source_key: "suggestions",
                 } %>
               <% end %>
             </div>
