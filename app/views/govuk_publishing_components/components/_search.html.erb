@@ -1,0 +1,76 @@
+<%
+  shared_helper = GovukPublishingComponents::Presenters::SharedHelper.new(local_assigns)
+
+  aria_controls ||= nil
+  button_text ||= t("components.search_box.search_button")
+  correction_value = "off" if local_assigns[:disable_corrections]
+  label_id ||= "search-main-" + SecureRandom.hex(4)
+  wrap_label_in_a_heading ||= false
+  label_margin_bottom ||= nil
+  label_size ||= nil
+  label_text ||= t("components.search_box.label")
+  label_custom_class ||= nil
+  name ||= "q"
+  homepage ||= false
+  size ||= ""
+  value ||= ""
+  local_assigns[:margin_bottom] ||= 6
+
+  component_helper = GovukPublishingComponents::Presenters::ComponentWrapperHelper.new(local_assigns)
+  component_helper.add_data_attribute({ module: "gem-toggle-input-class-on-focus" })
+  component_helper.add_class("gem-c-search govuk-!-display-none-print")
+  component_helper.add_class("gem-c-search--large") if size == "large"
+  component_helper.add_class("gem-c-search--homepage") if homepage
+  component_helper.add_class("gem-c-search--on-govuk-blue") if local_assigns[:on_govuk_blue].eql?(true)
+  component_helper.add_class("gem-c-search--on-white") unless local_assigns[:on_govuk_blue].eql?(true)
+  component_helper.add_class("gem-c-search--separate-label") if local_assigns.include?(:inline_label) or local_assigns.include?(:label_size)
+
+  label_classes = []
+  if (shared_helper.valid_heading_size?(label_size))
+    label_classes << "govuk-label govuk-label--#{label_size}"
+    label_classes << "gem-c-search__label--white" if homepage
+  else
+    label_classes << "gem-c-search__label"
+  end
+  label_classes << "govuk-!-margin-bottom-#{label_margin_bottom}" if [*1..9].include?(label_margin_bottom) and local_assigns.include?(:inline_label)
+  label_classes << label_custom_class if label_custom_class
+
+  tag_label = capture do
+    tag.label(for: label_id, class: label_classes) do
+      label_text
+    end
+  end
+%>
+<%= tag.div(**component_helper.all_attributes) do %>
+  <% if wrap_label_in_a_heading %>
+    <%= content_tag(shared_helper.get_heading_level, class: "govuk-!-margin-0") do %>
+      <%= tag_label %>
+    <% end %>
+  <% else %>
+    <%= tag_label %>
+  <% end %>
+  <div class="gem-c-search__item-wrapper">
+    <div class="js-search-input-wrapper">
+      <%= tag.input(
+        aria: {
+          controls: aria_controls,
+        },
+        enterkeyhint: "search",
+        class: "gem-c-search__item gem-c-search__input js-class-toggle",
+        id: label_id,
+        name: name,
+        title: t("components.search_box.input_title"),
+        type: "search",
+        value: value,
+        autocorrect: correction_value,
+        autocapitalize: correction_value,
+      ) %>
+    </div>
+    <div class="gem-c-search__item gem-c-search__submit-wrapper">
+      <%= tag.button class: "gem-c-search__submit", type: "submit", enterkeyhint: "search" do %>
+        <%= button_text %>
+        <%= render "govuk_publishing_components/components/search/search_icon" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
