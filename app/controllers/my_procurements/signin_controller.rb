@@ -7,6 +7,7 @@ module MyProcurements
       session.delete(:energy_onboarding)
       session.delete(:faf_referrer)
       session[:email_school_buyer_link] = my_procurements_task_path(id: params[:id], host: request.host)
+      session[:school_buyer_signin_link] = my_procurements_signin_path(id: params[:id])
     end
   end
 end
