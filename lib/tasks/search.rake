@@ -37,6 +37,28 @@ namespace :search do
     SearchClient.instance.bulk(body: bulk_actions)
     puts "Successfully indexed #{entries.size} entries into search index."
   end
+
+  desc "Deletes all documents from the search index"
+  task clear: :environment do
+    index_name = "solution-data"
+
+    unless SearchClient.instance.indices.exists?(index: index_name)
+      puts "Search index #{index_name} does not exist."
+      next
+    end
+
+    puts "Clearing search index #{index_name}..."
+    response = SearchClient.instance.delete_by_query(
+      index: index_name,
+      body: {
+        query: {
+          match_all: {},
+        },
+      },
+      refresh: true,
+    )
+    puts "Deleted #{response.fetch('deleted', 0)} documents from search index #{index_name}."
+  end
 end
 
 # Create the index and its mapping

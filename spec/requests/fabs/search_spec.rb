@@ -33,6 +33,34 @@ RSpec.describe "FABS search", type: :request do
     expect(response.body).to include("Catering")
   end
 
+  it "renders side-by-side comparison results when requested" do
+    opensearch_solution = instance_double(
+      Solution,
+      title: "OpenSearch result",
+      description: "OpenSearch description",
+      slug: "opensearch-result",
+      primary_category: category,
+    )
+    azure_solution = instance_double(
+      Solution,
+      title: "Azure result",
+      description: "Azure description",
+      slug: "azure-result",
+      primary_category: category,
+    )
+
+    allow(Solution).to receive(:search).with(query: "catering").and_return([solution])
+    allow(FABS::Category).to receive(:search).with(query: "catering").and_return([])
+    allow(SolutionSearcher).to receive(:new).with(query: "catering").and_return(instance_double(SolutionSearcher, search: [opensearch_solution]))
+    allow(AzureAiSearch::SolutionSearcher).to receive(:new).with(query: "catering").and_return(instance_double(AzureAiSearch::SolutionSearcher, search: [azure_solution]))
+
+    get search_path(query: "catering", compare_search: "true")
+
+    expect(response.body).to include("Search comparison")
+    expect(response.body).to include("OpenSearch result")
+    expect(response.body).to include("Azure result")
+  end
+
   it "escapes HTML in the page title" do
     allow(Solution).to receive(:search).with(query: "<b>catering</b>").and_return([])
     allow(FABS::Category).to receive(:search).with(query: "<b>catering</b>").and_return([])

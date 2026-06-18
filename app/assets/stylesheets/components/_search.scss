@@ -111,8 +111,37 @@
   padding-top: 20px;
 }
 
+.search-results-comparison {
+  border-top: 2px solid govuk-colour("black");
+  padding-top: 20px;
+}
+
+.search-results-comparison__grid {
+  display: grid;
+  gap: 30px;
+
+  @media (min-width: 48em) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.search-results-comparison__column {
+  border-top: 1px solid #b1b4b6;
+  padding-top: 15px;
+}
+
 .search-container {
   margin-bottom: 2rem;
+}
+
+.search-comparison-container {
+  background: govuk-colour("light-grey");
+  margin-bottom: 2rem;
+  padding: 20px;
+}
+
+.search-comparison-container__label {
+  margin-bottom: 10px;
 }
 
 .search-input-container {
