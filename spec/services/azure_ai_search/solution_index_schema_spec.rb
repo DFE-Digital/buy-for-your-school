@@ -9,7 +9,7 @@ RSpec.describe AzureAiSearch::SolutionIndexSchema do
         name: "solution-data",
         fields: include(
           include(name: "id", type: "Edm.String", key: true),
-          include(name: "title", type: "Edm.String", searchable: true),
+          include(name: "title", type: "Edm.String", searchable: true, analyzer: "en.microsoft"),
           include(name: "provider_reference", type: "Edm.String", searchable: true),
           include(name: "primary_category", type: "Edm.ComplexType"),
         ),
