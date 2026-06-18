@@ -14,6 +14,21 @@ namespace :azure_search do
     puts "Created Azure AI Search index #{index_name}."
   end
 
+  desc "Deletes the Azure AI Search solution index"
+  task delete_index: :environment do
+    index_name = AzureAiSearch::SolutionIndexSchema::INDEX
+    client = AzureAiSearch::Client.new
+
+    unless client.index_exists?(index_name:)
+      puts "Azure AI Search index #{index_name} does not exist."
+      next
+    end
+
+    puts "Deleting Azure AI Search index #{index_name}..."
+    client.delete_index(index_name:)
+    puts "Deleted Azure AI Search index #{index_name}."
+  end
+
   desc "Syncs Contentful solutions to Azure AI Search"
   task index: :environment do
     puts "Starting Contentful to Azure AI Search sync..."

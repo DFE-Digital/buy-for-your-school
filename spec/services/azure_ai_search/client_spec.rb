@@ -38,6 +38,17 @@ RSpec.describe AzureAiSearch::Client do
     end
   end
 
+  describe "#delete_index" do
+    it "deletes the index from Azure AI Search" do
+      request = stub_request(:delete, "https://devghbs-search.search.windows.net/indexes('solution-data')?api-version=2024-07-01")
+        .with(headers: { "api-key" => "primary-key", "Content-Type" => "application/json" })
+        .to_return(status: 204, body: "")
+
+      expect(client.delete_index(index_name: "solution-data")).to eq({})
+      expect(request).to have_been_requested
+    end
+  end
+
   describe "#document_count" do
     it "returns the document count from Azure AI Search" do
       stub_request(:get, "https://devghbs-search.search.windows.net/indexes('solution-data')/docs/$count?api-version=2024-07-01")
