@@ -2,6 +2,10 @@ RSpec.feature "Common layout element" do
   let(:accessibility_statement_url) { ApplicationHelper::ACCESSIBILITY_STATEMENT_URL }
   let(:privacy_notice_url) { ApplicationHelper::PRIVACY_NOTICE_URL }
 
+  around do |example|
+    ClimateControl.modify(APPLICATION_URL: "https://get-help-buying-for-schools.education.gov.uk") { example.run }
+  end
+
   before do
     visit "/cms"
   end
@@ -24,10 +28,12 @@ RSpec.feature "Common layout element" do
   describe "footer" do
     scenario "provides an email address for the service and expected links" do
       within("ul.govuk-footer__inline-list") do
-        expect(page).to have_link "Accessibility statement", href: accessibility_statement_url, class: "govuk-footer__link"
-        expect(page).to have_link "Terms and Conditions", href: "/terms-and-conditions", class: "govuk-footer__link"
-        expect(page).to have_link "Privacy notice", href: privacy_notice_url, class: "govuk-footer__link"
+        expect(page).to have_link "Request procurement help", href: "/procurement-support", class: "govuk-footer__link"
+        expect(page).to have_link "Privacy", href: privacy_notice_url, class: "govuk-footer__link"
         expect(page).to have_link "Cookies", href: "/cookie_preferences", class: "govuk-footer__link"
+        expect(page).to have_link "Accessibility", href: accessibility_statement_url, class: "govuk-footer__link"
+        expect(page).to have_link "Terms and conditions", href: "/terms-and-conditions", class: "govuk-footer__link"
+        expect(page).to have_link "Feedback", href: "https://get-help-buying-for-schools.education.gov.uk/customer_satisfaction_surveys/new?service=find_a_buying_solution&source=footer_link", class: "govuk-footer__link"
       end
     end
   end

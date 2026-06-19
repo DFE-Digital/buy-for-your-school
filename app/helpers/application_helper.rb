@@ -67,11 +67,11 @@ module ApplicationHelper
     "https://submit.forms.service.gov.uk/form/8895/multi-academy-trusts-register-your-interest-in-energy-for-schools/1049539"
   end
 
-  def accessibility_link(link_text = t("shared.accessibility_statement"), **options)
+  def accessibility_link(link_text = t("shared.dfe_footer.accessibility"), **options)
     fabs_govuk_link_to(link_text, ACCESSIBILITY_STATEMENT_URL, **options)
   end
 
-  def privacy_link(link_text = t("shared.privacy_notice"), **options)
+  def privacy_link(link_text = t("shared.dfe_footer.privacy"), **options)
     fabs_govuk_link_to(link_text, PRIVACY_NOTICE_URL, **options)
   end
 
