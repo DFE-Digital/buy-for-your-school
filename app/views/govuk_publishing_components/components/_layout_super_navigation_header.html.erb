@@ -43,7 +43,8 @@
     <nav
       aria-labelledby="super-navigation-menu-heading"
       class="gem-c-layout-super-navigation-header__content"
-      data-module="super-navigation-mega-menu">
+      data-controller="search-menu-toggle"
+      data-action="keydown->search-menu-toggle#handleKeydown">
       <%= content_tag(:div, {
         class: header_logo_classes,
       }) do %>
@@ -83,6 +84,9 @@
       <div class="gem-c-layout-super-navigation-header__navigation-item">
         <%= link_to link[:href], {
           class: item_link_classes,
+            data: {
+              search_menu_toggle_target: "navigationLink",
+            }
         } do %>
           <% content_tag(:span, {
             class: item_link_inner_classes,
@@ -99,10 +103,7 @@
           },
           class: top_toggle_button_classes,
           data: {
-            text_for_hide: hide_menu_text,
-            text_for_show: show_menu_text,
-            toggle_desktop_group: "top",
-            toggle_mobile_group: "top",
+            action: "click->search-menu-toggle#toggleNavigation",
             ga4_event: {
               event_name: "select_content",
               type: "header menu bar",
@@ -111,6 +112,9 @@
               index_section_count: 2,
               section: link[:label],
             },
+            hide_label: hide_menu_text,
+            search_menu_toggle_target: "navigationButton",
+            show_label: show_menu_text,
           },
           hidden: true,
           id: "super-navigation-menu-toggle",
@@ -123,6 +127,9 @@
         id: "super-navigation-menu",
         hidden: "",
         class: dropdown_menu_classes,
+        data: {
+          search_menu_toggle_target: "navigationMenu",
+        },
       }) do %>
         <div class="govuk-grid-row gem-c-layout-super-navigation-header__navigation-items">
 
@@ -175,29 +182,28 @@
       <% end %>
       <div class="gem-c-layout-super-navigation-header__search-item">
         <%= content_tag(:button, {
-          id: "super-search-menu-toggle",
-          class: search_toggle_button_classes,
           aria: {
             controls: "super-search-menu",
-            expanded: "true",
-            label: hide_search_menu_text,
+            expanded: false,
+            label: show_search_menu_text,
           },
+          class: search_toggle_button_classes,
           data: {
-            "text-for-hide": hide_search_menu_text,
-            "text-for-show": show_search_menu_text,
-            "toggle-mobile-group": "top",
-            "toggle-desktop-group": "top",
-            "ga4-event": "#{{
-              "event_name": "select_content",
-              "type": "header menu bar",
-              "text": "Search",
-              "index_section": 2,
-              "index_section_count": 2,
-              "section": "Search",
-              }.to_json
-            }",
+            action: "click->search-menu-toggle#toggleSearch",
+            ga4_event: {
+              event_name: "select_content",
+              type: "header menu bar",
+              text: "Search",
+              index_section: 2,
+              index_section_count: 2,
+              section: "Search",
+            },
+            hide_label: hide_search_menu_text,
+            search_menu_toggle_target: "searchButton",
+            show_label: show_search_menu_text,
           },
           hidden: true,
+          id: "super-search-menu-toggle",
           type: "button",
         }) do %>
           <span class="govuk-visually-hidden">
@@ -217,6 +223,9 @@
 
         <%= link_to "/search", {
           class: search_item_link_classes,
+          data: {
+            search_menu_toggle_target: "searchLink",
+          },
         } do %>
           <span class="govuk-visually-hidden">
             <%= search_text %>
@@ -232,6 +241,9 @@
         id: "super-search-menu",
         hidden: "",
         class: dropdown_menu_classes,
+        data: {
+          search_menu_toggle_target: "searchMenu",
+        },
       }) do %>
         <div class="gem-c-layout-super-navigation-header__search-container gem-c-layout-super-navigation-header__search-items">
           <h3 class="govuk-visually-hidden">
