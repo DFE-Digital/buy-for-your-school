@@ -1,0 +1,84 @@
+<% unless subcategories.empty? %>
+  <div class="moj-filter" data-module="moj-filter">
+
+    <%# Header %>
+    <div class="moj-filter__header">
+      <div class="moj-filter__header-title">
+        <h2 class="govuk-heading-m"><%= t(".filter") %></h2>
+      </div>
+      <div class="moj-filter__header-action"></div>
+    </div>
+
+    <div class="moj-filter__content">
+
+      <%# Selected filters section — only shown when filters are active %>
+      <% selected_slugs = params.fetch(:subcategory_slugs, []).compact_blank %>
+      <% unless selected_slugs.blank? %>
+        <div class="moj-filter__selected">
+          <div class="moj-filter__selected-heading">
+            <div class="moj-filter__heading-title">
+              <h2 class="govuk-heading-m"><%= t(".selected_filters") %></h2>
+            </div>
+            <div class="moj-filter__heading-action">
+              <p>
+                <%= link_to t(".clear_filters"),
+                      category_path(@category),
+                      class: "govuk-link govuk-link--no-visited-state" %>
+              </p>
+            </div>
+          </div>
+
+          <h3 class="govuk-heading-s govuk-!-margin-bottom-0">
+            <%= t(".subcategories") %>
+          </h3>
+          <ul class="moj-filter-tags">
+            <% subcategories.select { |s| selected_slugs.include?(s.slug) }.each do |subcategory| %>
+              <%# Build URL with this subcategory removed from the selected slugs %>
+              <% remaining_slugs = selected_slugs - [subcategory.slug] %>
+              <% remove_url = category_path(category, subcategory_slugs: remaining_slugs) %>
+              <li>
+                <a class="moj-filter__tag" href="<%= remove_url %>">
+                  <span class="govuk-visually-hidden"><%= t(".remove_filter") %></span>
+                  <%= subcategory.title %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%# Filter options with checkboxes %>
+      <div class="moj-filter__options">
+        <%= form_with url: category_path(category), method: :get do |f| %>
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                <%= t(".subcategories") %>
+              </legend>
+              <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                <%= f.collection_check_boxes :subcategory_slugs, subcategories, :slug, :title,
+                    checked: params[:subcategory_slugs] do |b| %>
+                  <div class="govuk-checkboxes__item">
+                    <%= b.check_box(class: "govuk-checkboxes__input") %>
+                    <%= b.label(class: "govuk-label govuk-checkboxes__label") do %>
+                      <%= b.text %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </fieldset>
+          </div>
+
+          <button type="submit" class="govuk-button" data-module="govuk-button">
+            <%= t(".apply") %>
+          </button>
+        <% end %>
+      </div>
+
+    </div>
+
+    <div class="results-count">
+      <%= t("results.count", count: solutions.count) %>
+    </div>
+  </div>
+<% end %>
