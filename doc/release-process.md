@@ -58,22 +58,21 @@ Development deployment is automated with github actions, but you will need to
 update the `development` branch for it to deploy changes.
 
 Switch to the `development` branch, ensure it is updated from origin, then
-rebase it with `main`.
+reset it to the feature branch you want deployed.
 
 ```
 $ git fetch
 $ git checkout development
-$ git reset --hard origin/development
-$ git rebase your-feature-branch
-$ git push --force-with-lease
+$ git reset --hard your-feature-branch
+$ git push --force-with-lease origin development
 ```
 
 NOTE: `git push --force-with-lease` is important, the force push will be
 rejected if changes have been made in origin that differ from your local branch.
 This ensures you don't overwrite other developer's changes on development.
 
-If you need to make repeated changes, always reset `development` and then
-rebase your feature branch again.
+If you need to make repeated changes, update your feature branch and then
+reset `development` to it again.
 
 Monitor the [github actions
 page](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/ci-full-pipeline.yml)
