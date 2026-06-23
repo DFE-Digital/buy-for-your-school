@@ -180,8 +180,10 @@ en:
         school_name: "<b>School name</b> (select all)"
         selected: of <b>%{total} schools selected</b> from %{group_name}
     search_box:
+      input_title: Search
       label: Search Get help buying for schools
       placeholder: Search
+      search_button: Search
   cookies:
     banner:
       accepted:
