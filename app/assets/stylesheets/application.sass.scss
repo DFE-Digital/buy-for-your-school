@@ -127,3 +127,9 @@
   content: url(department-for-education_black.png);
   height: 30px;
 }
+
+.govuk-frontend-supported .gem-c-layout-super-navigation-header__nav-wrapper {
+  &::before {
+    content: none;
+  }
+}
