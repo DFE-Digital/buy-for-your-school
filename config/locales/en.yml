@@ -145,12 +145,14 @@ en:
         - label: Transport
           href: "/categories/transport"
           description: Buy home to school transport and accessories
-      - label: Guidance
+      - label: Guidance and support
         menu_contents:
-        - label: About this service
+        - label: About our service
           href: "/about-this-service"
-        - label: Buying for schools guidance
-          href: "https://www.gov.uk/guidance/buying-for-schools"
+          description: Who we help and what we do
+        - label: Request for help
+          href: "/procurement-support"
+          description: Ask for advice and guidance from our procurement team
       navigation_menu_heading: Navigation menu
       navigation_search_subheading: Search
       search_text: Search Get help buying for schools
