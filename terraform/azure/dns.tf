@@ -1,5 +1,5 @@
 data "azurerm_dns_zone" "get_help_buying_for_schools__service__gov__uk" {
-  name                = "get-help-buying-for-schools.service.gov.uk"
+  name                = "get-help-buying-for-schools.education.gov.uk"
   resource_group_name = local.parent_dns_zone_resource_group_name
   provider            = azurerm.prod
 }
