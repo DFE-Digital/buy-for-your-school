@@ -154,9 +154,9 @@ $ terraform state show 'module.azure_container_apps_hosting.azurerm_cdn_frontdoo
 
 2. Set the "host_name" value into the `cdn_frontdoor_origin_host_header_override` tfvar and deploy.
 
-#### 3. (Production only) Apex domain setup for get-help-buying-for-schools.service.gov.uk
+#### 3. (Production only) Apex domain setup for get-help-buying-for-schools.education.gov.uk
 
-1. Ensure "get-help-buying-for-schools.service.gov.uk" appears in the `cdn_frontdoor_custom_domains` array.
+1. Ensure "get-help-buying-for-schools.education.gov.uk" appears in the `cdn_frontdoor_custom_domains` array.
 
 2. Get the endpoint id from here:
 
@@ -170,7 +170,7 @@ $ terraform state show 'module.azure_container_apps_hosting.azurerm_cdn_frontdoo
 $ az network dns record-set a create \
   -g <DNS Zone resource group name> \
   --name "@" \
-  --zone-name "get-help-buying-for-schools.service.gov.uk" \
+  --zone-name "get-help-buying-for-schools.education.gov.uk" \
   --target-resource "<endpoint id from above>"
 ```
 
@@ -179,7 +179,7 @@ $ az network dns record-set a create \
 4.1. Get the validation token:
 
 ```
-$ terraform state show 'module.azure_container_apps_hosting.azurerm_cdn_frontdoor_custom_domain.custom_domain["get-help-buying-for-schools.service.gov.uk"]'
+$ terraform state show 'module.azure_container_apps_hosting.azurerm_cdn_frontdoor_custom_domain.custom_domain["get-help-buying-for-schools.education.gov.uk"]'
 ```
 
 4.2. Add the `_dnsauth` record
@@ -188,7 +188,7 @@ $ terraform state show 'module.azure_container_apps_hosting.azurerm_cdn_frontdoo
 $ az network dns record-set txt add-record \
   -g <DNS Zone resource group name> \
   --record-set-name "_dnsauth" \
-  --zone-name "get-help-buying-for-schools.service.gov.uk" \
+  --zone-name "get-help-buying-for-schools.education.gov.uk" \
   --value "<validation token from above>"
 ```
 

@@ -14,7 +14,7 @@ RSpec.describe "FABS offers", type: :request do
       slug: "energy-for-schools",
       expiry: "2026-08-31",
       call_to_action: nil,
-      url: "https://www.get-help-buying-for-schools.service.gov.uk/energy/before-you-start",
+      url: "https://get-help-buying-for-schools.education.gov.uk/energy/before-you-start",
       related_content: [],
     )
   end
