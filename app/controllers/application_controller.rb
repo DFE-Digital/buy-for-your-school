@@ -90,11 +90,13 @@ protected
   end
 
   def google_analytics_id
+    return unless Rails.env.production?
+
     if hosted_development?
       "G-JHQ4K916N1"
     elsif hosted_staging?
       "G-8770N0RLNE"
-    elsif hosted_production?
+    else
       "G-PT4157VC9D"
     end
   end
@@ -105,10 +107,6 @@ protected
 
   def hosted_development?
     request.url.starts_with?("https://dev.")
-  end
-
-  def hosted_production?
-    request.url.starts_with?("https://www.")
   end
 
   def hosted_staging?

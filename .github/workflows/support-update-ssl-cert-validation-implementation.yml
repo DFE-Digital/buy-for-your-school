@@ -42,7 +42,7 @@ jobs:
 
             if [[ "$DOMAIN_FAMILY" == "service" ]]; then
               customDomainName="devghbscustom-domain0"
-              zoneName="dev.get-help-buying-for-schools.education.gov.uk"
+              zoneName="dev.get-help-buying-for-schools.service.gov.uk"
             else
               customDomainName="dev-get-help-buying-for-schools-education-gov-uk-ab1b"
               zoneName="dev.get-help-buying-for-schools.education.gov.uk"
@@ -53,7 +53,7 @@ jobs:
 
             if [[ "$DOMAIN_FAMILY" == "service" ]]; then
               customDomainName="stagghbscustom-domain0"
-              zoneName="staging.get-help-buying-for-schools.education.gov.uk"
+              zoneName="staging.get-help-buying-for-schools.service.gov.uk"
             else
               customDomainName="staging-get-help-buying-for-schools-education-gov-uk-c932"
               zoneName="staging.get-help-buying-for-schools.education.gov.uk"
@@ -64,7 +64,7 @@ jobs:
 
             if [[ "$DOMAIN_FAMILY" == "service" ]]; then
               customDomainName="prodghbscustom-domain0"
-              zoneName="www.get-help-buying-for-schools.education.gov.uk"
+              zoneName="www.get-help-buying-for-schools.service.gov.uk"
             else
               customDomainName="www-get-help-buying-for-schools-education-gov-uk-eed8"
               zoneName="www.get-help-buying-for-schools.education.gov.uk"
