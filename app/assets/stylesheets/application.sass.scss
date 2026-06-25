@@ -128,8 +128,11 @@
   height: 30px;
 }
 
+// Fix mega menu background at 0.5x page size
 .govuk-frontend-supported .gem-c-layout-super-navigation-header__nav-wrapper {
   &::before {
-    content: none;
+    left: calc(50% - 50vw);
+    right: calc(50% - 50vw);
+    top: calc($navbar-height + 1px);
   }
 }
