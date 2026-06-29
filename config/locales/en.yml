@@ -98,6 +98,62 @@ en:
       discovery_method: Case origin is missing
       request_type: Select whether the request is related to a procurement category
   components:
+    layout_super_navigation_header:
+      logo_link: "/"
+      logo_link_title: Go to the Get help buying for schools homepage
+      menu_toggle_label:
+        hide: Hide %{label} menu
+        show: Show %{label} menu
+      navigation_link:
+        href: "/"
+        label: Menu
+      navigation_links_columns:
+      - label: Explore categories
+        menu_contents:
+        - label: Banking and finance
+          href: "/categories/banking-finance"
+          description: Buy financial services
+        - label: Catalogues
+          href: "/categories/catalogues"
+          description: Use catalogues to buy low value goods
+        - label: Catering
+          href: "/categories/catering"
+          description: Buy food, drink and catering services
+        - label: Energy
+          href: "/categories/energy"
+          description: Buy electricity, gas and other fuels
+        - label: Facilities management and estates
+          href: "/categories/facilities-management-estates"
+          description: Buy facilities management services
+        - label: IT
+          href: "/categories/it"
+          description: Buy IT and ICT equipment and services
+      - label: " "
+        menu_contents:
+        - label: Legal
+          href: "/categories/legal"
+          description: Buy legal services
+        - label: Office and education supplies
+          href: "/categories/office-education-supplies"
+          description: Buy arts and crafts supplies, stationery and other equipment
+        - label: Professional services
+          href: "/categories/consultancy-services"
+          description: Including Consultancy services
+        - label: Recruitment, HR and training
+          href: "/categories/recruitment-hr-training"
+          description: Buy staffing solutions
+        - label: Transport
+          href: "/categories/transport"
+          description: Buy home to school transport and accessories
+      - label: Guidance
+        menu_contents:
+        - label: About this service
+          href: "/about-this-service"
+        - label: Buying for schools guidance
+          href: "https://www.gov.uk/guidance/buying-for-schools"
+      navigation_menu_heading: Navigation menu
+      navigation_search_subheading: Search
+      search_text: Search Get help buying for schools
     school_picker:
       filters:
         clear: Clear filters
@@ -123,6 +179,9 @@ en:
         phase: Phase of education
         school_name: "<b>School name</b> (select all)"
         selected: of <b>%{total} schools selected</b> from %{group_name}
+    search_box:
+      label: Search Get help buying for schools
+      placeholder: Search
   cookies:
     banner:
       accepted:
@@ -2982,7 +3041,6 @@ en:
       empty: Enter a search term.
       too_long: Your search query is too long. Use less than 2000 characters.
       too_many_words: Your search query has too many words. Use less than 25 words.
-    header_title: Search Get help buying for schools
     no_results:
       cta: Visit Get Help Buying Home page
       description: It looks like there are no results for your search keyword.
@@ -3007,13 +3065,6 @@ en:
       terms_and_conditions: Terms and conditions
     dfe_homepage_header:
       view_all_buying_options: Browse a list of all DfE-approved buying options
-    dfe_search:
-      close_search: Close search
-      search: Search
-      search_this_website: Search this website
-    dfe_search_homepage:
-      search: Search
-      search_this_website: Search this website
     external_link:
       opens_in_new_tab: opens in new tab
   solutions:

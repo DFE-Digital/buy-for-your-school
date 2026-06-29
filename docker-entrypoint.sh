@@ -17,7 +17,11 @@ if [ ! "$RAILS_ENV" == "production" ]; then
 
   echo "ENTRYPOINT: Compile /public/assets (if required) for development"
   cp -R /srv/node_modules $APP_HOME
-  RAILS_ENV=production SECRET_KEY_BASE=key bundle exec rails assets:precompile
+  GOVUK_APP_DOMAIN=www.gov.uk \
+  GOVUK_WEBSITE_ROOT=https://www.gov.uk \
+  RAILS_ENV=production \
+  SECRET_KEY_BASE=key \
+  bundle exec rails assets:precompile
 fi
 
 if [ -z ${DATABASE_URL+x} ]; then echo "ENTRYPOINT: Skipping database setup"; else setup_database; fi

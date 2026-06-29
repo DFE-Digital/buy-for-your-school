@@ -20,7 +20,7 @@
     "regenerator-runtime": "^0.14.1",
     "dropzone": "^6.0.0-beta.2",
     "express": "^4.20.0",
-    "govuk-frontend": "^5.13.0",
+    "govuk-frontend": "^5.14.0",
     "jest": "^29.7.0",
     "lodash": "^4.17.21",
     "sass": "^1.97.0",
@@ -62,6 +62,6 @@
   "scripts": {
     "postinstall": "sh script/assets/copy-assets.sh",
     "build": "webpack --config ./config/webpack/webpack.config.js",
-    "build:css": "sass ./app/assets/stylesheets/application.sass.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+    "build:css": "sass ./app/assets/stylesheets/application.sass.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --load-path=node_modules/govuk-frontend/dist --load-path=$(bundle exec ruby -e 'print Gem::Specification.find_by_name(\"govuk_publishing_components\").gem_dir')/app/assets/stylesheets"
   }
 }

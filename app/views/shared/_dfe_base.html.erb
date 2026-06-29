@@ -20,10 +20,12 @@
 </head>
 
 <body class="govuk-template__body" data-controller="external-link-tracking internal-link-tracking engagement-tracking">
+  <%= javascript_tag nonce: true do -%>
+    document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
+  <% end -%>
 
   <%= render "cookie_preferences/banner" %>
 
-  <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
   <%= yield %>
 </body>
 </html>

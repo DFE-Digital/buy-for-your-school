@@ -19,6 +19,12 @@
   }
 }
 
+.dfe-header {
+  color: #ffffff;
+  background-color: #1d70b8;
+  padding-bottom: 0px;
+}
+
 .dfe-page-hero {
    color: #ffffff;
    .hero-text-container{
@@ -26,6 +32,10 @@
         margin-left: 0px;
       }
     }
+}
+
+.govuk-width-container {
+  max-width: 1200px !important;
 }
 
 .govuk-service-navigation{

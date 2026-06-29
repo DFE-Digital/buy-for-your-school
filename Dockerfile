@@ -95,7 +95,11 @@ COPY --from=assets /deps/node_modules $APP_HOME/node_modules
 
 RUN \
   yarn config set ignore-engines true && \
-  RAILS_ENV=${RAILS_ENV} SECRET_KEY_BASE=key bundle exec rake assets:precompile
+  GOVUK_APP_DOMAIN=www.gov.uk \
+  GOVUK_WEBSITE_ROOT=https://www.gov.uk \
+  RAILS_ENV=${RAILS_ENV} \
+  SECRET_KEY_BASE=key \
+  bundle exec rake assets:precompile
 
 COPY ./docker-entrypoint.sh /
 
