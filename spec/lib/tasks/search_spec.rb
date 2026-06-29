@@ -4,10 +4,15 @@ RSpec.describe "Search tasks" do
     Rake::Task.define_task(:environment)
   end
 
+  after do
+    Rake::Task["search:index"].reenable
+    Rake::Task["search:clear"].reenable
+  end
+
   describe "search:index" do
     subject(:invoke_task) { Rake::Task["search:index"].invoke }
 
-    let(:search_client) { double("search client", indices:) }
+    let(:search_client) { instance_double(SearchClient, indices:) }
     let(:indices) { double("indices") }
     let(:category) { instance_double(FABS::Category, id: "category-id", title: "ICT", slug: "ict") }
     let(:solution_with_category) do
@@ -114,6 +119,57 @@ RSpec.describe "Search tasks" do
         expect(indices).not_to receive(:create)
 
         invoke_task
+      end
+    end
+  end
+
+  describe "search:clear" do
+    subject(:invoke_task) { Rake::Task["search:clear"].invoke }
+
+    let(:search_client) { instance_double(SearchClient, indices:) }
+    let(:indices) { double("indices") }
+
+    before do
+      allow(SearchClient).to receive(:instance).and_return(search_client)
+    end
+
+    context "when the search index exists" do
+      before do
+        allow(indices).to receive(:exists?).with(index: "solution-data").and_return(true)
+        allow(search_client).to receive(:delete_by_query).and_return("deleted" => 64)
+      end
+
+      it "deletes all documents from the search index" do
+        expect(search_client).to receive(:delete_by_query).with(
+          index: "solution-data",
+          body: {
+            query: {
+              match_all: {},
+            },
+          },
+          refresh: true,
+        )
+
+        expect { invoke_task }
+          .to output(
+            "Clearing search index solution-data...\n" \
+            "Deleted 64 documents from search index solution-data.\n",
+          )
+          .to_stdout
+      end
+    end
+
+    context "when the search index does not exist" do
+      before do
+        allow(indices).to receive(:exists?).with(index: "solution-data").and_return(false)
+      end
+
+      it "does not attempt to delete documents" do
+        expect(search_client).not_to receive(:delete_by_query)
+
+        expect { invoke_task }
+          .to output("Search index solution-data does not exist.\n")
+          .to_stdout
       end
     end
   end

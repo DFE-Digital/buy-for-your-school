@@ -16,6 +16,7 @@ class SearchController < Fabs::ApplicationController
       @solutions = Solution.search(query:)
       @categories = FABS::Category.search(query:)
       @results_count = @solutions.count + @categories.count
+      build_search_comparison(query) if compare_search?
     end
 
     render layout: "search"
@@ -42,5 +43,24 @@ private
     else
       false
     end
+  end
+
+  def compare_search?
+    ActiveModel::Type::Boolean.new.cast(params[:compare_search])
+  end
+
+  def build_search_comparison(query)
+    @search_comparison_enabled = true
+    @opensearch_solutions = comparison_results("OpenSearch") { SolutionSearcher.new(query:).search }
+    @azure_solutions = comparison_results("Azure AI Search") { AzureAiSearch::SolutionSearcher.new(query:).search }
+  end
+
+  def comparison_results(label)
+    yield
+  rescue StandardError => e
+    Rollbar.warning("#{label} comparison search failed", error: e.message) if defined?(Rollbar)
+    @comparison_errors ||= {}
+    @comparison_errors[label] = e.message
+    []
   end
 end

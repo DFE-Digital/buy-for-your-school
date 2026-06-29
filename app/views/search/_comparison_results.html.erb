@@ -1,0 +1,30 @@
+<div class="search-results-comparison govuk-!-margin-top-8">
+  <h2 class="govuk-heading-m">Search comparison</h2>
+  <p class="govuk-body">
+    Side-by-side comparison of OpenSearch and Azure AI Search results for this query.
+  </p>
+
+  <div class="search-results-comparison__grid">
+    <section class="search-results-comparison__column">
+      <h3 class="govuk-heading-s">OpenSearch</h3>
+      <% if @comparison_errors&.key?("OpenSearch") %>
+        <p class="govuk-body govuk-!-font-weight-bold">OpenSearch comparison failed.</p>
+        <p class="govuk-body-s"><%= @comparison_errors["OpenSearch"] %></p>
+      <% else %>
+        <p class="govuk-body-s"><%= t("results.count", count: @opensearch_solutions.count) %></p>
+        <%= render "search/solution_results", solutions: @opensearch_solutions %>
+      <% end %>
+    </section>
+
+    <section class="search-results-comparison__column">
+      <h3 class="govuk-heading-s">Azure AI Search</h3>
+      <% if @comparison_errors&.key?("Azure AI Search") %>
+        <p class="govuk-body govuk-!-font-weight-bold">Azure AI Search comparison failed.</p>
+        <p class="govuk-body-s"><%= @comparison_errors["Azure AI Search"] %></p>
+      <% else %>
+        <p class="govuk-body-s"><%= t("results.count", count: @azure_solutions.count) %></p>
+        <%= render "search/solution_results", solutions: @azure_solutions %>
+      <% end %>
+    </section>
+  </div>
+</div>
