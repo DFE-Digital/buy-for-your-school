@@ -46,6 +46,7 @@
 @import "./components/sidebar";
 @import "./components/filter";
 @import "./components/banner";
+@import "./components/header";
 
 
 // Panel overrides
@@ -94,45 +95,4 @@
 .govuk-prototype-kit-common-templates-related-items {
   border-top: 2px solid #1d70b8;
   padding-top: 10px;
-}
-
-// govuk rebrand header personalisation for 'Signed in' as
-.govuk-header__container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-content: space-between;
-  flex-wrap: wrap;
-
-  .govuk-header__signed-in-user {
-    font-size: 16px;
-    line-height: 1;
-    flex-shrink: 0;
-    padding: 10px 0;
-  }
-
-  .govuk-header__logo{
-    flex-basis:50%;
-    flex-grow: 2;
-    flex-shrink: 1;
-  }
-}
-
-// dfe logo correct size and focus
-.govuk-header__link .govuk-header__logotype {
-  height: 30px;
-}
-
-.govuk-header__link:focus .govuk-header__logotype {
-  content: url(department-for-education_black.png);
-  height: 30px;
-}
-
-// Fix mega menu background at 0.5x page size
-.govuk-frontend-supported .gem-c-layout-super-navigation-header__nav-wrapper {
-  &::before {
-    left: calc(50% - 50vw);
-    right: calc(50% - 50vw);
-    top: calc($navbar-height + 1px);
-  }
 }
