@@ -55,3 +55,17 @@
 .gem-c-layout-super-navigation-header__column-header {
   position: relative;
 }
+
+// Second mega menu column header is a blank placeholder, hide it when collapsing to single column
+@include govuk-media-query($until: desktop) {
+  .gem-c-layout-super-navigation-header__navigation-items > div:nth-child(2) {
+    .gem-c-layout-super-navigation-header__column-header {
+      display: none;
+    }
+
+    .gem-c-layout-super-navigation-header__navigation-second-items {
+      padding-top: 0;
+      margin-top: -10px;
+    }
+  }
+}
