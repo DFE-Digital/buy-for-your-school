@@ -147,7 +147,7 @@ en:
           description: Buy home to school transport and accessories
       - label: Guidance and support
         menu_contents:
-        - label: About our service
+        - label: About this service
           href: "/about-this-service"
           description: Who we help and what we do
         - label: Request for help
