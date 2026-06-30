@@ -1,0 +1,11 @@
+// Override left padding for search input
+.gem-c-search__input[type="search"] {
+  padding-left: govuk-spacing(3);
+}
+
+// Increase contrast for search input placeholder
+.gem-c-search__input[type="search"]::placeholder {
+  color: govuk-colour("dark-grey");
+  opacity: 1;
+}
+  
