@@ -108,7 +108,7 @@ en:
         href: "/"
         label: Menu
       navigation_links_columns:
-      - label: Explore categories
+      - label: Browse categories
         menu_contents:
         - label: Banking and finance
           href: "/categories/banking-finance"
