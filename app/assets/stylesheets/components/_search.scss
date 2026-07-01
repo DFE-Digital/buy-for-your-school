@@ -8,4 +8,8 @@
   color: govuk-colour("dark-grey");
   opacity: 1;
 }
-  
+
+// Hide non accessible label error
+.gem-c-search__label--white {
+  display: none;
+}
