@@ -79,6 +79,7 @@ RUN \
 COPY config.ru ${APP_HOME}/config.ru
 COPY Rakefile ${APP_HOME}/Rakefile
 COPY public ${APP_HOME}/public
+COPY vendor ${APP_HOME}/vendor
 COPY bin ${APP_HOME}/bin
 COPY script ${APP_HOME}/script
 COPY lib ${APP_HOME}/lib

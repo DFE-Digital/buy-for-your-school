@@ -25,6 +25,7 @@
 - [Release process](release-process.md)
 - [Roles and Portals](roles-and-portals.md)
 - [Search](search.md)
+- [Update GOV.UK publishing files](update-govuk-publishing-files.md)
 - [Supported Buying Case Management](case-management.md)
 - [Using Git](git.md)
 - [Webhooks](webhooks.md)

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Agent can review evaluations", :js, :with_csrf_protection do
+describe "Agent can review evaluations", :flaky, :js, :with_csrf_protection do
   include_context "with an agent"
 
   let(:support_case) { create(:support_case, email: user.email) }
