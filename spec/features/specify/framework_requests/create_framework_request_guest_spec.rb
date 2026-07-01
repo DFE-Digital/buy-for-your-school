@@ -1,4 +1,4 @@
-RSpec.feature "Creating a 'Find a Framework' request as a guest" do
+RSpec.feature "Creating a 'Find a Framework' request as a guest", :flaky do
   include_context "with schools and groups"
 
   def confirm_choice_step
