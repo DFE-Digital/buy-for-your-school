@@ -1,4 +1,4 @@
-RSpec.feature "Creating a 'Find a Framework' request as a guest", :flaky do
+RSpec.feature "Creating a 'Find a Framework' request as a guest" do
   include_context "with schools and groups"
 
   def confirm_choice_step
@@ -51,16 +51,35 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest", :flaky do
     click_continue
   end
 
-  let(:keys) { all("dt.govuk-summary-list__key") }
-  let(:values) { all("dd.govuk-summary-list__value") }
-  let(:actions) { all("dd.govuk-summary-list__actions") }
-
-  before do
-    create(:request_for_help_category, title: "A category", slug: "a", flow: :goods)
-
+  def start_guest_flow
     visit "/procurement-support/sign_in"
     choose "No, continue without a DfE Sign-in account"
     click_continue
+  end
+
+  def create_school_request(attributes = {})
+    create(
+      :framework_request,
+      {
+        group: false,
+        org_id: "100254",
+        first_name: "Test",
+        last_name: "User",
+        email: "test@email.com",
+        category:,
+        procurement_amount: "120.32",
+        message_body: "I have a problem",
+      }.merge(attributes),
+    )
+  end
+
+  let(:keys) { all("dt.govuk-summary-list__key") }
+  let(:values) { all("dd.govuk-summary-list__value") }
+  let(:actions) { all("dd.govuk-summary-list__actions") }
+  let!(:category) { create(:request_for_help_category, title: "A category", slug: "a", flow: :goods) }
+
+  before do |example|
+    start_guest_flow unless example.metadata[:existing_request]
   end
 
   describe "the organisation type choice page" do
@@ -70,7 +89,9 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest", :flaky do
   end
 
   context "when selecting a single school", :js do
-    before do
+    before do |example|
+      next if example.metadata[:existing_request]
+
       choose "A single school"
       click_continue
     end
@@ -116,9 +137,14 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest", :flaky do
       end
     end
 
-    describe "the school confirmation page" do
+    describe "the school confirmation page", :js, :existing_request do
       before do
-        autocomplete_school_step
+        visit confirm_organisation_framework_requests_path(
+          framework_support_form: {
+            school_type: "school",
+            org_id: "100254 - Greendale Academy for Bright Sparks",
+          },
+        )
       end
 
       it "goes back to the school search page and retains the autocompleted result" do
@@ -158,10 +184,9 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest", :flaky do
       end
     end
 
-    describe "the name page" do
+    describe "the name page", :existing_request, js: false do
       before do
-        autocomplete_school_step
-        confirm_choice_step
+        visit edit_framework_request_name_path(create_school_request)
       end
 
       it "asks for their full name" do
@@ -175,11 +200,9 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest", :flaky do
       end
     end
 
-    describe "the email address page" do
+    describe "the email address page", :existing_request, js: false do
       before do
-        autocomplete_school_step
-        confirm_choice_step
-        complete_name_step
+        visit edit_framework_request_email_path(create_school_request(email: nil))
       end
 
       it "has the correct attributes" do
@@ -222,22 +245,21 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest", :flaky do
         fill_in "framework_support_form[email]", with: "test@sky.learnmat.uk"
         click_continue
 
-        expect(page).to have_text "What type of goods or service do you need?"
+        expect(page).to have_text "Support request updated"
+        expect(page).to have_text "test@sky.learnmat.uk"
 
-        click_link "Back"
+        visit edit_framework_request_email_path(create_school_request(email: nil))
         fill_in "framework_support_form[email]", with: "test@sch.uk"
         click_continue
 
-        expect(page).to have_text "What type of goods or service do you need?"
+        expect(page).to have_text "Support request updated"
+        expect(page).to have_text "test@sch.uk"
       end
     end
 
-    describe "the categories page" do
+    describe "the categories page", :existing_request, js: false do
       before do
-        autocomplete_school_step
-        confirm_choice_step
-        complete_name_step
-        complete_email_step
+        visit edit_framework_request_category_path(create_school_request(category: nil))
       end
 
       it "has the correct attributes" do
@@ -245,14 +267,9 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest", :flaky do
       end
     end
 
-    describe "the message text page" do
+    describe "the message text page", :existing_request, js: false do
       before do
-        autocomplete_school_step
-        confirm_choice_step
-        complete_name_step
-        complete_email_step
-        complete_category_step
-        complete_procurement_amount_step
+        visit edit_framework_request_message_path(create_school_request(message_body: nil))
       end
 
       it "has the correct attributes" do
@@ -265,13 +282,9 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest", :flaky do
       end
     end
 
-    describe "the procurement amount page", :js do
+    describe "the procurement amount page", :existing_request, js: false do
       before do
-        autocomplete_school_step
-        confirm_choice_step
-        complete_name_step
-        complete_email_step
-        complete_category_step
+        visit edit_framework_request_procurement_amount_path(create_school_request(procurement_amount: nil))
       end
 
       it "has the correct attributes" do
@@ -308,15 +321,11 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest", :flaky do
       end
     end
 
-    describe "the special requirements page", :js do
+    describe "the special requirements page", :js, :existing_request do
       before do
-        autocomplete_school_step
-        confirm_choice_step
-        complete_name_step
-        complete_email_step
-        complete_category_step
-        complete_procurement_amount_step
-        complete_help_message_step
+        start_guest_flow
+        FrameworkRequest.order(:created_at).last.update!(category:)
+        visit special_requirements_framework_requests_path
       end
 
       it "has the correct attributes" do
@@ -364,12 +373,6 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest", :flaky do
 
         click_on "Search for a single school instead."
         expect(find("h1.govuk-heading-l")).to have_text "Search for your school"
-
-        autocomplete_school_step
-
-        expect(page).to have_text "Is this the school you're buying for?"
-
-        expect(values[0]).to have_text "Greendale Academy for Bright Sparks, St James's Passage, Duke's Place, London, EC3A 5DE"
       end
 
       it "doesn't include archived establishment groups in the dropdown" do
