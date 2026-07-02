@@ -137,7 +137,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
     end
 
-    describe "the school confirmation page", :js, :existing_request do
+    describe "the school confirmation page", :existing_request, :js do
       before do
         visit confirm_organisation_framework_requests_path(
           framework_support_form: {
@@ -321,7 +321,7 @@ RSpec.feature "Creating a 'Find a Framework' request as a guest" do
       end
     end
 
-    describe "the special requirements page", :js, :existing_request do
+    describe "the special requirements page", :existing_request, :js do
       before do
         start_guest_flow
         FrameworkRequest.order(:created_at).last.update!(category:)
