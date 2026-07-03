@@ -523,7 +523,7 @@ describe "'Check your answers' flows", :js do
         # Back to CYA
         expect(page).to have_text("Check your answers")
         expect(page).not_to have_text("Address for invoice")
-        expect(page).to have_text("paper")
+        expect(page).to have_text("Paper")
       end
     end
 
@@ -556,7 +556,7 @@ describe "'Check your answers' flows", :js do
         # Back to CYA
         expect(page).to have_text("Check your answers")
         expect(page).to have_text("Address for invoice")
-        expect(page).to have_text("paper")
+        expect(page).to have_text("Paper")
       end
     end
   end
