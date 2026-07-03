@@ -1,37 +1,71 @@
-.govuk-template--rebranded .govuk-header__logo {
-  padding-bottom: 0px;
-}
-
-.govuk-service-navigation {
-  .govuk-service-navigation__link:link,
-  .govuk-service-navigation__link:visited,
-  .govuk-service-navigation__active-fallback {
-    color: #1d70b8;
-    font-weight: normal;
-  }
-
-  .govuk-service-navigation__item--active .govuk-service-navigation__link,
-  .govuk-service-navigation__service-name.govuk-service-navigation__item--active .govuk-service-navigation__link,
-  .govuk-service-navigation__active-fallback {
-    font-weight: bold;
-  }
-}
-
-.dfe-header {
-  color: #ffffff;
-  background-color: #1d70b8;
-  padding-bottom: 0px;
-}
-
-.dfe-header__container {
-  align-items: center;
+// govuk rebrand header personalisation for 'Signed in' as
+.govuk-header__container {
   display: flex;
-  flex-wrap: nowrap;
   justify-content: space-between;
+  align-items: center;
+  align-content: space-between;
+  flex-wrap: wrap;
+
+  .govuk-header__signed-in-user {
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding: 10px 0;
+  }
+
+  .govuk-header__logo{
+    flex-basis:50%;
+    flex-grow: 2;
+    flex-shrink: 1;
+  }
 }
 
-.govuk-service-navigation__link {
-  &:focus {
-    color: $govuk-focus-text-colour !important;
+// DfE logo with correct size and focus style
+.govuk-header__link .govuk-header__logotype {
+  height: 30px !important;
+}
+
+.govuk-header__link:focus .govuk-header__logotype {
+  content: url(department-for-education_black.png);
+  height: 30px !important;
+}
+
+// Disable mega menu background on wrapper (misbehaves on wide viewports)
+.govuk-frontend-supported .gem-c-layout-super-navigation-header__nav-wrapper::before {
+  content: none;
+}
+
+// Replacement mega menu background on dropdown menu div only (full screen width)
+.govuk-frontend-supported .gem-c-layout-super-navigation-header__navigation-dropdown-menu {
+  position: relative;
+}
+
+.govuk-frontend-supported .gem-c-layout-super-navigation-header__navigation-dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 50vw);
+  right: calc(50% - 50vw);
+  background: $govuk-rebrand-template-background-colour;
+  box-shadow: 0 1px govuk-colour("mid-grey");
+}
+
+// Ensure mega menu column headers remain visible
+.gem-c-layout-super-navigation-header__column-header {
+  position: relative;
+}
+
+// Second mega menu column header is a blank placeholder, hide it when collapsing to single column
+@include govuk-media-query($until: desktop) {
+  .gem-c-layout-super-navigation-header__navigation-items > div:nth-child(2) {
+    .gem-c-layout-super-navigation-header__column-header {
+      display: none;
+    }
+
+    .gem-c-layout-super-navigation-header__navigation-second-items {
+      padding-top: 0;
+      margin-top: -10px;
+    }
   }
 }

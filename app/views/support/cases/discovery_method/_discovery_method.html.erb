@@ -10,7 +10,6 @@
 		<%= form.govuk_radio_button :discovery_method, '7', label: { text: I18n.t("support.case.label.discovery_method.website") } %>
 		<%= form.govuk_radio_button :discovery_method, '8', label: { text: I18n.t("support.case.label.discovery_method.other") } do %>
 			<%= form.govuk_text_field :discovery_method_other_text,
-						id: "discovery_method_other_text",
 						label: { text: I18n.t("support.case.label.discovery_method.other_text_field") },
 						link_errors: true
 			%>

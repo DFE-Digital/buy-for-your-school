@@ -103,5 +103,5 @@ application.register("external-link-tracking", ExternalLinkTrackingController);
 import InternalLinkTrackingController from "./internal_link_tracking_controller"
 application.register("internal-link-tracking", InternalLinkTrackingController);
 
-import SearchToggleController from "./search_toggle_controller"
-application.register("search-toggle", SearchToggleController);
+import SearchMenuToggleController from "./search_menu_toggle_controller"
+application.register("search-menu-toggle", SearchMenuToggleController)
