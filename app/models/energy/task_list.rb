@@ -269,7 +269,7 @@ private
     Task.new(title: __method__, status:, path:).tap do |t|
       t.add_attribute(:billing_payment_method, case_org, text: case_org.billing_payment_method.present? ? I18n.t("energy.check_your_answers.billing_preferences.#{case_org.billing_payment_method}") : "")
       t.add_attribute(:billing_payment_terms, case_org, text: case_org.billing_payment_terms.present? ? I18n.t("energy.check_your_answers.billing_preferences.#{case_org.billing_payment_terms}") : "")
-      t.add_attribute(:billing_invoicing_method, case_org)
+      t.add_attribute(:billing_invoicing_method, case_org, text: case_org.billing_invoicing_method.present? ? I18n.t("energy.check_your_answers.billing_preferences.#{case_org.billing_invoicing_method}") : "")
 
       if case_org.billing_invoicing_method == "email"
         t.add_attribute(:billing_invoicing_email, case_org)
