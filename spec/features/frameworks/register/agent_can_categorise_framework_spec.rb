@@ -14,7 +14,8 @@ describe "Agent can categorise framework" do
     click_on "Save changes"
 
     within ".govuk-summary-card", text: "Basic Details" do
-      expect(page).to have_content("Laptops, Electricity")
+      expect(page).to have_content("Laptops")
+      expect(page).to have_content("Electricity")
     end
 
     within "#framework-activity" do
