@@ -7,10 +7,12 @@
         <h1 class="govuk-panel__title">
           <%= I18n.t("faf_submissions.header.confirmation") %>
         </h1>
-        <div class="govuk-panel__body">
-          <%= I18n.t("faf_submissions.sub_header.confirmation") %>
-          <br><strong><%= @framework_request.email %></strong>
-        </div>
+        <% if @email.present? %>
+          <div class="govuk-panel__body">
+            <%= I18n.t("faf_submissions.sub_header.confirmation") %>
+            <br><strong><%= @email %></strong>
+          </div>
+        <% end %>
       </div>
 
       <% if @framework_request.flow.energy? %>

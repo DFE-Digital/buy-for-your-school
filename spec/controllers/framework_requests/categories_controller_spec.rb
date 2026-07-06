@@ -111,6 +111,26 @@ describe FrameworkRequests::CategoriesController, type: :controller do
     end
   end
 
+  describe "submitted request redirects" do
+    let(:framework_request) { create(:framework_request, submitted: true, category:, group:, org_id:) }
+
+    describe "on edit" do
+      before { get :edit, params: { id: framework_request.id } }
+
+      it "redirects to the submission confirmation page" do
+        expect(response).to redirect_to("/procurement-support-submissions/#{framework_request.id}")
+      end
+    end
+
+    describe "on update" do
+      before { patch :update, params: { id: framework_request.id, framework_support_form: { category_slug: nil } } }
+
+      it "redirects to the submission confirmation page" do
+        expect(response).to redirect_to("/procurement-support-submissions/#{framework_request.id}")
+      end
+    end
+  end
+
   describe "on create" do
     context "when the user has not chosen a category" do
       before { post :create, params: { framework_support_form: { category_slug: nil } }, session: { framework_request_id: framework_request.id } }

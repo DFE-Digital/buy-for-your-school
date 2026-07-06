@@ -8,6 +8,19 @@ describe FrameworkRequests::DocumentUploadsController, type: :controller do
       post(:create)
       expect(response).to redirect_to "/procurement-support/special_requirements"
     end
+
+    context "when the request is already submitted" do
+      let(:framework_request) { create(:framework_request, submitted: true, category: create(:request_for_help_category, flow: "services")) }
+
+      before do
+        allow(controller).to receive(:framework_request).and_return(FrameworkRequestPresenter.new(framework_request))
+        post(:create, session: { framework_request_id: framework_request.id })
+      end
+
+      it "redirects to the submission confirmation page" do
+        expect(response).to redirect_to("/procurement-support-submissions/#{framework_request.id}")
+      end
+    end
   end
 
   describe "on update" do
@@ -19,6 +32,34 @@ describe FrameworkRequests::DocumentUploadsController, type: :controller do
 
     it "redirects to the check-your-answers page" do
       expect(response).to redirect_to("/procurement-support/#{framework_request.id}")
+    end
+  end
+
+  describe "submitted request redirects" do
+    let(:framework_request) { create(:framework_request, submitted: true, category: create(:request_for_help_category, flow: "services")) }
+
+    it "redirects list requests to the submission confirmation page" do
+      allow(controller).to receive(:framework_request).and_return(FrameworkRequestPresenter.new(framework_request))
+      get(:list, params: { id: framework_request.id })
+      expect(response).to redirect_to("/procurement-support-submissions/#{framework_request.id}")
+    end
+
+    it "redirects upload requests to the submission confirmation page" do
+      allow(controller).to receive(:framework_request).and_return(FrameworkRequestPresenter.new(framework_request))
+      post(:upload, params: { id: framework_request.id })
+      expect(response).to redirect_to("/procurement-support-submissions/#{framework_request.id}")
+    end
+
+    it "redirects remove requests to the submission confirmation page" do
+      allow(controller).to receive(:framework_request).and_return(FrameworkRequestPresenter.new(framework_request))
+      delete(:remove, params: { id: framework_request.id, file_id: "123" })
+      expect(response).to redirect_to("/procurement-support-submissions/#{framework_request.id}")
+    end
+
+    it "redirects edit requests to the submission confirmation page" do
+      allow(controller).to receive(:framework_request).and_return(FrameworkRequestPresenter.new(framework_request))
+      get(:edit, params: { id: framework_request.id })
+      expect(response).to redirect_to("/procurement-support-submissions/#{framework_request.id}")
     end
   end
 

@@ -1,5 +1,6 @@
 module FrameworkRequests
   class BaseController < ApplicationController
+    prepend_before_action :redirect_if_submitted, except: %i[index]
     before_action :form, only: %i[index create update edit]
     before_action :back_url, except: %i[edit]
     before_action :framework_request, only: %i[edit]
@@ -72,6 +73,12 @@ module FrameworkRequests
       return sign_in_framework_requests_path(framework_support_form: @form.common, back_to: current_url_b64) if current_user.guest?
 
       confirm_sign_in_framework_requests_path
+    end
+
+    def redirect_if_submitted
+      return unless framework_request.submitted?
+
+      redirect_to framework_request_submission_path(framework_request)
     end
 
     def flow
