@@ -45,8 +45,12 @@ module FrameworkRequests
       ], *form_params).merge(id: framework_request_id, user: current_user)
     end
 
+    def framework_request_record
+      @framework_request_record ||= FrameworkRequest.find(framework_request_id)
+    end
+
     def framework_request
-      @framework_request ||= FrameworkRequestPresenter.new(FrameworkRequest.find(framework_request_id))
+      @framework_request ||= FrameworkRequestPresenter.new(framework_request_record)
     end
 
     def framework_request_id
@@ -76,9 +80,9 @@ module FrameworkRequests
     end
 
     def redirect_if_submitted
-      return unless framework_request.submitted?
+      return unless framework_request_record.submitted?
 
-      redirect_to framework_request_submission_path(framework_request)
+      redirect_to framework_request_submission_path(framework_request_record)
     end
 
     def flow
