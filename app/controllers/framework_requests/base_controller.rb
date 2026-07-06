@@ -31,6 +31,13 @@ module FrameworkRequests
 
   private
 
+    def redirect_if_submitted
+      framework_request_record = FrameworkRequest.find(framework_request_id)
+      return unless framework_request_record.submitted?
+
+      redirect_to framework_request_submission_path(framework_request_record)
+    end
+
     def form
       @form ||= FrameworkRequests::BaseForm.new(all_form_params)
     end
@@ -45,12 +52,8 @@ module FrameworkRequests
       ], *form_params).merge(id: framework_request_id, user: current_user)
     end
 
-    def framework_request_record
-      @framework_request_record ||= FrameworkRequest.find(framework_request_id)
-    end
-
     def framework_request
-      @framework_request ||= FrameworkRequestPresenter.new(framework_request_record)
+      @framework_request ||= FrameworkRequestPresenter.new(FrameworkRequest.find(framework_request_id))
     end
 
     def framework_request_id
@@ -77,12 +80,6 @@ module FrameworkRequests
       return sign_in_framework_requests_path(framework_support_form: @form.common, back_to: current_url_b64) if current_user.guest?
 
       confirm_sign_in_framework_requests_path
-    end
-
-    def redirect_if_submitted
-      return unless framework_request_record.submitted?
-
-      redirect_to framework_request_submission_path(framework_request_record)
     end
 
     def flow
