@@ -73,13 +73,27 @@ module FABS
       new(entry)
     end
 
-    def filtered_solutions(subcategory_slugs: nil)
-      return solutions if subcategory_slugs.blank?
+    def filtered_solutions(subcategory_slugs: nil, ways_to_buy_slugs: nil)
+      return solutions if subcategory_slugs.blank? && ways_to_buy_slugs.blank?
 
       solutions.select do |solution|
-        solution.subcategories&.any? do |subcat|
-          subcategory_slugs.include?(subcat.fields[:slug])
-        end
+        subcategory_match =
+          if subcategory_slugs.present?
+            solution.subcategories&.any? do |subcategory|
+              subcategory_slugs.include?(subcategory.fields[:slug])
+            end
+          else
+            true
+          end
+
+        ways_to_buy_match =
+          if ways_to_buy_slugs.present?
+            ways_to_buy_slugs.include?(solution.ways_to_buy&.fields&.[](:slug))
+          else
+            true
+          end
+
+        subcategory_match && ways_to_buy_match
       end
     end
   end

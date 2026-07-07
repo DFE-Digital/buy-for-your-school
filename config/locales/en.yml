@@ -93,6 +93,9 @@ en:
       not_sure_title: Not sure where to start?
       not_sure_body: Our buying team can help you choose the right way to buy for your school
       expert_help_button: Get expert buying help
+    show:
+      apply_filters: Apply filers
+      ways_to_buy: Ways to buy
   case_requests:
     validation:
       discovery_method: Case origin is missing
