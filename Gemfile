@@ -18,7 +18,7 @@ gem "contentful", "~> 2.19"
 gem "contentful-management", require: false
 gem "crawler_detect"
 gem "cssbundling-rails", "~> 1.4"
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.12"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.17"
 gem "dry-struct"
 gem "dry-transformer"
 gem "dry-validation"
