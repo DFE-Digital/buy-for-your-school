@@ -20,6 +20,6 @@
 <% end %>
 
 <% content_for :sidebar do %>
-  <%= render partial: "shared/right_filters", locals: { subcategories: @subcategories, category: @category, solutions: @solutions } %>
+  <%= render partial: "shared/right_filters", locals: { subcategories: @subcategories, category: @category, solutions: @solutions, ways_to_buy: @ways_to_buy } %>
   <%= render partial: "shared/related_content", locals: { related_content: @category.related_content } %>
 <% end %>

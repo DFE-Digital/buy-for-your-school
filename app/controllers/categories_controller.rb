@@ -1,5 +1,6 @@
 class CategoriesController < Fabs::ApplicationController
   before_action :disable_search_in_header, only: :index
+  before_action :ways_to_buy, only: :show
 
   def index
     @categories = FABS::Category.all
@@ -11,11 +12,12 @@ class CategoriesController < Fabs::ApplicationController
   def show
     add_breadcrumb_on_rails :home_breadcrumb_name, :root_path
 
-    @category = FABS::Category.find_by_slug!(params[:slug])
-    @subcategories = @category.subcategories
+    @subcategories = category.subcategories
     @selected_subcategories = @subcategories.select { |subcategory| params[:subcategory_slugs]&.include?(subcategory.slug) }
-    @solutions = @category.filtered_solutions(subcategory_slugs: params[:subcategory_slugs]&.compact_blank)
+
+    @solutions = @category.filtered_solutions(subcategory_slugs: params[:subcategory_slugs]&.compact_blank, ways_to_buy_slugs: params[:ways_to_buy_slugs]&.compact_blank)
     @dfe_solutions, @other_solutions = @solutions.partition(&:buying_option_type)
+
     @page_section_title = t(".section_title")
     @page_header_class = "category-header"
     @page_title = @category.title
@@ -26,6 +28,14 @@ class CategoriesController < Fabs::ApplicationController
   end
 
 private
+
+  def category
+    @category ||= FABS::Category.find_by_slug!(params[:slug])
+  end
+
+  def ways_to_buy
+    @ways_to_buy ||= category.solutions.map(&:ways_to_buy).compact.map { |entry| WaysToBuy.new(entry) }.sort_by(&:title).uniq(&:title)
+  end
 
   def disable_search_in_header
     @show_search_in_header = false
