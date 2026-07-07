@@ -21,7 +21,7 @@ You agree to use the Service:
 
 We may update the Service at any time. Changes or removal of content may happen without notice.
 
-Access to certain parts of the service, such as the '[Create a specification for your school](https://www.get-help-buying-for-schools.service.gov.uk/)' tool requires the use of [DfE Sign-In](https://services.signin.education.gov.uk/). DfE Sign-In has its own [Terms and Conditions](https://interactions.signin.education.gov.uk/terms).
+Access to certain parts of the service, such as the '[Create a specification for your school](https://get-help-buying-for-schools.education.gov.uk/)' tool requires the use of [DfE Sign-In](https://services.signin.education.gov.uk/). DfE Sign-In has its own [Terms and Conditions](https://interactions.signin.education.gov.uk/terms).
 
 Keep your passwords and access codes secure and confidential and do not share them with others.
 

@@ -10,9 +10,9 @@ These tender documents can then be used to start a procurement process saving sc
 
 |Environment|URL|
 |-|-|
-|Production|https://www.get-help-buying-for-schools.service.gov.uk|
-|Staging|https://staging.get-help-buying-for-schools.service.gov.uk|
-|Development|https://dev.get-help-buying-for-schools.service.gov.uk|
+|Production|https://get-help-buying-for-schools.education.gov.uk|
+|Staging|https://staging.get-help-buying-for-schools.education.gov.uk|
+|Development|https://dev.get-help-buying-for-schools.education.gov.uk|
 
 ## Getting Started with Development
 

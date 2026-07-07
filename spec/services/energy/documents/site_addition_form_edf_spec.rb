@@ -51,135 +51,122 @@ RSpec.describe Energy::Documents::SiteAdditionFormEdf, type: :model do
 
     after { FileUtils.rm_f(service.output_file_xl) }
 
-    describe "creates site addition details on xl document" do
-      before do
-        energy_electricity_meter
-        service.call
-      end
+    it "creates site addition details for a single meter" do
+      energy_electricity_meter
+      service.call
 
-      it "creates new xl file" do
+      row = worksheet[starting_row]
+
+      aggregate_failures "file output" do
         expect(File.exist?(service.output_file_xl)).to be true
       end
 
-      context "with site and billing addresses" do
-        context "when single school" do
-          it "matches site details and address" do
-            expect(worksheet[starting_row][0].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_NAME)
-            expect(worksheet[starting_row][1].value).to eq(support_organisation.name)
+      aggregate_failures "site details and address" do
+        site_address_line2 = "#{support_organisation.address['street']}, #{support_organisation.address['locality']}"
 
-            site_address_line2 = "#{support_organisation.address['street']}, #{support_organisation.address['locality']}"
-            expect(worksheet[starting_row][2].value).to eq(site_address_line2)
-            expect(worksheet[starting_row][4].value).to eq(support_organisation.address["postcode"])
-          end
-
-          it "matches billing address" do
-            expect(worksheet[starting_row][5].value).to eq(support_organisation.name)
-
-            billing_address_line2 = "#{input_values[:billing_invoice_address][:street]}, #{input_values[:billing_invoice_address][:locality]}"
-            expect(worksheet[starting_row][6].value).to eq(billing_address_line2)
-            expect(worksheet[starting_row][7].value).to eq(input_values[:billing_invoice_address][:town])
-            expect(worksheet[starting_row][8].value).to eq(input_values[:billing_invoice_address][:postcode])
-          end
-        end
+        expect(row[0].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_NAME)
+        expect(row[1].value).to eq(support_organisation.name)
+        expect(row[2].value).to eq(site_address_line2)
+        expect(row[4].value).to eq(support_organisation.address["postcode"])
       end
 
-      it "matches contract dates" do
-        expect(worksheet[starting_row][9].value).to eq(electricity_end_date.strftime("%d/%m/%Y"))
-        expect(worksheet[starting_row][10].value).to eq((electricity_end_date + 1.day).strftime("%d/%m/%Y"))
+      aggregate_failures "billing address" do
+        billing_address_line2 = "#{input_values[:billing_invoice_address][:street]}, #{input_values[:billing_invoice_address][:locality]}"
+
+        expect(row[5].value).to eq(support_organisation.name)
+        expect(row[6].value).to eq(billing_address_line2)
+        expect(row[7].value).to eq(input_values[:billing_invoice_address][:town])
+        expect(row[8].value).to eq(input_values[:billing_invoice_address][:postcode])
       end
 
-      context "with bacs" do
-        it "matches payment details" do
-          expect(worksheet[starting_row][18].value).to eq("BACS")
-          expect(worksheet[starting_row][19].value).to eq("14")
-          expect(worksheet[starting_row][20].value).to eq("Standard")
-          expect(worksheet[starting_row][21].value).to eq("Yes")
-        end
+      aggregate_failures "contract dates" do
+        expect(row[9].value).to eq(electricity_end_date.strftime("%d/%m/%Y"))
+        expect(row[10].value).to eq((electricity_end_date + 1.day).strftime("%d/%m/%Y"))
       end
 
-      context "with direct debit" do
-        let(:payment_method) { :direct_debit }
-        let(:payment_term) { :days21 }
-        let(:is_bill_consolidated) { false }
-
-        it "matches payment details" do
-          expect(worksheet[starting_row][18].value).to eq("Direct Debit")
-          expect(worksheet[starting_row][19].value).to eq("21")
-          expect(worksheet[starting_row][21].value).to eq("No")
-        end
+      aggregate_failures "meter details" do
+        expect(onboarding_case_organisation.electricity_meters.count).to eq(1)
+        expect(row[11].value).to eq(electricity_meter_values[:mpan])
+        expect(row[12].value).to eq("HH")
+        expect(row[13].value).to eq(electricity_meter_values[:supply_capacity])
+        expect(row[14].value).to eq(electricity_meter_values[:electricity_usage])
+        expect(row[15].value).to eq(electricity_meter_values[:data_aggregator])
+        expect(row[16].value).to eq(electricity_meter_values[:data_collector])
+        expect(row[17].value).to eq(electricity_meter_values[:meter_operator])
       end
 
-      it "matches key business contact details" do
-        expect(worksheet[starting_row][22].value).to eq("Annette Harrison")
-        expect(worksheet[starting_row][24].value).to eq("Department for Education")
-        expect(worksheet[starting_row][27].value).to eq("SW1P 3BT")
+      aggregate_failures "payment details" do
+        expect(row[18].value).to eq("BACS")
+        expect(row[19].value).to eq("14")
+        expect(row[20].value).to eq("Standard")
+        expect(row[21].value).to eq("Yes")
+      end
+
+      aggregate_failures "key business contact details" do
+        expect(row[22].value).to eq("Annette Harrison")
+        expect(row[24].value).to eq("Department for Education")
+        expect(row[27].value).to eq("SW1P 3BT")
       end
     end
 
-    describe "single meter" do
-      before do
+    context "with direct debit" do
+      let(:payment_method) { :direct_debit }
+      let(:payment_term) { :days21 }
+      let(:is_bill_consolidated) { false }
+
+      it "matches payment details" do
         energy_electricity_meter
         service.call
-      end
 
-      context "with single meter" do
-        it "matches meter details" do
-          expect(onboarding_case_organisation.electricity_meters.count).to eq(1)
+        row = worksheet[starting_row]
 
-          expect(worksheet[starting_row][11].value).to eq(electricity_meter_values[:mpan])
-          expect(worksheet[starting_row][12].value).to eq("HH")
-          expect(worksheet[starting_row][13].value).to eq(electricity_meter_values[:supply_capacity])
-          expect(worksheet[starting_row][14].value).to eq(electricity_meter_values[:electricity_usage])
-
-          expect(worksheet[starting_row][15].value).to eq(electricity_meter_values[:data_aggregator])
-          expect(worksheet[starting_row][16].value).to eq(electricity_meter_values[:data_collector])
-          expect(worksheet[starting_row][17].value).to eq(electricity_meter_values[:meter_operator])
+        aggregate_failures "payment details" do
+          expect(row[18].value).to eq("Direct Debit")
+          expect(row[19].value).to eq("21")
+          expect(row[21].value).to eq("No")
         end
       end
     end
 
-    describe "multi meter" do
-      context "with multiple meters" do
-        let(:meter_type) { :multi }
-        let(:onboarding_case) { create(:onboarding_case, support_case:) }
-        let(:another_onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_organisation, **input_values) }
-        let(:electicity_meter1) { create(:energy_electricity_meter, :another_meter, onboarding_case_organisation: another_onboarding_case_organisation) }
-        let(:electicity_meter2) { create(:energy_electricity_meter, :another_meter, onboarding_case_organisation: another_onboarding_case_organisation) }
+    context "with multiple meters" do
+      let(:meter_type) { :multi }
+      let(:another_onboarding_case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_organisation, **input_values) }
+      let(:electricity_meter1) { create(:energy_electricity_meter, :another_meter, onboarding_case_organisation: another_onboarding_case_organisation) }
+      let(:electricity_meter2) { create(:energy_electricity_meter, :another_meter, onboarding_case_organisation: another_onboarding_case_organisation) }
 
-        before do
-          electicity_meter1
-          electicity_meter2
-          service.call
-        end
+      it "creates site addition details for each meter" do
+        electricity_meter1
+        electricity_meter2
+        service.call
 
-        it "2 meter rows for meter details" do
+        first_row = worksheet[starting_row]
+        second_row = worksheet[starting_row + 1]
+
+        aggregate_failures "meter count" do
           expect(another_onboarding_case_organisation.electricity_meters.count).to eq(2)
         end
 
-        it "has same organisation details on each row" do
-          expect(worksheet[starting_row][0].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_NAME)
-          expect(worksheet[starting_row + 1][0].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_NAME)
+        aggregate_failures "organisation details" do
+          expect(first_row[0].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_NAME)
+          expect(second_row[0].value).to eq(Energy::Documents::SiteAdditionForm::CUSTOMER_NAME)
         end
 
-        it "has same site details and address on each row" do
-          expect(worksheet[starting_row][1].value).to eq(support_organisation.name)
-          expect(worksheet[starting_row + 1][1].value).to eq(support_organisation.name)
-
-          expect(worksheet[starting_row][4].value).to eq(support_organisation.address["postcode"])
-          expect(worksheet[starting_row + 1][4].value).to eq(support_organisation.address["postcode"])
+        aggregate_failures "site details and address" do
+          expect(first_row[1].value).to eq(support_organisation.name)
+          expect(second_row[1].value).to eq(support_organisation.name)
+          expect(first_row[4].value).to eq(support_organisation.address["postcode"])
+          expect(second_row[4].value).to eq(support_organisation.address["postcode"])
         end
 
-        it "has multiple rows for each meter" do
-          expect(worksheet[starting_row][11].value).to eq(electicity_meter1.mpan)
-          expect(worksheet[starting_row + 1][11].value).to eq(electicity_meter2.mpan)
+        aggregate_failures "meter details" do
+          expect(first_row[11].value).to eq(electricity_meter1.mpan)
+          expect(second_row[11].value).to eq(electricity_meter2.mpan)
           expect(worksheet[starting_row + 2][11].value).to be_nil
-
-          expect(worksheet[starting_row][13].value).to eq(electicity_meter1.supply_capacity)
-          expect(worksheet[starting_row + 1][13].value).to eq(electicity_meter2.supply_capacity)
+          expect(first_row[13].value).to eq(electricity_meter1.supply_capacity)
+          expect(second_row[13].value).to eq(electricity_meter2.supply_capacity)
           expect(worksheet[starting_row + 2][13].value).to be_nil
-
-          expect(worksheet[starting_row][14].value).to eq(electicity_meter1.electricity_usage)
-          expect(worksheet[starting_row + 1][14].value).to eq(electicity_meter2.electricity_usage)
+          expect(first_row[14].value).to eq(electricity_meter1.electricity_usage)
+          expect(second_row[14].value).to eq(electricity_meter2.electricity_usage)
           expect(worksheet[starting_row + 3][14].value).to be_nil
         end
       end

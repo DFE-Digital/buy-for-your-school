@@ -2,6 +2,13 @@
 
 @import "./base/frontend";
 @import "./base/misc";
+
+@import "govuk_publishing_components/components/mixins/index";
+@import "govuk_publishing_components/components/helpers/colours";
+@import "govuk_publishing_components/components/helpers/brand-colours";
+@import "govuk_publishing_components/components/layout-super-navigation-header";
+@import "govuk_publishing_components/components/search";
+
 @import "./components/activity-log";
 @import "./components/supported/procurement-stage-colours";
 @import "./components/govuk-radios-small";
@@ -38,9 +45,9 @@
 @import "./components/homepage";
 @import "./components/sidebar";
 @import "./components/filter";
+@import "./components/banner";
 @import "./components/header";
 @import "./components/search";
-@import "./components/banner";
 
 
 // Panel overrides
@@ -89,36 +96,4 @@
 .govuk-prototype-kit-common-templates-related-items {
   border-top: 2px solid #1d70b8;
   padding-top: 10px;
-}
-
-// govuk rebrand header personalisation for 'Signed in' as
-.govuk-header__container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-content: space-between;
-  flex-wrap: wrap;
-
-  .govuk-header__signed-in-user {
-    font-size: 16px;
-    line-height: 1;
-    flex-shrink: 0;
-    padding: 10px 0;
-  }
-
-  .govuk-header__logo{
-    flex-basis:50%;
-    flex-grow: 2;
-    flex-shrink: 1;
-  }
-}
-
-// dfe logo correct size and focus
-.govuk-header__link .govuk-header__logotype {
-  height: 30px;
-}
-
-.govuk-header__link:focus .govuk-header__logotype {
-  content: url(department-for-education_black.png);
-  height: 30px;
 }

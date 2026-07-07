@@ -21,7 +21,7 @@ end
 ```
 
 ## Enabling / Disabling feature flags
-Visit https://`<your-environment>`/flipper e.g. https://www.get-help-buying-for-schools.service.gov.uk/flipper and enter the username and password for feature flag access.
+Visit https://`<your-environment>`/flipper e.g. https://get-help-buying-for-schools.education.gov.uk/flipper and enter the username and password for feature flag access.
 
 The username and password for each environment can be found in Azure within each container app (e.g., `devghbs-buyforyourschool`) in the secrets section of settings on the left hand side.
 

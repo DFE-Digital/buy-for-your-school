@@ -50,17 +50,17 @@ RSpec.describe ApplicationHelper, type: :helper do
 
     context "with get-help-buying-for-schools URLs" do
       it "converts staging and service URLs to fully qualified application URLs" do
-        result = helper.fabs_govuk_link_to("Energy", "https://staging.get-help-buying-for-schools.service.gov.uk/energy/before-you-start")
+        result = helper.fabs_govuk_link_to("Energy", "https://staging.get-help-buying-for-schools.education.gov.uk/energy/before-you-start")
         expect(result).to include('href="https://get-help-buying-for-schools.education.gov.uk/energy/before-you-start"')
       end
 
       it "preserves query strings and fragments when converting to application URLs" do
-        result = helper.fabs_govuk_link_to("Energy", "https://staging.get-help-buying-for-schools.service.gov.uk/energy/before-you-start?source=email#start")
+        result = helper.fabs_govuk_link_to("Energy", "https://staging.get-help-buying-for-schools.education.gov.uk/energy/before-you-start?source=email#start")
         expect(result).to include('href="https://get-help-buying-for-schools.education.gov.uk/energy/before-you-start?source=email#start"')
       end
 
       it "does not treat converted URLs as external" do
-        result = helper.fabs_govuk_link_to("Energy", "https://staging.get-help-buying-for-schools.service.gov.uk/energy/before-you-start")
+        result = helper.fabs_govuk_link_to("Energy", "https://staging.get-help-buying-for-schools.education.gov.uk/energy/before-you-start")
 
         expect(result).not_to include('rel="noopener noreferrer"')
         expect(result).not_to include('target="_blank"')

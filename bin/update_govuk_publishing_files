@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readonly APP_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly SOURCE_REPO_URL="https://github.com/alphagov/govuk_publishing_components.git"
+readonly SOURCE_VERSION="66.5.0"
+readonly SOURCE_REF="v${SOURCE_VERSION}"
+readonly CHECKOUT_ROOT="${APP_ROOT}/tmp/govuk_publishing_components"
+readonly LIB_ROOT="${APP_ROOT}/lib"
+readonly VENDOR_STYLESHEETS_ROOT="${APP_ROOT}/vendor/assets/stylesheets"
+readonly VENDOR_IMAGES_ROOT="${APP_ROOT}/vendor/assets/images"
+
+# Keep this list tight. We only want the Sass needed for the super navigation
+# header and search components plus the tiny asset dependency referenced by
+# search.scss.
+readonly STYLESHEET_PATHS=(
+  "app/assets/stylesheets/govuk_publishing_components/_base.scss"
+  "app/assets/stylesheets/govuk_publishing_components/settings/_index.scss"
+  "app/assets/stylesheets/govuk_publishing_components/settings/_app-font-url.scss"
+  "app/assets/stylesheets/govuk_publishing_components/settings/_app-image-url.scss"
+  "app/assets/stylesheets/govuk_publishing_components/settings/_colours.scss"
+  "app/assets/stylesheets/govuk_publishing_components/settings/_typography.scss"
+  "app/assets/stylesheets/govuk_publishing_components/components/_layout-super-navigation-header.scss"
+  "app/assets/stylesheets/govuk_publishing_components/components/_search.scss"
+  "app/assets/stylesheets/govuk_publishing_components/components/helpers/_colours.scss"
+  "app/assets/stylesheets/govuk_publishing_components/components/helpers/_brand-colours.scss"
+  "app/assets/stylesheets/govuk_publishing_components/components/mixins/_index.scss"
+  "app/assets/stylesheets/govuk_publishing_components/components/mixins/_grid-helper.scss"
+  "app/assets/stylesheets/govuk_publishing_components/components/mixins/_margins.scss"
+  "app/assets/stylesheets/govuk_publishing_components/components/mixins/_prefixed-transform.scss"
+  "app/assets/stylesheets/govuk_publishing_components/components/mixins/_scale.scss"
+  "app/assets/stylesheets/govuk_publishing_components/lib/_link.scss"
+  "app/assets/stylesheets/govuk_publishing_components/lib/_print_support.scss"
+)
+
+readonly IMAGE_PATHS=(
+  "app/assets/images/govuk_publishing_components/icon-close.svg"
+)
+
+readonly RUBY_PATHS=(
+  "lib/govuk_publishing_components/presenters/component_wrapper_helper.rb"
+  "lib/govuk_publishing_components/presenters/shared_helper.rb"
+)
+
+checkout_repo() {
+  if [[ -d "${CHECKOUT_ROOT}/.git" ]]; then
+    git -C "${CHECKOUT_ROOT}" fetch --tags origin
+  else
+    git clone --depth 1 --filter=blob:none --sparse "${SOURCE_REPO_URL}" "${CHECKOUT_ROOT}"
+  fi
+
+  git -C "${CHECKOUT_ROOT}" sparse-checkout set \
+    "app/assets/stylesheets/govuk_publishing_components" \
+    "app/assets/images/govuk_publishing_components" \
+    "lib/govuk_publishing_components/presenters"
+
+  git -C "${CHECKOUT_ROOT}" fetch --tags origin
+  git -C "${CHECKOUT_ROOT}" checkout --force "${SOURCE_REF}"
+}
+
+copy_path() {
+  local checkout_root="$1"
+  local source_root="$2"
+  local source_path="$3"
+  local destination_root="$4"
+
+  local relative_path="${source_path#${source_root}/}"
+  local destination_path="${destination_root}/${relative_path}"
+
+  mkdir -p "$(dirname "${destination_path}")"
+  cp -p "${checkout_root}/${source_path}" "${destination_path}"
+}
+
+main() {
+  if [[ -n "${GOVUK_PUBLISHING_COMPONENTS_CHECKOUT_ROOT:-}" ]]; then
+    if [[ ! -d "${GOVUK_PUBLISHING_COMPONENTS_CHECKOUT_ROOT}" ]]; then
+      echo "GOVUK_PUBLISHING_COMPONENTS_CHECKOUT_ROOT does not exist: ${GOVUK_PUBLISHING_COMPONENTS_CHECKOUT_ROOT}" >&2
+      exit 1
+    fi
+
+    echo "Using existing checkout at ${GOVUK_PUBLISHING_COMPONENTS_CHECKOUT_ROOT}"
+  else
+    echo "Checking out govuk_publishing_components ${SOURCE_REF} into ${CHECKOUT_ROOT}"
+    checkout_repo
+  fi
+
+  local checkout_root="${CHECKOUT_ROOT}"
+  if [[ -n "${GOVUK_PUBLISHING_COMPONENTS_CHECKOUT_ROOT:-}" ]]; then
+    checkout_root="${GOVUK_PUBLISHING_COMPONENTS_CHECKOUT_ROOT}"
+  fi
+
+  echo "Copying Sass assets to vendor/assets/stylesheets"
+  rm -rf "${VENDOR_STYLESHEETS_ROOT}/govuk_publishing_components"
+  for path in "${STYLESHEET_PATHS[@]}"; do
+    copy_path "${checkout_root}" "app/assets/stylesheets" "${path}" "${VENDOR_STYLESHEETS_ROOT}"
+  done
+
+  echo "Copying image assets to vendor/assets/images"
+  rm -rf "${VENDOR_IMAGES_ROOT}/govuk_publishing_components"
+  for path in "${IMAGE_PATHS[@]}"; do
+    copy_path "${checkout_root}" "app/assets/images" "${path}" "${VENDOR_IMAGES_ROOT}"
+  done
+
+  echo "Copying Ruby helpers to lib"
+  for path in "${RUBY_PATHS[@]}"; do
+    copy_path "${checkout_root}" "lib" "${path}" "${LIB_ROOT}"
+  done
+
+  echo "Done."
+  echo "Checkout retained at ${checkout_root}"
+}
+
+main "$@"

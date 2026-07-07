@@ -51,6 +51,12 @@ describe Support::SyncFrameworks do
         let(:provider_detail) { create(:frameworks_provider, short_name: "ABC") }
         let!(:existing_framework) { create(:frameworks_framework, name: framework_1_name, provider_id: provider_detail.id, faf_slug_ref: "ref-1", faf_category: "Energy", provider_end_date: Date.parse(old_expiry_date), url: testurl1, description: "Desc", source: 2, status: "dfe_approved") }
 
+        around do |example|
+          travel_to(Time.zone.local(2026, 6, 1)) do
+            example.run
+          end
+        end
+
         it "creates new frameworks and updates existing ones" do
           expect { service.call }.to change(Frameworks::Framework, :count).from(1).to(2)
           .and(change { existing_framework.reload.provider_end_date }.from(Date.parse(old_expiry_date)).to(Date.parse(framework_1_expiry)))

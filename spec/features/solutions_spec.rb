@@ -72,7 +72,7 @@ RSpec.describe "Solutions pages", :vcr, type: :feature do
       survey_url = link["href"]
       uri = URI.parse(survey_url)
 
-      expect(uri.host).to eq("www.get-help-buying-for-schools.service.gov.uk")
+      expect(uri.host).to eq("get-help-buying-for-schools.education.gov.uk")
       expect(survey_url).to include("service=find_a_buying_solution")
       expect(survey_url).to match(/return_url=[^&]+/)
     end
