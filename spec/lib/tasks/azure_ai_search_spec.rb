@@ -8,6 +8,7 @@ RSpec.describe "Azure AI search tasks" do
 
   after do
     Rake::Task["azure_ai_search:create_index"].reenable
+    Rake::Task["azure_ai_search:delete_index"].reenable
     Rake::Task["azure_ai_search:index"].reenable
     Rake::Task["azure_ai_search:count"].reenable
     Rake::Task["azure_ai_search:clear"].reenable
@@ -47,6 +48,45 @@ RSpec.describe "Azure AI search tasks" do
 
         expect { invoke_task }
           .to output("Azure AI Search index solution-data already exists.\n")
+          .to_stdout
+      end
+    end
+  end
+
+  describe "azure_ai_search:delete_index" do
+    subject(:invoke_task) { Rake::Task["azure_ai_search:delete_index"].invoke }
+
+    let(:client) { instance_double(AzureAiSearch::Client) }
+
+    before do
+      allow(AzureAiSearch::Client).to receive(:new).and_return(client)
+    end
+
+    context "when the index exists" do
+      before do
+        allow(client).to receive(:index_exists?).with(index_name: "solution-data").and_return(true)
+        allow(client).to receive(:delete_index)
+      end
+
+      it "deletes the index" do
+        expect(client).to receive(:delete_index).with(index_name: "solution-data")
+
+        expect { invoke_task }
+          .to output("Deleting Azure AI Search index solution-data...\nDeleted Azure AI Search index solution-data.\n")
+          .to_stdout
+      end
+    end
+
+    context "when the index does not exist" do
+      before do
+        allow(client).to receive(:index_exists?).with(index_name: "solution-data").and_return(false)
+      end
+
+      it "does not attempt to delete the index" do
+        expect(client).not_to receive(:delete_index)
+
+        expect { invoke_task }
+          .to output("Azure AI Search index solution-data does not exist.\n")
           .to_stdout
       end
     end

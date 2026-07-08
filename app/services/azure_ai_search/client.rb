@@ -36,6 +36,10 @@ module AzureAiSearch
       post(path: "/indexes", body:)
     end
 
+    def delete_index(index_name:)
+      delete(path: "/indexes('#{index_name}')")
+    end
+
     def index_exists?(index_name:)
       get(path: "/indexes('#{index_name}')")
       true
@@ -49,6 +53,10 @@ module AzureAiSearch
 
     def get(path:)
       request(path:, request_class: Net::HTTP::Get)
+    end
+
+    def delete(path:)
+      request(path:, request_class: Net::HTTP::Delete)
     end
 
     def post(path:, body:)
