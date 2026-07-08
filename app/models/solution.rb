@@ -111,8 +111,9 @@ class Solution
   end
 
   def self.search(query: "")
-    use_opensearch = ENV.fetch("USE_OPENSEARCH", "false")
-    if use_opensearch == "true"
+    if Flipper.enabled?(:azure_ai_search)
+      AzureAiSearch::SolutionSearcher.new(query:).search
+    elsif ENV.fetch("USE_OPENSEARCH", "false") == "true"
       SolutionSearcher.new(query:).search
     else
       ContentfulClient.entries(
