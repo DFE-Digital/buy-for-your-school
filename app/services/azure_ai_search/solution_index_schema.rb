@@ -2,6 +2,7 @@ module AzureAiSearch
   class SolutionIndexSchema
     INDEX = ENV.fetch("AZURE_AI_SEARCH_INDEX_NAME", "solution-data")
     SEMANTIC_CONFIGURATION = ENV.fetch("AZURE_AI_SEARCH_SEMANTIC_CONFIGURATION", "solution-semantic-config")
+    ENGLISH_ANALYZER = "en.microsoft"
 
     def self.to_h
       {
@@ -14,9 +15,9 @@ module AzureAiSearch
     def self.fields
       [
         { name: "id", type: "Edm.String", key: true, searchable: false, filterable: true, retrievable: true },
-        { name: "title", type: "Edm.String", searchable: true, filterable: true, sortable: true, retrievable: true },
-        { name: "description", type: "Edm.String", searchable: true, retrievable: true },
-        { name: "summary", type: "Edm.String", searchable: true, retrievable: true },
+        { name: "title", type: "Edm.String", searchable: true, filterable: true, sortable: true, retrievable: true, analyzer: ENGLISH_ANALYZER },
+        { name: "description", type: "Edm.String", searchable: true, retrievable: true, analyzer: ENGLISH_ANALYZER },
+        { name: "summary", type: "Edm.String", searchable: true, retrievable: true, analyzer: ENGLISH_ANALYZER },
         { name: "slug", type: "Edm.String", searchable: false, filterable: true, retrievable: true },
         { name: "provider_reference", type: "Edm.String", searchable: true, filterable: true, retrievable: true },
         {
@@ -24,7 +25,7 @@ module AzureAiSearch
           type: "Edm.ComplexType",
           fields: [
             { name: "id", type: "Edm.String", searchable: false, filterable: true, retrievable: true },
-            { name: "title", type: "Edm.String", searchable: true, filterable: true, retrievable: true },
+            { name: "title", type: "Edm.String", searchable: true, filterable: true, retrievable: true, analyzer: ENGLISH_ANALYZER },
             { name: "slug", type: "Edm.String", searchable: false, filterable: true, retrievable: true },
           ],
         },
