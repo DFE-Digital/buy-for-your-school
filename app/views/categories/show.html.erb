@@ -1,16 +1,23 @@
-<% content_for :pre_main do %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <div class=" govuk-!-margin-top-2 govuk-!-margin-bottom-2">
       <% if @category.banner.present? %>
-        <%= render partial: "shared/content_banner", locals: { 
-          title: @category.banner.title, 
-          description: @category.banner.description,
-          url: @category.banner.url
-        } %>
+        <%= image_tag @category.banner&.image&.url, alt: @category.banner&.title %>
       <% end %>
     </div>
   </div>
-<% end %>
+  <div class="govuk-grid-column-two-thirds">
+    <% if @category.banner.present? %>
+      <%= render partial: "shared/content_banner", locals: { 
+        title: @category.banner.title, 
+        description: @category.banner.description,
+        url: @category.banner.url
+      } %>
+    <% end %>
+  </div>
+</div>
+
 
 <% if @dfe_solutions.present? %>
   <%= render partial: "shared/solution_section", locals: { title_key: t(".dfe_title"), standfirst_key: t(".dfe_standfirst"), solutions: @dfe_solutions, category_slug: @category_slug  } %>
@@ -21,5 +28,22 @@
 
 <% content_for :sidebar do %>
   <%= render partial: "shared/right_filters", locals: { subcategories: @subcategories, category: @category, solutions: @solutions, ways_to_buy: @ways_to_buy } %>
+
+  <% if @category.get_expert_help.present? && 1 ==1 %>
+    <div class=" govuk-!-padding-bottom-4 govuk-!-padding-top-9 border-top">
+      <h2 class="govuk-heading-s govuk-!-margin-top-2"><%= t(".get_expert_help") %></h2>
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            <b><%= @category&.get_expert_help&.title %></b>
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <%= render_markdown_to_html(@category&.get_expert_help&.description) %>
+        </div>
+      </details>
+    </div>
+  <% end %>
   <%= render partial: "shared/related_content", locals: { related_content: @category.related_content } %>
+
 <% end %>

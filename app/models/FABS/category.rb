@@ -8,7 +8,7 @@ module FABS
     CONTENT_TYPE = "category".freeze
     SUMMARY_SELECT = "sys.id,fields.title,fields.description,fields.slug,fields.banner".freeze
 
-    attr_reader :id, :title, :description, :slug, :subcategories, :banner
+    attr_reader :id, :title, :description, :slug, :subcategories, :banner, :get_expert_help
 
     def initialize(entry)
       @id = entry.id
@@ -17,6 +17,7 @@ module FABS
       @slug = entry.fields[:slug]
       @subcategories = entry.fields.fetch(:subcategories, []).map { |subcat| Subcategory.new(subcat) }.sort_by(&:title)
       @banner = entry.fields[:banner] ? Banner.new(entry.fields[:banner]) : nil
+      @get_expert_help = entry.fields[:get_expert_help] ? GetExpertHelp.new(entry.fields[:get_expert_help]) : nil
       super
     end
 
