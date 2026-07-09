@@ -2,12 +2,12 @@ module AzureAiSearch
   class SolutionIndexSchema
     INDEX = ENV.fetch("AZURE_AI_SEARCH_INDEX_NAME", "solution-data")
     SEMANTIC_CONFIGURATION = ENV.fetch("AZURE_AI_SEARCH_SEMANTIC_CONFIGURATION", "solution-semantic-config")
-    ENGLISH_ANALYZER = "en.microsoft"
+    ENGLISH_ANALYZER = "en.microsoft".freeze
 
     def self.to_h
       {
         name: INDEX,
-        fields: fields,
+        fields:,
         semantic: semantic_configuration,
       }
     end
