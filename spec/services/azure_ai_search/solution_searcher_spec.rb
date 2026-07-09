@@ -63,7 +63,7 @@ RSpec.describe AzureAiSearch::SolutionSearcher do
           index_name: "solution-data",
           body: hash_including(
             queryType: "semantic",
-            semanticConfiguration: "solution-semantic-config",
+            semanticConfiguration: "solutions-v1",
             captions: "extractive|highlight-true",
           ),
         )
