@@ -11,6 +11,7 @@ class FrameworkRequests::FrameworkRequestSubmissionsController < FrameworkReques
 
       session.delete(:framework_request_id)
       session.delete(:faf_referrer)
+      session[:framework_request_email] = framework_request.email
 
       redirect_to framework_request_submission_path(framework_request)
     else
@@ -21,6 +22,7 @@ class FrameworkRequests::FrameworkRequestSubmissionsController < FrameworkReques
   def show
     if framework_request.submitted?
       @framework_request = FrameworkRequestPresenter.new(framework_request)
+      @email = session.delete(:framework_request_email)
     else
       redirect_to framework_request_path(framework_request)
     end

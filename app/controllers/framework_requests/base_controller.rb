@@ -1,5 +1,6 @@
 module FrameworkRequests
   class BaseController < ApplicationController
+    prepend_before_action :redirect_if_submitted, except: %i[index]
     before_action :form, only: %i[index create update edit]
     before_action :back_url, except: %i[edit]
     before_action :framework_request, only: %i[edit]
@@ -29,6 +30,13 @@ module FrameworkRequests
     end
 
   private
+
+    def redirect_if_submitted
+      framework_request_record = FrameworkRequest.find(framework_request_id)
+      return unless framework_request_record.submitted?
+
+      redirect_to framework_request_submission_path(framework_request_record)
+    end
 
     def form
       @form ||= FrameworkRequests::BaseForm.new(all_form_params)
