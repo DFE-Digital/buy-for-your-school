@@ -850,6 +850,8 @@ en:
         days28: 28 days
         days30: 30 days
         billing_invoicing_method: How would you like to receive your bills?
+        email: Email
+        paper: Paper
         billing_invoicing_email: Email for invoice
         billing_invoice_address: Address for invoice
       no_data: No onboarding data available for this case
