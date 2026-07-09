@@ -17,7 +17,7 @@ RSpec.describe AzureAiSearch::SolutionIndexSchema do
       expect(schema[:fields]).not_to include(include(name: "provider_name"))
       expect(schema[:fields]).not_to include(include(name: "buying_option_type"))
       expect(schema.dig(:semantic, :configurations, 0)).to include(
-        name: "solution-semantic-config",
+        name: "solutions-v1",
         prioritizedFields: include(
           titleField: { fieldName: "title" },
           prioritizedContentFields: include({ fieldName: "description" }, { fieldName: "summary" }),
