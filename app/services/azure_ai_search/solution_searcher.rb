@@ -1,7 +1,7 @@
 module AzureAiSearch
   class SolutionSearcher
     INDEX = ENV.fetch("AZURE_AI_SEARCH_INDEX_NAME", "solution-data")
-    SEMANTIC_CONFIGURATION = ENV.fetch("AZURE_AI_SEARCH_SEMANTIC_CONFIGURATION", "solution-semantic-config")
+    SEMANTIC_CONFIGURATION = ENV.fetch("AZURE_AI_SEARCH_SEMANTIC_CONFIGURATION", "solutions-v1")
 
     def initialize(query:, client: Client.new)
       @query = query
