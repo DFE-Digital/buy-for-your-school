@@ -10,9 +10,9 @@ module AzureAiSearch
 
     def search
       response = client.search(index_name: INDEX, body: search_body)
-      Array(response["value"]).filter_map do |result|
+      Array(response["value"]).filter_map { |result|
         Solution.rehydrate_from_search(result.except(*metadata_keys))
-      end.select(&:presentable?)
+      }.select(&:presentable?)
     end
 
   private

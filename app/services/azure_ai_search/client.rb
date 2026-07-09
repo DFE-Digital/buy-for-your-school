@@ -4,7 +4,7 @@ require "uri"
 
 module AzureAiSearch
   class Client
-    DEFAULT_API_VERSION = "2024-07-01"
+    DEFAULT_API_VERSION = "2024-07-01".freeze
 
     Error = Class.new(StandardError)
     NotFound = Class.new(Error)
