@@ -97,13 +97,18 @@ RSpec.describe "Azure AI search tasks" do
 
     let(:client) { instance_double(AzureAiSearch::Client) }
     let(:indexer) { instance_double(AzureAiSearch::SolutionIndexer) }
+    let(:solution_1) { instance_double(Solution, presentable?: true) }
+    let(:solution_2) { instance_double(Solution, presentable?: true) }
 
     before do
       allow(AzureAiSearch::Client).to receive(:new).and_return(client)
       allow(AzureAiSearch::SolutionIndexer).to receive(:new).with(client:).and_return(indexer)
-      allow(Solution).to receive(:all).and_return(%w[solution-1 solution-2])
-      allow(indexer).to receive(:index_all).with(%w[solution-1 solution-2]).and_return(
-        [{ "value" => [{ "status" => true }, { "status" => false }] }],
+      allow(Solution).to receive(:all).and_return([solution_1, solution_2])
+      allow(indexer).to receive(:sync_all).with([solution_1, solution_2]).and_return(
+        {
+          deleted: [{ "value" => [{ "status" => true }] }],
+          indexed: [{ "value" => [{ "status" => true }, { "status" => false }] }],
+        },
       )
       allow(client).to receive(:document_count).with(index_name: "solution-data").and_return(1)
     end
@@ -113,6 +118,7 @@ RSpec.describe "Azure AI search tasks" do
         .to output(
           "Starting Contentful to Azure AI Search sync...\n" \
           "Successfully indexed 1 of 2 solutions into Azure AI Search.\n" \
+          "Successfully deleted 1 stale documents from Azure AI Search.\n" \
           "Azure AI Search document count for solution-data: 1\n",
         )
         .to_stdout
