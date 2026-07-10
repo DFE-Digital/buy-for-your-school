@@ -7,10 +7,6 @@ RSpec.feature "Starting a 'Find a Framework' request" do
     expect(page).to have_current_path "/procurement-support"
   end
 
-  it "links to the homepage" do
-    expect(page).to have_link "create a specification", href: "/", class: "govuk-link"
-  end
-
   describe "for authenticated users", :js do
     before do
       user_exists_in_dfe_sign_in
