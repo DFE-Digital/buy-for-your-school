@@ -744,7 +744,9 @@ en:
       payment_method:
         legend: How will the bills be paid?
         bacs: BACS
+        bacs_hint: You must pay by bank transfer within your payment terms
         direct_debit: Direct Debit
+        direct_debit_hint: Payments are collected automatically. Prices may be slightly lower depending on your payment terms
       terms:
         legend: Payment terms
         days14: 14 days
