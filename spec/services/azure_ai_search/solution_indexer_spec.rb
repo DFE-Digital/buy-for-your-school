@@ -66,4 +66,44 @@ RSpec.describe AzureAiSearch::SolutionIndexer do
       end
     end
   end
+
+  describe "#sync_all" do
+    before do
+      allow(client).to receive(:search).and_return(
+        "value" => [
+          { "id" => "solution-1" },
+          { "id" => "solution-2" },
+        ],
+      )
+      allow(client).to receive(:index_documents).and_return("value" => [{ "status" => true }])
+    end
+
+    it "deletes stale documents and indexes current presentable solutions" do
+      indexer.sync_all([solution])
+
+      expect(client).to have_received(:search).with(
+        index_name: "solution-data",
+        body: {
+          search: "*",
+          select: "id",
+          top: 1000,
+        },
+      )
+      expect(client).to have_received(:index_documents).with(
+        index_name: "solution-data",
+        documents: [
+          { "@search.action": "delete", id: "solution-2" },
+        ],
+      )
+      expect(client).to have_received(:index_documents).with(
+        index_name: "solution-data",
+        documents: [
+          hash_including(
+            "@search.action": "mergeOrUpload",
+            id: "solution-1",
+          ),
+        ],
+      )
+    end
+  end
 end

@@ -36,10 +36,16 @@ namespace :azure_ai_search do
     index_name = AzureAiSearch::SolutionIndexer::INDEX
     solutions = Solution.all
     client = AzureAiSearch::Client.new
-    responses = AzureAiSearch::SolutionIndexer.new(client:).index_all(solutions)
-    indexed_count = responses.sum { |response| Array(response["value"]).count { |result| result["status"] == true } }
+    sync_result = AzureAiSearch::SolutionIndexer.new(client:).sync_all(solutions)
+    indexed_count = Array(sync_result[:indexed]).sum do |response|
+      Array(response["value"]).count { |result| result["status"] == true }
+    end
+    deleted_count = Array(sync_result[:deleted]).sum do |response|
+      Array(response["value"]).count { |result| result["status"] == true }
+    end
 
-    puts "Successfully indexed #{indexed_count} of #{solutions.size} solutions into Azure AI Search."
+    puts "Successfully indexed #{indexed_count} of #{solutions.count(&:presentable?)} solutions into Azure AI Search."
+    puts "Successfully deleted #{deleted_count} stale documents from Azure AI Search."
     puts "Azure AI Search document count for #{index_name}: #{client.document_count(index_name:)}"
   end
 
