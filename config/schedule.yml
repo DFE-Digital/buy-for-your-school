@@ -27,3 +27,8 @@ sync_frameworks:
   cron: "0 0,12 * * *" # every midnight and midday
   class: Support::SyncFrameworksJob
   description: Fetch and persist frameworks from FaF
+
+azure_ai_search_reindex:
+  cron: 0 0 * * * # every midnight
+  class: AzureAiSearch::ReindexJob
+  description: Reindex Contentful solutions into Azure AI Search and remove stale documents
