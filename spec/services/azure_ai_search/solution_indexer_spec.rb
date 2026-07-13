@@ -69,13 +69,10 @@ RSpec.describe AzureAiSearch::SolutionIndexer do
 
   describe "#sync_all" do
     before do
-      allow(client).to receive(:search).and_return(
-        "value" => [
-          { "id" => "solution-1" },
-          { "id" => "solution-2" },
-        ],
-      )
-      allow(client).to receive(:index_documents).and_return("value" => [{ "status" => true }])
+      allow(client).to receive_messages(search: { "value" => [
+        { "id" => "solution-1" },
+        { "id" => "solution-2" },
+      ] }, index_documents: { "value" => [{ "status" => true }] })
     end
 
     it "deletes stale documents and indexes current presentable solutions" do

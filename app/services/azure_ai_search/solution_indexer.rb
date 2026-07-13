@@ -56,12 +56,12 @@ module AzureAiSearch
     end
 
     def delete_documents(ids)
-      ids.each_slice(BATCH_SIZE).map do |batch|
+      ids.each_slice(BATCH_SIZE).map { |batch|
         client.index_documents(
           index_name: INDEX,
           documents: batch.map { |id| SolutionDocument.delete(id) },
         )
-      end.compact
+      }.compact
     end
 
     def existing_document_ids
