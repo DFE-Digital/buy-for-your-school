@@ -172,17 +172,6 @@ RSpec.describe "Solutions pages", type: :feature do
       expect(page).to have_link("Go to site", class: "govuk-button")
     end
 
-    it "includes the usability survey URL with service and return_url params", skip: "Survey link temporarily removed to allow time to create an improved design solution" do
-      visit solution_path("it-hardware")
-      link = find("a.govuk-button[href]", match: :first)
-      survey_url = link["href"]
-      uri = URI.parse(survey_url)
-
-      expect(uri.host).to eq("get-help-buying-for-schools.education.gov.uk")
-      expect(survey_url).to include("service=find_a_buying_solution")
-      expect(survey_url).to match(/return_url=[^&]+/)
-    end
-
     it "sets the CTA button href to the solution url" do
       visit solution_path("it-hardware")
       link = find("a.govuk-button[href]", match: :first)
