@@ -1,15 +1,10 @@
 require "rails_helper"
 
-RSpec.describe Offer, :vcr, type: :model do
+RSpec.describe Offer, type: :model do
   describe "#initialize" do
     subject(:offer) { described_class.new(entry) }
 
-    let(:entry) do
-      ContentfulClient.entries(
-        content_type: "offer",
-        "fields.slug": "energy-for-schools",
-      ).first
-    end
+    let(:entry) { offer_entry }
 
     it "sets the attributes" do
       expect(offer).to have_attributes(
@@ -24,6 +19,13 @@ RSpec.describe Offer, :vcr, type: :model do
 
   describe ".all" do
     subject(:offers) { described_class.all }
+
+    let(:entry_a) { offer_entry(id: "offer-a", title: "Alpha offer", slug: "alpha-offer", sort_order: 1) }
+    let(:entry_b) { offer_entry(id: "offer-b", title: "Beta offer", slug: "beta-offer", sort_order: 2) }
+
+    before do
+      allow(ContentfulClient).to receive(:entries).and_return([entry_a, entry_b])
+    end
 
     it "fetches offers from Contentful" do
       expect(offers).to be_present
@@ -44,6 +46,11 @@ RSpec.describe Offer, :vcr, type: :model do
 
     context "when offer exists" do
       let(:slug) { "energy-for-schools" }
+      let(:entry) { offer_entry(slug:) }
+
+      before do
+        allow(ContentfulClient).to receive(:entries).and_return([entry])
+      end
 
       it "returns the offer" do
         expect(offer).to be_a(described_class)
@@ -54,9 +61,32 @@ RSpec.describe Offer, :vcr, type: :model do
     context "when offer does not exist" do
       let(:slug) { "non-existent" }
 
+      before do
+        allow(ContentfulClient).to receive(:entries).and_return([])
+      end
+
       it "raises ContentfulRecordNotFoundError" do
         expect { offer }.to raise_error(ContentfulRecordNotFoundError, "Offer not found")
       end
     end
+  end
+
+  def offer_entry(id: "offer-id", title: "Energy for schools", description: "Description", summary: "Summary", slug: "energy-for-schools", url: "https://example.com", call_to_action: "Call to action", image: nil, featured_on_homepage: false, expiry: nil, sort_order: 1, related_content: [])
+    OpenStruct.new(
+      id:,
+      fields: {
+        title:,
+        description:,
+        summary:,
+        slug:,
+        url:,
+        call_to_action:,
+        image:,
+        featured_on_homepage:,
+        expiry:,
+        sort_order:,
+        related_content:,
+      },
+    )
   end
 end
