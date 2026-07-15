@@ -8,7 +8,7 @@ The following are the minimal required settings for two types of webhook. Both a
 
 ### Cache busting webhook
 
-This webhook is triggered when any action is performed on a Contentufl entry, e.g. create, save, delete, etc.
+This webhook is triggered when any action is performed on a Contentful entry, e.g. create, save, delete, etc.
 This lets our application know that there has been a content change and the old version of the entry is deleted from the cache.
 
 |              |                                     |
