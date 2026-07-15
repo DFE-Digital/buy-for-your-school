@@ -29,7 +29,7 @@ describe "User can update energy type", :js do
 
     click_button "Save and continue"
 
-    expect(case_organisation.gas_meters.any?).to be(false)
+    expect(case_organisation.reload.gas_meters.any?).to be(false)
 
     create(:energy_electricity_meter, :with_valid_data, energy_onboarding_case_organisation_id: case_organisation.id)
 
@@ -43,6 +43,6 @@ describe "User can update energy type", :js do
 
     visit energy_case_switch_energy_path(onboarding_case, case_organisation)
 
-    expect(case_organisation.electricity_meters.any?).to be(false)
+    expect(case_organisation.reload.electricity_meters.any?).to be(false)
   end
 end
