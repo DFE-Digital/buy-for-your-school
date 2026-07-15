@@ -99,6 +99,7 @@ RSpec.describe Solution, type: :model do
     before do
       allow(ENV).to receive(:fetch).and_call_original
       allow(ENV).to receive(:fetch).with("USE_OPENSEARCH", "false").and_return("false")
+      allow(ContentfulClient).to receive(:entries).and_return([entry])
     end
 
     let(:query) { "technology" }
@@ -111,10 +112,6 @@ RSpec.describe Solution, type: :model do
         slug: "technology-solution",
         primary_category: instance_double(FABS::Category),
       )
-    end
-
-    before do
-      allow(ContentfulClient).to receive(:entries).and_return([entry])
     end
 
     it "returns solutions matching the query" do
@@ -140,7 +137,7 @@ RSpec.describe Solution, type: :model do
           title: "IT hardware",
           description: "Buy IT hardware",
           summary: "Summary",
-          slug: slug,
+          slug:,
           primary_category: instance_double(FABS::Category),
         )
       end

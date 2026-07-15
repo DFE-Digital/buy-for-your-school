@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "Offer Details Page", type: :feature do
   before do
     I18n.backend.store_translations(:en, date: { formats: { standard: "%-d %B %Y" } })
+    allow(Offer).to receive(:find_by_slug!).with("energy-for-schools").and_return(offer)
   end
 
   let(:offer) do
@@ -16,10 +17,6 @@ RSpec.describe "Offer Details Page", type: :feature do
       call_to_action: nil,
       related_content: [],
     )
-  end
-
-  before do
-    allow(Offer).to receive(:find_by_slug!).with("energy-for-schools").and_return(offer)
   end
 
   describe "GET /offers/:slug" do

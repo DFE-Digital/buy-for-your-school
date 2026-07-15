@@ -65,6 +65,16 @@ RSpec.describe FABS::Category, type: :model do
     subject(:category) { described_class.new(entry) }
 
     let(:entry) { category_entry(subcategories: default_subcategories) }
+    let(:solutions) do
+      [
+        solution_model(slug: "alpha-solution", title: "Alpha solution"),
+        solution_model(slug: "zeta-solution", title: "Zeta solution"),
+      ]
+    end
+
+    before do
+      allow(Solution).to receive(:all).with(category_id: "category-id").and_return(solutions)
+    end
 
     it "orders solutions alphabetically by title" do
       solution_titles = category.solutions.map(&:title)
@@ -96,7 +106,7 @@ RSpec.describe FABS::Category, type: :model do
     end
 
     before do
-      allow(category).to receive(:solutions).and_return(all_solutions)
+      allow(Solution).to receive(:all).with(category_id: "category-id").and_return(all_solutions)
     end
 
     it "filters solutions by subcategory slugs" do
@@ -220,7 +230,7 @@ RSpec.describe FABS::Category, type: :model do
         title:,
         description:,
         slug:,
-        subcategories: subcategories,
+        subcategories:,
         banner:,
         related_content:,
       },

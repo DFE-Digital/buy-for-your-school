@@ -4,7 +4,11 @@ RSpec.describe "Solutions pages", type: :feature do
   before do
     I18n.backend.store_translations(:en, date: { formats: { standard: "%-d %B %Y" } })
     allow(FABS::Category).to receive(:find_by_slug!).with(nil).and_return(nil)
-    allow_any_instance_of(SolutionsController).to receive(:category_solution_url).and_return("http://www.example.com/solutions/it-hardware")
+    allow(Solution).to receive(:find_by_slug!).with("it-hardware").and_return(it_hardware_solution)
+    allow(Solution).to receive(:find_by_slug!).with("software-application-solutions").and_return(software_application_solution)
+    allow(Solution).to receive(:find_by_slug!).with("musical-instruments-equipment-and-technology").and_return(musical_instruments_solution)
+    allow(Solution).to receive(:find_by_slug!).with("debt-resolution-services").and_return(debt_resolution_solution)
+    allow(Solution).to receive(:find_by_slug!).with("ict-procurement").and_return(ict_procurement_solution)
   end
 
   let(:related_content) do
@@ -39,7 +43,7 @@ RSpec.describe "Solutions pages", type: :feature do
       summary: "Software application summary",
       slug: "software-application-solutions",
       suffix: nil,
-      related_content: related_content,
+      related_content:,
       provider_name: "Provider Procurement Services",
       expiry: "2025-08-31",
       provider_reference: nil,
@@ -57,7 +61,7 @@ RSpec.describe "Solutions pages", type: :feature do
       summary: "Musical instruments summary",
       slug: "musical-instruments-equipment-and-technology",
       suffix: nil,
-      related_content: related_content,
+      related_content:,
       provider_name: "Provider Procurement Services",
       expiry: nil,
       provider_reference: nil,
@@ -75,7 +79,7 @@ RSpec.describe "Solutions pages", type: :feature do
       summary: "Debt resolution summary",
       slug: "debt-resolution-services",
       suffix: nil,
-      related_content: related_content,
+      related_content:,
       provider_name: "Provider Procurement Services",
       expiry: "2025-08-31",
       provider_reference: "what-uu",
@@ -93,7 +97,7 @@ RSpec.describe "Solutions pages", type: :feature do
       summary: "ICT procurement summary",
       slug: "ict-procurement",
       suffix: nil,
-      related_content: related_content,
+      related_content:,
       provider_name: "Provider Procurement Services",
       expiry: "2025-08-31",
       provider_reference: nil,
@@ -101,14 +105,6 @@ RSpec.describe "Solutions pages", type: :feature do
       url: "https://example.com/go-to-site",
       primary_category: it_category,
     )
-  end
-
-  before do
-    allow(Solution).to receive(:find_by_slug!).with("it-hardware").and_return(it_hardware_solution)
-    allow(Solution).to receive(:find_by_slug!).with("software-application-solutions").and_return(software_application_solution)
-    allow(Solution).to receive(:find_by_slug!).with("musical-instruments-equipment-and-technology").and_return(musical_instruments_solution)
-    allow(Solution).to receive(:find_by_slug!).with("debt-resolution-services").and_return(debt_resolution_solution)
-    allow(Solution).to receive(:find_by_slug!).with("ict-procurement").and_return(ict_procurement_solution)
   end
 
   describe "GET /solutions/:slug" do
