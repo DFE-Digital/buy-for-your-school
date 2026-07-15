@@ -1,8 +1,21 @@
 require "rails_helper"
 
-RSpec.describe "Categories pages", :vcr, type: :request do
+RSpec.describe "Categories pages", type: :request do
+  let(:categories) do
+    [
+      instance_double(FABS::Category, title: "Banking and finance", description: "Buy financial services", slug: "banking-and-finance"),
+      instance_double(FABS::Category, title: "Catalogues", description: "Buy catalogues", slug: "catalogues"),
+      instance_double(FABS::Category, title: "Catering", description: "Buy food, drink and catering services", slug: "catering"),
+    ]
+  end
+  let(:featured_offers) { [] }
+  let(:energy_banner) { nil }
+
   describe "GET /" do
     before do
+      allow(FABS::Category).to receive(:all).and_return(categories)
+      allow(Offer).to receive(:featured_offers).and_return(featured_offers)
+      allow(Banner).to receive(:find_by_slug).and_return(energy_banner)
       get root_path
     end
 
@@ -37,7 +50,7 @@ RSpec.describe "Categories pages", :vcr, type: :request do
       expect(response.body).not_to include("category-without-any-solution")
     end
 
-    it "displays new request for help content", vcr: { cassette_name: "Categories_pages/GET_/sets_default_HTML_title_tag" } do
+    it "displays new request for help content" do
       expect(response.body).to include("Not sure where to start?")
       expect(response.body).to include("Our buying team can help you choose the right way to buy for your school")
       expect(response.body).to include('href="/procurement-support">Get expert buying help')
