@@ -79,7 +79,6 @@ Set up the database and seed the local environment:
 
 ```
 $ bundle exec rails db:setup
-$ rails self_serve:populate_categories
 $ rails case_management:seed
 $ rails request_for_help:seed
 ```
