@@ -1,8 +1,110 @@
 require "rails_helper"
 
-RSpec.describe "Solutions pages", :vcr, type: :feature do
+RSpec.describe "Solutions pages", type: :feature do
   before do
     I18n.backend.store_translations(:en, date: { formats: { standard: "%-d %B %Y" } })
+    allow(FABS::Category).to receive(:find_by_slug!).with(nil).and_return(nil)
+    allow(Solution).to receive(:find_by_slug!).with("it-hardware").and_return(it_hardware_solution)
+    allow(Solution).to receive(:find_by_slug!).with("software-application-solutions").and_return(software_application_solution)
+    allow(Solution).to receive(:find_by_slug!).with("musical-instruments-equipment-and-technology").and_return(musical_instruments_solution)
+    allow(Solution).to receive(:find_by_slug!).with("debt-resolution-services").and_return(debt_resolution_solution)
+    allow(Solution).to receive(:find_by_slug!).with("ict-procurement").and_return(ict_procurement_solution)
+  end
+
+  let(:related_content) do
+    [OpenStruct.new(link_text: "Plan technology for your school", url: "/plan-technology")]
+  end
+
+  let(:it_category) { instance_double(FABS::Category, title: "IT", slug: "it") }
+
+  let(:it_hardware_solution) do
+    instance_double(
+      Solution,
+      title: "IT Hardware",
+      description: "A full range of IT hardware including new, refurbished, and remanufactured.",
+      summary: "## What it offers\n\n## Benefits",
+      slug: "it-hardware",
+      suffix: nil,
+      related_content:,
+      provider_name: "Provider Procurement Services",
+      expiry: "2025-08-31",
+      provider_reference: nil,
+      call_to_action: nil,
+      url: "https://www.procurementservices.co.uk/our-solutions/frameworks/technology/it-hardware",
+      primary_category: it_category,
+    )
+  end
+
+  let(:software_application_solution) do
+    instance_double(
+      Solution,
+      title: "Software Application Solutions",
+      description: "Software applications for public sector organisations.",
+      summary: "Software application summary",
+      slug: "software-application-solutions",
+      suffix: nil,
+      related_content:,
+      provider_name: "Provider Procurement Services",
+      expiry: "2025-08-31",
+      provider_reference: nil,
+      call_to_action: nil,
+      url: "https://example.com/software",
+      primary_category: it_category,
+    )
+  end
+
+  let(:musical_instruments_solution) do
+    instance_double(
+      Solution,
+      title: "Musical Instruments, Equipment and Technology",
+      description: "Musical instruments equipment and technology.",
+      summary: "Musical instruments summary",
+      slug: "musical-instruments-equipment-and-technology",
+      suffix: nil,
+      related_content:,
+      provider_name: "Provider Procurement Services",
+      expiry: nil,
+      provider_reference: nil,
+      call_to_action: nil,
+      url: "https://example.com/musical-instruments",
+      primary_category: it_category,
+    )
+  end
+
+  let(:debt_resolution_solution) do
+    instance_double(
+      Solution,
+      title: "Debt Resolution Services",
+      description: "Debt resolution services.",
+      summary: "Debt resolution summary",
+      slug: "debt-resolution-services",
+      suffix: nil,
+      related_content:,
+      provider_name: "Provider Procurement Services",
+      expiry: "2025-08-31",
+      provider_reference: "what-uu",
+      call_to_action: nil,
+      url: "https://example.com/debt",
+      primary_category: it_category,
+    )
+  end
+
+  let(:ict_procurement_solution) do
+    instance_double(
+      Solution,
+      title: "ICT Procurement",
+      description: "ICT procurement services.",
+      summary: "ICT procurement summary",
+      slug: "ict-procurement",
+      suffix: nil,
+      related_content:,
+      provider_name: "Provider Procurement Services",
+      expiry: "2025-08-31",
+      provider_reference: nil,
+      call_to_action: "Go to site",
+      url: "https://example.com/go-to-site",
+      primary_category: it_category,
+    )
   end
 
   describe "GET /solutions/:slug" do
@@ -64,17 +166,6 @@ RSpec.describe "Solutions pages", :vcr, type: :feature do
     it "displays the custom CTA text when provided" do
       visit solution_path("ict-procurement")
       expect(page).to have_link("Go to site", class: "govuk-button")
-    end
-
-    it "includes the usability survey URL with service and return_url params", skip: "Survey link temporarily removed to allow time to create an improved design solution" do
-      visit solution_path("it-hardware")
-      link = find("a.govuk-button[href]", match: :first)
-      survey_url = link["href"]
-      uri = URI.parse(survey_url)
-
-      expect(uri.host).to eq("get-help-buying-for-schools.education.gov.uk")
-      expect(survey_url).to include("service=find_a_buying_solution")
-      expect(survey_url).to match(/return_url=[^&]+/)
     end
 
     it "sets the CTA button href to the solution url" do

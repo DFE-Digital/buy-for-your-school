@@ -9,6 +9,12 @@ RSpec.feature "Showing a Page" do
     let(:sidebar) { nil }
     let(:body) { nil }
 
+    before do
+      allow(Page).to receive(:find_by).and_return(nil)
+      allow(FABS::Page).to receive(:find_by_slug!).with("non-existent-page")
+        .and_raise(ContentfulRecordNotFoundError.new("Page not found", slug: "non-existent-page"))
+    end
+
     it "shows the not found page" do
       visit "/non-existent-page"
       expect(find("h1.govuk-heading-xl")).to have_text("Page not found")
