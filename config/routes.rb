@@ -656,6 +656,9 @@ Rails.application.routes.draw do
   get "/search", to: "search#index"
   post "/events", to: "events#create"
 
+  # Exempt browser request for favicon from being treated as a page by catch-all route below
+  get "/favicon.ico", to: ->(_env) { [404, { "Content-Type" => "text/plain", "Content-Length" => "0" }, []] }
+
   # DB-backed pages (BFYS) and Contentful-backed pages (FABS)
   get ":slug", to: "pages#show", as: :page
 end
