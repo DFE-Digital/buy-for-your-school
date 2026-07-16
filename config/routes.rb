@@ -49,10 +49,6 @@ Rails.application.routes.draw do
 
   # Contentful
   namespace :api do
-    namespace :find_a_framework do
-      post "framework" => "frameworks#changed"
-    end
-
     namespace :user_journeys do
       post "step" => "step#create"
     end
