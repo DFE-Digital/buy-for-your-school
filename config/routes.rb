@@ -49,17 +49,6 @@ Rails.application.routes.draw do
 
   # Contentful
   namespace :api do
-    namespace :contentful do
-      post "auth" => "base#auth"
-      post "entry_updated" => "entries#changed"
-      post "category" => "categories#changed"
-      resources :pages, only: %i[create destroy]
-    end
-
-    namespace :find_a_framework do
-      post "framework" => "frameworks#changed"
-    end
-
     namespace :user_journeys do
       post "step" => "step#create"
     end
