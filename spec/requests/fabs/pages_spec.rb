@@ -1,10 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "FABS pages", type: :request do
-  before do
-    allow(Page).to receive(:find_by).and_return(nil)
-  end
-
   def document
     Capybara.string(response.body)
   end
@@ -122,9 +118,6 @@ RSpec.describe "FABS pages", type: :request do
       },
     )
 
-    stub_const("PagesController::DEPRECATED_GHBS_CONTENTFUL_PAGES", [deprecated_slug])
-    allow(Flipper).to receive(:enabled?).and_call_original
-    allow(Flipper).to receive(:enabled?).with(:deprecate_ghbs_contentful).and_return(true)
     allow(FABS::Page).to receive(:find_by_slug!).with(deprecated_slug).and_return(FABS::Page.new(deprecated_page_entry))
 
     get page_path(deprecated_slug)

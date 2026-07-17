@@ -2,15 +2,23 @@ require "rails_helper"
 
 RSpec.feature "Showing a Page" do
   # `our_page` so we don't clash with Capybara `page`
-  let(:our_page) { create(:page, sidebar:, body:, updated_at: Date.parse("1 January 2022")) }
-  let(:updated_at) { "Last updated 1 January 2022" }
+  let(:related_content) { [] }
+  let(:our_page) do
+    OpenStruct.new(
+      title: "Test page",
+      description: "Test page description",
+      body:,
+      related_content:,
+      parent: nil,
+      slug: "test-page",
+    )
+  end
 
   context "when visiting a non-existent page slug" do
     let(:sidebar) { nil }
     let(:body) { nil }
 
     before do
-      allow(Page).to receive(:find_by).and_return(nil)
       allow(FABS::Page).to receive(:find_by_slug!).with("non-existent-page")
         .and_raise(ContentfulRecordNotFoundError.new("Page not found", slug: "non-existent-page"))
     end
@@ -21,24 +29,32 @@ RSpec.feature "Showing a Page" do
     end
   end
 
-  context "with a page with a sidebar" do
-    let(:sidebar) { "# hello sidebar" }
+  context "with a page with related content" do
+    let(:related_content) do
+      [OpenStruct.new(link_text: "Helpful link", url: "/helpful-link")]
+    end
     let(:body) { "# hello body" }
 
-    it "shows the page with a sidebar" do
-      visit "/#{our_page.slug}"
-      expect(find(".govuk-grid-column-two-thirds h1")).to have_text("hello body")
-      expect(find(".govuk-grid-column-one-third h1")).to have_text("hello sidebar")
-      expect(find("#last-updated")).to have_text(updated_at)
+    before do
+      allow(FABS::Page).to receive(:find_by_slug!).with("test-page").and_return(our_page)
+    end
+
+    it "shows the page with related content" do
+      visit "/test-page"
+      expect(page).to have_text("hello body")
+      expect(page).to have_link("Helpful link", href: "http://localhost:3000/helpful-link")
     end
   end
 
   context "without a sidebar" do
-    let(:sidebar) { nil }
     let(:body) { "# hello body" }
 
+    before do
+      allow(FABS::Page).to receive(:find_by_slug!).with("test-page").and_return(our_page)
+    end
+
     it "shows the page without a sidebar" do
-      visit "/#{our_page.slug}"
+      visit "/test-page"
       expect(page).not_to have_css("#page-sidebar")
     end
   end
