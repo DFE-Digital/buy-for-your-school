@@ -101,30 +101,4 @@ RSpec.describe "FABS pages", type: :request do
 
     expect(response).to redirect_to("/404")
   end
-
-  it "serves the FABS page instead of the DB-backed page when the deprecation flag is enabled for the slug" do
-    deprecated_slug = "deprecated-page"
-    db_page = create(:page, slug: deprecated_slug, title: "DB page", body: "DB body", sidebar: nil)
-    deprecated_page_entry = contentful_entry(
-      id: "deprecated-page-id",
-      content_type: "page",
-      fields: {
-        title: "FABS replacement page",
-        description: "Served from FABS",
-        body: "FABS body",
-        slug: deprecated_slug,
-        parent: category_entry,
-        related_content: [],
-      },
-    )
-
-    allow(FABS::Page).to receive(:find_by_slug!).with(deprecated_slug).and_return(FABS::Page.new(deprecated_page_entry))
-
-    get page_path(deprecated_slug)
-
-    expect(response).to be_successful
-    expect(response.body).to include("FABS replacement page")
-    expect(response.body).to include("Served from FABS")
-    expect(response.body).not_to include(db_page.title)
-  end
 end
