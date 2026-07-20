@@ -5,6 +5,7 @@ RSpec.describe "Contentful webhooks", type: :request do
   let(:secret) { "valid-signature" }
   let(:headers) { { "X-Contentful-Webhook-Signature" => secret } }
   let(:indexer) { instance_double(SolutionIndexer) }
+  let(:azure_indexer) { instance_double(AzureAiSearch::SolutionIndexer) }
 
   before do
     allow(ENV).to receive(:fetch).and_call_original
@@ -51,6 +52,34 @@ RSpec.describe "Contentful webhooks", type: :request do
       post contentful_webhooks_path, params: { entityId: entity_id }, headers: { "X-Contentful-Webhook-Signature" => "wrong" }
 
       expect(response).to have_http_status(:unauthorized)
+    end
+
+    context "when Azure AI Search is enabled" do
+      before do
+        allow(Flipper).to receive(:enabled?).and_return(false)
+        allow(Flipper).to receive(:enabled?).with(:azure_ai_search).and_return(true)
+        allow(AzureAiSearch::SolutionIndexer).to receive(:new).and_return(azure_indexer)
+      end
+
+      it "indexes the document through Azure AI Search" do
+        allow(azure_indexer).to receive(:index_document).with(entity_id).and_return(true)
+
+        post(contentful_webhooks_path, params: { entityId: entity_id }, headers:)
+
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq("message" => "Webhook for entry #{entity_id} processed successfully.")
+        expect(azure_indexer).to have_received(:index_document).with(entity_id)
+      end
+
+      it "deletes the document through Azure AI Search" do
+        allow(azure_indexer).to receive(:delete_document).with(entity_id).and_return(true)
+
+        post(delete_contentful_entry_path, params: { entityId: entity_id }, headers:)
+
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq("message" => "Webhook for entry #{entity_id} deletion processed successfully.")
+        expect(azure_indexer).to have_received(:delete_document).with(entity_id)
+      end
     end
   end
 
