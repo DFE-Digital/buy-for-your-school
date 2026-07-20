@@ -16,7 +16,6 @@ class CategoriesController < Fabs::ApplicationController
     @selected_subcategories = @subcategories.select { |subcategory| params[:subcategory_slugs]&.include?(subcategory.slug) }
 
     @solutions = @category.filtered_solutions(subcategory_slugs: params[:subcategory_slugs]&.compact_blank, ways_to_buy_slugs: params[:ways_to_buy_slugs]&.compact_blank)
-    @dfe_solutions, @other_solutions = @solutions.partition(&:buying_option_type)
 
     @page_section_title = t(".section_title")
     @page_header_class = "category-header"

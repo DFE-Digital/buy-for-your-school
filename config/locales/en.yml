@@ -95,6 +95,7 @@ en:
       expert_help_button: Get expert buying help
     show:
       get_expert_help: Get expert help
+      heading: Browse DfE-approved frameworks and deals
   case_requests:
     validation:
       discovery_method: Case origin is missing

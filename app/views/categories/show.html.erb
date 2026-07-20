@@ -1,6 +1,11 @@
+<div class="govuk-!-margin-top-2 govuk-!-margin-bottom-2">
+  <h2 class="govuk-heading-l govuk-!-margin-bottom-0"><%= t(".heading")%></h2>
+  <p class="govuk-!-margin-bottom-4 govuk-body-l"><%= @category.description %></p>
+</div>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-one-third">
-    <div class=" govuk-!-margin-top-2 govuk-!-margin-bottom-2">
+    <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-4">
       <% if @category.banner.present? %>
         <%= image_tag @category.banner&.image&.url, alt: @category.banner&.title %>
       <% end %>
@@ -17,12 +22,9 @@
   </div>
 </div>
 
-
-<% if @dfe_solutions.present? %>
-  <%= render partial: "shared/solution_section", locals: { title_key: t(".dfe_title"), standfirst_key: t(".dfe_standfirst"), solutions: @dfe_solutions, category_slug: @category_slug  } %>
-  <%= render partial: "shared/solution_section", locals: { title_key: t(".other_title"), standfirst_key: t(".other_standfirst"), solutions: @other_solutions, category_slug: @category_slug  } %>
-<% else  %>
-  <%= render partial: "shared/solution_section", locals: { title_key: t(".title"), standfirst_key: t(".standfirst"), solutions: @solutions, category_slug: @category_slug  } %>
+<hr/><br />
+<% if @solutions.present? %>
+  <%= render partial: "shared/solution_section", locals: { solutions: @solutions, category_slug: @category_slug  } %>
 <% end %>
 
 <% content_for :sidebar do %>

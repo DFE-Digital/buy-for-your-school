@@ -78,21 +78,11 @@ module FABS
       return solutions if subcategory_slugs.blank? && ways_to_buy_slugs.blank?
 
       solutions.select do |solution|
-        subcategory_match =
-          if subcategory_slugs.present?
-            solution.subcategories&.any? do |subcategory|
-              subcategory_slugs.include?(subcategory.fields[:slug])
-            end
-          else
-            true
-          end
+        subcategory_match = subcategory_slugs.blank? ||
+          solution.subcategories.to_a.any? { |sub| subcategory_slugs.include?(sub.fields[:slug]) }
 
-        ways_to_buy_match =
-          if ways_to_buy_slugs.present?
-            ways_to_buy_slugs.include?(solution.ways_to_buy&.fields&.[](:slug))
-          else
-            true
-          end
+        ways_to_buy_match = ways_to_buy_slugs.blank? ||
+          ways_to_buy_slugs.include?(solution.ways_to_buy&.fields&.dig(:slug))
 
         subcategory_match && ways_to_buy_match
       end
