@@ -53,8 +53,8 @@ If `AZURE_AI_SEARCH_SEMANTIC_CONFIGURATION` is omitted, the application uses the
 Azure solution search is populated by:
 
 ```sh
-bundle exec rake azure_search:create_index
-bundle exec rake azure_search:index
+bundle exec rake azure_ai_search:create_index
+bundle exec rake azure_ai_search:index
 ```
 
 The index task:
@@ -76,13 +76,13 @@ The Azure index currently stores the same core solution fields used for search:
 There is also a maintenance task to clear the index:
 
 ```sh
-bundle exec rake azure_search:clear
+bundle exec rake azure_ai_search:clear
 ```
 
 And a task to delete the index entirely:
 
 ```sh
-bundle exec rake azure_search:delete_index
+bundle exec rake azure_ai_search:delete_index
 ```
 
 ## OpenSearch
@@ -134,8 +134,8 @@ To use Azure AI Search locally:
 
 1. Enable the `azure_ai_search` feature flag.
 2. Set the Azure AI Search environment variables above.
-3. Run `bundle exec rake azure_search:create_index`.
-4. Run `bundle exec rake azure_search:index`.
+3. Run `bundle exec rake azure_ai_search:create_index`.
+4. Run `bundle exec rake azure_ai_search:index`.
 
 After indexing, solution searches will query Azure AI Search instead of Contentful.
 
