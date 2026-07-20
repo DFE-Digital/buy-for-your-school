@@ -21,28 +21,30 @@ describe "User can update energy type", :js do
 
     create(:energy_gas_meter, :with_valid_data, energy_onboarding_case_organisation_id: case_organisation.id)
 
-    expect(case_organisation.gas_meters.any?).to be(true)
+    expect(Energy::GasMeter.where(energy_onboarding_case_organisation_id: case_organisation.id).count).to be(1)
 
     visit energy_case_switch_energy_path(onboarding_case, case_organisation)
 
     choose "Electricity only"
 
-    click_button "Save and continue"
-
-    expect(case_organisation.reload.gas_meters.any?).to be(false)
+    expect {
+      click_button "Save and continue"
+    }.to change {
+      Energy::GasMeter.where(energy_onboarding_case_organisation_id: case_organisation.id).count
+    }.from(1).to(0)
 
     create(:energy_electricity_meter, :with_valid_data, energy_onboarding_case_organisation_id: case_organisation.id)
 
-    expect(case_organisation.electricity_meters.any?).to be(true)
+    expect(Energy::ElectricityMeter.where(energy_onboarding_case_organisation_id: case_organisation.id).count).to be(1)
 
     visit energy_case_switch_energy_path(onboarding_case, case_organisation)
 
     choose "Gas only"
 
-    click_button "Save and continue"
-
-    visit energy_case_switch_energy_path(onboarding_case, case_organisation)
-
-    expect(case_organisation.reload.electricity_meters.any?).to be(false)
+    expect {
+      click_button "Save and continue"
+    }.to change {
+      Energy::ElectricityMeter.where(energy_onboarding_case_organisation_id: case_organisation.id).count
+    }.from(1).to(0)
   end
 end
