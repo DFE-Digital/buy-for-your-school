@@ -88,20 +88,24 @@ RSpec.describe FABS::Category, type: :model do
     let(:entry) { category_entry(subcategories: default_subcategories) }
     let(:hardware_subcategory) { subcategory_entry(id: "subcat-hardware", title: "Hardware", slug: "hardware") }
     let(:software_subcategory) { subcategory_entry(id: "subcat-software", title: "Software", slug: "software") }
+
+    let(:dps_ways_to_buy) { ways_to_buy_entry(id: "dps-id", title: "DPS", slug: "dps") }
+    let(:framework_ways_to_buy) { ways_to_buy_entry(id: "framework-id", title: "Framework", slug: "framework") }
+
     let(:all_solutions) do
       [
-        solution_model(slug: "audio-visual-solutions", title: "Audio visual solutions", subcategories: [hardware_subcategory]),
-        solution_model(slug: "corporate-software", title: "Corporate software", subcategories: [software_subcategory]),
-        solution_model(slug: "electronic-catering-management-and-payment-solutions", title: "Electronic catering management and payment solutions", subcategories: [hardware_subcategory]),
-        solution_model(slug: "ict-procurement", title: "ICT procurement", subcategories: [hardware_subcategory]),
-        solution_model(slug: "g-cloud", title: "G-Cloud", subcategories: [software_subcategory]),
-        solution_model(slug: "it-hardware", title: "IT hardware", subcategories: [hardware_subcategory]),
-        solution_model(slug: "microsoft-shape-the-future", title: "Microsoft shape the future", subcategories: [hardware_subcategory]),
-        solution_model(slug: "outsourced-ict", title: "Outsourced ICT", subcategories: [software_subcategory]),
-        solution_model(slug: "software-application-solutions", title: "Software application solutions", subcategories: [software_subcategory]),
-        solution_model(slug: "software-licenses", title: "Software licenses", subcategories: [software_subcategory]),
-        solution_model(slug: "sustainable-hardware-asset-recycling-and-data-destruction", title: "Sustainable hardware asset recycling and data destruction", subcategories: [hardware_subcategory]),
-        solution_model(slug: "technology-products-and-associated-services-2", title: "Technology products and associated services 2", subcategories: [hardware_subcategory, software_subcategory]),
+        solution_model(slug: "audio-visual-solutions", title: "Audio visual solutions", subcategories: [hardware_subcategory], ways_to_buy: dps_ways_to_buy),
+        solution_model(slug: "corporate-software", title: "Corporate software", subcategories: [software_subcategory], ways_to_buy: dps_ways_to_buy),
+        solution_model(slug: "electronic-catering-management-and-payment-solutions", title: "Electronic catering management and payment solutions", subcategories: [hardware_subcategory], ways_to_buy: dps_ways_to_buy),
+        solution_model(slug: "ict-procurement", title: "ICT procurement", subcategories: [hardware_subcategory], ways_to_buy: dps_ways_to_buy),
+        solution_model(slug: "g-cloud", title: "G-Cloud", subcategories: [software_subcategory], ways_to_buy: framework_ways_to_buy),
+        solution_model(slug: "it-hardware", title: "IT hardware", subcategories: [hardware_subcategory], ways_to_buy: framework_ways_to_buy),
+        solution_model(slug: "microsoft-shape-the-future", title: "Microsoft shape the future", subcategories: [hardware_subcategory], ways_to_buy: framework_ways_to_buy),
+        solution_model(slug: "outsourced-ict", title: "Outsourced ICT", subcategories: [software_subcategory], ways_to_buy: framework_ways_to_buy),
+        solution_model(slug: "software-application-solutions", title: "Software application solutions", subcategories: [software_subcategory], ways_to_buy: framework_ways_to_buy),
+        solution_model(slug: "software-licenses", title: "Software licenses", subcategories: [software_subcategory], ways_to_buy: framework_ways_to_buy),
+        solution_model(slug: "sustainable-hardware-asset-recycling-and-data-destruction", title: "Sustainable hardware asset recycling and data destruction", subcategories: [hardware_subcategory], ways_to_buy: framework_ways_to_buy),
+        solution_model(slug: "technology-products-and-associated-services-2", title: "Technology products and associated services 2", subcategories: [hardware_subcategory, software_subcategory], ways_to_buy: framework_ways_to_buy),
       ]
     end
 
@@ -119,13 +123,13 @@ RSpec.describe FABS::Category, type: :model do
       expect(filtered.map(&:slug)).to match_array(expected_solution_slugs)
     end
 
-    it "returns all solutions when subcategory_slugs is nil" do
+    it "returns all solutions when subcategory_slugs is nil and ways_to_buy_slugs is nil" do
       filtered_solutions = category.filtered_solutions(subcategory_slugs: nil)
       all_solutions = category.solutions
       expect(filtered_solutions).to eq(all_solutions)
     end
 
-    it "returns all solutions when subcategory_slugs is empty" do
+    it "returns all solutions when subcategory_slugs is empty and ways_to_buy_slugs is empty" do
       filtered_solutions = category.filtered_solutions(subcategory_slugs: [])
       all_solutions = category.solutions
       expect(filtered_solutions).to eq(all_solutions)
@@ -135,6 +139,33 @@ RSpec.describe FABS::Category, type: :model do
       subcategory_slugs = %w[hardware]
       filtered = category.filtered_solutions(subcategory_slugs:)
       expect(filtered.map(&:slug)).not_to include("software-licenses")
+    end
+
+    it "filters solutions by ways_to_buy slugs" do
+      ways_to_buy_slugs = %w[dps]
+      filtered = category.filtered_solutions(ways_to_buy_slugs:)
+      expected_solution_slugs = %w[audio-visual-solutions corporate-software electronic-catering-management-and-payment-solutions ict-procurement]
+
+      expect(filtered).to be_an(Array)
+      expect(filtered).to all(be_a(Solution))
+      expect(filtered.map(&:slug)).to match_array(expected_solution_slugs)
+    end
+
+    it "excludes solutions that don't match any of the specified ways_to_buy slugs" do
+      ways_to_buy_slugs = %w[dps]
+      filtered = category.filtered_solutions(ways_to_buy_slugs:)
+      expect(filtered.map(&:slug)).not_to include("g-cloud")
+    end
+
+    it "filters solutions by subcategory slugs and ways_to_buy slugs" do
+      subcategory_slugs = %w[hardware]
+      ways_to_buy_slugs = %w[dps]
+      filtered = category.filtered_solutions(subcategory_slugs:, ways_to_buy_slugs:)
+      expected_solution_slugs = %w[ict-procurement audio-visual-solutions electronic-catering-management-and-payment-solutions]
+
+      expect(filtered).to be_an(Array)
+      expect(filtered).to all(be_a(Solution))
+      expect(filtered.map(&:slug)).to match_array(expected_solution_slugs)
     end
   end
 
@@ -222,7 +253,27 @@ RSpec.describe FABS::Category, type: :model do
     end
   end
 
-  def category_entry(id: "category-id", title: "IT", description: "Category description", slug: "it", subcategories: [], banner: nil, related_content: [])
+  describe "#get_expert_help" do
+    subject(:category) { described_class.new(entry) }
+
+    let(:entry) { category_entry(get_expert_help: get_expert_help_entry) }
+
+    it "returns a GetExpertHelp object" do
+      expect(category.get_expert_help).to be_a(GetExpertHelp)
+    end
+  end
+
+  describe "#promo banner" do
+    subject(:category) { described_class.new(entry) }
+
+    let(:entry) { category_entry(banner: banner_entry) }
+
+    it "returns a Banner (promo) object" do
+      expect(category.banner).to be_a(Banner)
+    end
+  end
+
+  def category_entry(id: "category-id", title: "IT", description: "Category description", slug: "it", subcategories: [], banner: nil, related_content: [], get_expert_help: nil)
     OpenStruct.new(
       id:,
       sys: { id: },
@@ -233,6 +284,7 @@ RSpec.describe FABS::Category, type: :model do
         subcategories:,
         banner:,
         related_content:,
+        get_expert_help:,
       },
     )
   end
@@ -241,7 +293,11 @@ RSpec.describe FABS::Category, type: :model do
     OpenStruct.new(id:, fields: { title:, slug: })
   end
 
-  def solution_model(slug:, title:, subcategories: [])
+  def ways_to_buy_entry(id:, title:, slug:)
+    OpenStruct.new(id:, fields: { title:, slug: })
+  end
+
+  def solution_model(slug:, title:, subcategories: [], ways_to_buy: nil)
     Solution.new(
       OpenStruct.new(
         id: slug,
@@ -252,6 +308,7 @@ RSpec.describe FABS::Category, type: :model do
           slug:,
           primary_category: instance_double(FABS::Category),
           subcategories:,
+          ways_to_buy:,
         },
       ),
     )
@@ -270,6 +327,29 @@ RSpec.describe FABS::Category, type: :model do
       fields: {
         link_text:,
         url:,
+      },
+    )
+  end
+
+  def get_expert_help_entry(id: "get-expert-help-id", title: "Get expert help", description: "Description")
+    OpenStruct.new(
+      id:,
+      fields: {
+        title:,
+        description:,
+      },
+    )
+  end
+
+  def banner_entry(id: "banner-id", title: "Banner title", description: "Banner description", url: "https://example.com/banner", slug: "banner-slug", image: nil)
+    OpenStruct.new(
+      id:,
+      fields: {
+        title:,
+        description:,
+        url:,
+        slug:,
+        image:,
       },
     )
   end
