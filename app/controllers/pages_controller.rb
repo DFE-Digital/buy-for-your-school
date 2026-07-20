@@ -3,16 +3,8 @@ class PagesController < ApplicationController
 
   include Breadcrumbs
 
-  DEPRECATED_GHBS_CONTENTFUL_PAGES = %w[foo].freeze
-
   def show
     if page.present?
-      set_breadcrumbs
-      @page = PagePresenter.new(page)
-      render "pages/show", layout: "application"
-    elsif fabs_page.present?
-      @page = fabs_page
-
       @page_title = @page.title
       add_breadcrumb_on_rails(home_breadcrumb_name, home_breadcrumb_path)
       build_page_breadcrumbs(@page)
@@ -32,18 +24,7 @@ class PagesController < ApplicationController
 private
 
   def page
-    return if deprecated_ghbs_contentful_page?
-
-    @page ||= Page.find_by(slug: params[:slug])
-  end
-
-  def fabs_page
-    @fabs_page ||= FABS::Page.find_by_slug!(params[:slug])
-  end
-
-  # Apply Contentful breadcrumbs in the format "title, path"
-  def set_breadcrumbs
-    page&.breadcrumbs&.each { |item| breadcrumb(*item.split(",")) }
+    @page ||= FABS::Page.find_by_slug!(params[:slug])
   end
 
   def build_page_breadcrumbs(page)
@@ -75,9 +56,5 @@ private
         add_breadcrumb_on_rails n.title, page_path(n.slug)
       end
     end
-  end
-
-  def deprecated_ghbs_contentful_page?
-    Flipper.enabled?(:deprecate_ghbs_contentful) && DEPRECATED_GHBS_CONTENTFUL_PAGES.include?(params[:slug])
   end
 end

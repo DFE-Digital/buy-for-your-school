@@ -4,7 +4,6 @@ RSpec.feature "Custom Errors" do
       Rails.application.env_config["action_dispatch.show_exceptions"] = true
       Rails.application.env_config["action_dispatch.show_detailed_exceptions"] = false
       Rails.application.env_config["consider_all_requests_local"] = false
-      allow(Page).to receive(:find_by).and_return(nil)
       allow(FABS::Page).to receive(:find_by_slug!).with("foo")
         .and_raise(ContentfulRecordNotFoundError.new("Page not found", slug: "foo"))
     end

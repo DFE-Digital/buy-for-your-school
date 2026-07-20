@@ -13,7 +13,6 @@ RSpec.feature "Completing the Usability Survey" do
     allow(UrlVerifier).to receive(:verify_url) do |url|
       url == signed_url ? example_url : nil
     end
-    allow(Page).to receive(:find_by).with(slug: "__dummy_return__").and_return(nil)
     allow(FABS::Page).to receive(:find_by_slug!).with("__dummy_return__")
       .and_raise(ContentfulRecordNotFoundError.new("Page not found", slug: "__dummy_return__"))
   end

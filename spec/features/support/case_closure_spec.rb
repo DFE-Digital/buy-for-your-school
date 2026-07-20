@@ -9,6 +9,10 @@ RSpec.feature "Case closure" do
   let(:kase) { create(:support_case, state:, source: kase_source, ref: "000001", agent:) }
 
   describe "Attempting to close/reject the case" do
+    around do |example|
+      travel_to(Time.zone.local(2026, 7, 17, 16, 37)) { example.run }
+    end
+
     before do
       visit "/support/cases/#{kase.id}"
     end
