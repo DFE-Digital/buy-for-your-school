@@ -10,9 +10,9 @@
   <%= form.govuk_radio_buttons_fieldset :billing_payment_method, legend: {tag: "h2", size: "s", text: I18n.t("energy.billing_preferences.payment_method.legend") } do %>
     <% form.object.payment_method_options.each_with_index do |option, i| %>
       <% if i.zero? %>
-        <%= form.govuk_radio_button :billing_payment_method, option, label: { text: I18n.t("energy.billing_preferences.payment_method.#{option}") }, link_errors: true %>
+        <%= form.govuk_radio_button :billing_payment_method, option, label: { text: I18n.t("energy.billing_preferences.payment_method.#{option}") }, hint: {text: I18n.t("energy.billing_preferences.payment_method.#{option}_hint")}, link_errors: true %>
       <% else %>
-        <%= form.govuk_radio_button :billing_payment_method, option, label: { text: I18n.t("energy.billing_preferences.payment_method.#{option}") } %>
+        <%= form.govuk_radio_button :billing_payment_method, option, label: { text: I18n.t("energy.billing_preferences.payment_method.#{option}") }, hint: {text: I18n.t("energy.billing_preferences.payment_method.#{option}_hint")} %>
       <% end %>
     <% end %>
   <% end %>

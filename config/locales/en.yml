@@ -467,8 +467,11 @@ en:
         - If you're out of contract and need an immediate energy supply, you'll be placed on interim rates.
       billing:
         title: Billing
-        body:
+        body_html:
         - Your electricity and gas invoices will be issued separately by the relevant suppliers.
+        - "There are two ways to pay:"
+        - <strong>Direct Debit</strong> Payments are taken automatically and a small discount may apply, depending on your payment terms. You can still dispute bills if you believe they are wrong.
+        - <strong>BACS</strong> You must pay by bank transfer within your payment terms.
         - When your contract starts your new supplier will ask for an opening meter reading. Take the reading on the start date and keep a photo for your records. This helps make sure your first bill is accurate.
         - Your new supplier will also give you access to a customer portal. It will show your bills, energy rates and how much energy you use.
       compliance:
@@ -744,7 +747,9 @@ en:
       payment_method:
         legend: How will the bills be paid?
         bacs: BACS
+        bacs_hint: You must pay by bank transfer within your payment terms
         direct_debit: Direct Debit
+        direct_debit_hint: Payments are collected automatically. Prices may be slightly lower depending on your payment terms
       terms:
         legend: Payment terms
         days14: 14 days

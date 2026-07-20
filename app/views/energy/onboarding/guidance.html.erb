@@ -44,7 +44,7 @@
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.interim_rate.body")) %>
 
     <h3 class="govuk-heading-s"><%= I18n.t("energy.guidance.billing.title") %></h3>
-    <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.billing.body")) %>
+    <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.billing.body_html"))%>
 
     <h2 class="govuk-heading-m" id="compliance"><%= I18n.t("energy.guidance.compliance.title") %></h2>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.compliance.body")) %>

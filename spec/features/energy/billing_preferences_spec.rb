@@ -15,6 +15,7 @@ describe "Billing preferences", :js do
     visit energy_case_org_billing_preferences_path(onboarding_case, case_organisation)
 
     expect(page).to have_text("Billing preferences")
+    expect(page).to have_css(".govuk-radios__hint", count: 2)
     expect(page).to have_link("Discard and go to task list", href: energy_case_tasks_path(case_id: onboarding_case.id))
     expect(page).not_to have_text("Government Procurement Card")
 
