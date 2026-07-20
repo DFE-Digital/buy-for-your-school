@@ -12,7 +12,7 @@ Rails.application.config.assets.paths << Rails.root.join("app/javascript")
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand")
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand/images")
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/fonts")
-Rails.application.config.assets.paths << Rails.root.join("vendor/assets/images")
+Rails.application.config.assets.paths << Rails.root.join("node_modules/@ministryofjustice/frontend/moj/assets/images")
 
 ### PLEASE NOTE - DUE TO THE WAY govuk-frontend WORKS THE PRODUCTION SERVER SERVES NON DIGESTED
 ###               VERSIONS OF SOME ASSETS DUE TO THE CSS NOT REFERENCING DIGESTED VERSIONS
@@ -30,6 +30,8 @@ Rails.application.config.assets.precompile += [
   "govuk-icon-512.png",
   "govuk-icon-mask.svg",
   "govuk-crest.svg",
+  "icon-tag-remove-cross.svg",
+  "icon-tag-remove-cross-white.svg",
 ]
 
 # Add Yarn node_modules folder to the asset load path.
