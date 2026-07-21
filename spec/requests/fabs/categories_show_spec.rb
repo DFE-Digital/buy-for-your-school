@@ -115,6 +115,8 @@ RSpec.describe "FABS category pages", type: :request do
       subcategories:,
       related_content: [related_link],
       get_expert_help:,
+      body_title: "Browse DfE-approved frameworks and deals",
+      body_description: "including IT and ICT equipment and services",
     )
   end
 
@@ -131,6 +133,8 @@ RSpec.describe "FABS category pages", type: :request do
     expect(response.body).to include("Buy IT and ICT equipment and services")
     expect(response.body).to include("Everything ICT")
     expect(response.body).to include("Related Content")
+    expect(response.body).to include("Browse DfE-approved frameworks and deals")
+    expect(response.body).to include("including IT and ICT equipment and services")
     expect(document).to have_link("Plan technology for your school", href: "http://localhost:3000/plan-technology")
     expect(document).to have_link("Home", href: "/")
   end
@@ -157,6 +161,9 @@ RSpec.describe "FABS category pages", type: :request do
     expect(response.body).to include("Everything ICT")
     expect(response.body).to include("Corporate software and related products and services")
     expect(response.body).to include("Cyber security services 4")
+    expect(response.body).to include("0 selected")
+    expect(response.body).to include("Software (3)") # number of solutions for software subcategory
+    expect(response.body).to include("Cyber security (1)")
   end
 
   it "shows only matching solutions when subcategory filters are selected" do
@@ -166,6 +173,7 @@ RSpec.describe "FABS category pages", type: :request do
     expect(response.body).to include("Everything ICT")
     expect(response.body).to include("Corporate software and related products and services")
     expect(response.body).not_to include("Cyber security services 4")
+    expect(response.body).to include("1 selected")
   end
 
   it "keeps the selected subcategory values are visible after submission" do
@@ -184,6 +192,7 @@ RSpec.describe "FABS category pages", type: :request do
     expect(response.body).to include("Everything ICT")
     expect(response.body).not_to include("Corporate software and related products and services")
     expect(response.body).not_to include("Cyber security services 4")
+    expect(response.body).to include("0 selected")
   end
 
   it "keeps the selected ways_to_buy values are visible after submission" do
@@ -191,5 +200,6 @@ RSpec.describe "FABS category pages", type: :request do
 
     expect(document).to have_css(".moj-filter__tag", text: "DPS")
     expect(document).to have_no_css(".moj-filter__tag", text: "Framework")
+    expect(response.body).to include("1 selected")
   end
 end

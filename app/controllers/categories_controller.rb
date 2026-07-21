@@ -17,16 +17,36 @@ class CategoriesController < Fabs::ApplicationController
 
     @solutions = @category.filtered_solutions(subcategory_slugs: params[:subcategory_slugs]&.compact_blank, ways_to_buy_slugs: params[:ways_to_buy_slugs]&.compact_blank)
 
+    @solutions_count_subcategory = solutions_count_by_subcategory(@solutions)
+    @solutions_count_ways_to_buy = solutions_count_by_ways_to_buy(@solutions)
     @page_section_title = t(".section_title")
     @page_header_class = "category-header"
     @page_title = @category.title
     @page_description = @category.description
+
+    @body_title = @category.body_title
+    @body_description = @category.body_description
+
     @category_slug = @category.slug
 
     render layout: "fabs_application"
   end
 
 private
+
+  def solutions_count_by_subcategory(solutions)
+    solutions.each_with_object(Hash.new(0)) do |solution, counts|
+      solution.subcategories.to_a.each do |subcategory|
+        counts[subcategory.slug] += 1
+      end
+    end
+  end
+
+  def solutions_count_by_ways_to_buy(solutions)
+    solutions.each_with_object(Hash.new(0)) do |solution, counts|
+      counts[solution.ways_to_buy&.slug] += 1
+    end
+  end
 
   def category
     @category ||= FABS::Category.find_by_slug!(params[:slug])
