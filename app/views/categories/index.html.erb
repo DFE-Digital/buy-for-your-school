@@ -29,14 +29,13 @@
     </div>
   <% end %>
 
-  <h2 class="govuk-heading-m"><%= t(".title") %></h2>
-  <div class="dfe-grid-container">
-    <% @categories.each do |category| %>
-      <%= render "category", category: category %>
-    <% end %>
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m"><%= t(".title") %></h2>
+    <p class="govuk-body"><%= t(".subtitle") %></p>
+    <div class="homepage-category-list">
+      <ul class="chevron-card-list">
+        <%= render @categories %>
+      </ul>
+    </div>
   </div>
-
-  <p class="govuk-body">
-    <%= govuk_link_to t(".procurement_support"), framework_requests_path, target: "_blank", rel: "noopener noreferrer", data: { track_internal_link: true } %>
-  </p>
 </div>
