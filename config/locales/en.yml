@@ -87,8 +87,8 @@ en:
       remove_filter: Remove filter
     index:
       offers_title: DfE featured
-      procurement_support: I need something else (opens in a new tab)
-      title: DfE-approved buying options by category
+      title: Browse by category
+      subtitle: Find frameworks, catalogues and DfE deals to suit your school's needs
       not_sure_title: Not sure where to start?
       not_sure_body: Our buying team can help you choose the right way to buy for your school
       expert_help_button: Get expert buying help
