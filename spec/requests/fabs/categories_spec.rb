@@ -3,9 +3,9 @@ require "rails_helper"
 RSpec.describe "Categories pages", type: :request do
   let(:categories) do
     [
-      instance_double(FABS::Category, title: "Banking and finance", description: "Buy financial services", slug: "banking-and-finance"),
-      instance_double(FABS::Category, title: "Catalogues", description: "Buy catalogues", slug: "catalogues"),
-      instance_double(FABS::Category, title: "Catering", description: "Buy food, drink and catering services", slug: "catering"),
+      fabs_category(title: "Banking and finance", description: "Buy financial services", slug: "banking-and-finance"),
+      fabs_category(title: "Catalogues", description: "Buy catalogues", slug: "catalogues"),
+      fabs_category(title: "Catering", description: "Buy food, drink and catering services", slug: "catering"),
     ]
   end
   let(:featured_offers) { [] }
@@ -24,7 +24,7 @@ RSpec.describe "Categories pages", type: :request do
     end
 
     it "includes buying options section heading" do
-      expect(response.body).to include("DfE-approved buying options by category")
+      expect(response.body).to include("Browse by category")
     end
 
     it "displays category titles" do
@@ -55,5 +55,20 @@ RSpec.describe "Categories pages", type: :request do
       expect(response.body).to include("Our buying team can help you choose the right way to buy for your school")
       expect(response.body).to include('href="/procurement-support">Get expert buying help')
     end
+  end
+
+  def fabs_category(title:, description:, slug:)
+    FABS::Category.new(
+      OpenStruct.new(
+        id: slug,
+        fields: {
+          title:,
+          description:,
+          slug:,
+          subcategories: [],
+          banner: nil,
+        },
+      ),
+    )
   end
 end
