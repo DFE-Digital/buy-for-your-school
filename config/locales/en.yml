@@ -66,8 +66,7 @@ en:
       title: Thank you - Get help buying for schools feedback
   app:
     name: Get help buying for schools
-  header_description: A free and compliant service to help you buy for your school,
-    trust or academy
+  header_description: A free service that offers impartial advice and compliant ways to buy goods and services for your school or trust
   header_title: Get help buying for schools
   banner:
     beta:
@@ -3073,8 +3072,6 @@ en:
       procurement_help: Request procurement help
       support_links: Support links
       terms_and_conditions: Terms and conditions
-    dfe_homepage_header:
-      view_all_buying_options: Browse a list of all DfE-approved buying options
     external_link:
       opens_in_new_tab: opens in new tab
   solutions:
