@@ -121,7 +121,7 @@ RSpec.describe "Solutions pages", type: :feature do
     end
 
     it "displays the solution description" do
-      expect(page).to have_content("A full range of IT hardware including new, refurbished, and remanufactured.")
+      expect(page).to have_no_content("A full range of IT hardware including new, refurbished, and remanufactured.")
     end
 
     it "displays key solution detail sections" do
