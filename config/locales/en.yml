@@ -91,9 +91,6 @@ en:
       procurement_support: Start your request
       title: Browse by category
       subtitle: Find frameworks, catalogues and DfE deals to suit your school's needs
-      not_sure_title: Not sure where to start?
-      not_sure_body: Our buying team can help you choose the right way to buy for your school
-      expert_help_button: Get expert buying help
   case_requests:
     validation:
       discovery_method: Case origin is missing
