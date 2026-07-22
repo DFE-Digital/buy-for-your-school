@@ -16,12 +16,6 @@
     <%= render partial: 'energy_banner', locals: { banner: @energy_banner } %>
   <% end %>
 
-  <div class="govuk-inset-text govuk-inset-text--thin">
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t(".not_sure_title") %></h2>
-    <p class="govuk-body"><%= t(".not_sure_body") %></p>
-    <%= govuk_link_to(t(".expert_help_button"), framework_requests_path, class: "cta govuk-button", data: { track_internal_link: true }) %>
-  </div>
-
   <% if @featured_offers.present? %>
     <h2 class="govuk-heading-m"><%= t(".offers_title") %></h2>
     <div class="dfe-grid-container offers-grid-container">
