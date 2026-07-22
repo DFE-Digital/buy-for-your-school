@@ -19,9 +19,7 @@
   <% if @featured_offers.present? %>
     <h2 class="govuk-heading-m"><%= t(".offers_title") %></h2>
     <div class="dfe-grid-container offers-grid-container">
-      <% @featured_offers.each do |offer| %>
-        <%= render partial: "offers/offer", locals: { offer: offer } %>
-      <% end %>
+      <%= render @featured_offers %>
     </div>
   <% end %>
 
