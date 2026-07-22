@@ -3,8 +3,6 @@ class SearchController < Fabs::ApplicationController
   MAX_QUERY_LENGTH = 150
   MAX_WORDS = 25
 
-  before_action :disable_search_in_header
-
   def index
     @solutions = []
     @categories = []
@@ -24,10 +22,6 @@ class SearchController < Fabs::ApplicationController
   end
 
 private
-
-  def disable_search_in_header
-    @show_search_in_header = false
-  end
 
   def invalid_query?(query)
     if query.blank?

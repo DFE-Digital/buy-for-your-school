@@ -1,5 +1,4 @@
 class CategoriesController < Fabs::ApplicationController
-  before_action :disable_search_in_header, only: :index
   include Redirectable
 
   before_action :redirect_legacy_slugs, only: :show
@@ -61,9 +60,5 @@ private
 
   def ways_to_buy
     category.solutions.map(&:ways_to_buy).compact.map { |entry| WaysToBuy.new(entry) }.sort_by(&:title).uniq(&:title)
-  end
-
-  def disable_search_in_header
-    @show_search_in_header = false
   end
 end
