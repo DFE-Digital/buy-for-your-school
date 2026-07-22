@@ -1,4 +1,7 @@
 <div class="dfe-card dfe-card--featured">
+  <% if offer.image.present? %>
+    <%= image_tag offer.image.url, alt: offer.title, class: "dfe-card--featured--image" %>
+  <% end %>
   <div class="dfe-card-container">
     <h3 class="govuk-heading-m">
       <%= fabs_govuk_link_to offer.title, offer.url, class: "govuk-link govuk-link--no-visited-state dfe-card-link--header" %>
