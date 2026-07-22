@@ -1,13 +1,15 @@
-<div class="dfe-grid-row">
-  <div class="dfe-grid-column-two-thirds">
-    <h1 class="dfe-heading-xl homepage-heading XXhomepage-heading-search-open">
-      <%= t('header_title') %>
-    </h1>
-    <p class="dfe-body-l">
-      <%= t('header_description') %>
-    </p>
+<%= content_for :pre_main do %>
+  <div class="dfe-grid-row">
+    <div class="dfe-grid-column-two-thirds">
+      <h1 class="dfe-heading-xl homepage-heading">
+        <%= t('header_title') %>
+      </h1>
+      <p class="dfe-body-l">
+        <%= t('header_description') %>
+      </p>
+    </div>
   </div>
-</div>
+<% end %>
 
 <div class="govuk-!-margin-top-4">
   <% if @energy_banner %>
@@ -29,13 +31,18 @@
     </div>
   <% end %>
 
-  <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-m"><%= t(".title") %></h2>
-    <p class="govuk-body"><%= t(".subtitle") %></p>
-    <div class="homepage-category-list">
-      <ul class="chevron-card-list">
-        <%= render @categories %>
-      </ul>
-    </div>
+  <h2 class="govuk-heading-m"><%= t(".title") %></h2>
+  <p class="govuk-body"><%= t(".subtitle") %></p>
+  <div class="homepage-category-list">
+    <ul class="chevron-card-list">
+      <%= render @categories %>
+    </ul>
   </div>
 </div>
+
+<% content_for :sidebar do %>
+  <h2 class="govuk-heading-m"><%= t(".support_heading") %></h2>
+  <p class="govuk-body">
+    <%= govuk_link_to t(".procurement_support"), framework_requests_path, target: "_blank", rel: "noopener noreferrer", data: { track_internal_link: true } %>
+  </p>
+<% end %>
