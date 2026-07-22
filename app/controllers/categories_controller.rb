@@ -3,8 +3,9 @@ class CategoriesController < Fabs::ApplicationController
 
   def index
     @categories = FABS::Category.all
-    @featured_offers = Offer.featured_offers.select { |offer| offer.sort_order.present? }.first(3)
+    @featured_offers = Offer.featured_offers.select { |offer| offer.sort_order.present? }.first(2)
     @energy_banner = Banner.find_by_slug(ENV.fetch("HOMEPAGE_BANNER_SLUG", "homepage-banner"))
+
     render layout: "homepage"
   end
 
