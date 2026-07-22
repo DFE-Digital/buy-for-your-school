@@ -1,6 +1,4 @@
 class CategoriesController < Fabs::ApplicationController
-  before_action :disable_search_in_header, only: :index
-
   def index
     @categories = FABS::Category.all
     @featured_offers = Offer.featured_offers.select { |offer| offer.sort_order.present? }.first(2)
@@ -24,11 +22,5 @@ class CategoriesController < Fabs::ApplicationController
     @category_slug = @category.slug
 
     render layout: "fabs_application"
-  end
-
-private
-
-  def disable_search_in_header
-    @show_search_in_header = false
   end
 end
