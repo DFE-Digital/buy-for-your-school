@@ -50,10 +50,9 @@ RSpec.describe "Categories pages", type: :request do
       expect(response.body).not_to include("category-without-any-solution")
     end
 
-    it "displays new request for help content" do
-      expect(response.body).to include("Not sure where to start?")
-      expect(response.body).to include("Our buying team can help you choose the right way to buy for your school")
-      expect(response.body).to include('href="/procurement-support">Get expert buying help')
+    it "displays get expert help content" do
+      expect(response.body).to include("Get expert help")
+      expect(response.body).to include('href="/procurement-support">Start your request')
     end
   end
 
