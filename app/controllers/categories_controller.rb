@@ -11,6 +11,7 @@ class CategoriesController < Fabs::ApplicationController
 
   def show
     add_breadcrumb_on_rails :home_breadcrumb_name, :root_path
+    add_breadcrumb_on_rails :category_breadcrumb_name
 
     @subcategories = category.subcategories
     @selected_subcategories = @subcategories.select { |subcategory| params[:subcategory_slugs]&.include?(subcategory.slug) }
