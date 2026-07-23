@@ -45,6 +45,7 @@ RSpec.describe "Homepage Offers Section", type: :feature do
   before do
     allow(FABS::Category).to receive(:all).and_return([])
     allow(Offer).to receive(:featured_offers).and_return([featured_offer])
+    allow(PopularLink).to receive(:all).and_return([])
     allow(Banner).to receive(:find_by_slug).and_return(nil)
   end
 
