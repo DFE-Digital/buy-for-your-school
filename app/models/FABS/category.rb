@@ -6,17 +6,21 @@ module FABS
     include HasRelatedContent
 
     CONTENT_TYPE = "category".freeze
-    SUMMARY_SELECT = "sys.id,fields.title,fields.description,fields.slug,fields.banner".freeze
+    SUMMARY_SELECT = "sys.id, fields.title, fields.description, fields.body_title,
+      fields.body_description, fields.slug, fields.banner".freeze
 
-    attr_reader :id, :title, :description, :slug, :subcategories, :banner
+    attr_reader :id, :title, :description, :body_title, :body_description, :slug, :subcategories, :banner, :get_expert_help
 
     def initialize(entry)
       @id = entry.id
       @title = entry.fields[:title]
       @description = entry.fields[:description]
+      @body_title = entry.fields[:body_title]
+      @body_description = entry.fields[:body_description]
       @slug = entry.fields[:slug]
       @subcategories = entry.fields.fetch(:subcategories, []).map { |subcat| Subcategory.new(subcat) }.sort_by(&:title)
       @banner = entry.fields[:banner] ? Banner.new(entry.fields[:banner]) : nil
+      @get_expert_help = entry.fields[:get_expert_help] ? GetExpertHelp.new(entry.fields[:get_expert_help]) : nil
       super
     end
 
@@ -73,13 +77,17 @@ module FABS
       new(entry)
     end
 
-    def filtered_solutions(subcategory_slugs: nil)
-      return solutions if subcategory_slugs.blank?
+    def filtered_solutions(subcategory_slugs: nil, ways_to_buy_slugs: nil)
+      return solutions if subcategory_slugs.blank? && ways_to_buy_slugs.blank?
 
       solutions.select do |solution|
-        solution.subcategories&.any? do |subcat|
-          subcategory_slugs.include?(subcat.fields[:slug])
-        end
+        subcategory_match = subcategory_slugs.blank? ||
+          solution.subcategories.to_a.any? { |sub| subcategory_slugs.include?(sub.fields[:slug]) }
+
+        ways_to_buy_match = ways_to_buy_slugs.blank? ||
+          ways_to_buy_slugs.include?(solution.ways_to_buy&.fields&.dig(:slug))
+
+        subcategory_match && ways_to_buy_match
       end
     end
   end

@@ -81,6 +81,9 @@ en:
       visitor: You must sign in.
   breadcrumbs:
     offers: Offers
+  layouts:
+    fabs_application:
+      page_title: "Buying options for"
   categories:
     filter_labels:
       active_filters: Active filters
@@ -93,6 +96,9 @@ en:
       not_sure_title: Not sure where to start?
       not_sure_body: Our buying team can help you choose the right way to buy for your school
       expert_help_button: Get expert buying help
+    show:
+      get_expert_help: Get expert help
+      heading: Browse DfE-approved frameworks and deals
   case_requests:
     validation:
       discovery_method: Case origin is missing
@@ -3077,6 +3083,14 @@ en:
       view_all_buying_options: Browse a list of all DfE-approved buying options
     external_link:
       opens_in_new_tab: opens in new tab
+    right_filters:
+      apply_filters: Apply filters
+      selected_filters: Selected Filters
+      subcategories: Subcategories
+      ways_to_buy: Ways to buy
+    related_content:
+      header: Related reading
+
   solutions:
     index:
       all_buying_options_description: Use a DfE-approved buying option to make sure
