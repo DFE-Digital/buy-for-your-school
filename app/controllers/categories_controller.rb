@@ -1,6 +1,5 @@
 class CategoriesController < Fabs::ApplicationController
   before_action :disable_search_in_header, only: :index
-  before_action :ways_to_buy, only: :show
 
   def index
     @categories = FABS::Category.all
@@ -15,11 +14,12 @@ class CategoriesController < Fabs::ApplicationController
 
     @subcategories = category.subcategories
     @selected_subcategories = @subcategories.select { |subcategory| params[:subcategory_slugs]&.include?(subcategory.slug) }
-
     @solutions = @category.filtered_solutions(subcategory_slugs: params[:subcategory_slugs]&.compact_blank, ways_to_buy_slugs: params[:ways_to_buy_slugs]&.compact_blank)
 
     @solutions_count_subcategory = solutions_count_by_subcategory(@solutions)
     @solutions_count_ways_to_buy = solutions_count_by_ways_to_buy(@solutions)
+    @ways_to_buy = ways_to_buy
+
     @page_section_title = t(".section_title")
     @page_header_class = "category-header"
     @page_title = @category.title
@@ -54,7 +54,7 @@ private
   end
 
   def ways_to_buy
-    @ways_to_buy ||= category.solutions.map(&:ways_to_buy).compact.map { |entry| WaysToBuy.new(entry) }.sort_by(&:title).uniq(&:title)
+    category.solutions.map(&:ways_to_buy).compact.map { |entry| WaysToBuy.new(entry) }.sort_by(&:title).uniq(&:title)
   end
 
   def disable_search_in_header
