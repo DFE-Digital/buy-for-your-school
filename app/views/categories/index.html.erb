@@ -11,7 +11,7 @@
   </div>
 <% end %>
 
-<div class="govuk-!-margin-top-4">
+<div>
   <% if @energy_banner %>
     <%= render partial: 'energy_banner', locals: { banner: @energy_banner } %>
   <% end %>
@@ -23,12 +23,14 @@
     </div>
   <% end %>
 
-  <h2 class="govuk-heading-m"><%= t(".title") %></h2>
-  <p class="govuk-body"><%= t(".subtitle") %></p>
-  <div class="homepage-category-list">
-    <ul class="chevron-card-list">
-      <%= render @categories %>
-    </ul>
+  <div class="govuk-!-margin-top-7">
+    <h2 class="govuk-heading-m"><%= t(".title") %></h2>
+    <p class="govuk-body"><%= t(".subtitle") %></p>
+    <div class="homepage-category-list">
+      <ul class="chevron-card-list">
+        <%= render @categories %>
+      </ul>
+    </div>
   </div>
 </div>
 
