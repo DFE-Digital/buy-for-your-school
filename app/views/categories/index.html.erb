@@ -34,7 +34,14 @@
 
 <% content_for :sidebar do %>
   <h2 class="govuk-heading-m"><%= t(".support_heading") %></h2>
-  <p class="govuk-body">
-    <%= govuk_link_to t(".procurement_support"), framework_requests_path, target: "_blank", rel: "noopener noreferrer", data: { track_internal_link: true } %>
-  </p>
+  <details class="govuk-details">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">
+        <b><%= t(".procurement_support") %></b>
+      </span>
+    </summary>
+    <div class="govuk-details__text">
+      <%= govuk_link_to t(".procurement_support"), framework_requests_path, target: "_blank", rel: "noopener noreferrer", data: { track_internal_link: true } %>
+    </div>
+  </details>
 <% end %>
