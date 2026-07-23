@@ -1,10 +1,10 @@
 class CategoriesController < Fabs::ApplicationController
-  before_action :disable_search_in_header, only: :index
-
   def index
     @categories = FABS::Category.all
-    @featured_offers = Offer.featured_offers.select { |offer| offer.sort_order.present? }.first(3)
+    @featured_offers = Offer.featured_offers.select { |offer| offer.sort_order.present? }.first(2)
+    @popular_links = PopularLink.all.select { |popular_link| popular_link.sort_order.present? }.first(6)
     @energy_banner = Banner.find_by_slug(ENV.fetch("HOMEPAGE_BANNER_SLUG", "homepage-banner"))
+
     render layout: "homepage"
   end
 
@@ -23,11 +23,5 @@ class CategoriesController < Fabs::ApplicationController
     @category_slug = @category.slug
 
     render layout: "fabs_application"
-  end
-
-private
-
-  def disable_search_in_header
-    @show_search_in_header = false
   end
 end
