@@ -6,7 +6,9 @@
   <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
     <div class="govuk-grid-row gov-uk-!-padding-left-0">
       <div class="govuk-grid-column-one-third">
-        <%= image_tag @category.banner&.image&.url, alt: @category.banner&.title, width: "100%", height: "auto" %>
+        <% if @category.banner.present? && @category.banner&.image&.url.present? %>
+          <%= image_tag @category.banner&.image&.url, alt: @category.banner&.title, width: "100%", height: "auto" %>
+        <% end %>
       </div>
 
       <% if @category.banner.present? %>
