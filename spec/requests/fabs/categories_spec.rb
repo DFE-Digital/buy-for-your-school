@@ -9,13 +9,15 @@ RSpec.describe "Categories pages", type: :request do
     ]
   end
   let(:featured_offers) { [] }
+  let(:popular_links) { [] }
   let(:energy_banner) { nil }
 
   describe "GET /" do
     before do
-      allow(FABS::Category).to receive(:all).and_return(categories)
-      allow(Offer).to receive(:featured_offers).and_return(featured_offers)
-      allow(Banner).to receive(:find_by_slug).and_return(energy_banner)
+      allow(FABS::Category).to receive(:all) { categories }
+      allow(Offer).to receive(:featured_offers) { featured_offers }
+      allow(PopularLink).to receive(:all) { popular_links }
+      allow(Banner).to receive(:find_by_slug) { energy_banner }
       get root_path
     end
 
@@ -50,6 +52,24 @@ RSpec.describe "Categories pages", type: :request do
       expect(response.body).not_to include("category-without-any-solution")
     end
 
+    context "when there are popular links" do
+      let(:popular_links) do
+        [
+          popular_link(title: "Link one", url: "/link-one"),
+          popular_link(title: "Link two", url: "https://example.com/link-two"),
+        ]
+      end
+
+      it "displays the popular links section" do
+        expect(response.body).to include("Popular on GHBS")
+        expect(response.body).to include('class="homepage-popular-links')
+        expect(response.body).to include('class="govuk-grid-row"')
+        expect(response.body).to include('class="govuk-grid-column-one-third"')
+        expect(response.body).to include('href="/link-one">Link one')
+        expect(response.body).to include('href="https://example.com/link-two">Link two')
+      end
+    end
+
     it "displays get expert help content" do
       expect(response.body).to include("Get expert help")
       expect(response.body).to include('href="/procurement-support">Start your request')
@@ -66,6 +86,19 @@ RSpec.describe "Categories pages", type: :request do
           slug:,
           subcategories: [],
           banner: nil,
+        },
+      ),
+    )
+  end
+
+  def popular_link(title:, url:, sort_order: 1)
+    PopularLink.new(
+      OpenStruct.new(
+        id: title.parameterize,
+        fields: {
+          title:,
+          url:,
+          sort_order:,
         },
       ),
     )

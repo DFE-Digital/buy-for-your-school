@@ -9,6 +9,15 @@
       </p>
     </div>
   </div>
+
+  <% if @popular_links.present? %>
+    <div class="homepage-popular-links govuk-!-margin-top-7 govuk-!-padding-bottom-7">
+      <h2 class="govuk-heading-m"><%= t(".popular_links_title") %></h2>
+      <div class="govuk-grid-row">
+        <%= render @popular_links %>
+      </div>
+    </div>
+  <% end %>
 <% end %>
 
 <div>
