@@ -12,8 +12,8 @@ readonly VENDOR_STYLESHEETS_ROOT="${APP_ROOT}/vendor/assets/stylesheets"
 readonly VENDOR_IMAGES_ROOT="${APP_ROOT}/vendor/assets/images"
 
 # Keep this list tight. We only want the Sass needed for the super navigation
-# header and search components plus the tiny asset dependency referenced by
-# search.scss.
+# header, search, and action link components plus the tiny asset dependency
+# referenced by search.scss and the action link icon assets.
 readonly STYLESHEET_PATHS=(
   "app/assets/stylesheets/govuk_publishing_components/_base.scss"
   "app/assets/stylesheets/govuk_publishing_components/settings/_index.scss"
@@ -21,6 +21,7 @@ readonly STYLESHEET_PATHS=(
   "app/assets/stylesheets/govuk_publishing_components/settings/_app-image-url.scss"
   "app/assets/stylesheets/govuk_publishing_components/settings/_colours.scss"
   "app/assets/stylesheets/govuk_publishing_components/settings/_typography.scss"
+  "app/assets/stylesheets/govuk_publishing_components/components/_action-link.scss"
   "app/assets/stylesheets/govuk_publishing_components/components/_layout-super-navigation-header.scss"
   "app/assets/stylesheets/govuk_publishing_components/components/_search.scss"
   "app/assets/stylesheets/govuk_publishing_components/components/helpers/_colours.scss"
@@ -35,6 +36,8 @@ readonly STYLESHEET_PATHS=(
 )
 
 readonly IMAGE_PATHS=(
+  "app/assets/images/govuk_publishing_components/action-link-arrow--light.svg"
+  "app/assets/images/govuk_publishing_components/action-link-arrow--simple.svg"
   "app/assets/images/govuk_publishing_components/icon-close.svg"
 )
 
