@@ -147,8 +147,8 @@ en:
           description: Buy home to school transport and accessories
       - label: Guidance and support
         menu_contents:
-        - label: About this service
-          href: "/about-this-service"
+        - label: About our service
+          href: "/about-our-service"
           description: Who we help and what we do
         - label: Request for help
           href: "/procurement-support"
@@ -3058,9 +3058,6 @@ en:
     title: Search
   service:
     name: Get help buying for schools
-    navigation:
-      about: About this service
-      menu: Menu
   shared:
     dfe_footer:
       accessibility: Accessibility
