@@ -1,0 +1,117 @@
+categories:
+- category: Buildings and maintenance
+  description: Cleaning services, grounds maintenance and sports facilities
+  slug: buildings-maintenance
+  subcategories:
+  - name: Buildings
+    slug: buildings
+  - name: Cleaning services and equipment
+    slug: cleaning-services-equipment
+  - name: Facilities management
+    slug: facilities-management
+  - name: Grounds, estates and maintenance
+    slug: grounds-estates-maintenance
+  - name: Health, safety and security
+    slug: health-safety-security
+  - name: Lighting
+    slug: lighting
+  - name: Sports grounds, facilities and equipment
+    slug: sports-grounds-facilities-equipment
+- category: Catering
+  description: Food, vending machines, catering services and equipment
+  slug: catering
+  subcategories:
+  - name: Breakfast club
+    slug: breakfast-club
+  - name: Catering equipment
+    slug: catering-equipment
+  - name: Catering services and staff
+    slug: catering-services-staff
+  - name: Food
+    slug: food
+  - name: Vending machines
+    slug: vending-machines
+- category: Classroom, curriculum and office supplies
+  description: Books, classroom tech, furniture and sensory equipment
+  slug: classroom-curriculum-office-supplies
+  subcategories:
+  - name: Arts, crafts and music
+    slug: arts-crafts-music
+  - name: Books
+    slug: books
+  - name: Classroom and office supplies
+    slug: classroom-office-supplies
+  - name: Furniture
+    slug: furniture
+  - name: Laptops, AV and classroom tech
+    slug: laptops-av-classroom-tech
+  - name: Printed materials
+    slug: printed-materials
+  - name: SEND products
+    slug: send-products
+  - name: Sports equipment
+    slug: sports-equipment
+- category: Energy and utilities
+  description: Gas and electricity supplies, solar panels and water
+  slug: energy-utilities
+  subcategories:
+  - name: Electricity
+    slug: electricity
+  - name: Energy audits, savings and debt resolution
+    slug: energy-audits-savings-debt-resolution
+  - name: Gas
+    slug: gas
+  - name: Lighting
+    slug: lighting
+  - name: Other fuels
+    slug: other-fuels
+  - name: Renewables and energy-saving products
+    slug: renewables-energysaving-products
+  - name: Water
+    slug: water
+- category: Finance, legal and insurance
+  description: Insurance solutions, audits and legal services
+  slug: finance-legal-insurance
+  subcategories:
+  - name: Debt resolution and services
+    slug: debt-resolution-services
+  - name: Financial, audit and payroll
+    slug: financial-audit-payroll
+  - name: Insurance
+    slug: insurance
+  - name: Legal services
+    slug: legal-services
+- category: HR, people and professional services
+  description: 'Recruitment, payroll and consultancy '
+  slug: hr-people-professional-services
+  subcategories:
+  - name: Catering staff
+    slug: catering-staff
+  - name: HR and recruitment
+    slug: hr-recruitment
+  - name: Language services
+    slug: language-services
+  - name: Professional services
+    slug: professional-services
+  - name: Training and development
+    slug: training-development
+- category: ICT and business systems
+  description: Hardware, software and management systems
+  slug: ict-business-systems
+  subcategories:
+  - name: Cameras and AV equipment
+    slug: cameras-av-equipment
+  - name: Broadband, wifi and telecomms
+    slug: broadband-wifi-telecomms
+  - name: Cloud services, AI and data storage
+    slug: cloud-services-ai-data-storage
+  - name: Cyber security
+    slug: cyber-security
+  - name: ICT software and systems
+    slug: ict-software-systems
+  - name: Laptops, printers and ICT hardware
+    slug: laptops-printers-ict-hardware
+- category: Transport
+  description: Daily transport and educational trips
+  slug: transport
+  subcategories: []
