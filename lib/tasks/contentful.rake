@@ -3,48 +3,51 @@ require "contentful/management"
 
 # rubocop:disable Rails/SaveBang
 namespace :contentful do
-  desc "Create categories and subcategories from config/categories.yml in Contentful"
-  task create_categories: :environment do
-    data = YAML.load_file(Rails.root.join("config/categories.yml"))
-    client = Contentful::Management::Client.new(ENV["CONTENTFUL_CMA_TOKEN"])
-    space = client.spaces.find(ENV["CONTENTFUL_SPACE_ID"])
-    environment = space.environments.find(ENV.fetch("CONTENTFUL_ENVIRONMENT", "master"))
-
+  desc "Create or update subcategories from config/categories.yml in Contentful"
+  task create_subcategories: :environment do
+    data = categories_config
+    environment = contentful_environment
     subcategory_type = environment.content_types.find("subcategory")
-    category_type = environment.content_types.find("category")
 
-    subcategories_by_slug = {}
+    each_subcategory(data) do |sub_category|
+      slug = sub_category["slug"]
+      entry = find_entry_by_slug(environment, "subcategory", slug)
 
-    data.fetch("categories", []).each do |category|
-      Array(category["subcategories"]).each do |sub_category|
-        slug = sub_category["slug"]
-        next if subcategories_by_slug.key?(slug)
-
-        entry = find_entry_by_slug(environment, "subcategory", slug)
-
-        if entry
-          puts "Updating subcategory #{sub_category['name']} (#{slug})"
-          entry.update(
-            title: sub_category["name"],
-            slug:,
-          )
-        else
-          puts "Creating subcategory #{sub_category['name']} (#{slug})"
-          entry = subcategory_type.entries.create(
-            id: slug,
-            title: sub_category["name"],
-            slug:,
-          )
-        end
-
-        entry.publish
-        subcategories_by_slug[slug] = entry
+      if entry
+        puts "Updating subcategory #{sub_category['name']} (#{slug})"
+        entry.update(
+          title: sub_category["name"],
+          slug:,
+        )
+      else
+        puts "Creating subcategory #{sub_category['name']} (#{slug})"
+        entry = subcategory_type.entries.create(
+          id: slug,
+          title: sub_category["name"],
+          slug:,
+        )
       end
+
+      entry.publish
     end
+
+    puts "Subcategory creation complete."
+  end
+
+  desc "Create or update categories from config/categories.yml in Contentful"
+  task create_categories: :environment do
+    data = categories_config
+    environment = contentful_environment
+    category_type = environment.content_types.find("category")
 
     data.fetch("categories", []).each do |category|
       slug = category["slug"]
-      subcategory_entries = Array(category["subcategories"]).map { |sub_category| subcategories_by_slug.fetch(sub_category["slug"]) }
+      subcategory_entries = Array(category["subcategories"]).map do |sub_category|
+        entry = find_entry_by_slug(environment, "subcategory", sub_category["slug"])
+        raise "Missing subcategory #{sub_category['name']} (#{sub_category['slug']}). Run contentful:create_subcategories first." unless entry
+
+        entry
+      end
       entry = find_entry_by_slug(environment, "category", slug)
 
       if entry
@@ -252,11 +255,27 @@ namespace :contentful do
   end
 end
 
+def categories_config
+  YAML.load_file(Rails.root.join("config/categories.yml"))
+end
+
+def contentful_environment
+  client = Contentful::Management::Client.new(ENV["CONTENTFUL_CMA_TOKEN"])
+  space = client.spaces.find(ENV["CONTENTFUL_SPACE_ID"])
+  space.environments.find(ENV.fetch("CONTENTFUL_ENVIRONMENT", "master"))
+end
+
+def each_subcategory(json_data)
+  json_data.fetch("categories", []).each do |category|
+    Array(category["subcategories"]).each { |sub_category| yield sub_category }
+  end
+end
+
 def unique_categories(json_data)
   json_data.map { |item| item["cat"] }.uniq
 end
 
-def create_categories(environment, json_data)
+def build_categories(environment, json_data)
   categories = {}
   unique_categories(json_data).each { |item| categories[item["ref"]] = create_category(environment, item) }
   categories
