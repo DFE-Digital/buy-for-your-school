@@ -90,6 +90,7 @@ en:
       popular_links_title: Popular on GHBS
       support_heading: Get expert help
       procurement_support: Start your request
+      procurement_support_detail_html: Fill in our short <a href="/procurement-support" class="govuk-link">form</a> and get help from our team of buying experts
       title: Browse by category
       subtitle: Find frameworks, catalogues and DfE deals to suit your school's needs
     show:
