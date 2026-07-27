@@ -1,28 +1,28 @@
 <%= content_for :pre_main do %>
-  <div class="govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+  <div class="govuk-!-margin-top-4 govuk-!-margin-bottom-4">
     <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= @category.body_title %></h2>
-    <p class="govuk-!-margin-bottom-4 govuk-body-m"><%= @category.body_description %></p>
+    <p class="govuk-body-m"><%= @category.body_description %></p>
   </div>
-  <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
-    <div class="govuk-grid-row gov-uk-!-padding-left-0">
-      <div class="govuk-grid-column-one-third">
-        <% if @category.banner.present? && @category.banner&.image&.url.present? %>
-          <%= image_tag @category.banner&.image&.url, alt: @category.banner&.title, width: "100%", height: "auto" %>
-        <% end %>
-      </div>
+  <% if @category.banner.present? %>
+    <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0 govuk-!-margin-bottom-4">
+      <div class="govuk-grid-row gov-uk-!-padding-left-0">
+        <div class="govuk-grid-column-one-third">
+          <% if @category.banner&.image&.url.present? %>
+            <%= image_tag @category.banner&.image&.url, alt: @category.banner&.title, width: "100%", height: "auto" %>
+          <% end %>
+        </div>
 
-      <% if @category.banner.present? %>
         <%= render partial: "shared/content_banner", locals: {
           title: @category.banner.title,
           description: @category.banner.description,
           url: @category.banner.url
         } %>
-      <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
 
-<br /><hr/>
+<hr/>
 <% if @solutions.present? %>
   <%= render partial: "shared/solution_section", locals: { solutions: @solutions, category_slug: @category_slug  } %>
 <% end %>
@@ -30,17 +30,17 @@
 <% content_for :sidebar, class: "govuk-!-margin-top-4" do %>
   <%= render partial: "shared/right_filters", locals: { subcategories: @subcategories, category: @category, solutions: @solutions, ways_to_buy: @ways_to_buy } %>
 
-  <% if @category.get_expert_help.present? %>
-    <div class=" govuk-!-padding-bottom-4 govuk-!-padding-top-9 border-top">
+  <% if @get_expert_help.present? %>
+    <div class=" govuk-!-padding-bottom-2 govuk-!-padding-top-2 border-top">
       <h2 class="govuk-heading-s govuk-!-margin-top-2"><%= t(".get_expert_help") %></h2>
       <details class="govuk-details">
         <summary class="govuk-details__summary">
           <span class="govuk-details__summary-text">
-            <b><%= @category&.get_expert_help&.title %></b>
+            <b><%= @get_expert_help&.title %></b>
           </span>
         </summary>
         <div class="govuk-details__text">
-          <%= render_markdown_to_html(@category&.get_expert_help&.description) %>
+          <%= render_markdown_to_html(@get_expert_help&.description) %>
         </div>
       </details>
     </div>

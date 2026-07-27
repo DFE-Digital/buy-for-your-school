@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "FABS category pages", type: :request do
   before do
     allow(FABS::Category).to receive(:find_by_slug!).with("it").and_return(category)
+    allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
     allow(category).to receive(:solutions).and_return(solutions)
 
     allow(category).to receive(:filtered_solutions) do |subcategory_slugs:, ways_to_buy_slugs:|
@@ -114,7 +115,6 @@ RSpec.describe "FABS category pages", type: :request do
       banner:,
       subcategories:,
       related_content: [related_link],
-      get_expert_help:,
       body_title: "Browse DfE-approved frameworks and deals",
       body_description: "including IT and ICT equipment and services",
     )
@@ -201,5 +201,13 @@ RSpec.describe "FABS category pages", type: :request do
     expect(document).to have_css(".moj-filter__tag", text: "DPS")
     expect(document).to have_no_css(".moj-filter__tag", text: "Framework")
     expect(response.body).to include("1 selected")
+  end
+
+  it "renders get expert help content" do
+    get category_path("it")
+
+    expect(response).to be_successful
+    expect(response.body).to include("Get expert help")
+    expect(response.body).to include("Start your request")
   end
 end

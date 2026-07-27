@@ -1,10 +1,10 @@
 <% if related_content.present? %>
-  <div class="govuk-!-margin-top-0">
+  <div class="govuk-!-margin-top-2">
     <h2 class="govuk-heading-s"><%= t("shared.dfe_sidebar.related_content") %></h2>
     <ul class="govuk-list">
       <% related_content.each do |link| %>
         <li>
-          <%= fabs_govuk_link_to link.link_text, link.url, class: "govuk-body-s" %>
+          <%= fabs_govuk_link_to link.link_text, link.url, class: "govuk-body-m" %>
         </li>
       <% end %>
     </ul>

@@ -19,6 +19,7 @@ class CategoriesController < Fabs::ApplicationController
     @solutions_count_subcategory = solutions_count_by_subcategory(@solutions)
     @solutions_count_ways_to_buy = solutions_count_by_ways_to_buy(@solutions)
     @ways_to_buy = ways_to_buy
+    @get_expert_help = get_expert_help
 
     @page_section_title = t(".section_title")
     @page_header_class = "category-header"
@@ -55,6 +56,10 @@ private
 
   def ways_to_buy
     category.solutions.map(&:ways_to_buy).compact.map { |entry| WaysToBuy.new(entry) }.sort_by(&:title).uniq(&:title)
+  end
+
+  def get_expert_help
+    GetExpertHelp.content
   end
 
   def disable_search_in_header

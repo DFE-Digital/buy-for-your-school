@@ -3085,7 +3085,8 @@ en:
       opens_in_new_tab: opens in new tab
     right_filters:
       apply_filters: Apply filters
-      selected_filters: Selected Filters
+      clear_filters: Clear filters
+      selected_filters: Selected filters
       subcategories: Subcategories
       ways_to_buy: Ways to buy
     related_content:

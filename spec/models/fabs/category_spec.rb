@@ -253,16 +253,6 @@ RSpec.describe FABS::Category, type: :model do
     end
   end
 
-  describe "#get_expert_help" do
-    subject(:category) { described_class.new(entry) }
-
-    let(:entry) { category_entry(get_expert_help: get_expert_help_entry) }
-
-    it "returns a GetExpertHelp object" do
-      expect(category.get_expert_help).to be_a(GetExpertHelp)
-    end
-  end
-
   describe "#promo banner" do
     subject(:category) { described_class.new(entry) }
 
@@ -273,7 +263,7 @@ RSpec.describe FABS::Category, type: :model do
     end
   end
 
-  def category_entry(id: "category-id", title: "IT", description: "Category description", slug: "it", subcategories: [], banner: nil, related_content: [], get_expert_help: nil)
+  def category_entry(id: "category-id", title: "IT", description: "Category description", slug: "it", subcategories: [], banner: nil, related_content: [])
     OpenStruct.new(
       id:,
       sys: { id: },
@@ -284,7 +274,6 @@ RSpec.describe FABS::Category, type: :model do
         subcategories:,
         banner:,
         related_content:,
-        get_expert_help:,
       },
     )
   end
@@ -327,16 +316,6 @@ RSpec.describe FABS::Category, type: :model do
       fields: {
         link_text:,
         url:,
-      },
-    )
-  end
-
-  def get_expert_help_entry(id: "get-expert-help-id", title: "Get expert help", description: "Description")
-    OpenStruct.new(
-      id:,
-      fields: {
-        title:,
-        description:,
       },
     )
   end
