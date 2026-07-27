@@ -8,12 +8,21 @@ New fields should be added with input from a developer. Significant changes shou
 
 ## Categories
 
-A webhook has been added to Contentful to keep track of changes to the `Category` content as it is **published**.
+### Creating categories from `config/categories.yml`
 
-The following fields may be updated with each published change:
-- `title`
-- `description`
-- `liquid_template`
-- `slug`
+The categories used by the public FABS pages can be created or updated in Contentful with the following rake tasks:
 
-As `liquid_template` determines the content of a user specification, any existing user specification may be affected by changes made to this field. Work to handle this has not yet started.
+```sh
+bundle exec rake contentful:create_subcategories
+bundle exec rake contentful:create_categories
+```
+
+Run `contentful:create_subcategories` first when you need to create or refresh the subcategory entries. After that, `contentful:create_categories` can be rerun on its own to map categories to the correct subcategories.
+
+Both tasks require:
+
+- `CONTENTFUL_CMA_TOKEN` this is a temporary admin token that lasts for 30 days
+- `CONTENTFUL_SPACE_ID`
+- `CONTENTFUL_ENVIRONMENT` if you are not using the default `master`
+
+Note that `CONTENTFUL_CMA_TOKEN` is intentionally not available during deployment to Azure so will have to be manually defined within a terminal session after connecting to Azure environment before running these rake tasks.
