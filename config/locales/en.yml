@@ -384,10 +384,10 @@ en:
         title: Benefits
         text: "Schools can make significant savings on their gas and electricity costs. Over 1,000 schools have already joined the scheme. The service also:"
         list:
-        - protect schools from market volatility and high prices
-        - save time spent on procurement process
-        - remove risk associated with unregulated energy brokers
-        - comply with procurement regulations
+        - helps protect schools from market volatility and high prices
+        - saves time spent on procurement process
+        - removes risk associated with unregulated energy brokers
+        - complies with procurement regulations
       mat_info:
       - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
       - Multi-academy trusts (MATs) can join the contract by filling in the <a class="govuk-link" href="%{form_url}">Register your interest form</a> and completing the process offline.
@@ -415,7 +415,7 @@ en:
         body:
         - Energy for Schools offers schools a simpler, safer way to manage their energy needs by helping schools switch to the same energy contract as the Department for Education (DfE).
         - DfE manages the contract on behalf of schools through procurement specialists Government Commercial Agency (GCA), formerly Crown Commercial Service. On the current contract, referred to as V30 or the V30 basket, electricity is supplied by EDF, and gas is supplied by TotalEnergies.
-        - This service differs from other frameworks because it allows schools to benefit from the bulk purchasing power of a government-wide contract. It also saves schools from pouring over complex energy contracts because DfE handles the paperwork.
+        - This service differs from other frameworks because it allows schools to benefit from the bulk purchasing power of a government-wide contract. It also saves schools from comparing complex energy contracts because DfE handles the paperwork.
       benefits:
         title: Benefits
         body:
