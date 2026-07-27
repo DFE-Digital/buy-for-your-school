@@ -3,6 +3,75 @@ require "contentful/management"
 
 # rubocop:disable Rails/SaveBang
 namespace :contentful do
+  desc "Create categories and subcategories from config/categories.yml in Contentful"
+  task create_categories: :environment do
+    data = YAML.load_file(Rails.root.join("config/categories.yml"))
+    client = Contentful::Management::Client.new(ENV["CONTENTFUL_CMA_TOKEN"])
+    space = client.spaces.find(ENV["CONTENTFUL_SPACE_ID"])
+    environment = space.environments.find(ENV.fetch("CONTENTFUL_ENVIRONMENT", "master"))
+
+    subcategory_type = environment.content_types.find("subcategory")
+    category_type = environment.content_types.find("category")
+
+    subcategories_by_slug = {}
+
+    data.fetch("categories", []).each do |category|
+      Array(category["subcategories"]).each do |sub_category|
+        slug = sub_category["slug"]
+        next if subcategories_by_slug.key?(slug)
+
+        entry = find_entry_by_slug(environment, "subcategory", slug)
+
+        if entry
+          puts "Updating subcategory #{sub_category['name']} (#{slug})"
+          entry.update(
+            title: sub_category["name"],
+            slug:,
+          )
+        else
+          puts "Creating subcategory #{sub_category['name']} (#{slug})"
+          entry = subcategory_type.entries.create(
+            id: slug,
+            title: sub_category["name"],
+            slug:,
+          )
+        end
+
+        entry.publish
+        subcategories_by_slug[slug] = entry
+      end
+    end
+
+    data.fetch("categories", []).each do |category|
+      slug = category["slug"]
+      subcategory_entries = Array(category["subcategories"]).map { |sub_category| subcategories_by_slug.fetch(sub_category["slug"]) }
+      entry = find_entry_by_slug(environment, "category", slug)
+
+      if entry
+        puts "Updating category #{category['category']} (#{slug})"
+        entry.update(
+          title: category["category"],
+          description: category["description"],
+          slug:,
+          subcategories: subcategory_entries,
+        )
+      else
+        puts "Creating category #{category['category']} (#{slug})"
+        entry = category_type.entries.create(
+          id: slug,
+          title: category["category"],
+          description: category["description"],
+          slug:,
+          subcategories: subcategory_entries,
+        )
+      end
+
+      entry.publish
+    end
+
+    puts "Category creation complete."
+  end
+
   desc "Fetches all solutions and checks if their URLs are working"
   task check_solution_urls: :environment do
     puts "Fetching all solutions and checking URLs..."
@@ -267,5 +336,9 @@ end
 def skip_entry(msg)
   puts msg
   puts "------------------"
+end
+
+def find_entry_by_slug(environment, content_type, slug)
+  environment.entries.all(content_type:, "fields.slug" => slug).first
 end
 # rubocop:enable Rails/SaveBang
