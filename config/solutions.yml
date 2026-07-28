@@ -1,0 +1,251 @@
+---
+solutions:
+- title: Ambient, chilled, frozen foods and fresh fruit, vegetables and salad
+  slug: ambient-chilled-frozen-foods-and-fresh-fruit-vegetables-and-salad
+- title: Apprenticeships and associated training
+  slug: apprenticeships-and-associated-training
+- title: Asbestos inspection & removal services
+  slug: asbestos-inspection-and-removal-services
+- title: Audio-Visual equipment and installation services
+  slug: audio-visual-equipment-and-installation-services
+- title: 'Audio Visual Solutions '
+  slug: audio-visual-solutions
+- title: Audit and financial services
+  slug: audit-and-financial-services
+- title: Books, e-books and associated services
+  slug: books-e-books-and-associated-services
+- title: Building cleaning
+  slug: building-cleaning
+- title: Buildings internal fit-out and maintenance  - dynamic purchasing system (DPS)
+  slug: buildings-internal-fit-out-and-maintenance-dps
+- title: Business support services
+  slug: business-support-services
+- title: Buying better food and drink
+  slug: buying-better-food-and-drink
+- title: Catering services - dynamic purchasing system (DPS)
+  slug: catering-services-dps
+- title: Catering, vending machines & water cooler solutions
+  slug: catering-vending-machines-and-water-cooler-solutions
+- title: CCTV access solutions and security services
+  slug: cctv-access-solutions-and-security-services
+- title: Cleaning services
+  slug: cleaning-services
+- title: 'Cloud services, AI, data centre management and transformation solutions '
+  slug: cloud-services-ai-data-centre-management-and-transformation-solutions
+- title: Communications solutions
+  slug: communications-solutions
+- title: Communications solutions and associated telephony services
+  slug: communications-telephony
+- title: Corporate software and related products and services
+  slug: corporate-software
+- title: Cyber security services 3 DPS
+  slug: cyber-security-services-dps
+- title: Debt resolution services Lot 1 only
+  slug: debt-resolution-services
+- title: Early years furniture framework
+  slug: early-years-furniture
+- title: Education decarbonisation
+  slug: education-decarbonisation
+- title: Education management systems
+  slug: education-management-systems
+- title: Education Professional Services
+  slug: education-professional-services
+- title: Education services
+  slug: education-services
+- title: Electric Vehicle Charging Points – Supply, installation, maintenance and
+    consultancy
+  slug: electric-vehicle-charging-points-supply-installation-maintenance-and-consultancy
+- title: Electrical Testing services
+  slug: electrical-testing-services
+- title: 'Electricity (for supply during 2024-2028) '
+  slug: electricity-espo
+- title: 'Electronic catering management and payment solutions '
+  slug: electronic-catering-management-and-payment-solutions
+- title: Supply of energy 2
+  slug: energy-ancillary
+- title: Energy cost recovery services for schools
+  slug: energy-cost-recovery-services
+- title: DfE Energy for Schools
+  slug: energy-for-schools
+- title: Engineering inspection services
+  slug: engineering-inspection-services
+- title: ESPO catalogue
+  slug: espo-catalogue
+- title: Estates and facilities professional services (DPS)
+  slug: estates-and-facilities-professional-services
+- title: Exterior building services DPS
+  slug: exterior-building-services-dps
+- title: Facilities supplies
+  slug: facilities-supplies
+- title: 'Financial leasing solutions '
+  slug: financial-leasing-solutions
+- title: Findel Education catalogue
+  slug: findel-education-catalogue
+- title: Fire safety products and services
+  slug: fire-safety-products-and-services
+- title: Fixed and flexible electricity and gas frameworks
+  slug: fixed-and-flexible-gas
+- title: Flexible electricity
+  slug: flex-electricity
+- title: Flexible gas
+  slug: flexible-gas-framework
+- title: Building in use - support services DPS
+  slug: fm-support-services-dps
+- title: Facilities management and workplace services DPS
+  slug: fm-workplace-dps
+- title: Food and drink - dynamic purchasing system (DPS)
+  slug: food-and-drink-dynamic-purchasing-system-dps
+- title: Food and drink - framework
+  slug: food-and-drink-framework
+- title: Food and drink vending solution
+  slug: food-and-drink-vending-solution
+- title: Furniture and associated services
+  slug: furniture-and-associated-services
+- title: G-Cloud 14
+  slug: g-cloud
+- title: Language services
+  slug: gca-language-services
+- title: GCA purchasing platform catalogue
+  slug: gca-purchasing-platform-catalogue
+- title: Grounds maintenance & associated services
+  slug: grounds-maintenance-and-associated-services
+- title: Grounds maintenance services
+  slug: grounds-maintenance-services
+- title: HR, payroll and employee screening services
+  slug: hr-payroll-and-employee-screening
+- title: HR support services
+  slug: hr-support-services
+- title: 'ICT hardware and peripherals equipment '
+  slug: ict-hardware-and-peripherals-equipment
+- title: ICT Managed services & consultancy
+  slug: ict-managed-services-and-consultancy
+- title: ICT network, storage and service solutions
+  slug: ict-network-storage-and-service-solutions
+- title: Everything ICT
+  slug: ict-procurement
+- title: Insurance and associated services (Lot 3 only)
+  slug: insurance-and-associated-services-lot-three-only
+- title: Internal audit, assurance and counter fraud investigation services
+  slug: internal-audit-assurance-and-counter-fraud-investigation-services
+- title: IT, hardware, ITAD & associated services
+  slug: it-hardware-itad-and-associated-services
+- title: Language services
+  slug: language-services
+- title: LED Lighting
+  slug: led-lighting
+- title: LED Lighting
+  slug: led-lights
+- title: Legal Services
+  slug: legal-services
+- title: Legal services – wider public sector
+  slug: legal-services-wider-public-sector
+- title: Library resources, software and associated services
+  slug: library-resources-software-and-associated-services
+- title: Liquid fuels
+  slug: liquid-fuel-espo
+- title: Low energy lighting DPS
+  slug: low-energy-lighting-dps
+- title: Mains gas 2023
+  slug: mains-gas-espo
+- title: Multifunctional devices and associated products and services (including print
+    and design)
+  slug: mfd-and-associated-products-and-services-including-print-and-design
+- title: Minor works DPS 2
+  slug: minor-works-dps-2
+- title: Multifunctional Devices, GovPrint Hardware, Managed Print Provision and Digital
+    Workflow Software Services
+  slug: multifunctional-devices-govprint-hardware-managed-print-provision-digital-workflow-software-services
+- title: Musical instruments, equipment and technology
+  slug: musical-instruments-equipment-and-technology
+- title: Network connectivity and telecommunication solutions
+  slug: network-connectivity-and-telecommunication-solutions
+- title: National professional qualification (NPQ) courses
+  slug: npq
+- title: Occupational health services
+  slug: occupational-health-services
+- title: Outdoor playground equipment, fitness and sport facilities and equipment
+  slug: outdoor-playground-equipment-fitness-and-sport-facilities-and-equipment
+- title: Outdoor sports surfaces and activity equipment
+  slug: outdoor-sports-surfaces-and-activity-equipment
+- title: Catering services
+  slug: outsourced-catering
+- title: 'Outsourced catering services '
+  slug: outsourced-catering-cpc
+- title: Pest control products & services
+  slug: pest-control-products-and-services
+- title: 'Photographic equipment and consumables '
+  slug: photographic-equipment-and-consumables
+- title: Playground, fitness and sports facilities and leisure facilities
+  slug: playground-fitness-and-sports-facilities-and-leisure-facilities
+- title: Print books
+  slug: print-books
+- title: 'Print Marketplace 2 '
+  slug: print-marketplace-2
+- title: Promotional merchandise
+  slug: promotional-merchandise
+- title: Property refurbishment, maintenance and management
+  slug: property-refurbishment-maintenance-and-management
+- title: 'Public sector legal services '
+  slug: public-sector-legal-services
+- title: Records information management
+  slug: records-information-management
+- title: Risk protection arrangement – alternative to commercial insurance
+  slug: rpa
+- title: Sandwiches and food to go
+  slug: sandwiches-and-food-to-go
+- title: Sandwiches, ready meals, meal concepts and food to go
+  slug: sandwiches-ready-meals-meal-concepts-and-food-to-go
+- title: Sensory equipment and associated services
+  slug: sensory-equipment-and-associated-services
+- title: Signs and associated services
+  slug: signs-and-associated-services
+- title: Software application solutions - dynamic purchasing system (DPS)
+  slug: software-application-solutions-dps
+- title: 'Software licenses and associated services for academies and schools '
+  slug: software-licenses
+- title: Software products & associated services
+  slug: software-products-and-associated-services
+- title: Solar photovoltaic
+  slug: solar-photovoltaic
+- title: Specialist professional services
+  slug: specialist-professional-services
+- title: Sports facilities installation, refurbishment and maintenance
+  slug: sports-facilities-installation-refurbishment-and-maintenance
+- title: Staff absence protection and reimbursement services 2025
+  slug: staff-absence-protection-and-reimbursement-services
+- title: Stationery, paper and education supplies
+  slug: stationery-paper-and-education-supplies
+- title: Supply and installation of Solar PV
+  slug: supply-and-installation-of-solar-pv
+- title: Supply of mains gas
+  slug: supply-of-mains-gas
+- title: Supply Teachers and Education Recruitment
+  slug: supply-teachers
+- title: 'Sustainable hardware, asset recycling and data destruction '
+  slug: sustainable-hardware-asset-recycling-and-data-destruction
+- title: Technology products and associated services 2
+  slug: technology-products-and-associated-services-2
+- title: Temporary and semi-permanent buildings
+  slug: temporary-and-semi-permanent-buildings
+- title: Total cleaning service solutions
+  slug: total-cleaning-service-solutions
+- title: 'Total facilities management '
+  slug: total-facilities-management
+- title: Training, learning and development managed services
+  slug: training-learning-and-development-managed-services
+- title: Student transport DPS
+  slug: transport
+- title: Utilities supplies and services
+  slug: utilities-supply-services
+- title: Vehicle daily rental
+  slug: vehicle-daily-rental
+- title: Vehicle purchase
+  slug: vehicle-purchase
+- title: Waste management services
+  slug: waste-management-services
+- title: Water, wastewater and ancillary services
+  slug: water-wastewater-and-ancillary-services
+- title: Wheelie bin containers and kerbside recycling containers
+  slug: wheelie-bin-containers-and-kerbside-recycling-containers
+- title: YPO procurement product catalogue
+  slug: ypo-procurement

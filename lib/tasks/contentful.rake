@@ -1,8 +1,25 @@
 require "json"
 require "contentful/management"
+require "yaml"
 
 # rubocop:disable Rails/SaveBang
 namespace :contentful do
+  desc "Download published solutions to config/solutions.yml"
+  task export_solutions: :environment do
+    puts "Exporting published solutions to config/solutions.yml..."
+
+    environment = contentful_environment
+    solutions = environment.entries.all(content_type: "solution", limit: 1000)
+      .select(&:published?)
+      .map { |entry| { "title" => entry.title, "slug" => entry.fields[:slug] } }
+      .sort_by { |solution| solution["slug"] }
+
+    file = Rails.root.join("config/solutions.yml")
+    File.write(file, { "solutions" => solutions }.to_yaml)
+
+    puts "Wrote #{solutions.count} published solutions to #{file}"
+  end
+
   desc "Create or update subcategories from config/categories.yml in Contentful"
   task create_subcategories: :environment do
     data = categories_config

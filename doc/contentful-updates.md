@@ -26,3 +26,19 @@ Both tasks require:
 - `CONTENTFUL_ENVIRONMENT` if you are not using the default `master`
 
 Note that `CONTENTFUL_CMA_TOKEN` is intentionally not available during deployment to Azure so will have to be manually defined within a terminal session after connecting to Azure environment before running these rake tasks.
+
+### Exporting solutions to `config/solutions.yml`
+
+You can export the currently published solutions from Contentful into `config/solutions.yml` with:
+
+```sh
+bundle exec rake contentful:export_solutions
+```
+
+The exported file contains the `title` and `slug` for each published solution, ordered by slug for stable output.
+
+This task also requires:
+
+- `CONTENTFUL_CMA_TOKEN`
+- `CONTENTFUL_SPACE_ID`
+- `CONTENTFUL_ENVIRONMENT` if you are not using the default `master`
