@@ -65,7 +65,7 @@ RSpec.describe "FABS pages", type: :request do
     expect(response.body).to include("<title>Unit Trust Bank - #{I18n.t('service.name')}</title>")
     expect(response.body).to include("Unit Trust Bank")
     expect(response.body).to include("Child page description")
-    expect(response.body).to include("Related Content")
+    expect(response.body).to include("Related reading")
     expect(document).to have_link("Home", href: "/")
     expect(document).to have_link("Banking and finance", href: "/categories/banking-finance")
     expect(document).to have_link("Current accounts and savings", href: "/current-account-and-savings")
@@ -90,7 +90,7 @@ RSpec.describe "FABS pages", type: :request do
     get page_path("dynamic-purchasing-systems")
 
     expect(response).to be_successful
-    expect(response.body).not_to include("Related Content")
+    expect(response.body).not_to include("Related reading")
   end
 
   it "redirects to /404 when the FABS page does not exist" do

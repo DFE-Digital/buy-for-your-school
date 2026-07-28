@@ -15,7 +15,6 @@
       <% selected_subcategory_slugs = params.fetch(:subcategory_slugs, []).compact_blank %>
       <% selected_ways_to_buy_slugs = params.fetch(:ways_to_buy_slugs, []).compact_blank %>
 
-
       <div class="moj-filter__selected">
         <div class="moj-filter__selected-heading">
           <div class="moj-filter__heading-title">
@@ -61,7 +60,7 @@
           <% if subcategories.present? %>
             <div class="govuk-form-group govuk-!-margin-bottom-0">
               <fieldset class="govuk-fieldset">
-                <details class="govuk-details govuk-!-margin-bottom-4">
+                <details <%= "open" if selected_subcategory_slugs.present? %> class="govuk-details govuk-!-margin-bottom-4">
                   <summary class="govuk-details__summary">
                     <span class="govuk-details__summary-text">
                       <%= t(".subcategories") %> 
@@ -90,7 +89,7 @@
           <% if ways_to_buy.present? && ways_to_buy.count > 1 %>
             <div class="govuk-form-group govuk-!-margin-bottom-0">
               <fieldset class="govuk-fieldset">
-                <details class="govuk-details govuk-!-margin-bottom-4">
+                <details <%= "open" if selected_ways_to_buy_slugs.present? %> class="govuk-details govuk-!-margin-bottom-4">
                   <summary class="govuk-details__summary">
                     <span class="govuk-details__summary-text">
                       <%= t(".ways_to_buy") %>

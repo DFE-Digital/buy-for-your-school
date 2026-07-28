@@ -129,8 +129,8 @@ RSpec.describe "Solutions pages", type: :feature do
       expect(page).to have_content("Benefits")
     end
 
-    it "displays related content section" do
-      expect(page).to have_content("Related Content")
+    it "displays related reading section" do
+      expect(page).to have_content("Related reading")
     end
 
     it "displays the related content link" do

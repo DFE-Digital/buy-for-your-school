@@ -34,6 +34,6 @@ class SolutionsController < Fabs::ApplicationController
       add_breadcrumb_on_rails :primary_category_breadcrumb_name, :primary_category_breadcrumb_path
     end
 
-    render layout: "solution"
+    render layout: "fabs_application"
   end
 end
