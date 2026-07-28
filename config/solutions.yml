@@ -8,7 +8,7 @@ solutions:
   slug: asbestos-inspection-and-removal-services
 - title: Audio-Visual equipment and installation services
   slug: audio-visual-equipment-and-installation-services
-- title: 'Audio Visual Solutions '
+- title: Audio Visual Solutions
   slug: audio-visual-solutions
 - title: Audit and financial services
   slug: audit-and-financial-services
@@ -30,7 +30,7 @@ solutions:
   slug: cctv-access-solutions-and-security-services
 - title: Cleaning services
   slug: cleaning-services
-- title: 'Cloud services, AI, data centre management and transformation solutions '
+- title: Cloud services, AI, data centre management and transformation solutions
   slug: cloud-services-ai-data-centre-management-and-transformation-solutions
 - title: Communications solutions
   slug: communications-solutions
@@ -57,9 +57,9 @@ solutions:
   slug: electric-vehicle-charging-points-supply-installation-maintenance-and-consultancy
 - title: Electrical Testing services
   slug: electrical-testing-services
-- title: 'Electricity (for supply during 2024-2028) '
+- title: Electricity (for supply during 2024-2028)
   slug: electricity-espo
-- title: 'Electronic catering management and payment solutions '
+- title: Electronic catering management and payment solutions
   slug: electronic-catering-management-and-payment-solutions
 - title: Supply of energy 2
   slug: energy-ancillary
@@ -77,7 +77,7 @@ solutions:
   slug: exterior-building-services-dps
 - title: Facilities supplies
   slug: facilities-supplies
-- title: 'Financial leasing solutions '
+- title: Financial leasing solutions
   slug: financial-leasing-solutions
 - title: Findel Education catalogue
   slug: findel-education-catalogue
@@ -115,7 +115,7 @@ solutions:
   slug: hr-payroll-and-employee-screening
 - title: HR support services
   slug: hr-support-services
-- title: 'ICT hardware and peripherals equipment '
+- title: ICT hardware and peripherals equipment
   slug: ict-hardware-and-peripherals-equipment
 - title: ICT Managed services & consultancy
   slug: ict-managed-services-and-consultancy
@@ -169,23 +169,23 @@ solutions:
   slug: outdoor-sports-surfaces-and-activity-equipment
 - title: Catering services
   slug: outsourced-catering
-- title: 'Outsourced catering services '
+- title: Outsourced catering services
   slug: outsourced-catering-cpc
 - title: Pest control products & services
   slug: pest-control-products-and-services
-- title: 'Photographic equipment and consumables '
+- title: Photographic equipment and consumables
   slug: photographic-equipment-and-consumables
 - title: Playground, fitness and sports facilities and leisure facilities
   slug: playground-fitness-and-sports-facilities-and-leisure-facilities
 - title: Print books
   slug: print-books
-- title: 'Print Marketplace 2 '
+- title: Print Marketplace 2
   slug: print-marketplace-2
 - title: Promotional merchandise
   slug: promotional-merchandise
 - title: Property refurbishment, maintenance and management
   slug: property-refurbishment-maintenance-and-management
-- title: 'Public sector legal services '
+- title: Public sector legal services
   slug: public-sector-legal-services
 - title: Records information management
   slug: records-information-management
@@ -201,7 +201,7 @@ solutions:
   slug: signs-and-associated-services
 - title: Software application solutions - dynamic purchasing system (DPS)
   slug: software-application-solutions-dps
-- title: 'Software licenses and associated services for academies and schools '
+- title: Software licenses and associated services for academies and schools
   slug: software-licenses
 - title: Software products & associated services
   slug: software-products-and-associated-services
@@ -221,7 +221,7 @@ solutions:
   slug: supply-of-mains-gas
 - title: Supply Teachers and Education Recruitment
   slug: supply-teachers
-- title: 'Sustainable hardware, asset recycling and data destruction '
+- title: Sustainable hardware, asset recycling and data destruction
   slug: sustainable-hardware-asset-recycling-and-data-destruction
 - title: Technology products and associated services 2
   slug: technology-products-and-associated-services-2
@@ -229,7 +229,7 @@ solutions:
   slug: temporary-and-semi-permanent-buildings
 - title: Total cleaning service solutions
   slug: total-cleaning-service-solutions
-- title: 'Total facilities management '
+- title: Total facilities management
   slug: total-facilities-management
 - title: Training, learning and development managed services
   slug: training-learning-and-development-managed-services

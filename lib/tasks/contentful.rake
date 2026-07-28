@@ -11,7 +11,7 @@ namespace :contentful do
     environment = contentful_environment
     solutions = environment.entries.all(content_type: "solution", limit: 1000)
       .select(&:published?)
-      .map { |entry| { "title" => entry.title, "slug" => entry.fields[:slug] } }
+      .map { |entry| { "title" => entry.title.strip, "slug" => entry.fields[:slug] } }
       .sort_by { |solution| solution["slug"] }
 
     file = Rails.root.join("config/solutions.yml")
