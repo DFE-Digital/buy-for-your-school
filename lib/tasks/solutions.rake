@@ -28,14 +28,19 @@ namespace :solutions do
       row = row.to_h.transform_values { |value| value.is_a?(String) ? value.strip : value }
       row_number = index + 2
       title = row["Framework name or content name"].to_s
+      slug = row["Framework slug"].to_s
       break if title.blank? && row.to_h.values.compact.map(&:to_s).all?(&:blank?)
 
       buying_option = lookup_buying_option(row["Type of buying option"], invalid_buying_option_rows, row_number)
 
-      solution = solutions_by_slug[title.parameterize] || solutions_by_normalised_title[normalise_title(title)]
+      solution = if slug.present?
+                   solutions_by_slug[slug]
+                 else
+                   solutions_by_slug[title.parameterize] || solutions_by_normalised_title[normalise_title(title)]
+                 end
 
       if solution.nil?
-        unmatched_rows << { row: row_number, title: }
+        unmatched_rows << { row: row_number, title:, slug: }
         next
       end
 
@@ -59,7 +64,10 @@ namespace :solutions do
 
     puts "Updated #{updated} solutions in #{solutions_path}"
     puts "Unmatched solution rows: #{unmatched_rows.size}"
-    unmatched_rows.each { |row| puts "  - line #{row[:row]}: #{row[:title]}" }
+    unmatched_rows.each do |row|
+      identifier = row[:slug].present? ? "#{row[:title]} (slug: #{row[:slug]})" : row[:title]
+      puts "  - line #{row[:row]}: #{identifier}"
+    end
 
     if unresolved_categories.any?
       puts "Unresolved category titles:"
