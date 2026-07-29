@@ -4,154 +4,855 @@ solutions:
   slug: ambient-chilled-frozen-foods-and-fresh-fruit-vegetables-and-salad
 - title: Apprenticeships and associated training
   slug: apprenticeships-and-associated-training
+  category_slugs:
+  - hr-people-professional-services
+  subcategory_slugs:
+  - training-development
+  primary_category: hr-people-professional-services
+  categories:
+  - hr-people-professional-services
+  subcategories:
+  - training-development
 - title: Asbestos inspection & removal services
   slug: asbestos-inspection-and-removal-services
 - title: Audio-Visual equipment and installation services
   slug: audio-visual-equipment-and-installation-services
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  - ict-business-systems
+  subcategory_slugs:
+  - laptops-av-classroom-tech
+  - cameras-av-equipment
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  - ict-business-systems
+  subcategories:
+  - laptops-av-classroom-tech
+  - cameras-av-equipment
 - title: Audio Visual Solutions
   slug: audio-visual-solutions
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  - ict-business-systems
+  subcategory_slugs:
+  - laptops-av-classroom-tech
+  - cameras-av-equipment
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  - ict-business-systems
+  subcategories:
+  - laptops-av-classroom-tech
+  - cameras-av-equipment
 - title: Audit and financial services
   slug: audit-and-financial-services
+  category_slugs:
+  - finance-legal-insurance
+  subcategory_slugs:
+  - financial-audit-payroll
+  primary_category: finance-legal-insurance
+  categories:
+  - finance-legal-insurance
+  subcategories:
+  - financial-audit-payroll
 - title: Books, e-books and associated services
   slug: books-e-books-and-associated-services
 - title: Building cleaning
   slug: building-cleaning
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - cleaning-services-equipment
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - cleaning-services-equipment
 - title: Buildings internal fit-out and maintenance  - dynamic purchasing system (DPS)
   slug: buildings-internal-fit-out-and-maintenance-dps
 - title: Business support services
   slug: business-support-services
+  category_slugs:
+  - hr-people-professional-services
+  - finance-legal-insurance
+  subcategory_slugs:
+  - hr-recruitment
+  - professional-services
+  - financial-audit-payroll
+  primary_category: hr-people-professional-services
+  categories:
+  - hr-people-professional-services
+  - finance-legal-insurance
+  subcategories:
+  - hr-recruitment
+  - professional-services
+  - financial-audit-payroll
 - title: Buying better food and drink
   slug: buying-better-food-and-drink
+  category_slugs:
+  - catering
+  subcategory_slugs:
+  - food
+  primary_category: catering
+  categories:
+  - catering
+  subcategories:
+  - food
 - title: Catering services - dynamic purchasing system (DPS)
   slug: catering-services-dps
+  category_slugs:
+  - catering
+  subcategory_slugs:
+  - catering-services-staff
+  primary_category: catering
+  categories:
+  - catering
+  subcategories:
+  - catering-services-staff
 - title: Catering, vending machines & water cooler solutions
   slug: catering-vending-machines-and-water-cooler-solutions
+  category_slugs:
+  - catering
+  subcategory_slugs:
+  - breakfast-club
+  - vending-machines
+  - catering-equipment
+  primary_category: catering
+  categories:
+  - catering
+  subcategories:
+  - breakfast-club
+  - vending-machines
+  - catering-equipment
 - title: CCTV access solutions and security services
   slug: cctv-access-solutions-and-security-services
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - grounds-estates-maintenance
+  - health-safety-security
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - grounds-estates-maintenance
+  - health-safety-security
 - title: Cleaning services
   slug: cleaning-services
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - cleaning-services-equipment
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - cleaning-services-equipment
 - title: Cloud services, AI, data centre management and transformation solutions
   slug: cloud-services-ai-data-centre-management-and-transformation-solutions
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - cloud-services-ai-data-storage
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - cloud-services-ai-data-storage
 - title: Communications solutions
   slug: communications-solutions
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - broadband-wifi-telecomms
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - broadband-wifi-telecomms
 - title: Communications solutions and associated telephony services
   slug: communications-telephony
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - broadband-wifi-telecomms
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - broadband-wifi-telecomms
 - title: Corporate software and related products and services
   slug: corporate-software
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - ict-software-systems
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - ict-software-systems
 - title: Cyber security services 3 DPS
   slug: cyber-security-services-dps
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - cyber-security
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - cyber-security
 - title: Debt resolution services Lot 1 only
   slug: debt-resolution-services
+  category_slugs:
+  - finance-legal-insurance
+  subcategory_slugs:
+  - debt-resolution-services
+  primary_category: finance-legal-insurance
+  categories:
+  - finance-legal-insurance
+  subcategories:
+  - debt-resolution-services
 - title: Early years furniture framework
   slug: early-years-furniture
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  subcategory_slugs:
+  - furniture
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  subcategories:
+  - furniture
 - title: Education decarbonisation
   slug: education-decarbonisation
+  category_slugs:
+  - energy-utilities
+  subcategory_slugs:
+  - renewables-energysaving-products
+  - energy-audits-savings-debt-resolution
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  subcategories:
+  - renewables-energysaving-products
+  - energy-audits-savings-debt-resolution
 - title: Education management systems
   slug: education-management-systems
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - ict-software-systems
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - ict-software-systems
 - title: Education Professional Services
   slug: education-professional-services
 - title: Education services
   slug: education-services
+  category_slugs:
+  - hr-people-professional-services
+  subcategory_slugs:
+  - professional-services
+  primary_category: hr-people-professional-services
+  categories:
+  - hr-people-professional-services
+  subcategories:
+  - professional-services
 - title: Electric Vehicle Charging Points – Supply, installation, maintenance and
     consultancy
   slug: electric-vehicle-charging-points-supply-installation-maintenance-and-consultancy
+  category_slugs:
+  - buildings-maintenance
+  - energy-utilities
+  subcategory_slugs:
+  - grounds-estates-maintenance
+  - renewables-energysaving-products
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  - energy-utilities
+  subcategories:
+  - grounds-estates-maintenance
+  - renewables-energysaving-products
 - title: Electrical Testing services
   slug: electrical-testing-services
+  category_slugs:
+  - buildings-maintenance
+  - ict-business-systems
+  subcategory_slugs:
+  - buildings
+  - laptops-printers-ict-hardware
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  - ict-business-systems
+  subcategories:
+  - buildings
+  - laptops-printers-ict-hardware
 - title: Electricity (for supply during 2024-2028)
   slug: electricity-espo
+  category_slugs:
+  - energy-utilities
+  subcategory_slugs:
+  - electricity
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  subcategories:
+  - electricity
 - title: Electronic catering management and payment solutions
   slug: electronic-catering-management-and-payment-solutions
+  category_slugs:
+  - ict-business-systems
+  - catering
+  subcategory_slugs:
+  - ict-software-systems
+  - catering-equipment
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  - catering
+  subcategories:
+  - ict-software-systems
+  - catering-equipment
 - title: Supply of energy 2
   slug: energy-ancillary
+  category_slugs:
+  - energy-utilities
+  - hr-people-professional-services
+  subcategory_slugs:
+  - gas
+  - electricity
+  - professional-services
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  - hr-people-professional-services
+  subcategories:
+  - gas
+  - electricity
+  - professional-services
 - title: Energy cost recovery services for schools
   slug: energy-cost-recovery-services
 - title: DfE Energy for Schools
   slug: energy-for-schools
+  category_slugs:
+  - energy-utilities
+  subcategory_slugs:
+  - electricity
+  - gas
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  subcategories:
+  - electricity
+  - gas
 - title: Engineering inspection services
   slug: engineering-inspection-services
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - health-safety-security
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - health-safety-security
 - title: ESPO catalogue
   slug: espo-catalogue
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  subcategory_slugs:
+  - books
+  - classroom-office-supplies
+  - arts-crafts-music
+  - sports-equipment
+  - furniture
+  - laptops-av-classroom-tech
+  - catering-services-staff
+  - cleaning-services-equipment
+  - health-safety-security
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  subcategories:
+  - books
+  - classroom-office-supplies
+  - arts-crafts-music
+  - sports-equipment
+  - furniture
+  - laptops-av-classroom-tech
+  - catering-services-staff
+  - cleaning-services-equipment
+  - health-safety-security
 - title: Estates and facilities professional services (DPS)
   slug: estates-and-facilities-professional-services
+  category_slugs:
+  - buildings-maintenance
+  - hr-people-professional-services
+  subcategory_slugs:
+  - grounds-estates-maintenance
+  - professional-services
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  - hr-people-professional-services
+  subcategories:
+  - grounds-estates-maintenance
+  - professional-services
 - title: Exterior building services DPS
   slug: exterior-building-services-dps
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - buildings
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - buildings
 - title: Facilities supplies
   slug: facilities-supplies
+  category_slugs:
+  - energy-utilities
+  - buildings-maintenance
+  subcategory_slugs:
+  - renewables-energysaving-products
+  - lighting
+  - grounds-estates-maintenance
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  - buildings-maintenance
+  subcategories:
+  - renewables-energysaving-products
+  - lighting
+  - grounds-estates-maintenance
 - title: Financial leasing solutions
   slug: financial-leasing-solutions
+  category_slugs:
+  - finance-legal-insurance
+  subcategory_slugs:
+  - financial-audit-payroll
+  primary_category: finance-legal-insurance
+  categories:
+  - finance-legal-insurance
+  subcategories:
+  - financial-audit-payroll
 - title: Findel Education catalogue
   slug: findel-education-catalogue
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  subcategory_slugs:
+  - books
+  - classroom-office-supplies
+  - arts-crafts-music
+  - furniture
+  - sports-equipment
+  - send-products
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  subcategories:
+  - books
+  - classroom-office-supplies
+  - arts-crafts-music
+  - furniture
+  - sports-equipment
+  - send-products
 - title: Fire safety products and services
   slug: fire-safety-products-and-services
 - title: Fixed and flexible electricity and gas frameworks
   slug: fixed-and-flexible-gas
+  category_slugs:
+  - energy-utilities
+  subcategory_slugs:
+  - gas
+  - electricity
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  subcategories:
+  - gas
+  - electricity
 - title: Flexible electricity
   slug: flex-electricity
+  category_slugs:
+  - energy-utilities
+  subcategory_slugs:
+  - electricity
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  subcategories:
+  - electricity
 - title: Flexible gas
   slug: flexible-gas-framework
+  category_slugs:
+  - energy-utilities
+  subcategory_slugs:
+  - gas
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  subcategories:
+  - gas
 - title: Building in use - support services DPS
   slug: fm-support-services-dps
+  category_slugs:
+  - buildings-maintenance
+  - catering
+  subcategory_slugs:
+  - facilities-management
+  - health-safety-security
+  - catering-staff
+  - catering-services-staff
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  - catering
+  subcategories:
+  - facilities-management
+  - health-safety-security
+  - catering-staff
+  - catering-services-staff
 - title: Facilities management and workplace services DPS
   slug: fm-workplace-dps
+  category_slugs:
+  - buildings-maintenance
+  - catering
+  subcategory_slugs:
+  - facilities-management
+  - health-safety-security
+  - grounds-estates-maintenance
+  - catering-staff
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  - catering
+  subcategories:
+  - facilities-management
+  - health-safety-security
+  - grounds-estates-maintenance
+  - catering-staff
 - title: Food and drink - dynamic purchasing system (DPS)
   slug: food-and-drink-dynamic-purchasing-system-dps
+  category_slugs:
+  - catering
+  subcategory_slugs:
+  - food
+  primary_category: catering
+  categories:
+  - catering
+  subcategories:
+  - food
 - title: Food and drink - framework
   slug: food-and-drink-framework
+  category_slugs:
+  - catering
+  subcategory_slugs:
+  - food
+  primary_category: catering
+  categories:
+  - catering
+  subcategories:
+  - food
 - title: Food and drink vending solution
   slug: food-and-drink-vending-solution
+  category_slugs:
+  - catering
+  subcategory_slugs:
+  - catering-equipment
+  - vending-machines
+  primary_category: catering
+  categories:
+  - catering
+  subcategories:
+  - catering-equipment
+  - vending-machines
 - title: Furniture and associated services
   slug: furniture-and-associated-services
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  subcategory_slugs:
+  - furniture
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  subcategories:
+  - furniture
 - title: G-Cloud 14
   slug: g-cloud
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - ict-software-systems
+  - laptops-printers-ict-hardware
+  - broadband-wifi-telecomms
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - ict-software-systems
+  - laptops-printers-ict-hardware
+  - broadband-wifi-telecomms
 - title: Language services
   slug: gca-language-services
 - title: GCA purchasing platform catalogue
   slug: gca-purchasing-platform-catalogue
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - ict-software-systems
+  - cameras-av-equipment
+  - laptops-printers-ict-hardware
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - ict-software-systems
+  - cameras-av-equipment
+  - laptops-printers-ict-hardware
 - title: Grounds maintenance & associated services
   slug: grounds-maintenance-and-associated-services
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - grounds-estates-maintenance
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - grounds-estates-maintenance
 - title: Grounds maintenance services
   slug: grounds-maintenance-services
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - grounds-estates-maintenance
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - grounds-estates-maintenance
 - title: HR, payroll and employee screening services
   slug: hr-payroll-and-employee-screening
+  category_slugs:
+  - hr-people-professional-services
+  subcategory_slugs:
+  - hr-recruitment
+  primary_category: hr-people-professional-services
+  categories:
+  - hr-people-professional-services
+  subcategories:
+  - hr-recruitment
 - title: HR support services
   slug: hr-support-services
+  category_slugs:
+  - hr-people-professional-services
+  subcategory_slugs:
+  - hr-recruitment
+  primary_category: hr-people-professional-services
+  categories:
+  - hr-people-professional-services
+  subcategories:
+  - hr-recruitment
 - title: ICT hardware and peripherals equipment
   slug: ict-hardware-and-peripherals-equipment
 - title: ICT Managed services & consultancy
   slug: ict-managed-services-and-consultancy
+  category_slugs:
+  - ict-business-systems
+  - hr-people-professional-services
+  subcategory_slugs:
+  - ict-software-systems
+  - cyber-security
+  - professional-services
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  - hr-people-professional-services
+  subcategories:
+  - ict-software-systems
+  - cyber-security
+  - professional-services
 - title: ICT network, storage and service solutions
   slug: ict-network-storage-and-service-solutions
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - cyber-security
+  - cloud-services-ai-data-storage
+  - broadband-wifi-telecomms
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - cyber-security
+  - cloud-services-ai-data-storage
+  - broadband-wifi-telecomms
 - title: Everything ICT
   slug: ict-procurement
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - cloud-services-ai-data-storage
+  - broadband-wifi-telecomms
+  - ict-software-systems
+  - laptops-printers-ict-hardware
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - cloud-services-ai-data-storage
+  - broadband-wifi-telecomms
+  - ict-software-systems
+  - laptops-printers-ict-hardware
 - title: Insurance and associated services (Lot 3 only)
   slug: insurance-and-associated-services-lot-three-only
+  category_slugs:
+  - finance-legal-insurance
+  subcategory_slugs:
+  - insurance
+  primary_category: finance-legal-insurance
+  categories:
+  - finance-legal-insurance
+  subcategories:
+  - insurance
 - title: Internal audit, assurance and counter fraud investigation services
   slug: internal-audit-assurance-and-counter-fraud-investigation-services
+  category_slugs:
+  - finance-legal-insurance
+  subcategory_slugs:
+  - financial-audit-payroll
+  primary_category: finance-legal-insurance
+  categories:
+  - finance-legal-insurance
+  subcategories:
+  - financial-audit-payroll
 - title: IT, hardware, ITAD & associated services
   slug: it-hardware-itad-and-associated-services
 - title: Language services
   slug: language-services
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  subcategory_slugs:
+  - language-services
+  - professional-services
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  subcategories:
+  - language-services
+  - professional-services
 - title: LED Lighting
   slug: led-lighting
 - title: LED Lighting
   slug: led-lights
+  category_slugs:
+  - energy-utilities
+  - buildings-maintenance
+  subcategory_slugs:
+  - renewables-energysaving-products
+  - lighting
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  - buildings-maintenance
+  subcategories:
+  - renewables-energysaving-products
+  - lighting
 - title: Legal Services
   slug: legal-services
+  category_slugs:
+  - finance-legal-insurance
+  subcategory_slugs:
+  - legal-services
+  primary_category: finance-legal-insurance
+  categories:
+  - finance-legal-insurance
+  subcategories:
+  - legal-services
 - title: Legal services – wider public sector
   slug: legal-services-wider-public-sector
+  category_slugs:
+  - finance-legal-insurance
+  subcategory_slugs:
+  - legal-services
+  primary_category: finance-legal-insurance
+  categories:
+  - finance-legal-insurance
+  subcategories:
+  - legal-services
 - title: Library resources, software and associated services
   slug: library-resources-software-and-associated-services
 - title: Liquid fuels
   slug: liquid-fuel-espo
+  category_slugs:
+  - energy-utilities
+  subcategory_slugs:
+  - other-fuels
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  subcategories:
+  - other-fuels
 - title: Low energy lighting DPS
   slug: low-energy-lighting-dps
+  category_slugs:
+  - energy-utilities
+  - buildings-maintenance
+  subcategory_slugs:
+  - renewables-energysaving-products
+  - lighting
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  - buildings-maintenance
+  subcategories:
+  - renewables-energysaving-products
+  - lighting
 - title: Mains gas 2023
   slug: mains-gas-espo
+  category_slugs:
+  - energy-utilities
+  subcategory_slugs:
+  - gas
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  subcategories:
+  - gas
 - title: Multifunctional devices and associated products and services (including print
     and design)
   slug: mfd-and-associated-products-and-services-including-print-and-design
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - cloud-services-ai-data-storage
+  - laptops-printers-ict-hardware
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - cloud-services-ai-data-storage
+  - laptops-printers-ict-hardware
 - title: Minor works DPS 2
   slug: minor-works-dps-2
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - buildings
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - buildings
 - title: Multifunctional Devices, GovPrint Hardware, Managed Print Provision and Digital
     Workflow Software Services
   slug: multifunctional-devices-govprint-hardware-managed-print-provision-digital-workflow-software-services
@@ -159,93 +860,433 @@ solutions:
   slug: musical-instruments-equipment-and-technology
 - title: Network connectivity and telecommunication solutions
   slug: network-connectivity-and-telecommunication-solutions
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - broadband-wifi-telecomms
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - broadband-wifi-telecomms
 - title: National professional qualification (NPQ) courses
   slug: npq
 - title: Occupational health services
   slug: occupational-health-services
+  category_slugs:
+  - hr-people-professional-services
+  subcategory_slugs:
+  - hr-recruitment
+  primary_category: hr-people-professional-services
+  categories:
+  - hr-people-professional-services
+  subcategories:
+  - hr-recruitment
 - title: Outdoor playground equipment, fitness and sport facilities and equipment
   slug: outdoor-playground-equipment-fitness-and-sport-facilities-and-equipment
 - title: Outdoor sports surfaces and activity equipment
   slug: outdoor-sports-surfaces-and-activity-equipment
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  - buildings-maintenance
+  subcategory_slugs:
+  - sports-equipment
+  - send-products
+  - sports-grounds-facilities-equipment
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  - buildings-maintenance
+  subcategories:
+  - sports-equipment
+  - send-products
+  - sports-grounds-facilities-equipment
 - title: Catering services
   slug: outsourced-catering
+  category_slugs:
+  - catering
+  subcategory_slugs:
+  - catering-services-staff
+  - breakfast-club
+  primary_category: catering
+  categories:
+  - catering
+  subcategories:
+  - catering-services-staff
+  - breakfast-club
 - title: Outsourced catering services
   slug: outsourced-catering-cpc
+  category_slugs:
+  - catering
+  subcategory_slugs:
+  - catering-services-staff
+  primary_category: catering
+  categories:
+  - catering
+  subcategories:
+  - catering-services-staff
 - title: Pest control products & services
   slug: pest-control-products-and-services
 - title: Photographic equipment and consumables
   slug: photographic-equipment-and-consumables
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  - ict-business-systems
+  subcategory_slugs:
+  - laptops-av-classroom-tech
+  - cameras-av-equipment
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  - ict-business-systems
+  subcategories:
+  - laptops-av-classroom-tech
+  - cameras-av-equipment
 - title: Playground, fitness and sports facilities and leisure facilities
   slug: playground-fitness-and-sports-facilities-and-leisure-facilities
 - title: Print books
   slug: print-books
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  subcategory_slugs:
+  - books
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  subcategories:
+  - books
 - title: Print Marketplace 2
   slug: print-marketplace-2
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  subcategory_slugs:
+  - printed-materials
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  subcategories:
+  - printed-materials
 - title: Promotional merchandise
   slug: promotional-merchandise
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  subcategory_slugs:
+  - printed-materials
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  subcategories:
+  - printed-materials
 - title: Property refurbishment, maintenance and management
   slug: property-refurbishment-maintenance-and-management
+  category_slugs:
+  - buildings-maintenance
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
 - title: Public sector legal services
   slug: public-sector-legal-services
+  category_slugs:
+  - finance-legal-insurance
+  subcategory_slugs:
+  - legal-services
+  primary_category: finance-legal-insurance
+  categories:
+  - finance-legal-insurance
+  subcategories:
+  - legal-services
 - title: Records information management
   slug: records-information-management
 - title: Risk protection arrangement – alternative to commercial insurance
   slug: rpa
 - title: Sandwiches and food to go
   slug: sandwiches-and-food-to-go
+  category_slugs:
+  - catering
+  subcategory_slugs:
+  - food
+  primary_category: catering
+  categories:
+  - catering
+  subcategories:
+  - food
 - title: Sandwiches, ready meals, meal concepts and food to go
   slug: sandwiches-ready-meals-meal-concepts-and-food-to-go
+  category_slugs:
+  - catering
+  subcategory_slugs:
+  - food
+  primary_category: catering
+  categories:
+  - catering
+  subcategories:
+  - food
 - title: Sensory equipment and associated services
   slug: sensory-equipment-and-associated-services
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  subcategory_slugs:
+  - send-products
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  subcategories:
+  - send-products
 - title: Signs and associated services
   slug: signs-and-associated-services
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - buildings
+  - health-safety-security
+  - grounds-estates-maintenance
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - buildings
+  - health-safety-security
+  - grounds-estates-maintenance
 - title: Software application solutions - dynamic purchasing system (DPS)
   slug: software-application-solutions-dps
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - ict-software-systems
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - ict-software-systems
 - title: Software licenses and associated services for academies and schools
   slug: software-licenses
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - ict-software-systems
+  - cyber-security
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - ict-software-systems
+  - cyber-security
 - title: Software products & associated services
   slug: software-products-and-associated-services
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - ict-software-systems
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - ict-software-systems
 - title: Solar photovoltaic
   slug: solar-photovoltaic
 - title: Specialist professional services
   slug: specialist-professional-services
+  category_slugs:
+  - hr-people-professional-services
+  subcategory_slugs:
+  - professional-services
+  primary_category: hr-people-professional-services
+  categories:
+  - hr-people-professional-services
+  subcategories:
+  - professional-services
 - title: Sports facilities installation, refurbishment and maintenance
   slug: sports-facilities-installation-refurbishment-and-maintenance
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - sports-grounds-facilities-equipment
+  - buildings
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - sports-grounds-facilities-equipment
+  - buildings
 - title: Staff absence protection and reimbursement services 2025
   slug: staff-absence-protection-and-reimbursement-services
+  category_slugs:
+  - hr-people-professional-services
+  - finance-legal-insurance
+  subcategory_slugs:
+  - hr-recruitment
+  - insurance
+  primary_category: hr-people-professional-services
+  categories:
+  - hr-people-professional-services
+  - finance-legal-insurance
+  subcategories:
+  - hr-recruitment
+  - insurance
 - title: Stationery, paper and education supplies
   slug: stationery-paper-and-education-supplies
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  subcategory_slugs:
+  - classroom-office-supplies
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  subcategories:
+  - classroom-office-supplies
 - title: Supply and installation of Solar PV
   slug: supply-and-installation-of-solar-pv
 - title: Supply of mains gas
   slug: supply-of-mains-gas
+  category_slugs:
+  - energy-utilities
+  subcategory_slugs:
+  - gas
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  subcategories:
+  - gas
 - title: Supply Teachers and Education Recruitment
   slug: supply-teachers
+  category_slugs:
+  - hr-people-professional-services
+  subcategory_slugs:
+  - hr-recruitment
+  primary_category: hr-people-professional-services
+  categories:
+  - hr-people-professional-services
+  subcategories:
+  - hr-recruitment
 - title: Sustainable hardware, asset recycling and data destruction
   slug: sustainable-hardware-asset-recycling-and-data-destruction
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - laptops-printers-ict-hardware
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - laptops-printers-ict-hardware
 - title: Technology products and associated services 2
   slug: technology-products-and-associated-services-2
+  category_slugs:
+  - ict-business-systems
+  subcategory_slugs:
+  - ict-software-systems
+  - laptops-printers-ict-hardware
+  - cloud-services-ai-data-storage
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - ict-software-systems
+  - laptops-printers-ict-hardware
+  - cloud-services-ai-data-storage
 - title: Temporary and semi-permanent buildings
   slug: temporary-and-semi-permanent-buildings
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - buildings
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - buildings
 - title: Total cleaning service solutions
   slug: total-cleaning-service-solutions
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - cleaning-services-equipment
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - cleaning-services-equipment
 - title: Total facilities management
   slug: total-facilities-management
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - facilities-management
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - facilities-management
 - title: Training, learning and development managed services
   slug: training-learning-and-development-managed-services
 - title: Student transport DPS
   slug: transport
+  category_slugs:
+  - transport
+  primary_category: transport
+  categories:
+  - transport
 - title: Utilities supplies and services
   slug: utilities-supply-services
+  category_slugs:
+  - energy-utilities
+  - hr-people-professional-services
+  subcategory_slugs:
+  - energy-audits-savings-debt-resolution
+  - renewables-energysaving-products
+  - professional-services
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  - hr-people-professional-services
+  subcategories:
+  - energy-audits-savings-debt-resolution
+  - renewables-energysaving-products
+  - professional-services
 - title: Vehicle daily rental
   slug: vehicle-daily-rental
 - title: Vehicle purchase
   slug: vehicle-purchase
+  category_slugs:
+  - transport
+  primary_category: transport
+  categories:
+  - transport
 - title: Waste management services
   slug: waste-management-services
+  category_slugs:
+  - buildings-maintenance
+  subcategory_slugs:
+  - buildings
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - buildings
 - title: Water, wastewater and ancillary services
   slug: water-wastewater-and-ancillary-services
 - title: Wheelie bin containers and kerbside recycling containers
   slug: wheelie-bin-containers-and-kerbside-recycling-containers
 - title: YPO procurement product catalogue
   slug: ypo-procurement
+  category_slugs:
+  - classroom-curriculum-office-supplies
+  subcategory_slugs:
+  - books
+  - classroom-office-supplies
+  - arts-crafts-music
+  - furniture
+  - sports-equipment
+  - send-products
+  - laptops-av-classroom-tech
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  subcategories:
+  - books
+  - classroom-office-supplies
+  - arts-crafts-music
+  - furniture
+  - sports-equipment
+  - send-products
+  - laptops-av-classroom-tech
