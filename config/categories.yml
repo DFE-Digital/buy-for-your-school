@@ -82,7 +82,7 @@ categories:
   - name: Legal services
     slug: legal-services
 - category: HR, people and professional services
-  description: 'Recruitment, payroll and consultancy '
+  description: Recruitment, payroll and consultancy
   slug: hr-people-professional-services
   subcategories:
   - name: Catering staff
