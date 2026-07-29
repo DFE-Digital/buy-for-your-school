@@ -88,14 +88,21 @@ namespace :solutions do
       puts "  - #{solution['title']} (#{solution['slug']})"
     end
 
-    unmapped_solutions = solutions.select do |solution|
-      solution["primary_category"].blank? ||
-        Array(solution["categories"]).blank? ||
-        Array(solution["subcategories"]).blank?
+    solutions_with_no_mapped_categories = solutions.select do |solution|
+      solution["primary_category"].blank? || Array(solution["categories"]).blank?
     end
 
-    puts "Solutions with no mapped categories or subcategories: #{unmapped_solutions.count}"
-    unmapped_solutions.each do |solution|
+    puts "Solutions with no mapped categories: #{solutions_with_no_mapped_categories.count}"
+    solutions_with_no_mapped_categories.each do |solution|
+      puts "  - #{solution['title']} (#{solution['slug']})"
+    end
+
+    solutions_with_no_mapped_subcategories = solutions.select do |solution|
+      Array(solution["subcategories"]).blank?
+    end
+
+    puts "Solutions with no mapped subcategories: #{solutions_with_no_mapped_subcategories.count}"
+    solutions_with_no_mapped_subcategories.each do |solution|
       puts "  - #{solution['title']} (#{solution['slug']})"
     end
   end
