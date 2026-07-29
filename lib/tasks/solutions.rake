@@ -65,6 +65,17 @@ namespace :solutions do
       puts "Unresolved subcategory titles:"
       unresolved_subcategories.uniq.each { |row| puts "  - line #{row[:row]}: #{row[:value]}" }
     end
+
+    unmapped_solutions = solutions.select do |solution|
+      solution["primary_category"].blank? ||
+        Array(solution["categories"]).blank? ||
+        Array(solution["subcategories"]).blank?
+    end
+
+    puts "Solutions with no mapped categories or subcategories: #{unmapped_solutions.count}"
+    unmapped_solutions.each do |solution|
+      puts "  - #{solution['title']} (#{solution['slug']})"
+    end
   end
 end
 
