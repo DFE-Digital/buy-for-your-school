@@ -22,11 +22,15 @@ namespace :solutions do
     unmatched_rows = []
     unresolved_categories = []
     unresolved_subcategories = []
+    invalid_buying_option_rows = []
 
     spreadsheet_rows.each_with_index do |row, index|
+      row = row.to_h.transform_values { |value| value.is_a?(String) ? value.strip : value }
       row_number = index + 2
-      title = row["Framework name or content name"].to_s.strip
+      title = row["Framework name or content name"].to_s
       break if title.blank? && row.to_h.values.compact.map(&:to_s).all?(&:blank?)
+
+      buying_option = lookup_buying_option(row["Type of buying option"], invalid_buying_option_rows, row_number)
 
       solution = solutions_by_slug[title.parameterize] || solutions_by_normalised_title[normalise_title(title)]
 
@@ -47,6 +51,7 @@ namespace :solutions do
       solution["primary_category"] = primary_category if primary_category.present?
       solution["categories"] = categories if categories.any?
       solution["subcategories"] = subcategory_slugs if subcategory_slugs.any?
+      solution["ways_to_buy"] = buying_option if buying_option.present?
       updated += 1
     end
 
@@ -64,6 +69,15 @@ namespace :solutions do
     if unresolved_subcategories.any?
       puts "Unresolved subcategory titles:"
       unresolved_subcategories.uniq.each { |row| puts "  - line #{row[:row]}: #{row[:value]}" }
+    end
+
+    puts "Unresolved ways to buy: #{invalid_buying_option_rows.count}"
+    invalid_buying_option_rows.each { |row| puts "  - line #{row[:row]}: #{row[:value]}" }
+
+    unmapped_buying_options = solutions.select { |solution| solution["ways_to_buy"].blank? }
+    puts "Solutions with no mapped ways_to_buy: #{unmapped_buying_options.count}"
+    unmapped_buying_options.each do |solution|
+      puts "  - #{solution['title']} (#{solution['slug']})"
     end
 
     unmapped_solutions = solutions.select do |solution|
@@ -141,6 +155,17 @@ def lookup_subcategory_slugs(value, lookup, unresolved, row_number)
   else
     Array(slug)
   end
+end
+
+def lookup_buying_option(value, unresolved, row_number)
+  raw_value = value.to_s.strip
+  return nil if raw_value.blank?
+
+  buying_options = ["Catalogue", "DfE deal", "DPS", "Framework"]
+  buying_option = buying_options.find { |option| option == raw_value }
+
+  unresolved << { row: row_number, value: raw_value } if buying_option.nil?
+  buying_option
 end
 
 def normalise_title(value)
