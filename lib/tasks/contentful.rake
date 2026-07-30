@@ -20,6 +20,120 @@ namespace :contentful do
     puts "Wrote #{solutions.count} published solutions to #{file}"
   end
 
+  desc "Update existing Contentful solutions from config/solutions.yml"
+  task update_solutions: :environment do
+    puts "Updating Contentful solutions from config/solutions.yml..."
+
+    environment = contentful_environment
+    solutions_data = YAML.load_file(Rails.root.join("config/solutions.yml")).fetch("solutions", [])
+
+    solutions_by_slug = published_entries_by_slug(environment, "solution")
+    categories_by_slug = published_entries_by_slug(environment, "category")
+    subcategories_by_slug = published_entries_by_slug(environment, "subcategory")
+    ways_to_buy_by_slug = published_entries_by_slug(environment, "ways_to_buy")
+
+    updated = 0
+    unmatched_solutions = []
+    unmatched_categories = []
+    unmatched_subcategories = []
+    unmatched_ways_to_buy = []
+    skipped_solutions = []
+
+    solutions_data.each do |solution_data|
+      solution_slug = solution_data["slug"].to_s
+      solution_entry = solutions_by_slug[solution_slug]
+
+      if solution_entry.nil?
+        unmatched_solutions << solution_slug
+        next
+      end
+
+      primary_category_slug = solution_data["primary_category"].presence
+      category_slugs = Array(solution_data["categories"]).presence || []
+      subcategory_slugs = Array(solution_data["subcategories"]).presence || []
+      ways_to_buy_slug = solution_data["ways_to_buy"].presence
+
+      primary_category_entry = primary_category_slug && categories_by_slug[primary_category_slug]
+      category_entries = category_slugs.filter_map { |slug| categories_by_slug[slug] }
+      subcategory_entries = subcategory_slugs.filter_map { |slug| subcategories_by_slug[slug] }
+      ways_to_buy_entry = ways_to_buy_slug && ways_to_buy_by_slug[ways_to_buy_slug]
+
+      if primary_category_slug.present? && primary_category_entry.nil?
+        unmatched_categories << { solution: solution_slug, slug: primary_category_slug }
+      end
+
+      (category_slugs - category_entries.map { |entry| entry.fields[:slug] }).each do |slug|
+        unmatched_categories << { solution: solution_slug, slug: }
+      end
+
+      (subcategory_slugs - subcategory_entries.map { |entry| entry.fields[:slug] }).each do |slug|
+        unmatched_subcategories << { solution: solution_slug, slug: }
+      end
+
+      if ways_to_buy_slug.present? && ways_to_buy_entry.nil?
+        unmatched_ways_to_buy << { solution: solution_slug, slug: ways_to_buy_slug }
+      end
+
+      if primary_category_slug.present? && primary_category_entry.nil? ||
+          category_entries.size != category_slugs.size ||
+          subcategory_entries.size != subcategory_slugs.size ||
+          ways_to_buy_slug.present? && ways_to_buy_entry.nil?
+        skipped_solutions << solution_slug
+        next
+      end
+
+      update_attributes = {}
+      update_attributes[:primary_category] = primary_category_entry if primary_category_slug.present?
+      update_attributes[:categories] = category_entries if solution_data.key?("categories")
+      update_attributes[:subcategories] = subcategory_entries if solution_data.key?("subcategories")
+
+      if ways_to_buy_slug.present?
+        ways_to_buy_field = solution_buying_option_field(solution_entry)
+        update_attributes[ways_to_buy_field] = ways_to_buy_entry if ways_to_buy_field
+      end
+
+      next if update_attributes.empty?
+
+      puts "Updating #{solution_entry.title} (#{solution_slug})"
+      solution_entry.update(**update_attributes)
+      solution_entry.publish
+      updated += 1
+    end
+
+    puts "Updated #{updated} solutions"
+
+    if unmatched_solutions.any?
+      puts "Solutions not found: #{unmatched_solutions.uniq.count}"
+      unmatched_solutions.uniq.sort.each { |slug| puts "  - #{slug}" }
+    end
+
+    if unmatched_categories.any?
+      puts "Categories not found: #{unmatched_categories.uniq.count}"
+      unmatched_categories.uniq.sort_by { |item| [item[:slug], item[:solution]] }.each do |item|
+        puts "  - #{item[:slug]} (solution: #{item[:solution]})"
+      end
+    end
+
+    if unmatched_subcategories.any?
+      puts "Subcategories not found: #{unmatched_subcategories.uniq.count}"
+      unmatched_subcategories.uniq.sort_by { |item| [item[:slug], item[:solution]] }.each do |item|
+        puts "  - #{item[:slug]} (solution: #{item[:solution]})"
+      end
+    end
+
+    if unmatched_ways_to_buy.any?
+      puts "Ways to buy not found: #{unmatched_ways_to_buy.uniq.count}"
+      unmatched_ways_to_buy.uniq.sort_by { |item| [item[:slug], item[:solution]] }.each do |item|
+        puts "  - #{item[:slug]} (solution: #{item[:solution]})"
+      end
+    end
+
+    if skipped_solutions.any?
+      puts "Solutions skipped due to unresolved references: #{skipped_solutions.uniq.count}"
+      skipped_solutions.uniq.sort.each { |slug| puts "  - #{slug}" }
+    end
+  end
+
   desc "Create or update subcategories from config/categories.yml in Contentful"
   task create_subcategories: :environment do
     data = categories_config
@@ -280,6 +394,23 @@ def contentful_environment
   client = Contentful::Management::Client.new(ENV["CONTENTFUL_CMA_TOKEN"])
   space = client.spaces.find(ENV["CONTENTFUL_SPACE_ID"])
   space.environments.find(ENV.fetch("CONTENTFUL_ENVIRONMENT", "master"))
+end
+
+def published_entries_by_slug(environment, content_type)
+  environment.entries.all(content_type:, limit: 1000)
+    .select(&:published?)
+    .each_with_object({}) do |entry, entries_by_slug|
+      slug = entry.fields[:slug]
+      entries_by_slug[slug] = entry if slug.present?
+    end
+end
+
+def solution_buying_option_field(solution_entry)
+  fields = solution_entry.fields
+  return :ways_to_buy if fields.key?(:ways_to_buy)
+  return :buying_option_type if fields.key?(:buying_option_type)
+
+  :ways_to_buy
 end
 
 def each_subcategory(json_data)

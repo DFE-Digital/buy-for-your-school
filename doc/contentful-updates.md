@@ -73,3 +73,41 @@ The intended workflow is:
 Matching is done by `Framework slug` when present. If that column is blank, the task falls back to matching by solution title. If `Framework slug` contains `ignore`, that spreadsheet row is skipped.
 
 The task prints a summary showing unmatched rows, unresolved category or subcategory values, ignored rows, and any solutions still missing mapped data.
+
+### Updating existing Contentful solutions from `config/solutions.yml`
+
+Once `config/solutions.yml` has been annotated with the correct category, subcategory and buying option slugs, you can apply that data back to existing Contentful solution entries with:
+
+```sh
+bundle exec rake contentful:update_solutions
+```
+
+This task:
+
+- reads the annotated `config/solutions.yml`
+- looks up existing published Contentful entries by slug for:
+  - solutions
+  - categories
+  - subcategories
+  - ways to buy
+- updates existing solution entries with:
+  - `primary_category`
+  - `categories`
+  - `subcategories`
+  - `ways_to_buy`
+
+The task does not create new solutions. If a solution slug from `config/solutions.yml` cannot be matched in Contentful, it is reported in the summary and skipped.
+
+If any referenced category, subcategory or ways to buy slug cannot be resolved in Contentful for a given solution, that solution is skipped rather than being partially updated. The task summary reports any unmatched:
+
+- solutions
+- categories
+- subcategories
+- ways to buy
+- solutions skipped because of unresolved references
+
+This task also requires:
+
+- `CONTENTFUL_CMA_TOKEN`
+- `CONTENTFUL_SPACE_ID`
+- `CONTENTFUL_ENVIRONMENT` if you are not using the default `master`
