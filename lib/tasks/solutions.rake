@@ -79,8 +79,10 @@ namespace :solutions do
       unresolved_subcategories.uniq.each { |row| puts "  - line #{row[:row]}: #{row[:value]}" }
     end
 
-    puts "Unresolved ways to buy: #{invalid_buying_option_rows.count}"
-    invalid_buying_option_rows.each { |row| puts "  - line #{row[:row]}: #{row[:value]}" }
+    if invalid_buying_option_rows.any?
+      puts "Unresolved ways to buy: #{invalid_buying_option_rows.count}"
+      invalid_buying_option_rows.each { |row| puts "  - line #{row[:row]}: #{row[:value]}" }
+    end
 
     unmapped_buying_options = solutions.select { |solution| solution["ways_to_buy"].blank? }
     puts "Solutions with no mapped ways_to_buy: #{unmapped_buying_options.count}"
