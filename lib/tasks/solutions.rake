@@ -45,8 +45,10 @@ namespace :solutions do
       end
 
       primary_category = lookup_slug(row["To-be primary category"], category_lookup, unresolved_categories, row_number)
-      secondary_category = lookup_slug(row["To-be 2nd category (if applicable)"], category_lookup, unresolved_categories, row_number)
-      categories = [primary_category, secondary_category].compact.uniq
+      secondary_categories = parse_values(row["To-be 2nd category (if applicable)"]).filter_map do |value|
+        lookup_slug(value, category_lookup, unresolved_categories, row_number)
+      end
+      categories = ([primary_category] + secondary_categories).compact.uniq
 
       subcategory_slugs = (
         parse_values(row["Primary sub-categories"]).flat_map { |value| lookup_subcategory_slugs(value, subcategory_lookup, unresolved_subcategories, row_number) } +
