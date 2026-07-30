@@ -176,11 +176,14 @@ def lookup_buying_option(value, unresolved, row_number)
   raw_value = value.to_s.strip
   return nil if raw_value.blank?
 
-  buying_options = ["Catalogue", "DfE deal", "DPS", "Framework"]
-  buying_option = buying_options.find { |option| option == raw_value }
+  buying_options = {
+    "Catalogue" => 'catalogue',
+    "DfE deal" => 'dfe_deal',
+    "DPS" => 'dps',
+    "Framework" => 'framework'
+  }
 
-  unresolved << { row: row_number, value: raw_value } if buying_option.nil?
-  buying_option
+  buying_options[raw_value]
 end
 
 def normalise_title(value)

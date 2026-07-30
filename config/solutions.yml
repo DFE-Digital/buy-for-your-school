@@ -2,6 +2,12 @@
 solutions:
 - title: Ambient, chilled, frozen foods and fresh fruit, vegetables and salad
   slug: ambient-chilled-frozen-foods-and-fresh-fruit-vegetables-and-salad
+  primary_category: catering
+  categories:
+  - catering
+  subcategories:
+  - food
+  ways_to_buy: framework
 - title: Apprenticeships and associated training
   slug: apprenticeships-and-associated-training
   category_slugs:
@@ -13,9 +19,16 @@ solutions:
   - hr-people-professional-services
   subcategories:
   - training-development
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Asbestos inspection & removal services
   slug: asbestos-inspection-and-removal-services
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - buildings
+  - health-safety-security
+  ways_to_buy: framework
 - title: Audio-Visual equipment and installation services
   slug: audio-visual-equipment-and-installation-services
   category_slugs:
@@ -31,7 +44,7 @@ solutions:
   subcategories:
   - laptops-av-classroom-tech
   - cameras-av-equipment
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Audio Visual Solutions
   slug: audio-visual-solutions
   category_slugs:
@@ -47,7 +60,7 @@ solutions:
   subcategories:
   - laptops-av-classroom-tech
   - cameras-av-equipment
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Audit and financial services
   slug: audit-and-financial-services
   category_slugs:
@@ -59,9 +72,14 @@ solutions:
   - finance-legal-insurance
   subcategories:
   - financial-audit-payroll
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Books, e-books and associated services
   slug: books-e-books-and-associated-services
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  subcategories:
+  - books
 - title: Building cleaning
   slug: building-cleaning
   category_slugs:
@@ -73,9 +91,17 @@ solutions:
   - buildings-maintenance
   subcategories:
   - cleaning-services-equipment
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Buildings internal fit-out and maintenance - dynamic purchasing system (DPS)
   slug: buildings-internal-fit-out-and-maintenance-dps
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - grounds-estates-maintenance
+  - buildings
+  - facilities-management
+  ways_to_buy: dps
 - title: Business support services
   slug: business-support-services
   category_slugs:
@@ -93,7 +119,7 @@ solutions:
   - hr-recruitment
   - professional-services
   - financial-audit-payroll
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Buying better food and drink
   slug: buying-better-food-and-drink
   category_slugs:
@@ -105,7 +131,7 @@ solutions:
   - catering
   subcategories:
   - food
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Catering services - dynamic purchasing system (DPS)
   slug: catering-services-dps
   category_slugs:
@@ -117,7 +143,7 @@ solutions:
   - catering
   subcategories:
   - catering-services-staff
-  ways_to_buy: DPS
+  ways_to_buy: dps
 - title: Catering, vending machines & water cooler solutions
   slug: catering-vending-machines-and-water-cooler-solutions
   category_slugs:
@@ -133,7 +159,7 @@ solutions:
   - breakfast-club
   - vending-machines
   - catering-equipment
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: CCTV access solutions and security services
   slug: cctv-access-solutions-and-security-services
   category_slugs:
@@ -147,7 +173,7 @@ solutions:
   subcategories:
   - grounds-estates-maintenance
   - health-safety-security
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Cleaning services
   slug: cleaning-services
   category_slugs:
@@ -159,7 +185,7 @@ solutions:
   - buildings-maintenance
   subcategories:
   - cleaning-services-equipment
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Cloud services, AI, data centre management and transformation solutions
   slug: cloud-services-ai-data-centre-management-and-transformation-solutions
   category_slugs:
@@ -171,7 +197,7 @@ solutions:
   - ict-business-systems
   subcategories:
   - cloud-services-ai-data-storage
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Communications solutions
   slug: communications-solutions
   category_slugs:
@@ -183,7 +209,7 @@ solutions:
   - ict-business-systems
   subcategories:
   - broadband-wifi-telecomms
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Communications solutions and associated telephony services
   slug: communications-telephony
   category_slugs:
@@ -195,7 +221,7 @@ solutions:
   - ict-business-systems
   subcategories:
   - broadband-wifi-telecomms
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Corporate software and related products and services
   slug: corporate-software
   category_slugs:
@@ -207,7 +233,7 @@ solutions:
   - ict-business-systems
   subcategories:
   - ict-software-systems
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Cyber security services 3 DPS
   slug: cyber-security-services-dps
   category_slugs:
@@ -219,7 +245,7 @@ solutions:
   - ict-business-systems
   subcategories:
   - cyber-security
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Debt resolution services Lot 1 only
   slug: debt-resolution-services
   category_slugs:
@@ -231,7 +257,7 @@ solutions:
   - finance-legal-insurance
   subcategories:
   - debt-resolution-services
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Early years furniture framework
   slug: early-years-furniture
   category_slugs:
@@ -243,7 +269,7 @@ solutions:
   - classroom-curriculum-office-supplies
   subcategories:
   - furniture
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Education decarbonisation
   slug: education-decarbonisation
   category_slugs:
@@ -257,7 +283,7 @@ solutions:
   subcategories:
   - renewables-energysaving-products
   - energy-audits-savings-debt-resolution
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Education management systems
   slug: education-management-systems
   category_slugs:
@@ -269,9 +295,15 @@ solutions:
   - ict-business-systems
   subcategories:
   - ict-software-systems
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Education Professional Services
   slug: education-professional-services
+  primary_category: hr-people-professional-services
+  categories:
+  - hr-people-professional-services
+  subcategories:
+  - professional-services
+  - language-services
 - title: Education services
   slug: education-services
   category_slugs:
@@ -283,7 +315,7 @@ solutions:
   - hr-people-professional-services
   subcategories:
   - professional-services
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Electric Vehicle Charging Points – Supply, installation, maintenance and
     consultancy
   slug: electric-vehicle-charging-points-supply-installation-maintenance-and-consultancy
@@ -300,7 +332,7 @@ solutions:
   subcategories:
   - grounds-estates-maintenance
   - renewables-energysaving-products
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Electrical Testing services
   slug: electrical-testing-services
   category_slugs:
@@ -312,11 +344,10 @@ solutions:
   primary_category: buildings-maintenance
   categories:
   - buildings-maintenance
-  - ict-business-systems
   subcategories:
   - buildings
-  - laptops-printers-ict-hardware
-  ways_to_buy: Framework
+  - health-safety-security
+  ways_to_buy: framework
 - title: Electricity (for supply during 2024-2028)
   slug: electricity-espo
   category_slugs:
@@ -328,7 +359,7 @@ solutions:
   - energy-utilities
   subcategories:
   - electricity
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Electronic catering management and payment solutions
   slug: electronic-catering-management-and-payment-solutions
   category_slugs:
@@ -344,7 +375,7 @@ solutions:
   subcategories:
   - ict-software-systems
   - catering-equipment
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Supply of energy 2
   slug: energy-ancillary
   category_slugs:
@@ -362,9 +393,17 @@ solutions:
   - gas
   - electricity
   - professional-services
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Energy cost recovery services for schools
   slug: energy-cost-recovery-services
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  - hr-people-professional-services
+  subcategories:
+  - energy-audits-savings-debt-resolution
+  - professional-services
+  ways_to_buy: dfe_deal
 - title: DfE Energy for Schools
   slug: energy-for-schools
   category_slugs:
@@ -378,7 +417,7 @@ solutions:
   subcategories:
   - electricity
   - gas
-  ways_to_buy: DfE deal
+  ways_to_buy: dfe_deal
 - title: Engineering inspection services
   slug: engineering-inspection-services
   category_slugs:
@@ -390,7 +429,7 @@ solutions:
   - buildings-maintenance
   subcategories:
   - health-safety-security
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: ESPO catalogue
   slug: espo-catalogue
   category_slugs:
@@ -418,7 +457,7 @@ solutions:
   - catering-services-staff
   - cleaning-services-equipment
   - health-safety-security
-  ways_to_buy: Catalogue
+  ways_to_buy: catalogue
 - title: Estates and facilities professional services (DPS)
   slug: estates-and-facilities-professional-services
   category_slugs:
@@ -434,7 +473,7 @@ solutions:
   subcategories:
   - grounds-estates-maintenance
   - professional-services
-  ways_to_buy: DPS
+  ways_to_buy: dps
 - title: Exterior building services DPS
   slug: exterior-building-services-dps
   category_slugs:
@@ -446,7 +485,7 @@ solutions:
   - buildings-maintenance
   subcategories:
   - buildings
-  ways_to_buy: DPS
+  ways_to_buy: dps
 - title: Facilities supplies
   slug: facilities-supplies
   category_slugs:
@@ -464,7 +503,7 @@ solutions:
   - renewables-energysaving-products
   - lighting
   - grounds-estates-maintenance
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Financial leasing solutions
   slug: financial-leasing-solutions
   category_slugs:
@@ -476,7 +515,7 @@ solutions:
   - finance-legal-insurance
   subcategories:
   - financial-audit-payroll
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Findel Education catalogue
   slug: findel-education-catalogue
   category_slugs:
@@ -498,9 +537,15 @@ solutions:
   - furniture
   - sports-equipment
   - send-products
-  ways_to_buy: Catalogue
+  ways_to_buy: catalogue
 - title: Fire safety products and services
   slug: fire-safety-products-and-services
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - health-safety-security
+  ways_to_buy: framework
 - title: Fixed and flexible electricity and gas frameworks
   slug: fixed-and-flexible-gas
   category_slugs:
@@ -514,7 +559,7 @@ solutions:
   subcategories:
   - gas
   - electricity
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Flexible electricity
   slug: flex-electricity
   category_slugs:
@@ -526,7 +571,7 @@ solutions:
   - energy-utilities
   subcategories:
   - electricity
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Flexible gas
   slug: flexible-gas-framework
   category_slugs:
@@ -538,7 +583,7 @@ solutions:
   - energy-utilities
   subcategories:
   - gas
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Building in use - support services DPS
   slug: fm-support-services-dps
   category_slugs:
@@ -558,7 +603,7 @@ solutions:
   - health-safety-security
   - catering-staff
   - catering-services-staff
-  ways_to_buy: DPS
+  ways_to_buy: dps
 - title: Facilities management and workplace services DPS
   slug: fm-workplace-dps
   category_slugs:
@@ -578,7 +623,7 @@ solutions:
   - health-safety-security
   - grounds-estates-maintenance
   - catering-staff
-  ways_to_buy: DPS
+  ways_to_buy: dps
 - title: Food and drink - dynamic purchasing system (DPS)
   slug: food-and-drink-dynamic-purchasing-system-dps
   category_slugs:
@@ -590,7 +635,7 @@ solutions:
   - catering
   subcategories:
   - food
-  ways_to_buy: DPS
+  ways_to_buy: dps
 - title: Food and drink - framework
   slug: food-and-drink-framework
   category_slugs:
@@ -602,7 +647,7 @@ solutions:
   - catering
   subcategories:
   - food
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Food and drink vending solution
   slug: food-and-drink-vending-solution
   category_slugs:
@@ -616,7 +661,7 @@ solutions:
   subcategories:
   - catering-equipment
   - vending-machines
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Furniture and associated services
   slug: furniture-and-associated-services
   category_slugs:
@@ -628,7 +673,7 @@ solutions:
   - classroom-curriculum-office-supplies
   subcategories:
   - furniture
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: G-Cloud 14
   slug: g-cloud
   category_slugs:
@@ -644,9 +689,16 @@ solutions:
   - ict-software-systems
   - laptops-printers-ict-hardware
   - broadband-wifi-telecomms
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Language services
   slug: gca-language-services
+  primary_category: hr-people-professional-services
+  categories:
+  - hr-people-professional-services
+  subcategories:
+  - language-services
+  - professional-services
+  ways_to_buy: framework
 - title: GCA purchasing platform catalogue
   slug: gca-purchasing-platform-catalogue
   category_slugs:
@@ -662,7 +714,7 @@ solutions:
   - ict-software-systems
   - cameras-av-equipment
   - laptops-printers-ict-hardware
-  ways_to_buy: Catalogue
+  ways_to_buy: catalogue
 - title: Grounds maintenance & associated services
   slug: grounds-maintenance-and-associated-services
   category_slugs:
@@ -674,7 +726,7 @@ solutions:
   - buildings-maintenance
   subcategories:
   - grounds-estates-maintenance
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Grounds maintenance services
   slug: grounds-maintenance-services
   category_slugs:
@@ -686,7 +738,7 @@ solutions:
   - buildings-maintenance
   subcategories:
   - grounds-estates-maintenance
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: HR, payroll and employee screening services
   slug: hr-payroll-and-employee-screening
   category_slugs:
@@ -698,7 +750,7 @@ solutions:
   - hr-people-professional-services
   subcategories:
   - hr-recruitment
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: HR support services
   slug: hr-support-services
   category_slugs:
@@ -710,9 +762,15 @@ solutions:
   - hr-people-professional-services
   subcategories:
   - hr-recruitment
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: ICT hardware and peripherals equipment
   slug: ict-hardware-and-peripherals-equipment
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - laptops-printers-ict-hardware
+  ways_to_buy: framework
 - title: ICT Managed services & consultancy
   slug: ict-managed-services-and-consultancy
   category_slugs:
@@ -730,7 +788,7 @@ solutions:
   - ict-software-systems
   - cyber-security
   - professional-services
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: ICT network, storage and service solutions
   slug: ict-network-storage-and-service-solutions
   category_slugs:
@@ -746,7 +804,7 @@ solutions:
   - cyber-security
   - cloud-services-ai-data-storage
   - broadband-wifi-telecomms
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Everything ICT
   slug: ict-procurement
   category_slugs:
@@ -764,7 +822,7 @@ solutions:
   - broadband-wifi-telecomms
   - ict-software-systems
   - laptops-printers-ict-hardware
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Insurance and associated services (Lot 3 only)
   slug: insurance-and-associated-services-lot-three-only
   category_slugs:
@@ -776,7 +834,7 @@ solutions:
   - finance-legal-insurance
   subcategories:
   - insurance
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Internal audit, assurance and counter fraud investigation services
   slug: internal-audit-assurance-and-counter-fraud-investigation-services
   category_slugs:
@@ -788,9 +846,14 @@ solutions:
   - finance-legal-insurance
   subcategories:
   - financial-audit-payroll
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: IT, hardware, ITAD & associated services
   slug: it-hardware-itad-and-associated-services
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - laptops-printers-ict-hardware
 - title: Language services
   slug: language-services
   category_slugs:
@@ -798,15 +861,23 @@ solutions:
   subcategory_slugs:
   - language-services
   - professional-services
-  primary_category: classroom-curriculum-office-supplies
+  primary_category: hr-people-professional-services
   categories:
-  - classroom-curriculum-office-supplies
+  - hr-people-professional-services
   subcategories:
   - language-services
   - professional-services
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: LED Lighting
   slug: led-lighting
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  - buildings-maintenance
+  subcategories:
+  - renewables-energysaving-products
+  - lighting
+  ways_to_buy: framework
 - title: LED Lighting
   slug: led-lights
   category_slugs:
@@ -822,7 +893,7 @@ solutions:
   subcategories:
   - renewables-energysaving-products
   - lighting
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Legal Services
   slug: legal-services
   category_slugs:
@@ -834,7 +905,7 @@ solutions:
   - finance-legal-insurance
   subcategories:
   - legal-services
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Legal services – wider public sector
   slug: legal-services-wider-public-sector
   category_slugs:
@@ -846,9 +917,16 @@ solutions:
   - finance-legal-insurance
   subcategories:
   - legal-services
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Library resources, software and associated services
   slug: library-resources-software-and-associated-services
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  - ict-business-systems
+  subcategories:
+  - books
+  - ict-software-systems
 - title: Liquid fuels
   slug: liquid-fuel-espo
   category_slugs:
@@ -860,7 +938,7 @@ solutions:
   - energy-utilities
   subcategories:
   - other-fuels
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Low energy lighting DPS
   slug: low-energy-lighting-dps
   category_slugs:
@@ -876,7 +954,7 @@ solutions:
   subcategories:
   - renewables-energysaving-products
   - lighting
-  ways_to_buy: DPS
+  ways_to_buy: dps
 - title: Mains gas 2023
   slug: mains-gas-espo
   category_slugs:
@@ -888,7 +966,7 @@ solutions:
   - energy-utilities
   subcategories:
   - gas
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Multifunctional devices and associated products and services (including print
     and design)
   slug: mfd-and-associated-products-and-services-including-print-and-design
@@ -903,7 +981,7 @@ solutions:
   subcategories:
   - cloud-services-ai-data-storage
   - laptops-printers-ict-hardware
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Minor works DPS 2
   slug: minor-works-dps-2
   category_slugs:
@@ -915,12 +993,23 @@ solutions:
   - buildings-maintenance
   subcategories:
   - buildings
-  ways_to_buy: DPS
+  ways_to_buy: dps
 - title: Multifunctional Devices, GovPrint Hardware, Managed Print Provision and Digital
     Workflow Software Services
   slug: multifunctional-devices-govprint-hardware-managed-print-provision-digital-workflow-software-services
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - laptops-printers-ict-hardware
 - title: Musical instruments, equipment and technology
   slug: musical-instruments-equipment-and-technology
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  subcategories:
+  - arts-crafts-music
+  - laptops-av-classroom-tech
 - title: Network connectivity and telecommunication solutions
   slug: network-connectivity-and-telecommunication-solutions
   category_slugs:
@@ -932,9 +1021,14 @@ solutions:
   - ict-business-systems
   subcategories:
   - broadband-wifi-telecomms
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: National professional qualification (NPQ) courses
   slug: npq
+  primary_category: hr-people-professional-services
+  categories:
+  - hr-people-professional-services
+  subcategories:
+  - training-development
 - title: Occupational health services
   slug: occupational-health-services
   category_slugs:
@@ -946,9 +1040,18 @@ solutions:
   - hr-people-professional-services
   subcategories:
   - hr-recruitment
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Outdoor playground equipment, fitness and sport facilities and equipment
   slug: outdoor-playground-equipment-fitness-and-sport-facilities-and-equipment
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  - buildings-maintenance
+  subcategories:
+  - sports-equipment
+  - sports-grounds-facilities-equipment
+  - facilities-management
+  ways_to_buy: framework
 - title: Outdoor sports surfaces and activity equipment
   slug: outdoor-sports-surfaces-and-activity-equipment
   category_slugs:
@@ -966,7 +1069,7 @@ solutions:
   - sports-equipment
   - send-products
   - sports-grounds-facilities-equipment
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Catering services
   slug: outsourced-catering
   category_slugs:
@@ -980,7 +1083,7 @@ solutions:
   subcategories:
   - catering-services-staff
   - breakfast-club
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Outsourced catering services
   slug: outsourced-catering-cpc
   category_slugs:
@@ -992,9 +1095,15 @@ solutions:
   - catering
   subcategories:
   - catering-services-staff
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Pest control products & services
   slug: pest-control-products-and-services
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - health-safety-security
+  ways_to_buy: framework
 - title: Photographic equipment and consumables
   slug: photographic-equipment-and-consumables
   category_slugs:
@@ -1010,9 +1119,17 @@ solutions:
   subcategories:
   - laptops-av-classroom-tech
   - cameras-av-equipment
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Playground, fitness and sports facilities and leisure facilities
   slug: playground-fitness-and-sports-facilities-and-leisure-facilities
+  primary_category: classroom-curriculum-office-supplies
+  categories:
+  - classroom-curriculum-office-supplies
+  - buildings-maintenance
+  subcategories:
+  - sports-equipment
+  - sports-grounds-facilities-equipment
+  ways_to_buy: framework
 - title: Print books
   slug: print-books
   category_slugs:
@@ -1024,7 +1141,7 @@ solutions:
   - classroom-curriculum-office-supplies
   subcategories:
   - books
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Print Marketplace 2
   slug: print-marketplace-2
   category_slugs:
@@ -1036,7 +1153,7 @@ solutions:
   - classroom-curriculum-office-supplies
   subcategories:
   - printed-materials
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Promotional merchandise
   slug: promotional-merchandise
   category_slugs:
@@ -1048,7 +1165,7 @@ solutions:
   - classroom-curriculum-office-supplies
   subcategories:
   - printed-materials
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Property refurbishment, maintenance and management
   slug: property-refurbishment-maintenance-and-management
   category_slugs:
@@ -1056,7 +1173,7 @@ solutions:
   primary_category: buildings-maintenance
   categories:
   - buildings-maintenance
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Public sector legal services
   slug: public-sector-legal-services
   category_slugs:
@@ -1068,11 +1185,23 @@ solutions:
   - finance-legal-insurance
   subcategories:
   - legal-services
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Records information management
   slug: records-information-management
+  primary_category: ict-business-systems
+  categories:
+  - ict-business-systems
+  subcategories:
+  - ict-software-systems
+  - cyber-security
 - title: Risk protection arrangement – alternative to commercial insurance
   slug: rpa
+  primary_category: finance-legal-insurance
+  categories:
+  - finance-legal-insurance
+  subcategories:
+  - insurance
+  ways_to_buy: dfe_deal
 - title: Sandwiches and food to go
   slug: sandwiches-and-food-to-go
   category_slugs:
@@ -1084,7 +1213,7 @@ solutions:
   - catering
   subcategories:
   - food
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Sandwiches, ready meals, meal concepts and food to go
   slug: sandwiches-ready-meals-meal-concepts-and-food-to-go
   category_slugs:
@@ -1096,7 +1225,7 @@ solutions:
   - catering
   subcategories:
   - food
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Sensory equipment and associated services
   slug: sensory-equipment-and-associated-services
   category_slugs:
@@ -1108,7 +1237,7 @@ solutions:
   - classroom-curriculum-office-supplies
   subcategories:
   - send-products
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Signs and associated services
   slug: signs-and-associated-services
   category_slugs:
@@ -1124,7 +1253,7 @@ solutions:
   - buildings
   - health-safety-security
   - grounds-estates-maintenance
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Software application solutions - dynamic purchasing system (DPS)
   slug: software-application-solutions-dps
   category_slugs:
@@ -1136,7 +1265,7 @@ solutions:
   - ict-business-systems
   subcategories:
   - ict-software-systems
-  ways_to_buy: DPS
+  ways_to_buy: dps
 - title: Software licenses and associated services for academies and schools
   slug: software-licenses
   category_slugs:
@@ -1150,7 +1279,7 @@ solutions:
   subcategories:
   - ict-software-systems
   - cyber-security
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Software products & associated services
   slug: software-products-and-associated-services
   category_slugs:
@@ -1162,7 +1291,7 @@ solutions:
   - ict-business-systems
   subcategories:
   - ict-software-systems
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Solar photovoltaic
   slug: solar-photovoltaic
 - title: Specialist professional services
@@ -1176,7 +1305,7 @@ solutions:
   - hr-people-professional-services
   subcategories:
   - professional-services
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Sports facilities installation, refurbishment and maintenance
   slug: sports-facilities-installation-refurbishment-and-maintenance
   category_slugs:
@@ -1190,7 +1319,7 @@ solutions:
   subcategories:
   - sports-grounds-facilities-equipment
   - buildings
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Staff absence protection and reimbursement services 2025
   slug: staff-absence-protection-and-reimbursement-services
   category_slugs:
@@ -1206,7 +1335,7 @@ solutions:
   subcategories:
   - hr-recruitment
   - insurance
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Stationery, paper and education supplies
   slug: stationery-paper-and-education-supplies
   category_slugs:
@@ -1218,7 +1347,7 @@ solutions:
   - classroom-curriculum-office-supplies
   subcategories:
   - classroom-office-supplies
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Supply and installation of Solar PV
   slug: supply-and-installation-of-solar-pv
 - title: Supply of mains gas
@@ -1232,7 +1361,7 @@ solutions:
   - energy-utilities
   subcategories:
   - gas
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Supply Teachers and Education Recruitment
   slug: supply-teachers
   category_slugs:
@@ -1244,7 +1373,7 @@ solutions:
   - hr-people-professional-services
   subcategories:
   - hr-recruitment
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Sustainable hardware, asset recycling and data destruction
   slug: sustainable-hardware-asset-recycling-and-data-destruction
   category_slugs:
@@ -1256,7 +1385,7 @@ solutions:
   - ict-business-systems
   subcategories:
   - laptops-printers-ict-hardware
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Technology products and associated services 2
   slug: technology-products-and-associated-services-2
   category_slugs:
@@ -1272,7 +1401,7 @@ solutions:
   - ict-software-systems
   - laptops-printers-ict-hardware
   - cloud-services-ai-data-storage
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Temporary and semi-permanent buildings
   slug: temporary-and-semi-permanent-buildings
   category_slugs:
@@ -1284,7 +1413,7 @@ solutions:
   - buildings-maintenance
   subcategories:
   - buildings
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Total cleaning service solutions
   slug: total-cleaning-service-solutions
   category_slugs:
@@ -1296,7 +1425,7 @@ solutions:
   - buildings-maintenance
   subcategories:
   - cleaning-services-equipment
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Total facilities management
   slug: total-facilities-management
   category_slugs:
@@ -1308,7 +1437,7 @@ solutions:
   - buildings-maintenance
   subcategories:
   - facilities-management
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Training, learning and development managed services
   slug: training-learning-and-development-managed-services
 - title: Student transport DPS
@@ -1318,7 +1447,7 @@ solutions:
   primary_category: transport
   categories:
   - transport
-  ways_to_buy: DPS
+  ways_to_buy: dps
 - title: Utilities supplies and services
   slug: utilities-supply-services
   category_slugs:
@@ -1336,9 +1465,12 @@ solutions:
   - energy-audits-savings-debt-resolution
   - renewables-energysaving-products
   - professional-services
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Vehicle daily rental
   slug: vehicle-daily-rental
+  primary_category: transport
+  categories:
+  - transport
 - title: Vehicle purchase
   slug: vehicle-purchase
   category_slugs:
@@ -1346,7 +1478,7 @@ solutions:
   primary_category: transport
   categories:
   - transport
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Waste management services
   slug: waste-management-services
   category_slugs:
@@ -1358,11 +1490,26 @@ solutions:
   - buildings-maintenance
   subcategories:
   - buildings
-  ways_to_buy: Framework
+  ways_to_buy: framework
 - title: Water, wastewater and ancillary services
   slug: water-wastewater-and-ancillary-services
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  - buildings-maintenance
+  subcategories:
+  - water
+  - buildings
+  ways_to_buy: framework
 - title: Wheelie bin containers and kerbside recycling containers
   slug: wheelie-bin-containers-and-kerbside-recycling-containers
+  primary_category: buildings-maintenance
+  categories:
+  - buildings-maintenance
+  subcategories:
+  - cleaning-services-equipment
+  - grounds-estates-maintenance
+  ways_to_buy: framework
 - title: YPO procurement product catalogue
   slug: ypo-procurement
   category_slugs:
@@ -1386,4 +1533,4 @@ solutions:
   - sports-equipment
   - send-products
   - laptops-av-classroom-tech
-  ways_to_buy: Catalogue
+  ways_to_buy: catalogue
