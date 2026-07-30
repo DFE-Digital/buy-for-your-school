@@ -19,6 +19,7 @@ namespace :solutions do
     solutions_by_slug = solutions.index_by { |solution| solution["slug"] }
 
     updated = 0
+    ignored = 0
     unmatched_rows = []
     unresolved_categories = []
     unresolved_subcategories = []
@@ -30,6 +31,11 @@ namespace :solutions do
       title = row["Framework name or content name"].to_s
       slug = row["Framework slug"].to_s
       break if title.blank? && row.to_h.values.compact.map(&:to_s).all?(&:blank?)
+
+      if slug.casecmp("ignore").zero?
+        ignored += 1
+        next
+      end
 
       buying_option = lookup_buying_option(row["Type of buying option"], invalid_buying_option_rows, row_number)
 
@@ -65,6 +71,7 @@ namespace :solutions do
     File.write(solutions_path, solutions_file.to_yaml)
 
     puts "Updated #{updated} solutions in #{solutions_path}"
+    puts "Ignored rows: #{ignored}"
     puts "Unmatched solution rows: #{unmatched_rows.size}"
     unmatched_rows.each do |row|
       identifier = row[:slug].present? ? "#{row[:title]} (slug: #{row[:slug]})" : row[:title]

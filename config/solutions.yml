@@ -80,6 +80,7 @@ solutions:
   - classroom-curriculum-office-supplies
   subcategories:
   - books
+  ways_to_buy: framework
 - title: Building cleaning
   slug: building-cleaning
   category_slugs:
@@ -304,6 +305,7 @@ solutions:
   subcategories:
   - professional-services
   - language-services
+  ways_to_buy: framework
 - title: Education services
   slug: education-services
   category_slugs:
@@ -856,6 +858,7 @@ solutions:
   - ict-business-systems
   subcategories:
   - laptops-printers-ict-hardware
+  ways_to_buy: framework
 - title: Language services
   slug: language-services
   category_slugs:
@@ -929,6 +932,7 @@ solutions:
   subcategories:
   - books
   - ict-software-systems
+  ways_to_buy: framework
 - title: Liquid fuels
   slug: liquid-fuel-espo
   category_slugs:
@@ -1004,6 +1008,7 @@ solutions:
   - ict-business-systems
   subcategories:
   - laptops-printers-ict-hardware
+  ways_to_buy: framework
 - title: Musical instruments, equipment and technology
   slug: musical-instruments-equipment-and-technology
   primary_category: classroom-curriculum-office-supplies
@@ -1012,6 +1017,7 @@ solutions:
   subcategories:
   - arts-crafts-music
   - laptops-av-classroom-tech
+  ways_to_buy: dfe_deal
 - title: Network connectivity and telecommunication solutions
   slug: network-connectivity-and-telecommunication-solutions
   category_slugs:
@@ -1031,6 +1037,7 @@ solutions:
   - hr-people-professional-services
   subcategories:
   - training-development
+  ways_to_buy: dfe_deal
 - title: Occupational health services
   slug: occupational-health-services
   category_slugs:
@@ -1196,6 +1203,7 @@ solutions:
   subcategories:
   - ict-software-systems
   - cyber-security
+  ways_to_buy: framework
 - title: Risk protection arrangement – alternative to commercial insurance
   slug: rpa
   primary_category: finance-legal-insurance
@@ -1296,6 +1304,12 @@ solutions:
   ways_to_buy: framework
 - title: Solar photovoltaic
   slug: solar-photovoltaic
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  subcategories:
+  - renewables-energysaving-products
+  ways_to_buy: framework
 - title: Specialist professional services
   slug: specialist-professional-services
   category_slugs:
@@ -1352,6 +1366,12 @@ solutions:
   ways_to_buy: framework
 - title: Supply and installation of Solar PV
   slug: supply-and-installation-of-solar-pv
+  primary_category: energy-utilities
+  categories:
+  - energy-utilities
+  subcategories:
+  - renewables-energysaving-products
+  ways_to_buy: framework
 - title: Supply of mains gas
   slug: supply-of-mains-gas
   category_slugs:
@@ -1442,6 +1462,12 @@ solutions:
   ways_to_buy: framework
 - title: Training, learning and development managed services
   slug: training-learning-and-development-managed-services
+  primary_category: hr-people-professional-services
+  categories:
+  - hr-people-professional-services
+  subcategories:
+  - training-development
+  ways_to_buy: framework
 - title: Student transport DPS
   slug: transport
   category_slugs:
@@ -1473,6 +1499,7 @@ solutions:
   primary_category: transport
   categories:
   - transport
+  ways_to_buy: framework
 - title: Vehicle purchase
   slug: vehicle-purchase
   category_slugs:
