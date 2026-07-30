@@ -14,8 +14,8 @@
     <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0 govuk-!-margin-bottom-4">
       <div class="govuk-grid-row gov-uk-!-padding-left-0">
         <div class="govuk-grid-column-one-third">
-          <% if @category.banner&.image&.url.present? %>
-            <%= image_tag @category.banner&.image&.url, alt: @category.banner&.title, width: "100%", height: "auto" %>
+          <% if @category.banner.image&.url.present? %>
+            <%= image_tag @category.banner.image.url, alt: @category.banner.title, width: "100%", height: "auto" %>
           <% end %>
         </div>
 
@@ -43,11 +43,11 @@
       <details class="govuk-details">
         <summary class="govuk-details__summary">
           <span class="govuk-details__summary-text">
-            <b><%= @get_expert_help&.title %></b>
+            <b><%= @get_expert_help.title %></b>
           </span>
         </summary>
         <div class="govuk-details__text">
-          <%= render_markdown_to_html(@get_expert_help&.description) %>
+          <%= render_markdown_to_html(@get_expert_help.description) %>
         </div>
       </details>
     </div>
