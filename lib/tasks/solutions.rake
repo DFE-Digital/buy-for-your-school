@@ -72,10 +72,12 @@ namespace :solutions do
 
     puts "Updated #{updated} solutions in #{solutions_path}"
     puts "Ignored rows: #{ignored}"
-    puts "Unmatched solution rows: #{unmatched_rows.size}"
-    unmatched_rows.each do |row|
-      identifier = row[:slug].present? ? "#{row[:title]} (slug: #{row[:slug]})" : row[:title]
-      puts "  - line #{row[:row]}: #{identifier}"
+    if unmatched_rows.any?
+      puts "Unmatched solution rows: #{unmatched_rows.size}"
+      unmatched_rows.each do |row|
+        identifier = row[:slug].present? ? "#{row[:title]} (slug: #{row[:slug]})" : row[:title]
+        puts "  - line #{row[:row]}: #{identifier}"
+      end
     end
 
     if unresolved_categories.any?
@@ -94,27 +96,33 @@ namespace :solutions do
     end
 
     unmapped_buying_options = solutions.select { |solution| solution["ways_to_buy"].blank? }
-    puts "Solutions with no mapped ways_to_buy: #{unmapped_buying_options.count}"
-    unmapped_buying_options.each do |solution|
-      puts "  - #{solution['title']} (#{solution['slug']})"
+    if unmapped_buying_options.any?
+      puts "Solutions with no mapped ways_to_buy: #{unmapped_buying_options.count}"
+      unmapped_buying_options.each do |solution|
+        puts "  - #{solution['title']} (#{solution['slug']})"
+      end
     end
 
     solutions_with_no_mapped_categories = solutions.select do |solution|
       solution["primary_category"].blank? || Array(solution["categories"]).blank?
     end
 
-    puts "Solutions with no mapped categories: #{solutions_with_no_mapped_categories.count}"
-    solutions_with_no_mapped_categories.each do |solution|
-      puts "  - #{solution['title']} (#{solution['slug']})"
+    if solutions_with_no_mapped_categories.any?
+      puts "Solutions with no mapped categories: #{solutions_with_no_mapped_categories.count}"
+      solutions_with_no_mapped_categories.each do |solution|
+        puts "  - #{solution['title']} (#{solution['slug']})"
+      end
     end
 
     solutions_with_no_mapped_subcategories = solutions.select do |solution|
       Array(solution["subcategories"]).blank?
     end
 
-    puts "Solutions with no mapped subcategories: #{solutions_with_no_mapped_subcategories.count}"
-    solutions_with_no_mapped_subcategories.each do |solution|
-      puts "  - #{solution['title']} (#{solution['slug']})"
+    if solutions_with_no_mapped_subcategories.any?
+      puts "Solutions with no mapped subcategories: #{solutions_with_no_mapped_subcategories.count}"
+      solutions_with_no_mapped_subcategories.each do |solution|
+        puts "  - #{solution['title']} (#{solution['slug']})"
+      end
     end
   end
 end
