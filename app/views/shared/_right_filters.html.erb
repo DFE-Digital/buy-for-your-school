@@ -1,4 +1,4 @@
-<% unless subcategories.empty? %>
+<% if subcategories.present? || ways_to_buy.present? %>
   <div class="moj-filter" data-module="moj-filter">
 
     <%# Header %>
@@ -10,7 +10,6 @@
     </div>
 
     <div class="moj-filter__content">
-
       <%# Selected filters section — only shown when filters are active %>
       <% selected_subcategory_slugs = params.fetch(:subcategory_slugs, []).compact_blank %>
       <% selected_ways_to_buy_slugs = params.fetch(:ways_to_buy_slugs, []).compact_blank %>
@@ -84,8 +83,9 @@
                 </details>
               </fieldset>
             </div>
+            <hr />
           <% end %>
-          <hr />
+
           <% if ways_to_buy.present? && ways_to_buy.count > 1 %>
             <div class="govuk-form-group govuk-!-margin-bottom-0">
               <fieldset class="govuk-fieldset">
