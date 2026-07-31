@@ -2,6 +2,10 @@ $govuk-assets-path: "/assets/";
 $govuk-images-path: "/assets/images/";
 $govuk-font-family: 'Inter', sans-serif;
 $govuk-new-organisation-colours: true;
+$govuk-suppressed-warnings: (
+  "organisation-colours",
+  "govuk-typography-scale-14"
+);
 
 @import "govuk-frontend/dist/govuk/index";
 @import "dfe-frontend/dist/dfefrontend";
