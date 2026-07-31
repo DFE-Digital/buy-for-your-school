@@ -1,0 +1,218 @@
+// Copied with minor amendments from https://github.com/ministryofjustice/moj-frontend/blob/v8.0.1/src/moj/components/filter/_filter.scss
+
+/* ==========================================================================
+   #FILTER
+   ========================================================================== */
+
+.moj-filter {
+  background-color: govuk-colour("white");
+  box-shadow: inset 0 0 0 1px govuk-colour("mid-grey");
+
+  &:focus {
+    box-shadow:
+      0 -2px $govuk-focus-colour,
+      0 4px $govuk-focus-text-colour;
+  }
+}
+
+.moj-filter__header {
+  padding: govuk-spacing(2) govuk-spacing(4);
+  background-color: govuk-colour("mid-grey");
+  font-size: 0; // Hide whitespace between elements
+  text-align: justify; // Trick to remove the need for floats
+
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+  }
+
+  [class^="govuk-heading-"] {
+    margin-bottom: 0;
+  }
+}
+
+// JavaScript
+.moj-filter__legend {
+  width: 100%;
+  overflow: visible; // Override govuk to allow for focus style to be seen
+
+  button {
+    appearance: none;
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    border-radius: 0;
+    background-color: transparent;
+    text-align: left;
+    cursor: pointer; // Adam would not approve
+    -webkit-appearance: none;
+    @include govuk-font($size: 24, $weight: bold);
+
+    // Fix unwanted button padding in Firefox
+    &::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 16px;
+      height: 16px;
+      margin-top: -8px; // Half the height of the icon
+      background-image: url(moj/icon-toggle-plus-minus.svg);
+      background-position: 0 0;
+    }
+
+    &[aria-expanded="true"]::after {
+      background-position: 16px 16px;
+    }
+  }
+}
+
+.moj-filter__header-title,
+.moj-filter__header-action {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.moj-filter__close {
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  // @include govuk-focusable;
+  color: govuk-colour("black");
+  background-color: transparent;
+  cursor: pointer; // I know Adam won’t like this
+  -webkit-appearance: none;
+  appearance: none;
+  @include govuk-font(19);
+
+  &:focus {
+    outline: none;
+    color: $govuk-focus-text-colour;
+    background-color: $govuk-focus-colour;
+    box-shadow:
+      0 -2px $govuk-focus-colour,
+      0 4px $govuk-focus-text-colour;
+  }
+
+  // Fix unwanted button padding in Firefox
+  &::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+  }
+
+  &::before {
+    content: "";
+    display: inline-block;
+    position: relative;
+    top: -1px; // Alignment tweak
+    width: 14px;
+    height: 14px;
+    margin-right: govuk-spacing(1);
+    background-image: url(moj/icon-close-cross-black.svg);
+    vertical-align: middle;
+  }
+}
+
+.moj-filter__selected {
+  padding: govuk-spacing(4);
+  background-color: govuk-colour("light-grey");
+  box-shadow: inset 0 0 0 1px govuk-colour("mid-grey");
+
+  ul:last-of-type {
+    margin-bottom: 0; // IE9 +
+  }
+}
+
+.moj-filter__selected-heading {
+  font-size: 0; // Hide whitespace between elements
+  text-align: justify; // Trick to remove the need for floats
+
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+  }
+}
+
+.moj-filter__heading-title,
+.moj-filter__heading-action {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+  @include govuk-font(16);
+}
+
+.moj-filter-tags {
+  margin-bottom: govuk-spacing(4); // Needs to adjust to 15px on mobile
+  padding-left: 0;
+  font-size: 0;
+
+  li {
+    display: inline-block;
+    margin-right: govuk-spacing(2);
+  }
+}
+
+.moj-filter__tag {
+  display: inline-block;
+  margin-top: govuk-spacing(1);
+  padding: govuk-spacing(1);
+  border: 1px solid govuk-colour("black");
+  color: govuk-colour("black");
+  background-color: govuk-colour("white");
+  text-decoration: none;
+  @include govuk-font(16);
+
+  &:link,
+  &:visited {
+    color: govuk-colour("black");
+  }
+
+  &:focus {
+    color: $govuk-focus-text-colour;
+    background-color: $govuk-focus-colour;
+  }
+
+  &:hover {
+    color: govuk-colour("white");
+    background-color: govuk-colour("black");
+  }
+
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: govuk-spacing(1);
+    background-image: url(moj/icon-tag-remove-cross.svg);
+    font-weight: bold;
+    vertical-align: middle;
+  }
+
+  &:hover::after {
+    background-image: url(moj/icon-tag-remove-cross-white.svg);
+  }
+}
+
+.moj-filter__options {
+  margin-top: -1px;
+  padding: govuk-spacing(4);
+  box-shadow: inset 0 0 0 1px govuk-colour("mid-grey");
+
+  div:last-of-type {
+    margin-bottom: 0; // IE9 +
+  }
+}

@@ -9,7 +9,6 @@ $govuk-suppressed-warnings: (
 
 @import "govuk-frontend/dist/govuk/index";
 @import "dfe-frontend/dist/dfefrontend";
-@import "@ministryofjustice/frontend/moj/all";
 @import url('https://rsms.me/inter/inter.css');
 
 .govuk-table__row.borderless .govuk-table__cell,

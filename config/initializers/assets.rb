@@ -12,7 +12,6 @@ Rails.application.config.assets.paths << Rails.root.join("app/javascript")
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand")
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand/images")
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/fonts")
-Rails.application.config.assets.paths << Rails.root.join("node_modules/@ministryofjustice/frontend/moj/assets/images")
 Rails.application.config.assets.paths << Rails.root.join("vendor/assets/images")
 
 ### PLEASE NOTE - DUE TO THE WAY govuk-frontend WORKS THE PRODUCTION SERVER SERVES NON DIGESTED
