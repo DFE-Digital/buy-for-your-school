@@ -13,11 +13,12 @@ New fields should be added with input from a developer. Significant changes shou
 The categories used by the public FABS pages can be created or updated in Contentful with the following rake tasks:
 
 ```sh
+bundle exec rake contentful:create_ways_to_buy
 bundle exec rake contentful:create_subcategories
 bundle exec rake contentful:create_categories
 ```
 
-Run `contentful:create_subcategories` first when you need to create or refresh the subcategory entries. After that, `contentful:create_categories` can be rerun on its own to map categories to the correct subcategories.
+Run `contentful:create_ways_to_buy` when you need to create or refresh the fixed ways to buy entries used by solutions. Run `contentful:create_subcategories` first when you need to create or refresh the subcategory entries. After that, `contentful:create_categories` can be rerun on its own to map categories to the correct subcategories.
 
 Both tasks require:
 
@@ -26,6 +27,27 @@ Both tasks require:
 - `CONTENTFUL_ENVIRONMENT` if you are not using the default `master`
 
 Note that `CONTENTFUL_CMA_TOKEN` is intentionally not available during deployment to Azure so will have to be manually defined within a terminal session after connecting to Azure environment before running these rake tasks.
+
+### Creating ways to buy entries
+
+The fixed ways to buy entries can be created or updated in Contentful with:
+
+```sh
+bundle exec rake contentful:create_ways_to_buy
+```
+
+This task creates or updates the following title and slug pairs:
+
+- `Catalogue` → `catalogue`
+- `DfE deal` → `dfe_deal`
+- `DPS` → `dps`
+- `Framework` → `framework`
+
+This task also requires:
+
+- `CONTENTFUL_CMA_TOKEN`
+- `CONTENTFUL_SPACE_ID`
+- `CONTENTFUL_ENVIRONMENT` if you are not using the default `master`
 
 ### Exporting solutions to `config/solutions.yml`
 

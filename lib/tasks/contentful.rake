@@ -165,6 +165,42 @@ namespace :contentful do
     puts "Subcategory creation complete."
   end
 
+  desc "Create or update ways to buy entries in Contentful"
+  task create_ways_to_buy: :environment do
+    environment = contentful_environment
+    ways_to_buy_type = environment.content_types.find("ways_to_buy")
+
+    buying_options = {
+      "Catalogue" => "catalogue",
+      "DfE deal" => "dfe_deal",
+      "DPS" => "dps",
+      "Framework" => "framework",
+    }
+
+    buying_options.each do |title, slug|
+      entry = find_entry_by_slug(environment, "ways_to_buy", slug)
+
+      if entry
+        puts "Updating ways to buy #{title} (#{slug})"
+        entry.update(
+          title:,
+          slug:,
+        )
+      else
+        puts "Creating ways to buy #{title} (#{slug})"
+        entry = ways_to_buy_type.entries.create(
+          id: slug,
+          title:,
+          slug:,
+        )
+      end
+
+      entry.publish
+    end
+
+    puts "Ways to buy creation complete."
+  end
+
   desc "Create or update categories from config/categories.yml in Contentful"
   task create_categories: :environment do
     data = categories_config
