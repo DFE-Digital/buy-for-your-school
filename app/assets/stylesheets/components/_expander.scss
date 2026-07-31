@@ -3,7 +3,7 @@
   position: relative;
   padding: govuk-spacing(1);
   border: 1px solid $govuk-border-colour;
-  background-color: govuk-colour("light-grey", $legacy: "grey-4");
+  background-color: govuk-colour("light-grey");
 }
 
 .expander[disabled], .expander:disabled {
