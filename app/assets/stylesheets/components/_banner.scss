@@ -84,6 +84,37 @@
   }
 }
 
+.promo-banner-container {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.promo-banner-image {
+  flex: 1 1 33.333%;
+  min-width: 0;
+  width: 100%;
+  max-width: 33.333%;
+  object-fit: cover;
+}
+
 .promo-banner {
-  background-color: #f3f2f1
+  background-color: #f3f2f1;
+  flex: 2 1 66.667%;
+  min-width: 0;
+  padding: govuk-spacing(2) govuk-spacing(4);
+}
+
+@media (max-width: 640px) {
+  .promo-banner-container {
+    display: block;
+    margin-bottom: govuk-spacing(6);
+  }
+
+  .promo-banner-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: govuk-spacing(2);
+  }
 }
