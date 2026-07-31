@@ -30,8 +30,6 @@ Rails.application.config.assets.precompile += [
   "govuk-icon-512.png",
   "govuk-icon-mask.svg",
   "govuk-crest.svg",
-  "icon-tag-remove-cross.svg",
-  "icon-tag-remove-cross-white.svg",
 ]
 
 # Add Yarn node_modules folder to the asset load path.
