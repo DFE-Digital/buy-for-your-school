@@ -1,5 +1,8 @@
 class CategoriesController < Fabs::ApplicationController
   before_action :disable_search_in_header, only: :index
+  include Redirectable
+
+  before_action :redirect_legacy_slugs, only: :show
 
   DUMMY_SUBCATEGORY_SLUG = "not-applicable".freeze
 

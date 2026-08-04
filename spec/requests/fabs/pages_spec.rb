@@ -57,6 +57,7 @@ RSpec.describe "FABS pages", type: :request do
   end
 
   it "renders a FABS page with title, related content, and nested breadcrumbs" do
+    allow(RedirectMatcher).to receive(:call).with("/unit-trust-bank").and_return(nil)
     allow(FABS::Page).to receive(:find_by_slug!).with("unit-trust-bank").and_return(FABS::Page.new(page_entry))
 
     get page_path("unit-trust-bank")
@@ -85,6 +86,7 @@ RSpec.describe "FABS pages", type: :request do
         related_content: [],
       },
     )
+    allow(RedirectMatcher).to receive(:call).with("/dynamic-purchasing-systems").and_return(nil)
     allow(FABS::Page).to receive(:find_by_slug!).with("dynamic-purchasing-systems").and_return(FABS::Page.new(no_related_content_entry))
 
     get page_path("dynamic-purchasing-systems")
@@ -93,12 +95,29 @@ RSpec.describe "FABS pages", type: :request do
     expect(response.body).not_to include("Related reading")
   end
 
-  it "redirects to /404 when the FABS page does not exist" do
+  it "returns not found when the FABS page does not exist" do
+    allow(RedirectMatcher).to receive(:call).with("/missing-page").and_return(nil)
     allow(FABS::Page).to receive(:find_by_slug!).with("missing-page")
       .and_raise(ContentfulRecordNotFoundError.new("Page not found", slug: "missing-page"))
 
     get page_path("missing-page")
 
-    expect(response).to redirect_to("/404")
+    expect(response).to have_http_status(:not_found)
+  end
+
+  it "redirects legacy page slugs before Contentful page lookup" do
+    match = RedirectMatcher::Result.new(
+      redirect: instance_double(Redirect),
+      destination_path: "/about-our-service",
+      status: :moved_permanently,
+    )
+
+    allow(RedirectMatcher).to receive(:call).with("/about-this-service").and_return(match)
+    expect(FABS::Page).not_to receive(:find_by_slug!)
+
+    get page_path("about-this-service")
+
+    expect(response).to redirect_to("/about-our-service")
+    expect(response).to have_http_status(:moved_permanently)
   end
 end
