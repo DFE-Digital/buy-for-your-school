@@ -640,7 +640,6 @@ Rails.application.routes.draw do
   resources :offers, only: %i[index show], param: :slug
 
   resources :contentful_webhooks, only: %i[create]
-  post "delete_contentful_entry", to: "contentful_webhooks#destroy"
 
   get "/search", to: "search#index"
   post "/events", to: "events#create"

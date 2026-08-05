@@ -14,6 +14,10 @@ class RedirectMatcher
     end
   end
 
+  def self.invalidate_cache!
+    Rails.cache.delete(CACHE_KEY)
+  end
+
   def initialize(path, redirects: self.class.cached_redirects)
     @path = path
     @redirects = redirects
