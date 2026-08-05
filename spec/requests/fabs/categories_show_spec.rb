@@ -210,4 +210,17 @@ RSpec.describe "FABS category pages", type: :request do
     expect(response.body).to include("Get expert help")
     expect(response.body).to include("Start your request")
   end
+
+  describe "N/A subcategory" do
+    let(:na_subcategory) { OpenStruct.new(slug: "not-applicable", title: "N/A") }
+    let(:subcategories) { [hardware_subcategory, software_subcategory, cyber_subcategory, na_subcategory] }
+
+    it "does not display the N/A subcategory in the filter" do
+      get category_path("it")
+
+      expect(response).to be_successful
+      expect(response.body).not_to include("N/A")
+      expect(response.body).to include("Software")
+    end
+  end
 end

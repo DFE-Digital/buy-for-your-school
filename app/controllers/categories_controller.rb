@@ -1,6 +1,8 @@
 class CategoriesController < Fabs::ApplicationController
   before_action :disable_search_in_header, only: :index
 
+  DUMMY_SUBCATEGORY_SLUG = "not-applicable".freeze
+
   def index
     @categories = FABS::Category.all
     @featured_offers = Offer.featured_offers.select { |offer| offer.sort_order.present? }.first(3)
@@ -11,7 +13,7 @@ class CategoriesController < Fabs::ApplicationController
   def show
     add_breadcrumb_on_rails :home_breadcrumb_name, :root_path
 
-    @subcategories = category.subcategories
+    @subcategories = category.subcategories.reject { _1.slug.downcase == DUMMY_SUBCATEGORY_SLUG }
     @selected_subcategories = @subcategories.select { |subcategory| params[:subcategory_slugs]&.include?(subcategory.slug) }
     @solutions = @category.filtered_solutions(subcategory_slugs: params[:subcategory_slugs]&.compact_blank, ways_to_buy_slugs: params[:ways_to_buy_slugs]&.compact_blank)
 
