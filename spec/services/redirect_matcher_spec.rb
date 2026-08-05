@@ -2,6 +2,10 @@ require "rails_helper"
 
 RSpec.describe RedirectMatcher do
   describe ".cached_redirects" do
+    before do
+      allow(described_class).to receive(:cached_redirects).and_call_original
+    end
+
     it "loads redirects through Rails cache" do
       redirects = [instance_double(Redirect)]
 

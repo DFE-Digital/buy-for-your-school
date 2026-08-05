@@ -75,11 +75,16 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
   config.before do
+    # Enable feature flags that are common across all tests
     Flipper.enable(:customer_satisfaction_survey)
     Flipper.enable(:sc_tasklist_case)
     Flipper.enable(:usability_surveys)
     Flipper.enable(:auto_email_vat_dd)
+
+    # Avoid making Contentful API call to fetch redirects
+    allow(RedirectMatcher).to receive(:cached_redirects).and_return([])
   end
 
   config.before(:each, type: :feature) do
