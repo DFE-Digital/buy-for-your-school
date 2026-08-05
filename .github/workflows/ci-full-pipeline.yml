@@ -15,6 +15,9 @@ jobs:
   build_test:
     name: Build (Test)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     outputs:
       docker_image: ${{ steps.build.outputs.docker_image }}
 
@@ -34,6 +37,9 @@ jobs:
   build_release:
     name: Build (Release)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     outputs:
       docker_image: ${{ steps.build.outputs.docker_image }}
 
@@ -52,7 +58,17 @@ jobs:
     name: Checks - Brakeman
     needs: build_test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
     steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_USERNAME || github.actor }}
+          password: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_PAT || secrets.GITHUB_TOKEN }}
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -62,7 +78,17 @@ jobs:
     name: Checks - Rubocop
     needs: build_test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
     steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_USERNAME || github.actor }}
+          password: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_PAT || secrets.GITHUB_TOKEN }}
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -95,6 +121,9 @@ jobs:
     name: Checks - Rspec
     needs: build_test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
 
     strategy:
       fail-fast: false
@@ -121,6 +150,13 @@ jobs:
           - 9222:9222
 
     steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_USERNAME || github.actor }}
+          password: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_PAT || secrets.GITHUB_TOKEN }}
+
       - name: Run Rspec tests
         run: |
           docker run \
@@ -175,6 +211,9 @@ jobs:
     name: Checks - Rspec (Quarantined tests)
     needs: build_test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
 
     services:
       postgres:
@@ -195,6 +234,13 @@ jobs:
           - 9222:9222
 
     steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_USERNAME || github.actor }}
+          password: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_PAT || secrets.GITHUB_TOKEN }}
+
       - name: Run Quarantined Rspec tests
         continue-on-error: true
         run: |
@@ -248,8 +294,18 @@ jobs:
     name: Checks - Produce test coverage report
     needs: [build_test, rspec, rspec_quarantine]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
 
     steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_USERNAME || github.actor }}
+          password: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_PAT || secrets.GITHUB_TOKEN }}
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Download all test coverage
@@ -316,6 +372,9 @@ jobs:
     name: Checks - Is enums export up to date?
     needs: build_test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
     if: ${{ github.event_name == 'pull_request' }}
 
     services:
@@ -333,6 +392,13 @@ jobs:
           - 6379:6379
 
     steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_USERNAME || github.actor }}
+          password: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_PAT || secrets.GITHUB_TOKEN }}
+
       - name: Run check
         run: |
           docker run \
