@@ -1,0 +1,50 @@
+redirects:
+  - title: About this service
+    source_path: /about-this-service
+    destination_path: /about-our-service
+    redirect_type: permanent
+
+  - title: Legacy category Banking and finance
+    source_path: /categories/banking-finance/*
+    destination_path: /categories/finance-legal-insurance/*
+    redirect_type: permanent
+
+  - title: Legacy category Catalogues
+    source_path: /categories/catalogues/*
+    destination_path: /
+    redirect_type: permanent
+
+  - title: Legacy category Energy
+    source_path: /categories/energy/*
+    destination_path: /categories/energy-utilities/*
+    redirect_type: permanent
+
+  - title: Legacy category Facilities management and estates
+    source_path: /categories/facilities-management-estates/*
+    destination_path: /categories/buildings-maintenance/*
+    redirect_type: permanent
+
+  - title: Legacy category IT
+    source_path: /categories/it/*
+    destination_path: /categories/ict-business-systems/*
+    redirect_type: permanent
+
+  - title: Legacy category Legal
+    source_path: /categories/legal/*
+    destination_path: /categories/finance-legal-insurance/*
+    redirect_type: permanent
+
+  - title: Legacy category Office and education supplies
+    source_path: /categories/office-education-supplies/*
+    destination_path: /categories/classroom-curriculum-office-supplies/*
+    redirect_type: permanent
+
+  - title: Legacy category Professional services
+    source_path: /categories/consultancy-services/*
+    destination_path: /categories/hr-people-professional-services/*
+    redirect_type: permanent
+
+  - title: Legacy category Recruitment, HR and training
+    source_path: /categories/recruitment-hr-training/*
+    destination_path: /categories/hr-people-professional-services/*
+    redirect_type: permanent

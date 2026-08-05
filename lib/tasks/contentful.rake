@@ -201,6 +201,53 @@ namespace :contentful do
     puts "Ways to buy creation complete."
   end
 
+  desc "Create or update redirects from config/redirects.yml in Contentful"
+  task create_redirects: :environment do
+    data = redirects_config
+    environment = contentful_environment
+    redirect_type = environment.content_types.find("redirect")
+
+    created = 0
+    updated = 0
+
+    data.fetch("redirects", []).each do |redirect|
+      title = redirect.fetch("title")
+      source_path = redirect.fetch("source_path")
+      destination_path = redirect.fetch("destination_path")
+      redirect_kind = redirect.fetch("redirect_type")
+
+      unless %w[permanent temporary].include?(redirect_kind)
+        raise "Invalid redirect_type #{redirect_kind.inspect} for #{title}. Expected 'permanent' or 'temporary'."
+      end
+
+      entry = find_entry_by_field(environment, "redirect", :source_path, source_path)
+
+      if entry
+        puts "Updating redirect #{title} (#{source_path})"
+        entry.update(
+          title:,
+          source_path:,
+          destination_path:,
+          redirect_type: redirect_kind,
+        )
+        updated += 1
+      else
+        puts "Creating redirect #{title} (#{source_path})"
+        entry = redirect_type.entries.create(
+          title:,
+          source_path:,
+          destination_path:,
+          redirect_type: redirect_kind,
+        )
+        created += 1
+      end
+
+      entry.publish
+    end
+
+    puts "Redirect creation complete. Created #{created}, updated #{updated}."
+  end
+
   desc "Create or update categories from config/categories.yml in Contentful"
   task create_categories: :environment do
     data = categories_config
@@ -426,6 +473,10 @@ def categories_config
   YAML.load_file(Rails.root.join("config/categories.yml"))
 end
 
+def redirects_config
+  YAML.load_file(Rails.root.join("config/redirects.yml"))
+end
+
 def contentful_environment
   client = Contentful::Management::Client.new(ENV["CONTENTFUL_CMA_TOKEN"])
   space = client.spaces.find(ENV["CONTENTFUL_SPACE_ID"])
@@ -543,5 +594,9 @@ end
 
 def find_entry_by_slug(environment, content_type, slug)
   environment.entries.all(content_type:, "fields.slug" => slug).first
+end
+
+def find_entry_by_field(environment, content_type, field, value)
+  environment.entries.all(content_type:, "fields.#{field}" => value).first
 end
 # rubocop:enable Rails/SaveBang

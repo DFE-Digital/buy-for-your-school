@@ -49,6 +49,36 @@ This task also requires:
 - `CONTENTFUL_SPACE_ID`
 - `CONTENTFUL_ENVIRONMENT` if you are not using the default `master`
 
+### Creating redirects from `config/redirects.yml`
+
+Redirect entries can be created or updated in Contentful with:
+
+```sh
+bundle exec rake contentful:create_redirects
+```
+
+This task reads `config/redirects.yml` and upserts Redirect entries by `source_path`.
+
+Each redirect entry in the YAML file must define:
+
+- `title`
+- `source_path`
+- `destination_path`
+- `redirect_type`
+
+`redirect_type` must be either:
+
+- `permanent`
+- `temporary`
+
+The initial `config/redirects.yml` file includes the about-page redirect and the current legacy category redirects.
+
+This task also requires:
+
+- `CONTENTFUL_CMA_TOKEN`
+- `CONTENTFUL_SPACE_ID`
+- `CONTENTFUL_ENVIRONMENT` if you are not using the default `master`
+
 ### Exporting solutions to `config/solutions.yml`
 
 You can export the currently published solutions from Contentful into `config/solutions.yml` with:
