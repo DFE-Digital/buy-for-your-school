@@ -644,6 +644,5 @@ Rails.application.routes.draw do
   get "/search", to: "search#index"
   post "/events", to: "events#create"
 
-  # DB-backed pages (BFYS) and Contentful-backed pages (FABS)
-  get ":slug", to: "pages#show", as: :page, format: false, constraints: { slug: /[^.]+/ }
+  get ":slug", to: "pages#show", as: :page, format: false, constraints: { slug: /[^\/.]+/ }
 end
