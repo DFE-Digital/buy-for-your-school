@@ -1,86 +1,123 @@
 # Webhooks
 
-We use Contentful webhooks to notify our application of new and updated content.
+We use Contentful webhooks to notify the application when published content changes.
 
-## Settings
+The application currently exposes a single webhook endpoint:
 
-The following are the minimal required settings for two types of webhook. Both are needed for each application environment to ensure the content there is up-to-date.
+- `POST /contentful_webhooks`
 
-### Cache busting webhook
+This endpoint handles multiple Contentful entry types and actions by inspecting the standard Contentful webhook payload and the `X-Contentful-Topic` header.
 
-This webhook is triggered when any action is performed on a Contentufl entry, e.g. create, save, delete, etc.
-This lets our application know that there has been a content change and the old version of the entry is deleted from the cache.
+## Supported Contentful content types
 
-|              |                                     |
-| ------------ | ----------------------------------- |
-| **Env**:     | `CONTENTFUL_ENVIRONMENT=staging`    |
-| **Filter**:  | `sys.environment.sys.id == staging` |
-| **Headers**: | `Authorization Token xxxxxx`        |
-|              | `Content-Type application/json`     |
+The webhook currently handles these Contentful content types:
 
-**Payload**:
+- `solution`
+- `redirect`
 
-```json
-{
-  "entityId": "{ /payload/sys/id }",
-  "spaceId": "{ /payload/sys/space/sys/id }",
-  "parameters": {
-    "text": "Entity version: { /payload/sys/version }"
-  }
-}
-```
+Any other content type is accepted but ignored.
 
-### Published category webhook
+## Supported Contentful topics
 
-This webhook is triggered when a `Category` entry has been (re)published.
+The webhook currently processes these topics:
 
-|              |                                      |
-| ------------ | ------------------------------------ |
-| **Env**:     | `CONTENTFUL_ENVIRONMENT=staging`     |
-| **Filters**: | `sys.environment.sys.id == staging`  |
-|              | `sys.contentType.sys.id == category` |
-| **Headers**: | `Authorization Token xxxxxx`         |
-|              | `Content-Type application/json`      |
-| **Payload**: | default                              |
+- `ContentManagement.Entry.publish`
+- `ContentManagement.Entry.unpublish`
+- `ContentManagement.Entry.archive`
+- `ContentManagement.Entry.delete`
 
-### Published page webhook
+Any other topic is accepted but ignored.
 
-This webhook is triggered when a `Page` entry has been (re)published.
+## Behaviour
 
-|              |                                     |
-| ------------ | ----------------------------------- |
-| **Env**:     | `CONTENTFUL_ENVIRONMENT=staging`    |
-| **Filters**: | `sys.environment.sys.id == staging` |
-|              | `sys.contentType.sys.id == page`    |
-| **Headers**: | `Authorization Token xxxxxx`        |
-|              | `Content-Type application/json`     |
-| **Payload**: | default                             |
+### Solution entries
 
-### Deleted page webhook
+For `solution` entries:
 
-This webhook is triggered when a `Page` entry has been deleted or unpublished.
+- `ContentManagement.Entry.publish` updates the search index entry for the solution
+- `ContentManagement.Entry.unpublish` removes the solution from the search index
+- `ContentManagement.Entry.archive` removes the solution from the search index
+- `ContentManagement.Entry.delete` removes the solution from the search index
+
+### Redirect entries
+
+For `redirect` entries:
+
+- `ContentManagement.Entry.publish` invalidates the cached redirect list
+- `ContentManagement.Entry.unpublish` invalidates the cached redirect list
+- `ContentManagement.Entry.archive` invalidates the cached redirect list
+- `ContentManagement.Entry.delete` invalidates the cached redirect list
+
+## Contentful webhook configuration
+
+Create one webhook per application environment.
+
+Recommended minimal settings:
 
 |              |                                     |
 | ------------ | ----------------------------------- |
 | **Env**:     | `CONTENTFUL_ENVIRONMENT=staging`    |
 | **Filters**: | `sys.environment.sys.id == staging` |
-|              | `sys.contentType.sys.id == page`    |
-| **Headers**: | `Authorization Token xxxxxx`        |
-|              | `Content-Type application/json`     |
+|              | `sys.type == Entry`                 |
+| **Headers**: | `X-Contentful-Webhook-Signature: xxxxxx` |
+|              | `Content-Type: application/json`    |
 | **Payload**: | default                             |
 
-## Open Tunnel via Ngrok
+Notes:
 
-Working with incoming webhooks (i.e. contentful) can be made easier by using [ngrok](https://ngrok.com/). The easiest way to install ngrok is probably through brew (`$ brew install ngrok`), otherwise docs can be found [here](https://dashboard.ngrok.com/get-started/setup) upon setting up a free account.
+- Use the default Contentful payload. The application reads `sys.id` and `sys.contentType.sys.id` from the request body.
+- The custom header X-Contentful-Webhook-Signature must be added with a secure secret value.
+- The webhook secret must match `CONTENTFUL_WEBHOOK_SECRET` in the Rails application.
+- The `Content-Type` header must be set to `application/json` so Rails parses the webhook body into `params`.
+- Set the environment filter to the correct Contentful environment for the target app, for example:
+  - `sys.environment.sys.id == development`
+  - `sys.environment.sys.id == master`
+  - `sys.environment.sys.id == staging`
+- Filtering to `sys.type == Entry` helps avoid irrelevant non-entry webhook traffic.
+- Additional filters can be added if needed, but are not required by the application.
 
-Upon starting the local server (`$ script/server`), you can then run ngrok:
+## Testing webhooks locally with ngrok
 
+ngrok is a simple way to expose your local Rails application to Contentful.
+
+Install ngrok on macOS with Homebrew:
+
+```sh
+brew install ngrok
 ```
-$ ngrok http https://localhost:3000
+
+Connect ngrok to your account:
+
+```sh
+ngrok config add-authtoken <your-authtoken>
 ```
 
-Once connected, you use the forwarding address which appears in the terminal for the incoming webhooks and route to the respective controller. With a free ngrok account, the forwarding address for each developer is different every time, so the webhooks in Contentful will need to be updated regularly.
+Start the local Rails server first. If you are running Rails over HTTPS on port 3000:
 
-To avoid any confusion, and adopt a common convention, the name of the developer can be used when naming the webhook in Contentful.
+```sh
+script/server
+```
 
-- Web interface will be available on http://localhost:4040 - allowing you view the raw payload of incoming requests.
+Then start ngrok and point it at the local HTTPS app:
+
+```sh
+ngrok http https://localhost:3000
+```
+
+Use the HTTPS forwarding URL shown by ngrok as the base URL for the Contentful webhook, for example:
+
+```text
+https://<random-subdomain>.ngrok-free.app/contentful_webhooks
+```
+
+Notes:
+
+- With a free ngrok account, the public URL usually changes when ngrok restarts.
+- If the URL changes, update the webhook URL in Contentful.
+- The local ngrok inspection UI is available at `http://localhost:4040`.
+- The inspection UI is useful for checking headers, payload shape and delivery attempts.
+
+## References
+
+- [Ngrok quickstart](https://ngrok.com/docs/guides/share-localhost/quickstart)
+- [Ngrok CLI reference](https://ngrok.com/docs/agent/cli)
