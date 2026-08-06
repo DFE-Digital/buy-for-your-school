@@ -86,7 +86,7 @@
             <hr />
           <% end %>
 
-          <% if ways_to_buy.present? %>
+          <% if ways_to_buy.present? && ways_to_buy.count > 1 %>
             <div class="govuk-form-group govuk-!-margin-bottom-0">
               <fieldset class="govuk-fieldset">
                 <details <%= "open" if selected_ways_to_buy_slugs.present? %> class="govuk-details govuk-!-margin-bottom-4">
