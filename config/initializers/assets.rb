@@ -40,6 +40,6 @@ Rails.application.config.assets.paths << Rails.root.join("node_modules")
 # folder are already added.
 
 # Add TinyMce To precompile (is referenced separately to application.js)
-# NOTE: it's static assets are copied to public/assets/tinymce to be served
+# NOTE: its static assets are copied to public/assets/tinymce to be served
 # See: ./script/assets/copy-assets.sh
 Rails.application.config.assets.precompile << "tinymce/tinymce.min.js"
