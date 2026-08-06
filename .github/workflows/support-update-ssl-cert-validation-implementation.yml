@@ -31,17 +31,17 @@ jobs:
           # are based on convention and therefor can be built programmatically
 
           if [[ "${{ inputs.chosen_environment }}" == "az-dev" ]]; then
-            customDomainName="devghbscustom-domain0"
             profileName="devghbscdn"
-            zoneName="dev.get-help-buying-for-schools.service.gov.uk"
+            customDomainName="dev-get-help-buying-for-schools-education-gov-uk-ab1b"
+            zoneName="dev.get-help-buying-for-schools.education.gov.uk"
           elif [[ "${{ inputs.chosen_environment }}" == "az-staging" ]]; then
-            customDomainName="stagghbscustom-domain0"
             profileName="stagghbscdn"
-            zoneName="staging.get-help-buying-for-schools.service.gov.uk"
+            customDomainName="staging-get-help-buying-for-schools-education-gov-uk-c932"
+            zoneName="staging.get-help-buying-for-schools.education.gov.uk"
           elif [[ "${{ inputs.chosen_environment }}" == "az-production" ]]; then
-            customDomainName="prodghbscustom-domain0"
             profileName="prodghbscdn"
-            zoneName="www.get-help-buying-for-schools.service.gov.uk"
+            customDomainName="www-get-help-buying-for-schools-education-gov-uk-eed8"
+            zoneName="www.get-help-buying-for-schools.education.gov.uk"
           fi
 
           echo customDomainName=$customDomainName >> $GITHUB_OUTPUT
