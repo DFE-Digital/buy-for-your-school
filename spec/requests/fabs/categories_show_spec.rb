@@ -223,4 +223,26 @@ RSpec.describe "FABS category pages", type: :request do
       expect(response.body).to include("Software")
     end
   end
+
+  describe "with single ways to buy type" do
+    let(:solutions) { [dfe_solution] }
+
+    it "does not display the ways to buy filter section when there is only one way to buy" do
+      get category_path("it")
+
+      expect(response).to be_successful
+      expect(response.body).not_to include("Ways to buy")
+    end
+  end
+
+  describe "with multiple ways to buy type" do
+    let(:solutions) { [dfe_solution, other_solution] }
+
+    it "displays the ways to buy filter section when there are multiple ways to buy" do
+      get category_path("it")
+
+      expect(response).to be_successful
+      expect(response.body).to include("Ways to buy")
+    end
+  end
 end
