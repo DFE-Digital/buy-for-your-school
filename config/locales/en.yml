@@ -116,41 +116,32 @@ en:
       navigation_links_columns:
       - label: Browse categories
         menu_contents:
-        - label: Banking and finance
-          href: "/categories/banking-finance"
-          description: Buy financial services
-        - label: Catalogues
-          href: "/categories/catalogues"
-          description: Use catalogues to buy low value goods
+        - label: Buildings and maintenance
+          href: "/categories/buildings-maintenance"
+          description: Cleaning services, grounds maintenance and sports facilities
         - label: Catering
           href: "/categories/catering"
-          description: Buy food, drink and catering services
-        - label: Energy
-          href: "/categories/energy"
-          description: Buy electricity, gas and other fuels
-        - label: Facilities management and estates
-          href: "/categories/facilities-management-estates"
-          description: Buy facilities management services
-        - label: I T 
-          href: "/categories/it"
-          description: Buy IT and ICT equipment and services
+          description: Food, vending machines, catering services and equipment
+        - label: Classroom, curriculum and office supplies
+          href: "/categories/classroom-curriculum-office-supplies"
+          description: Books, classroom tech, furniture and sensory equipment
+        - label: Energy and utilities
+          href: "/categories/energy-utilities"
+          description: Gas and electricity supplies, solar panels and water
       - label: " "
         menu_contents:
-        - label: Legal
-          href: "/categories/legal"
-          description: Buy legal services
-        - label: Office and education supplies
-          href: "/categories/office-education-supplies"
-          description: Buy arts and crafts supplies, stationery and other equipment
-        - label: Professional services
-          href: "/categories/consultancy-services"
-          description: Including Consultancy services
-        - label: Recruitment, HR and training
-          href: "/categories/recruitment-hr-training"
-          description: Buy staffing solutions
+        - label: Finance, legal and insurance
+          href: "/categories/finance-legal-insurance"
+          description: Insurance solutions, audits and legal services
+        - label: HR, people and professional services
+          href: "/categories/hr-people-professional-services"
+          description: Recruitment, payroll and consultancy
+        - label: ICT and business systems
+          href: "/categories/ict-business-systems"
+          description: Hardware, software and management systems
         - label: Transport
           href: "/categories/transport"
-          description: Buy home to school transport and accessories
+          description: Daily transport and educational trips
       - label: Guidance and support
         menu_contents:
         - label: About our service
