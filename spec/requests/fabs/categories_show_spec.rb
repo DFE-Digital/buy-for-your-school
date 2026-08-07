@@ -124,13 +124,12 @@ RSpec.describe "FABS category pages", type: :request do
     Capybara.string(response.body)
   end
 
-  it "renders the category page with title, description, solutions, related content, and breadcrumbs" do
+  it "renders the category page with title, body content, solutions, related content, and breadcrumbs" do
     get category_path("it")
 
     expect(response).to be_successful
     expect(response.body).to include("<title>IT - #{I18n.t('service.name')}</title>")
     expect(response.body).to include("IT")
-    expect(response.body).to include("Buy IT and ICT equipment and services")
     expect(response.body).to include("Everything ICT")
     expect(response.body).to include("Related reading")
     expect(response.body).to include("Browse DfE-approved frameworks and deals")
