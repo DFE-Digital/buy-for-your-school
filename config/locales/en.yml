@@ -384,6 +384,7 @@ en:
     join:
       title: Join Energy for Schools
       explanations:
+      - <strong>This is a DfE energy deal.</strong> All schools can use this deal to procure gas and electricity, including academy trusts. See the <a href="/dfe-energy-approved-deals" class="govuk-link">guidance on DfE energy approved deals</a>.
       - Energy for Schools helps state-funded schools and trusts switch to the same energy contract used by the Department for Education.
       - Schools that join Energy for Schools are added to DfE’s V30 energy contract with Government Commercial Agency (GCA), formerly Crown Commercial Service. GCA buys energy for this particular contract over a long period of time, reducing the risk to customers of substantial fluctuations in price.
       benefits:
