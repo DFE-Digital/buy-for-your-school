@@ -3,96 +3,142 @@ require "rails_helper"
 RSpec.describe "Contentful webhooks", type: :request do
   let(:entity_id) { "contentful-entry-123" }
   let(:secret) { "valid-signature" }
-  let(:headers) { { "X-Contentful-Webhook-Signature" => secret } }
+  let(:topic) { "ContentManagement.Entry.publish" }
+  let(:headers) do
+    {
+      "X-Contentful-Webhook-Signature" => secret,
+      "X-Contentful-Topic" => topic,
+    }
+  end
   let(:indexer) { instance_double(SolutionIndexer) }
+  let(:payload) do
+    {
+      sys: {
+        id: entity_id,
+        contentType: {
+          sys: {
+            id: content_type,
+          },
+        },
+      },
+    }
+  end
+  let(:content_type) { "solution" }
 
   before do
     allow(ENV).to receive(:fetch).and_call_original
     allow(ENV).to receive(:fetch).with("CONTENTFUL_WEBHOOK_SECRET").and_return(secret)
     allow(SolutionIndexer).to receive(:new).with(id: entity_id).and_return(indexer)
+    allow(RedirectMatcher).to receive(:invalidate_cache!)
   end
 
   describe "POST /contentful_webhooks" do
-    it "returns success when indexing succeeds" do
-      allow(indexer).to receive(:index_document).and_return(true)
+    context "when publishing a solution" do
+      it "returns success when indexing succeeds" do
+        allow(indexer).to receive(:index_document).and_return(true)
 
-      post(contentful_webhooks_path, params: { entityId: entity_id }, headers:)
+        post(contentful_webhooks_path, params: payload, headers:)
 
-      expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body)).to eq("message" => "Webhook for entry #{entity_id} processed successfully.")
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq("message" => "Webhook for entry #{entity_id} processed successfully.")
+      end
+
+      it "returns unprocessable_content when indexing fails" do
+        allow(indexer).to receive(:index_document).and_return(false)
+
+        post(contentful_webhooks_path, params: payload, headers:)
+
+        expect(response.status).to eq(422)
+        expect(JSON.parse(response.body)).to eq("error" => "Failed to index the document for id #{entity_id}.")
+      end
     end
 
-    it "returns unprocessable_content when indexing fails" do
-      allow(indexer).to receive(:index_document).and_return(false)
+    context "when deleting a solution" do
+      let(:topic) { "ContentManagement.Entry.delete" }
 
-      post(contentful_webhooks_path, params: { entityId: entity_id }, headers:)
+      it "returns success when deletion succeeds" do
+        allow(indexer).to receive(:delete_document).and_return(true)
 
-      expect(response.status).to eq(422)
-      expect(JSON.parse(response.body)).to eq("error" => "Failed to index the document for id #{entity_id}.")
+        post(contentful_webhooks_path, params: payload, headers:)
+
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq("message" => "Webhook for entry #{entity_id} deletion processed successfully.")
+      end
+
+      it "returns unprocessable_content when deletion fails" do
+        allow(indexer).to receive(:delete_document).and_return(false)
+
+        post(contentful_webhooks_path, params: payload, headers:)
+
+        expect(response.status).to eq(422)
+        expect(JSON.parse(response.body)).to eq("error" => "Failed to delete the document for id #{entity_id}.")
+      end
     end
 
-    it "returns bad_request when entityId is missing" do
-      post(contentful_webhooks_path, params: {}, headers:)
+    context "when publishing a redirect" do
+      let(:content_type) { "redirect" }
 
-      expect(response).to have_http_status(:bad_request)
-      expect(JSON.parse(response.body)).to eq("error" => "The 'entityId' is missing from the request.")
+      it "invalidates the redirect cache" do
+        post(contentful_webhooks_path, params: payload, headers:)
+
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq("message" => "Webhook for redirect entry #{entity_id} processed successfully.")
+        expect(RedirectMatcher).to have_received(:invalidate_cache!)
+      end
     end
 
-    it "returns bad_request when only sys.id is provided" do
-      allow(indexer).to receive(:index_document)
+    context "when unpublishing a redirect" do
+      let(:content_type) { "redirect" }
+      let(:topic) { "ContentManagement.Entry.unpublish" }
 
-      post(contentful_webhooks_path, params: { sys: { id: entity_id } }, headers:)
+      it "invalidates the redirect cache" do
+        post(contentful_webhooks_path, params: payload, headers:)
 
-      expect(response).to have_http_status(:bad_request)
-      expect(indexer).not_to have_received(:index_document)
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq("message" => "Webhook for redirect entry #{entity_id} deletion processed successfully.")
+        expect(RedirectMatcher).to have_received(:invalidate_cache!)
+      end
     end
 
-    it "returns unauthorized when the signature is invalid" do
-      post contentful_webhooks_path, params: { entityId: entity_id }, headers: { "X-Contentful-Webhook-Signature" => "wrong" }
+    context "when the entry id is missing" do
+      let(:payload) { { sys: { contentType: { sys: { id: content_type } } } } }
 
-      expect(response).to have_http_status(:unauthorized)
-    end
-  end
+      it "returns bad_request" do
+        post(contentful_webhooks_path, params: payload, headers:)
 
-  describe "POST /delete_contentful_entry" do
-    it "returns success when deletion succeeds" do
-      allow(indexer).to receive(:delete_document).and_return(true)
-
-      post(delete_contentful_entry_path, params: { entityId: entity_id }, headers:)
-
-      expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body)).to eq("message" => "Webhook for entry #{entity_id} deletion processed successfully.")
+        expect(response).to have_http_status(:bad_request)
+        expect(JSON.parse(response.body)).to eq("error" => "The entry id is missing from the request.")
+      end
     end
 
-    it "returns unprocessable_content when deletion fails" do
-      allow(indexer).to receive(:delete_document).and_return(false)
+    context "when the topic is unsupported" do
+      let(:topic) { "ContentManagement.Entry.auto_save" }
 
-      post(delete_contentful_entry_path, params: { entityId: entity_id }, headers:)
+      it "returns success and ignores the webhook" do
+        post(contentful_webhooks_path, params: payload, headers:)
 
-      expect(response.status).to eq(422)
-      expect(JSON.parse(response.body)).to eq("error" => "Failed to delete the document for id #{entity_id}.")
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq("message" => "Ignoring unsupported webhook topic #{topic} for entry #{entity_id}.")
+      end
     end
 
-    it "returns bad_request when entityId is missing" do
-      post(delete_contentful_entry_path, params: {}, headers:)
+    context "when the content type is unsupported" do
+      let(:content_type) { "category" }
 
-      expect(response).to have_http_status(:bad_request)
-      expect(JSON.parse(response.body)).to eq("error" => "The 'entityId' is missing from the request.")
+      it "returns success and ignores the webhook" do
+        post(contentful_webhooks_path, params: payload, headers:)
+
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq("message" => "Ignoring unsupported content type #{content_type} for entry #{entity_id}.")
+      end
     end
 
-    it "returns bad_request when only sys.id is provided" do
-      allow(indexer).to receive(:delete_document)
+    context "when the signature is invalid" do
+      it "returns unauthorized" do
+        post contentful_webhooks_path, params: payload, headers: headers.merge("X-Contentful-Webhook-Signature" => "wrong")
 
-      post(delete_contentful_entry_path, params: { sys: { id: entity_id } }, headers:)
-
-      expect(response).to have_http_status(:bad_request)
-      expect(indexer).not_to have_received(:delete_document)
-    end
-
-    it "returns unauthorized when the signature is missing" do
-      post delete_contentful_entry_path, params: { entityId: entity_id }
-
-      expect(response).to have_http_status(:unauthorized)
+        expect(response).to have_http_status(:unauthorized)
+      end
     end
   end
 end

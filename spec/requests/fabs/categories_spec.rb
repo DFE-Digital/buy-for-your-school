@@ -56,4 +56,50 @@ RSpec.describe "Categories pages", type: :request do
       expect(response.body).to include('href="/procurement-support">Get expert buying help')
     end
   end
+
+  describe "GET /categories/:slug" do
+    let(:get_expert_help) { instance_double(GetExpertHelp, title: "Get expert help", description: "Helpful content") }
+
+    let(:category) do
+      instance_double(
+        FABS::Category,
+        title: "ICT business systems",
+        description: "Buy ICT services",
+        slug: "ict-business-systems",
+        body_title: nil,
+        body_description: nil,
+        banner: nil,
+        related_content: [],
+        subcategories: [],
+        solutions: [],
+        filtered_solutions: [],
+      )
+    end
+
+    it "redirects legacy category slugs before category lookup" do
+      match = RedirectMatcher::Result.new(
+        redirect: instance_double(Redirect),
+        destination_path: "/categories/ict-business-systems",
+        status: :moved_permanently,
+      )
+
+      allow(RedirectMatcher).to receive(:call).with("/categories/it").and_return(match)
+      expect(FABS::Category).not_to receive(:find_by_slug!)
+
+      get category_path("it")
+
+      expect(response).to redirect_to("/categories/ict-business-systems")
+      expect(response).to have_http_status(:moved_permanently)
+    end
+
+    it "renders the category when no legacy redirect matches" do
+      allow(RedirectMatcher).to receive(:call).with("/categories/ict-business-systems").and_return(nil)
+      allow(FABS::Category).to receive(:find_by_slug!).with("ict-business-systems").and_return(category)
+      allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
+
+      get category_path("ict-business-systems")
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end

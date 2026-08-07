@@ -48,6 +48,7 @@ RSpec.describe "FABS solutions", type: :request do
 
   describe "GET /categories/:category_slug/:slug" do
     before do
+      allow(RedirectMatcher).to receive(:call).with("/categories/banking-finance/audit-and-financial-services").and_return(nil)
       allow(Solution).to receive(:find_by_slug!).with("audit-and-financial-services").and_return(solution)
       allow(FABS::Category).to receive(:find_by_slug!).with("banking-finance").and_return(primary_category)
     end
@@ -78,6 +79,23 @@ RSpec.describe "FABS solutions", type: :request do
       expect(response.body).not_to include("31 December 2026")
       expect(response.body).not_to include("RM1234")
       expect(document).to have_link("Apply now", href: "https://example.com/apply")
+    end
+
+    it "redirects legacy category solution slugs before solution lookup" do
+      match = RedirectMatcher::Result.new(
+        redirect: instance_double(Redirect),
+        destination_path: "/categories/ict-business-systems/communications-solutions",
+        status: :moved_permanently,
+      )
+
+      allow(RedirectMatcher).to receive(:call).with("/categories/it/communications-solutions").and_return(match)
+      expect(Solution).not_to receive(:find_by_slug!)
+      expect(FABS::Category).not_to receive(:find_by_slug!)
+
+      get category_solution_path("it", "communications-solutions")
+
+      expect(response).to redirect_to("/categories/ict-business-systems/communications-solutions")
+      expect(response).to have_http_status(:moved_permanently)
     end
   end
 end

@@ -1,4 +1,8 @@
 class SolutionsController < Fabs::ApplicationController
+  include Redirectable
+
+  before_action :redirect_legacy_slugs, only: :show
+
   def index
     @solutions = Solution.all
     @sorted_categories = @solutions.each_with_object({}) { |solution, hash|

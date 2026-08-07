@@ -1,16 +1,24 @@
 RSpec.feature "Custom Errors" do
   context "when the page does not exist (404)" do
-    before do
+    around do |example|
+      original_show_exceptions = Rails.application.env_config["action_dispatch.show_exceptions"]
+      original_show_detailed_exceptions = Rails.application.env_config["action_dispatch.show_detailed_exceptions"]
+      original_consider_all_requests_local = Rails.application.env_config["consider_all_requests_local"]
+
       Rails.application.env_config["action_dispatch.show_exceptions"] = true
       Rails.application.env_config["action_dispatch.show_detailed_exceptions"] = false
       Rails.application.env_config["consider_all_requests_local"] = false
-      allow(FABS::Page).to receive(:find_by_slug!).with("foo")
-        .and_raise(ContentfulRecordNotFoundError.new("Page not found", slug: "foo"))
+
+      example.run
+    ensure
+      Rails.application.env_config["action_dispatch.show_exceptions"] = original_show_exceptions
+      Rails.application.env_config["action_dispatch.show_detailed_exceptions"] = original_show_detailed_exceptions
+      Rails.application.env_config["consider_all_requests_local"] = original_consider_all_requests_local
     end
 
-    after do
-      Rails.application.env_config["action_dispatch.show_exceptions"] = false
-      Rails.application.env_config["consider_all_requests_local"] = true
+    before do
+      allow(FABS::Page).to receive(:find_by_slug!).with("foo")
+        .and_raise(ContentfulRecordNotFoundError.new("Page not found", slug: "foo"))
     end
 
     it "shows the expected error message" do
