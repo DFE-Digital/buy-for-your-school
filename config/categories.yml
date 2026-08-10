@@ -114,4 +114,6 @@ categories:
 - category: Transport
   description: Daily transport and educational trips
   slug: transport
-  subcategories: []
+  subcategories:
+  - name: N/A
+    slug: not-applicable
