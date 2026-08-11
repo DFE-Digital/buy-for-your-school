@@ -81,9 +81,6 @@ en:
       visitor: You must sign in.
   breadcrumbs:
     offers: Offers
-  layouts:
-    fabs_application:
-      page_title: "Buying options for"
   categories:
     filter_labels:
       active_filters: Active filters
