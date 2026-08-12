@@ -103,6 +103,7 @@ class Solution
   def self.all(category_id: nil)
     params = {
       content_type: CONTENT_TYPE,
+      limit: 200,
       select: LIST_SELECT_FIELDS,
       order: FIELD_TITLE,
       "fields.categories.sys.id[in]": category_id,
