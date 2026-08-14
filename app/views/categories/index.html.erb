@@ -21,10 +21,6 @@
 <% end %>
 
 <div>
-  <% if @energy_banner %>
-    <%= render partial: 'energy_banner', locals: { banner: @energy_banner } %>
-  <% end %>
-
   <div class="govuk-inset-text govuk-inset-text--thin">
     <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t(".not_sure_title") %></h2>
     <p class="govuk-body"><%= t(".not_sure_body") %></p>
