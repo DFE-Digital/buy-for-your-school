@@ -93,6 +93,9 @@ en:
       procurement_support_detail_html: Fill in our <a href="/procurement-support" class="govuk-link">short form</a> and get help from our team of buying experts
       title: Browse by category
       subtitle: Find frameworks, catalogues and DfE deals to suit your school's needs
+      not_sure_title: Not sure where to start?
+      not_sure_body: Our buying team can help you choose the right way to buy for your school
+      expert_help_button: Get expert buying help
     show:
       get_expert_help: Get expert help
       heading: Browse DfE-approved frameworks and deals
