@@ -103,6 +103,7 @@ class Solution
   def self.all(category_id: nil)
     params = {
       content_type: CONTENT_TYPE,
+      limit: 200,
       select: LIST_SELECT_FIELDS,
       order: FIELD_TITLE,
       "fields.categories.sys.id[in]": category_id,
@@ -111,8 +112,9 @@ class Solution
   end
 
   def self.search(query: "")
-    use_opensearch = ENV.fetch("USE_OPENSEARCH", "false")
-    if use_opensearch == "true"
+    if Flipper.enabled?(:azure_ai_search)
+      AzureAiSearch::SolutionSearcher.new(query:).search
+    elsif ENV.fetch("USE_OPENSEARCH", "false") == "true"
       SolutionSearcher.new(query:).search
     else
       ContentfulClient.entries(

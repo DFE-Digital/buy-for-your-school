@@ -63,7 +63,7 @@ private
   end
 
   def process_solution_index_upsert
-    result = SolutionIndexer.new(id:).index_document
+    result = index_document(id:)
 
     if result
       render json: { message: "Webhook for entry #{id} processed successfully." }, status: :ok
@@ -73,7 +73,7 @@ private
   end
 
   def process_solution_index_delete
-    result = SolutionIndexer.new(id:).delete_document
+    result = delete_document(id:)
 
     if result
       render json: { message: "Webhook for entry #{id} deletion processed successfully." }, status: :ok
@@ -97,5 +97,21 @@ private
 
   def signature
     request.headers["X-Contentful-Webhook-Signature"]
+  end
+
+  def index_document(id:)
+    if Flipper.enabled?(:azure_ai_search)
+      AzureAiSearch::SolutionIndexer.new.index_document(id)
+    else
+      SolutionIndexer.new(id:).index_document
+    end
+  end
+
+  def delete_document(id:)
+    if Flipper.enabled?(:azure_ai_search)
+      AzureAiSearch::SolutionIndexer.new.delete_document(id)
+    else
+      SolutionIndexer.new(id:).delete_document
+    end
   end
 end
