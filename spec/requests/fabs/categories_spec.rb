@@ -109,9 +109,11 @@ RSpec.describe "Categories pages", type: :request do
 
     it "renders the category when no legacy redirect matches" do
       allow(RedirectMatcher).to receive(:call).with("/categories/ict-business-systems").and_return(nil)
-      allow(category).to receive(:filtered_solutions).and_return([])
-      allow(category).to receive(:related_content).and_return([])
-      allow(category).to receive(:solutions).and_return([])
+      allow(category).to receive_messages(
+        filtered_solutions: [],
+        related_content: [],
+        solutions: [],
+      )
       allow(FABS::Category).to receive(:find_by_slug!).with("ict-business-systems").and_return(category)
       allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
 
