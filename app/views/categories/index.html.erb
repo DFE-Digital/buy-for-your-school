@@ -46,15 +46,5 @@
 </div>
 
 <% content_for :sidebar do %>
-  <h2 class="govuk-heading-m"><%= t(".support_heading") %></h2>
-  <details class="govuk-details">
-    <summary class="govuk-details__summary">
-      <span class="govuk-details__summary-text">
-        <b><%= t(".procurement_support") %></b>
-      </span>
-    </summary>
-    <div class="govuk-details__text">
-      <%= t(".procurement_support_detail_html") %>
-    </div>
-  </details>
+  <%= render partial: "shared/get_expert_help", locals: { get_expert_help: @get_expert_help, first_item: true } %>
 <% end %>
