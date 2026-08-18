@@ -20,8 +20,12 @@ RSpec.describe "Categories pages", type: :request do
       allow(PopularLink).to receive(:all) { popular_links }
       allow(Banner).to receive(:find_by_slug) { energy_banner }
       allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
+      allow(Flipper).to receive(:enabled?).and_return(false)
+      allow(Flipper).to receive(:enabled?).with(:homepage_rfh_cta).and_return(rfh_feature_flag)
       get root_path
     end
+
+    let(:rfh_feature_flag) { false }
 
     it "sets default HTML title tag" do
       expect(response.body).to include("<title>#{I18n.t('service.name')}</title>")
@@ -52,6 +56,20 @@ RSpec.describe "Categories pages", type: :request do
 
     it "does not display categories without solutions" do
       expect(response.body).not_to include("category-without-any-solution")
+    end
+
+    it "does not display request for help content" do
+      expect(response.body).not_to include("Not sure where to start?")
+    end
+
+    context "when feature flag is enabled" do
+      let(:rfh_feature_flag) { true }
+
+      it "displays new request for help content" do
+        expect(response.body).to include("Not sure where to start?")
+        expect(response.body).to include("Our buying team can help you choose the right way to buy for your school")
+        expect(response.body).to include('href="/procurement-support">Get expert buying help')
+      end
     end
 
     context "when there are popular links" do
