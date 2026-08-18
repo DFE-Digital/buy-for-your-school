@@ -9,6 +9,7 @@ class CategoriesController < Fabs::ApplicationController
     @categories = FABS::Category.all
     @featured_offers = Offer.featured_offers.select { |offer| offer.sort_order.present? }.first(2)
     @popular_links = PopularLink.all.select { |popular_link| popular_link.sort_order.present? }.first(6)
+    @get_expert_help = GetExpertHelp.content
 
     render layout: "homepage"
   end
@@ -34,6 +35,8 @@ class CategoriesController < Fabs::ApplicationController
     @body_description = @category.body_description
 
     @category_slug = @category.slug
+
+    @show_filter = @subcategories.present? || (@ways_to_buy.present? && @ways_to_buy.count > 1)
 
     render layout: "fabs_application"
   end

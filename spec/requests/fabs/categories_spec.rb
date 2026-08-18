@@ -3,14 +3,15 @@ require "rails_helper"
 RSpec.describe "Categories pages", type: :request do
   let(:categories) do
     [
-      instance_double(FABS::Category, title: "Banking and finance", description: "Buy financial services", slug: "banking-and-finance"),
-      instance_double(FABS::Category, title: "Catalogues", description: "Buy catalogues", slug: "catalogues"),
-      instance_double(FABS::Category, title: "Catering", description: "Buy food, drink and catering services", slug: "catering"),
+      build_category(title: "Banking and finance", description: "Buy financial services", slug: "banking-and-finance"),
+      build_category(title: "Catalogues", description: "Buy catalogues", slug: "catalogues"),
+      build_category(title: "Catering", description: "Buy food, drink and catering services", slug: "catering"),
     ]
   end
   let(:featured_offers) { [] }
   let(:popular_links) { [] }
   let(:energy_banner) { nil }
+  let(:get_expert_help) { instance_double(GetExpertHelp, title: "Get expert help", description: "Helpful content") }
 
   describe "GET /" do
     before do
@@ -18,6 +19,7 @@ RSpec.describe "Categories pages", type: :request do
       allow(Offer).to receive(:featured_offers) { featured_offers }
       allow(PopularLink).to receive(:all) { popular_links }
       allow(Banner).to receive(:find_by_slug) { energy_banner }
+      allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
       get root_path
     end
 
@@ -72,26 +74,20 @@ RSpec.describe "Categories pages", type: :request do
 
     it "displays get expert help content" do
       expect(response.body).to include("Get expert help")
-      expect(response.body).to include('href="/procurement-support">Start your request')
+      expect(response.body).to include("Helpful content")
     end
   end
 
   describe "GET /categories/:slug" do
-    let(:get_expert_help) { instance_double(GetExpertHelp, title: "Get expert help", description: "Helpful content") }
-
     let(:category) do
-      instance_double(
-        FABS::Category,
+      build_category(
         title: "ICT business systems",
         description: "Buy ICT services",
         slug: "ict-business-systems",
         body_title: nil,
         body_description: nil,
         banner: nil,
-        related_content: [],
         subcategories: [],
-        solutions: [],
-        filtered_solutions: [],
       )
     end
 
@@ -113,6 +109,9 @@ RSpec.describe "Categories pages", type: :request do
 
     it "renders the category when no legacy redirect matches" do
       allow(RedirectMatcher).to receive(:call).with("/categories/ict-business-systems").and_return(nil)
+      allow(category).to receive(:filtered_solutions).and_return([])
+      allow(category).to receive(:related_content).and_return([])
+      allow(category).to receive(:solutions).and_return([])
       allow(FABS::Category).to receive(:find_by_slug!).with("ict-business-systems").and_return(category)
       allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
 
@@ -130,6 +129,23 @@ RSpec.describe "Categories pages", type: :request do
           title:,
           url:,
           sort_order:,
+        },
+      ),
+    )
+  end
+
+  def build_category(title:, description:, slug:, body_title: nil, body_description: nil, banner: nil, subcategories: [])
+    FABS::Category.new(
+      OpenStruct.new(
+        id: slug,
+        fields: {
+          title:,
+          description:,
+          slug:,
+          body_title:,
+          body_description:,
+          banner:,
+          subcategories:,
         },
       ),
     )
