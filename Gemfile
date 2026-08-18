@@ -116,3 +116,5 @@ group :test do
   gem "simplecov"
   gem "webmock"
 end
+
+gem "bundle-audit", "~> 0.2.0"
