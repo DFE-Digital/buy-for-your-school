@@ -14,6 +14,7 @@
 - [Console access](console-access.md)
 - [Contentful Updates](contentful-updates.md)
 - [Continuous Integration](continuous-integration.md)
+- [Dependency management](dependencies.md)
 - [DfE Sign-In](dfe-sign-in.md)
 - [Educational Establishment Personas](school-personas.md)
 - [Feature Flags](feature-flags.md)
