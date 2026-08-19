@@ -11,6 +11,10 @@ on:
         required: true
         type: string
 
+      domain_variant:
+        required: true
+        type: string
+
 env:
   RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
   AZURE_CORE_USE_MSAL_HTTP_CACHE: "false"
@@ -33,6 +37,7 @@ jobs:
         env:
           # Supports "service" and "education" values for *.service.gov.uk and *.education.gov.uk domains
           DOMAIN_FAMILY: ${{ inputs.domain_family }}
+          DOMAIN_VARIANT: ${{ inputs.domain_variant }}
         run: |
           # To avoid adding multiple variables into the environment when the names
           # are based on convention and therefor can be built programmatically
@@ -63,11 +68,21 @@ jobs:
             profileName="prodghbscdn"
 
             if [[ "$DOMAIN_FAMILY" == "service" ]]; then
-              customDomainName="prodghbscustom-domain0"
-              zoneName="www.get-help-buying-for-schools.service.gov.uk"
+              if [[ "$DOMAIN_VARIANT" == "www" ]]; then
+                customDomainName="prodghbscustom-domain0"
+                zoneName="www.get-help-buying-for-schools.service.gov.uk"
+              else
+                customDomainName="prodghbscustom-domain3"
+                zoneName="get-help-buying-for-schools.service.gov.uk"
+              fi
             else
-              customDomainName="www-get-help-buying-for-schools-education-gov-uk-eed8"
-              zoneName="www.get-help-buying-for-schools.education.gov.uk"
+              if [[ "$DOMAIN_VARIANT" == "www" ]]; then
+                customDomainName="www-get-help-buying-for-schools-education-gov-uk-eed8"
+                zoneName="www.get-help-buying-for-schools.education.gov.uk"
+              else
+                customDomainName="prodghbscustom-domain2"
+                zoneName="get-help-buying-for-schools.education.gov.uk"
+              fi
             fi
           fi
 
