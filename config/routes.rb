@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "sidekiq/web"
+require "sidekiq/cron/web"
+
 Rails.application.routes.draw do
   root "categories#index"
 
@@ -478,8 +481,6 @@ Rails.application.routes.draw do
 
   resources :usability_surveys, only: %i[new create]
 
-  require "sidekiq/web"
-  require "sidekiq/cron/web"
   if Rails.env.production?
     Sidekiq::Web.use Rack::Auth::Basic do |username, password|
       username == ENV["SIDEKIQ_USERNAME"] && password == ENV["SIDEKIQ_PASSWORD"]
