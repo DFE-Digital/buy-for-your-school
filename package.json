@@ -36,6 +36,7 @@
     "webpack-dev-server": "^5.2.6"
   },
   "resolutions": {
+    "@babel/core": "7.29.7",
     "ajv": "8.18.0",
     "body-parser": "1.20.6",
     "brace-expansion": "1.1.18",
@@ -48,6 +49,7 @@
     "node-forge": "1.4.0",
     "on-headers": "1.1.0",
     "path-to-regexp": "0.1.13",
+    "picomatch": "2.3.2",
     "qs": "6.15.2",
     "shell-quote": "1.9.0",
     "websocket-driver": "0.7.5",
