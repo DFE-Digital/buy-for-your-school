@@ -69,13 +69,9 @@ Rollbar.configure do |config|
   # https://devcenter.heroku.com/articles/deploying-to-a-custom-rails-environment
   config.environment = ENV.fetch("ROLLBAR_ENV", nil).presence || Rails.env
 
-  # Don't report routing misses. They are handled as normal 404s by the
-  # application and are mostly bot noise in live environments.
-  config.before_process << proc do |options|
-    exception = options[:exception]
-
-    if exception.is_a?(ActionController::RoutingError)
-      throw(:ignore)
-    end
-  end
+  # Routing misses are handled as normal 404s by the application and are mostly
+  # bot noise in live environments.
+  config.exception_level_filters.merge!(
+    "ActionController::RoutingError" => "ignore",
+  )
 end
