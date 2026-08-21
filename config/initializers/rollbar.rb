@@ -72,6 +72,6 @@ Rollbar.configure do |config|
   # Routing misses are handled as normal 404s by the application and are mostly
   # bot noise in live environments.
   config.exception_level_filters.merge!(
-    "ActionController::RoutingError" => "ignore"
+    "ActionController::RoutingError" => "ignore",
   )
 end
