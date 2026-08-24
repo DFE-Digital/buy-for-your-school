@@ -92,7 +92,7 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem "foreman"
-  gem "listen", ">= 3.8", "< 3.10"
+  gem "listen", ">= 3.8", "< 3.11"
   gem "spring"
   gem "spring-commands-rspec"
   # Incompatible with spring 3.0 and higher
