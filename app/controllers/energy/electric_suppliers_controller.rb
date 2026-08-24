@@ -26,6 +26,23 @@ module Energy
         messages: validation.errors(full: true).to_h,
         **validation.to_h,
       )
+      preserve_submitted_contract_end_date
+      @form
+    end
+
+    # Show invalid input after error so user can correct it
+    def preserve_submitted_contract_end_date
+      return if @form.electric_current_contract_end_date.is_a?(Date)
+
+      submitted = params.fetch(:electric_supplier_form, {})
+      @form.instance_variable_set(
+        :@electric_current_contract_end_date,
+        {
+          1 => submitted["electric_current_contract_end_date(1i)"],
+          2 => submitted["electric_current_contract_end_date(2i)"],
+          3 => submitted["electric_current_contract_end_date(3i)"],
+        },
+      )
     end
 
     def validation
