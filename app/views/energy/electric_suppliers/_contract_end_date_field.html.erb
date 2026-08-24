@@ -1,0 +1,87 @@
+<%#
+  Renders the contract end date input with per-segment error handling so the
+  error summary can link to the specific invalid part and only that segment
+  gets the govuk-input--error border.
+
+  Errors on :electric_current_contract_end_date (missing / invalid_date /
+  invalid_range) still apply to the whole field.
+%>
+<%
+  form_obj = form.object
+  raw = form_obj.electric_current_contract_end_date
+  values = case raw
+           when ::Hash then { day: raw[3], month: raw[2], year: raw[1] }
+           when ::Date then { day: raw.day, month: raw.month, year: raw.year }
+           else             { day: nil, month: nil, year: nil }
+           end
+
+  messages = form_obj.messages || {}
+  general_message = Array(messages[:electric_current_contract_end_date]).first
+  part_messages = {
+    day:   Array(messages[:electric_current_contract_end_date_day]).first,
+    month: Array(messages[:electric_current_contract_end_date_month]).first,
+    year:  Array(messages[:electric_current_contract_end_date_year]).first,
+  }
+  any_error = general_message.present? || part_messages.values.any?(&:present?)
+  visible_message = part_messages[:day] || part_messages[:month] || part_messages[:year] || general_message
+
+  # Anchors the error summary generates via build_id('field-error', attribute_name:).
+  # Anchor format: "<object>-<attribute>-field-error" with underscores replaced by hyphens.
+  base_anchor = "electric-supplier-form-electric-current-contract-end-date"
+  general_anchor = "#{base_anchor}-field-error"
+  part_anchor = ->(part) { "#{base_anchor}-#{part}-field-error" }
+
+  segments = [
+    { part: :day,   segment: "3i", width: 2 },
+    { part: :month, segment: "2i", width: 2 },
+    { part: :year,  segment: "1i", width: 4 },
+  ]
+%>
+
+<div class="govuk-form-group<%= " govuk-form-group--error" if any_error %>">
+  <fieldset class="govuk-fieldset" role="group">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+      <h2 class="govuk-fieldset__heading"><%= I18n.t("energy.current_contract.when_contract_ends") %></h2>
+    </legend>
+    <div class="govuk-hint"><%= I18n.t("energy.current_contract.date_for_example") %></div>
+
+    <% if visible_message %>
+      <p class="govuk-error-message">
+        <span class="govuk-visually-hidden">Error:</span> <%= visible_message %>
+      </p>
+    <% end %>
+
+    <div class="govuk-date-input">
+      <% segments.each do |seg| %>
+        <%
+          part = seg[:part]
+          segment = seg[:segment]
+          width = seg[:width]
+          part_message = part_messages[part]
+          highlight = part_message.present? || general_message.present?
+          id = if part_message.present?
+                 part_anchor.call(part)
+               elsif general_message.present? && part == :day
+                 # match the anchor the summary generates for the whole-field error
+                 general_anchor
+               else
+                 "electric_supplier_form_electric_current_contract_end_date_#{segment}"
+               end
+        %>
+        <div class="govuk-date-input__item">
+          <div class="govuk-form-group">
+            <%= tag.label part.to_s.capitalize, class: "govuk-label govuk-date-input__label", for: id %>
+            <%= tag.input(
+                  id: id,
+                  class: "govuk-input govuk-date-input__input govuk-input--width-#{width}#{' govuk-input--error' if highlight}",
+                  name: "electric_supplier_form[electric_current_contract_end_date(#{segment})]",
+                  type: "text",
+                  inputmode: "numeric",
+                  value: values[part],
+                ) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </fieldset>
+</div>

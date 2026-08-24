@@ -417,6 +417,9 @@ en:
       electric_current_supplier: ""
       electric_current_supplier_other: ""
       electric_current_contract_end_date: ""
+      electric_current_contract_end_date_day: ""
+      electric_current_contract_end_date_month: ""
+      electric_current_contract_end_date_year: ""
     errors:
       rules:
         electric_current_supplier:
@@ -424,9 +427,16 @@ en:
         electric_current_supplier_other:
           missing: Enter a supplier name
         electric_current_contract_end_date:
-          missing: Enter a contract end date
-          invalid_date: Enter a valid date
+          invalid_date: Contract end date must be a real date
           invalid_range: Enter a contract end date that’s no more than 1 year prior to and no more than 5 years from today’s date
+          missing: Enter a contract end date
+        electric_current_contract_end_date_day:
+          missing_day: Enter a day
+        electric_current_contract_end_date_month:
+          missing_month: Enter a month
+        electric_current_contract_end_date_year:
+          missing_year: Enter a year
+
   gas_bill_consolidation_form:
     rules:
       gas_bill_consolidation: ""
