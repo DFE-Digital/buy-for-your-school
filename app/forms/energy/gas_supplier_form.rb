@@ -1,4 +1,4 @@
-# Switch Energy Form
+# Gas Supplier Form
 #
 class Energy::GasSupplierForm < Energy::Form
   option :gas_current_supplier, Types::Params::Symbol, optional: true

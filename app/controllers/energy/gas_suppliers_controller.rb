@@ -25,6 +25,24 @@ module Energy
         messages: validation.errors(full: true).to_h,
         **validation.to_h,
       )
+
+      preserve_submitted_contract_end_date
+      @form
+    end
+
+    # Show invalid input after error so user can correct it
+    def preserve_submitted_contract_end_date
+      return if @form.gas_current_contract_end_date.is_a?(Date)
+
+      submitted = params.fetch(:gas_supplier_form, {})
+      @form.instance_variable_set(
+        :@gas_current_contract_end_date,
+        {
+          1 => submitted["gas_current_contract_end_date(1i)"],
+          2 => submitted["gas_current_contract_end_date(2i)"],
+          3 => submitted["gas_current_contract_end_date(3i)"],
+        },
+      )
     end
 
     def validation
@@ -51,7 +69,7 @@ module Energy
       return energy_case_org_gas_single_multi_path(onboarding_case, @onboarding_case_organisation) if switching_gas?
 
       # They must be switching both
-      energy_case_electric_supplier_path(onboarding_case)
+      energy_case_gas_supplier_path(onboarding_case)
     end
   end
 end
