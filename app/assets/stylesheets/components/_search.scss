@@ -5,7 +5,7 @@
 
 // Increase contrast for search input placeholder
 .gem-c-search__input[type="search"]::placeholder {
-  color: govuk-colour("dark-grey");
+  color: govuk-colour("black", $variant: "tint-25");
   opacity: 1;
 }
 
