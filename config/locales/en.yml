@@ -346,10 +346,6 @@ en:
       x_years:
         one: "%{count} year"
         other: "%{count} years"
-  design:
-    category_selection_header: Choose a category
-    not_found: No categories found
-    spec_template_tag_title: Specification tag
   end_of_journey_survey:
     new:
       body: Please could you let us know how easy it was to use the form? Your feedback helps us make our service better.

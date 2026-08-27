@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   get "health_check" => "application#health_check"
   get "maintenance" => "application#maintenance"
   resource :cookie_preferences, only: %i[show edit update]
-  resources :design, only: %i[index show]
   get "/pages/:page", to: "static_pages#show"
 
   # CMS entrypoints
