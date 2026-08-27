@@ -1,5 +1,7 @@
+@use "sass:map";
+
 @mixin organisation-brand-colour {
-  @each $organisation in map-keys($govuk-colours-organisations) {
+  @each $organisation in map.keys($govuk-colours-organisations) {
     .brand--#{$organisation} {
       // the & declaration allows border-color to also be applied to the parent
       // element as required by the heading component, adds 2KB to the CSS
