@@ -21,6 +21,7 @@
   <%= fabs_govuk_link_to h(solution_cta(@solution)), @solution.url, class: "cta govuk-button" %>
 
   <% content_for :sidebar do %>
+    <%= render partial: "shared/get_expert_help", locals: { get_expert_help: @get_expert_help } %>
     <%= render partial: "shared/related_content", locals: { related_content: @solution.related_content } %>
   <% end %>
 </div>

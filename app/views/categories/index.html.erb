@@ -1,32 +1,52 @@
-
-<div class="govuk-!-margin-top-4">
-  <% if @energy_banner %>
-    <%= render partial: 'energy_banner', locals: { banner: @energy_banner } %>
-  <% end %>
-
-  <div class="govuk-inset-text govuk-inset-text--thin">
-    <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t(".not_sure_title") %></h2>
-    <p class="govuk-body"><%= t(".not_sure_body") %></p>
-    <%= govuk_link_to(t(".expert_help_button"), framework_requests_path, class: "cta govuk-button", data: { track_internal_link: true }) %>
+<%= content_for :pre_main do %>
+  <div class="dfe-grid-row">
+    <div class="dfe-grid-column-two-thirds">
+      <h1 class="dfe-heading-xl homepage-heading">
+        <%= t('header_title') %>
+      </h1>
+      <p class="dfe-body-l">
+        <%= t('header_description') %>
+      </p>
+    </div>
   </div>
 
-  <% if @featured_offers.present? %>
-    <h2 class="govuk-heading-m"><%= t(".offers_title") %></h2>
-    <div class="dfe-grid-container offers-grid-container">
-      <% @featured_offers.each do |offer| %>
-        <%= render partial: "offers/offer", locals: { offer: offer } %>
-      <% end %>
+  <% if Flipper.enabled?(:homepage_rfh_cta) %>
+    <div class="govuk-inset-text govuk-inset-text--thin">
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-0"><%= t(".not_sure_title") %></h2>
+      <p class="govuk-body"><%= t(".not_sure_body") %></p>
+      <%= govuk_link_to(t(".expert_help_button"), framework_requests_path, class: "cta govuk-button", data: { track_internal_link: true }) %>
     </div>
   <% end %>
 
-  <h2 class="govuk-heading-m"><%= t(".title") %></h2>
-  <div class="dfe-grid-container">
-    <% @categories.each do |category| %>
-      <%= render "category", category: category %>
-    <% end %>
-  </div>
+  <% if @popular_links.present? %>
+    <div class="homepage-popular-links govuk-!-margin-top-7 govuk-!-padding-bottom-7">
+      <h2 class="govuk-heading-m"><%= t(".popular_links_title") %></h2>
+      <div class="govuk-grid-row">
+        <%= render @popular_links %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
 
-  <p class="govuk-body">
-    <%= govuk_link_to t(".procurement_support"), framework_requests_path, target: "_blank", rel: "noopener noreferrer", data: { track_internal_link: true } %>
-  </p>
+<div>
+  <% if @featured_offers.present? %>
+    <h2 class="govuk-heading-m"><%= t(".offers_title") %></h2>
+    <div class="dfe-grid-container offers-grid-container">
+      <%= render @featured_offers %>
+    </div>
+  <% end %>
+
+  <div class="govuk-!-margin-top-7">
+    <h2 class="govuk-heading-m"><%= t(".title") %></h2>
+    <p class="govuk-body"><%= t(".subtitle") %></p>
+    <div class="homepage-category-list">
+      <ul class="chevron-card-list">
+        <%= render @categories %>
+      </ul>
+    </div>
+  </div>
 </div>
+
+<% content_for :sidebar do %>
+  <%= render partial: "shared/get_expert_help", locals: { get_expert_help: @get_expert_help, first_item: true } %>
+<% end %>

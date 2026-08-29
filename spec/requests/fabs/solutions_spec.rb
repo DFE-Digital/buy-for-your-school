@@ -26,6 +26,7 @@ RSpec.describe "FABS solutions", type: :request do
       url: "https://example.com/apply",
     )
   end
+  let(:get_expert_help) { instance_double(GetExpertHelp, title: "Get expert help", description: "Helpful content") }
 
   def document
     Capybara.string(response.body)
@@ -51,6 +52,7 @@ RSpec.describe "FABS solutions", type: :request do
       allow(RedirectMatcher).to receive(:call).with("/categories/banking-finance/audit-and-financial-services").and_return(nil)
       allow(Solution).to receive(:find_by_slug!).with("audit-and-financial-services").and_return(solution)
       allow(FABS::Category).to receive(:find_by_slug!).with("banking-finance").and_return(primary_category)
+      allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
     end
 
     it "renders the show page with canonical URL, breadcrumbs, details, related content, and default CTA text" do
