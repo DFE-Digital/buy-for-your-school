@@ -9,6 +9,7 @@ class PagesController < ApplicationController
   def show
     if page.present?
       @page_title = @page.title
+      @seo_description = @page.seo_description
       add_breadcrumb_on_rails(home_breadcrumb_name, home_breadcrumb_path)
       build_page_breadcrumbs(@page)
       render "fabs/pages/show", layout: "pages"
