@@ -5,6 +5,10 @@ RSpec.shared_context "with current energy contract" do |energy_type|
   let(:onboarding_case) { create(:onboarding_case, support_case:) }
   let(:case_organisation) { create(:energy_onboarding_case_organisation, onboarding_case:, onboardable: support_organisation) }
 
+  let(:too_far_future_year) { 6.years.from_now.year }
+  let(:too_far_past_year) { 6.years.ago.year }
+  let(:current_year) { Date.today.year }
+
   let(:expected_suppliers) do
     [
       "British Gas",
@@ -47,22 +51,22 @@ RSpec.shared_context "with current energy contract" do |energy_type|
     expect(page).to have_text(energy_type_error)
     expect(page).to have_text("Enter a contract end date") # missing date
 
-    fill_in_supplier_and_contract_end_date(day: "31", month: "12", year: "2035") # check upper limit of date
+    fill_in_supplier_and_contract_end_date(day: "31", month: "12", year: too_far_future_year) # check upper limit of date
     expect(page).to have_text("Enter a contract end date that’s no more than 1 year prior to and no more than 5 years from today’s date")
 
-    fill_in_supplier_and_contract_end_date(day: "10", month: "05", year: "2024") # check lower limit of date
+    fill_in_supplier_and_contract_end_date(day: "10", month: "05", year: too_far_past_year) # check lower limit of date
     expect(page).to have_text("Enter a contract end date that’s no more than 1 year prior to and no more than 5 years from today’s date")
 
-    fill_in_supplier_and_contract_end_date(day: "32", month: "01", year: "2025") # check invalid date
+    fill_in_supplier_and_contract_end_date(day: "32", month: "01", year: current_year) # check invalid date
     expect(page).to have_text("Contract end date must be a real date")
 
-    fill_in_supplier_and_contract_end_date(day: "29", month: "02", year: "2025") # check non leap year
+    fill_in_supplier_and_contract_end_date(day: "29", month: "02", year: current_year) # check non leap year
     expect(page).to have_text("Contract end date must be a real date")
 
-    fill_in_supplier_and_contract_end_date(day: "29", month: "", year: "2025") # enter date with month missing
+    fill_in_supplier_and_contract_end_date(day: "29", month: "", year: current_year) # enter date with month missing
     expect(page).to have_text("Enter a month")
 
-    fill_in_supplier_and_contract_end_date(day: "", month: "3", year: "2025") # enter date with day missing
+    fill_in_supplier_and_contract_end_date(day: "", month: "3", year: current_year) # enter date with day missing
     expect(page).to have_text("Enter a day")
 
     fill_in_supplier_and_contract_end_date(day: "29", month: "4", year: "") # enter date with year missing
@@ -72,7 +76,7 @@ RSpec.shared_context "with current energy contract" do |energy_type|
     expect(page).to have_text("Enter a year")
     expect(page).to have_text("Enter a month")
 
-    fill_in_supplier_and_contract_end_date(day: "31", month: "12", year: "2025")
+    fill_in_supplier_and_contract_end_date(day: "31", month: "12", year: current_year)
     expect(page).not_to have_current_path(path)
   end
 
