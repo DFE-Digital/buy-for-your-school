@@ -29,6 +29,7 @@ class SolutionsController < Fabs::ApplicationController
     @page_title = @solution.title
     @page_description = @solution.description
     @page_header_class = "details-header"
+    @seo_description = @solution.seo_description
     add_breadcrumb_on_rails :home_breadcrumb_name, :home_breadcrumb_path
     @canonical_url = category_solution_url(@primary_category.slug, @solution.slug)
 
