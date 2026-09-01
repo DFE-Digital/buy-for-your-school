@@ -78,6 +78,7 @@ RSpec.describe "FABS category pages", type: :request do
       buying_option_type: "dfe-approved",
       subcategories: [software_subcategory, hardware_subcategory],
       ways_to_buy: dps_ways_to_buy,
+      seo_description: "A DfE-approved ICT route seo description",
     )
   end
   let(:other_solution) do
@@ -91,6 +92,7 @@ RSpec.describe "FABS category pages", type: :request do
       buying_option_type: nil,
       subcategories: [software_subcategory],
       ways_to_buy: framework_ways_to_buy,
+      seo_description: "Software buying route seo description",
     )
   end
   let(:another_solution) do
@@ -104,6 +106,7 @@ RSpec.describe "FABS category pages", type: :request do
       buying_option_type: nil,
       subcategories: [software_subcategory, cyber_subcategory],
       ways_to_buy: framework_ways_to_buy,
+      seo_description: "Cyber route seo description",
     )
   end
   let(:category) do
@@ -117,6 +120,7 @@ RSpec.describe "FABS category pages", type: :request do
       related_content: [related_link],
       body_title: "Browse DfE-approved frameworks and deals",
       body_description: "including IT and ICT equipment and services",
+      seo_description: "IT seo description ",
     )
   end
 
@@ -124,7 +128,7 @@ RSpec.describe "FABS category pages", type: :request do
     Capybara.string(response.body)
   end
 
-  it "renders the category page with title, body content, solutions, related content, and breadcrumbs" do
+  it "renders the category page with title, body content, solutions, related content, and breadcrumbs and seo description" do
     get category_path("it")
 
     expect(response).to be_successful
@@ -134,6 +138,7 @@ RSpec.describe "FABS category pages", type: :request do
     expect(response.body).to include("Related reading")
     expect(response.body).to include("Browse DfE-approved frameworks and deals")
     expect(response.body).to include("including IT and ICT equipment and services")
+    expect(response.body).to include("IT seo description")
     expect(document).to have_link("Plan technology for your school", href: "http://localhost:3000/plan-technology")
     expect(document).to have_link("Home", href: "/")
   end

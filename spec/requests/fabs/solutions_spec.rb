@@ -24,6 +24,7 @@ RSpec.describe "FABS solutions", type: :request do
       provider_reference: "RM1234",
       call_to_action: nil,
       url: "https://example.com/apply",
+      seo_description: "Audit and financial services seo description",
     )
   end
 

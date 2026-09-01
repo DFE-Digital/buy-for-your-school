@@ -49,6 +49,7 @@ RSpec.describe "FABS pages", type: :request do
         body: "Child body",
         slug: "unit-trust-bank",
         parent: parent_page_entry,
+        seo_description: "Unit Trust Bank seo description",
         related_content: [
           related_content_entry(id: "rel-1", link_text: "Framework agreements", url: "/framework-agreements"),
         ],
@@ -67,6 +68,7 @@ RSpec.describe "FABS pages", type: :request do
     expect(response.body).to include("Unit Trust Bank")
     expect(response.body).to include("Child page description")
     expect(response.body).to include("Related reading")
+    expect(response.body).to include("Unit Trust Bank seo description")
     expect(document).to have_link("Home", href: "/")
     expect(document).to have_link("Banking and finance", href: "/categories/banking-finance")
     expect(document).to have_link("Current accounts and savings", href: "/current-account-and-savings")
