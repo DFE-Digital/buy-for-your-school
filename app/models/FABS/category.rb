@@ -9,7 +9,7 @@ module FABS
     SUMMARY_SELECT = "sys.id, fields.title, fields.description, fields.body_title,
       fields.body_description, fields.slug, fields.banner".freeze
 
-    attr_reader :id, :title, :description, :body_title, :body_description, :slug, :subcategories, :banner
+    attr_reader :id, :title, :description, :body_title, :body_description, :slug, :subcategories, :banner, :seo_description
 
     def initialize(entry)
       @id = entry.id
@@ -20,6 +20,7 @@ module FABS
       @slug = entry.fields[:slug]
       @subcategories = entry.fields.fetch(:subcategories, []).map { |subcat| Subcategory.new(subcat) }.sort_by(&:title)
       @banner = entry.fields[:banner] ? Banner.new(entry.fields[:banner]) : nil
+      @seo_description = entry.fields[:seo_description]
       super
     end
 
