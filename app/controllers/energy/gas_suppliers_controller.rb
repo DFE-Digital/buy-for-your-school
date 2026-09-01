@@ -26,23 +26,8 @@ module Energy
         **validation.to_h,
       )
 
-      preserve_submitted_contract_end_date
+      preserve_date_param(@form, :gas_supplier_form, :gas_current_contract_end_date)
       @form
-    end
-
-    # Show invalid input after error so user can correct it
-    def preserve_submitted_contract_end_date
-      return if @form.gas_current_contract_end_date.is_a?(Date)
-
-      submitted = params.fetch(:gas_supplier_form, {})
-      @form.instance_variable_set(
-        :@gas_current_contract_end_date,
-        {
-          1 => submitted["gas_current_contract_end_date(1i)"],
-          2 => submitted["gas_current_contract_end_date(2i)"],
-          3 => submitted["gas_current_contract_end_date(3i)"],
-        },
-      )
     end
 
     def validation
