@@ -82,10 +82,6 @@ en:
   breadcrumbs:
     offers: Offers
   categories:
-    filter_labels:
-      active_filters: Active filters
-      clear_all_filters: Clear all filters
-      remove_filter: Remove filter
     index:
       offers_title: DfE featured
       procurement_support: I need something else (opens in a new tab)
