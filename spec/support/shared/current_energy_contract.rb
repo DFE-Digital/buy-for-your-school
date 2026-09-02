@@ -7,7 +7,7 @@ RSpec.shared_context "with current energy contract" do |energy_type|
 
   let(:too_far_future_year) { 6.years.from_now.year }
   let(:too_far_past_year) { 6.years.ago.year }
-  let(:current_year) { Date.today.year }
+  let(:current_year) { Time.zone.today.year }
 
   let(:expected_suppliers) do
     [
