@@ -24,7 +24,12 @@
     <% end %>
   <% end %>
 
-  <%= render "energy/gas_suppliers/contract_end_date_field", form: form %>
+    <%= render "shared/date_input",
+    form: form,
+    attribute: :gas_current_contract_end_date,
+    legend: t("energy.current_contract.when_contract_ends"),
+    hint: t("energy.current_contract.date_for_example")
+  %>
 
   <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags, additional_classes: "validate_date") %>
 <% end %>
