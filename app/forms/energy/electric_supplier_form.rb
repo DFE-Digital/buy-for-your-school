@@ -1,4 +1,4 @@
-# Switch Energy Form
+# Electric Supplier Form
 #
 class Energy::ElectricSupplierForm < Energy::Form
   option :electric_current_supplier, Types::Params::Symbol, optional: true
