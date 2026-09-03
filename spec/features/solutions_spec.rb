@@ -32,6 +32,7 @@ RSpec.describe "Solutions pages", type: :feature do
       call_to_action: nil,
       url: "https://www.procurementservices.co.uk/our-solutions/frameworks/technology/it-hardware",
       primary_category: it_category,
+      seo_description: "IT hardware seo description",
     )
   end
 
@@ -50,6 +51,7 @@ RSpec.describe "Solutions pages", type: :feature do
       call_to_action: nil,
       url: "https://example.com/software",
       primary_category: it_category,
+      seo_description: "Software application seo description",
     )
   end
 
@@ -68,6 +70,7 @@ RSpec.describe "Solutions pages", type: :feature do
       call_to_action: nil,
       url: "https://example.com/musical-instruments",
       primary_category: it_category,
+      seo_description: "Musical instruments seo description",
     )
   end
 
@@ -86,6 +89,7 @@ RSpec.describe "Solutions pages", type: :feature do
       call_to_action: nil,
       url: "https://example.com/debt",
       primary_category: it_category,
+      seo_description: "Debt resolution seo description",
     )
   end
 
@@ -104,6 +108,7 @@ RSpec.describe "Solutions pages", type: :feature do
       call_to_action: "Go to site",
       url: "https://example.com/go-to-site",
       primary_category: it_category,
+      seo_description: "ICT procurement seo description",
     )
   end
 
@@ -135,6 +140,11 @@ RSpec.describe "Solutions pages", type: :feature do
 
     it "displays the related content link" do
       expect(page).to have_link("Plan technology for your school")
+    end
+
+    it "has seo description as meta tag" do
+      meta_description = page.find('meta[name="description"]', visible: false)
+      expect(meta_description[:content]).to eq("IT hardware seo description")
     end
 
     it "displays provider and expires when the solution has them" do

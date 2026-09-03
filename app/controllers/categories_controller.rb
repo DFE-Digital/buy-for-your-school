@@ -34,6 +34,7 @@ class CategoriesController < Fabs::ApplicationController
     @body_description = @category.body_description
 
     @category_slug = @category.slug
+    @seo_description = @category.seo_description
 
     render layout: "fabs_application"
   end

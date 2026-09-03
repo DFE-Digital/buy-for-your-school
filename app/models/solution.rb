@@ -18,6 +18,7 @@ class Solution
   FIELD_PROVIDER_REFERENCE = "fields.provider_reference".freeze
   FIELD_PRIMARY_CATEGORY = "fields.primary_category".freeze
   FIELD_WAYS_TO_BUY = "fields.ways_to_buy".freeze
+  FIELD_SEO_DESCRIPTION = "fields.seo_description".freeze
 
   SELECT_FIELDS = [
     SYS_ID,
@@ -36,6 +37,7 @@ class Solution
     FIELD_PROVIDER_REFERENCE,
     FIELD_PRIMARY_CATEGORY,
     FIELD_WAYS_TO_BUY,
+    FIELD_SEO_DESCRIPTION,
   ].join(",").freeze
 
   LIST_SELECT_FIELDS = [
@@ -55,6 +57,7 @@ class Solution
     FIELD_PROVIDER_REFERENCE,
     FIELD_PRIMARY_CATEGORY,
     FIELD_WAYS_TO_BUY,
+    FIELD_SEO_DESCRIPTION,
   ].join(",").freeze
 
   SEARCH_SELECT_FIELDS = [
@@ -69,13 +72,14 @@ class Solution
     FIELD_PRIMARY_CATEGORY,
     FIELD_PROVIDER_REFERENCE,
     FIELD_WAYS_TO_BUY,
+    FIELD_SEO_DESCRIPTION,
   ].join(",").freeze
 
   attr_reader :id, :title, :description, :expiry, :summary,
               :slug, :provider_name, :provider_initials, :url,
               :categories, :subcategories, :suffix, :call_to_action,
               :primary_category, :buying_option_type, :provider_reference,
-              :ways_to_buy
+              :ways_to_buy, :seo_description
 
   delegate :slug, to: :primary_category, prefix: true, allow_nil: true
 
@@ -97,6 +101,7 @@ class Solution
     @buying_option_type = entry.fields[:buying_option_type]
     @provider_reference = entry.fields[:provider_reference]
     @ways_to_buy = entry.fields[:ways_to_buy]
+    @seo_description = entry.fields[:seo_description]
     super
   end
 

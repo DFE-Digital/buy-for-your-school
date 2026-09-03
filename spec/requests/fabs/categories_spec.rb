@@ -73,6 +73,7 @@ RSpec.describe "Categories pages", type: :request do
         subcategories: [],
         solutions: [],
         filtered_solutions: [],
+        seo_description: "ICT business systems seo description",
       )
     end
 
