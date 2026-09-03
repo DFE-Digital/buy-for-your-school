@@ -17,9 +17,8 @@ echo "Deploying feature branch '$current_branch' onto development..."
 
 git fetch
 git checkout development
-git reset --hard origin/development
-git rebase "$current_branch"
-git push --force-with-lease
+git reset --hard "$current_branch"
+git push --force-with-lease origin development
 
 echo "Returning to $current_branch..."
 git checkout "$current_branch"
