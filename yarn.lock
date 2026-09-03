@@ -5540,10 +5540,10 @@ tinyglobby@^0.2.15:
     fdir "^6.5.0"
     picomatch "^4.0.4"
 
-tinymce@^7.9.3:
-  version "7.9.3"
-  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-7.9.3.tgz#74f0a04bdf662f90910512d3fe792f0d5f1111e3"
-  integrity sha512-Mtm54U5YJ6Pyo/GaAx+JSHXTGEuxrg2AowVWCD9zy1eBolp5Ub7S1rTtsyQdxhPegfhLuR3VLiTKGw1tacv09g==
+tinymce@^8.8.2:
+  version "8.8.2"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-8.8.2.tgz#d30e01ff36581074d97795cc0d0578030947b0ea"
+  integrity sha512-wcUGaaAf4XFrQtbZtClbDN/QCqklXLlPt3+7UWliEoosuhnTOJUkXwf7Fzlq7agPnwkKKp1e4JGOhx3O1gWH3g==
 
 tldts-core@^6.1.86:
   version "6.1.86"
