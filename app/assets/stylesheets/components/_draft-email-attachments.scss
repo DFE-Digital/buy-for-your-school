@@ -10,7 +10,7 @@
 }
 
 .draft-email__attachment.dz-error {
-  border: $govuk-border-width solid $govuk-error-colour;
+  border: $govuk-border-width solid govuk-functional-colour(error);
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -24,7 +24,7 @@
   @include govuk-font($size: 19);
   @include govuk-typography-weight-bold;
   grid-column: 2;
-  color: $govuk-error-colour;
+  color: govuk-functional-colour(error);
 }
 
 .draft-email__attachment-progress {
