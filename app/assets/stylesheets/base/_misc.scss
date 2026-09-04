@@ -80,7 +80,7 @@
 
 .fake-link {
   @extend .govuk-link;
-  color: $govuk-link-colour;
+  color: govuk-functional-colour(link);
   cursor: pointer;
 }
 

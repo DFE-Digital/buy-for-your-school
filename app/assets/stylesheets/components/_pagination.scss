@@ -43,7 +43,7 @@
 
     &:link,
     &:visited {
-      color: $govuk-link-colour;
+      color: govuk-functional-colour(link);
     }
 
     &:hover {
