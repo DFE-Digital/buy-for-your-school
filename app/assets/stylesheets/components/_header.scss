@@ -46,7 +46,7 @@
   bottom: 0;
   left: calc(50% - 50vw);
   right: calc(50% - 50vw);
-  background: $govuk-blue-tint-95;
+  background: govuk-colour("blue", $variant: "tint-95");
   box-shadow: 0 1px govuk-colour("black", $variant: "tint-80");
 }
 
