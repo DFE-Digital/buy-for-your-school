@@ -41,7 +41,7 @@
 }
 
 .info-box-grey {
-    background: govuk-colour("light-grey");
+    background: govuk-colour("black", $variant: "tint-95");
     padding: 20px;
     margin: 0px;
     margin-bottom: 20px;
@@ -80,12 +80,12 @@
 
 .fake-link {
   @extend .govuk-link;
-  color: $govuk-link-colour;
+  color: govuk-functional-colour(link);
   cursor: pointer;
 }
 
 .divider-bottom {
-  border-bottom: 1px solid $govuk-border-colour;
+  border-bottom: 1px solid govuk-functional-colour(border);
   margin-bottom: govuk-spacing(4);
 }
 
@@ -98,10 +98,6 @@ a:focus {
 }
 
 .govuk-secondary-text-colour {
-  color: #505a5f;
-}
-
-.results-count {
   color: #505a5f;
 }
 

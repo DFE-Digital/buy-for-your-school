@@ -2,8 +2,8 @@
   @include govuk-responsive-margin(2, "bottom");
   position: relative;
   padding: govuk-spacing(1);
-  border: 1px solid $govuk-border-colour;
-  background-color: govuk-colour("light-grey");
+  border: 1px solid govuk-functional-colour(border);
+  background-color: govuk-colour("black", $variant: "tint-95");
 }
 
 .expander[disabled], .expander:disabled {
@@ -68,7 +68,7 @@
 }
 
 .expander__subtitle {
-  @include govuk-font($size: 14);
+  @include govuk-font($size: 16);
   margin-top: 3px;
 }
 

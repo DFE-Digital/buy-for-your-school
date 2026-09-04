@@ -7,7 +7,6 @@
   flex-wrap: wrap;
 
   .govuk-header__signed-in-user {
-    font-size: 16px;
     line-height: 1;
     flex-shrink: 0;
     padding: 10px 0;
@@ -21,11 +20,11 @@
 }
 
 // DfE logo with correct size and focus style
-.govuk-header__link .govuk-header__logotype {
+.govuk-header__link .govuk-header__logotype, .govuk-header__homepage-link .govuk-header__logotype {
   height: 30px !important;
 }
 
-.govuk-header__link:focus .govuk-header__logotype {
+.govuk-header__link:focus .govuk-header__logotype, .govuk-header__homepage-link:focus .govuk-header__logotype {
   content: url(department-for-education_black.png);
   height: 30px !important;
 }
@@ -47,8 +46,8 @@
   bottom: 0;
   left: calc(50% - 50vw);
   right: calc(50% - 50vw);
-  background: $govuk-rebrand-template-background-colour;
-  box-shadow: 0 1px govuk-colour("mid-grey");
+  background: govuk-colour("blue", $variant: "tint-95");
+  box-shadow: 0 1px govuk-colour("black", $variant: "tint-80");
 }
 
 // Ensure mega menu column headers remain visible

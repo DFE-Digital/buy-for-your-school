@@ -3569,10 +3569,15 @@ govuk-frontend@4.4.1:
   resolved "https://registry.npmjs.org/govuk-frontend/-/govuk-frontend-4.4.1.tgz"
   integrity sha512-Jm1LUWiH9vy47b6HSH/ksSb4ueBrtTTgyLBk+3X2qqAmmFUc1AXWLSYHid07YYu1tvn9RnodWk5Bac5Ywqk6tA==
 
-govuk-frontend@^5.14.0, govuk-frontend@^5.3.1:
+govuk-frontend@^5.3.1:
   version "5.14.0"
   resolved "https://registry.npmjs.org/govuk-frontend/-/govuk-frontend-5.14.0.tgz"
   integrity sha512-MgfaXswIM6KpXS2T5gltEnzgVLgfM3UoE9+rYkhBiR0suaJ8Let31VZXQZqz9QhiPDbv28fW1nRjIyLujfZIBA==
+
+govuk-frontend@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-6.4.0.tgz#bacd856aae0b27862b9636734eddcfa14b90b3ac"
+  integrity sha512-jU3oaVFXqK1yDVIdZs1YZ6JD7YDB4PFUHF3rFMWJye9ArImp42F9wCsFzzB1+udjuzGCryJGcHHbBQ5HY+8rqQ==
 
 graceful-fs@^4.1.2, graceful-fs@^4.2.11, graceful-fs@^4.2.4, graceful-fs@^4.2.9:
   version "4.2.11"

@@ -18,7 +18,7 @@
 	}
 
   .case-panel {
-    border-bottom: 1px solid $govuk-border-colour;
+    border-bottom: 1px solid govuk-functional-colour(border);
     margin-bottom: 15px;
 
     .case-label {
@@ -89,6 +89,6 @@
   .filters-panel {
     @include govuk-responsive-margin(0, "bottom");
     padding: govuk-spacing(4);
-    border: 1px solid $govuk-border-colour;
+    border: 1px solid govuk-functional-colour(border);
   }
 }

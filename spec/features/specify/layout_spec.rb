@@ -13,7 +13,7 @@ RSpec.feature "Common layout element" do
   describe "header" do
     scenario "logo links back to homepage" do
       within ".govuk-header__logo" do
-        expect(page).to have_link href: "https://www.gov.uk", class: "govuk-header__link--homepage"
+        expect(page).to have_link href: "https://www.gov.uk", class: "govuk-header__homepage-link"
       end
     end
 

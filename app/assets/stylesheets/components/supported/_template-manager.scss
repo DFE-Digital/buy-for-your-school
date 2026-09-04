@@ -1,11 +1,11 @@
 .template-manager__filters-panel {
   @include govuk-responsive-margin(0, "bottom");
   padding: govuk-spacing(4);
-  border: 1px solid $govuk-border-colour;
+  border: 1px solid govuk-functional-colour(border);
 }
 
 .template-manager__templates-summary {
-  border-bottom: 1px solid $govuk-border-colour;
+  border-bottom: 1px solid govuk-functional-colour(border);
 }
 
 .template-manager__templates > ul {
@@ -15,12 +15,12 @@
 }
 
 .template-manager__templates > ul > li {
-  border-bottom: 1px solid $govuk-border-colour;
+  border-bottom: 1px solid govuk-functional-colour(border);
   padding-top: govuk-spacing(4);
 }
 
 .template-manager__templates > ul > div > fieldset > div > li {
-  border-bottom: 1px solid $govuk-border-colour;
+  border-bottom: 1px solid govuk-functional-colour(border);
 }
 
 .template-manager__template-actions {
@@ -50,7 +50,7 @@
   justify-content: space-between;
   padding-top: govuk-spacing(2);
   padding-bottom: govuk-spacing(2);
-  border-bottom: 1px solid $govuk-border-colour;
+  border-bottom: 1px solid govuk-functional-colour(border);
 }
 
 .template-manager__attachment-name {

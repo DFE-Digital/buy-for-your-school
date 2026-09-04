@@ -5,11 +5,17 @@
 
 // Increase contrast for search input placeholder
 .gem-c-search__input[type="search"]::placeholder {
-  color: govuk-colour("dark-grey");
+  color: govuk-colour("black", $variant: "tint-25");
   opacity: 1;
 }
 
 // Hide non accessible label error
 .gem-c-search__label--white {
   display: none;
+}
+
+.results-count {
+  display: flex;
+  justify-content: end;
+  color: #505a5f;
 }
