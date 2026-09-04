@@ -5,7 +5,7 @@ module FABS
     include ActiveModel::Model
     include HasRelatedContent
 
-    attr_reader :id, :title, :body, :description, :slug, :parent, :seo_description
+    attr_reader :id, :title, :body, :description, :slug, :parent, :seo_description, :updated_at
 
     def initialize(entry)
       @id = entry.id
@@ -16,6 +16,7 @@ module FABS
       parent_entry = entry.fields[:parent]
       @parent = build_parent_from_entry(parent_entry)
       @seo_description = entry.fields[:seo_description]
+      @updated_at = entry.updated_at
       super
     end
 
