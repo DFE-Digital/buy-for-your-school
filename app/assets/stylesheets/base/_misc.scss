@@ -85,7 +85,7 @@
 }
 
 .divider-bottom {
-  border-bottom: 1px solid $govuk-border-colour;
+  border-bottom: 1px solid govuk-functional-colour(border);
   margin-bottom: govuk-spacing(4);
 }
 
