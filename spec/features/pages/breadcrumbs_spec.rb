@@ -1,9 +1,10 @@
 RSpec.feature "Page with breadcrumbs" do
-  def contentful_entry(id:, fields:, content_type:)
+  def contentful_entry(id:, fields:, content_type:, updated_at: Time.zone.now)
     double(
       "Contentful::Entry",
       id:,
       fields:,
+      updated_at:,
       content_type: double("Contentful::ContentType", id: content_type),
     )
   end

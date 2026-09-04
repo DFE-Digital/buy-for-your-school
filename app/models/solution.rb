@@ -79,7 +79,7 @@ class Solution
               :slug, :provider_name, :provider_initials, :url,
               :categories, :subcategories, :suffix, :call_to_action,
               :primary_category, :buying_option_type, :provider_reference,
-              :ways_to_buy, :seo_description
+              :ways_to_buy, :seo_description, :updated_at
 
   delegate :slug, to: :primary_category, prefix: true, allow_nil: true
 
@@ -102,6 +102,7 @@ class Solution
     @provider_reference = entry.fields[:provider_reference]
     @ways_to_buy = entry.fields[:ways_to_buy]
     @seo_description = entry.fields[:seo_description]
+    @updated_at = entry.updated_at
     super
   end
 
@@ -201,6 +202,7 @@ class Solution
       url:,
       descr: description,
       expiry:,
+      updated_at:,
       body: summary,
       primary_category: {
         title: primary_category&.title,
