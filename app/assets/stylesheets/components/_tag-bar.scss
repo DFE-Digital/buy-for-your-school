@@ -5,7 +5,7 @@
 
 .tag-bar__group {
   padding: govuk-spacing(1);
-  background-color: govuk-colour("light-grey");
+  background-color: govuk-colour("black", $variant: "tint-95");
   display: flex;
   align-items: center;
 }
@@ -29,9 +29,9 @@
   display: table-cell;
   position: relative;
   padding: .5em .5em .5em 1.5em;
-  border: 1px solid govuk-colour("dark-grey");
+  border: 1px solid govuk-colour("black", $variant: "tint-25");
   border-radius: .3125em;
-  background-color: govuk-colour("light-grey");
+  background-color: govuk-colour("black", $variant: "tint-95");
 }
 
 .tag-bar__text {

@@ -1,10 +1,4 @@
 .activity-log-table {
-  @extend .govuk-\!-font-size-16;
-
-  table {
-    @extend .govuk-\!-font-size-16;
-  }
-
   .activity-log-date {
     width: 180px;
   }
@@ -20,12 +14,6 @@
 }
 
 .activity-log-table-advanced {
-  font-size: 15px;
-
-  table {
-    font-size: 15px;
-  }
-
   .activity-log-request {
     width: 330px;
   }
