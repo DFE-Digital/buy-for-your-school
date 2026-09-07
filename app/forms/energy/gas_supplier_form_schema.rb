@@ -12,38 +12,13 @@ class Energy::GasSupplierFormSchema < ::Support::Schema
   end
 
   rule(:gas_current_contract_end_date) do
-    parts = value.transform_keys(&:to_s)
-    date = hash_to_date.call(parts)
-
-    day = parts["day"]
-    month = parts["month"]
-    year = parts["year"]
-
-    # Nothing entered
-    if [day, month, year].all?(&:blank?)
-      key.failure(:missing)
-      next
-    end
-
-    # Incomplete date
-    if [day, month, year].any?(&:blank?)
-      key([:gas_current_contract_end_date_day]).failure(:missing_day) if day.blank?
-      key([:gas_current_contract_end_date_month]).failure(:missing_month) if month.blank?
-      key([:gas_current_contract_end_date_year]).failure(:missing_year) if year.blank?
-      next
-    end
-
-    # Invalid date
-    unless date
-      key.failure(:invalid_date)
-      next
-    end
-
-    # Out of range
-    min_date = Date.current - 1.year
-    max_date = Date.current + 5.years
-
-    key.failure(:invalid_range) unless date.between?(min_date, max_date)
+    validate_date_parts(
+      self,
+      :gas_current_contract_end_date,
+      value,
+      min: Date.current - 1.year,
+      max: Date.current + 5.years,
+    )
   end
 
   rule(:gas_current_supplier_other) do
