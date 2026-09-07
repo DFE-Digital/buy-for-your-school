@@ -18,14 +18,14 @@ SitemapGenerator::Sitemap.create(include_root: false) do
   end
 
   # Solutions
-  Solution.all.as_json.each do |solution|
-    category_slug = solution[:cat][:ref]
-    add "/categories/#{category_slug}/#{solution[:ref]}", lastmod: solution[:updated_at]
+  Solution.all.each do |solution|
+    category_slug = solution.primary_category.slug
+    add "/categories/#{category_slug}/#{solution.slug}", lastmod: solution.updated_at
   end
 
   # Pages
-  ContentfulClient.entries(content_type: "page", include: 4).each do |page|
-    add "/#{page.fields[:slug]}", lastmod: page.updated_at
+  FABS::Page.all.each do |page|
+    add "/#{page.slug}", lastmod: page.updated_at
   end
 end
 # rubocop:enable all
