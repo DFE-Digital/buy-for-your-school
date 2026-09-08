@@ -26,6 +26,8 @@ module Energy
         messages: validation.errors(full: true).to_h,
         **validation.to_h,
       )
+      preserve_date_param(@form, :electric_supplier_form, :electric_current_contract_end_date)
+      @form
     end
 
     def validation
