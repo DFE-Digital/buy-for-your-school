@@ -88,8 +88,6 @@ RSpec.describe "Categories pages", type: :request do
         body_description: nil,
         banner: nil,
         subcategories: [],
-        solutions: [],
-        filtered_solutions: [],
         seo_description: "ICT business systems seo description",
       )
     end
@@ -139,7 +137,7 @@ RSpec.describe "Categories pages", type: :request do
     )
   end
 
-  def build_category(title:, description:, slug:, body_title: nil, body_description: nil, banner: nil, subcategories: [])
+  def build_category(title:, description:, slug:, body_title: nil, body_description: nil, banner: nil, subcategories: [], seo_description: nil)
     FABS::Category.new(
       OpenStruct.new(
         id: slug,
@@ -151,6 +149,7 @@ RSpec.describe "Categories pages", type: :request do
           body_description:,
           banner:,
           subcategories:,
+          seo_description:,
         },
       ),
     )
