@@ -5,10 +5,11 @@ RSpec.describe "FABS pages", type: :request do
     Capybara.string(response.body)
   end
 
-  def contentful_entry(id:, fields:, content_type:)
+  def contentful_entry(id:, fields:, content_type:, updated_at: Time.zone.now)
     double(
       "Contentful::Entry",
       id:,
+      updated_at:,
       fields:,
       content_type: double("Contentful::ContentType", id: content_type),
     )

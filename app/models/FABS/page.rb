@@ -5,7 +5,9 @@ module FABS
     include ActiveModel::Model
     include HasRelatedContent
 
-    attr_reader :id, :title, :body, :description, :slug, :parent, :seo_description
+    CONTENT_TYPE = "page".freeze
+
+    attr_reader :id, :title, :body, :description, :slug, :parent, :seo_description, :updated_at
 
     def initialize(entry)
       @id = entry.id
@@ -16,6 +18,7 @@ module FABS
       parent_entry = entry.fields[:parent]
       @parent = build_parent_from_entry(parent_entry)
       @seo_description = entry.fields[:seo_description]
+      @updated_at = entry.updated_at
       super
     end
 
@@ -24,6 +27,13 @@ module FABS
       raise ContentfulRecordNotFoundError.new("Page not found", slug:) unless entry
 
       new(entry)
+    end
+
+    def self.all
+      ContentfulClient.entries(
+        content_type: CONTENT_TYPE,
+        include: 2,
+      ).map { |entry| new(entry) }
     end
 
   private
