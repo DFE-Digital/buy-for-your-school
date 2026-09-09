@@ -614,6 +614,8 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
+    readline (0.0.4)
+      reline
     redis (4.8.1)
     redis-actionpack (5.4.0)
       actionpack (>= 5, < 8)
@@ -908,6 +910,7 @@ DEPENDENCIES
   rails (~> 7, >= 7.2.3.2)
   rails-controller-testing
   rake
+  readline
   redis (~> 4.8)
   redis-client
   redis-namespace

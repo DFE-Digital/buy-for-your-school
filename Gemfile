@@ -78,6 +78,7 @@ group :development, :test do
   gem "knapsack"
   gem "pry-byebug"
   gem "pry-rails"
+  gem "readline"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance", require: false
   gem "ruby-lsp-rails"
