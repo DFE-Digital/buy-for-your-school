@@ -38,7 +38,7 @@ unless ENV["SKIP_COVERAGE"] == "1"
       ])
     end
 
-    track_files "**/*.rb"
+    cover "**/*.rb"
   end
 
   SimpleCov.at_exit do

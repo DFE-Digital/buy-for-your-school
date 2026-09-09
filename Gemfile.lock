@@ -128,8 +128,8 @@ GEM
     bindex (0.8.1)
     binding_of_caller (1.0.1)
       debug_inspector (>= 1.2.0)
-    bootsnap (1.18.4)
-      msgpack (~> 1.2)
+    bootsnap (1.26.0)
+      msgpack (~> 1.5)
     brakeman (6.1.2)
       racc
     breadcrumbs_on_rails (4.1.0)
@@ -188,7 +188,6 @@ GEM
     debug_inspector (1.2.0)
     declarative (0.0.20)
     diff-lcs (1.5.1)
-    docile (1.4.0)
     domain_name (0.6.20240107)
     dotenv (3.2.0)
     dotenv-rails (3.2.0)
@@ -526,7 +525,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.7.0)
+    prism (1.9.0)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -747,12 +746,7 @@ GEM
     simple_xlsx_reader (5.1.0)
       nokogiri
       rubyzip
-    simplecov (0.22.0)
-      docile (~> 1.1)
-      simplecov-html (~> 0.11)
-      simplecov_json_formatter (~> 0.1)
-    simplecov-html (0.12.3)
-    simplecov_json_formatter (0.1.4)
+    simplecov (1.2.0)
     sitemap_generator (7.1.1)
       builder (~> 3.0)
     spring (4.4.0)
@@ -851,7 +845,7 @@ DEPENDENCIES
   azure-blob (~> 0.8)
   better_errors
   binding_of_caller
-  bootsnap (>= 1.1.0)
+  bootsnap (>= 1.24.4)
   brakeman
   breadcrumbs_on_rails
   bundle-audit (~> 0.2.0)
@@ -927,7 +921,7 @@ DEPENDENCIES
   sidekiq (~> 6.4)
   sidekiq-cron (~> 2.4)
   simple_xlsx_reader
-  simplecov
+  simplecov (~> 1.2)
   sitemap_generator
   spring
   spring-commands-rspec

@@ -9,7 +9,7 @@ gem "application_insights"
 gem "ar-sequence"
 gem "aws-sdk-s3", require: false
 gem "azure-blob", "~> 0.8", require: false
-gem "bootsnap", ">= 1.1.0", require: false
+gem "bootsnap", ">= 1.24.4", require: false
 gem "breadcrumbs_on_rails"
 gem "contentful", "~> 2.19"
 gem "contentful-management", require: false
@@ -112,7 +112,7 @@ group :test do
   gem "redis-client"
   gem "rspec-rails"
   gem "shoulda-matchers"
-  gem "simplecov"
+  gem "simplecov", "~> 1.2"
   gem "webmock"
 end
 
