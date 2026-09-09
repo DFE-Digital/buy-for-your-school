@@ -320,7 +320,6 @@ jobs:
           docker cp coverage $CONTAINER_ID:/srv/app
           docker exec $CONTAINER_ID bash -c "ruby lib/code_coverage_collate.rb"
           docker cp $CONTAINER_ID:/srv/app/coverage/index.html coverage
-          docker cp $CONTAINER_ID:/srv/app/coverage/assets coverage
           docker cp $CONTAINER_ID:/srv/app/coverage/.last_run.json coverage
           docker stop $CONTAINER_ID
           docker rm $CONTAINER_ID
