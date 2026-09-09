@@ -1,4 +1,3 @@
-# :nocov:
 module Support
   class OtherSchoolForm
     extend Dry::Initializer
@@ -17,4 +16,3 @@ module Support
     end
   end
 end
-# :nocov:
