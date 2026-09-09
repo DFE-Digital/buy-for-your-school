@@ -64,14 +64,14 @@ gem "stimulus-rails"
 gem "terser"
 gem "thor"
 gem "turbo-rails"
-gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+gem "tzinfo-data", platforms: %i[windows jruby]
 gem "wicked_pdf"
 gem "will_paginate", "~> 4.0.0"
 gem "wisper", "3.0.0"
 gem "wkhtmltopdf-binary"
 
 group :development, :test do
-  gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "byebug", platforms: %i[mri windows]
   gem "dotenv-rails"
   gem "guard-rspec", require: false
   gem "i18n-tasks"
