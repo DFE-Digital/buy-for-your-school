@@ -134,7 +134,6 @@ GEM
     bundler-audit (0.9.3)
       bundler (>= 1.2.0)
       thor (~> 1.0)
-    byebug (12.0.0)
     capybara (3.40.0)
       addressable
       matrix
@@ -517,11 +516,6 @@ GEM
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    pry-byebug (3.11.0)
-      byebug (~> 12.0)
-      pry (>= 0.13, < 0.16)
-    pry-rails (0.3.11)
-      pry (>= 0.13.0)
     pstore (0.2.1)
     psych (5.3.1)
       date
@@ -601,8 +595,6 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
-    readline (0.0.4)
-      reline
     redis (4.8.1)
     redis-actionpack (5.5.0)
       actionpack (>= 5)
@@ -824,7 +816,6 @@ DEPENDENCIES
   brakeman
   breadcrumbs_on_rails
   bundle-audit (~> 0.2.0)
-  byebug
   capybara (>= 2.15)
   climate_control
   contentful (~> 2.19)
@@ -871,14 +862,11 @@ DEPENDENCIES
   pdf-forms
   pg
   pg_search
-  pry-byebug
-  pry-rails
   puma (~> 7)
   pundit
   rails (~> 7, >= 7.2.3.2)
   rails-controller-testing
   rake
-  readline
   redis (~> 4.8)
   redis-actionpack (~> 5.5)
   redis-client

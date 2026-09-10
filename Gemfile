@@ -70,14 +70,10 @@ gem "wisper", "3.0.0"
 gem "wkhtmltopdf-binary"
 
 group :development, :test do
-  gem "byebug", platforms: %i[mri windows]
   gem "dotenv-rails"
   gem "guard-rspec", require: false
   gem "i18n-tasks"
   gem "knapsack"
-  gem "pry-byebug"
-  gem "pry-rails"
-  gem "readline"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance", require: false
   gem "ruby-lsp-rails"
