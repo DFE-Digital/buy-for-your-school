@@ -8,11 +8,8 @@ gem "aasm"
 gem "application_insights"
 gem "ar-sequence"
 gem "aws-sdk-s3", require: false
-#
-# awaiting PR merge here: https://github.com/Azure/azure-storage-ruby/pull/228 due to need for faraday 2
-# gem "azure-storage-blob", "~> 2.0", require: false
-gem "azure-storage-blob", git: "https://github.com/honeyankit/azure-storage-ruby", ref: "patch-1", require: false
-gem "bootsnap", ">= 1.1.0", require: false
+gem "azure-blob", "~> 0.8", require: false
+gem "bootsnap", ">= 1.24.4", require: false
 gem "breadcrumbs_on_rails"
 gem "contentful", "~> 2.19"
 gem "contentful-management", require: false
@@ -67,20 +64,21 @@ gem "stimulus-rails"
 gem "terser"
 gem "thor"
 gem "turbo-rails"
-gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+gem "tzinfo-data", platforms: %i[windows jruby]
 gem "wicked_pdf"
 gem "will_paginate", "~> 4.0.0"
 gem "wisper", "3.0.0"
 gem "wkhtmltopdf-binary"
 
 group :development, :test do
-  gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "byebug", platforms: %i[mri windows]
   gem "dotenv-rails"
   gem "guard-rspec", require: false
   gem "i18n-tasks"
   gem "knapsack"
   gem "pry-byebug"
   gem "pry-rails"
+  gem "readline"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance", require: false
   gem "ruby-lsp-rails"
@@ -114,7 +112,7 @@ group :test do
   gem "redis-client"
   gem "rspec-rails"
   gem "shoulda-matchers"
-  gem "simplecov"
+  gem "simplecov", "~> 1.2"
   gem "webmock"
 end
 
