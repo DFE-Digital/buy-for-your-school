@@ -87,8 +87,6 @@ group :development, :test do
 end
 
 group :development do
-  gem "better_errors"
-  gem "binding_of_caller"
   gem "foreman"
   gem "listen", ">= 3.8", "< 3.10"
   gem "web-console", ">= 3.3.0"
