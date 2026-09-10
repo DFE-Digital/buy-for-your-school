@@ -21,6 +21,7 @@ describe "Agent can quick edit a case", :js do
       fill_in "Description of next key date", with: "Key event"
       choose "Yes"
       click_button "Save"
+      expect(page).to have_content("Case updated")
     end
 
     it "persists the changes" do

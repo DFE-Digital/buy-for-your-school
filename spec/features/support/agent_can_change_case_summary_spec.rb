@@ -29,7 +29,8 @@ describe "Agent can change case summary", :js do
       fill_in "Description of next key date", with: "Key event"
       click_button "Continue"
       click_button "Save"
-      sleep 0.5
+      expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
+      expect(page).to have_content("10/08/2023")
     end
 
     it "persists the changes" do
@@ -105,7 +106,8 @@ describe "Agent can change case summary", :js do
       fill_in "Description of next key date", with: "Key event"
       click_button "Continue"
       click_button "Save"
-      sleep 0.5
+      expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
+      expect(page).to have_content("On Hold")
     end
 
     it "persists the changes" do
