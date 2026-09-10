@@ -91,10 +91,6 @@ group :development do
   gem "binding_of_caller"
   gem "foreman"
   gem "listen", ">= 3.8", "< 3.10"
-  gem "spring"
-  gem "spring-commands-rspec"
-  # Incompatible with spring 3.0 and higher
-  # gem "spring-watcher-listen", "~> 2.0.0"
   gem "web-console", ">= 3.3.0"
 end
 

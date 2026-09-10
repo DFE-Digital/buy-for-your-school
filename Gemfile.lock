@@ -737,9 +737,6 @@ GEM
     simplecov (1.2.0)
     sitemap_generator (7.1.1)
       builder (~> 3.0)
-    spring (4.4.0)
-    spring-commands-rspec (1.0.4)
-      spring (>= 0.9.1)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -910,8 +907,6 @@ DEPENDENCIES
   simple_xlsx_reader
   simplecov (~> 1.2)
   sitemap_generator
-  spring
-  spring-commands-rspec
   sprockets-rails
   stimulus-rails
   terminal-notifier
