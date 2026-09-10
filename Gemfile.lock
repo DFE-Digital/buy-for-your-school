@@ -421,7 +421,8 @@ GEM
     libv8-node (24.1.0.0-x86_64-darwin)
     libv8-node (24.1.0.0-x86_64-linux)
     liquid (5.5.0)
-    listen (3.9.0)
+    listen (3.10.0)
+      logger
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     llhttp-ffi (0.5.1)
@@ -883,7 +884,7 @@ DEPENDENCIES
   knapsack
   kramdown
   liquid
-  listen (>= 3.8, < 3.10)
+  listen (>= 3.8, < 3.11)
   loaf
   mini_racer
   mock_redis
