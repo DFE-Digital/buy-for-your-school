@@ -14,6 +14,14 @@ module Support
       @draft = @draft.save_draft!
 
       redirect_to redirect_url
+    rescue StandardError => e
+      Rollbar.warning(
+        "Draft create failed",
+        exception: e,
+        current_case_ref: current_case.ref,
+        current_email:,
+      )
+      raise
     end
 
     def submit
