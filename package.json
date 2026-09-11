@@ -49,6 +49,7 @@
     "minimatch": "3.1.4",
     "node-forge": "1.4.0",
     "on-headers": "1.1.0",
+    "qs": "6.16.0",
     "shell-quote": "1.9.0",
     "websocket-driver": "0.7.5",
     "ws": "8.21.0",
