@@ -38,6 +38,7 @@
   "resolutions": {
     "@babel/core": "7.29.7",
     "ajv": "8.18.0",
+    "baseline-browser-mapping": "2.11.0",
     "brace-expansion": "1.1.18",
     "follow-redirects": "1.16.0",
     "fast-uri": "3.1.6",
