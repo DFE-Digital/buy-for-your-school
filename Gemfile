@@ -70,6 +70,7 @@ gem "wisper", "3.0.0"
 gem "wkhtmltopdf-binary"
 
 group :development, :test do
+  gem "benchmark", require: false
   gem "dotenv-rails"
   gem "guard-rspec", require: false
   gem "i18n-tasks"

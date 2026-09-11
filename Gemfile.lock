@@ -815,6 +815,7 @@ DEPENDENCIES
   ar-sequence
   aws-sdk-s3
   azure-blob (~> 0.8)
+  benchmark
   bootsnap (>= 1.24.4)
   brakeman
   breadcrumbs_on_rails
