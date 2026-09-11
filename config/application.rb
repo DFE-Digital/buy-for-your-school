@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative "boot"
 require_relative "../lib/real_ip"
 
@@ -21,9 +19,6 @@ module BuyForYourSchool
                        request_specs: false
       g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
-
-    # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.1
 
     # Make sure the `form_with` helper generates local forms, instead of defaulting
     # to remote and unobtrusive XHR forms
@@ -87,6 +82,23 @@ module BuyForYourSchool
     # Enable locale substitution from Contentful
     config.x.public_frontend_contentful_enabled = true
 
+    # Don't raise exceptions for undefined feature flags
     config.flipper.strict = false
+
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 7.2
+
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks])
+
+    # Configuration for the application, engines, and railties goes here.
+    #
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
+    #
+    # config.time_zone = "Central Time (US & Canada)"
+    # config.eager_load_paths << Rails.root.join("extras")
   end
 end
