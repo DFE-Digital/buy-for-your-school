@@ -24,6 +24,7 @@ class SolutionsController < Fabs::ApplicationController
     @solution = Solution.find_by_slug!(params[:slug])
     @category = FABS::Category.find_by_slug!(params[:category_slug])
     @primary_category = @solution.primary_category
+    @get_expert_help = GetExpertHelp.content
 
     @page_section_title = t(".section_title")
     @page_title = @solution.title

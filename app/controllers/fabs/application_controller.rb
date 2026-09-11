@@ -4,17 +4,13 @@ class Fabs::ApplicationController < ApplicationController
   rescue_from ContentfulRecordNotFoundError, with: :record_not_found
 
   skip_before_action :authenticate_user!
-  before_action :enable_search_in_header, :page_back_link, :canonical_url
+  before_action :page_back_link, :canonical_url
   before_action :reload_translations, if: -> { Rails.configuration.x.public_frontend_contentful_enabled }
 
 private
 
   def record_not_found
     render "errors/not_found", status: :not_found
-  end
-
-  def enable_search_in_header
-    @show_search_in_header = true
   end
 
   def page_back_link

@@ -41,6 +41,23 @@ RSpec.describe Offer, type: :model do
     end
   end
 
+  describe ".featured_offers" do
+    subject(:offers) { described_class.featured_offers }
+
+    let(:featured_entry_1) { offer_entry(id: "offer-1", title: "Alpha offer", slug: "alpha-offer", sort_order: 1, featured_on_homepage: true) }
+    let(:featured_entry_2) { offer_entry(id: "offer-2", title: "Beta offer", slug: "beta-offer", sort_order: 2, featured_on_homepage: true) }
+    let(:featured_entry_3) { offer_entry(id: "offer-3", title: "Gamma offer", slug: "gamma-offer", sort_order: 3, featured_on_homepage: true) }
+
+    before do
+      allow(ContentfulClient).to receive(:entries).and_return([featured_entry_1, featured_entry_2, featured_entry_3])
+    end
+
+    it "returns offers in correct order" do
+      expect(offers).to have_attributes(length: 3)
+      expect(offers.map(&:slug)).to eq(%w[alpha-offer beta-offer gamma-offer])
+    end
+  end
+
   describe ".find_by_slug!" do
     subject(:offer) { described_class.find_by_slug!(slug) }
 
