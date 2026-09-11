@@ -1,7 +1,4 @@
 require "active_support/core_ext/integer/time"
-# Load environment variables that are created by GPaaS
-require_relative "../../lib/vcap_parser"
-VcapParser.load_service_environment_variables!
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
