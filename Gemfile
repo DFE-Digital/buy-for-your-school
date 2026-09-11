@@ -46,11 +46,11 @@ gem "pg"
 gem "pg_search"
 gem "puma", "~> 7"
 gem "pundit"
-gem "rails", "~> 7", ">= 7.2.3.2"
+gem "rails", "~> 8.0"
 gem "rake"
 gem "redis", "~> 4.8"
+gem "redis-actionpack", "~> 5.5"
 gem "redis-namespace"
-gem "redis-rails"
 gem "rollbar"
 gem "rubyXL"
 gem "scenic"
@@ -70,14 +70,11 @@ gem "wisper", "3.0.0"
 gem "wkhtmltopdf-binary"
 
 group :development, :test do
-  gem "byebug", platforms: %i[mri windows]
+  gem "benchmark", require: false
   gem "dotenv-rails"
   gem "guard-rspec", require: false
   gem "i18n-tasks"
   gem "knapsack"
-  gem "pry-byebug"
-  gem "pry-rails"
-  gem "readline"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance", require: false
   gem "ruby-lsp-rails"
@@ -87,14 +84,8 @@ group :development, :test do
 end
 
 group :development do
-  gem "better_errors"
-  gem "binding_of_caller"
   gem "foreman"
   gem "listen", ">= 3.8", "< 3.10"
-  gem "spring"
-  gem "spring-commands-rspec"
-  # Incompatible with spring 3.0 and higher
-  # gem "spring-watcher-listen", "~> 2.0.0"
   gem "web-console", ">= 3.3.0"
 end
 
