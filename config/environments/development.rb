@@ -77,7 +77,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Console colorised output
-  config.log_format = :color 
+  config.log_format = :color
 
   # Append comments with runtime information tags to SQL queries in logs.
   config.active_record.query_log_tags_enabled = true

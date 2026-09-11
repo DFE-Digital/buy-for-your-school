@@ -48,10 +48,10 @@ Rails.application.configure do
     :request_id,
     ->(request) { request.env["ApplicationInsights.request.id"] },
   ]
-  config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
+  config.logger = ActiveSupport::TaggedLogging.logger($stdout)
 
   # Don't log SQL queries
-  config.active_record.logger = nil 
+  config.active_record.logger = nil
 
   # Prevent health checks from clogging up the logs.
   config.silence_healthcheck_path = "/up"
@@ -124,7 +124,7 @@ Rails.application.configure do
   end
 
   # Only use :id for inspections in production.
-  config.active_record.attributes_for_inspect = [ :id ]
+  config.active_record.attributes_for_inspect = [:id]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   [
