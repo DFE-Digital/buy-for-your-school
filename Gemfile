@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby file: ".ruby-version"
 
 gem "aasm"
-gem "application_insights"
+gem "application_insights", "0.5.10", github: "AirIndemnite/ApplicationInsights-Ruby"
 gem "ar-sequence"
 gem "aws-sdk-s3", require: false
 gem "azure-blob", "~> 0.8", require: false
