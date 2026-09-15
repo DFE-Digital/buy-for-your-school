@@ -24,250 +24,72 @@
       "note": ""
     },
     {
-      "warning_type": "Dynamic Render Path",
-      "warning_code": 15,
-      "fingerprint": "0854fd9d7c5fab94107cd75a427609e602a65d82d13a9260fe9000ec71c3b24e",
-      "check_name": "Render",
-      "message": "Render path contains parameter value",
-      "file": "app/views/frameworks/provider_contacts/show/_history.html.erb",
-      "line": 1,
-      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => ActivityLog::HistoryComponent.new(:activity_log_items => Frameworks::ProviderContact.find(params[:id]).activity_log_items.paginate(:page => params[:activities_page])), {})",
+      "warning_type": "Dangerous Eval",
+      "warning_code": 13,
+      "fingerprint": "05bb946f6f35bc1989969146994a3c283f7588d0164b6c91e206cf23054e2c15",
+      "check_name": "Evaluation",
+      "message": "Dynamic string evaluated as code",
+      "file": "app/views/support/case_statistics/_by_status.html.erb",
+      "line": 60,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
+      "code": "eval(\"@live_cases.#{status}.count\")",
       "render_path": [
-        {
-          "type": "controller",
-          "class": "Frameworks::ProviderContactsController",
-          "method": "show",
-          "line": 13,
-          "file": "app/controllers/frameworks/provider_contacts_controller.rb",
-          "rendered": {
-            "name": "frameworks/provider_contacts/show",
-            "file": "app/views/frameworks/provider_contacts/show.html.erb"
-          }
-        },
         {
           "type": "template",
-          "name": "frameworks/provider_contacts/show",
-          "line": 40,
-          "file": "app/views/frameworks/provider_contacts/show.html.erb",
+          "name": "support/case_statistics/_tab_person",
+          "line": 3,
+          "file": "app/views/support/case_statistics/_tab_person.html.erb",
           "rendered": {
-            "name": "frameworks/provider_contacts/show/_history",
-            "file": "app/views/frameworks/provider_contacts/show/_history.html.erb"
+            "name": "support/case_statistics/_by_status",
+            "file": "app/views/support/case_statistics/_by_status.html.erb"
           }
         }
       ],
       "location": {
         "type": "template",
-        "template": "frameworks/provider_contacts/show/_history"
-      },
-      "user_input": "params[:activities_page]",
-      "confidence": "Weak",
-      "cwe_id": [
-        22
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Dynamic Render Path",
-      "warning_code": 15,
-      "fingerprint": "0bb9d316930182410224e235ece8dd8591c92966fb97a1f3520c82420bf7a066",
-      "check_name": "Render",
-      "message": "Render path contains parameter value",
-      "file": "app/views/frameworks/evaluations/index.html.erb",
-      "line": 13,
-      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => Frameworks::Evaluation.filtering(filter_form_params).results.paginate(:page => params[:evaluations_page]), {})",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Frameworks::EvaluationsController",
-          "method": "index",
-          "line": 12,
-          "file": "app/controllers/frameworks/evaluations_controller.rb",
-          "rendered": {
-            "name": "frameworks/evaluations/index",
-            "file": "app/views/frameworks/evaluations/index.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "frameworks/evaluations/index"
-      },
-      "user_input": "params[:evaluations_page]",
-      "confidence": "Weak",
-      "cwe_id": [
-        22
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Dynamic Render Path",
-      "warning_code": 15,
-      "fingerprint": "188c6c6b5b31525ba4c9508067846c8542e28b3f2b6a1850c158f6662c532303",
-      "check_name": "Render",
-      "message": "Render path contains parameter value",
-      "file": "app/views/frameworks/providers/index.html.erb",
-      "line": 13,
-      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => Frameworks::Provider.filtering(filter_form_params).results.paginate(:page => params[:providers_page]), {})",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Frameworks::ProvidersController",
-          "method": "index",
-          "line": 7,
-          "file": "app/controllers/frameworks/providers_controller.rb",
-          "rendered": {
-            "name": "frameworks/providers/index",
-            "file": "app/views/frameworks/providers/index.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "frameworks/providers/index"
-      },
-      "user_input": "params[:providers_page]",
-      "confidence": "Weak",
-      "cwe_id": [
-        22
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "2ef6ebeba0d2146fb5e1de20d86b6c3b18fec55be2ce6d7ce57f73ee4d4de9e0",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/frameworks/framework/sortable.rb",
-      "line": 11,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Arel.sql(\"regexp_replace(frameworks_frameworks.reference, 'F', '')::int #{safe_direction(direction)}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Frameworks::Framework::Sortable",
-        "method": null
-      },
-      "user_input": "safe_direction(direction)",
-      "confidence": "Medium",
-      "cwe_id": [
-        89
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Dynamic Render Path",
-      "warning_code": 15,
-      "fingerprint": "3e64491e5beaa655ce36e95350fc20f5ed306e08b75d4909885aca7784df1d18",
-      "check_name": "Render",
-      "message": "Render path contains parameter value",
-      "file": "app/views/frameworks/frameworks/index.html.erb",
-      "line": 13,
-      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => Frameworks::Framework.filtering(filter_form_params).results.paginate(:page => params[:frameworks_page]), {})",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Frameworks::FrameworksController",
-          "method": "index",
-          "line": 16,
-          "file": "app/controllers/frameworks/frameworks_controller.rb",
-          "rendered": {
-            "name": "frameworks/frameworks/index",
-            "file": "app/views/frameworks/frameworks/index.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "frameworks/frameworks/index"
-      },
-      "user_input": "params[:frameworks_page]",
-      "confidence": "Weak",
-      "cwe_id": [
-        22
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Dynamic Render Path",
-      "warning_code": 15,
-      "fingerprint": "432d3e56c9b36c14892853ecc585ba8356f02654b83ef979338e3619f3569b4e",
-      "check_name": "Render",
-      "message": "Render path contains parameter value",
-      "file": "app/views/frameworks/provider_contacts/index.html.erb",
-      "line": 13,
-      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => Frameworks::ProviderContact.filtering(filter_form_params).results.paginate(:page => params[:provider_contacts_page]), {})",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Frameworks::ProviderContactsController",
-          "method": "index",
-          "line": 8,
-          "file": "app/controllers/frameworks/provider_contacts_controller.rb",
-          "rendered": {
-            "name": "frameworks/provider_contacts/index",
-            "file": "app/views/frameworks/provider_contacts/index.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "frameworks/provider_contacts/index"
-      },
-      "user_input": "params[:provider_contacts_page]",
-      "confidence": "Weak",
-      "cwe_id": [
-        22
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "7b626cf917f6eb123c72612cc71a981fcf7ecc1d44773d6e0230d8602e3d3c5c",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/support/management/email_templates/template_manager/templates/_template.html.erb",
-      "line": 54,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "(Unresolved Model).new.body_parsed",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Support::Management::SchoolsEmails::SchoolsEmailsTemplates::TemplatesController",
-          "method": "index",
-          "line": 10,
-          "file": "app/controllers/support/management/schools_emails/schools_emails_templates/templates_controller.rb",
-          "rendered": {
-            "name": "support/management/schools_emails/schools_emails_templates/templates/index",
-            "file": "app/views/support/management/schools_emails/schools_emails_templates/templates/index.html.erb"
-          }
-        },
-        {
-          "type": "template",
-          "name": "support/management/schools_emails/schools_emails_templates/templates/index",
-          "line": 31,
-          "file": "app/views/support/management/schools_emails/schools_emails_templates/templates/index.html.erb",
-          "rendered": {
-            "name": "support/management/email_templates/template_manager/templates/_template",
-            "file": "app/views/support/management/email_templates/template_manager/templates/_template.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "support/management/email_templates/template_manager/templates/_template"
+        "template": "support/case_statistics/_by_status"
       },
       "user_input": null,
-      "confidence": "High",
+      "confidence": "Weak",
       "cwe_id": [
-        79
-      ]
+        913,
+        95
+      ],
+      "note": "Case status is derived from enum DB column so no risk here"
+    },
+    {
+      "warning_type": "Dangerous Eval",
+      "warning_code": 13,
+      "fingerprint": "1ef4f40f06195c3253ff718a1f4cd8b84c8cf553638381acb955e7683d82cf0c",
+      "check_name": "Evaluation",
+      "message": "Dynamic string evaluated as code",
+      "file": "app/views/support/case_statistics/_by_status.html.erb",
+      "line": 40,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
+      "code": "eval(\"@live_cases.assigned_to_non_caseworkers.#{status}.count\")",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "support/case_statistics/_tab_person",
+          "line": 3,
+          "file": "app/views/support/case_statistics/_tab_person.html.erb",
+          "rendered": {
+            "name": "support/case_statistics/_by_status",
+            "file": "app/views/support/case_statistics/_by_status.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "support/case_statistics/_by_status"
+      },
+      "user_input": null,
+      "confidence": "Weak",
+      "cwe_id": [
+        913,
+        95
+      ],
+      "note": "Case status is derived from enum DB column so no risk here"
     },
     {
       "warning_type": "Cross-Site Scripting",
@@ -347,82 +169,82 @@
       "note": ""
     },
     {
-      "warning_type": "Dynamic Render Path",
-      "warning_code": 15,
-      "fingerprint": "96a1220b12d66145810d7fd48dac7c64090c7910e0f886739c151af4b5df1682",
-      "check_name": "Render",
-      "message": "Render path contains parameter value",
-      "file": "app/views/frameworks/providers/show/_history.html.erb",
-      "line": 1,
-      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => ActivityLog::HistoryComponent.new(:activity_log_items => Frameworks::Provider.find(params[:id]).activity_log_items.paginate(:page => params[:activities_page])), {})",
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "7b626cf917f6eb123c72612cc71a981fcf7ecc1d44773d6e0230d8602e3d3c5c",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/support/management/email_templates/template_manager/templates/_template.html.erb",
+      "line": 54,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "(Unresolved Model).new.body_parsed",
       "render_path": [
         {
           "type": "controller",
-          "class": "Frameworks::ProvidersController",
-          "method": "show",
-          "line": 12,
-          "file": "app/controllers/frameworks/providers_controller.rb",
+          "class": "Support::Management::SchoolsEmails::SchoolsEmailsTemplates::TemplatesController",
+          "method": "index",
+          "line": 10,
+          "file": "app/controllers/support/management/schools_emails/schools_emails_templates/templates_controller.rb",
           "rendered": {
-            "name": "frameworks/providers/show",
-            "file": "app/views/frameworks/providers/show.html.erb"
+            "name": "support/management/schools_emails/schools_emails_templates/templates/index",
+            "file": "app/views/support/management/schools_emails/schools_emails_templates/templates/index.html.erb"
           }
         },
         {
           "type": "template",
-          "name": "frameworks/providers/show",
-          "line": 49,
-          "file": "app/views/frameworks/providers/show.html.erb",
+          "name": "support/management/schools_emails/schools_emails_templates/templates/index",
+          "line": 31,
+          "file": "app/views/support/management/schools_emails/schools_emails_templates/templates/index.html.erb",
           "rendered": {
-            "name": "frameworks/providers/show/_history",
-            "file": "app/views/frameworks/providers/show/_history.html.erb"
+            "name": "support/management/email_templates/template_manager/templates/_template",
+            "file": "app/views/support/management/email_templates/template_manager/templates/_template.html.erb"
           }
         }
       ],
       "location": {
         "type": "template",
-        "template": "frameworks/providers/show/_history"
+        "template": "support/management/email_templates/template_manager/templates/_template"
       },
-      "user_input": "params[:activities_page]",
-      "confidence": "Weak",
+      "user_input": null,
+      "confidence": "High",
       "cwe_id": [
-        22
+        79
       ],
       "note": ""
     },
     {
-      "warning_type": "Dynamic Render Path",
-      "warning_code": 15,
-      "fingerprint": "980fba543310693da0639b846104e0423a33d4f9306cea00b5e33b5e877e0c7a",
-      "check_name": "Render",
-      "message": "Render path contains parameter value",
-      "file": "app/views/frameworks/evaluations/show.html.erb",
-      "line": 59,
-      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => ActivityLog::HistoryComponent.new(:activity_log_items => Frameworks::Evaluation.find(params[:id]).activity_log_items.order(\"created_at DESC\").paginate(:page => params[:activity_log_page])), {})",
+      "warning_type": "Dangerous Eval",
+      "warning_code": 13,
+      "fingerprint": "846e6fca6d3ae8c0fa1e2ca61a72e7111ae77a1fa5e7c264e8545ec66f6aa1c9",
+      "check_name": "Evaluation",
+      "message": "Dynamic string evaluated as code",
+      "file": "app/views/support/case_statistics/_by_status.html.erb",
+      "line": 29,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
+      "code": "eval(\"@live_cases.by_agent(agent.id).#{status}.count\")",
       "render_path": [
         {
-          "type": "controller",
-          "class": "Frameworks::EvaluationsController",
-          "method": "show",
-          "line": 17,
-          "file": "app/controllers/frameworks/evaluations_controller.rb",
+          "type": "template",
+          "name": "support/case_statistics/_tab_person",
+          "line": 3,
+          "file": "app/views/support/case_statistics/_tab_person.html.erb",
           "rendered": {
-            "name": "frameworks/evaluations/show",
-            "file": "app/views/frameworks/evaluations/show.html.erb"
+            "name": "support/case_statistics/_by_status",
+            "file": "app/views/support/case_statistics/_by_status.html.erb"
           }
         }
       ],
       "location": {
         "type": "template",
-        "template": "frameworks/evaluations/show"
+        "template": "support/case_statistics/_by_status"
       },
-      "user_input": "params[:activity_log_page]",
+      "user_input": null,
       "confidence": "Weak",
       "cwe_id": [
-        22
+        913,
+        95
       ],
-      "note": ""
+      "note": "Agent id and status are derived from integer and enum DB columns so no risk here"
     },
     {
       "warning_type": "SQL Injection",
@@ -454,7 +276,7 @@
       "check_name": "MassAssignment",
       "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
       "file": "app/controllers/support/cases_controller.rb",
-      "line": 63,
+      "line": 79,
       "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
       "code": "params.fetch(:tower, {}).fetch(tab, {}).permit!",
       "render_path": null,
@@ -562,104 +384,39 @@
       "note": ""
     },
     {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "e09a55726782a4df4a1d7a66771b0b700c06cb19214d3b3b628b34840106ba5e",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/components/school_picker/_school_picker_results.html.erb",
-      "line": 4,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "I18n.t(\"components.school_picker.table.selected\", :total => CaseRequest.find_by(:id => params[:id]).organisation.organisations.order(:name).count, :group_name => CaseRequest.find_by(:id => params[:id]).organisation.name)",
+      "warning_type": "Dangerous Eval",
+      "warning_code": 13,
+      "fingerprint": "f91ef4a733c8e13db986bbbb080755a7f9b27019fae6977a0cc43f7e1a49b06b",
+      "check_name": "Evaluation",
+      "message": "Dynamic string evaluated as code",
+      "file": "app/views/support/case_statistics/_by_status.html.erb",
+      "line": 50,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
+      "code": "eval(\"@live_cases.unassigned.#{status}.count\")",
       "render_path": [
         {
-          "type": "controller",
-          "class": "Engagement::CaseRequests::SchoolPickersController",
-          "method": "edit",
-          "line": 13,
-          "file": "app/controllers/engagement/case_requests/school_pickers_controller.rb",
-          "rendered": {
-            "name": "engagement/case_requests/school_pickers/edit",
-            "file": "app/views/engagement/case_requests/school_pickers/edit.html.erb"
-          }
-        },
-        {
           "type": "template",
-          "name": "engagement/case_requests/school_pickers/edit",
+          "name": "support/case_statistics/_tab_person",
           "line": 3,
-          "file": "app/views/engagement/case_requests/school_pickers/edit.html.erb",
+          "file": "app/views/support/case_statistics/_tab_person.html.erb",
           "rendered": {
-            "name": "components/school_picker/_school_picker",
-            "file": "app/views/components/school_picker/_school_picker.html.erb"
-          }
-        },
-        {
-          "type": "template",
-          "name": "components/school_picker/_school_picker",
-          "line": 9,
-          "file": "app/views/components/school_picker/_school_picker.html.erb",
-          "rendered": {
-            "name": "components/school_picker/_school_picker_results",
-            "file": "app/views/components/school_picker/_school_picker_results.html.erb"
+            "name": "support/case_statistics/_by_status",
+            "file": "app/views/support/case_statistics/_by_status.html.erb"
           }
         }
       ],
       "location": {
         "type": "template",
-        "template": "components/school_picker/_school_picker_results"
+        "template": "support/case_statistics/_by_status"
       },
-      "user_input": "CaseRequest.find_by(:id => params[:id]).organisation",
+      "user_input": null,
       "confidence": "Weak",
       "cwe_id": [
-        79
+        913,
+        95
       ],
-      "note": ""
-    },
-    {
-      "warning_type": "Dynamic Render Path",
-      "warning_code": 15,
-      "fingerprint": "faf7621a09154f735c29c0be769dc1a65f68ded0be082d38d833f8be5e74bd95",
-      "check_name": "Render",
-      "message": "Render path contains parameter value",
-      "file": "app/views/frameworks/frameworks/show/_framework_history.html.erb",
-      "line": 2,
-      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
-      "code": "render(action => ActivityLog::HistoryComponent.new(:activity_log_items => Frameworks::Framework.find(params[:id]).activity_log_items.paginate(:page => params[:activities_page])), {})",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Frameworks::FrameworksController",
-          "method": "show",
-          "line": 21,
-          "file": "app/controllers/frameworks/frameworks_controller.rb",
-          "rendered": {
-            "name": "frameworks/frameworks/show",
-            "file": "app/views/frameworks/frameworks/show.html.erb"
-          }
-        },
-        {
-          "type": "template",
-          "name": "frameworks/frameworks/show",
-          "line": 50,
-          "file": "app/views/frameworks/frameworks/show.html.erb",
-          "rendered": {
-            "name": "frameworks/frameworks/show/_framework_history",
-            "file": "app/views/frameworks/frameworks/show/_framework_history.html.erb"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "frameworks/frameworks/show/_framework_history"
-      },
-      "user_input": "params[:activities_page]",
-      "confidence": "Weak",
-      "cwe_id": [
-        22
-      ],
-      "note": ""
+      "note": "Case status is derived from enum DB column so no risk here"
     }
   ],
-  "updated": "2024-07-05 23:02:00 +0100",
-  "brakeman_version": "6.1.2"
+  "brakeman_version": "8.0.6"
 }
