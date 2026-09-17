@@ -27,6 +27,25 @@ The username and password for each environment can be found in Azure within each
 
 Click on `add feature` and enter the name you have used for your feature flag. You can then choose to enable and disable it based on need. It's important to remember you will need to add and enable/disable on each environment you use, including local host.
 
+## A/B testing with feature flags
+
+Feature flags can assign visitors to a sticky A/B-test cohort. The application passes a Flipper actor when checking experiment flags:
+
+- Authenticated users use their DfE Sign-in user ID.
+- Anonymous visitors use a random ID stored in their session.
+
+This keeps a visitor in the same cohort throughout their session and subsequent visits using that session. Enabled experiment flags are added to the `event_tags` field on DfE Analytics page-impression and custom events, allowing journeys and outcomes to be compared in BigQuery.
+
+To configure an A/B test:
+
+1. Add the experiment flag to the `EXPERIMENT_FLAGS` list in `FeatureFlagTracking`.
+2. Implement the alternative behaviour using `ab_test_enabled?(:your_flag)`.
+3. Add the feature in the Flipper UI for the required environment.
+4. Select **Enable for % of actors** and set the percentage to **50%** for an even split between control and treatment cohorts.
+5. Confirm that the flag is enabled for the intended percentage of actors in each environment.
+
+For example, `homepage_rfh_button` controls the RFH button on the homepage. When enabled for 50% of actors, those visitors see the button and receive `homepage_rfh_button` in their analytics `event_tags`; the control cohort does not see the button and does not receive that tag. Other contextual RFH links remain available to both cohorts.
+
 ## Current Flags
 |Flag name|Description|Status|Actions|
 |--|--|--|--|
@@ -35,6 +54,7 @@ Click on `add feature` and enter the name you have used for your feature flag. Y
 |auto_send_siteAdditions_power|Site addition and portal access forms email goes to electric supplier (EDF)|DISABLED|DO NOT ENABLE
 |auto_email_vat_dd|when enabled, auto email sending of emails regarding DD/VAT|
 |customer_satisfaction_survey|Replace the exit survey with the new customer satisfaction survey.|ENABLED|Feature now live, flag to be removed|
+|homepage_rfh_button|A/B test for displaying the RFH button on the homepage.|50% of actors|Use **Enable for % of actors** in Flipper and set to 50%|
 |maintenance_mode|Prevent user access to the application. Intended for infrastructure or data maintenance.|DISABLED|To be enabled when required|
 |rfh_usability_survey|Embed the RfH usability survey in the RfH submission confirmation page.|ENABLED|Feature now live, flag to be removed|
 |sc_tasklist_case|The task list tab for a case at level 4 or 5 will be visible, and the 'case action_required' flag will be updated based on the evaluation document upload status and the evaluation approval status. |ENABLED in development, DISABLED in production|To be enabled when all components of the task list are ready|
