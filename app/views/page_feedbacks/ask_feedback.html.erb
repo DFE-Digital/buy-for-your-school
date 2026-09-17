@@ -1,0 +1,24 @@
+<%# app/views/page_feedbacks/ask_feedback.html.erb %>
+<%= turbo_frame_tag "page_feedback" do %>
+  <div class="gem-c-feedback gem-c-feedback__prompt gem-c-feedback__js-show js-prompt" tabindex="-1">
+    <div class="gem-c-feedback__prompt-content dfe-width-container">
+      <div class="gem-c-feedback__prompt-questions">
+        <div class="gem-c-feedback__prompt-question-answer">
+          <h2 class="gem-c-feedback__prompt-question">Do you want to provide feedback?</h2>
+          <ul class="gem-c-feedback__option-list">
+            <li class="gem-c-feedback__option-list-item">
+              <%= button_to "Yes", form_page_feedbacks_path,
+                    params: { page_url: @page_url, page_useful: @page_useful, wants_feedback: true },
+                    method: :get, class: "govuk-button gem-c-feedback__prompt-link" %>
+            </li>
+            <li class="gem-c-feedback__option-list-item">
+              <%= button_to "No", page_feedbacks_path(
+                    page_feedback: { page_url: @page_url, page_useful: @page_useful, wants_feedback: false }
+                  ), method: :post, class: "govuk-button gem-c-feedback__prompt-link" %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
