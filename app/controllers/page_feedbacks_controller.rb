@@ -1,12 +1,12 @@
 # app/controllers/page_feedbacks_controller.rb
 class PageFeedbacksController < ApplicationController
+  skip_before_action :authenticate_user!
   before_action :set_page_url, only: %i[widget ask_feedback form]
 
   def widget; end
   def ask_feedback; end
 
   def form
-    # @page_feedback = PageFeedback.new(page_url: @page_url, page_useful: params[:page_useful])
     @page_feedback = PageFeedback.new(page_url: @page_url, page_useful: params[:page_useful], wants_feedback: params[:wants_feedback])
   end
 
@@ -24,8 +24,6 @@ class PageFeedbacksController < ApplicationController
 private
 
   def set_page_url
-    # binding.pry
-    # @page_useful = params[:page_useful]
     @page_useful = params[:page_useful] == "true"
     @page_url = params[:page_url]
   end

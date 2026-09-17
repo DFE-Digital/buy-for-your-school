@@ -1,0 +1,29 @@
+<%# app/views/page_feedbacks/form.html.erb %>
+<%= turbo_frame_tag "page_feedback" do %>
+  <div class="dfe-width-container">
+    <h3>Help us improve Get help buying for schools</h3>
+    <p>Your feedback helps us to improve this website. Do not provide any personal information. We cannot reply to you directly.</p>
+
+    <%= form_with model: @page_feedback, url: page_feedbacks_path do |f| %>
+      <%= f.hidden_field :page_url %>
+      <%= f.hidden_field :page_useful %>
+      <%= f.hidden_field :wants_feedback %>
+
+      <div data-controller="char-counter" data-char-counter-limit-value="250">
+
+        <% if @page_feedback.errors[:feedback].any? %>
+          <p class="field-error"><%= @page_feedback.errors[:feedback].to_sentence %></p>
+        <% end %>
+        <%= f.text_area :feedback, rows: 5, maxlength: 250,
+              data: { char_counter_target: "input", action: "input->char-counter#update" } %>
+        <p class="char-counter" data-char-counter-target="label">250 characters remaining</p>
+      </div>
+
+      <%= button_to "Send", ask_feedback_page_feedbacks_path, class: "govuk-button" %>
+
+    <% end %>
+    <%= button_to "Cancel", ask_feedback_page_feedbacks_path,
+            params: { page_url: @page_url, page_useful: @page_useful},
+            method: :get, class: "govuk-button govuk-button--secondary"%>
+  </div>
+<% end %>
