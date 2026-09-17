@@ -646,4 +646,12 @@ Rails.application.routes.draw do
   post "/events", to: "events#create"
 
   get ":slug", to: "pages#show", as: :page, format: false, constraints: { slug: /[^\/.]+/ }
+
+  resources :page_feedbacks, only: [:create] do
+    collection do
+      get :widget        # "Is this page useful?"
+      get :ask_feedback  # "Do you want to provide feedback?"
+      get :form          # feedback textarea
+    end
+  end
 end
