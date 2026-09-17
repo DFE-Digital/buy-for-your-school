@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_10_115922) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_15_120557) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -516,6 +516,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_10_115922) do
     t.uuid "step_id"
     t.datetime "updated_at", null: false
     t.index ["step_id"], name: "index_number_answers_on_step_id"
+  end
+
+  create_table "page_feedbacks", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "feedback"
+    t.string "page_url", null: false
+    t.boolean "page_useful", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "wants_feedback"
   end
 
   create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
