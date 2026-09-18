@@ -10,10 +10,17 @@
     </div>
   </div>
 
+  <% if @featured_offers.present? %>
+    <h2 class="govuk-heading-m"><%= t(".offers_title") %></h2>
+    <div class="dfe-grid-container">
+      <%= render @featured_offers %>
+    </div>
+  <% end %>
+
   <% if @popular_links.present? %>
-    <div class="homepage-popular-links govuk-!-margin-top-7 govuk-!-padding-bottom-7">
+    <div class="govuk-!-margin-top-7 govuk-!-padding-bottom-7">
       <h2 class="govuk-heading-m"><%= t(".popular_links_title") %></h2>
-      <div class="govuk-grid-row">
+      <div class="dfe-grid-row">
         <%= render @popular_links %>
       </div>
     </div>
@@ -21,24 +28,16 @@
 <% end %>
 
 <div>
-  <% if @featured_offers.present? %>
-    <h2 class="govuk-heading-m"><%= t(".offers_title") %></h2>
-    <div class="dfe-grid-container offers-grid-container">
-      <%= render @featured_offers %>
-    </div>
-  <% end %>
-
-  <div class="govuk-!-margin-top-7">
-    <h2 class="govuk-heading-m"><%= t(".title") %></h2>
-    <p class="govuk-body"><%= t(".subtitle") %></p>
-    <div class="homepage-category-list">
-      <ul class="chevron-card-list">
-        <%= render @categories %>
-      </ul>
-    </div>
+  <h2 class="govuk-heading-m"><%= t(".title") %></h2>
+  <p class="govuk-body"><%= t(".subtitle") %></p>
+  <div class="homepage-category-list">
+    <ul class="chevron-card-list">
+      <%= render @categories %>
+    </ul>
   </div>
+  <% content_for :sidebar do %>
+    <%= render partial: "shared/get_expert_help", locals: { get_expert_help: @get_expert_help, first_item: true } %>
+  <% end %>
 </div>
 
-<% content_for :sidebar do %>
-  <%= render partial: "shared/get_expert_help", locals: { get_expert_help: @get_expert_help, first_item: true } %>
-<% end %>
+

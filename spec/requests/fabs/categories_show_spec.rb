@@ -211,7 +211,7 @@ RSpec.describe "FABS category pages", type: :request do
     get category_path("it")
 
     expect(response).to be_successful
-    expect(response.body).to include("Get expert help")
+    expect(response.body).to include("Request help")
     expect(response.body).to include("Start your request")
   end
 
