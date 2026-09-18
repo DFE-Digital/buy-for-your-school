@@ -1,0 +1,32 @@
+<%# app/views/page_feedbacks/form.html.erb %>
+<%= turbo_frame_tag "page_feedback" do %>
+  <div class="dfe-width-container">
+  
+    <%= form_with model: @page_feedback, url: page_feedbacks_path do |f| %>
+      <%= f.hidden_field :page_url %>
+      <%= f.hidden_field :page_useful %>
+      <%= f.hidden_field :wants_feedback %>
+
+      <div class="govuk-form-group govuk-character-count govuk-character-count-container" data-module="govuk-character-count" data-maxlength="250">
+        <h3 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--m" for="with-hint">
+            Help us improve Get help buying for schools
+          </label>
+        </h3>
+        <div id="with-hint-hint" class="govuk-hint">
+          Your feedback helps us to improve this website. Do not provide any personal information. We cannot reply to you directly.
+        </div>
+        <textarea name="page_feedback[feedback]" class="govuk-textarea govuk-js-character-count" id="with-hint"  rows="5" aria-describedby="with-hint-info with-hint-hint"></textarea>
+        <div id="with-hint-info" class="govuk-hint govuk-character-count__message" width="500px">
+          You can enter up to 250 characters
+        </div>
+      </div>
+      
+      <div class="govuk-button-group">
+        <%= button_to "Send", ask_feedback_page_feedbacks_path, class: "govuk-button" %>
+        <%= link_to "Cancel", ask_feedback_page_feedbacks_path(page_url: @page_url, page_useful: @page_useful), class: "govuk-button govuk-button--secondary" %>
+      </div>
+
+    <% end %>
+  </div>
+<% end %>
