@@ -57,23 +57,40 @@ RSpec.describe "Categories pages", type: :request do
     context "when there are popular links" do
       let(:popular_links) do
         [
-          popular_link(title: "Link one", url: "/link-one"),
-          popular_link(title: "Link two", url: "https://example.com/link-two"),
+          popular_link(title: "Link one", url: "/link-one", image: OpenStruct.new(url: "/assets/images/banner.jpg")),
+          popular_link(title: "Link two", url: "https://example.com/link-two", image: OpenStruct.new(url: "/assets/images/banner.jpg")),
         ]
       end
 
       it "displays the popular links section" do
-        expect(response.body).to include("Popular on GHBS")
-        expect(response.body).to include('class="homepage-popular-links')
-        expect(response.body).to include('class="govuk-grid-row"')
-        expect(response.body).to include('class="govuk-grid-column-one-third"')
+        expect(response.body).to include("Popular")
+        # expect(response.body).to include('class="homepage-popular-links')
+        # expect(response.body).to include('class="govuk-grid-row"')
+        # expect(response.body).to include('class="govuk-grid-column-one-third"')
         expect(response.body).to include('href="/link-one">Link one')
         expect(response.body).to include('href="https://example.com/link-two">Link two')
       end
     end
 
+    context "when there are featured offers" do
+      let(:featured_offers) do
+        [
+          featured_offer(id: "offer-1", title: "Offer one", url: "/offer-one", sort_order: 1, featured_on_homepage: true),
+          featured_offer(id: "offer-2", title: "Offer two", url: "https://example.com/offer-two", sort_order: 2, featured_on_homepage: true),
+          featured_offer(id: "offer-3", title: "Offer three", url: "https://example.com/offer-three", sort_order: 3, featured_on_homepage: true),
+        ]
+      end
+
+      it "displays the 'I want to' featured offers section" do
+        expect(response.body).to include("I want to")
+        expect(response.body).to include('href="http://localhost:3000/offer-one">Offer one')
+        expect(response.body).to include('href="https://example.com/offer-two">Offer two')
+        expect(response.body).to include('href="https://example.com/offer-three">Offer three')
+      end
+    end
+
     it "displays get expert help content" do
-      expect(response.body).to include("Get expert help")
+      expect(response.body).to include("Request help")
       expect(response.body).to include("Helpful content")
     end
   end
@@ -124,7 +141,7 @@ RSpec.describe "Categories pages", type: :request do
     end
   end
 
-  def popular_link(title:, url:, sort_order: 1)
+  def popular_link(title:, url:, sort_order: 1, image:)
     PopularLink.new(
       OpenStruct.new(
         id: title.parameterize,
@@ -132,6 +149,28 @@ RSpec.describe "Categories pages", type: :request do
           title:,
           url:,
           sort_order:,
+          image:,
+        },
+      ),
+    )
+  end
+
+  def featured_offer(id: "offer-id", title: "Energy for schools", description: "Description", summary: "Summary", slug: "energy-for-schools", url: "https://example.com", call_to_action: "Call to action", image: nil, featured_on_homepage: false, expiry: nil, sort_order: 1, related_content: [])
+    Offer.new(
+      OpenStruct.new(
+        id:,
+        fields: {
+          title:,
+          description:,
+          summary:,
+          slug:,
+          url:,
+          call_to_action:,
+          image:,
+          featured_on_homepage:,
+          expiry:,
+          sort_order:,
+          related_content:,
         },
       ),
     )

@@ -6,6 +6,11 @@
       </h1>
       <p class="dfe-body-l">
         <%= t('header_description') %>
+        <ul>
+          <% t('header_bullets').each do |text| %>
+            <li><%= text %></li>
+          <% end %>
+        </ul>
       </p>
     </div>
   </div>

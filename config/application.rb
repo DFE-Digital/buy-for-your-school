@@ -70,6 +70,7 @@ module BuyForYourSchool
       categories
       date
       header_description
+      header_bullets
       header_title
       offers
       results
