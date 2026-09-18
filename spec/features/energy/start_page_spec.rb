@@ -10,7 +10,7 @@ describe "Energy Start page", :js do
     expect(page).to have_text("Individual schools, like local authority-maintained schools and single academy trusts, can join using the online service.")
     expect(page).to have_link("Register your interest form", href: "https://submit.forms.service.gov.uk/form/8895/multi-academy-trusts-register-your-interest-in-energy-for-schools/1049539")
 
-    expect(page).to have_text("Apply by 12pm Tuesday 15 September 2026 to join the next available V30 basket on 1 April 2027.")
+    expect(page).to have_text("Apply by 12pm Friday 6th November 2026 to join the next available V30 basket on 1 April 2027.")
     expect(page).to have_text("You may be placed on an interim rate to start with, depending on your current contract’s end date.")
   end
 
