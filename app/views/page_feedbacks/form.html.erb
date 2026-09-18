@@ -1,4 +1,3 @@
-<%# app/views/page_feedbacks/form.html.erb %>
 <%= turbo_frame_tag "page_feedback" do %>
   <div class="dfe-width-container">
   
@@ -21,12 +20,12 @@
           You can enter up to 250 characters
         </div>
       </div>
-      <div class="govuk-form-group">
+      
+      <div class="govuk-button-group">
         <%= button_to "Send", ask_feedback_page_feedbacks_path, class: "govuk-button" %>
+        <%= link_to "Cancel", ask_feedback_page_feedbacks_path(page_url: @page_url, page_useful: @page_useful), class: "govuk-button govuk-button--secondary" %>
       </div>
+
     <% end %>
-    <%= button_to "Cancel", ask_feedback_page_feedbacks_path,
-            params: { page_url: @page_url, page_useful: @page_useful},
-            method: :get, class: "govuk-button govuk-button--secondary"%>
   </div>
 <% end %>

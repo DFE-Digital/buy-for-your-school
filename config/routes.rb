@@ -649,9 +649,9 @@ Rails.application.routes.draw do
 
   resources :page_feedbacks, only: [:create] do
     collection do
-      get :widget        # "Is this page useful?"
-      get :ask_feedback  # "Do you want to provide feedback?"
-      get :form          # feedback textarea
+      get "widget", to: "page_feedbacks#widget"             # "Is this page useful?"
+      get "ask_feedback", to: "page_feedbacks#ask_feedback" # "Do you want to provide feedback?"
+      get "form", to: "page_feedbacks#form"                 # feedback textarea
     end
   end
 end

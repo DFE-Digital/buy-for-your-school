@@ -7,11 +7,14 @@ class PageFeedbacksController < ApplicationController
   def ask_feedback; end
 
   def form
-    @page_feedback = PageFeedback.new(page_url: @page_url, page_useful: params[:page_useful], wants_feedback: params[:wants_feedback])
+    @page_feedback = PageFeedback.new(
+      page_url: @page_url,
+      page_useful: params[:page_useful],
+      wants_feedback: params[:wants_feedback],
+    )
   end
 
   def create
-    # binding.pry
     @page_feedback = PageFeedback.new(page_feedback_params)
     if @page_feedback.save
       render :thanks
