@@ -13,13 +13,6 @@
   - id
   - blob_id
   - variation_digest
-  :active_storage_attachments:
-  - id
-  - name
-  - record_type
-  - record_id
-  - blob_id
-  - created_at
   :active_storage_blobs:
   - id
   - key
@@ -29,6 +22,13 @@
   - service_name
   - byte_size
   - checksum
+  - created_at
+  :active_storage_attachments:
+  - id
+  - name
+  - record_type
+  - record_id
+  - blob_id
   - created_at
   :support_upload_contract_handovers:
   - id
@@ -146,7 +146,6 @@
   - has_uploaded_documents
   - evaluation_approved
   - has_downloaded_documents
-  - evaluation_submitted
   :support_establishment_searches:
   - id
   - name
@@ -489,7 +488,6 @@
   - sent_email_to_evaluators
   - has_uploaded_contract_handovers
   - has_shared_handover_pack
-  - is_upload_documents
   :support_activity_log_items:
   - id
   - support_case_id
@@ -619,24 +617,23 @@
   - switching_energy_type
   - created_at
   - updated_at
-  - gas_bill_consolidation
+  - gas_single_multi
   - gas_current_supplier
   - gas_current_supplier_other
   - gas_current_contract_end_date
   - electric_current_supplier
   - electric_current_supplier_other
   - electric_current_contract_end_date
-  - gas_single_multi
+  - gas_bill_consolidation
   - electricity_meter_type
   - is_electric_bill_consolidated
+  - vat_rate
+  - vat_lower_rate_percentage
+  - vat_lower_rate_reg_no
   - site_contact_first_name
   - site_contact_last_name
   - site_contact_email
   - site_contact_phone
-  - vat_rate
-  - vat_lower_rate_percentage
-  - vat_lower_rate_reg_no
-  - vat_certificate_declared
   - vat_person_correct_details
   - vat_person_first_name
   - vat_person_last_name
@@ -646,6 +643,7 @@
   - billing_payment_terms
   - billing_invoicing_method
   - billing_invoicing_email
+  - vat_certificate_declared
   - billing_invoice_address
   - billing_invoice_address_source_id
   - vat_alt_person_first_name
@@ -659,9 +657,16 @@
   - are_you_authorised
   - created_at
   - updated_at
+  - submitted_at
   - form_started_email_sent
   - form_submitted_email_sent
-  - submitted_at
+  :energy_gas_meters:
+  - id
+  - energy_onboarding_case_organisation_id
+  - mprn
+  - created_at
+  - updated_at
+  - gas_usage
   :energy_email_template_configurations:
   - id
   - energy_type
@@ -672,13 +677,6 @@
   - bcc_email_ids
   - created_at
   - updated_at
-  :energy_gas_meters:
-  - id
-  - energy_onboarding_case_organisation_id
-  - mprn
-  - created_at
-  - updated_at
-  - gas_usage
   :energy_electricity_meters:
   - id
   - energy_onboarding_case_organisation_id
@@ -823,6 +821,14 @@
   - created_at
   - updated_at
   - further_information
+  :page_feedbacks:
+  - id
+  - page_url
+  - page_useful
+  - wants_feedback
+  - feedback
+  - created_at
+  - updated_at
   :pages:
   - id
   - title
