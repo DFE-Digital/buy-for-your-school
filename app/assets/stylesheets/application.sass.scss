@@ -8,6 +8,7 @@
 @import "govuk_publishing_components/components/helpers/brand-colours";
 @import "govuk_publishing_components/components/layout-super-navigation-header";
 @import "govuk_publishing_components/components/search";
+@import "govuk_publishing_components/components/feedback";
 
 @import "./components/activity-log";
 @import "./components/supported/procurement-stage-colours";
@@ -47,7 +48,7 @@
 @import "./components/banner";
 @import "./components/header";
 @import "./components/search";
-@import "./components/feedback";
+@import "./components/page_feedback";
 
 
 // Panel overrides

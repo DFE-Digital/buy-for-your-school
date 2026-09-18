@@ -1,26 +1,29 @@
 <%# app/views/page_feedbacks/form.html.erb %>
 <%= turbo_frame_tag "page_feedback" do %>
   <div class="dfe-width-container">
-    <h3>Help us improve Get help buying for schools</h3>
-    <p>Your feedback helps us to improve this website. Do not provide any personal information. We cannot reply to you directly.</p>
-
+  
     <%= form_with model: @page_feedback, url: page_feedbacks_path do |f| %>
       <%= f.hidden_field :page_url %>
       <%= f.hidden_field :page_useful %>
       <%= f.hidden_field :wants_feedback %>
 
-      <div data-controller="char-counter" data-char-counter-limit-value="250">
-
-        <% if @page_feedback.errors[:feedback].any? %>
-          <p class="field-error"><%= @page_feedback.errors[:feedback].to_sentence %></p>
-        <% end %>
-        <%= f.text_area :feedback, rows: 5, maxlength: 250,
-              data: { char_counter_target: "input", action: "input->char-counter#update" } %>
-        <p class="char-counter" data-char-counter-target="label">250 characters remaining</p>
+      <div class="govuk-form-group govuk-character-count govuk-character-count-container" data-module="govuk-character-count" data-maxlength="250">
+        <h3 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--m" for="with-hint">
+            Help us improve Get help buying for schools
+          </label>
+        </h3>
+        <div id="with-hint-hint" class="govuk-hint">
+          Your feedback helps us to improve this website. Do not provide any personal information. We cannot reply to you directly.
+        </div>
+        <textarea name="page_feedback[feedback]" class="govuk-textarea govuk-js-character-count" id="with-hint"  rows="5" aria-describedby="with-hint-info with-hint-hint"></textarea>
+        <div id="with-hint-info" class="govuk-hint govuk-character-count__message" width="500px">
+          You can enter up to 250 characters
+        </div>
       </div>
-
-      <%= button_to "Send", ask_feedback_page_feedbacks_path, class: "govuk-button" %>
-
+      <div class="govuk-form-group">
+        <%= button_to "Send", ask_feedback_page_feedbacks_path, class: "govuk-button" %>
+      </div>
     <% end %>
     <%= button_to "Cancel", ask_feedback_page_feedbacks_path,
             params: { page_url: @page_url, page_useful: @page_useful},

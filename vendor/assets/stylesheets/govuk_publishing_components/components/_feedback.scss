@@ -1,10 +1,12 @@
+$feedback-prompt-background-colour: $govuk-blue-tint-95;
+$feedback-prompt-border-top-colour: $govuk-blue-tint-50;
 
 .gem-c-feedback {
   background: govuk-colour("white");
   margin-top: govuk-spacing(6);
-  background-color: #f4f8fb;
+  background-color: $feedback-prompt-background-colour;
   color: govuk-colour("black");
-  border-top: 1px solid #8eb8dc;
+  border-top: 1px solid $feedback-prompt-border-top-colour;
 
   @include govuk-media-query($from: desktop) {
     margin-top: govuk-spacing(9);
@@ -45,9 +47,9 @@
 
 .gem-c-feedback__prompt-questions {
   text-align: left;
-  padding: govuk-spacing(0) 0;
+  padding: govuk-spacing(4) 0;
   @include govuk-media-query($from: tablet) {
-    margin: 0 0;
+    margin: 0 govuk-spacing(3);
   }
 }
 
@@ -174,13 +176,13 @@
   // this comes from the backend so we can't put a class on it
   h2 {
     margin: 0 0 govuk-spacing(3);
-    color: govuk-functional-colour(text);
+    @include govuk-text-colour;
     @include govuk-font($size: 24, $weight: bold);
   }
 
   p {
     margin: 0 0 govuk-spacing(3);
-    color: govuk-functional-colour(text);
+    @include govuk-text-colour;
     @include govuk-font($size: 19);
   }
 
@@ -209,13 +211,13 @@
 
 .gem-c-feedback__form-heading {
   margin: 0 0 govuk-spacing(3);
-  color: govuk-functional-colour(text);
+  @include govuk-text-colour;
   @include govuk-font(24, $weight: bold);
 }
 
 .gem-c-feedback__form-paragraph {
   margin: 0 0 govuk-spacing(6);
-  color: govuk-functional-colour(text);
+  @include govuk-text-colour;
   @include govuk-font(19);
 }
 
@@ -226,10 +228,9 @@
 }
 
 .gem-c-feedback__close {
-  display: none;
-
-  .govuk-frontend-supported & {
-    display: block;
+  margin: 0 govuk-spacing(2);
+  @include govuk-media-query($until: tablet) {
+    margin: govuk-spacing(4) 0 0;
   }
 }
 
