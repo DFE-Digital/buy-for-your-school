@@ -13,11 +13,14 @@ RSpec.describe "Categories pages", type: :request do
 
   describe "GET /" do
     before do
+      Flipper.enable(:homepage_rfh_button)
       allow(FABS::Category).to receive(:all).and_return(categories)
       allow(Offer).to receive(:featured_offers).and_return(featured_offers)
       allow(Banner).to receive(:find_by_slug).and_return(energy_banner)
       get root_path
     end
+
+    after { Flipper.disable(:homepage_rfh_button) }
 
     it "sets default HTML title tag" do
       expect(response.body).to include("<title>#{I18n.t('service.name')}</title>")
@@ -54,6 +57,14 @@ RSpec.describe "Categories pages", type: :request do
       expect(response.body).to include("Not sure where to start?")
       expect(response.body).to include("Our buying team can help you choose the right way to buy for your school")
       expect(response.body).to include('href="/procurement-support">Get expert buying help')
+    end
+
+    it "does not display the homepage RFH button when its experiment is disabled" do
+      Flipper.disable(:homepage_rfh_button)
+
+      get root_path
+
+      expect(response.body).not_to include('href="/procurement-support">Get expert buying help')
     end
   end
 
