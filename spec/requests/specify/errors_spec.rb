@@ -13,6 +13,13 @@ RSpec.describe "Errors", type: :request do
     end
   end
 
+  describe "not_acceptable" do
+    it "the 406 endpoint returns the expected status and error page" do
+      get "/406"
+      expect(response).to have_http_status(:not_acceptable)
+    end
+  end
+
   describe "unacceptable" do
     it "the 422 endpoint returns the expected status" do
       get "/422"
