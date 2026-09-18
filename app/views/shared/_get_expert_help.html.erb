@@ -1,7 +1,7 @@
 <% if get_expert_help.present? %>
 <% first_item = local_assigns.fetch(:first_item, false) %>
 <div class="<%= class_names('govuk-!-padding-bottom-2', 'govuk-!-padding-top-2': !first_item) %>">
-  <h2 class="<%= class_names('govuk-heading-s', 'govuk-!-margin-top-2': !first_item) %>"><%= t(".heading") %></h2>
+  <h2 class="<%= class_names('govuk-heading-m', 'govuk-!-margin-top-2': !first_item) %>"><%= t(".heading") %></h2>
   <details class="govuk-details">
     <summary class="govuk-details__summary">
       <span class="govuk-details__summary-text">

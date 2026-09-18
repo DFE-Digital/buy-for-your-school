@@ -82,8 +82,8 @@ en:
     offers: Offers
   categories:
     index:
-      offers_title: Featured
-      popular_links_title: Popular on GHBS
+      offers_title: I want to
+      popular_links_title: Popular
       title: Browse by category
       subtitle: Find frameworks, catalogues and DfE deals to suit your school's needs
     show:
@@ -3056,7 +3056,7 @@ en:
     external_link:
       opens_in_new_tab: opens in new tab
     get_expert_help:
-      heading: Get expert help
+      heading: Request help
     right_filters:
       apply_filters: Apply filters
       clear_filters: Clear filters
