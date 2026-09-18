@@ -67,5 +67,11 @@ describe "Agent can set case contact details", :js do
     fill_in "Email address", with: email
     fill_in "Extension number", with: extension_number
     click_button "Save changes"
+
+    if email.blank?
+      expect(page).to have_content("Please enter contact email address")
+    else
+      expect(page).to have_content(I18n.t("support.case_contact_details.flash.updated"))
+    end
   end
 end
