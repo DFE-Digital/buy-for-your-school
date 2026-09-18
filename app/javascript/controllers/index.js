@@ -105,6 +105,3 @@ application.register("internal-link-tracking", InternalLinkTrackingController);
 
 import SearchMenuToggleController from "./search_menu_toggle_controller"
 application.register("search-menu-toggle", SearchMenuToggleController)
-
-import CharCounterController from "./char_counter_controller"
-application.register("char-counter", CharCounterController)
