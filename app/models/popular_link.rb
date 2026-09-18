@@ -7,16 +7,18 @@ class PopularLink
     "sys.id",
     "fields.title",
     "fields.url",
+    "fields.image",
     SORT_ORDER_FIELD,
   ].join(",").freeze
 
-  attr_reader :id, :title, :url, :sort_order
+  attr_reader :id, :title, :url, :sort_order, :image
 
   def initialize(entry)
     @id = entry.id
     @title = entry.fields[:title]
     @url = entry.fields[:url]
     @sort_order = entry.fields[:sort_order]
+    @image = entry.fields[:image]
   end
 
   def self.all
