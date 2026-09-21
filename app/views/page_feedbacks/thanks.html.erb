@@ -1,7 +1,9 @@
 <%= turbo_frame_tag "page_feedback" do %>
   <div class="dfe-width-container">
-    <div class=" gem-c-feedback__prompt-questions gem-c-feedback__prompt-success js-prompt-success">
-      Thank you for providing feedback
+    <div class="gem-c-feedback__prompt-questions">
+      <div class=" gem-c-feedback__prompt-questions gem-c-feedback__prompt-success js-prompt-success">
+        <%= t('page_feedback.thank_you') %>
+      </div>
     </div>
   </div>
 <% end %>

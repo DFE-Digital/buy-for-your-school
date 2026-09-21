@@ -1,9 +1,9 @@
 <%= turbo_frame_tag "page_feedback" do %>
   <div class="gem-c-feedback gem-c-feedback__prompt gem-c-feedback__js-show js-prompt" tabindex="-1">
     <div class="gem-c-feedback__prompt-content dfe-width-container">
-      <div class="gem-c-feedback__prompt-questions">
+      <div class="gem-c-feedback__prompt-questions gem-c-feedback__prompt-questions-div">
         <div class="gem-c-feedback__prompt-question-answer">
-          <h2 class="gem-c-feedback__prompt-question">Is this page useful?</h2>
+          <h2 class="gem-c-feedback__prompt-question"><%= t('page_feedback.page_useful') %></h2>
           <ul class="gem-c-feedback__option-list">
             <li class="gem-c-feedback__option-list-item">
               <%= button_to "Yes", form_page_feedbacks_path,
