@@ -72,16 +72,12 @@
 
     <div class="govuk-width-container <%= container_width_class %>">
       <%= render partial: "layouts/breadcrumbs" %>
-      <main class="govuk-main-wrapper govuk-main-wrapper-padding" id="main-content">
+      <main class="govuk-main-wrapper" id="main-content">
         <%= render partial: "layouts/messages" %>
         <%= yield %>
-
-
       </main>
     </div>
-    <div class="feedback">
-      <%= render "shared/feedback" %> 
-    </div>
+
     <%= render "shared/dfe_footer" %>
 
     <%= render partial: "layouts/redirect" %>
