@@ -16,9 +16,11 @@
   </div>
 
   <% if @featured_offers.present? %>
-    <h2 class="govuk-heading-m"><%= t(".offers_title") %></h2>
-    <div class="dfe-grid-container">
-      <%= render @featured_offers %>
+    <div class="govuk-!-margin-top-7 govuk-!-padding-bottom-7">
+      <h2 class="govuk-heading-m"><%= t(".offers_title") %></h2>
+      <div class="dfe-grid-container">
+        <%= render @featured_offers %>
+      </div>
     </div>
   <% end %>
 
