@@ -8,12 +8,15 @@
 
   <div class="page-with-sidebar">
     <div class="dfe-width-container">
-      <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0 govuk-!-margin-top-7 govuk-!-margin-bottom-7">
+      <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0 govuk-!-margin-top-7">
         <%= yield %>
+
+        <div class="main-container dfe-width-container">
+          <%= render "shared/feedback" %> 
+        </div>
       </div>
       <%= render "shared/dfe_sidebar" %>
     </div>
   </div>
-
   <%= render "shared/dfe_footer" %>
  <% end %>

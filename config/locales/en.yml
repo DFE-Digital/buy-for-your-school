@@ -1523,6 +1523,14 @@ en:
   journeys_title: Create your specification to procure %{category} for your school
   page:
     updated_at: Last updated %{date}
+
+  page_feedback:
+    page_useful: Is this page useful?
+    want_feedback: Do you want to provide feedback?
+    thank_you: Thank you for providing feedback
+    feedback_title: Help us improve Get help buying for schools
+    feedback_hint: Your feedback helps us to improve this website. Do not provide any personal information. We cannot reply to you directly.
+    character_limit: You can enter up to 250 characters
   profile:
     body: 'These are the details we have for you, if they are not correct or up to date you will need to either:'
     caption: About you
