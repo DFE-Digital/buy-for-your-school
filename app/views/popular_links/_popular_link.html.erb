@@ -1,12 +1,10 @@
-<div class="govuk-grid-column-one-third govuk-!-padding-left-0 govuk-!-margin-bottom-4">
-    <div class="promo-banner-container">
-        <% if popular_link.image.present? %>
-          <%= image_tag popular_link.image.url, alt: popular_link.title, class: "promo-banner-image" %>
-        <% end %>
-      <div class="promo-banner">
-        <h3 class="govuk-heading-s content-banner__title">
-          <%= link_to popular_link.title, popular_link.url, class: "govuk-link govuk-link--no-visited-state" %>
-        </h3>
-      </div>
-    </div>
+<div class="popular-link-container">
+  <% if popular_link.image.present? %>
+    <%= image_tag popular_link.image.url, alt: popular_link.title, class: "popular-image" %>
+  <% end %>
+  <div class="popular-text">
+    <h3 class="govuk-heading-s">
+      <%= link_to popular_link.title, popular_link.url, class: "popular-link govuk-link govuk-link--no-visited-state" %>
+    </h3>
+  </div>
 </div>

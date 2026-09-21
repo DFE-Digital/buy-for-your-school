@@ -141,7 +141,7 @@ RSpec.describe "Categories pages", type: :request do
     end
   end
 
-  def popular_link(title:, url:, sort_order: 1, image:)
+  def popular_link(title:, url:, image:, sort_order: 1)
     PopularLink.new(
       OpenStruct.new(
         id: title.parameterize,
