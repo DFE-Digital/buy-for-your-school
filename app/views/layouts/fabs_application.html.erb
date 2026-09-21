@@ -13,17 +13,12 @@
   <div class="page-with-sidebar">
     <div class="dfe-width-container">
       <%= yield :pre_main %>
-      <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0 govuk-!-margin-top-0">
+      <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0 govuk-!-margin-top-0 govuk-!-margin-bottom-7">
         <%= yield %>
-        <div class="">
-          <%= yield :post_main %>
-        </div>
-        <div class="feedback">
-          <%= render "shared/feedback" %> 
-        </div>
       </div>
       <%= render "shared/dfe_sidebar" %>
     </div>
   </div>
+
   <%= render "shared/dfe_footer" %>
 <% end %>
