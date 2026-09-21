@@ -7,7 +7,7 @@ class CategoriesController < Fabs::ApplicationController
 
   def index
     @categories = FABS::Category.all
-    @featured_offers = Offer.featured_offers.select { |offer| offer.sort_order.present? }.first(2)
+    @featured_offers = Offer.featured_offers.select { |offer| offer.sort_order.present? }.first(3)
     @popular_links = PopularLink.all.select { |popular_link| popular_link.sort_order.present? }.first(6)
     @get_expert_help = GetExpertHelp.content
 
