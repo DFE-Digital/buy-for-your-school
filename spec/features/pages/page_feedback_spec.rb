@@ -94,5 +94,17 @@ RSpec.describe "Page feedback", :js do
         expect(page).to have_content("Thank you for providing feedback")
       end
     end
+
+    scenario "user submits feedback exceeding the character limit" do
+      within("turbo-frame#page_feedback") do
+        click_button "Yes"
+
+        fill_in "page_feedback[feedback]", with: "a" * 251
+        click_button "Send"
+
+        expect(page).to have_field("page_feedback[feedback]", type: "textarea")
+        expect(page).not_to have_content("Thank you for providing feedback")
+      end
+    end
   end
 end
