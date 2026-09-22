@@ -62,7 +62,8 @@ RSpec.describe "Page feedback", :js do
         expect(page).to have_button("No")
 
         click_button "No"
-        expect(page).to have_content("Thank you for providing feedback")
+        expect(page).to have_content("Thank you")
+        expect(page).not_to have_content("Thank you for providing feedback")
       end
     end
 
