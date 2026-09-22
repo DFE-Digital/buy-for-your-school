@@ -15,7 +15,7 @@
         <div id="with-hint-hint" class="govuk-hint">
           <%= t('page_feedback.feedback_hint') %>
         </div>
-        <textarea name="page_feedback[feedback]" class="govuk-textarea govuk-js-character-count" id="with-hint"  rows="5" aria-describedby="with-hint-info with-hint-hint"></textarea>
+        <textarea name="page_feedback[feedback]" class="govuk-textarea govuk-js-character-count" id="with-hint"  rows="5" maxlength="250" aria-describedby="with-hint-info with-hint-hint"></textarea>
         <div id="with-hint-info" class="govuk-hint govuk-character-count__message" width="500px">
           <%= t('page_feedback.character_limit') %>
         </div>
