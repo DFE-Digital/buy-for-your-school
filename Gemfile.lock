@@ -723,7 +723,7 @@ GEM
     simple_xlsx_reader (5.1.0)
       nokogiri
       rubyzip
-    simplecov (1.2.0)
+    simplecov (1.3.0)
     sitemap_generator (7.1.1)
       builder (~> 3.0)
     sprockets (4.2.1)
@@ -888,7 +888,7 @@ DEPENDENCIES
   sidekiq (~> 6.4)
   sidekiq-cron (~> 2.4)
   simple_xlsx_reader
-  simplecov (~> 1.2)
+  simplecov (~> 1.3)
   sitemap_generator
   sprockets-rails
   stimulus-rails

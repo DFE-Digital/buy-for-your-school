@@ -101,7 +101,7 @@ group :test do
   gem "redis-client"
   gem "rspec-rails"
   gem "shoulda-matchers"
-  gem "simplecov", "~> 1.2"
+  gem "simplecov", "~> 1.3"
   gem "webmock"
 end
 
