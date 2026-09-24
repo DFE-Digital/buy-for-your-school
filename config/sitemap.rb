@@ -7,7 +7,7 @@ SitemapGenerator::Sitemap.default_host = "https://get-help-buying-for-schools.ed
 SitemapGenerator::Sitemap.create(include_root: false) do
   def view_lastmod(template)
     full_path = Rails.root.join("app", "views", "#{template}.html.erb")
-    Time.zone.at(`git log -1 --format="%ct" -- #{full_path}`.to_i).to_date
+    File.mtime(full_path).to_date
   end
   # Root
   add "/", lastmod: view_lastmod("categories/index")
@@ -26,6 +26,20 @@ SitemapGenerator::Sitemap.create(include_root: false) do
   # Pages
   FABS::Page.all.each do |page|
     add "/#{page.slug}", lastmod: page.updated_at
+  end
+
+  # Static pages: maps the URL slug to its view template, where they differ
+  def static_page_view
+    {
+      "energy/start" => "energy/onboarding/start",
+      "energy/before-you-start" => "energy/onboarding/before_you_start",
+      "energy/guidance" => "energy/onboarding/guidance",
+      "procurement-support" => "framework_requests/framework_requests/index"
+    }
+  end
+
+  static_page_view.each do |path, template|
+    add "/#{path}", lastmod: view_lastmod(template)
   end
 end
 # rubocop:enable all
