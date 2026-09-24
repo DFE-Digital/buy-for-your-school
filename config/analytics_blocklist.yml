@@ -146,6 +146,7 @@
   - has_uploaded_documents
   - evaluation_approved
   - has_downloaded_documents
+  - evaluation_submitted
   :support_establishment_searches:
   - id
   - name
@@ -488,6 +489,7 @@
   - sent_email_to_evaluators
   - has_uploaded_contract_handovers
   - has_shared_handover_pack
+  - is_upload_documents
   :support_activity_log_items:
   - id
   - support_case_id

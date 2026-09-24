@@ -4,9 +4,9 @@ RSpec.describe PageFeedbacksController, type: :controller do
   let(:page_url) { "https://example.com/some-page" }
   let(:feedback) { "This page was helpful." }
 
-  describe "GET #widget" do
+  describe "GET #new" do
     it "renders successfully" do
-      get :widget, params: { page_url: }
+      get :new, params: { page_url: }
       expect(response).to be_successful
     end
   end
