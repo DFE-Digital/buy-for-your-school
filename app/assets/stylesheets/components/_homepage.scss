@@ -85,7 +85,7 @@
  .homepage-popular-links {
    grid-template-columns: 1fr;
    .popular-text a {
-     @include govuk-font($size: 24, $weight: bold);
+     @include govuk-font($size: 19, $weight: bold);
    }
  }
 }
