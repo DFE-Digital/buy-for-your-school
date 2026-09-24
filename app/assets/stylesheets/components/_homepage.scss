@@ -17,11 +17,6 @@
   }
 }
 
-.homepage-category-list {
-  border-top: 1px solid #b1b4b6;
-  padding: 20px 0 60px 0;
-}
-
 .homepage-popular-links {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -50,6 +45,12 @@
     flex: 2 1 55%;
     min-width: 0;
     padding: govuk-spacing(2);
+    &:hover, &:focus-within {
+      background-color: #505a5f;
+      a {
+        color: #ffffff;
+      }
+    }
   }
 
   .popular-link {
@@ -83,5 +84,13 @@
 @media (max-width: 661px) {
  .homepage-popular-links {
    grid-template-columns: 1fr;
+   .popular-text a {
+     @include govuk-font($size: 24, $weight: bold);
+   }
  }
+}
+
+.homepage-category-list {
+  border-top: 1px solid #b1b4b6;
+  padding: 20px 0 60px 0;
 }
