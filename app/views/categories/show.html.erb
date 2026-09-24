@@ -34,6 +34,6 @@
 
 <% content_for :sidebar do %>
   <%= render partial: "shared/right_filters", locals: { subcategories: @subcategories, category: @category, solutions: @solutions, ways_to_buy: @ways_to_buy } if @show_filter %>
-  <%= render partial: "shared/get_expert_help", locals: { get_expert_help: @get_expert_help, first_item: !@show_filter } %>
+  <%= render partial: "shared/get_expert_help", locals: { get_expert_help: @get_expert_help, top_padding: @show_filter } %>
   <%= render partial: "shared/related_content", locals: { related_content: @category.related_content } %>
 <% end %>

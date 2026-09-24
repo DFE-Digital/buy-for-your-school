@@ -43,7 +43,7 @@
     </ul>
   </div>
   <% content_for :sidebar do %>
-    <%= render partial: "shared/get_expert_help", locals: { get_expert_help: @get_expert_help, first_item: true } %>
+    <%= render partial: "shared/get_expert_help", locals: { get_expert_help: @get_expert_help, homepage: true } %>
   <% end %>
 </div>
 
