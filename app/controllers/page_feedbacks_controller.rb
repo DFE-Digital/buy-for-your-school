@@ -1,9 +1,9 @@
 # app/controllers/page_feedbacks_controller.rb
 class PageFeedbacksController < ApplicationController
   skip_before_action :authenticate_user!
-  before_action :set_page_url, only: %i[widget ask_feedback form]
+  before_action :set_page_url, only: %i[new ask_feedback form]
 
-  def widget; end
+  def new; end
   def ask_feedback; end
 
   def form
