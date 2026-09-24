@@ -26,37 +26,26 @@
 
   .popular-link-container {
     display: flex;
-    gap: 12px;
-    align-items: stretch;
     position: relative;
-    height: 100%;
   }
 
   .popular-image {
-    flex: 1 1 45%;
-    min-width: 0;
-    width: 100%;
-    max-width: 45%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: calc(40% - 6px);
+    height: 100%;
     object-fit: cover;
   }
 
   .popular-text {
-    background-color: #f3f2f1;
-    flex: 2 1 55%;
-    min-width: 0;
-    padding: govuk-spacing(2);
-    &:hover, &:focus-within {
-      background-color: #505a5f;
-      a {
-        color: #ffffff;
-      }
-    }
-  }
+    flex: 1;
+    box-sizing: border-box;
+    padding: govuk-spacing(2) govuk-spacing(6) govuk-spacing(2) govuk-spacing(2);
+    margin-left: calc(40% + 6px);
 
-  .popular-link {
-    display: block;
-    padding-right: 2rem;
-
+    // Chevron (rotated border)
     &::before {
       content: "";
       position: absolute;
@@ -64,13 +53,12 @@
       right: 1rem;
       width: 7px;
       height: 7px;
-      border-top: 3px solid #1d70b8;
-      border-right: 3px solid #1d70b8;
+      border-top: 3px solid govuk-functional-colour("link");
+      border-right: 3px solid govuk-functional-colour("link");
       transform: translateY(-50%) rotate(45deg);
     }
-
-    &:hover::before {
-      border-color: #003078;
+    &:hover::before, &:focus-within::before {
+      border-color: govuk-functional-colour("inverse-text");
     }
   }
 }
@@ -84,7 +72,7 @@
 @media (max-width: 661px) {
  .homepage-popular-links {
    grid-template-columns: 1fr;
-   .popular-text a {
+   .popular-text .card-link {
      @include govuk-font($size: 19, $weight: bold);
    }
  }
