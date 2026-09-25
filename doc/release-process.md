@@ -58,7 +58,7 @@ Development deployment is automated with github actions, but you will need to
 update the `development` branch for it to deploy changes.
 
 Switch to the `development` branch, ensure it is updated from origin, then
-rebase it with `main`.
+rebase it with the feature branch you want deployed.
 
 ```
 $ git fetch
@@ -72,8 +72,14 @@ NOTE: `git push --force-with-lease` is important, the force push will be
 rejected if changes have been made in origin that differ from your local branch.
 This ensures you don't overwrite other developer's changes on development.
 
-If you need to make repeated changes, always reset `development` and then
-rebase your feature branch again.
+If you need to make repeated changes, update your feature branch and then
+rebase `development` onto it again. The above steps can also be achieved by running
+`bin/deploy_dev` script.
+
+If you specifically want `development` to mirror your feature branch exactly,
+use `bin/deploy_dev --reset`. This replaces the rebase behaviour with a hard reset
+and force-pushes `development` with the feature branch. Use this when the feature
+branch itself has rebased commits and you want to deploy a clean known state.
 
 Monitor the [github actions
 page](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/ci-full-pipeline.yml)
