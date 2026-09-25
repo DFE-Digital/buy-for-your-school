@@ -1,4 +1,5 @@
 .card {
+  position: relative;
   background-color: govuk-colour("black", $variant: "tint-95");
 
   @media (max-width: 661px) {
@@ -23,7 +24,6 @@
 }
 
 .card-text-container {
-  position: relative;
   padding: 24px;
   display: flex;
   flex-direction: column;

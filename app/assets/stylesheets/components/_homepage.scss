@@ -61,6 +61,10 @@
       border-color: govuk-functional-colour("inverse-text");
     }
   }
+
+  .card {
+    position: static;
+  }
 }
 
 @media (max-width: 1024px) {
