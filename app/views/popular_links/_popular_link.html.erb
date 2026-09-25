@@ -1,0 +1,10 @@
+<div class="popular-link-container">
+  <% if popular_link.image.present? %>
+    <%= image_tag popular_link.image.url, alt: popular_link.title, class: "popular-image" %>
+  <% end %>
+  <div class="popular-text card">
+    <h3 class="govuk-heading-s govuk-!-margin-0">
+      <%= fabs_govuk_link_to popular_link.title, popular_link.url, class: "govuk-link govuk-link--no-visited-state card-link" %>
+    </h3>
+  </div>
+</div>

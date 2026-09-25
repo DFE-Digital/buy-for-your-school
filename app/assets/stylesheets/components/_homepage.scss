@@ -1,37 +1,5 @@
 .homepage-heading {
-  margin-bottom: 10px;
-}
-
-.homepage-heading-search-open{
-   padding-top: 1px;
-}
-
-@media (max-width: 40.0525em) {
-  .homepage-heading-search-open{
-    padding-top: 10px;
-  }
-}
-
-@media (max-width: 640px) {
-  .dfe-page-hero .hero-text-container {
-    margin-left: 0px;
-    margin-top: 10px;
-  }
-}
-
-.dfe-header {
-  color: #ffffff;
-  background-color: #1d70b8;
-  padding-bottom: 0px;
-}
-
-.dfe-page-hero {
-   color: #ffffff;
-   .hero-text-container{
-      @media (max-width: 640px) {
-        margin-left: 0px;
-      }
-    }
+  margin-bottom: 20px;
 }
 
 .govuk-service-navigation{
@@ -49,14 +17,72 @@
   }
 }
 
-.govuk-inset-text--thin {
-  border-left-width: 6px;
+.homepage-popular-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 2rem;
+  align-items: stretch;
+
+  .popular-link-container {
+    display: flex;
+    position: relative;
+  }
+
+  .popular-image {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: calc(40% - 6px);
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .popular-text {
+    flex: 1;
+    box-sizing: border-box;
+    padding: govuk-spacing(2) govuk-spacing(6) govuk-spacing(2) govuk-spacing(2);
+    margin-left: calc(40% + 6px);
+
+    // Chevron (rotated border)
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 1rem;
+      width: 7px;
+      height: 7px;
+      border-top: 3px solid govuk-functional-colour("link");
+      border-right: 3px solid govuk-functional-colour("link");
+      transform: translateY(-50%) rotate(45deg);
+    }
+    &:hover::before, &:focus-within::before {
+      border-color: govuk-functional-colour("inverse-text");
+    }
+  }
+
+  .card {
+    position: static;
+  }
 }
 
-.all-buying-options-link-container {
-  @media (max-width: 640px) {
-    margin-left: 0px;
-    padding-top: 2px;
-    padding-bottom: 1px;
-  }
+@media (max-width: 1024px) {
+ .homepage-popular-links {
+   grid-template-columns: repeat(2, minmax(0, 1fr));
+ }
+}
+
+@media (max-width: 661px) {
+ .homepage-popular-links {
+   grid-template-columns: 1fr;
+   .popular-text .card-link {
+     @include govuk-font($size: 19, $weight: bold);
+   }
+ }
+}
+
+.homepage-category-list {
+  border-top: 1px solid #b1b4b6;
+  padding: 20px 0 60px 0;
 }

@@ -69,8 +69,6 @@ module BuyForYourSchool
       breadcrumbs
       categories
       date
-      header_description
-      header_title
       offers
       results
       search

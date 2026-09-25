@@ -1,136 +1,133 @@
-<% if subcategories.present? || (ways_to_buy.present? && ways_to_buy.count > 1) %>
-  <div class="moj-filter" data-module="moj-filter">
+<div class="moj-filter" data-module="moj-filter">
 
-    <%# Header %>
-    <div class="moj-filter__header">
-      <div class="moj-filter__header-title">
-        <h2 class="govuk-heading-m"><%= t(".filter") %></h2>
+  <%# Header %>
+  <div class="moj-filter__header">
+    <div class="moj-filter__header-title">
+      <h2 class="govuk-heading-m"><%= t(".filter") %></h2>
+    </div>
+    <div class="moj-filter__header-action"></div>
+  </div>
+
+  <div class="moj-filter__content">
+    <%# Selected filters section — only shown when filters are active %>
+    <% selected_subcategory_slugs = params.fetch(:subcategory_slugs, []).compact_blank %>
+    <% selected_ways_to_buy_slugs = params.fetch(:ways_to_buy_slugs, []).compact_blank %>
+
+    <div class="moj-filter__selected">
+      <div class="moj-filter__selected-heading">
+        <div class="moj-filter__heading-title">
+          <h3 class="govuk-heading-s govuk-!-margin-bottom-4"><%= t(".selected_filters") %></h3>
+        </div>
       </div>
-      <div class="moj-filter__header-action"></div>
+
+      <% if selected_subcategory_slugs.present? %>
+        <ul class="moj-filter-tags">
+          <% subcategories.select { |s| selected_subcategory_slugs.include?(s.slug) }.each do |subcategory| %>
+            <%# Build URL with this subcategory removed from the selected slugs %>
+            <% remaining_slugs = selected_subcategory_slugs - [subcategory.slug] %>
+            <% remove_url = category_path(category, subcategory_slugs: remaining_slugs, ways_to_buy_slugs: selected_ways_to_buy_slugs) %>
+            <li>
+              <a class="moj-filter__tag sidebar__link--highlight" href="<%= remove_url %>">
+                <span class="govuk-visually-hidden"><%= t(".remove_filter") %></span>
+                <%= subcategory.title %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <% if selected_ways_to_buy_slugs.present? %>
+        <ul class="moj-filter-tags">
+          <% ways_to_buy.select { |w| selected_ways_to_buy_slugs.include?(w.slug) }.each do |way_to_buy| %>
+            <% remaining_slugs = selected_ways_to_buy_slugs - [way_to_buy.slug] %>
+            <% remove_url = category_path(category, subcategory_slugs: selected_subcategory_slugs, ways_to_buy_slugs: remaining_slugs) %>
+            <li>
+              <a class="moj-filter__tag sidebar__link--highlight" href="<%= remove_url %>">
+                <span class="govuk-visually-hidden"><%= t(".remove_filter") %></span>
+                <%= way_to_buy.title %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
     </div>
 
-    <div class="moj-filter__content">
-      <%# Selected filters section — only shown when filters are active %>
-      <% selected_subcategory_slugs = params.fetch(:subcategory_slugs, []).compact_blank %>
-      <% selected_ways_to_buy_slugs = params.fetch(:ways_to_buy_slugs, []).compact_blank %>
+    <%# Filter options with checkboxes %>
+    <div class="moj-filter__options">
+      <%= form_with url: category_path(category), method: :get do |f| %>
+        <% if subcategories.present? %>
+          <div class="govuk-form-group govuk-!-margin-bottom-0">
+            <fieldset class="govuk-fieldset">
+              <details <%= "open" if selected_subcategory_slugs.present? %> class="govuk-details govuk-!-margin-bottom-4">
+                <summary class="govuk-details__summary">
+                  <span class="govuk-details__summary-text">
+                    <%= t(".subcategories") %> 
+                  </span>
+                  <br />
+                  <span class="selected-count"><%= selected_subcategory_slugs.count %> selected </span>   
+                </summary>
+                
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                  <%= f.collection_check_boxes :subcategory_slugs, subcategories, :slug, :title,
+                      checked: params[:subcategory_slugs] do |b| %>
 
-      <div class="moj-filter__selected">
-        <div class="moj-filter__selected-heading">
-          <div class="moj-filter__heading-title">
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-4"><%= t(".selected_filters") %></h3>
+                    <div class="govuk-checkboxes__item">
+                      <%= b.check_box(class: "govuk-checkboxes__input") %>
+                      <%= b.label(class: "govuk-label govuk-checkboxes__label") do %>
+                        <%= b.text %> (<%= @solutions_count_subcategory[b.value] %>)
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </details>
+            </fieldset>
           </div>
+          <hr />
+        <% end %>
+
+        <% if ways_to_buy.present? && ways_to_buy.count > 1 %>
+          <div class="govuk-form-group govuk-!-margin-bottom-0">
+            <fieldset class="govuk-fieldset">
+              <details <%= "open" if selected_ways_to_buy_slugs.present? %> class="govuk-details govuk-!-margin-bottom-4">
+                <summary class="govuk-details__summary">
+                  <span class="govuk-details__summary-text">
+                    <%= t(".ways_to_buy") %>
+                  </span>
+                  <br />
+                  <span class="selected-count"><%= selected_ways_to_buy_slugs.count %> selected </span>  
+                </summary>
+
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                  <%= f.collection_check_boxes :ways_to_buy_slugs, ways_to_buy, :slug, :title,
+                      checked: params[:ways_to_buy_slugs] do |b| %>
+                    <div class="govuk-checkboxes__item">
+                      <%= b.check_box(class: "govuk-checkboxes__input") %>
+                      <%= b.label(class: "govuk-label govuk-checkboxes__label") do %>
+                        <%= b.text %> (<%= @solutions_count_ways_to_buy[b.value] %>)
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </details>
+            </fieldset>
+          </div>
+          <hr />
+        <% end %>
+        <div class="moj-filter__heading-action govuk-!-padding-top-4">
+          <button type="submit" class="govuk-button" data-module="govuk-button">
+            <%= t(".apply_filters") %>
+          </button>
+          <% if selected_subcategory_slugs.present? || selected_ways_to_buy_slugs.present?  %>
+            <div class="moj-filter__heading-action govuk-!-padding-left-2 govuk-!-padding-top-2">
+              <p class="margin-left-2">
+                <%= link_to t(".clear_filters"),
+                      category_path(@category),
+                      class: "govuk-link govuk-link--no-visited-state" %>
+              </p>
+            </div>
+          <% end %>
         </div>
-
-        <% if selected_subcategory_slugs.present? %>
-          <ul class="moj-filter-tags">
-            <% subcategories.select { |s| selected_subcategory_slugs.include?(s.slug) }.each do |subcategory| %>
-              <%# Build URL with this subcategory removed from the selected slugs %>
-              <% remaining_slugs = selected_subcategory_slugs - [subcategory.slug] %>
-              <% remove_url = category_path(category, subcategory_slugs: remaining_slugs, ways_to_buy_slugs: selected_ways_to_buy_slugs) %>
-              <li>
-                <a class="moj-filter__tag sidebar__link--highlight" href="<%= remove_url %>">
-                  <span class="govuk-visually-hidden"><%= t(".remove_filter") %></span>
-                  <%= subcategory.title %>
-                </a>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
-
-        <% if selected_ways_to_buy_slugs.present? %>
-          <ul class="moj-filter-tags">
-            <% ways_to_buy.select { |w| selected_ways_to_buy_slugs.include?(w.slug) }.each do |way_to_buy| %>
-              <% remaining_slugs = selected_ways_to_buy_slugs - [way_to_buy.slug] %>
-              <% remove_url = category_path(category, subcategory_slugs: selected_subcategory_slugs, ways_to_buy_slugs: remaining_slugs) %>
-              <li>
-                <a class="moj-filter__tag sidebar__link--highlight" href="<%= remove_url %>">
-                  <span class="govuk-visually-hidden"><%= t(".remove_filter") %></span>
-                  <%= way_to_buy.title %>
-                </a>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
-      </div>
-
-      <%# Filter options with checkboxes %>
-      <div class="moj-filter__options">
-        <%= form_with url: category_path(category), method: :get do |f| %>
-          <% if subcategories.present? %>
-            <div class="govuk-form-group govuk-!-margin-bottom-0">
-              <fieldset class="govuk-fieldset">
-                <details <%= "open" if selected_subcategory_slugs.present? %> class="govuk-details govuk-!-margin-bottom-4">
-                  <summary class="govuk-details__summary">
-                    <span class="govuk-details__summary-text">
-                      <%= t(".subcategories") %> 
-                    </span>
-                    <br />
-                    <span class="selected-count"><%= selected_subcategory_slugs.count %> selected </span>   
-                  </summary>
-                  
-                  <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                    <%= f.collection_check_boxes :subcategory_slugs, subcategories, :slug, :title,
-                        checked: params[:subcategory_slugs] do |b| %>
-
-                      <div class="govuk-checkboxes__item">
-                        <%= b.check_box(class: "govuk-checkboxes__input") %>
-                        <%= b.label(class: "govuk-label govuk-checkboxes__label") do %>
-                          <%= b.text %> (<%= @solutions_count_subcategory[b.value] %>)
-                        <% end %>
-                      </div>
-                    <% end %>
-                  </div>
-                </details>
-              </fieldset>
-            </div>
-            <hr />
-          <% end %>
-
-          <% if ways_to_buy.present? && ways_to_buy.count > 1 %>
-            <div class="govuk-form-group govuk-!-margin-bottom-0">
-              <fieldset class="govuk-fieldset">
-                <details <%= "open" if selected_ways_to_buy_slugs.present? %> class="govuk-details govuk-!-margin-bottom-4">
-                  <summary class="govuk-details__summary">
-                    <span class="govuk-details__summary-text">
-                      <%= t(".ways_to_buy") %>
-                    </span>
-                    <br />
-                    <span class="selected-count"><%= selected_ways_to_buy_slugs.count %> selected </span>  
-                  </summary>
-
-                  <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                    <%= f.collection_check_boxes :ways_to_buy_slugs, ways_to_buy, :slug, :title,
-                        checked: params[:ways_to_buy_slugs] do |b| %>
-                      <div class="govuk-checkboxes__item">
-                        <%= b.check_box(class: "govuk-checkboxes__input") %>
-                        <%= b.label(class: "govuk-label govuk-checkboxes__label") do %>
-                          <%= b.text %> (<%= @solutions_count_ways_to_buy[b.value] %>)
-                        <% end %>
-                      </div>
-                    <% end %>
-                  </div>
-                </details>
-              </fieldset>
-            </div>
-            <hr />
-          <% end %>
-          <div class="moj-filter__heading-action govuk-!-padding-top-4">
-            <button type="submit" class="govuk-button" data-module="govuk-button">
-              <%= t(".apply_filters") %>
-            </button>
-            <% if selected_subcategory_slugs.present? || selected_ways_to_buy_slugs.present?  %>
-              <div class="moj-filter__heading-action govuk-!-padding-left-2 govuk-!-padding-top-2">
-                <p class="margin-left-2">
-                  <%= link_to t(".clear_filters"),
-                        category_path(@category),
-                        class: "govuk-link govuk-link--no-visited-state" %>
-                </p>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
+      <% end %>
     </div>
   </div>
-<% end %>
-
+</div>
