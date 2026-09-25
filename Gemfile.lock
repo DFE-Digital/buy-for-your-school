@@ -742,7 +742,7 @@ GEM
       attr_required (>= 0.0.5)
       faraday (~> 2.0)
       faraday-follow_redirects
-    terminal-notifier (2.0.0)
+    terminal-notifier (3.1.0)
     terminal-notifier-guard (1.7.0)
     terminal-table (4.0.0)
       unicode-display_width (>= 1.1.1, < 4)
