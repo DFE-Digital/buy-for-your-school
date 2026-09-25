@@ -68,7 +68,7 @@ en:
     name: Get help buying for schools
   header_description: We're here to help schools save time and money and buy compliantly. You can
   header_bullets:
-  - find approved buying options and DfE deals
+  - find approved buying options and DfE offers
   - ask our team of buying experts for advice
   - get help running your procurement
   header_title: Get help buying for schools
@@ -89,7 +89,7 @@ en:
       offers_title: I want to
       popular_links_title: Popular
       title: Browse by category
-      subtitle: Find frameworks, catalogues and DfE deals to suit your school's needs
+      subtitle: Find frameworks, catalogues and DfE offers to suit your school's needs
     show:
       heading: Browse DfE-approved frameworks and deals
   case_requests:
