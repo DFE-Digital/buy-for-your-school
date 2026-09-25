@@ -21,8 +21,11 @@ module Support
       def create
         @case_email_mover = current_case.email_mover(form_params)
         if @case_email_mover.valid?
+          uniq_emails = current_case.emails.distinct(:outlook_conversation_id).to_a
           @case_email_mover.save!
           @destination = @case_email_mover.destination
+          update_emails_subject(uniq_emails:, from_case: current_case, to_case: @destination)
+
           render :success
         else
           back_url
@@ -42,6 +45,14 @@ module Support
 
       def current_case
         @current_case ||= CasePresenter.new(super)
+      end
+
+      def update_emails_subject(uniq_emails:, from_case:, to_case:)
+        if uniq_emails.present?
+          Support::UpdateEmailSubjectJob.perform_later(email_ids: uniq_emails.pluck(:id), to_case_id: to_case.id, from_case_id: from_case.id)
+        else
+          Rails.logger.info("Not updating email subjects as more than 1 unique emails or no emails found for case ##{from_case.ref}")
+        end
       end
     end
   end
