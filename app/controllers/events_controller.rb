@@ -32,6 +32,8 @@ private
       .with_response_details(response)
       .with_data(data:)
 
+    with_feature_flag_context(event)
+
     DfE::Analytics::SendEvents.do([event])
   end
 end
