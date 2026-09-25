@@ -6,10 +6,11 @@ SitemapGenerator::Sitemap.default_host = "https://get-help-buying-for-schools.ed
 # rubocop:disable all
 SitemapGenerator::Sitemap.create(include_root: false) do
   def view_lastmod(template)
-    full_path = Rails.root.join("app", "views", "#{template}.html.erb")
-    Time.zone.at(`git log -1 --format="%ct" -- #{full_path}`.to_i).to_date
+    timestamps = YAML.safe_load_file(Rails.root.join("config", "view_lastmod.yml"))
+    Time.zone.at(timestamps.fetch(template).to_i).to_date
   end
-  # Root
+
+  # Static pages
   add "/", lastmod: view_lastmod("categories/index")
 
   # Categories

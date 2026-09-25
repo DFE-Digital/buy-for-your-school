@@ -22,6 +22,16 @@ runs:
   steps:
     - uses: actions/checkout@v4
       name: Checkout Code
+      with:
+        fetch-depth: 0
+
+    - name: Record sitemap template last-modified time
+      shell: bash
+      run: |
+        for template in categories/index; do
+          timestamp=$(git log -1 --format=%ct -- "app/views/${template}.html.erb")
+          printf '%s: %s\n' "$template" "$timestamp"
+        done > config/view_lastmod.yml
 
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v3
