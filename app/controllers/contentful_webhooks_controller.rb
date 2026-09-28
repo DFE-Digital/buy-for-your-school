@@ -1,4 +1,5 @@
-class ContentfulWebhooksController < Fabs::ApplicationController
+class ContentfulWebhooksController < ApplicationController
+  skip_before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
 
   UPSERT_TOPICS = [

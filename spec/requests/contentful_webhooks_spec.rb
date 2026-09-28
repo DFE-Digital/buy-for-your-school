@@ -38,7 +38,7 @@ RSpec.describe "Contentful webhooks", type: :request do
       it "returns success when indexing succeeds" do
         allow(indexer).to receive(:index_document).and_return(true)
 
-        post(contentful_webhooks_path, params: payload, headers:)
+        post(contentful_webhooks_path, params: payload, headers: headers.merge("Accept" => "application/json"))
 
         expect(response).to have_http_status(:ok)
         expect(JSON.parse(response.body)).to eq("message" => "Webhook for entry #{entity_id} processed successfully.")
