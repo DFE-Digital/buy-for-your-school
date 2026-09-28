@@ -5,13 +5,6 @@ SitemapGenerator::Sitemap.default_host = "https://get-help-buying-for-schools.ed
 
 # rubocop:disable all
 SitemapGenerator::Sitemap.create(include_root: false) do
-  def view_lastmod(template)
-    full_path = Rails.root.join("app", "views", "#{template}.html.erb")
-    File.mtime(full_path).to_date
-  end
-  # Root
-  add "/", lastmod: view_lastmod("categories/index")
-
   # Categories
   FABS::Category.all.each do |category|
     add "/categories/#{category.slug}", lastmod: category.updated_at
@@ -29,8 +22,9 @@ SitemapGenerator::Sitemap.create(include_root: false) do
   end
 
   # Static pages: maps the URL slug to its view template, where they differ
-  def static_page_view
+  def static_pages
     {
+      "" => "categories/index",
       "energy/start" => "energy/onboarding/start",
       "energy/before-you-start" => "energy/onboarding/before_you_start",
       "energy/guidance" => "energy/onboarding/guidance",
@@ -38,8 +32,13 @@ SitemapGenerator::Sitemap.create(include_root: false) do
     }
   end
 
-  static_page_view.each do |path, template|
-    add "/#{path}", lastmod: view_lastmod(template)
+  path = Rails.root.join("config", "view_lastmod.yml")
+  templates_with_timestamps = File.exist?(path) ? YAML.safe_load_file(path) : {}
+
+  templates_with_timestamps.keys.each do |template|
+    path = static_pages.key(template)
+    lastmod_date = Time.zone.at(templates_with_timestamps.fetch(template).to_i).to_date
+    add "/#{path}", lastmod: lastmod_date
   end
 end
 # rubocop:enable all
