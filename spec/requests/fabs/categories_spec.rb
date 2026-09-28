@@ -63,12 +63,14 @@ RSpec.describe "Categories pages", type: :request do
       end
 
       it "displays the popular links section" do
-        expect(response.body).to include("Popular")
-        # expect(response.body).to include('class="homepage-popular-links')
-        # expect(response.body).to include('class="govuk-grid-row"')
-        # expect(response.body).to include('class="govuk-grid-column-one-third"')
-        expect(response.body).to include('href="/link-one">Link one')
-        expect(response.body).to include('href="https://example.com/link-two">Link two')
+        popular_links_section = Nokogiri::HTML(response.body).at_css(".homepage-popular-links")
+
+        expect(popular_links_section).to be_present
+        expect(popular_links_section.text).to include("Link one", "Link two")
+        expect(popular_links_section.css("a").map { |link| link["href"] }).to contain_exactly(
+          "http://localhost:3000/link-one",
+          "https://example.com/link-two",
+        )
       end
     end
 
