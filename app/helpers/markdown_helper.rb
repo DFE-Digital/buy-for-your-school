@@ -2,7 +2,7 @@
 # from FABS codebase. Contentful content formatting and markdown -> HTML conversion should be standardised
 module MarkdownHelper
   ALLOWED_TAGS = %w[p h1 h2 h3 h4 h5 h6 a ul ol li strong em br img table thead tbody tr th td caption].freeze
-  ALLOWED_ATTRIBUTES = %w[href src alt target rel class id].freeze
+  ALLOWED_ATTRIBUTES = %w[href src alt target rel class id style].freeze
 
   def render_markdown_to_html(markdown_content)
     return "" if markdown_content.blank?
@@ -32,6 +32,16 @@ module MarkdownHelper
     doc = update_class(doc, "tr", "govuk-table__row")
     doc = update_class(doc, "th", "govuk-table__header")
     doc = update_class(doc, "td", "govuk-table__cell")
+
+    doc.css('th[style="text-align:right;"]').each do |th|
+      th["class"] = [th["class"], "govuk-table__header--numeric"].compact.join(" ")
+      th.remove_attribute("style")
+    end
+
+    doc.css('td[style="text-align:right;"]').each do |td|
+      td["class"] = [td["class"], "govuk-table__cell--numeric"].compact.join(" ")
+      td.remove_attribute("style")
+    end
 
     doc.css("th").each do |th|
       th["scope"] ||= "col"

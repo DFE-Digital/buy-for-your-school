@@ -45,6 +45,20 @@ RSpec.describe MarkdownHelper, type: :helper do
       expect(html).to include("Compliant")
     end
 
+    it "adds GOV.UK numeric classes to right-aligned columns" do
+      markdown = <<~MD
+        | Scenario | Quote |
+        | ------- | ---: |
+        | DfE approved energy | £100 |
+        | Non-DfE approved energy | £1000 |
+      MD
+
+      html = helper.render_markdown_to_html(markdown)
+
+      expect(html).to include("govuk-table__header--numeric")
+      expect(html).to include("govuk-table__cell--numeric")
+    end
+
     describe "sanitization" do
       it "strips script tags" do
         markdown = "<script>alert('xss')</script>"
