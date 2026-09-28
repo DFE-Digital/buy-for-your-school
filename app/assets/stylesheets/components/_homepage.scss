@@ -17,6 +17,10 @@
   }
 }
 
+.homepage-featured-offers {
+  margin-top: 40px;
+}
+
 .homepage-popular-links {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -85,4 +89,10 @@
 .homepage-category-list {
   border-top: 1px solid #b1b4b6;
   padding: 20px 0 60px 0;
+}
+
+@media (max-width: 661px) {
+  .homepage-category-list {
+    padding-bottom: 20px;
+  }
 }
