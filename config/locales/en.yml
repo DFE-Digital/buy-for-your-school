@@ -66,8 +66,11 @@ en:
       title: Thank you - Get help buying for schools feedback
   app:
     name: Get help buying for schools
-  header_description: A free and compliant service to help you buy for your school,
-    trust or academy
+  header_description: We're here to help schools save time and money and buy compliantly. You can
+  header_bullets:
+  - find approved buying options and DfE offers
+  - ask our team of buying experts for advice
+  - get help running your procurement
   header_title: Get help buying for schools
   banner:
     beta:
@@ -83,14 +86,11 @@ en:
     offers: Offers
   categories:
     index:
-      offers_title: DfE featured
-      procurement_support: I need something else (opens in a new tab)
-      title: DfE-approved buying options by category
-      not_sure_title: Not sure where to start?
-      not_sure_body: Our buying team can help you choose the right way to buy for your school
-      expert_help_button: Get expert buying help
+      offers_title: I want to
+      popular_links_title: Popular
+      title: Browse by category
+      subtitle: Find frameworks, catalogues and DfE offers to suit your school's needs
     show:
-      get_expert_help: Get expert help
       heading: Browse DfE-approved frameworks and deals
   case_requests:
     validation:
@@ -3057,10 +3057,10 @@ en:
       procurement_help: Request procurement help
       support_links: Support links
       terms_and_conditions: Terms and conditions
-    dfe_homepage_header:
-      view_all_buying_options: Browse a list of all DfE-approved buying options
     external_link:
       opens_in_new_tab: opens in new tab
+    get_expert_help:
+      heading: Request help
     right_filters:
       apply_filters: Apply filters
       clear_filters: Clear filters

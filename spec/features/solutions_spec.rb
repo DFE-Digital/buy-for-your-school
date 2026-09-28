@@ -9,7 +9,10 @@ RSpec.describe "Solutions pages", type: :feature do
     allow(Solution).to receive(:find_by_slug!).with("musical-instruments-equipment-and-technology").and_return(musical_instruments_solution)
     allow(Solution).to receive(:find_by_slug!).with("debt-resolution-services").and_return(debt_resolution_solution)
     allow(Solution).to receive(:find_by_slug!).with("ict-procurement").and_return(ict_procurement_solution)
+    allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
   end
+
+  let(:get_expert_help) { instance_double(GetExpertHelp, title: "Get expert help", description: "Helpful content") }
 
   let(:related_content) do
     [OpenStruct.new(link_text: "Plan technology for your school", url: "/plan-technology")]
