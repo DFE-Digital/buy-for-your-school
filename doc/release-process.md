@@ -30,6 +30,9 @@ $ git push --force-with-lease
 NOTE: `git push --force-with-lease` is important, the force push will be
 rejected if changes have been made in origin that differ from your local branch.
 
+Alternatively, run `./bin/deploy_prod` from a named branch other than
+`production` to automate these steps.
+
 Monitor the [github actions
 page](https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/ci-full-pipeline.yml)
 to check status of the automated deployment.
