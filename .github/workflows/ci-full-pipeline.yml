@@ -451,6 +451,7 @@ jobs:
           az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}
           container_app_name: ${{ secrets.CONTAINER_APP_NAME }}
           resource_group_name: ${{ secrets.RESOURCE_GROUP_NAME }}
+          generate_sitemap: "true"
 
   release_staging:
     name: Deploy release (Staging)
