@@ -14,6 +14,10 @@ inputs:
   resource_group_name:
     description: The name of the resource group that contains the container app
     required: true
+  generate_sitemap:
+    description: Generate sitemap after deployment
+    required: false
+    default: "false"
 
 runs:
   using: composite
@@ -41,3 +45,16 @@ runs:
             --resource-group ${{ inputs.resource_group_name }} \
             --image ${{ inputs.docker_image_and_tag }} \
             --output none
+
+    - name: Generate sitemap post deployment
+      if: ${{ inputs.generate_sitemap == 'true' }}
+      uses: azure/CLI@v2.0.0
+      with:
+        azcliversion: 2.51.0
+        inlineScript: |
+          az config set extension.use_dynamic_install=yes_without_prompt
+
+          az containerapp exec \
+            --name ${{ inputs.container_app_name }} \
+            --resource-group ${{ inputs.resource_group_name }} \
+            --command "bundle exec rails sitemap:create"        
