@@ -451,7 +451,7 @@ jobs:
           az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}
           container_app_name: ${{ secrets.CONTAINER_APP_NAME }}
           resource_group_name: ${{ secrets.RESOURCE_GROUP_NAME }}
-          generate_sitemap: "true"
+          generate_sitemap: "false"
 
   release_staging:
     name: Deploy release (Staging)
@@ -469,6 +469,7 @@ jobs:
           az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}
           container_app_name: ${{ secrets.CONTAINER_APP_NAME }}
           resource_group_name: ${{ secrets.RESOURCE_GROUP_NAME }}
+          generate_sitemap: "false"
 
   release_production:
     name: Deploy release (Production)
@@ -486,3 +487,4 @@ jobs:
           az_credentials: ${{ secrets.AZURE_SP_CREDENTIALS }}
           container_app_name: ${{ secrets.CONTAINER_APP_NAME }}
           resource_group_name: ${{ secrets.RESOURCE_GROUP_NAME }}
+          generate_sitemap: "true"
