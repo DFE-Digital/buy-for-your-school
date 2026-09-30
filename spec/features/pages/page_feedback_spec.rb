@@ -1,10 +1,14 @@
 require "rails_helper"
 
 RSpec.describe "Page feedback", :js do
+  let(:get_expert_help) { instance_double(GetExpertHelp, title: "Get expert help", description: "Helpful content") }
+
   before do
     allow(FABS::Category).to receive(:all).and_return([])
     allow(Offer).to receive(:featured_offers).and_return([])
+    allow(PopularLink).to receive(:all).and_return([])
     allow(Banner).to receive(:find_by_slug).and_return(nil)
+    allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
   end
 
   context "when visiting the homepage" do

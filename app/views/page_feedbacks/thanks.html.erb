@@ -1,8 +1,12 @@
 <%= turbo_frame_tag "page_feedback" do %>
-  <div class="dfe-width-container">
-    <div class="gem-c-feedback__prompt-questions">
-      <div class=" gem-c-feedback__prompt-questions gem-c-feedback__prompt-success js-prompt-success">
-        <%= @page_feedback.page_useful || @page_feedback.wants_feedback ? t('page_feedback.thank_you_feedback') : t('page_feedback.thank_you') %>
+  <div class="gem-c-feedback gem-c-feedback__prompt gem-c-feedback__js-show js-prompt" tabindex="-1">
+    <div class="gem-c-feedback__prompt-content dfe-width-container">
+      <div class="gem-c-feedback__prompt-questions gem-c-feedback__prompt-questions-div">
+        <div class="gem-c-feedback__prompt-question-answer">
+          <div class="gem-c-feedback__prompt-success js-prompt-success">
+            <%= @page_feedback.page_useful || @page_feedback.wants_feedback ? t('page_feedback.thank_you_feedback') : t('page_feedback.thank_you') %>
+          </div>
+        </div>
       </div>
     </div>
   </div>
