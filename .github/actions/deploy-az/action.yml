@@ -52,9 +52,9 @@ runs:
       with:
         azcliversion: 2.51.0
         inlineScript: |
-          az config set extension.use_dynamic_install=yes_without_prompt
+          az extension add --name containerapp --upgrade
 
           az containerapp exec \
             --name ${{ inputs.container_app_name }} \
             --resource-group ${{ inputs.resource_group_name }} \
-            --command "bundle exec rails sitemap:create"        
+            --command "bundle exec rails sitemap:create"     
