@@ -48,13 +48,11 @@ runs:
 
     - name: Generate sitemap post deployment
       if: ${{ inputs.generate_sitemap == 'true' }}
-      uses: azure/CLI@v2.0.0
-      with:
-        azcliversion: 2.51.0
-        inlineScript: |
-          az extension add --name containerapp --upgrade
+      shell: bash
+      run: |
+        az extension add --name containerapp --upgrade
 
-          script -q -c 'az containerapp exec \
-            --name ${{ inputs.container_app_name }} \
-            --resource-group ${{ inputs.resource_group_name }} \
-            --command "bundle exec rails sitemap:create"' /dev/null    
+        script -q -e -c 'az containerapp exec \
+         --name ${{ inputs.container_app_name }} \
+         --resource-group ${{ inputs.resource_group_name }} \
+         --command "bundle exec rails sitemap:create"' /dev/null    
