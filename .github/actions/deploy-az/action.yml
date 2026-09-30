@@ -54,7 +54,7 @@ runs:
         inlineScript: |
           az extension add --name containerapp --upgrade
 
-          az containerapp exec \
+          script -q -c 'az containerapp exec \
             --name ${{ inputs.container_app_name }} \
             --resource-group ${{ inputs.resource_group_name }} \
-            --command "bundle exec rails sitemap:create"     
+            --command "bundle exec rails sitemap:create"' /dev/null    
