@@ -9,6 +9,13 @@ RSpec.describe MarkdownHelper, type: :helper do
       expect(html).to include('<a href="https://example.com" target="_blank" rel="noopener noreferrer" class="govuk-link">External</a>')
     end
 
+    it "styles 'Start now' links as a start button" do
+      markdown = "[Start now>](/start) [Other](/other)"
+      html = helper.render_markdown_to_html(markdown)
+      expect(html).to include('<a href="/start" class="govuk-button govuk-button--start">Start now&gt;</a>')
+      expect(html).to include('<a href="/other" class="govuk-link">Other</a>')
+    end
+
     it "add the correct css class for h2 and paragraph tags" do
       markdown = "## This a heading\nThis is a random paragraph"
       html = helper.render_markdown_to_html(markdown)

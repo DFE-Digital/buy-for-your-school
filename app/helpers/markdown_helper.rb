@@ -23,7 +23,10 @@ module MarkdownHelper
       end
     end
 
-    doc = update_class(doc, "a[href]", "govuk-link")
+    start_now_links, other_links = doc.css("a[href]").partition { |link| start_now_link?(link) }
+    start_now_links.each { |link| add_class(link, "govuk-button govuk-button--start") }
+    other_links.each { |link| add_class(link, "govuk-link") }
+
     doc = update_class(doc, "img", "govuk-!-width-full")
 
     doc = update_class(doc, "table", "govuk-table")
@@ -53,12 +56,18 @@ module MarkdownHelper
   def update_class(doc, tag_type, class_name)
     return doc unless doc.at_css(tag_type)
 
-    doc.css(tag_type).each do |tag|
-      unless tag["class"] && tag["class"].include?(class_name)
-        tag["class"] = [tag["class"], class_name].compact.join(" ")
-      end
-    end
+    doc.css(tag_type).each { |tag| add_class(tag, class_name) }
 
     doc
+  end
+
+  def add_class(tag, class_name)
+    return if tag["class"]&.include?(class_name)
+
+    tag["class"] = [tag["class"], class_name].compact.join(" ")
+  end
+
+  def start_now_link?(link)
+    link.text.squish.casecmp?("start now>")
   end
 end
