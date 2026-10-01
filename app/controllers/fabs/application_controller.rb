@@ -1,5 +1,6 @@
 class Fabs::ApplicationController < ApplicationController
   include Breadcrumbs
+  include HtmlOnlyRequests
 
   rescue_from ContentfulRecordNotFoundError, with: :record_not_found
 
