@@ -24,4 +24,6 @@ git push --force-with-lease
 echo "Returning to $current_branch..."
 git checkout "$current_branch"
 
-echo "Done."
+echo
+echo "Development deployment triggered by the push. Monitor the GitHub Actions full pipeline:"
+echo "https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/ci-full-pipeline.yml"
