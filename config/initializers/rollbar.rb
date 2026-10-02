@@ -73,5 +73,6 @@ Rollbar.configure do |config|
   # bot noise in live environments.
   config.exception_level_filters.merge!(
     "ActionController::RoutingError" => "ignore",
+    "ActionController::UnknownFormat" => "ignore",
   )
 end

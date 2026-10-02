@@ -41,6 +41,10 @@ RSpec.describe "Errors", type: :request do
       expect(response).to have_http_status(:not_acceptable)
       expect(response.body).to include(I18n.t("errors.unacceptable.page_title"))
     end
+
+    it "ignores unknown format exceptions in Rollbar" do
+      expect(Rollbar.configuration.exception_level_filters["ActionController::UnknownFormat"]).to eq("ignore")
+    end
   end
 
   describe "unacceptable" do
