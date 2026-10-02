@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+reset_development=false
+
+if [[ "$#" -gt 1 || ( "$#" -eq 1 && "$1" != "--reset" ) ]]; then
+  echo "Usage: $0 [--reset]"
+  exit 1
+fi
+
+if [[ "$#" -eq 1 ]]; then
+  reset_development=true
+fi
+
 current_branch="$(git branch --show-current)"
 
 if [[ -z "$current_branch" ]]; then
@@ -13,12 +24,22 @@ if [[ "$current_branch" == "main" || "$current_branch" == "development" ]]; then
   exit 1
 fi
 
-echo "Deploying feature branch '$current_branch' onto development..."
+if [[ "$reset_development" == true ]]; then
+  echo "Deploying feature branch '$current_branch' onto development with a hard reset..."
+else
+  echo "Deploying feature branch '$current_branch' onto development with a rebase..."
+fi
 
 git fetch
 git checkout development
-git reset --hard origin/development
-git rebase "$current_branch"
+
+if [[ "$reset_development" == true ]]; then
+  git reset --hard "$current_branch"
+else
+  git reset --hard origin/development
+  git rebase "$current_branch"
+fi
+
 git push --force-with-lease
 
 echo "Returning to $current_branch..."
