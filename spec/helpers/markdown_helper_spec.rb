@@ -59,6 +59,17 @@ RSpec.describe MarkdownHelper, type: :helper do
       expect(html).to include("govuk-table__cell--numeric")
     end
 
+    it "renders blockquotes as GOV.UK inset text" do
+      markdown = "> Important buying information"
+
+      html = helper.render_markdown_to_html(markdown)
+
+      expect(html).to include('class="govuk-inset-text"')
+      expect(html).not_to include("<blockquote>")
+      expect(html).not_to include("<p>")
+      expect(html).to include("Important buying information")
+    end
+
     describe "sanitization" do
       it "strips script tags" do
         markdown = "<script>alert('xss')</script>"
