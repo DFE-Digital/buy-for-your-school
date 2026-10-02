@@ -646,7 +646,7 @@ Rails.application.routes.draw do
   get "/search", to: "search#index"
   post "/events", to: "events#create"
 
-  get ":slug", to: "pages#show", as: :page, format: false, constraints: { slug: /[^\/.]+/ }
+  get ":slug", to: "pages#show", as: :page, format: false, constraints: { slug: /[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?/ }
 
   resources :page_feedbacks, only: [:create] do
     collection do
