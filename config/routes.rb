@@ -646,8 +646,6 @@ Rails.application.routes.draw do
   get "/search", to: "search#index"
   post "/events", to: "events#create"
 
-  get ":slug", to: "pages#show", as: :page, format: false, constraints: { slug: /[^\/.]+/ }
-
   resources :page_feedbacks, only: [:create] do
     collection do
       get "new", to: "page_feedbacks#new", as: :new         # "Is this page useful?"
@@ -655,4 +653,7 @@ Rails.application.routes.draw do
       get "form", to: "page_feedbacks#form"                 # feedback textarea
     end
   end
+
+  # Catch-all for Contentful pages; must stay last so it doesn't shadow the routes above
+  get ":slug", to: "pages#show", as: :page, format: false, constraints: { slug: /[\w-]+(?:\/[\w-]+)?/ }
 end
