@@ -12,6 +12,7 @@ RSpec.describe "Categories pages", type: :request do
   let(:popular_links) { [] }
   let(:energy_banner) { nil }
   let(:get_expert_help) { instance_double(GetExpertHelp, title: "Get expert help", description: "Helpful content") }
+  let(:request_headers) { {} }
 
   describe "GET /" do
     before do
@@ -20,7 +21,7 @@ RSpec.describe "Categories pages", type: :request do
       allow(PopularLink).to receive(:all) { popular_links }
       allow(Banner).to receive(:find_by_slug) { energy_banner }
       allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
-      get root_path
+      get root_path, headers: request_headers
     end
 
     it "sets default HTML title tag" do
@@ -94,6 +95,15 @@ RSpec.describe "Categories pages", type: :request do
     it "displays get expert help content" do
       expect(response.body).to include("Request help")
       expect(response.body).to include("Helpful content")
+    end
+
+    context "when the Accept header is a wildcard" do
+      let(:request_headers) { { "Accept" => "*/*" } }
+
+      it "treats the request as HTML" do
+        expect(response).to have_http_status(:ok)
+        expect(response.media_type).to eq("text/html")
+      end
     end
   end
 
