@@ -31,7 +31,7 @@ describe "Marking notifications as read/unread" do
 
     context "when redirection param is for a path the system does not recognise" do
       it "redirects to the notifications list" do
-        post support_notification_read_path(notification, redirect_to: "/etc/hosts")
+        post support_notification_read_path(notification, redirect_to: "/this/path/does-not-exist")
         expect(response).to redirect_to(support_notifications_path)
       end
     end
