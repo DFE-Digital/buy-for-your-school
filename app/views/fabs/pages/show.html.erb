@@ -11,5 +11,6 @@
 <%= render partial: "shared/attachments", locals: { attachments: @page.attachments } %>
 
 <% content_for :sidebar do %>
+  <br /><br />
   <%= render partial: "shared/related_content", locals: { related_content: @page.related_content } %>
 <% end %>
