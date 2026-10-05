@@ -1,8 +1,8 @@
 # TODO: consider deprecating use of this class in favour of Support::Markdown - this was introduced
 # from FABS codebase. Contentful content formatting and markdown -> HTML conversion should be standardised
 module MarkdownHelper
-  ALLOWED_TAGS = %w[p h1 h2 h3 h4 h5 h6 a ul ol li strong em br img table thead tbody tr th td caption blockquote div].freeze
-  ALLOWED_ATTRIBUTES = %w[href src alt target rel class id style].freeze
+  ALLOWED_TAGS = %w[p h1 h2 h3 h4 h5 h6 a ul ol li strong em br img table thead tbody tr th td caption blockquote div hr].freeze
+  ALLOWED_ATTRIBUTES = %w[href src alt target rel class id style start].freeze
 
   def render_markdown_to_html(markdown_content)
     return "" if markdown_content.blank?
@@ -10,12 +10,17 @@ module MarkdownHelper
     html = Kramdown::Document.new(markdown_content).to_html
     html = sanitize(html, tags: ALLOWED_TAGS, attributes: ALLOWED_ATTRIBUTES)
 
-    return html.html_safe unless html.match?(/href|<p\b|<h2\b|<img\b|<table\b/)
+    return html.html_safe unless html.match?(/href|<p\b|<h1\b|<h2\b|<h3\b|<hr\b|<ol\b|<ul\b|<img\b|<table\b/)
 
     doc = Nokogiri::HTML.fragment(html)
 
+    doc = update_class(doc, "h1", "govuk-heading-l")
     doc = update_class(doc, "h2", "govuk-heading-m")
+    doc = update_class(doc, "h3", "govuk-heading-s")
     doc = update_class(doc, "p", "govuk-body")
+    doc = update_class(doc, "ul", "govuk-list govuk-list--bullet")
+    doc = update_class(doc, "ol", "govuk-list govuk-list--number")
+    doc = update_class(doc, "hr", "govuk-section-break govuk-section-break--m govuk-section-break--visible")
 
     doc.css("a[href]").each do |link|
       external_link_attributes(link["href"]).each do |key, value|
