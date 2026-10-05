@@ -503,6 +503,24 @@ Rails.application.routes.draw do
   get "/energy/guidance", to: "energy/onboarding#guidance", as: "energy_guidance"
   get "/energy/onboarding/guidance", to: redirect("/energy/guidance")
   get "/energy/before-you-start", to: "energy/onboarding#before_you_start", as: "energy_before_you_start"
+  scope "/energy/register-your-interest", module: "energy/register_your_interests", as: "energy_register_your_interest" do
+    get "/", to: "names#index", as: ""
+    post "/", to: "names#create"
+    get "/email", to: "emails#index", as: "email"
+    post "/email", to: "emails#create"
+    get "/phone-number", to: "phone_numbers#index", as: "phone_number"
+    post "/phone-number", to: "phone_numbers#create"
+    get "/mat-search", to: "mats#search", as: "mat_search"
+    get "/mat", to: "mats#index", as: "mat"
+    post "/mat", to: "mats#create"
+    get "/gas", to: "gas#index", as: "gas"
+    post "/gas", to: "gas#create"
+    get "/electricity", to: "electricities#index", as: "electricity"
+    post "/electricity", to: "electricities#create"
+    get "/check-your-answers", to: "check_your_answers#show", as: "check_your_answers"
+    post "/check-your-answers", to: "check_your_answers#update"
+    get "/confirmation", to: "confirmations#show", as: "confirmation"
+  end
 
   # School selection
   get "/energy/which-school-buying-for", to: "energy/school_selections#show", as: "energy_school_selection"

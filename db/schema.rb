@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_15_120557) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_29_120000) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -300,6 +300,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_15_120557) do
     t.uuid "support_case_id"
     t.datetime "updated_at", null: false
     t.index ["support_case_id"], name: "index_energy_onboarding_cases_on_support_case_id"
+  end
+
+  create_table "energy_register_your_interests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "electricity_contract_end_date"
+    t.string "email"
+    t.date "gas_contract_end_date"
+    t.string "mat_name"
+    t.string "mat_uid"
+    t.string "name"
+    t.string "phone_number"
+    t.integer "status", default: 0, null: false
+    t.boolean "switch_electricity"
+    t.boolean "switch_gas"
+    t.string "ukprn"
+    t.datetime "updated_at", null: false
   end
 
   create_table "engagement_case_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
