@@ -1,0 +1,9 @@
+<% content_for :title, t(".email.title") %>
+<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">
+  <%= form_with model: @registration, scope: :energy_register_your_interest, url: energy_register_your_interest_email_path, method: :post do |form| %>
+    <%= form.govuk_error_summary %>
+    <%= form.govuk_text_field :email, label: { text: t(".email.title"), tag: :h1, size: "l" }, autocomplete: "email" %>
+    <%= hidden_field_tag :return_to, "check-answers" if params[:return_to] == "check-answers" %>
+    <%= form.submit t("generic.button.next"), class: "govuk-button" %>
+  <% end %>
+</div></div>
