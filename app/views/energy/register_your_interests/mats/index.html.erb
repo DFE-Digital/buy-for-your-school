@@ -1,0 +1,10 @@
+<% content_for :title, t(".mat.title") %>
+<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">
+  <h1 class="govuk-heading-l"><%= t(".mat.title") %></h1>
+  <%= form_with model: @registration, scope: :energy_register_your_interest, url: energy_register_your_interest_mat_path, method: :post do |form| %>
+    <%= form.govuk_error_summary %>
+    <%= render "components/autocomplete", container_id: "mat-autocomplete-container", element_id: "mat-autocomplete", element_name: "mat_search", label_text: t(".mat.search_label"), label_class: "govuk-hint", default_value: Support::EstablishmentGroup.find_by(uid: @registration.mat_uid)&.formatted_name, template_suggestion: t(".mat.suggestion_html"), value_field: :formatted_name, query_url: energy_register_your_interest_mat_search_path(format: :json, q: "{{QUERY}}"), hidden_fields: { "energy_register_your_interest[mat_uid]" => ["uid", @registration.mat_uid], "energy_register_your_interest[ukprn]" => ["ukprn", @registration.ukprn] } %>
+    <%= hidden_field_tag :return_to, "check-answers" if params[:return_to] == "check-answers" %>
+    <%= form.submit t("generic.button.next"), class: "govuk-button" %>
+  <% end %>
+</div></div>
