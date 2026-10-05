@@ -691,6 +691,21 @@
   - data_collector
   - meter_operator
   - electricity_usage
+  :energy_register_your_interests:
+  - id
+  - name
+  - email
+  - phone_number
+  - mat_uid
+  - mat_name
+  - ukprn
+  - switch_gas
+  - gas_contract_end_date
+  - switch_electricity
+  - electricity_contract_end_date
+  - status
+  - created_at
+  - updated_at
   :support_case_attachments:
   - id
   - support_case_id

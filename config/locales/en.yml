@@ -355,6 +355,57 @@ en:
   energy:
     generic:
       change: Change
+    register_your_interests:
+      names:
+        index:
+          name:
+            title: What is your name?
+      emails:
+        index:
+          email:
+            title: What is your email address?
+      phone_numbers:
+        index:
+          phone_number:
+            title: What is your preferred contact number?
+      mats:
+        index:
+          mat:
+            title: What is the name of your multi-academy trust?
+            search_label: Search for your multi-academy trust
+            suggestion_html: "<strong>{{name}}</strong> (UKPRN: {{ukprn}})"
+            selection_error: Select a multi-academy trust
+      gas:
+        index:
+          gas:
+            title: Do you want to switch gas?
+            contract_end_date: When does your gas contract end?
+            optional: This question is optional
+            invalid_date: Enter a valid gas contract end date
+      electricities:
+        index:
+          electricity:
+            title: Do you want to switch electricity?
+            contract_end_date: When does your electricity contract end?
+            optional: This question is optional
+            invalid_date: Enter a valid electricity contract end date
+      check_your_answers:
+        show:
+          title: Check your answers
+          answers:
+            name: Name
+            email: Email address
+            phone_number: Preferred contact number
+            mat_name: Multi-academy trust
+            ukprn: UKPRN
+            switch_gas: Do you want to switch gas?
+            gas_contract_end_date: Gas contract end date
+            switch_electricity: Do you want to switch electricity?
+            electricity_contract_end_date: Electricity contract end date
+      confirmations:
+        show:
+          title: Registration submitted
+          email_message: We will send a confirmation email to %{email}.
     related_actions:
       title: Related actions
       join: Join Energy for Schools
