@@ -1,0 +1,19 @@
+<% if attachments.present? %>
+  <div class="govuk-!-margin-top-6">
+    <h2 class="govuk-heading-m">Downloads</h2>
+    <ul class="govuk-list">
+      <% attachments.each do |attachment| %>
+        <% file_meta = [attachment.file_type, (number_to_human_size(attachment.file_size) if attachment.file_size)].compact %>
+        <li>
+          <%= link_to attachment.url, class: "govuk-link", download: attachment.file_name, target: "_blank", rel: "noopener noreferrer" do %>
+            <%= attachment.link_text %>
+            <span class="govuk-visually-hidden">(opens in new tab)</span>
+          <% end %>
+          <% if file_meta.any? %>
+            <span class="govuk-hint govuk-!-display-inline">(<%= file_meta.join(", ") %>)</span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

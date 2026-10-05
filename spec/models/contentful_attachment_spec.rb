@@ -1,0 +1,101 @@
+require "rails_helper"
+
+RSpec.describe ContentfulAttachment do
+  subject(:attachment) { described_class.new(asset) }
+
+  let(:title) { "Energy guide" }
+  let(:url) { "//assets.ctfassets.net/space/asset/energy-guide.pdf" }
+  let(:file) { OpenStruct.new(file_name: "energy-guide.pdf", details: { "size" => 245_760 }) }
+  let(:asset) { OpenStruct.new(title:, description: "How to switch supplier", url:, file:) }
+
+  it "exposes the asset title and description" do
+    expect(attachment).to have_attributes(title: "Energy guide", description: "How to switch supplier")
+  end
+
+  describe "#url" do
+    it "adds https to protocol-relative Contentful URLs" do
+      expect(attachment.url).to eq("https://assets.ctfassets.net/space/asset/energy-guide.pdf")
+    end
+
+    context "when the URL already has a protocol" do
+      let(:url) { "https://example.com/energy-guide.pdf" }
+
+      it "leaves it unchanged" do
+        expect(attachment.url).to eq("https://example.com/energy-guide.pdf")
+      end
+    end
+  end
+
+  describe "#file_name" do
+    it "returns the asset's file name" do
+      expect(attachment.file_name).to eq("energy-guide.pdf")
+    end
+
+    context "when the asset has no file" do
+      let(:file) { nil }
+
+      it "returns nil" do
+        expect(attachment.file_name).to be_nil
+      end
+    end
+  end
+
+  describe "#file_size" do
+    it "returns the size in bytes" do
+      expect(attachment.file_size).to eq(245_760)
+    end
+
+    context "when details use symbol keys" do
+      let(:file) { OpenStruct.new(file_name: "energy-guide.pdf", details: { size: 1024 }) }
+
+      it "returns the size in bytes" do
+        expect(attachment.file_size).to eq(1024)
+      end
+    end
+
+    context "when the asset has no file" do
+      let(:file) { nil }
+
+      it "returns nil" do
+        expect(attachment.file_size).to be_nil
+      end
+    end
+  end
+
+  describe "#file_type" do
+    it "returns the upper-cased file extension" do
+      expect(attachment.file_type).to eq("PDF")
+    end
+
+    context "when the file name has no extension" do
+      let(:file) { OpenStruct.new(file_name: "energy-guide", details: {}) }
+
+      it "returns nil" do
+        expect(attachment.file_type).to be_nil
+      end
+    end
+  end
+
+  describe "#link_text" do
+    it "uses the title" do
+      expect(attachment.link_text).to eq("Energy guide")
+    end
+
+    context "when the title is blank" do
+      let(:title) { "" }
+
+      it "falls back to the file name" do
+        expect(attachment.link_text).to eq("energy-guide.pdf")
+      end
+    end
+
+    context "when there is no title or file name" do
+      let(:title) { nil }
+      let(:file) { nil }
+
+      it "uses a generic label" do
+        expect(attachment.link_text).to eq("Download file")
+      end
+    end
+  end
+end
