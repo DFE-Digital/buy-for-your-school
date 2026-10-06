@@ -5,7 +5,11 @@ module Energy
       before_action(only: :show) { set_back_url(energy_register_your_interest_electricity_path) }
 
       def show
-        redirect_to energy_register_your_interest_confirmation_path if @registration.submitted?
+        if @registration.submitted?
+          redirect_to energy_register_your_interest_confirmation_path
+        else
+          @registration.valid?
+        end
       end
 
       def update
@@ -14,7 +18,7 @@ module Energy
           @registration.update!(status: :submitted)
           redirect_to energy_register_your_interest_confirmation_path
         else
-          render :show, status: :unprocessable_entity
+          redirect_to energy_register_your_interest_check_your_answers_path
         end
       end
     end

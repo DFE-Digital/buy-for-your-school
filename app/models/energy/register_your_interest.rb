@@ -11,7 +11,7 @@ module Energy
     validates :mat_uid, presence: true, if: -> { step == "mat" }
     validates :switch_gas, inclusion: { in: [true, false] }, if: -> { step == "gas" }
     validates :switch_electricity, inclusion: { in: [true, false] }, if: -> { step == "electricity" }
-    validates :name, :email, :phone_number, :mat_uid, :mat_name, :ukprn, presence: true, if: -> { step == "check-answers" }
+    validates :name, :email, :phone_number, :mat_uid, presence: true, if: -> { step == "check-answers" }
     validates :switch_gas, :switch_electricity, inclusion: { in: [true, false] }, if: -> { step == "check-answers" }
   end
 end
