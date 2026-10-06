@@ -1,6 +1,6 @@
 <% content_for :title, t(".electricity.title") %>
 <div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">
-  <%= form_with model: @registration, scope: :energy_register_your_interest, url: energy_register_your_interest_electricity_path, method: :post do |form| %>
+  <%= form_with model: @form, scope: :energy_register_your_interest, url: energy_register_your_interest_electricity_path, method: :post do |form| %>
     <%= form.govuk_error_summary %>
     <%= form.govuk_radio_buttons_fieldset :switch_electricity, legend: { text: t(".electricity.title"), tag: :h1, size: "l" } do %>
       <%= form.govuk_radio_button :switch_electricity, true, label: { text: t("generic.yes") } do %>
