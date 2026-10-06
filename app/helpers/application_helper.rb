@@ -64,7 +64,11 @@ module ApplicationHelper
   end
 
   def register_your_interest_form_url
-    energy_register_your_interest_path
+    if Flipper.enabled?(:register_your_interest)
+      energy_register_your_interest_path
+    else
+      "https://submit.forms.service.gov.uk/form/8895/multi-academy-trusts-register-your-interest-in-energy-for-schools/1049539"
+    end
   end
 
   def accessibility_link(link_text = t("shared.dfe_footer.accessibility"), **options)
