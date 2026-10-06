@@ -381,14 +381,18 @@ en:
             title: Do you want to switch gas?
             contract_end_date: When does your gas contract end?
             optional: This question is optional
+            switch_error: Select whether you want to switch gas
             invalid_date: Enter a valid gas contract end date
+            out_of_range: Enter a gas contract end date within the last 5 years and the next 5 years
       electricities:
         index:
           electricity:
             title: Do you want to switch electricity?
             contract_end_date: When does your electricity contract end?
             optional: This question is optional
+            switch_error: Select whether you want to switch electricity
             invalid_date: Enter a valid electricity contract end date
+            out_of_range: Enter an electricity contract end date within the last 5 years and the next 5 years
       check_your_answers:
         show:
           title: Check your answers
