@@ -23,6 +23,50 @@ RSpec.describe "Register your interest in Energy for Schools" do
     expect(response.body).to include("There is a problem", "Enter your name")
   end
 
+  it "rejects a gas contract end date more than five years in the future" do
+    mat_type = create(:support_establishment_group_type, code: Support::EstablishmentGroupType::MAT_CODE, name: "Multi-academy trust")
+    mat = create(:support_establishment_group, establishment_group_type: mat_type, uid: "MAT-123", name: "Example MAT", ukprn: "12345678")
+    date = Date.current.advance(years: 6)
+
+    post energy_register_your_interest_path, params: { energy_register_your_interest: { name: "Alex Example" } }
+    post energy_register_your_interest_email_path, params: { energy_register_your_interest: { email: "alex@example.com" } }
+    post energy_register_your_interest_phone_number_path, params: { energy_register_your_interest: { phone_number: "01234567890" } }
+    post energy_register_your_interest_mat_path, params: { energy_register_your_interest: { mat_uid: mat.uid } }
+    post energy_register_your_interest_gas_path, params: {
+      energy_register_your_interest: {
+        switch_gas: "true",
+        "gas_contract_end_date(1i)" => date.year.to_s,
+        "gas_contract_end_date(2i)" => date.month.to_s,
+        "gas_contract_end_date(3i)" => date.day.to_s,
+      },
+    }
+
+    expect(response).to have_http_status(:unprocessable_entity)
+    expect(response.body).to include("Enter a gas contract end date within the last 5 years and the next 5 years")
+  end
+
+  it "shows an error for an invalid electricity contract date component" do
+    mat_type = create(:support_establishment_group_type, code: Support::EstablishmentGroupType::MAT_CODE, name: "Multi-academy trust")
+    mat = create(:support_establishment_group, establishment_group_type: mat_type, uid: "MAT-123", name: "Example MAT", ukprn: "12345678")
+
+    post energy_register_your_interest_path, params: { energy_register_your_interest: { name: "Alex Example" } }
+    post energy_register_your_interest_email_path, params: { energy_register_your_interest: { email: "alex@example.com" } }
+    post energy_register_your_interest_phone_number_path, params: { energy_register_your_interest: { phone_number: "01234567890" } }
+    post energy_register_your_interest_mat_path, params: { energy_register_your_interest: { mat_uid: mat.uid } }
+    post energy_register_your_interest_gas_path, params: { energy_register_your_interest: { switch_gas: "false" } }
+    post energy_register_your_interest_electricity_path, params: {
+      energy_register_your_interest: {
+        switch_electricity: "true",
+        "electricity_contract_end_date(1i)" => "2027",
+        "electricity_contract_end_date(2i)" => "99",
+        "electricity_contract_end_date(3i)" => "1",
+      },
+    }
+
+    expect(response).to have_http_status(:unprocessable_entity)
+    expect(response.body).to include("Enter a valid electricity contract end date")
+  end
+
   it "takes a user through the journey and persists their submitted answers" do
     mat_type = create(:support_establishment_group_type, code: Support::EstablishmentGroupType::MAT_CODE, name: "Multi-academy trust")
     mat = create(:support_establishment_group, establishment_group_type: mat_type, uid: "MAT-123", name: "Example MAT", ukprn: "12345678")
