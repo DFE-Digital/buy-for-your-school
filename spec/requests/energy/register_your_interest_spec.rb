@@ -1,0 +1,78 @@
+require "rails_helper"
+
+RSpec.describe "Register your interest in Energy for Schools" do
+  it "shows an error when the name is missing" do
+    post energy_register_your_interest_path, params: { energy_register_your_interest: { name: "" } }
+
+    expect(response).to have_http_status(:unprocessable_entity)
+    expect(response.body).to include("Enter your name")
+  end
+
+  it "shows errors when check your answers is opened directly and continued with incomplete answers" do
+    get energy_register_your_interest_path
+    get energy_register_your_interest_check_your_answers_path
+
+    expect(response).to be_successful
+    expect(response.body).to include("There is a problem", "Enter your name")
+
+    post energy_register_your_interest_check_your_answers_path
+
+    expect(response).to redirect_to(energy_register_your_interest_check_your_answers_path)
+    follow_redirect!
+    expect(response).to be_successful
+    expect(response.body).to include("There is a problem", "Enter your name")
+  end
+
+  it "takes a user through the journey and persists their submitted answers" do
+    mat_type = create(:support_establishment_group_type, code: Support::EstablishmentGroupType::MAT_CODE, name: "Multi-academy trust")
+    mat = create(:support_establishment_group, establishment_group_type: mat_type, uid: "MAT-123", name: "Example MAT", ukprn: "12345678")
+
+    post energy_register_your_interest_path, params: { energy_register_your_interest: { name: "Alex Example" } }
+    expect(response).to redirect_to(energy_register_your_interest_email_path)
+    follow_redirect!
+    expect(response.body).to include("What is your email address?")
+
+    post energy_register_your_interest_email_path, params: { energy_register_your_interest: { email: "alex@example.com" } }
+    expect(response).to redirect_to(energy_register_your_interest_phone_number_path)
+    follow_redirect!
+
+    post energy_register_your_interest_phone_number_path, params: { energy_register_your_interest: { phone_number: "01234567890" } }
+    expect(response).to redirect_to(energy_register_your_interest_mat_path)
+    follow_redirect!
+
+    post energy_register_your_interest_mat_path, params: { energy_register_your_interest: { mat_uid: mat.uid } }
+    expect(response).to redirect_to(energy_register_your_interest_gas_path)
+    follow_redirect!
+
+    post energy_register_your_interest_gas_path, params: { energy_register_your_interest: { switch_gas: "true", "gas_contract_end_date(1i)" => "2027", "gas_contract_end_date(2i)" => "8", "gas_contract_end_date(3i)" => "1" } }
+    expect(response).to redirect_to(energy_register_your_interest_electricity_path)
+    follow_redirect!
+
+    post energy_register_your_interest_electricity_path, params: { energy_register_your_interest: { switch_electricity: "false" } }
+    expect(response).to redirect_to(energy_register_your_interest_check_your_answers_path)
+    follow_redirect!
+    expect(response.body).to include("Alex Example", "alex@example.com", "Example MAT", "Yes", "No")
+
+    registration = Energy::RegisterYourInterest.find(session[:energy_register_your_interest_id])
+    expect(registration).to have_attributes(
+      name: "Alex Example",
+      email: "alex@example.com",
+      phone_number: "01234567890",
+      mat_uid: mat.uid,
+      mat_name: mat.name,
+      ukprn: mat.ukprn,
+      switch_gas: true,
+      gas_contract_end_date: Date.new(2027, 8, 1),
+      switch_electricity: false,
+      status: "in_progress",
+    )
+
+    post energy_register_your_interest_check_your_answers_path
+    expect(response).to redirect_to(energy_register_your_interest_confirmation_path)
+    expect(registration.reload).to be_submitted
+
+    follow_redirect!
+    expect(response).to be_successful
+    expect(response.body).to include("confirmation email")
+  end
+end
