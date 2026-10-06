@@ -16,6 +16,19 @@ RSpec.describe Energy::RegisterYourInterest do
       expect(registration.errors).to include(:email)
     end
 
+    it "requires at least 8 digits in the phone number" do
+      registration = described_class.new(phone_number: "1234 567", step: "phone")
+
+      expect(registration).not_to be_valid
+      expect(registration.errors[:phone_number]).to include("The phone number should have 8 digits or more")
+    end
+
+    it "accepts a phone number containing at least 8 digits" do
+      registration = described_class.new(phone_number: "+44 1234 567890", step: "phone")
+
+      expect(registration).to be_valid
+    end
+
     it "requires the contact details, MAT, and switch choices on the check answers step" do
       registration = described_class.new(step: "check-answers")
 
