@@ -113,6 +113,8 @@ energy_onboarding_case_organisations,gas_single_multi,multi,1
 energy_onboarding_case_organisations,switching_energy_type,electricity,0
 energy_onboarding_case_organisations,switching_energy_type,gas,1
 energy_onboarding_case_organisations,switching_energy_type,gas_electricity,2
+energy_register_your_interests,status,in_progress,0
+energy_register_your_interests,status,submitted,1
 energy_bills,submission_status,pending,0
 energy_bills,submission_status,submitted,1
 engagement_case_uploads,upload_status,pending,0
