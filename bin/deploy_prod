@@ -100,4 +100,3 @@ git push --force-with-lease origin production
 echo
 echo "Production deployment triggered by the push. Monitor the GitHub Actions full pipeline:"
 echo "https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/ci-full-pipeline.yml"
-echo "After a successful deployment, update the release log as described in doc/release-process.md."
