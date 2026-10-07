@@ -46,5 +46,20 @@ RSpec.feature "CEC homepage" do
         expect(page).not_to have_text("Catering")
       end
     end
+
+    it "shows appropriate sort options" do
+      expect(page).to have_select(
+        "filter_all_cases_form[sort_by]",
+        options: [
+          "Flag",
+          "Case",
+          "Level",
+          "Organisation",
+          "Status",
+          "Updated",
+          "Key action date",
+        ],
+      )
+    end
   end
 end
