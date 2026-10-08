@@ -1,7 +1,7 @@
 # TODO: consider deprecating use of this class in favour of Support::Markdown - this was introduced
 # from FABS codebase. Contentful content formatting and markdown -> HTML conversion should be standardised
 module MarkdownHelper
-  ALLOWED_TAGS = %w[p h1 h2 h3 h4 h5 h6 a ul ol li strong em br img table thead tbody tr th td caption].freeze
+  ALLOWED_TAGS = %w[p h1 h2 h3 h4 h5 h6 a ul ol li strong em br img table thead tbody tr th td caption blockquote div].freeze
   ALLOWED_ATTRIBUTES = %w[href src alt target rel class id style].freeze
 
   def render_markdown_to_html(markdown_content)
@@ -45,6 +45,15 @@ module MarkdownHelper
 
     doc.css("th").each do |th|
       th["scope"] ||= "col"
+    end
+
+    doc.css("blockquote").each do |blockquote|
+      inset_text = Nokogiri::XML::Node.new("div", doc)
+      inset_text["class"] = "govuk-inset-text"
+
+      inset_text.content = blockquote.text.strip
+
+      blockquote.replace(inset_text)
     end
 
     doc.to_html.html_safe
