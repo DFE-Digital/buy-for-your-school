@@ -8,13 +8,13 @@ RSpec.describe "Register your interest in Energy for Schools" do
     expect(response.body).to include("Enter your name")
   end
 
-  it "shows an error when the contact phone number has fewer than 8 digits" do
+  it "shows an error when the contact phone number has fewer than 10 digits" do
     post energy_register_your_interest_path, params: { energy_register_your_interest: { name: "Alex Example" } }
     post energy_register_your_interest_email_path, params: { energy_register_your_interest: { email: "alex@example.com" } }
-    post energy_register_your_interest_phone_number_path, params: { energy_register_your_interest: { phone_number: "1234 567" } }
+    post energy_register_your_interest_phone_number_path, params: { energy_register_your_interest: { phone_number: "1234 56789" } }
 
     expect(response).to have_http_status(:unprocessable_entity)
-    expect(response.body).to include("The phone number should have 8 digits or more")
+    expect(response.body).to include("Enter a telephone number, like 07155487611")
   end
 
   it "shows errors when check your answers is opened directly and continued with incomplete answers" do
