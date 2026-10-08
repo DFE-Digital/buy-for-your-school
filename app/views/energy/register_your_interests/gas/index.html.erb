@@ -1,0 +1,14 @@
+<% content_for :title, t(".gas.title") %>
+<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">
+  <%= form_with model: @form, scope: :energy_register_your_interest, url: energy_register_your_interest_gas_path, method: :post do |form| %>
+    <%= form.govuk_error_summary %>
+    <%= form.govuk_radio_buttons_fieldset :switch_gas, legend: { text: t(".gas.title"), tag: :h1, size: "l" } do %>
+      <%= form.govuk_radio_button :switch_gas, true, label: { text: t("generic.yes") } do %>
+        <%= render "shared/date_input", form:, attribute: :gas_contract_end_date, legend: t(".gas.contract_end_date"), hint: t(".gas.optional") %>
+      <% end %>
+      <%= form.govuk_radio_button :switch_gas, false, label: { text: t("generic.no") } %>
+    <% end %>
+    <%= hidden_field_tag :return_to, "check-answers" if params[:return_to] == "check-answers" %>
+    <%= form.submit t("generic.button.next"), class: "govuk-button" %>
+  <% end %>
+</div></div>
