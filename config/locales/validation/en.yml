@@ -238,7 +238,7 @@ en:
               blank: Enter your email address
             phone_number:
               blank: Enter your contact telephone number
-              too_short: The phone number should have 8 digits or more
+              invalid: Enter a telephone number, like 07155487611
             mat_uid:
               blank: Select a multi-academy trust
             switch_gas:
