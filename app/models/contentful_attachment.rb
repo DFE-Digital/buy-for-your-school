@@ -8,7 +8,6 @@ class ContentfulAttachment
   end
 
   def url
-    # "//assets.ctfassets.net/o6csh136j1jr/5XpQHpoMekRGAgQoeLw6EO/c7df13854c7dc6116237f4fee5f367d7/test.pdf"
     url = @asset.url
     url.start_with?("//") ? "https:#{url}" : url
   end
@@ -24,6 +23,15 @@ class ContentfulAttachment
 
   def file_type
     File.extname(file_name.to_s).delete(".").upcase.presence
+  end
+
+  def thumbnail
+    case file_type
+    when "PDF" then "pdf"
+    when "DOC", "DOCX", "ODT", "RTF", "TXT" then "document"
+    when "XLS", "XLSX", "ODS", "CSV" then "spreadsheet"
+    else "generic"
+    end
   end
 
   def link_text

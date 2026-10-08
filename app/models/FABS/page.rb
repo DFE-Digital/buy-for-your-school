@@ -20,7 +20,6 @@ module FABS
       @parent = build_parent_from_entry(parent_entry)
       @seo_description = entry.fields[:seo_description]
       @updated_at = entry.updated_at
-      # binding.pry
       super
     end
 

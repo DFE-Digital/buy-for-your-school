@@ -1,19 +1,26 @@
 <% if attachments.present? %>
   <div class="govuk-!-margin-top-6">
     <h2 class="govuk-heading-m">Downloads</h2>
-    <ul class="govuk-list">
-      <% attachments.each do |attachment| %>
-        <% file_meta = [attachment.file_type, (number_to_human_size(attachment.file_size) if attachment.file_size)].compact %>
-        <li>
-          <%= link_to attachment.url, class: "govuk-link", download: attachment.file_name, target: "_blank", rel: "noopener noreferrer" do %>
-            <%= attachment.link_text %>
-            <span class="govuk-visually-hidden">(opens in new tab)</span>
+    <% attachments.each do |attachment| %>
+      <% file_meta = [attachment.file_type, (number_to_human_size(attachment.file_size) if attachment.file_size)].compact %>
+      <section class="gem-c-attachment govuk-!-margin-bottom-6">
+        <div class="gem-c-attachment__thumbnail govuk-!-display-none-print">
+          <%= link_to attachment.url, class: "govuk-link", download: attachment.file_name, target: "_blank", rel: "noopener noreferrer", tabindex: "-1", "aria-hidden": true do %>
+            <%= render "shared/attachment/thumbnail_#{attachment.thumbnail}" %>
           <% end %>
+        </div>
+        <div class="gem-c-attachment__details">
+          <h3 class="gem-c-attachment__title">
+            <%= link_to attachment.url, class: "govuk-link", download: attachment.file_name, target: "_blank", rel: "noopener noreferrer" do %>
+              <%= attachment.link_text %>
+              <span class="govuk-visually-hidden">(opens in new tab)</span>
+            <% end %>
+          </h3>
           <% if file_meta.any? %>
-            <span class="govuk-hint govuk-!-display-inline">(<%= file_meta.join(", ") %>)</span>
+            <p class="gem-c-attachment__metadata"><%= file_meta.join(", ") %></p>
           <% end %>
-        </li>
-      <% end %>
-    </ul>
+        </div>
+      </section>
+    <% end %>
   </div>
 <% end %>
