@@ -16,14 +16,34 @@ RSpec.describe Energy::RegisterYourInterest do
       expect(registration.errors).to include(:email)
     end
 
-    it "requires at least 8 digits in the phone number" do
-      registration = described_class.new(phone_number: "1234 567", step: "phone")
+    it "rejects a phone number with fewer than 10 digits" do
+      registration = described_class.new(phone_number: "1234 56789", step: "phone")
 
       expect(registration).not_to be_valid
-      expect(registration.errors[:phone_number]).to include("The phone number should have 8 digits or more")
+      expect(registration.errors[:phone_number]).to include("Enter a telephone number, like 07155487611")
     end
 
-    it "accepts a phone number containing at least 8 digits" do
+    it "accepts a phone number containing 10 to 13 digits" do
+      registration = described_class.new(phone_number: "0123456789", step: "phone")
+
+      expect(registration).to be_valid
+    end
+
+    it "rejects phone numbers containing more than 13 digits" do
+      registration = described_class.new(phone_number: "01234567890123", step: "phone")
+
+      expect(registration).not_to be_valid
+      expect(registration.errors[:phone_number]).to include("Enter a telephone number, like 07155487611")
+    end
+
+    it "rejects characters that are not permitted in phone numbers" do
+      registration = described_class.new(phone_number: "01234abc890", step: "phone")
+
+      expect(registration).not_to be_valid
+      expect(registration.errors[:phone_number]).to include("Enter a telephone number, like 07155487611")
+    end
+
+    it "accepts formatted international phone numbers with 10 to 13 digits" do
       registration = described_class.new(phone_number: "+44 1234 567890", step: "phone")
 
       expect(registration).to be_valid
