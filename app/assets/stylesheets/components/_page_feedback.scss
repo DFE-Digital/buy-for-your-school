@@ -1,0 +1,39 @@
+.govuk-character-count-container {
+  max-width: 700px;
+}
+
+.gem-c-feedback__prompt-questions-div{
+  margin: 0;
+}
+
+.gem-c-feedback__prompt-questions{
+  margin-left: 0;
+  padding-bottom: 10px;
+}
+
+.govuk-main-wrapper-padding {
+  padding-bottom: 0;
+}
+
+.feedback {
+  width: 100%;
+  clear: both;
+}
+
+// Match the height of the Yes/No button row (button padding + border + list item margin)
+.gem-c-feedback__prompt-success {
+  padding: 12px 0 13px;
+}
+
+// The feedback prompt sits outside a width container, so undo the component's
+// negative margins on smaller screens and let dfe-width-container provide the gutter
+@include govuk-media-query($until: desktop) {
+  .gem-c-feedback {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .gem-c-feedback__prompt-content {
+    padding: 0;
+  }
+}

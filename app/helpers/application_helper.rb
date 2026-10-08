@@ -175,4 +175,8 @@ module ApplicationHelper
   def page_title(page_title = nil)
     page_title.present? ? "#{h(page_title.strip)} - #{t('service.name')}" : t("service.name")
   end
+
+  def page_useful?
+    %w[categories solutions pages onboarding framework_requests].include? controller_name
+  end
 end

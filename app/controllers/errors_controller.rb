@@ -7,6 +7,12 @@ class ErrorsController < ApplicationController
            status: :internal_server_error
   end
 
+  def not_acceptable
+    render "errors/unacceptable",
+           formats: [:html],
+           status: :not_acceptable
+  end
+
   def not_found
     render "errors/not_found",
            formats: [:html],

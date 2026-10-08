@@ -8,8 +8,8 @@ describe Support::SyncFrameworks do
   let(:testurl2) { "https://localhost:3000/nf2" }
   let(:contentful_id_1) { "contentful-id-1" }
   let(:contentful_id_2) { "contentful-id-2" }
-  let(:framework_1_expiry) { "2026-08-31" }
-  let(:framework_2_expiry) { "2026-06-30" }
+  let(:framework_1_expiry) { "2027-08-31T00:00:00.000Z" }
+  let(:framework_2_expiry) { "2027-06-30T00:00:00.000Z" }
   let(:old_expiry_date) { "2025-11-15" }
   let(:framework_1_name) { "Framework 1" }
   let(:framework_2_name) { "Framework 2" }
@@ -24,7 +24,7 @@ describe Support::SyncFrameworks do
             cat: { ref: "energy", title: "Energy" },
             ref: "ref-1",
             title: framework_1_name,
-            expiry: "2026-08-31T00:00:00.000Z",
+            expiry: framework_1_expiry,
             url: testurl1,
             descr: "Desc",
             provider_reference: "PR-1",
@@ -35,7 +35,7 @@ describe Support::SyncFrameworks do
             cat: { ref: "catering", title: "Catering" },
             ref: "ref-2",
             title: framework_2_name,
-            expiry: "2026-06-30T00:00:00.000Z",
+            expiry: framework_2_expiry,
             url: testurl2,
             descr: "Desc",
             provider_reference: "PR-2",
@@ -91,7 +91,7 @@ describe Support::SyncFrameworks do
               cat: { ref: "energy", title: "Energy" },
               ref: "ref-1",
               title: framework_1_name,
-              expiry: "2026-08-31T00:00:00.000Z",
+              expiry: framework_1_expiry,
               url: testurl1,
               descr: "Desc",
               provider_reference: "PR-1",
@@ -149,7 +149,7 @@ describe Support::SyncFrameworks do
               cat: { ref: "energy", title: "Energy" },
               ref: "ref-1",
               title: framework_1_name,
-              expiry: "2026-08-31T00:00:00.000Z",
+              expiry: framework_1_expiry,
               url: testurl1,
               descr: "Desc",
               provider_reference: "PR-1",
@@ -297,7 +297,7 @@ describe Support::SyncFrameworks do
               cat: { ref: "energy", title: "Energy" },
               ref: "ref-1",
               title: framework_1_name, # Same name as legacy_framework
-              expiry: "2026-08-31T00:00:00.000Z",
+              expiry: framework_1_expiry,
               url: testurl1,
               descr: "Desc",
               provider_reference: "PR-1",
@@ -343,7 +343,7 @@ describe Support::SyncFrameworks do
               cat: { ref: "energy", title: "Energy" },
               ref: "ref-1",
               title: framework_1_name,
-              expiry: "2026-08-31T00:00:00.000Z",
+              expiry: framework_1_expiry,
               url: testurl1,
               descr: "Desc",
               provider_reference: "PR-1",
@@ -391,7 +391,7 @@ describe Support::SyncFrameworks do
               cat: { ref: "energy", title: "Energy" },
               ref: "ref-1",
               title: framework_1_name, # Same name as archived_framework
-              expiry: "2026-08-31T00:00:00.000Z",
+              expiry: framework_1_expiry,
               url: testurl1,
               descr: "Desc",
               provider_reference: "PR-1",

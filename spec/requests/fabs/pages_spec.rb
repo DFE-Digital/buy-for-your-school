@@ -5,10 +5,11 @@ RSpec.describe "FABS pages", type: :request do
     Capybara.string(response.body)
   end
 
-  def contentful_entry(id:, fields:, content_type:)
+  def contentful_entry(id:, fields:, content_type:, updated_at: Time.zone.now)
     double(
       "Contentful::Entry",
       id:,
+      updated_at:,
       fields:,
       content_type: double("Contentful::ContentType", id: content_type),
     )
@@ -49,6 +50,7 @@ RSpec.describe "FABS pages", type: :request do
         body: "Child body",
         slug: "unit-trust-bank",
         parent: parent_page_entry,
+        seo_description: "Unit Trust Bank seo description",
         related_content: [
           related_content_entry(id: "rel-1", link_text: "Framework agreements", url: "/framework-agreements"),
         ],
@@ -57,6 +59,7 @@ RSpec.describe "FABS pages", type: :request do
   end
 
   it "renders a FABS page with title, related content, and nested breadcrumbs" do
+    allow(RedirectMatcher).to receive(:call).with("/unit-trust-bank").and_return(nil)
     allow(FABS::Page).to receive(:find_by_slug!).with("unit-trust-bank").and_return(FABS::Page.new(page_entry))
 
     get page_path("unit-trust-bank")
@@ -65,7 +68,8 @@ RSpec.describe "FABS pages", type: :request do
     expect(response.body).to include("<title>Unit Trust Bank - #{I18n.t('service.name')}</title>")
     expect(response.body).to include("Unit Trust Bank")
     expect(response.body).to include("Child page description")
-    expect(response.body).to include("Related Content")
+    expect(response.body).to include("Related reading")
+    expect(response.body).to include("Unit Trust Bank seo description")
     expect(document).to have_link("Home", href: "/")
     expect(document).to have_link("Banking and finance", href: "/categories/banking-finance")
     expect(document).to have_link("Current accounts and savings", href: "/current-account-and-savings")
@@ -85,20 +89,38 @@ RSpec.describe "FABS pages", type: :request do
         related_content: [],
       },
     )
+    allow(RedirectMatcher).to receive(:call).with("/dynamic-purchasing-systems").and_return(nil)
     allow(FABS::Page).to receive(:find_by_slug!).with("dynamic-purchasing-systems").and_return(FABS::Page.new(no_related_content_entry))
 
     get page_path("dynamic-purchasing-systems")
 
     expect(response).to be_successful
-    expect(response.body).not_to include("Related Content")
+    expect(response.body).not_to include("Related reading")
   end
 
-  it "redirects to /404 when the FABS page does not exist" do
+  it "returns not found when the FABS page does not exist" do
+    allow(RedirectMatcher).to receive(:call).with("/missing-page").and_return(nil)
     allow(FABS::Page).to receive(:find_by_slug!).with("missing-page")
       .and_raise(ContentfulRecordNotFoundError.new("Page not found", slug: "missing-page"))
 
     get page_path("missing-page")
 
-    expect(response).to redirect_to("/404")
+    expect(response).to have_http_status(:not_found)
+  end
+
+  it "redirects legacy page slugs before Contentful page lookup" do
+    match = RedirectMatcher::Result.new(
+      redirect: instance_double(Redirect),
+      destination_path: "/about-our-service",
+      status: :moved_permanently,
+    )
+
+    allow(RedirectMatcher).to receive(:call).with("/about-this-service").and_return(match)
+    expect(FABS::Page).not_to receive(:find_by_slug!)
+
+    get page_path("about-this-service")
+
+    expect(response).to redirect_to("/about-our-service")
+    expect(response).to have_http_status(:moved_permanently)
   end
 end

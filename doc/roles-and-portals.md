@@ -27,7 +27,6 @@ Developers can modify the roles array on an agent directly using the rails conso
 
 ```
 $ bundle exec rails c
-Running via Spring preloader in process 93412
 Loading development environment (Rails 7.0.8)
 [1] pry(main)> Support::Agent.find("xxxx").update(roles: ["new", "roles", "here"])
 ```

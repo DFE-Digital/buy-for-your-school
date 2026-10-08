@@ -1,7 +1,7 @@
 require "./spec/support/shared/framework_request_controllers"
 
 describe FrameworkRequests::ConfirmOrganisationsController, type: :controller do
-  include_examples "back url", "/procurement-support/search_for_organisation?#{{ framework_support_form: { org_id: '' } }.to_query}"
+  include_examples "back url", "/procurement-support/search_for_organisation?#{{ framework_support_form: { org_id: nil } }.to_query}"
 
   shared_examples "school picker" do
     it "redirects to the school picker" do

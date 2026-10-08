@@ -1,11 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Favicon", type: :request do
-  it "returns a not found response without hitting Contentful page lookups" do
+  it "does not hit Contentful page lookups" do
     expect(FABS::Page).not_to receive(:find_by_slug!)
+    expect(RedirectMatcher).not_to receive(:call)
 
-    get "/favicon.ico"
-
-    expect(response).to have_http_status(:not_found)
+    expect { get "/favicon.ico" }.to raise_error(ActionController::RoutingError)
   end
 end

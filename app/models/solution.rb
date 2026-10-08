@@ -17,6 +17,8 @@ class Solution
   FIELD_BUYING_OPTION_TYPE = "fields.buying_option_type".freeze
   FIELD_PROVIDER_REFERENCE = "fields.provider_reference".freeze
   FIELD_PRIMARY_CATEGORY = "fields.primary_category".freeze
+  FIELD_WAYS_TO_BUY = "fields.ways_to_buy".freeze
+  FIELD_SEO_DESCRIPTION = "fields.seo_description".freeze
 
   SELECT_FIELDS = [
     SYS_ID,
@@ -34,6 +36,8 @@ class Solution
     FIELD_BUYING_OPTION_TYPE,
     FIELD_PROVIDER_REFERENCE,
     FIELD_PRIMARY_CATEGORY,
+    FIELD_WAYS_TO_BUY,
+    FIELD_SEO_DESCRIPTION,
   ].join(",").freeze
 
   LIST_SELECT_FIELDS = [
@@ -52,6 +56,8 @@ class Solution
     FIELD_BUYING_OPTION_TYPE,
     FIELD_PROVIDER_REFERENCE,
     FIELD_PRIMARY_CATEGORY,
+    FIELD_WAYS_TO_BUY,
+    FIELD_SEO_DESCRIPTION,
   ].join(",").freeze
 
   SEARCH_SELECT_FIELDS = [
@@ -65,12 +71,15 @@ class Solution
     FIELD_PROVIDER_INITIALS,
     FIELD_PRIMARY_CATEGORY,
     FIELD_PROVIDER_REFERENCE,
+    FIELD_WAYS_TO_BUY,
+    FIELD_SEO_DESCRIPTION,
   ].join(",").freeze
 
   attr_reader :id, :title, :description, :expiry, :summary,
               :slug, :provider_name, :provider_initials, :url,
               :categories, :subcategories, :suffix, :call_to_action,
-              :primary_category, :buying_option_type, :provider_reference
+              :primary_category, :buying_option_type, :provider_reference,
+              :ways_to_buy, :seo_description, :updated_at
 
   delegate :slug, to: :primary_category, prefix: true, allow_nil: true
 
@@ -91,12 +100,16 @@ class Solution
     @primary_category = entry.fields[:primary_category]
     @buying_option_type = entry.fields[:buying_option_type]
     @provider_reference = entry.fields[:provider_reference]
+    @ways_to_buy = entry.fields[:ways_to_buy]
+    @seo_description = entry.fields[:seo_description]
+    @updated_at = entry.updated_at
     super
   end
 
   def self.all(category_id: nil)
     params = {
       content_type: CONTENT_TYPE,
+      limit: 200,
       select: LIST_SELECT_FIELDS,
       order: FIELD_TITLE,
       "fields.categories.sys.id[in]": category_id,
@@ -105,8 +118,9 @@ class Solution
   end
 
   def self.search(query: "")
-    use_opensearch = ENV.fetch("USE_OPENSEARCH", "false")
-    if use_opensearch == "true"
+    if Flipper.enabled?(:azure_ai_search)
+      AzureAiSearch::SolutionSearcher.new(query:).search
+    elsif ENV.fetch("USE_OPENSEARCH", "false") == "true"
       SolutionSearcher.new(query:).search
     else
       ContentfulClient.entries(
@@ -188,6 +202,7 @@ class Solution
       url:,
       descr: description,
       expiry:,
+      updated_at:,
       body: summary,
       primary_category: {
         title: primary_category&.title,

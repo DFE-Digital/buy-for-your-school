@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "sidekiq/web"
+require "sidekiq/cron/web"
+
 Rails.application.routes.draw do
   root "categories#index"
 
@@ -10,7 +13,6 @@ Rails.application.routes.draw do
   get "health_check" => "application#health_check"
   get "maintenance" => "application#maintenance"
   resource :cookie_preferences, only: %i[show edit update]
-  resources :design, only: %i[index show]
   get "/pages/:page", to: "static_pages#show"
 
   # CMS entrypoints
@@ -28,6 +30,7 @@ Rails.application.routes.draw do
 
   # Errors
   get "/404", to: "errors#not_found"
+  get "/406", to: "errors#not_acceptable"
   get "/422", to: "errors#unacceptable"
   get "/500", to: "errors#internal_server_error"
 
@@ -478,7 +481,6 @@ Rails.application.routes.draw do
 
   resources :usability_surveys, only: %i[new create]
 
-  require "sidekiq/web"
   if Rails.env.production?
     Sidekiq::Web.use Rack::Auth::Basic do |username, password|
       username == ENV["SIDEKIQ_USERNAME"] && password == ENV["SIDEKIQ_PASSWORD"]
@@ -640,14 +642,17 @@ Rails.application.routes.draw do
   resources :offers, only: %i[index show], param: :slug
 
   resources :contentful_webhooks, only: %i[create]
-  post "delete_contentful_entry", to: "contentful_webhooks#destroy"
 
   get "/search", to: "search#index"
   post "/events", to: "events#create"
 
-  # Exempt browser request for favicon from being treated as a page by catch-all route below
-  get "/favicon.ico", to: ->(_env) { [404, { "Content-Type" => "text/plain", "Content-Length" => "0" }, []] }
+  get ":slug", to: "pages#show", as: :page, format: false, constraints: { slug: /[^\/.]+/ }
 
-  # DB-backed pages (BFYS) and Contentful-backed pages (FABS)
-  get ":slug", to: "pages#show", as: :page
+  resources :page_feedbacks, only: [:create] do
+    collection do
+      get "new", to: "page_feedbacks#new", as: :new         # "Is this page useful?"
+      get "ask_feedback", to: "page_feedbacks#ask_feedback" # "Do you want to provide feedback?"
+      get "form", to: "page_feedbacks#form"                 # feedback textarea
+    end
+  end
 end

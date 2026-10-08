@@ -14,6 +14,10 @@ inputs:
   resource_group_name:
     description: The name of the resource group that contains the container app
     required: true
+  generate_sitemap:
+    description: Generate sitemap after deployment
+    required: false
+    default: "false"
 
 runs:
   using: composite
@@ -41,3 +45,14 @@ runs:
             --resource-group ${{ inputs.resource_group_name }} \
             --image ${{ inputs.docker_image_and_tag }} \
             --output none
+
+    - name: Generate sitemap post deployment
+      if: ${{ inputs.generate_sitemap == 'true' }}
+      shell: bash
+      run: |
+        az extension add --name containerapp --upgrade
+
+        script -q -e -c 'az containerapp exec \
+         --name ${{ inputs.container_app_name }} \
+         --resource-group ${{ inputs.resource_group_name }} \
+         --command "bundle exec rails sitemap:create"' /dev/null    

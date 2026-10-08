@@ -7,7 +7,7 @@ RSpec.describe Support::ActivityLogItem, type: :model do
   describe "#to_csv" do
     it "includes headers" do
       expect(described_class.to_csv).to eql(
-        "id,support_case_id,action,data,created_at,updated_at\n",
+        "id,action,created_at,data,support_case_id,updated_at\n",
       )
     end
   end

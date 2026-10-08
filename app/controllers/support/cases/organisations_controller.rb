@@ -1,4 +1,3 @@
-# :nocov:
 module Support
   class Cases::OrganisationsController < Cases::ApplicationController
     before_action { @back_url = support_case_path(params[:case_id]) }
@@ -42,4 +41,3 @@ module Support
     end
   end
 end
-# :nocov:

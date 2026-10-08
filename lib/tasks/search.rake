@@ -1,4 +1,18 @@
 namespace :search do
+  desc "Deletes the Elasticsearch solution index"
+  task delete_index: :environment do
+    index_name = "solution-data"
+
+    unless SearchClient.instance.indices.exists?(index: index_name)
+      puts "Elasticsearch index #{index_name} does not exist."
+      next
+    end
+
+    puts "Deleting Elasticsearch index #{index_name}..."
+    SearchClient.instance.indices.delete(index: index_name)
+    puts "Deleted Elasticsearch index #{index_name}."
+  end
+
   desc "Syncs Contentful data to search index"
   task index: :environment do
     puts "Starting Contentful to search sync..."

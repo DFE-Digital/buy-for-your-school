@@ -18,7 +18,7 @@ module AllCasesSurvey
     end
 
     def data
-      to_h.except(:id, :case_id, :validation_context, :errors, :all_cases_survey_response)
+      to_h.except(:id, :case_id, :context_for_validation, :errors, :all_cases_survey_response)
     end
 
     def all_cases_survey_response

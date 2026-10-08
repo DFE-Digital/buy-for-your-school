@@ -43,15 +43,15 @@
 
     &:link,
     &:visited {
-      color: $govuk-link-colour;
+      color: govuk-functional-colour(link);
     }
 
     &:hover {
-      color: govuk-tint($govuk-link-colour, 25);
+      color: govuk-functional-colour(link-hover);
     }
 
     &:focus {
-      color: govuk-colour("black");
+      color: govuk-functional-colour(focus-text);
     }
 
   }

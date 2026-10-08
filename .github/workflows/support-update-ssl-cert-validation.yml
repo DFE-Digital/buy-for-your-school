@@ -14,8 +14,42 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        environment: [az-dev, az-staging, az-production]
-        domain_family: [service, education]
+        include:
+          # Dev - existing behaviour
+          - environment: az-dev
+            domain_family: service
+            domain_variant: non-www
+
+          - environment: az-dev
+            domain_family: education
+            domain_variant: non-www
+
+          # Staging - existing behaviour
+          - environment: az-staging
+            domain_family: service
+            domain_variant: non-www
+
+          - environment: az-staging
+            domain_family: education
+            domain_variant: non-www
+
+          # Production - non-www domains
+          - environment: az-production
+            domain_family: service
+            domain_variant: non-www
+
+          - environment: az-production
+            domain_family: education
+            domain_variant: non-www
+
+          # Production -  www domains
+          - environment: az-production
+            domain_family: service
+            domain_variant: www
+
+          - environment: az-production
+            domain_family: education
+            domain_variant: www
 
     # we must use a shared workflow in order to have 2 environments for prod (read only and normal)
     # this is so we can check the status of the validation without needing deployment approval.
@@ -25,5 +59,6 @@ jobs:
     with:
       chosen_environment: ${{ matrix.environment }}
       domain_family: ${{ matrix.domain_family }}
+      domain_variant: ${{ matrix.domain_variant }}
 
     secrets: inherit

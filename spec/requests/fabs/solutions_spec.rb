@@ -24,8 +24,10 @@ RSpec.describe "FABS solutions", type: :request do
       provider_reference: "RM1234",
       call_to_action: nil,
       url: "https://example.com/apply",
+      seo_description: "Audit and financial services seo description",
     )
   end
+  let(:get_expert_help) { instance_double(GetExpertHelp, title: "Get expert help", description: "Helpful content") }
 
   def document
     Capybara.string(response.body)
@@ -48,8 +50,10 @@ RSpec.describe "FABS solutions", type: :request do
 
   describe "GET /categories/:category_slug/:slug" do
     before do
+      allow(RedirectMatcher).to receive(:call).with("/categories/banking-finance/audit-and-financial-services").and_return(nil)
       allow(Solution).to receive(:find_by_slug!).with("audit-and-financial-services").and_return(solution)
       allow(FABS::Category).to receive(:find_by_slug!).with("banking-finance").and_return(primary_category)
+      allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
     end
 
     it "renders the show page with canonical URL, breadcrumbs, details, related content, and default CTA text" do
@@ -65,7 +69,7 @@ RSpec.describe "FABS solutions", type: :request do
       expect(response.body).to include("Provider Ltd")
       expect(response.body).to include("31 December 2026")
       expect(response.body).to include("RM1234")
-      expect(response.body).to include("Related Content")
+      expect(response.body).to include("Related reading")
       expect(document).to have_link("Framework agreements", href: "http://localhost:3000/framework-agreements")
       expect(document).to have_link(I18n.t("solutions.show.cta", title: "Audit and financial services"), href: "https://example.com/apply")
     end
@@ -78,6 +82,23 @@ RSpec.describe "FABS solutions", type: :request do
       expect(response.body).not_to include("31 December 2026")
       expect(response.body).not_to include("RM1234")
       expect(document).to have_link("Apply now", href: "https://example.com/apply")
+    end
+
+    it "redirects legacy category solution slugs before solution lookup" do
+      match = RedirectMatcher::Result.new(
+        redirect: instance_double(Redirect),
+        destination_path: "/categories/ict-business-systems/communications-solutions",
+        status: :moved_permanently,
+      )
+
+      allow(RedirectMatcher).to receive(:call).with("/categories/it/communications-solutions").and_return(match)
+      expect(Solution).not_to receive(:find_by_slug!)
+      expect(FABS::Category).not_to receive(:find_by_slug!)
+
+      get category_solution_path("it", "communications-solutions")
+
+      expect(response).to redirect_to("/categories/ict-business-systems/communications-solutions")
+      expect(response).to have_http_status(:moved_permanently)
     end
   end
 end

@@ -1,4 +1,4 @@
-feature "User authentication filter" do
+feature "User authentication filter", :with_csrf_protection do
   before do
     user_exists_in_dfe_sign_in(user:)
   end

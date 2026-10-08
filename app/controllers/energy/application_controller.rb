@@ -1,6 +1,6 @@
 module Energy
   class ApplicationController < ::ApplicationController
-    before_action :check_flag, :check_if_submitted, :set_routing_flags
+    before_action :check_if_submitted, :set_routing_flags
 
     ALLOWED_CLASSES = [
       "Support::Organisation",
@@ -10,10 +10,6 @@ module Energy
     MAX_METER_COUNT = 5
 
   private
-
-    def check_flag
-      render "errors/not_found", status: :not_found unless Flipper.enabled?(:energy)
-    end
 
     def check_if_submitted
       redirect_to energy_case_confirmation_path(onboarding_case) if onboarding_case.submitted?

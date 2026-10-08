@@ -22,6 +22,54 @@ RSpec.describe MarkdownHelper, type: :helper do
       expect(html).to include('<h1 id="h1-heading">H1 heading</h1>')
     end
 
+    it "renders markdown tables with GOV.UK table classes" do
+      markdown = <<~MD
+        | Scenario | Status |
+        | ------- | ---- |
+        | DfE approved energy | Compliant |
+        | Non-DfE approved energy | Non-compliant |
+      MD
+
+      html = helper.render_markdown_to_html(markdown)
+
+      expect(html).to include('class="govuk-table"')
+      expect(html).to include('class="govuk-table__head"')
+      expect(html).to include('class="govuk-table__body"')
+      expect(html).to include('class="govuk-table__row"')
+      expect(html).to include('class="govuk-table__header"')
+      expect(html).to include('class="govuk-table__cell"')
+
+      expect(html).to include("Scenario")
+      expect(html).to include("Status")
+      expect(html).to include("DfE approved energy")
+      expect(html).to include("Compliant")
+    end
+
+    it "adds GOV.UK numeric classes to right-aligned columns" do
+      markdown = <<~MD
+        | Scenario | Quote |
+        | ------- | ---: |
+        | DfE approved energy | £100 |
+        | Non-DfE approved energy | £1000 |
+      MD
+
+      html = helper.render_markdown_to_html(markdown)
+
+      expect(html).to include("govuk-table__header--numeric")
+      expect(html).to include("govuk-table__cell--numeric")
+    end
+
+    it "renders blockquotes as GOV.UK inset text" do
+      markdown = "> Important buying information"
+
+      html = helper.render_markdown_to_html(markdown)
+
+      expect(html).to include('class="govuk-inset-text"')
+      expect(html).not_to include("<blockquote>")
+      expect(html).not_to include("<p>")
+      expect(html).to include("Important buying information")
+    end
+
     describe "sanitization" do
       it "strips script tags" do
         markdown = "<script>alert('xss')</script>"

@@ -2,18 +2,22 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!
 
   include Breadcrumbs
+  include Redirectable
+
+  before_action :redirect_legacy_slugs
 
   def show
     if page.present?
       @page_title = @page.title
+      @seo_description = @page.seo_description
       add_breadcrumb_on_rails(home_breadcrumb_name, home_breadcrumb_path)
       build_page_breadcrumbs(@page)
       render "fabs/pages/show", layout: "pages"
     else
-      redirect_to "/404"
+      render "errors/not_found", status: :not_found
     end
   rescue ContentfulRecordNotFoundError
-    redirect_to "/404"
+    render "errors/not_found", status: :not_found
   end
 
   # TODO: remove this once pages are dynamic

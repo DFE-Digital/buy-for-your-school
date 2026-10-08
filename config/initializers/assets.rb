@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Be sure to restart your server when you modify this file.
 
 # Version of your assets, change this if you want to expire all your assets.
@@ -9,8 +7,7 @@ Rails.application.config.assets.version = "1.0"
 Rails.application.config.assets.paths << Rails.root.join("app/javascript")
 
 # Add the GOVUK Frontend assets paths
-Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand")
-Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/rebrand/images")
+Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/images")
 Rails.application.config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/fonts")
 Rails.application.config.assets.paths << Rails.root.join("vendor/assets/images")
 
@@ -40,6 +37,6 @@ Rails.application.config.assets.paths << Rails.root.join("node_modules")
 # folder are already added.
 
 # Add TinyMce To precompile (is referenced separately to application.js)
-# NOTE: it's static assets are copied to public/assets/tinymce to be served
+# NOTE: its static assets are copied to public/assets/tinymce to be served
 # See: ./script/assets/copy-assets.sh
 Rails.application.config.assets.precompile << "tinymce/tinymce.min.js"

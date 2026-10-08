@@ -66,8 +66,11 @@ en:
       title: Thank you - Get help buying for schools feedback
   app:
     name: Get help buying for schools
-  header_description: A free and compliant service to help you buy for your school,
-    trust or academy
+  header_description: We're here to help schools save time and money and buy compliantly. You can
+  header_bullets:
+  - find approved buying options and DfE offers
+  - ask our team of buying experts for advice
+  - get help running your procurement
   header_title: Get help buying for schools
   banner:
     beta:
@@ -82,17 +85,13 @@ en:
   breadcrumbs:
     offers: Offers
   categories:
-    filter_labels:
-      active_filters: Active filters
-      clear_all_filters: Clear all filters
-      remove_filter: Remove filter
     index:
-      offers_title: DfE featured
-      procurement_support: I need something else (opens in a new tab)
-      title: DfE-approved buying options by category
-      not_sure_title: Not sure where to start?
-      not_sure_body: Our buying team can help you choose the right way to buy for your school
-      expert_help_button: Get expert buying help
+      offers_title: I want to
+      popular_links_title: Popular
+      title: Browse by category
+      subtitle: Find frameworks, catalogues and DfE offers to suit your school's needs
+    show:
+      heading: Browse DfE-approved frameworks and deals
   case_requests:
     validation:
       discovery_method: Case origin is missing
@@ -110,45 +109,36 @@ en:
       navigation_links_columns:
       - label: Browse categories
         menu_contents:
-        - label: Banking and finance
-          href: "/categories/banking-finance"
-          description: Buy financial services
-        - label: Catalogues
-          href: "/categories/catalogues"
-          description: Use catalogues to buy low value goods
+        - label: Buildings and maintenance
+          href: "/categories/buildings-maintenance"
+          description: Cleaning services, grounds maintenance and sports facilities
         - label: Catering
           href: "/categories/catering"
-          description: Buy food, drink and catering services
-        - label: Energy
-          href: "/categories/energy"
-          description: Buy electricity, gas and other fuels
-        - label: Facilities management and estates
-          href: "/categories/facilities-management-estates"
-          description: Buy facilities management services
-        - label: I T 
-          href: "/categories/it"
-          description: Buy IT and ICT equipment and services
+          description: Food, vending machines, catering services and equipment
+        - label: Classroom, curriculum and office supplies
+          href: "/categories/classroom-curriculum-office-supplies"
+          description: Books, classroom tech, furniture and sensory equipment
+        - label: Energy and utilities
+          href: "/categories/energy-utilities"
+          description: Gas and electricity supplies, solar panels and water
       - label: " "
         menu_contents:
-        - label: Legal
-          href: "/categories/legal"
-          description: Buy legal services
-        - label: Office and education supplies
-          href: "/categories/office-education-supplies"
-          description: Buy arts and crafts supplies, stationery and other equipment
-        - label: Professional services
-          href: "/categories/consultancy-services"
-          description: Including Consultancy services
-        - label: Recruitment, HR and training
-          href: "/categories/recruitment-hr-training"
-          description: Buy staffing solutions
+        - label: Finance, legal and insurance
+          href: "/categories/finance-legal-insurance"
+          description: Insurance solutions, audits and legal services
+        - label: HR, people and professional services
+          href: "/categories/hr-people-professional-services"
+          description: Recruitment, payroll and consultancy
+        - label: ICT and business systems
+          href: "/categories/ict-business-systems"
+          description: Hardware, software and management systems
         - label: Transport
           href: "/categories/transport"
-          description: Buy home to school transport and accessories
+          description: Daily transport and educational trips
       - label: Guidance and support
         menu_contents:
-        - label: About this service
-          href: "/about-this-service"
+        - label: About our service
+          href: "/about-our-service"
           description: Who we help and what we do
         - label: Request for help
           href: "/procurement-support"
@@ -352,10 +342,6 @@ en:
       x_years:
         one: "%{count} year"
         other: "%{count} years"
-  design:
-    category_selection_header: Choose a category
-    not_found: No categories found
-    spec_template_tag_title: Specification tag
   end_of_journey_survey:
     new:
       body: Please could you let us know how easy it was to use the form? Your feedback helps us make our service better.
@@ -378,6 +364,7 @@ en:
     join:
       title: Join Energy for Schools
       explanations:
+      - <strong>This is a DfE energy deal.</strong> All schools can use this deal to procure gas and electricity, including academy trusts. See the <a href="/dfe-energy-approved-deals" class="govuk-link">guidance on DfE energy approved deals</a>.
       - Energy for Schools helps state-funded schools and trusts switch to the same energy contract used by the Department for Education.
       - Schools that join Energy for Schools are added to DfE’s V30 energy contract with Government Commercial Agency (GCA), formerly Crown Commercial Service. GCA buys energy for this particular contract over a long period of time, reducing the risk to customers of substantial fluctuations in price.
       benefits:
@@ -386,7 +373,6 @@ en:
         list:
         - helps protect schools from market volatility and high prices
         - saves time spent on procurement process
-        - removes risk associated with unregulated energy brokers
         - complies with procurement regulations
       mat_info:
       - The Energy for Schools online service is currently only available for individual state-funded schools, like local authority-maintained schools and single academy trusts.
@@ -401,7 +387,7 @@ en:
         - Multi-academy trusts (MATs) can join by repeating the online process for each school that's switching to the energy contract.
         - Alternatively, MATs can fill in the <a class="govuk-link" href="%{register_your_interest_form_url}">Register your interest form</a> and complete the paperwork offline. This may benefit MATs that are ready to switch 6 or more schools to the energy deal.
         deadline_text:
-        - Apply by 12pm Tuesday 15 September 2026 to join the next available V30 basket on 1 April 2027.
+        - Apply by 12pm Friday 6th November 2026 to join the next available V30 basket on 1 April 2027.
         - You may be placed on an interim rate to start with, depending on your current contract’s end date.
       more_info: Get more information
     guidance:
@@ -448,7 +434,7 @@ en:
           - V30 start dates
           rows:
             -
-              - 12pm, 15 September 2026
+              - 12pm, 6 November 2026
               - 1 April 2027
             -
               - September 2027
@@ -1536,6 +1522,15 @@ en:
   journeys_title: Create your specification to procure %{category} for your school
   page:
     updated_at: Last updated %{date}
+
+  page_feedback:
+    page_useful: Is this page useful?
+    want_feedback: Do you want to provide feedback?
+    thank_you_feedback: Thank you for providing feedback
+    thank_you: Thank you
+    feedback_title: Help us improve Get help buying for schools
+    feedback_hint: Your feedback helps us to improve this website. Do not provide any personal information. We cannot reply to you directly.
+    character_limit: Maximum 250 characters
   profile:
     body: 'These are the details we have for you, if they are not correct or up to date you will need to either:'
     caption: About you
@@ -3058,9 +3053,6 @@ en:
     title: Search
   service:
     name: Get help buying for schools
-    navigation:
-      about: About this service
-      menu: Menu
   shared:
     dfe_footer:
       accessibility: Accessibility
@@ -3073,10 +3065,19 @@ en:
       procurement_help: Request procurement help
       support_links: Support links
       terms_and_conditions: Terms and conditions
-    dfe_homepage_header:
-      view_all_buying_options: Browse a list of all DfE-approved buying options
     external_link:
       opens_in_new_tab: opens in new tab
+    get_expert_help:
+      heading: Request help
+    right_filters:
+      apply_filters: Apply filters
+      clear_filters: Clear filters
+      selected_filters: Selected filters
+      subcategories: Subcategories
+      ways_to_buy: Ways to buy
+    related_content:
+      header: Related reading
+
   solutions:
     index:
       all_buying_options_description: Use a DfE-approved buying option to make sure

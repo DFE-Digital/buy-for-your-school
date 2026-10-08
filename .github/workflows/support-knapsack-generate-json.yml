@@ -12,6 +12,9 @@ env:
 jobs:
   generate_json:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
 
     services:
       postgres:
@@ -33,6 +36,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_USERNAME || github.actor }}
+          password: ${{ github.actor == 'dependabot[bot]' && secrets.GHCR_PAT || secrets.GITHUB_TOKEN }}
 
       - name: Generate JSON
         run: |

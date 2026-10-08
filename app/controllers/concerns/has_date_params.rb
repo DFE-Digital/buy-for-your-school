@@ -21,6 +21,19 @@ module HasDateParams
       year: date["#{date_field}(1i)"],
     }
   end
+    
+  # Show invalid input after error so user can correct it
+  def preserve_date_param(form, form_param, date_field)
+    submitted = params.fetch(form_param, {})
+    form.instance_variable_set(
+      "@#{date_field}".to_sym,
+      {
+        1 => submitted["#{date_field}(1i)"],
+        2 => submitted["#{date_field}(2i)"],
+        3 => submitted["#{date_field}(3i)"],
+      },
+    )
+  end
 
   private
 

@@ -5,14 +5,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby file: ".ruby-version"
 
 gem "aasm"
-gem "application_insights"
+gem "application_insights", "0.5.10", github: "AirIndemnite/ApplicationInsights-Ruby"
 gem "ar-sequence"
 gem "aws-sdk-s3", require: false
-#
-# awaiting PR merge here: https://github.com/Azure/azure-storage-ruby/pull/228 due to need for faraday 2
-# gem "azure-storage-blob", "~> 2.0", require: false
-gem "azure-storage-blob", git: "https://github.com/honeyankit/azure-storage-ruby", ref: "patch-1", require: false
-gem "bootsnap", ">= 1.1.0", require: false
+gem "azure-blob", "~> 0.8", require: false
+gem "bootsnap", ">= 1.24.4", require: false
 gem "breadcrumbs_on_rails"
 gem "contentful", "~> 2.19"
 gem "contentful-management", require: false
@@ -26,12 +23,11 @@ gem "exception_notification"
 gem "flipper"
 gem "flipper-active_record"
 gem "flipper-ui"
-gem "govuk-components"
-gem "govuk_design_system_formbuilder", "~> 5"
+gem "govuk-components", "~> 6.5"
+gem "govuk_design_system_formbuilder", "~> 6"
 gem "httparty"
 gem "httpclient"
 gem "jbuilder", "~> 2.14"
-gem "jquery-rails"
 gem "jsbundling-rails"
 gem "jwt"
 gem "kramdown"
@@ -41,7 +37,6 @@ gem "mini_racer"
 gem "notifications-ruby-client"
 gem "omniauth"
 gem "omniauth_openid_connect"
-gem "omniauth-rails_csrf_protection"
 gem "opensearch-ruby"
 gem "pandoc-ruby"
 gem "paper_trail"
@@ -50,36 +45,35 @@ gem "pg"
 gem "pg_search"
 gem "puma", "~> 7"
 gem "pundit"
-gem "rails", "~> 7"
+gem "rails", "~> 8.0"
 gem "rake"
 gem "redis", "~> 4.8"
+gem "redis-actionpack", "~> 5.5"
 gem "redis-namespace"
-gem "redis-rails"
 gem "rollbar"
 gem "rubyXL"
 gem "scenic"
 gem "sidekiq", "~> 6.4"
-gem "sidekiq-cron", "~> 1.10"
+gem "sidekiq-cron", "~> 2.4"
 gem "simple_xlsx_reader"
+gem "sitemap_generator"
 gem "sprockets-rails"
 gem "stimulus-rails"
 gem "terser"
 gem "thor"
 gem "turbo-rails"
-gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+gem "tzinfo-data", platforms: %i[windows jruby]
 gem "wicked_pdf"
 gem "will_paginate", "~> 4.0.0"
 gem "wisper", "3.0.0"
 gem "wkhtmltopdf-binary"
 
 group :development, :test do
-  gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "benchmark", require: false
   gem "dotenv-rails"
   gem "guard-rspec", require: false
   gem "i18n-tasks"
   gem "knapsack"
-  gem "pry-byebug"
-  gem "pry-rails"
   gem "rubocop-govuk", require: false
   gem "rubocop-performance", require: false
   gem "ruby-lsp-rails"
@@ -89,14 +83,8 @@ group :development, :test do
 end
 
 group :development do
-  gem "better_errors"
-  gem "binding_of_caller"
   gem "foreman"
   gem "listen", ">= 3.8", "< 3.10"
-  gem "spring"
-  gem "spring-commands-rspec"
-  # Incompatible with spring 3.0 and higher
-  # gem "spring-watcher-listen", "~> 2.0.0"
   gem "web-console", ">= 3.3.0"
 end
 
@@ -113,6 +101,8 @@ group :test do
   gem "redis-client"
   gem "rspec-rails"
   gem "shoulda-matchers"
-  gem "simplecov"
+  gem "simplecov", "~> 1.3"
   gem "webmock"
 end
+
+gem "bundle-audit", "~> 0.2.0"

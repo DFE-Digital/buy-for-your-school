@@ -1,4 +1,4 @@
-RSpec.feature "Starting a 'Find a Framework' request" do
+RSpec.feature "Starting a 'Find a Framework' request", :with_csrf_protection do
   before do
     visit "/procurement-support"
   end

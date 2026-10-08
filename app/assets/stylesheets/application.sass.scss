@@ -8,6 +8,7 @@
 @import "govuk_publishing_components/components/helpers/brand-colours";
 @import "govuk_publishing_components/components/layout-super-navigation-header";
 @import "govuk_publishing_components/components/search";
+@import "govuk_publishing_components/components/feedback";
 
 @import "./components/activity-log";
 @import "./components/supported/procurement-stage-colours";
@@ -30,7 +31,6 @@
 @import "./components/multi-file-upload";
 @import "./components/supported/notifications";
 @import "./components/supported/cases";
-@import "./components/supported/table-sort-button";
 @import "./components/supported/template-manager";
 @import "./components/expander";
 @import "./components/tag-bar";
@@ -44,10 +44,11 @@
 @import "./components/chevron-card";
 @import "./components/homepage";
 @import "./components/sidebar";
-@import "./components/filter";
+@import "./components/moj_filter";
 @import "./components/banner";
 @import "./components/header";
 @import "./components/search";
+@import "./components/page_feedback";
 
 
 // Panel overrides

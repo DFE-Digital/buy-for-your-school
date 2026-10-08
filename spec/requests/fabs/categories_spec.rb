@@ -3,20 +3,25 @@ require "rails_helper"
 RSpec.describe "Categories pages", type: :request do
   let(:categories) do
     [
-      instance_double(FABS::Category, title: "Banking and finance", description: "Buy financial services", slug: "banking-and-finance"),
-      instance_double(FABS::Category, title: "Catalogues", description: "Buy catalogues", slug: "catalogues"),
-      instance_double(FABS::Category, title: "Catering", description: "Buy food, drink and catering services", slug: "catering"),
+      build_category(title: "Banking and finance", description: "Buy financial services", slug: "banking-and-finance"),
+      build_category(title: "Catalogues", description: "Buy catalogues", slug: "catalogues"),
+      build_category(title: "Catering", description: "Buy food, drink and catering services", slug: "catering"),
     ]
   end
   let(:featured_offers) { [] }
+  let(:popular_links) { [] }
   let(:energy_banner) { nil }
+  let(:get_expert_help) { instance_double(GetExpertHelp, title: "Get expert help", description: "Helpful content") }
+  let(:request_headers) { {} }
 
   describe "GET /" do
     before do
-      allow(FABS::Category).to receive(:all).and_return(categories)
-      allow(Offer).to receive(:featured_offers).and_return(featured_offers)
-      allow(Banner).to receive(:find_by_slug).and_return(energy_banner)
-      get root_path
+      allow(FABS::Category).to receive(:all) { categories }
+      allow(Offer).to receive(:featured_offers) { featured_offers }
+      allow(PopularLink).to receive(:all) { popular_links }
+      allow(Banner).to receive(:find_by_slug) { energy_banner }
+      allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
+      get root_path, headers: request_headers
     end
 
     it "sets default HTML title tag" do
@@ -24,7 +29,7 @@ RSpec.describe "Categories pages", type: :request do
     end
 
     it "includes buying options section heading" do
-      expect(response.body).to include("DfE-approved buying options by category")
+      expect(response.body).to include("Browse by category")
     end
 
     it "displays category titles" do
@@ -50,10 +55,154 @@ RSpec.describe "Categories pages", type: :request do
       expect(response.body).not_to include("category-without-any-solution")
     end
 
-    it "displays new request for help content" do
-      expect(response.body).to include("Not sure where to start?")
-      expect(response.body).to include("Our buying team can help you choose the right way to buy for your school")
-      expect(response.body).to include('href="/procurement-support">Get expert buying help')
+    context "when there are popular links" do
+      let(:popular_links) do
+        [
+          popular_link(title: "Link one", url: "/link-one", image: OpenStruct.new(url: "/assets/images/banner.jpg")),
+          popular_link(title: "Link two", url: "https://example.com/link-two", image: OpenStruct.new(url: "/assets/images/banner.jpg")),
+        ]
+      end
+
+      it "displays the popular links section" do
+        popular_links_section = Nokogiri::HTML(response.body).at_css(".homepage-popular-links")
+
+        expect(popular_links_section).to be_present
+        expect(popular_links_section.text).to include("Link one", "Link two")
+        expect(popular_links_section.css("a").map { |link| link["href"] }).to contain_exactly(
+          "http://localhost:3000/link-one",
+          "https://example.com/link-two",
+        )
+      end
     end
+
+    context "when there are featured offers" do
+      let(:featured_offers) do
+        [
+          featured_offer(id: "offer-1", title: "Offer one", url: "/offer-one", sort_order: 1, featured_on_homepage: true),
+          featured_offer(id: "offer-2", title: "Offer two", url: "https://example.com/offer-two", sort_order: 2, featured_on_homepage: true),
+          featured_offer(id: "offer-3", title: "Offer three", url: "https://example.com/offer-three", sort_order: 3, featured_on_homepage: true),
+        ]
+      end
+
+      it "displays the 'I want to' featured offers section" do
+        expect(response.body).to include("I want to")
+        expect(response.body).to include('href="http://localhost:3000/offer-one">Offer one')
+        expect(response.body).to include('href="https://example.com/offer-two">Offer two')
+        expect(response.body).to include('href="https://example.com/offer-three">Offer three')
+      end
+    end
+
+    it "displays get expert help content" do
+      expect(response.body).to include("Request help")
+      expect(response.body).to include("Helpful content")
+    end
+
+    context "when the Accept header is a wildcard" do
+      let(:request_headers) { { "Accept" => "*/*" } }
+
+      it "treats the request as HTML" do
+        expect(response).to have_http_status(:ok)
+        expect(response.media_type).to eq("text/html")
+      end
+    end
+  end
+
+  describe "GET /categories/:slug" do
+    let(:category) do
+      build_category(
+        title: "ICT business systems",
+        description: "Buy ICT services",
+        slug: "ict-business-systems",
+        body_title: nil,
+        body_description: nil,
+        banner: nil,
+        subcategories: [],
+        seo_description: "ICT business systems seo description",
+      )
+    end
+
+    it "redirects legacy category slugs before category lookup" do
+      match = RedirectMatcher::Result.new(
+        redirect: instance_double(Redirect),
+        destination_path: "/categories/ict-business-systems",
+        status: :moved_permanently,
+      )
+
+      allow(RedirectMatcher).to receive(:call).with("/categories/it").and_return(match)
+      expect(FABS::Category).not_to receive(:find_by_slug!)
+
+      get category_path("it")
+
+      expect(response).to redirect_to("/categories/ict-business-systems")
+      expect(response).to have_http_status(:moved_permanently)
+    end
+
+    it "renders the category when no legacy redirect matches" do
+      allow(RedirectMatcher).to receive(:call).with("/categories/ict-business-systems").and_return(nil)
+      allow(category).to receive_messages(
+        filtered_solutions: [],
+        related_content: [],
+        solutions: [],
+      )
+      allow(FABS::Category).to receive(:find_by_slug!).with("ict-business-systems").and_return(category)
+      allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
+
+      get category_path("ict-business-systems")
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
+  def popular_link(title:, url:, image:, sort_order: 1)
+    PopularLink.new(
+      OpenStruct.new(
+        id: title.parameterize,
+        fields: {
+          title:,
+          url:,
+          sort_order:,
+          image:,
+        },
+      ),
+    )
+  end
+
+  def featured_offer(id: "offer-id", title: "Energy for schools", description: "Description", summary: "Summary", slug: "energy-for-schools", url: "https://example.com", call_to_action: "Call to action", image: nil, featured_on_homepage: false, expiry: nil, sort_order: 1, related_content: [])
+    Offer.new(
+      OpenStruct.new(
+        id:,
+        fields: {
+          title:,
+          description:,
+          summary:,
+          slug:,
+          url:,
+          call_to_action:,
+          image:,
+          featured_on_homepage:,
+          expiry:,
+          sort_order:,
+          related_content:,
+        },
+      ),
+    )
+  end
+
+  def build_category(title:, description:, slug:, body_title: nil, body_description: nil, banner: nil, subcategories: [], seo_description: nil)
+    FABS::Category.new(
+      OpenStruct.new(
+        id: slug,
+        fields: {
+          title:,
+          description:,
+          slug:,
+          body_title:,
+          body_description:,
+          banner:,
+          subcategories:,
+          seo_description:,
+        },
+      ),
+    )
   end
 end

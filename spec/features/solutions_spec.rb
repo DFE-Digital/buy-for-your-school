@@ -9,7 +9,10 @@ RSpec.describe "Solutions pages", type: :feature do
     allow(Solution).to receive(:find_by_slug!).with("musical-instruments-equipment-and-technology").and_return(musical_instruments_solution)
     allow(Solution).to receive(:find_by_slug!).with("debt-resolution-services").and_return(debt_resolution_solution)
     allow(Solution).to receive(:find_by_slug!).with("ict-procurement").and_return(ict_procurement_solution)
+    allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
   end
+
+  let(:get_expert_help) { instance_double(GetExpertHelp, title: "Get expert help", description: "Helpful content") }
 
   let(:related_content) do
     [OpenStruct.new(link_text: "Plan technology for your school", url: "/plan-technology")]
@@ -32,6 +35,7 @@ RSpec.describe "Solutions pages", type: :feature do
       call_to_action: nil,
       url: "https://www.procurementservices.co.uk/our-solutions/frameworks/technology/it-hardware",
       primary_category: it_category,
+      seo_description: "IT hardware seo description",
     )
   end
 
@@ -50,6 +54,7 @@ RSpec.describe "Solutions pages", type: :feature do
       call_to_action: nil,
       url: "https://example.com/software",
       primary_category: it_category,
+      seo_description: "Software application seo description",
     )
   end
 
@@ -68,6 +73,7 @@ RSpec.describe "Solutions pages", type: :feature do
       call_to_action: nil,
       url: "https://example.com/musical-instruments",
       primary_category: it_category,
+      seo_description: "Musical instruments seo description",
     )
   end
 
@@ -86,6 +92,7 @@ RSpec.describe "Solutions pages", type: :feature do
       call_to_action: nil,
       url: "https://example.com/debt",
       primary_category: it_category,
+      seo_description: "Debt resolution seo description",
     )
   end
 
@@ -104,6 +111,7 @@ RSpec.describe "Solutions pages", type: :feature do
       call_to_action: "Go to site",
       url: "https://example.com/go-to-site",
       primary_category: it_category,
+      seo_description: "ICT procurement seo description",
     )
   end
 
@@ -129,12 +137,17 @@ RSpec.describe "Solutions pages", type: :feature do
       expect(page).to have_content("Benefits")
     end
 
-    it "displays related content section" do
-      expect(page).to have_content("Related Content")
+    it "displays related reading section" do
+      expect(page).to have_content("Related reading")
     end
 
     it "displays the related content link" do
       expect(page).to have_link("Plan technology for your school")
+    end
+
+    it "has seo description as meta tag" do
+      meta_description = page.find('meta[name="description"]', visible: false)
+      expect(meta_description[:content]).to eq("IT hardware seo description")
     end
 
     it "displays provider and expires when the solution has them" do

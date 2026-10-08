@@ -1,7 +1,3 @@
-<div data-controller="date-validation">
-    <div data-date-validation-target="dateValidation" 
-        date-validation-error-messages='<%= [I18n.t("gas_supplier_form.errors.rules.gas_current_contract_end_date.invalid_date")].to_json %>'
-     >
 <%= form_with model: @form, scope: :gas_supplier_form, url: @form_url, method: :patch do |form| %>
   <%= form.govuk_error_summary %>
 
@@ -28,9 +24,12 @@
     <% end %>
   <% end %>
 
-  <%= form.govuk_date_field :gas_current_contract_end_date, legend: { text: I18n.t("energy.current_contract.when_contract_ends"), size: "s", tag: "h2"}, hint: { text: I18n.t("energy.current_contract.date_for_example") } %>
+    <%= render "shared/date_input",
+    form: form,
+    attribute: :gas_current_contract_end_date,
+    legend: t("energy.current_contract.when_contract_ends"),
+    hint: t("energy.current_contract.date_for_example")
+  %>
 
   <%= render EnergyFormButtonsComponent.new(form, routing_flags: @routing_flags, additional_classes: "validate_date") %>
 <% end %>
-    </div>
-</div>

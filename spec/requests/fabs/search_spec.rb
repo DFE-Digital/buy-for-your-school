@@ -33,6 +33,21 @@ RSpec.describe "FABS search", type: :request do
     expect(response.body).to include("Catering")
   end
 
+  it "uses azure search when the feature flag is enabled" do
+    azure_searcher = instance_double(AzureAiSearch::SolutionSearcher, search: [solution])
+
+    allow(Flipper).to receive(:enabled?).and_return(false)
+    allow(Flipper).to receive(:enabled?).with(:azure_ai_search).and_return(true)
+    allow(AzureAiSearch::SolutionSearcher).to receive(:new).with(query: "catering").and_return(azure_searcher)
+    allow(FABS::Category).to receive(:search).with(query: "catering").and_return([category])
+
+    get search_path(query: "catering")
+
+    expect(response).to be_successful
+    expect(response.body).to include("Commercial catering equipment")
+    expect(AzureAiSearch::SolutionSearcher).to have_received(:new).with(query: "catering")
+  end
+
   it "escapes HTML in the page title" do
     allow(Solution).to receive(:search).with(query: "<b>catering</b>").and_return([])
     allow(FABS::Category).to receive(:search).with(query: "<b>catering</b>").and_return([])

@@ -38,13 +38,13 @@
 
   &__by {
     @include govuk-font(16);
-    color: govuk-colour('dark-grey');
+    color: govuk-colour("black", $variant: "tint-25");
     display: inline;
   }
 
   &__date {
     @include govuk-font(16);
-    color: govuk-colour('dark-grey');
+    color: govuk-colour("black", $variant: "tint-25");
     @include govuk-responsive-margin(0, "top");
   }
 

@@ -1,4 +1,3 @@
-# :nocov:
 module Support
   class CaseOrganisationFormSchema < Dry::Validation::Contract
     include Concerns::TranslatableFormSchema
@@ -18,4 +17,3 @@ module Support
     end
   end
 end
-# :nocov:

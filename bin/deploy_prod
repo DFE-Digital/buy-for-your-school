@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null)" || {
+  echo "Error: run this from inside the repository."
+  exit 1
+}
+cd "$repo_root"
+
+current_branch="$(git branch --show-current)"
+
+if [[ -z "$current_branch" ]]; then
+  echo "Error: deploy_prod must be run from a named branch, not a detached HEAD."
+  exit 1
+fi
+
+if [[ "$current_branch" == "production" ]]; then
+  echo "Error: run this from another branch; deploy_prod checks out production temporarily."
+  exit 1
+fi
+
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  echo "Error: tracked files have unstaged or staged changes. Commit or stash them before deploying."
+  exit 1
+fi
+
+if ! git remote get-url origin >/dev/null 2>&1; then
+  echo "Error: the repository has no 'origin' remote."
+  exit 1
+fi
+
+echo "Fetching the latest branches from origin..."
+git fetch origin
+
+for branch in main production; do
+  if ! git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+    echo "Error: origin/$branch was not found after fetching."
+    exit 1
+  fi
+done
+
+if git show-ref --verify --quiet refs/heads/production; then
+  local_only_commits="$(git rev-list --count origin/production..production)"
+  if (( local_only_commits > 0 )); then
+    echo "Error: local production has $local_only_commits commit(s) not present on origin/production."
+    echo "Preserve or resolve those commits before deploying; this script will not discard them."
+    exit 1
+  fi
+fi
+
+release_commits="$(git log --oneline --decorate origin/production..origin/main)"
+if [[ -z "$release_commits" ]]; then
+  echo "origin/production already contains all commits from origin/main; nothing to deploy."
+  exit 0
+fi
+
+echo
+echo "Changes to be released (origin/production → origin/main):"
+echo "$release_commits"
+echo
+git diff --stat origin/production origin/main
+echo
+echo "This will rebase production onto origin/main and push production to origin."
+read -r -p "Type 'deploy production' to continue: " confirmation
+if [[ "$confirmation" != "deploy production" ]]; then
+  echo "Deployment cancelled."
+  exit 1
+fi
+
+restore_branch() {
+  exit_code=$?
+  trap - EXIT
+
+  if (( exit_code != 0 )) && git rev-parse --verify --quiet REBASE_HEAD >/dev/null; then
+    if ! git rebase --abort >/dev/null 2>&1; then
+      echo "Warning: could not abort the in-progress rebase."
+    fi
+  fi
+
+  if [[ "$(git branch --show-current)" != "$current_branch" ]]; then
+    if ! git checkout "$current_branch" >/dev/null 2>&1; then
+      echo "Warning: could not return to '$current_branch'."
+    fi
+  fi
+
+  exit "$exit_code"
+}
+trap restore_branch EXIT
+
+if git show-ref --verify --quiet refs/heads/production; then
+  git checkout production
+  git reset --hard origin/production
+else
+  git checkout --track -b production origin/production
+fi
+
+git rebase origin/main
+git push --force-with-lease origin production
+
+echo
+echo "Production deployment triggered by the push. Monitor the GitHub Actions full pipeline:"
+echo "https://github.com/DFE-Digital/buy-for-your-school/actions/workflows/ci-full-pipeline.yml"
