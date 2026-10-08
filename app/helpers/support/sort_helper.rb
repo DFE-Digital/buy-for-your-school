@@ -27,6 +27,7 @@ module Support
 
     def cec_available_sort_options
       [
+        [I18n.t("support.case.label.flag"), "action"],
         [I18n.t("support.case.label.case"), "ref"],
         [I18n.t("support.case.label.level"), "support_level"],
         [I18n.t("support.case.label.organisation"), "organisation_name"],
