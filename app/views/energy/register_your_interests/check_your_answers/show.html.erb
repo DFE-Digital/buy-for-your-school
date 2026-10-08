@@ -1,0 +1,29 @@
+<% content_for :title, t(".title") %>
+<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">
+  <%= form_with model: @registration, url: energy_register_your_interest_check_your_answers_path, method: :post do |form| %>
+    <%= form.govuk_error_summary(presenter: Energy::RegisterYourInterests::ErrorSummaryPresenter) %>
+  <% end %>
+  <h1 class="govuk-heading-l"><%= t(".title") %></h1>
+  <%= govuk_summary_list do |list| %>
+    <% answers = [
+      [:name, :name, energy_register_your_interest_path],
+      [:email, :email, energy_register_your_interest_email_path],
+      [:phone_number, :phone_number, energy_register_your_interest_phone_number_path],
+      [:mat_name, :mat_name, energy_register_your_interest_mat_path],
+      [:switch_gas, :switch_gas, energy_register_your_interest_gas_path],
+      [:gas_contract_end_date, :gas_contract_end_date, energy_register_your_interest_gas_path],
+      [:switch_electricity, :switch_electricity, energy_register_your_interest_electricity_path],
+      [:electricity_contract_end_date, :electricity_contract_end_date, energy_register_your_interest_electricity_path],
+    ] %>
+    <% answers.each do |attribute, label_key, path| %>
+      <% value = @registration.public_send(attribute) %>
+      <% value = value.nil? ? t("generic.not_provided") : value == true ? t("generic.yes") : value == false ? t("generic.no") : value.respond_to?(:strftime) ? l(value, format: :long) : value %>
+      <%= list.with_row do |row| %>
+        <% row.with_key { t(".answers.#{label_key}") } %>
+        <% row.with_value { value } %>
+        <% row.with_action(text: t("generic.button.change_answer"), href: "#{path}#{path.include?("?") ? "&" : "?"}return_to=check-answers", visually_hidden_text: t(".answers.#{label_key}")) %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= button_to t("generic.button.submit"), energy_register_your_interest_check_your_answers_path, method: :post, class: "govuk-button" %>
+</div></div>
