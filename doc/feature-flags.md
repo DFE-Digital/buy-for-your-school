@@ -58,6 +58,7 @@ For example, `homepage_rfh_button` controls the RFH button on the homepage. When
 |maintenance_mode|Prevent user access to the application. Intended for infrastructure or data maintenance.|DISABLED|To be enabled when required|
 |rfh_usability_survey|Embed the RfH usability survey in the RfH submission confirmation page.|ENABLED|Feature now live, flag to be removed|
 |register_your_interest|Use the new in-app RYI journey instead of the existing external form.|Environment-specific|Enable to use the new journey; disable to use the existing form|
+|zendesk_integration|Create a Zendesk ticket when a Register Your Interest submission is completed.|Environment-specific|Enable only when Zendesk is configured for that environment; disabled submissions are saved without creating a Zendesk ticket|
 |sc_tasklist_case|The task list tab for a case at level 4 or 5 will be visible, and the 'case action_required' flag will be updated based on the evaluation document upload status and the evaluation approval status. |ENABLED in development, DISABLED in production|To be enabled when all components of the task list are ready|
 |usability_surveys|Usability survey for FABS|ENABLED|Feature now live, flag to be removed|
 |azure_ai_search|Use Azure AI Search for solution search instead of Contentful/OpenSearch|DISABLED|Enable in development / staging before go-live|
