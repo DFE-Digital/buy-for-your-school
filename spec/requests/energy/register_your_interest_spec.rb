@@ -36,6 +36,28 @@ RSpec.describe "Register your interest in Energy for Schools" do
     expect(response.body).to include("There is a problem", "Enter your name")
   end
 
+  it "does not enqueue a Zendesk ticket when the integration feature is disabled" do
+    get energy_register_your_interest_path
+    registration = Energy::RegisterYourInterest.find(session[:energy_register_your_interest_id])
+    registration.update!(
+      name: "Alex Example",
+      email: "alex@example.com",
+      phone_number: "01234567890",
+      mat_uid: "MAT-123",
+      switch_gas: false,
+      switch_electricity: false,
+    )
+    allow(Flipper).to receive(:enabled?).and_call_original
+    allow(Flipper).to receive(:enabled?).with(:zendesk_integration).and_return(false)
+
+    expect {
+      post energy_register_your_interest_check_your_answers_path
+    }.not_to have_enqueued_job(Energy::CreateRegisterYourInterestZendeskTicketJob)
+
+    expect(response).to redirect_to(energy_register_your_interest_confirmation_path)
+    expect(registration.reload).to be_submitted
+  end
+
   it "rejects a gas contract end date more than five years in the future" do
     mat_type = create(:support_establishment_group_type, code: Support::EstablishmentGroupType::MAT_CODE, name: "Multi-academy trust")
     mat = create(:support_establishment_group, establishment_group_type: mat_type, uid: "MAT-123", name: "Example MAT", ukprn: "12345678")
@@ -124,6 +146,8 @@ RSpec.describe "Register your interest in Energy for Schools" do
       status: "in_progress",
     )
 
+    allow(Flipper).to receive(:enabled?).and_call_original
+    allow(Flipper).to receive(:enabled?).with(:zendesk_integration).and_return(true)
     expect {
       post energy_register_your_interest_check_your_answers_path
     }.to have_enqueued_job(Energy::CreateRegisterYourInterestZendeskTicketJob).with(registration.id)
