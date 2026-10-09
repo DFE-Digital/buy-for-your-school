@@ -6,6 +6,9 @@ module HasAttachments
   end
 
   def initialize(entry)
-    @attachments = Array(entry.fields[:attachments]).compact.map { |asset| ContentfulAttachment.new(asset) }
+    @attachments = Array(entry.fields[:attachments]).compact
+      .map { |attachment_entry| ContentfulAttachment.new(attachment_entry) }
+      .select(&:url)
+    super
   end
 end

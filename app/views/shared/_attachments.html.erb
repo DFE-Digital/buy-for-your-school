@@ -1,8 +1,12 @@
 <% if attachments.present? %>
   <div class="govuk-!-margin-top-6">
-    <h2 class="govuk-heading-m">Downloads</h2>
+    <h2 class="govuk-heading-m">Documents</h2>
     <% attachments.each do |attachment| %>
-      <% file_meta = [attachment.file_type, (number_to_human_size(attachment.file_size) if attachment.file_size)].compact %>
+      <% file_meta = [
+        attachment.file_type,
+        (number_to_human_size(attachment.file_size) if attachment.file_size),
+        (pluralize(attachment.page_count, "page") if attachment.page_count),
+      ].compact %>
       <section class="gem-c-attachment govuk-!-margin-bottom-6">
         <div class="gem-c-attachment__thumbnail govuk-!-display-none-print">
           <%= link_to attachment.url, class: "govuk-link", download: attachment.file_name, target: "_blank", rel: "noopener noreferrer", tabindex: "-1", "aria-hidden": true do %>
@@ -18,6 +22,9 @@
           </h3>
           <% if file_meta.any? %>
             <p class="gem-c-attachment__metadata"><%= file_meta.join(", ") %></p>
+          <% end %>
+          <% if attachment.description.present? %>
+            <p class="govuk-body gem-c-attachment__summary"><%= attachment.description %></p>
           <% end %>
         </div>
       </section>

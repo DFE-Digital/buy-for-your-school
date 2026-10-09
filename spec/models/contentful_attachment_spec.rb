@@ -1,15 +1,39 @@
 require "rails_helper"
 
 RSpec.describe ContentfulAttachment do
-  subject(:attachment) { described_class.new(asset) }
+  subject(:attachment) { described_class.new(entry) }
 
   let(:title) { "Energy guide" }
   let(:url) { "//assets.ctfassets.net/space/asset/energy-guide.pdf" }
   let(:file) { OpenStruct.new(file_name: "energy-guide.pdf", details: { "size" => 245_760 }) }
+  let(:page_count) { "12" }
   let(:asset) { OpenStruct.new(title:, description: "How to switch supplier", url:, file:) }
+  let(:entry) { OpenStruct.new(fields: { page_count:, attachment: asset }) }
 
   it "exposes the asset title and description" do
     expect(attachment).to have_attributes(title: "Energy guide", description: "How to switch supplier")
+  end
+
+  context "when the entry has no asset" do
+    let(:asset) { nil }
+
+    it "returns nil for the title and description" do
+      expect(attachment).to have_attributes(title: nil, description: nil)
+    end
+  end
+
+  describe "#page_count" do
+    it "returns the page count as an integer" do
+      expect(attachment.page_count).to eq(12)
+    end
+
+    context "when the page count is blank" do
+      let(:page_count) { nil }
+
+      it "returns nil" do
+        expect(attachment.page_count).to be_nil
+      end
+    end
   end
 
   describe "#url" do
@@ -22,6 +46,14 @@ RSpec.describe ContentfulAttachment do
 
       it "leaves it unchanged" do
         expect(attachment.url).to eq("https://example.com/energy-guide.pdf")
+      end
+    end
+
+    context "when the entry has no asset" do
+      let(:asset) { nil }
+
+      it "returns nil" do
+        expect(attachment.url).to be_nil
       end
     end
   end

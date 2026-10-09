@@ -57,7 +57,7 @@ RSpec.describe FABS::Page, type: :model do
     end
   end
 
-  def page_entry(id: "page-id", title: "Dynamic purchasing systems", body: "Page body", description: "Page description", slug: "dynamic-purchasing-systems", related_content: [related_content_entry], parent: nil, attachments: [attachment_asset])
+  def page_entry(id: "page-id", title: "Dynamic purchasing systems", body: "Page body", description: "Page description", slug: "dynamic-purchasing-systems", related_content: [related_content_entry], parent: nil, attachments: [attachment_entry])
     OpenStruct.new(
       id:,
       fields: {
@@ -72,12 +72,17 @@ RSpec.describe FABS::Page, type: :model do
     )
   end
 
-  def attachment_asset
+  def attachment_entry
     OpenStruct.new(
-      title: "Guide",
-      description: nil,
-      url: "//assets.ctfassets.net/guide.pdf",
-      file: OpenStruct.new(file_name: "guide.pdf", details: { "size" => 1024 }),
+      fields: {
+        page_count: "3",
+        attachment: OpenStruct.new(
+          title: "Guide",
+          description: nil,
+          url: "//assets.ctfassets.net/guide.pdf",
+          file: OpenStruct.new(file_name: "guide.pdf", details: { "size" => 1024 }),
+        ),
+      },
     )
   end
 

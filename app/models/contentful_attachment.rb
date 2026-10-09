@@ -1,23 +1,32 @@
 class ContentfulAttachment
-  attr_reader :title, :description
+  attr_reader :page_count
 
-  def initialize(asset)
-    @asset = asset
-    @title = asset.title
-    @description = asset.description
+  def initialize(entry)
+    @page_count = entry.fields[:page_count].to_s[/\d+/]&.to_i
+    @asset = entry.fields[:attachment]
   end
 
   def url
-    url = @asset.url
+    url = @asset&.url
+    return if url.blank?
+
     url.start_with?("//") ? "https:#{url}" : url
   end
 
+  def description
+    @asset&.description
+  end
+
+  def title
+    @asset&.title
+  end
+
   def file_name
-    @asset.file&.file_name
+    @asset&.file&.file_name
   end
 
   def file_size
-    details = @asset.file&.details || {}
+    details = @asset&.file&.details || {}
     details["size"] || details[:size]
   end
 
