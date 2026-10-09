@@ -39,9 +39,11 @@ RSpec.describe "Zendesk tasks" do
     client = instance_double(Zendesk::Client, create_ticket: 789)
     allow(Zendesk::Client).to receive(:new).and_return(client)
 
-    expect { Rake::Task["zendesk:create_test_ticket"].invoke }
-      .to output("Created Zendesk test ticket 789.\n")
-      .to_stdout
+    expect {
+      ClimateControl.modify(ZENDESK_ENVIRONMENT: "staging") do
+        Rake::Task["zendesk:create_test_ticket"].invoke
+      end
+    }.to output("Created Zendesk test ticket 789.\n").to_stdout
 
     expect(client).to have_received(:create_ticket).with(
       subject: start_with("Register your interest test - "),

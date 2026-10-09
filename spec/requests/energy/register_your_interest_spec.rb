@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Register your interest in Energy for Schools" do
+  before do
+    ActiveJob::Base.queue_adapter = :test
+  end
+
   it "shows an error when the name is missing" do
     post energy_register_your_interest_path, params: { energy_register_your_interest: { name: "" } }
 
@@ -120,7 +124,9 @@ RSpec.describe "Register your interest in Energy for Schools" do
       status: "in_progress",
     )
 
-    post energy_register_your_interest_check_your_answers_path
+    expect {
+      post energy_register_your_interest_check_your_answers_path
+    }.to have_enqueued_job(Energy::CreateRegisterYourInterestZendeskTicketJob).with(registration.id)
     expect(response).to redirect_to(energy_register_your_interest_confirmation_path)
     expect(registration.reload).to be_submitted
 
