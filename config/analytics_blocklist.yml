@@ -703,6 +703,7 @@
   - gas_contract_end_date
   - switch_electricity
   - electricity_contract_end_date
+  - zendesk_ticket_id
   - status
   - created_at
   - updated_at
