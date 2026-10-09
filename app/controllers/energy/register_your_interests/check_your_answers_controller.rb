@@ -16,6 +16,7 @@ module Energy
         @registration.step = "check-answers"
         if @registration.valid?
           @registration.update!(status: :submitted)
+          Energy::CreateRegisterYourInterestZendeskTicketJob.perform_later(@registration.id)
           redirect_to energy_register_your_interest_confirmation_path
         else
           redirect_to energy_register_your_interest_check_your_answers_path
