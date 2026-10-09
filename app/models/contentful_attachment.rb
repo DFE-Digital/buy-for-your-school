@@ -27,7 +27,7 @@ class ContentfulAttachment
 
   def file_size
     details = @asset&.file&.details || {}
-    details["size"] || details[:size]
+    details["size"]
   end
 
   def file_type

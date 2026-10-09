@@ -10,7 +10,7 @@
       <section class="gem-c-attachment govuk-!-margin-bottom-6">
         <div class="gem-c-attachment__thumbnail govuk-!-display-none-print">
           <%= link_to attachment.url, class: "govuk-link", download: attachment.file_name, target: "_blank", rel: "noopener noreferrer", tabindex: "-1", "aria-hidden": true do %>
-            <%= render "shared/attachment/thumbnail_#{attachment.thumbnail}" %>
+            <%= render "govuk_publishing_components/components/attachment/thumbnail_#{attachment.thumbnail}" %>
           <% end %>
         </div>
         <div class="gem-c-attachment__details">

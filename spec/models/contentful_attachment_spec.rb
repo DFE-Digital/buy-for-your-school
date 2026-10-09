@@ -77,14 +77,6 @@ RSpec.describe ContentfulAttachment do
       expect(attachment.file_size).to eq(245_760)
     end
 
-    context "when details use symbol keys" do
-      let(:file) { OpenStruct.new(file_name: "energy-guide.pdf", details: { size: 1024 }) }
-
-      it "returns the size in bytes" do
-        expect(attachment.file_size).to eq(1024)
-      end
-    end
-
     context "when the asset has no file" do
       let(:file) { nil }
 

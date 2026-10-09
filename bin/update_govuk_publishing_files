@@ -8,6 +8,7 @@ readonly SOURCE_VERSION="68.3.0"
 readonly SOURCE_REF="v${SOURCE_VERSION}"
 readonly CHECKOUT_ROOT="${APP_ROOT}/tmp/govuk_publishing_components"
 readonly LIB_ROOT="${APP_ROOT}/lib"
+readonly VIEWS_ROOT="${APP_ROOT}/app/views"
 readonly VENDOR_STYLESHEETS_ROOT="${APP_ROOT}/vendor/assets/stylesheets"
 readonly VENDOR_IMAGES_ROOT="${APP_ROOT}/vendor/assets/images"
 
@@ -39,6 +40,13 @@ readonly IMAGE_PATHS=(
   "app/assets/images/govuk_publishing_components/icon-close.svg"
 )
 
+readonly VIEW_PATHS=(
+  "app/views/govuk_publishing_components/components/attachment/_thumbnail_document.html.erb"
+  "app/views/govuk_publishing_components/components/attachment/_thumbnail_generic.html.erb"
+  "app/views/govuk_publishing_components/components/attachment/_thumbnail_pdf.html.erb"
+  "app/views/govuk_publishing_components/components/attachment/_thumbnail_spreadsheet.html.erb"
+)
+
 readonly RUBY_PATHS=(
   "lib/govuk_publishing_components/presenters/component_wrapper_helper.rb"
   "lib/govuk_publishing_components/presenters/shared_helper.rb"
@@ -54,6 +62,7 @@ checkout_repo() {
   git -C "${CHECKOUT_ROOT}" sparse-checkout set \
     "app/assets/stylesheets/govuk_publishing_components" \
     "app/assets/images/govuk_publishing_components" \
+    "app/views/govuk_publishing_components/components/attachment" \
     "lib/govuk_publishing_components/presenters"
 
   git -C "${CHECKOUT_ROOT}" fetch --tags origin
@@ -101,6 +110,11 @@ main() {
   rm -rf "${VENDOR_IMAGES_ROOT}/govuk_publishing_components"
   for path in "${IMAGE_PATHS[@]}"; do
     copy_path "${checkout_root}" "app/assets/images" "${path}" "${VENDOR_IMAGES_ROOT}"
+  done
+
+  echo "Copying attachment thumbnail views to app/views"
+  for path in "${VIEW_PATHS[@]}"; do
+    copy_path "${checkout_root}" "app/views" "${path}" "${VIEWS_ROOT}"
   done
 
   echo "Copying Ruby helpers to lib"
