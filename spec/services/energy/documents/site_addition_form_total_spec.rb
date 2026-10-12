@@ -69,8 +69,8 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
       end
 
       aggregate_failures "main contact details" do
-        expect(row[7].value).to eq("Annette")
-        expect(row[8].value).to eq("Harrison")
+        expect(row[7].value).to eq(Energy::DfeContact::FIRST_NAME)
+        expect(row[8].value).to eq(Energy::DfeContact::LAST_NAME)
         expect(row[13].value).to eq("S1 2JF")
         expect(row[16].value).to include("education.gov.uk")
       end
@@ -152,10 +152,10 @@ RSpec.describe Energy::Documents::SiteAdditionFormTotal, type: :model do
         end
 
         aggregate_failures "main contact details" do
-          expect(first_row[7].value).to eq("Annette")
-          expect(second_row[7].value).to eq("Annette")
-          expect(first_row[8].value).to eq("Harrison")
-          expect(second_row[8].value).to eq("Harrison")
+          expect(first_row[7].value).to eq(Energy::DfeContact::FIRST_NAME)
+          expect(second_row[7].value).to eq(Energy::DfeContact::FIRST_NAME)
+          expect(first_row[8].value).to eq(Energy::DfeContact::LAST_NAME)
+          expect(second_row[8].value).to eq(Energy::DfeContact::LAST_NAME)
           expect(first_row[13].value).to eq("S1 2JF")
           expect(second_row[13].value).to eq("S1 2JF")
         end
