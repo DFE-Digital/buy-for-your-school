@@ -44,7 +44,7 @@ RSpec.describe Energy::CreateRegisterYourInterestZendeskTicketJob, type: :job do
       ticket_form_id: 35_484_269_639_570,
       requester: { name: "Alex Example", email: "alex@example.com" },
       custom_fields: contain_exactly(
-        { id: 34_677_379_305_490, value: "01234567890" },
+        { id: 34_677_379_305_490, value: "1234567890" },
         { id: 34_677_545_715_218, value: "2027-08-01" },
         { id: 35_483_951_884_690, value: "yes_change" },
         { id: 35_484_030_231_314, value: "no_change_elec" },
@@ -61,5 +61,41 @@ RSpec.describe Energy::CreateRegisterYourInterestZendeskTicketJob, type: :job do
     described_class.perform_now(registration.id)
 
     expect(zendesk_client).not_to have_received(:create_ticket)
+  end
+
+  describe "#zendesk_contact_number" do
+    subject(:zendesk_contact_number) { described_class.new.send(:zendesk_contact_number, phone_number) }
+
+    context "when the phone number has an international prefix" do
+      let(:phone_number) { "+44791469999" }
+
+      it { is_expected.to eq("791469999") }
+    end
+
+    context "when the international prefix is followed by a national trunk zero" do
+      let(:phone_number) { "+44 (0)7914 699999" }
+
+      it { is_expected.to eq("7914699999") }
+    end
+
+    context "when the phone number has parentheses and spaces" do
+      let(:phone_number) { "(0181) 8055555" }
+
+      it { is_expected.to eq("1818055555") }
+    end
+
+    context "when the phone number has hyphens" do
+      let(:phone_number) { "01-811-805555" }
+
+      it { is_expected.to eq("1811805555") }
+    end
+
+    context "when there are multiple leading zeroes" do
+      let(:phone_number) { "00123456789" }
+
+      it "removes only the first leading zero" do
+        expect(zendesk_contact_number).to eq("0123456789")
+      end
+    end
   end
 end
