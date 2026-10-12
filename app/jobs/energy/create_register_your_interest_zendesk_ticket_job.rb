@@ -24,7 +24,7 @@ module Energy
 
     def custom_fields(registration, field_ids)
       [
-        { id: field_ids[:contact_number], value: registration.phone_number },
+        { id: field_ids[:contact_number], value: zendesk_contact_number(registration.phone_number) },
         { id: field_ids[:electricity_contract_end_date], value: registration.electricity_contract_end_date&.iso8601 },
         { id: field_ids[:gas_contract_end_date], value: registration.gas_contract_end_date&.iso8601 },
         { id: field_ids[:switch_gas], value: registration.switch_gas ? "yes_change" : "no_change" },
@@ -32,6 +32,10 @@ module Energy
         { id: field_ids[:ukprn], value: registration.ukprn },
         { id: field_ids[:mat_name], value: registration.mat_name },
       ].reject { |field| field[:value].nil? }
+    end
+
+    def zendesk_contact_number(phone_number)
+      phone_number.to_s.sub(/\A\s*\+44/, "").gsub(/\D/, "").delete_prefix("0")
     end
   end
 end
