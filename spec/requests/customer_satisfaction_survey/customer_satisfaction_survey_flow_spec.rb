@@ -19,6 +19,32 @@ describe "Filling out a customer satisfaction survey" do
       expect(survey.in_progress?).to eq(true)
       expect(survey.survey_started_at).to be_within(1.second).of(Time.zone.now)
     end
+
+    context "when the service is invalid" do
+      let(:post_params) { { service: "invalid-service" } }
+
+      it "renders the unacceptable page without creating a survey" do
+        expect {
+          post customer_satisfaction_surveys_path, params: post_params
+        }.not_to change(CustomerSatisfactionSurveyResponse, :count)
+
+        expect(response).to have_http_status(:not_acceptable)
+        expect(response.body).to include(I18n.t("errors.unacceptable.page_title"))
+      end
+    end
+
+    context "when the source is invalid" do
+      let(:post_params) { { service: "create_a_spec", source: "invalid-source" } }
+
+      it "renders the unacceptable page without creating a survey" do
+        expect {
+          post customer_satisfaction_surveys_path, params: post_params
+        }.not_to change(CustomerSatisfactionSurveyResponse, :count)
+
+        expect(response).to have_http_status(:not_acceptable)
+        expect(response.body).to include(I18n.t("errors.unacceptable.page_title"))
+      end
+    end
   end
 
   describe "Accessing a completed survey" do
