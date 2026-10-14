@@ -2,7 +2,12 @@ class CustomerSatisfactionSurveysController < ApplicationController
   skip_before_action :authenticate_user!
 
   def create
-    @customer_satisfaction_survey = CustomerSatisfactionSurveyResponse.create!(form_params)
+    begin
+      @customer_satisfaction_survey = CustomerSatisfactionSurveyResponse.create!(form_params)
+    rescue ArgumentError
+      return render "errors/unacceptable", formats: [:html], status: :not_acceptable
+    end
+
     @customer_satisfaction_survey.start_survey!
     @survey_flow = set_flow
     redirect_to_path(@survey_flow.current_path, @customer_satisfaction_survey)
