@@ -9,10 +9,39 @@ RSpec.describe MarkdownHelper, type: :helper do
       expect(html).to include('<a href="https://example.com" target="_blank" rel="noopener noreferrer" class="govuk-link">External</a>')
     end
 
-    it "renders links wrapped in == as GOV.UK start buttons" do
-      markdown = "[==Start now>==](/start) [Normal](/normal)"
+    it "renders links wrapped in == with a trailing > as GOV.UK start buttons" do
+      markdown = "[==Start now==>](/start) [Normal](/normal)"
       html = helper.render_markdown_to_html(markdown)
-      expect(html).to include('<a href="/start" class="govuk-button govuk-button--start">Start now&gt;</a>')
+      button = Nokogiri::HTML.fragment(html).at_css("a.govuk-button--start")
+      expect(button["href"]).to eq("/start")
+      expect(button["class"]).to eq("govuk-button govuk-button--start")
+      expect(button["role"]).to eq("button")
+      expect(button["data-module"]).to eq("govuk-button")
+      expect(button.text).to eq("Start now")
+      expect(button.at_css("svg.govuk-button__start-icon path")).to be_present
+      expect(html).to include('<a href="/normal" class="govuk-link">Normal</a>')
+      expect(html).not_to include("==")
+    end
+
+    it "renders start buttons with relative links without opening a new tab" do
+      markdown = "[==Start now==>](/energy/before-you-start)"
+      html = helper.render_markdown_to_html(markdown)
+      button = Nokogiri::HTML.fragment(html).at_css("a.govuk-button--start")
+      expect(button["href"]).to eq("/energy/before-you-start")
+      expect(button["target"]).to be_nil
+      expect(button["rel"]).to be_nil
+      expect(button.text).to eq("Start now")
+      expect(button.at_css("svg.govuk-button__start-icon")).to be_present
+    end
+
+    it "renders links wrapped in == without a trailing > as GOV.UK buttons without an arrow icon" do
+      markdown = "[==Contact us==](/contact) [Normal](/normal)"
+      html = helper.render_markdown_to_html(markdown)
+      button = Nokogiri::HTML.fragment(html).at_css("a.govuk-button")
+      expect(button["href"]).to eq("/contact")
+      expect(button["class"]).to eq("govuk-button")
+      expect(button.text).to eq("Contact us")
+      expect(button.at_css("svg")).to be_nil
       expect(html).to include('<a href="/normal" class="govuk-link">Normal</a>')
       expect(html).not_to include("==")
     end

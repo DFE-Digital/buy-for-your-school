@@ -3,8 +3,10 @@
 module MarkdownHelper
   ALLOWED_TAGS = %w[p h1 h2 h3 h4 h5 h6 a ul ol li strong em br img table thead tbody tr th td caption blockquote div hr].freeze
   ALLOWED_ATTRIBUTES = %w[href src alt target rel class id style start].freeze
-  # Link text wrapped in "==" (e.g. "[==Start now==](/url)") renders as a GOV.UK start button
-  CTA_BUTTON_PATTERN = /\A==(.+)==\z/m
+  # Link text wrapped in "==" renders as a GOV.UK button:
+  #   "[==Start now==>](/url)" - start button with an arrow icon
+  #   "[==Contact us==](/url)" - standard button without an arrow icon
+  CTA_BUTTON_PATTERN = /\A==(.+?)==\s*(>)?\z/m
 
   def render_markdown_to_html(markdown_content)
     return "" if markdown_content.blank?
@@ -32,8 +34,15 @@ module MarkdownHelper
       match = link.text.strip.match(CTA_BUTTON_PATTERN)
       next unless match
 
-      link.content = match[1].strip
-      link["class"] = [link["class"], "govuk-button govuk-button--start"].compact.join(" ")
+      text = match[1].strip
+      html_attributes = link.attributes.slice("target", "rel").transform_values(&:value)
+      button = if match[2]
+                 govuk_start_button(text:, href: link["href"], html_attributes:)
+               else
+                 govuk_button_link_to(text, link["href"], **html_attributes.symbolize_keys)
+               end
+
+      link.replace(button.to_s)
     end
 
     doc = update_class(doc, "a[href]:not(.govuk-button)", "govuk-link")
