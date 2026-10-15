@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Register your interest in Energy for Schools" do
+  before do
+    ActiveJob::Base.queue_adapter = :test
+  end
+
   it "shows an error when the name is missing" do
     post energy_register_your_interest_path, params: { energy_register_your_interest: { name: "" } }
 
@@ -30,6 +34,28 @@ RSpec.describe "Register your interest in Energy for Schools" do
     follow_redirect!
     expect(response).to be_successful
     expect(response.body).to include("There is a problem", "Enter your name")
+  end
+
+  it "does not enqueue a Zendesk ticket when the integration feature is disabled" do
+    get energy_register_your_interest_path
+    registration = Energy::RegisterYourInterest.find(session[:energy_register_your_interest_id])
+    registration.update!(
+      name: "Alex Example",
+      email: "alex@example.com",
+      phone_number: "01234567890",
+      mat_uid: "MAT-123",
+      switch_gas: false,
+      switch_electricity: false,
+    )
+    allow(Flipper).to receive(:enabled?).and_call_original
+    allow(Flipper).to receive(:enabled?).with(:zendesk_integration).and_return(false)
+
+    expect {
+      post energy_register_your_interest_check_your_answers_path
+    }.not_to have_enqueued_job(Energy::CreateRegisterYourInterestZendeskTicketJob)
+
+    expect(response).to redirect_to(energy_register_your_interest_confirmation_path)
+    expect(registration.reload).to be_submitted
   end
 
   it "rejects a gas contract end date more than five years in the future" do
@@ -120,7 +146,11 @@ RSpec.describe "Register your interest in Energy for Schools" do
       status: "in_progress",
     )
 
-    post energy_register_your_interest_check_your_answers_path
+    allow(Flipper).to receive(:enabled?).and_call_original
+    allow(Flipper).to receive(:enabled?).with(:zendesk_integration).and_return(true)
+    expect {
+      post energy_register_your_interest_check_your_answers_path
+    }.to have_enqueued_job(Energy::CreateRegisterYourInterestZendeskTicketJob).with(registration.id)
     expect(response).to redirect_to(energy_register_your_interest_confirmation_path)
     expect(registration.reload).to be_submitted
 
