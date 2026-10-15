@@ -4,6 +4,7 @@ module FABS
   class Page
     include ActiveModel::Model
     include HasRelatedContent
+    include HasAttachments
 
     CONTENT_TYPE = "page".freeze
 

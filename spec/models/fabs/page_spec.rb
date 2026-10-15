@@ -16,6 +16,11 @@ RSpec.describe FABS::Page, type: :model do
         related_content: be_present,
       )
     end
+
+    it "sets the attachments" do
+      expect(page.attachments).to contain_exactly(an_instance_of(ContentfulAttachment))
+      expect(page.attachments.first.file_name).to eq("guide.pdf")
+    end
   end
 
   describe ".find_by_slug!" do
@@ -52,7 +57,7 @@ RSpec.describe FABS::Page, type: :model do
     end
   end
 
-  def page_entry(id: "page-id", title: "Dynamic purchasing systems", body: "Page body", description: "Page description", slug: "dynamic-purchasing-systems", related_content: [related_content_entry], parent: nil)
+  def page_entry(id: "page-id", title: "Dynamic purchasing systems", body: "Page body", description: "Page description", slug: "dynamic-purchasing-systems", related_content: [related_content_entry], parent: nil, attachments: [attachment_entry])
     OpenStruct.new(
       id:,
       fields: {
@@ -62,6 +67,21 @@ RSpec.describe FABS::Page, type: :model do
         slug:,
         related_content:,
         parent:,
+        attachments:,
+      },
+    )
+  end
+
+  def attachment_entry
+    OpenStruct.new(
+      fields: {
+        page_count: "3",
+        attachment: OpenStruct.new(
+          title: "Guide",
+          description: nil,
+          url: "//assets.ctfassets.net/guide.pdf",
+          file: OpenStruct.new(file_name: "guide.pdf", details: { "size" => 1024 }),
+        ),
       },
     )
   end

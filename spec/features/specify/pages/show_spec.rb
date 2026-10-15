@@ -11,6 +11,7 @@ RSpec.feature "Showing a Page" do
       related_content:,
       parent: nil,
       slug: "test-page",
+      attachments: [],
     )
   end
 
