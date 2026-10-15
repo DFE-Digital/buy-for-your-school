@@ -67,4 +67,4 @@
 <p><%= I18n.t("energy.letter_of_authorisation.signed.signed_by_school", school_name: @organisation.name) %></p>
 <p><%= @support_case.case_creator_full_name %> - <%= Date.current.strftime("%d/%m/%Y") %> </p>
 <p><%= I18n.t("energy.letter_of_authorisation.signed.signed_by_dfe") %></p>
-<p><%= I18n.t("energy.letter_of_authorisation.signed.signed_by_dfe_user") %></p>
+<p><%= Energy::DfeContact::FULL_NAME %></p>

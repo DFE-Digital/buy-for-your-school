@@ -62,8 +62,8 @@ module Energy
 
       def key_business_information
         {
-          "Key Business Contact Full Name" => "Annette Harrison",
-          "Key Business Contact Email" => "annette.harrison@education.gov.uk",
+          "Key Business Contact Full Name" => Energy::DfeContact::FULL_NAME,
+          "Key Business Contact Email" => Energy::DfeContact::EMAIL,
           "Company Registered Address Line 1" => CUSTOMER_NAME,
           "Company Registered Address Line 2" => "#{CUSTOMER_ADDRESS_LINE1}, #{CUSTOMER_ADDRESS_LINE2}",
           "Customer Registered City/Town" => CUSTOMER_ADDRESS_CITY,
