@@ -6,7 +6,8 @@ module MarkdownHelper
   # Link text wrapped in "==" renders as a GOV.UK button:
   #   "[==Start now==>](/url)" - start button with an arrow icon
   #   "[==Contact us==](/url)" - standard button without an arrow icon
-  CTA_BUTTON_PATTERN = /\A==(.+?)==\s*(>)?\z/m
+  #   "[==Continue==post](/url)" - standard button that submits a POST request to the url
+  CTA_BUTTON_PATTERN = /\A==(.+?)==\s*(>|post)?\z/m
 
   def render_markdown_to_html(markdown_content)
     return "" if markdown_content.blank?
@@ -36,13 +37,22 @@ module MarkdownHelper
 
       text = match[1].strip
       html_attributes = link.attributes.slice("target", "rel").transform_values(&:value)
-      button = if match[2]
+      button = case match[2]
+               when "post"
+                 govuk_button_to(text, link["href"])
+               when ">"
                  govuk_start_button(text:, href: link["href"], html_attributes:)
                else
                  govuk_button_link_to(text, link["href"], **html_attributes.symbolize_keys)
                end
 
-      link.replace(button.to_s)
+      # A <form> can't be nested in a <p>, so replace the wrapping paragraph when the button is its only content
+      parent = link.parent
+      if match[2] == "post" && parent&.name == "p" && parent.text.strip == link.text.strip
+        parent.replace(button.to_s)
+      else
+        link.replace(button.to_s)
+      end
     end
 
     doc = update_class(doc, "a[href]:not(.govuk-button)", "govuk-link")

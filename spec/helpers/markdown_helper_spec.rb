@@ -46,6 +46,19 @@ RSpec.describe MarkdownHelper, type: :helper do
       expect(html).not_to include("==")
     end
 
+    it "renders links wrapped in == with a trailing post as GOV.UK buttons that submit a POST request" do
+      markdown = "[==Continue==post](/auth/dfe)"
+      html = helper.render_markdown_to_html(markdown)
+      fragment = Nokogiri::HTML.fragment(html)
+      form = fragment.at_css("form")
+      expect(form["action"]).to eq("/auth/dfe")
+      expect(form["method"]).to eq("post")
+      expect(form.at_css("button.govuk-button").text.strip).to eq("Continue")
+      expect(fragment.at_css("p form")).to be_nil
+      expect(fragment.at_css("a")).to be_nil
+      expect(html).not_to include("==")
+    end
+
     it "add the correct css class for h2 and paragraph tags" do
       markdown = "## This a heading\nThis is a random paragraph"
       html = helper.render_markdown_to_html(markdown)

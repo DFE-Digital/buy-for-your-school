@@ -501,10 +501,8 @@ Rails.application.routes.draw do
 
   # Energy
   # Pre-sign-in
-  get "/energy/start", to: "energy/onboarding#start", as: "energy_start"
-  get "/energy/guidance", to: "energy/onboarding#guidance", as: "energy_guidance"
   get "/energy/onboarding/guidance", to: redirect("/energy/guidance")
-  get "/energy/before-you-start", to: "energy/onboarding#before_you_start", as: "energy_before_you_start"
+
   scope "/energy/register-your-interest", module: "energy/register_your_interests", as: "energy_register_your_interest" do
     get "/", to: "names#index", as: ""
     post "/", to: "names#create"
