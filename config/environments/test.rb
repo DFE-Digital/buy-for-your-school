@@ -53,9 +53,6 @@ Rails.application.configure do
   # Don't reload translations from Contentful
   config.x.public_frontend_contentful_enabled = false
 
-  # TODO: maybe remove this if the test suite passes without it
-  # config.flipper.memoize = false
-
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
 end
