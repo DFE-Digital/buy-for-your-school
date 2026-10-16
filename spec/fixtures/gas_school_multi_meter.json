@@ -1,0 +1,76 @@
+{
+  "contacts": [
+    {
+      "Contact Email Address": "multi-meter@example.test",
+      "schools": [
+        {
+          "School Name": "Example multi-meter School",
+          "School URN": 100002,
+          "School Postcode": "AA1 1AA",
+          "Trust Name": "Example Trust",
+          "Contact Telephone Number": null,
+          "meters": [
+            {
+              "mprn": "0000000000",
+              "Non-COG Unit rate (p/kWh)": 0.1148,
+              "Daily Charge (£/day)": 16.2443,
+              "April Monthly COG (p/kWh)": 2.8685,
+              "April Total Unit Rate (p/kWh)": 2.9833,
+              "May Monthly COG (p/kWh)": 2.9251,
+              "May Total Unit Rate (p/kWh)": 3.0399,
+              "June Monthly COG (p/kWh)": 3.2416,
+              "June Total Unit Rate (p/kWh)": 3.3564,
+              "July Monthly COG (p/kWh)": 3.1597,
+              "July Total Unit Rate (p/kWh)": 3.2745,
+              "August Monthly COG (p/kWh)": 3.1376,
+              "August Total Unit Rate (p/kWh)": 3.2524,
+              "September Monthly COG (p/kWh)": 3.2844,
+              "September Total Unit Rate (p/kWh)": 3.3992,
+              "October Monthly COG (p/kWh)": 3.3805,
+              "October Total Unit Rate (p/kWh)": 3.4953,
+              "November Monthly COG (p/kWh)": 3.6117,
+              "November Total Unit Rate (p/kWh)": 3.7265,
+              "December Monthly COG (p/kWh)": 3.6918,
+              "December Total Unit Rate (p/kWh)": 3.8066,
+              "January Monthly COG (p/kWh)": 3.7079,
+              "January Total Unit Rate (p/kWh)": 3.8227,
+              "February Monthly COG (p/kWh)": 3.6721,
+              "February Total Unit Rate (p/kWh)": 3.7869,
+              "March Monthly COG (p/kWh)": 3.5092,
+              "March Total Unit Rate (p/kWh)": 3.624
+            },
+            {
+              "mprn": "0000000000",
+              "Non-COG Unit rate (p/kWh)": 0.1148,
+              "Daily Charge (£/day)": 15.6826,
+              "April Monthly COG (p/kWh)": 2.8685,
+              "April Total Unit Rate (p/kWh)": 2.9833,
+              "May Monthly COG (p/kWh)": 2.9251,
+              "May Total Unit Rate (p/kWh)": 3.0399,
+              "June Monthly COG (p/kWh)": 3.2416,
+              "June Total Unit Rate (p/kWh)": 3.3564,
+              "July Monthly COG (p/kWh)": 3.1597,
+              "July Total Unit Rate (p/kWh)": 3.2745,
+              "August Monthly COG (p/kWh)": 3.1376,
+              "August Total Unit Rate (p/kWh)": 3.2524,
+              "September Monthly COG (p/kWh)": 3.2844,
+              "September Total Unit Rate (p/kWh)": 3.3992,
+              "October Monthly COG (p/kWh)": 3.3805,
+              "October Total Unit Rate (p/kWh)": 3.4953,
+              "November Monthly COG (p/kWh)": 3.6117,
+              "November Total Unit Rate (p/kWh)": 3.7265,
+              "December Monthly COG (p/kWh)": 3.6918,
+              "December Total Unit Rate (p/kWh)": 3.8066,
+              "January Monthly COG (p/kWh)": 3.7079,
+              "January Total Unit Rate (p/kWh)": 3.8227,
+              "February Monthly COG (p/kWh)": 3.6721,
+              "February Total Unit Rate (p/kWh)": 3.7869,
+              "March Monthly COG (p/kWh)": 3.5092,
+              "March Total Unit Rate (p/kWh)": 3.624
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
