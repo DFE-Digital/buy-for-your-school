@@ -34,11 +34,6 @@
 
     <h3 class="govuk-heading-s"><%= I18n.t("energy.guidance.start_date.title") %></h3>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.start_date.body")) %>
-    <%= render TableComponent.new(
-      headings: I18n.t("energy.guidance.start_date.table.headings"),
-      rows: I18n.t("energy.guidance.start_date.table.rows"),
-    ) %>
-    <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.start_date.body2")) %>
 
     <h3 class="govuk-heading-s"><%= I18n.t("energy.guidance.interim_rate.title") %></h3>
     <%= render ParagraphComponent.new(text: I18n.t("energy.guidance.interim_rate.body")) %>
