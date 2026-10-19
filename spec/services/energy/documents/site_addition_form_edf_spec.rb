@@ -103,7 +103,7 @@ RSpec.describe Energy::Documents::SiteAdditionFormEdf, type: :model do
       end
 
       aggregate_failures "key business contact details" do
-        expect(row[22].value).to eq("Annette Harrison")
+        expect(row[22].value).to eq(Energy::DfeContact::FULL_NAME)
         expect(row[24].value).to eq("Department for Education")
         expect(row[27].value).to eq("SW1P 3BT")
       end

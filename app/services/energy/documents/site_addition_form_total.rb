@@ -52,17 +52,17 @@ module Energy
 
       def main_contact_details
         {
-          "Contact Title" => "Mrs",
-          "*Contact First Name" => "Annette",
-          "*Contact Surname" => "Harrison",
+          "Contact Title" => Energy::DfeContact::TITLE,
+          "*Contact First Name" => Energy::DfeContact::FIRST_NAME,
+          "*Contact Surname" => Energy::DfeContact::LAST_NAME,
           "*Contact Address Line 1" => CUSTOMER_NAME,
           "*Contact Address Line 2" => "2 St Paul's Place",
           "Contact Address Line 3" => "125 Norfolk Street",
           "Contact Address Line 4" => "Sheffield",
           "*Contact Postcode" => "S1 2JF",
-          "*Contact phone" => "07530050691",
+          "*Contact phone" => Energy::DfeContact::PHONE,
           "Contact Fax" => "n/a",
-          "*Contact Email" => "annette.harrison@education.gov.uk",
+          "*Contact Email" => Energy::DfeContact::EMAIL,
         }
       end
 
