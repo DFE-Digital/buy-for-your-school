@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_29_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_07_120000) do
   create_sequence "evaluation_refs"
   create_sequence "framework_refs"
 
@@ -316,6 +316,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_29_120000) do
     t.boolean "switch_gas"
     t.string "ukprn"
     t.datetime "updated_at", null: false
+    t.bigint "zendesk_ticket_id"
   end
 
   create_table "engagement_case_uploads", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
