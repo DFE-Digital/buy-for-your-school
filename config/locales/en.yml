@@ -425,23 +425,13 @@ en:
         - To get an estimate of prices, email <a class="govuk-link" href="mailto:%{email}">%{email}</a> and request DfE’s benchmarking service. We’ll provide a price comparison based on your energy bills from the last financial year.
         - This is a rolling contract, meaning your school will remain on V30 until you give notice to exit. 30 months' notice is required.
       start_date:
-        title: Start date
+        title: Application deadline
         body:
-        - New customers are added to the V30 basket every April, although you can join at any time. Your application date and current contract's expiry date will determine which year you'll join V30, and whether you'll be placed on an interim rate contract.
-        table:
-          headings:
-          - Application deadline
-          - V30 start dates
-          rows:
-            -
-              - 12pm, 6 November 2026
-              - 1 April 2027
-            -
-              - September 2027
-              - 1 April 2028
-        body2:
+        - New customers are added to the V30 basket every April, although you can sign up at any time. Your application date and current contract's expiry date will determine which year you'll join V30, and whether you'll be placed on an interim rate contract.
+        - The deadline to join the April 2027 basket is 6 November 2026. However, DfE <strong>strongly recommends</strong> you submit all necessary information <strong>before 26 October 2026</strong> to allow enough time to review and clarify information before sending documents to suppliers.
+        - We'll do our best to process information submitted after 26 October 2026. If there are any issues with the information, you may not be included in the April 2027 basket.
         - Check your current contract's termination terms and notice period. You'll need to serve out your notice period and inform your supplier if you join Energy for Schools. DfE cannot do this for you.
-        - If your school’s energy contract is already through GCA, DfE will transfer (novate) you onto the new account. In this instance, you’ll not need to give notice to your current supplier.
+        - If your school's energy contract is already through GCA, DfE will transfer (novate) you onto the new account. In this instance, you'll not need to give notice to your current supplier.
       interim_rate:
         title: Interim rate
         body:
