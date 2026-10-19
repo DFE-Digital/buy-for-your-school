@@ -230,6 +230,21 @@ en:
             support_email_templates_id:
               blank: Select any one email template
           invalid_email_ids: Please enter valid email addresses separated by semicolons
+        energy/register_your_interest:
+          attributes:
+            name:
+              blank: Enter your name
+            email:
+              blank: Enter your email address
+            phone_number:
+              blank: Enter your contact telephone number
+              invalid: Enter a telephone number, like 07155487611
+            mat_uid:
+              blank: Select a multi-academy trust
+            switch_gas:
+              inclusion: Choose whether you want to switch gas or not
+            switch_electricity:
+              inclusion: Choose whether you want to switch electricity or not
 
   request:
     rules:

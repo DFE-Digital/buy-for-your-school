@@ -89,6 +89,20 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe "#register_your_interest_form_url" do
+    it "uses the in-app journey when the feature flag is enabled" do
+      allow(Flipper).to receive(:enabled?).with(:register_your_interest).and_return(true)
+
+      expect(helper.register_your_interest_form_url).to eq(energy_register_your_interest_path)
+    end
+
+    it "uses the external form when the feature flag is disabled" do
+      allow(Flipper).to receive(:enabled?).with(:register_your_interest).and_return(false)
+
+      expect(helper.register_your_interest_form_url).to eq("https://submit.forms.service.gov.uk/form/8895/multi-academy-trusts-register-your-interest-in-energy-for-schools/1049539")
+    end
+  end
+
   describe "#usability_survey_url" do
     before do
       allow(UrlVerifier).to receive(:generate).and_return("signed-return-url")
