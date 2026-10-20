@@ -1,0 +1,20 @@
+<% if solution.use_this_when.present? %>
+  <p class="govuk-body-m chevron-card__description govuk-!-margin-top-2">
+    <strong><%= t(".use_this_when") %></strong> <%= solution.use_this_when %>
+  </p>
+<% end %>
+<% if solution.includes.present? %>
+  <p class="govuk-body-m chevron-card__description govuk-!-margin-top-2">
+    <strong><%= t(".includes") %></strong> <%= solution.includes %>
+  </p>
+<% end %>
+<% if solution.how_to_buy.present? %>
+  <p class="govuk-body-m chevron-card__description govuk-!-margin-top-2">
+    <strong><%= t(".how_to_buy") %></strong> <%= solution.how_to_buy %>
+  </p>
+<% end %>
+<% if solution.provider_name.present? %>
+  <p class="govuk-body-m govuk-secondary-text-colour govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+    <%= t(".provider") %> <%= solution.provider_name %>
+  </p>
+<% end %>
