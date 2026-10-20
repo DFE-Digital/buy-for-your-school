@@ -3043,6 +3043,11 @@ en:
   service:
     name: Get help buying for schools
   shared:
+    card:
+      how_to_buy: "How to buy:"
+      includes: "Includes:"
+      provider: "Provider:"
+      use_this_when: "Use this when:"
     dfe_footer:
       accessibility: Accessibility
       cookies: Cookies
