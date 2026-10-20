@@ -6,7 +6,7 @@ module FeatureFlagTracking
   # Keep this list limited to flags which represent experiments. Operational
   # flags can contain implementation details and should not be sent to
   # analytics as experiment cohorts.
-  EXPERIMENT_FLAGS = %i[homepage_rfh_button category-catering].freeze
+  EXPERIMENT_FLAGS = %i[category-catering category-ict-business-systems].freeze
   ANONYMOUS_ACTOR_SESSION_KEY = :feature_flag_actor_id
 
   included do

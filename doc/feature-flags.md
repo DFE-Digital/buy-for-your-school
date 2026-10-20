@@ -54,7 +54,7 @@ For example, `homepage_rfh_button` controls the RFH button on the homepage. When
 |auto_send_siteAdditions_power|Site addition and portal access forms email goes to electric supplier (EDF)|DISABLED|DO NOT ENABLE
 |auto_email_vat_dd|when enabled, auto email sending of emails regarding DD/VAT|
 |customer_satisfaction_survey|Replace the exit survey with the new customer satisfaction survey.|ENABLED|Feature now live, flag to be removed|
-|homepage_rfh_button|A/B test for displaying the RFH button on the homepage.|50% of actors|Use **Enable for % of actors** in Flipper and set to 50%|
+|category-catering|A/B test for displaying the category landing page (or any page with category-category-slug) with new solution card view |50% of actors|Use **Enable for % of actors** in Flipper and set to 50%|
 |maintenance_mode|Prevent user access to the application. Intended for infrastructure or data maintenance.|DISABLED|To be enabled when required|
 |rfh_usability_survey|Embed the RfH usability survey in the RfH submission confirmation page.|ENABLED|Feature now live, flag to be removed|
 |sc_tasklist_case|The task list tab for a case at level 4 or 5 will be visible, and the 'case action_required' flag will be updated based on the evaluation document upload status and the evaluation approval status. |ENABLED in development, DISABLED in production|To be enabled when all components of the task list are ready|
