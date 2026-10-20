@@ -19,6 +19,9 @@ class Solution
   FIELD_PRIMARY_CATEGORY = "fields.primary_category".freeze
   FIELD_WAYS_TO_BUY = "fields.ways_to_buy".freeze
   FIELD_SEO_DESCRIPTION = "fields.seo_description".freeze
+  FIELD_USE_THIS_WHEN = "fields.use_this_when".freeze
+  FIELD_INCLUDES = "fields.includes".freeze
+  FIELD_HOW_TO_BUY = "fields.how_to_buy".freeze
 
   SELECT_FIELDS = [
     SYS_ID,
@@ -38,6 +41,9 @@ class Solution
     FIELD_PRIMARY_CATEGORY,
     FIELD_WAYS_TO_BUY,
     FIELD_SEO_DESCRIPTION,
+    FIELD_USE_THIS_WHEN,
+    FIELD_INCLUDES,
+    FIELD_HOW_TO_BUY,
   ].join(",").freeze
 
   LIST_SELECT_FIELDS = [
@@ -58,6 +64,9 @@ class Solution
     FIELD_PRIMARY_CATEGORY,
     FIELD_WAYS_TO_BUY,
     FIELD_SEO_DESCRIPTION,
+    FIELD_USE_THIS_WHEN,
+    FIELD_INCLUDES,
+    FIELD_HOW_TO_BUY,
   ].join(",").freeze
 
   SEARCH_SELECT_FIELDS = [
@@ -79,7 +88,8 @@ class Solution
               :slug, :provider_name, :provider_initials, :url,
               :categories, :subcategories, :suffix, :call_to_action,
               :primary_category, :buying_option_type, :provider_reference,
-              :ways_to_buy, :seo_description, :updated_at
+              :ways_to_buy, :seo_description, :use_this_when, :includes,
+              :how_to_buy, :updated_at
 
   delegate :slug, to: :primary_category, prefix: true, allow_nil: true
 
@@ -102,6 +112,9 @@ class Solution
     @provider_reference = entry.fields[:provider_reference]
     @ways_to_buy = entry.fields[:ways_to_buy]
     @seo_description = entry.fields[:seo_description]
+    @use_this_when = entry.fields[:use_this_when]
+    @includes = entry.fields[:includes]
+    @how_to_buy = entry.fields[:how_to_buy]
     @updated_at = entry.updated_at
     super
   end

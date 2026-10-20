@@ -15,6 +15,9 @@ RSpec.describe Solution, type: :model do
         provider_initials: "PR",
         suffix: "Suffix",
         primary_category: instance_double(FABS::Category),
+        use_this_when: "you run your own kitchen",
+        includes: "fruit, vegetables, meat and dairy products",
+        how_to_buy: "framework - either direct award or further competition",
       )
     end
 
@@ -27,6 +30,9 @@ RSpec.describe Solution, type: :model do
         slug: be_present,
         suffix: be_present,
         provider_name: be_present,
+        use_this_when: "you run your own kitchen",
+        includes: "fruit, vegetables, meat and dairy products",
+        how_to_buy: "framework - either direct award or further competition",
       )
     end
   end
@@ -250,7 +256,7 @@ RSpec.describe Solution, type: :model do
     end
   end
 
-  def contentful_entry(id:, title:, slug:, primary_category:, description: "Description", summary: "Summary", provider_name: "Provider", provider_initials: "PI", url: "https://example.com", expiry: nil, suffix: nil, call_to_action: nil, categories: [], subcategories: [], buying_option_type: nil, provider_reference: nil)
+  def contentful_entry(id:, title:, slug:, primary_category:, description: "Description", summary: "Summary", provider_name: "Provider", provider_initials: "PI", url: "https://example.com", expiry: nil, suffix: nil, call_to_action: nil, categories: [], subcategories: [], buying_option_type: nil, provider_reference: nil, use_this_when: nil, includes: nil, how_to_buy: nil)
     OpenStruct.new(
       id:,
       sys: { id: },
@@ -270,6 +276,9 @@ RSpec.describe Solution, type: :model do
         primary_category:,
         buying_option_type:,
         provider_reference:,
+        use_this_when:,
+        includes:,
+        how_to_buy:,
       },
     )
   end
