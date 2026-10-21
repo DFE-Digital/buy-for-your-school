@@ -177,6 +177,6 @@ module ApplicationHelper
   end
 
   def page_useful?
-    %w[categories solutions pages onboarding framework_requests].include? controller_name
+    %w[categories solutions pages onboarding framework_requests errors].include? controller_name
   end
 end
