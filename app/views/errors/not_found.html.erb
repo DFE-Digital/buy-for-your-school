@@ -3,14 +3,13 @@
 <div class="dfe-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
+      <%= govuk_back_link(href: @page_back_link) %>
       <h1 class="govuk-heading-xl">
         <%= t("errors.not_found.page_title") %>
       </h1>
-
       <% t("errors.not_found.page_body").each do |text| %>
-        <p class="govuk-body"><%= text %></p>
+        <p class="govuk-body"><%= text.html_safe %></p>
       <% end %>
-
       <p class="govuk-body">
         <%= govuk_link_to t("errors.go_home"), "/", no_visited_state: true %>
       </p>

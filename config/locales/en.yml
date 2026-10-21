@@ -894,7 +894,10 @@ en:
     go_home: Visit Get Help Buying Home page
     internal_server_error:
       page_title: Sorry, there is a problem with the service
-      page_body: Try again later.
+      page_body: 
+      - Try again later. 
+      - If you were filling in a request for help, we have not saved your answers. When the service is available, you will have to start again.
+      - 'If you need to tell us about a problem or it is urgent, email <a href="mailto:ghbs.website@education.gov.uk">ghbs.website@education.gov.uk</a>.'
     missing_role:
       page_body: You do not have the required role to access this page.
       page_title: Missing user role
@@ -902,6 +905,7 @@ en:
       page_body:
         - If you entered a web address, check it is correct.
         - If you pasted the web address, check you copied the entire address.
+        - 'If you selected a link or button and the page is missing, email <a href="mailto:ghbs.website@education.gov.uk">ghbs.website@education.gov.uk</a>.'
       page_title: Page not found
     repeat_step_in_the_contentful_journey:
       page_body: 'One or more steps in the Contentful journey would leave the user in an infinite loop. This entry ID was presented more than once to the user: %{entry_id}'
@@ -933,7 +937,7 @@ en:
       page_body: The service has had a problem trying to retrieve a working Specification template. The team have been notified of this problem and you should be able to retry shortly.
       page_title: An unexpected error occurred
     unacceptable:
-      page_body: There was a problem with your request.
+      page_body: The request could not be processed.
       page_title: Unacceptable request
     unexpected_contentful_model:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
