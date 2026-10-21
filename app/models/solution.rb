@@ -118,17 +118,7 @@ class Solution
   end
 
   def self.search(query: "")
-    if Flipper.enabled?(:azure_ai_search)
-      AzureAiSearch::SolutionSearcher.new(query:).search
-    elsif ENV.fetch("USE_OPENSEARCH", "false") == "true"
-      SolutionSearcher.new(query:).search
-    else
-      ContentfulClient.entries(
-        content_type: CONTENT_TYPE,
-        query:,
-        select: SEARCH_SELECT_FIELDS,
-      ).map { |entry| new(entry) }
-    end
+    AzureAiSearch::SolutionSearcher.new(query:).search
   end
 
   def self.find_by_slug!(slug)
