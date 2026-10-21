@@ -1,11 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "FABS search", type: :request do
-  before do
-    allow(ENV).to receive(:fetch).and_call_original
-    allow(ENV).to receive(:fetch).with("USE_OPENSEARCH", "false").and_return("false")
-  end
-
   let(:category) { instance_double(FABS::Category, title: "Catering", description: "Buy catering services", slug: "catering", to_param: "catering") }
   let(:solution) do
     instance_double(
@@ -33,11 +28,9 @@ RSpec.describe "FABS search", type: :request do
     expect(response.body).to include("Catering")
   end
 
-  it "uses azure search when the feature flag is enabled" do
+  it "uses azure search" do
     azure_searcher = instance_double(AzureAiSearch::SolutionSearcher, search: [solution])
 
-    allow(Flipper).to receive(:enabled?).and_return(false)
-    allow(Flipper).to receive(:enabled?).with(:azure_ai_search).and_return(true)
     allow(AzureAiSearch::SolutionSearcher).to receive(:new).with(query: "catering").and_return(azure_searcher)
     allow(FABS::Category).to receive(:search).with(query: "catering").and_return([category])
 

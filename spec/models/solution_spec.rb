@@ -97,12 +97,12 @@ RSpec.describe Solution, type: :model do
     subject(:search) { described_class.search(query:) }
 
     before do
-      allow(ENV).to receive(:fetch).and_call_original
-      allow(ENV).to receive(:fetch).with("USE_OPENSEARCH", "false").and_return("false")
-      allow(ContentfulClient).to receive(:entries).and_return([entry])
+      allow(AzureAiSearch::SolutionSearcher).to receive(:new).with(query:).and_return(searcher)
     end
 
     let(:query) { "technology" }
+    let(:searcher) { instance_double(AzureAiSearch::SolutionSearcher, search: [solution]) }
+    let(:solution) { described_class.new(entry) }
     let(:entry) do
       contentful_entry(
         id: "solution-search",
@@ -114,7 +114,7 @@ RSpec.describe Solution, type: :model do
       )
     end
 
-    it "returns solutions matching the query" do
+    it "searches Azure AI Search with the query and returns its matching solutions" do
       expect(search).to all(be_a(described_class))
       expect(search.first).to have_attributes(
         id: be_present,

@@ -23,20 +23,19 @@ RSpec.describe "Contentful webhooks", type: :request do
     }
   end
   let(:content_type) { "solution" }
-  let(:indexer) { instance_double(SolutionIndexer) }
   let(:azure_indexer) { instance_double(AzureAiSearch::SolutionIndexer) }
 
   before do
     allow(ENV).to receive(:fetch).and_call_original
     allow(ENV).to receive(:fetch).with("CONTENTFUL_WEBHOOK_SECRET").and_return(secret)
-    allow(SolutionIndexer).to receive(:new).with(id: entity_id).and_return(indexer)
+    allow(AzureAiSearch::SolutionIndexer).to receive(:new).and_return(azure_indexer)
     allow(RedirectMatcher).to receive(:invalidate_cache!)
   end
 
   describe "POST /contentful_webhooks" do
     context "when publishing a solution" do
       it "returns success when indexing succeeds" do
-        allow(indexer).to receive(:index_document).and_return(true)
+        allow(azure_indexer).to receive(:index_document).with(entity_id).and_return(true)
 
         post(contentful_webhooks_path, params: payload, headers: headers.merge("Accept" => "application/json"))
 
@@ -45,30 +44,12 @@ RSpec.describe "Contentful webhooks", type: :request do
       end
 
       it "returns unprocessable_content when indexing fails" do
-        allow(indexer).to receive(:index_document).and_return(false)
+        allow(azure_indexer).to receive(:index_document).with(entity_id).and_return(false)
 
         post(contentful_webhooks_path, params: payload, headers:)
 
         expect(response.status).to eq(422)
         expect(JSON.parse(response.body)).to eq("error" => "Failed to index the document for id #{entity_id}.")
-      end
-
-      context "when Azure AI Search is enabled" do
-        before do
-          allow(Flipper).to receive(:enabled?).and_return(false)
-          allow(Flipper).to receive(:enabled?).with(:azure_ai_search).and_return(true)
-          allow(AzureAiSearch::SolutionIndexer).to receive(:new).and_return(azure_indexer)
-        end
-
-        it "indexes the document through Azure AI Search" do
-          allow(azure_indexer).to receive(:index_document).with(entity_id).and_return(true)
-
-          post(contentful_webhooks_path, params: payload, headers:)
-
-          expect(response).to have_http_status(:ok)
-          expect(JSON.parse(response.body)).to eq("message" => "Webhook for entry #{entity_id} processed successfully.")
-          expect(azure_indexer).to have_received(:index_document).with(entity_id)
-        end
       end
     end
 
@@ -76,7 +57,7 @@ RSpec.describe "Contentful webhooks", type: :request do
       let(:topic) { "ContentManagement.Entry.delete" }
 
       it "returns success when deletion succeeds" do
-        allow(indexer).to receive(:delete_document).and_return(true)
+        allow(azure_indexer).to receive(:delete_document).with(entity_id).and_return(true)
 
         post(contentful_webhooks_path, params: payload, headers:)
 
@@ -85,30 +66,12 @@ RSpec.describe "Contentful webhooks", type: :request do
       end
 
       it "returns unprocessable_content when deletion fails" do
-        allow(indexer).to receive(:delete_document).and_return(false)
+        allow(azure_indexer).to receive(:delete_document).with(entity_id).and_return(false)
 
         post(contentful_webhooks_path, params: payload, headers:)
 
         expect(response.status).to eq(422)
         expect(JSON.parse(response.body)).to eq("error" => "Failed to delete the document for id #{entity_id}.")
-      end
-
-      context "when Azure AI Search is enabled" do
-        before do
-          allow(Flipper).to receive(:enabled?).and_return(false)
-          allow(Flipper).to receive(:enabled?).with(:azure_ai_search).and_return(true)
-          allow(AzureAiSearch::SolutionIndexer).to receive(:new).and_return(azure_indexer)
-        end
-
-        it "deletes the document through Azure AI Search" do
-          allow(azure_indexer).to receive(:delete_document).with(entity_id).and_return(true)
-
-          post(contentful_webhooks_path, params: payload, headers:)
-
-          expect(response).to have_http_status(:ok)
-          expect(JSON.parse(response.body)).to eq("message" => "Webhook for entry #{entity_id} deletion processed successfully.")
-          expect(azure_indexer).to have_received(:delete_document).with(entity_id)
-        end
       end
     end
 
