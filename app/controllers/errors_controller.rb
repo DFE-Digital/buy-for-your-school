@@ -1,4 +1,7 @@
 class ErrorsController < ApplicationController
+  layout "homepage"
+
+  before_action :set_back_link
   skip_before_action :authenticate_user!
 
   def internal_server_error
@@ -23,5 +26,11 @@ class ErrorsController < ApplicationController
     render "errors/unacceptable",
            formats: [:html],
            status: :unprocessable_entity
+  end
+
+private
+
+  def set_back_link
+    @page_back_link = request.referer || root_path
   end
 end

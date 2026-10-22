@@ -3,12 +3,13 @@
 <div class="dfe-width-container">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
+      <%= govuk_back_link(href: @page_back_link) %>
       <h1 class="govuk-heading-xl">
         <%= t("errors.internal_server_error.page_title") %>
       </h1>
-      <p class="govuk-body">
-        <%= t("errors.internal_server_error.page_body") %>
-      </p>
+      <% t("errors.internal_server_error.page_body").each do |text| %>
+        <p class="govuk-body"><%= text.html_safe %></p>
+      <% end %>
     </div>
   </div>
 </div>
