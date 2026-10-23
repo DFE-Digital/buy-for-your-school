@@ -18,7 +18,12 @@ module Energy
       validate_input!
     end
 
-    delegate :call, to: :notify_email
+    def call
+      attachment_path = Documents::GasPriceChangeForecast.new(school: @school, month: @month).call
+      notify_email(attachment_path:).call
+    ensure
+      File.delete(attachment_path) if attachment_path && File.exist?(attachment_path)
+    end
 
     def template_id
       if meters.one?
@@ -50,11 +55,12 @@ module Energy
 
   private
 
-    def notify_email
-      @notify_email ||= Notify::Email.new(
+    def notify_email(attachment_path:)
+      Notify::Email.new(
         recipient: RECIPIENT.new(@contact.fetch("Contact Email Address"), nil, nil),
         template: template_id,
         variables: personalisation,
+        attachment: attachment_path.to_s,
         client: @client || Notifications::Client.new(ENV["NOTIFY_API_KEY"]),
       )
     end
