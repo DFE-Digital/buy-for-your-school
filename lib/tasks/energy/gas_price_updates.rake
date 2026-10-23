@@ -8,6 +8,7 @@ namespace :energy do
 
     pricing_data = JSON.parse(File.read(input_file))
     schools_count = 0
+    puts "Starting gas price update emails from #{input_file}"
 
     pricing_data.fetch("contacts").each do |contact|
       contact.fetch("schools").each do |school|
