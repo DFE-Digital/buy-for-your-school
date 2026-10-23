@@ -1,0 +1,13 @@
+<% content_for :page_title, "Gas price update PDF previews" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Gas price update PDF previews</h1>
+    <p class="govuk-body">Temporary previews rendered from the sample pricing fixtures.</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= link_to "Single-meter PDF (A4 landscape)", energy_gas_price_update_preview_single_meter_path, target: "_blank", rel: "noopener" %></li>
+      <li><%= link_to "Multi-meter PDF (A4 portrait)", energy_gas_price_update_preview_multi_meter_path, target: "_blank", rel: "noopener" %></li>
+      <li><%= link_to "Nine-meter PDF (A4 portrait)", energy_gas_price_update_preview_nine_meters_path, target: "_blank", rel: "noopener" %></li>
+    </ul>
+  </div>
+</div>
