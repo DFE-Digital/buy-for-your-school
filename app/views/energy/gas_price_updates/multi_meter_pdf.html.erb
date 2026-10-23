@@ -1,0 +1,76 @@
+<header class="masthead">
+  <div class="dfe-mark">
+    <div class="dfe-crest">
+      <img src="<%= @logo_data_uri %>" alt="">
+    </div>
+    <strong><%= t("energy.gas_price_update.dfe_html") %></strong>
+  </div>
+  <h1><%= t("energy.gas_price_update.multi.title_html") %></h1>
+</header>
+
+<div class="pdf-content">
+  <h2 class="school-name"><%= @school.fetch("School Name") %></h2>
+  <p class="school-address"><%= @school.fetch("School Postcode") %></p>
+
+  <section>
+    <h2><%= t("energy.gas_price_update.multi.breakdown_title", month: @month) %></h2>
+    <p class="intro"><%= t("energy.gas_price_update.multi.breakdown_intro") %></p>
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th><%= t("energy.gas_price_update.table.meter_number_html") %></th>
+          <th><%= t("energy.gas_price_update.table.estimated_usage_html") %></th>
+          <th><%= t("energy.gas_price_update.table.daily_charge_html") %></th>
+          <th><%= t("energy.gas_price_update.table.non_cost_of_gas_html") %></th>
+          <th><%= t("energy.gas_price_update.table.month_cost_of_gas_html", month: @month) %></th>
+          <th><%= t("energy.gas_price_update.table.month_unit_rate_html", month: @month) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @meters.each do |meter| %>
+          <tr>
+            <td><%= meter.fetch("mprn") %></td>
+            <td>—</td>
+            <td>£<%= Energy::GasPriceFormatting.format(meter.fetch("Daily Charge (£/day)")) %></td>
+            <td><%= Energy::GasPriceFormatting.format(meter.fetch("Non-COG Unit rate (p/kWh)")) %>p</td>
+            <td><%= Energy::GasPriceFormatting.format(meter.fetch("#{@month} Monthly COG (p/kWh)")) %>p</td>
+            <td><%= Energy::GasPriceFormatting.format(meter.fetch("#{@month} Total Unit Rate (p/kWh)")) %>p</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="forecast-section">
+    <h2><%= t("energy.gas_price_update.multi.forecast_title") %></h2>
+    <p class="intro"><%= t("energy.gas_price_update.multi.forecast_intro") %></p>
+    <table class="forecast-table">
+      <thead>
+        <tr class="meter">
+          <th><%= t("energy.gas_price_update.table.meter") %></th>
+          <% @meters.each do |meter| %>
+            <th class="meter-group" colspan="2"><%= meter.fetch("mprn") %></th>
+          <% end %>
+        </tr>
+        <tr class="heading">
+          <th/>
+          <% @meters.each do |_meter| %>
+            <th class="meter-group"><div class="short-border"><%= t("energy.gas_price_update.table.cost_of_gas_html") %></div></th>
+            <th class="total"><%= t("energy.gas_price_update.table.total_html") %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @forecast_months.each do |month| %>
+          <tr>
+            <td class="month"><%= month %></td>
+            <% @meters.each do |meter| %>
+              <td class="cog"><%= Energy::GasPriceFormatting.format(meter.fetch("#{month} Monthly COG (p/kWh)")) %>p</td>
+              <td class="rate"><%= Energy::GasPriceFormatting.format(meter.fetch("#{month} Total Unit Rate (p/kWh)")) %>p</td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </section>
+</div>

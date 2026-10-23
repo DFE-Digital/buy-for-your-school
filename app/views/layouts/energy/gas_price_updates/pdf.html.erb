@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      @page { size: A4 <%= @single_meter ? "landscape" : "portrait" %>; margin: 0; }
+      * { box-sizing: border-box; }
+      body { margin: 0; color: #0b0c0c; font-family: Arial, sans-serif; }
+      .masthead { background: #f3f6f9; padding: 12mm 17mm; height: 77mm; }
+      .dfe-mark { display: inline-block; border-left: 1mm solid #1d70b8; padding-left: 3mm; min-height: 27mm; }
+      .dfe-crest { position: relative; overflow: hidden; width: 17.5mm; height: 15mm; }
+      .dfe-crest img { position: absolute; top: 0; max-width: none; height: 100%; left: -4mm; width: 138.15mm; }
+      .dfe-mark strong { display: block; margin-top: 1mm; line-height: 1.05; font-weight: normal; font-size: 15pt; }
+      .masthead h1 { line-height: 1.18; margin: 10mm 0 0; font-size: 25pt; }
+      .pdf-content { padding: 10mm 17mm 12mm; }
+      .school-name { font-size: 21pt; line-height: 1.2; margin: 0 0 1mm; }
+      .school-address { font-size: 12pt; }
+      h2 { margin: 10mm 0 2mm; font-size: 15pt; }
+      .intro { font-size: 9pt; line-height: 1.2; max-width: 175mm; margin: 0 0 8mm; }
+      .multi-meter .forecast-section { margin-top: 9mm; }
+      table { width: 100%; table-layout: fixed; border-collapse: collapse; page-break-inside: avoid; font-size: 6.5pt; }
+      .single-meter th, .single-meter td, .multi-meter th, .multi-meter td { padding: 2mm 1mm; text-align: center; }
+      .multi-meter th, .multi-meter td { vertical-align: middle; }
+      .single-meter .summary-table th:first-child,
+      .single-meter .summary-table td:first-child { width: 17%; text-align: left; font-weight: bold; }
+      .single-meter thead tr:first-child th { background: #f3f2f1; border-bottom: 1px solid #505a5f; font-size: 7.5pt; }
+      .single-meter thead tr:first-child th.meter { background: #fff; }
+      .single-meter thead tr:nth-child(2) th { padding-top: 4mm; padding-bottom: 4mm; background: #f3f2f1; font-size: 6pt; font-weight: normal; }
+      .single-meter thead tr:nth-child(2) th.meter { background: #fff; border-bottom: 1px solid #d8d8d8; }
+      .single-meter th.meter, .single-meter td.meter { width: 18mm; border-right: 1px solid #505a5f; font-weight: bold; }
+      .single-meter td.meter { background: #fff; font-size: 5.5pt; }
+      .single-meter tr.heading th.cog, .single-meter tr.heading th.month { background: #f3f2f1; font-weight: normal; }
+      .single-meter th.month, .single-meter td.month-end { border-right: 1px solid #505a5f; }
+      .single-meter tbody td { padding-top: 4mm; padding-bottom: 4mm; white-space: nowrap; }
+      .single-meter thead tr:nth-child(2) th { padding-top: 4mm; padding-bottom: 4mm; background: #f3f2f1; font-size: 6pt; font-weight: normal; }
+      .single-meter tbody td { border-right: 1px solid #d8d8d8; }
+      .single-meter tbody td.month-end { border-right: 1px solid #505a5f; }
+      .single-meter thead th.month.final-month,
+      .single-meter tbody td.month-end.final-month { border-right: 0; }
+      .multi-meter tbody tr:nth-child(even) { background: #f3f2f1; }
+      .multi-meter .summary-table thead th { font-weight: normal; }
+      .multi-meter .summary-table td:first-child { font-weight: bold; }
+      .multi-meter .summary-table thead th { border-bottom: 1px solid #d8d8d8; }
+      .multi-meter .summary-table thead th, .multi-meter .summary-table tbody td { border-right: 1px solid #d8d8d8; }
+      .multi-meter .summary-table thead th:last-child, .multi-meter .summary-table tbody td:last-child { border-right: 0; }
+      .multi-meter .forecast-table thead th { background: #f3f2f1; font-weight: bold; }
+      .multi-meter .forecast-table thead th:first-child { background: #fff; width: 11%; }
+      .multi-meter .forecast-table th.meter-group,
+      .multi-meter .forecast-table th.meter-group { font-size: 6.5pt; }
+      .multi-meter .forecast-table thead tr:first-child th { border-bottom: 1px solid #505a5f; }
+      .multi-meter .forecast-table thead tr:nth-child(2) th { font-size: 5.5pt; font-weight: normal; }
+      .multi-meter .forecast-table thead tr:last-child th { border-bottom: 1px solid #d8d8d8; }
+      .multi-meter .forecast-table tr.meter th,
+      .multi-meter .forecast-table tr.heading th:first-child,
+      .multi-meter .forecast-table th.total,
+      .multi-meter .forecast-table td.month,
+      .multi-meter .forecast-table td.rate { border-right: 1px solid #505a5f; }
+      .multi-meter .forecast-table td:first-child { font-weight: bold; }
+      .multi-meter .forecast-table thead th:last-child, .multi-meter .forecast-table tbody td:last-child { border-right: 0; }
+      .multi-meter .forecast-table td.cog { border-right: 1px solid #d8d8d8; }
+      .multi-meter .forecast-table td { white-space: nowrap; }
+      .short-border { width: 100%; height: 100%; position: relative; }
+      .short-border::after { content: ""; position: absolute; right: -4px; top: 10%; height: 180%; border-right: 1px solid #d8d8d8; }
+    </style>
+  </head>
+  <body class="<%= @single_meter ? "single-meter" : "multi-meter" %>"><%= yield %></body>
+</html>
