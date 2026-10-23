@@ -1,0 +1,44 @@
+<header class="masthead">
+  <div class="dfe-mark">
+    <div class="dfe-crest">
+      <img src="<%= @logo_data_uri %>" alt="">
+    </div>
+    <strong><%= t("energy.gas_price_update.dfe_html") %></strong>
+  </div>
+  <h1><%= t("energy.gas_price_update.single.title_html") %></h1>
+</header>
+
+<div class="pdf-content">
+  <h2 class="school-name"><%= @school.fetch("School Name") %></h2>
+  <p class="school-address"><%= @school.fetch("School Postcode") %></p>
+
+  <h2><%= t("energy.gas_price_update.single.forecast_title") %></h2>
+  <p class="intro"><%= t("energy.gas_price_update.single.forecast_intro") %></p>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="meter"><%= t("energy.gas_price_update.table.meter") %></th>
+        <% @forecast_months.each do |month| %>
+          <th class="month<%= " final-month" if month == @forecast_months.last %>" colspan="2"><%= month %></th>
+        <% end %>
+      </tr>
+      <tr class="heading">
+        <th class="meter"></th>
+        <% @forecast_months.each do |month| %>
+          <th class="cog"><div class="short-border"><%= t("energy.gas_price_update.table.cost_of_gas_html") %></div></th>
+          <th class="month<%= " final-month" if month == @forecast_months.last %>"><%= t("energy.gas_price_update.table.total_html") %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="meter"><%= @meter.fetch("mprn") %></td>
+        <% @forecast_months.each do |month| %>
+          <td><%= Energy::GasPriceFormatting.format(@meter.fetch("#{month} Monthly COG (p/kWh)")) %>p</td>
+          <td class="month-end<%= " final-month" if month == @forecast_months.last %>"><%= Energy::GasPriceFormatting.format(@meter.fetch("#{month} Total Unit Rate (p/kWh)")) %>p</td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+</div>

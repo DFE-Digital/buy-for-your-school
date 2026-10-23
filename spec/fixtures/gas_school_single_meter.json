@@ -11,7 +11,7 @@
           "Contact Telephone Number": null,
           "meters": [
             {
-              "mprn": "0000000000",
+              "mprn": "0000000001",
               "Non-COG Unit rate (p/kWh)": 0.1233,
               "Daily Charge (£/day)": 3.113,
               "April Monthly COG (p/kWh)": 2.8685,
