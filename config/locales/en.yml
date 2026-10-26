@@ -903,8 +903,9 @@ en:
       page_title: Missing user role
     not_found:
       page_body:
-        - If you entered a web address, check it is correct.
+        - If you typed the web address, check it is correct.
         - If you pasted the web address, check you copied the entire address.
+        - You can browse buying options for schools or use the search box above to find what you need.
         - 'If you selected a link or button and the page is missing, email <a href="mailto:ghbs.website@education.gov.uk">ghbs.website@education.gov.uk</a>.'
       page_title: Page not found
     repeat_step_in_the_contentful_journey:

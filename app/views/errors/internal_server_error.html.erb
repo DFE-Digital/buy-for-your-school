@@ -1,4 +1,4 @@
-<%= content_for :title, t("errors.internal_server_error.page_title") %>
+<% @page_title = t("errors.internal_server_error.page_title") %>
 
 <div class="dfe-width-container">
   <div class="govuk-grid-row">
@@ -10,6 +10,9 @@
       <% t("errors.internal_server_error.page_body").each do |text| %>
         <p class="govuk-body"><%= text.html_safe %></p>
       <% end %>
+      <p class="govuk-body">
+        <%= govuk_link_to t("errors.go_home"), "/", no_visited_state: true %>
+      </p>
     </div>
   </div>
 </div>

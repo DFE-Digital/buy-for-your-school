@@ -25,7 +25,7 @@ RSpec.feature "Custom Errors" do
       visit "/foo"
 
       expect(find("h1.govuk-heading-xl", text: "Page not found")).to be_present
-      expect(find("p.govuk-body", text: "If you entered a web address, check it is correct.")).to be_present
+      expect(find("p.govuk-body", text: "If you typed the web address, check it is correct.")).to be_present
       expect(find("p.govuk-body", text: "If you pasted the web address, check you copied the entire address.")).to be_present
       expect(page).to have_link(
         "ghbs.website@education.gov.uk",
