@@ -19,12 +19,25 @@ module MarkdownHelper
 
     doc = Nokogiri::HTML.fragment(html)
 
+
     doc = update_class(doc, "h1", "govuk-heading-l")
     doc = update_class(doc, "h2", "govuk-heading-m")
     doc = update_class(doc, "h3", "govuk-heading-s")
     doc = update_class(doc, "p", "govuk-body")
     doc = update_class(doc, "ul", "govuk-list govuk-list--bullet")
     doc = update_class(doc, "ol", "govuk-list govuk-list--number")
+
+    # Lists whose items all start with "— " render with dashes instead of bullets
+    doc.css("ul").each do |ul|
+      items = ul.css("> li")
+      next unless items.any? && items.all? { |li| li.text.lstrip.start_with?("— ") }
+
+      ul["class"] = "govuk-list dash-list"
+      items.each do |li|
+        text_node = li.xpath(".//text()").find { |node| node.text.strip.present? }
+        text_node.content = text_node.text.sub(/\A\s*— /, "")
+      end
+    end
     doc = update_class(doc, "hr", "govuk-section-break govuk-section-break--m govuk-section-break--visible")
 
     doc.css("a[href]").each do |link|
