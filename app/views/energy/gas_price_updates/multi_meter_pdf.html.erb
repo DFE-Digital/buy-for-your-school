@@ -30,7 +30,7 @@
         <% @meters.each do |meter| %>
           <tr>
             <td><%= meter.fetch("mprn") %></td>
-            <td>—</td>
+            <td><%= meter.fetch("Site AQ (kWh)", "—") %></td>
             <td>£<%= Energy::GasPriceFormatting.format(meter.fetch("Daily Charge (£/day)")) %></td>
             <td><%= Energy::GasPriceFormatting.format(meter.fetch("Non-COG Unit rate (p/kWh)")) %>p</td>
             <td><%= Energy::GasPriceFormatting.format(meter.fetch("#{@month} Monthly COG (p/kWh)")) %>p</td>
