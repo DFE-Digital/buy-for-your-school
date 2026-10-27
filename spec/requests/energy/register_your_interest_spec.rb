@@ -12,6 +12,20 @@ RSpec.describe "Register your interest in Energy for Schools" do
     expect(response.body).to include("Enter your full name")
   end
 
+  it "links gas and electricity switch errors to their radio buttons" do
+    [
+      [energy_register_your_interest_gas_path, "switch-gas"],
+      [energy_register_your_interest_electricity_path, "switch-electricity"],
+    ].each do |path, attribute|
+      post path, params: { energy_register_your_interest: {} }
+
+      field_error_id = "energy-register-your-interest-#{attribute}-field-error"
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.body).to include("href=\"##{field_error_id}\"")
+      expect(response.body).to include("id=\"#{field_error_id}\"")
+    end
+  end
+
   it "keeps the back link to check your answers when an edited answer is invalid" do
     get energy_register_your_interest_path
     registration = Energy::RegisterYourInterest.find(session[:energy_register_your_interest_id])
