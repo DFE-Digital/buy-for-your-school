@@ -9,7 +9,39 @@ RSpec.describe "Register your interest in Energy for Schools" do
     post energy_register_your_interest_path, params: { energy_register_your_interest: { name: "" } }
 
     expect(response).to have_http_status(:unprocessable_entity)
-    expect(response.body).to include("Enter your name")
+    expect(response.body).to include("Enter your full name")
+  end
+
+  it "keeps the back link to check your answers when an edited answer is invalid" do
+    get energy_register_your_interest_path
+    registration = Energy::RegisterYourInterest.find(session[:energy_register_your_interest_id])
+    registration.update!(
+      name: "Alex Example",
+      email: "alex@example.com",
+      phone_number: "01234567890",
+      mat_uid: "MAT-123",
+      switch_gas: false,
+      switch_electricity: false,
+    )
+
+    invalid_submissions = [
+      [energy_register_your_interest_path, { energy_register_your_interest: { name: "" } }],
+      [energy_register_your_interest_email_path, { energy_register_your_interest: { email: "invalid" } }],
+      [energy_register_your_interest_phone_number_path, { energy_register_your_interest: { phone_number: "123" } }],
+      [energy_register_your_interest_mat_path, { energy_register_your_interest: { mat_uid: "" } }],
+      [energy_register_your_interest_gas_path, { energy_register_your_interest: {} }],
+      [energy_register_your_interest_electricity_path, { energy_register_your_interest: {} }],
+    ]
+
+    invalid_submissions.each do |path, form_params|
+      post path, params: form_params.merge(return_to: "check-answers")
+
+      expect(response).to have_http_status(:unprocessable_entity), "expected #{path} to show validation errors"
+      expect(response.body).to include(
+        "govuk-back-link",
+        "href=\"#{energy_register_your_interest_check_your_answers_path}\"",
+      ), "expected #{path} to keep the back link to check your answers"
+    end
   end
 
   it "shows an error when the contact phone number has fewer than 10 digits" do
@@ -26,14 +58,14 @@ RSpec.describe "Register your interest in Energy for Schools" do
     get energy_register_your_interest_check_your_answers_path
 
     expect(response).to be_successful
-    expect(response.body).to include("There is a problem", "Enter your name")
+    expect(response.body).to include("There is a problem", "Enter your full name")
 
     post energy_register_your_interest_check_your_answers_path
 
     expect(response).to redirect_to(energy_register_your_interest_check_your_answers_path)
     follow_redirect!
     expect(response).to be_successful
-    expect(response.body).to include("There is a problem", "Enter your name")
+    expect(response.body).to include("There is a problem", "Enter your full name")
   end
 
   it "does not enqueue a Zendesk ticket when the integration feature is disabled" do

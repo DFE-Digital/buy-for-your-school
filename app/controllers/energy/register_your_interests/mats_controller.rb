@@ -2,7 +2,7 @@ module Energy
   module RegisterYourInterests
     class MatsController < BaseController
       before_action(only: :index) { @registration.step = "mat" }
-      before_action(only: :index) { set_back_url(energy_register_your_interest_phone_number_path) }
+      before_action { set_back_url(energy_register_your_interest_phone_number_path) }
 
       def index; end
 

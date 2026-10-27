@@ -2,7 +2,7 @@ module Energy
   module RegisterYourInterests
     class PhoneNumbersController < BaseController
       before_action { @registration.step = "phone" }
-      before_action(only: :index) { set_back_url(energy_register_your_interest_email_path) }
+      before_action { set_back_url(energy_register_your_interest_email_path) }
 
       def index; end
 

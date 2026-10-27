@@ -4,7 +4,7 @@ module Energy
       include HasDateParams
 
       before_action { @registration.step = "electricity" }
-      before_action(only: :index) { set_back_url(energy_register_your_interest_gas_path) }
+      before_action { set_back_url(energy_register_your_interest_gas_path) }
 
       def index
         @form = Energy::RegisterYourInterestElectricityForm.new(
