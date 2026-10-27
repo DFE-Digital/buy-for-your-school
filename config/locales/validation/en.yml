@@ -233,7 +233,7 @@ en:
         energy/register_your_interest:
           attributes:
             name:
-              blank: Enter your name
+              blank: Enter your full name
             email:
               blank: Enter your email address
             phone_number:

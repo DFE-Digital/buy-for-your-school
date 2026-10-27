@@ -359,7 +359,7 @@ en:
       names:
         index:
           name:
-            title: What is your name?
+            title: What is your full name?
       emails:
         index:
           email:
