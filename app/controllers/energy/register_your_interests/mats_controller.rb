@@ -21,7 +21,7 @@ module Energy
           .where("support_establishment_groups.name ILIKE :query OR support_establishment_groups.uid ILIKE :query OR support_establishment_groups.ukprn ILIKE :query", query: "%#{params.fetch(:q, '')}%")
           .limit(50)
 
-        render json: results.as_json(only: %i[uid name ukprn], methods: %i[formatted_name])
+        render json: results.as_json(only: %i[uid name ukprn], methods: %i[formatted_name postcode])
       end
     end
   end

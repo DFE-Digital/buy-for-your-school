@@ -373,7 +373,7 @@ en:
           mat:
             title: What is the name of your multi-academy trust?
             search_label: Search for your multi-academy trust
-            suggestion_html: "<strong>{{name}}</strong> (UKPRN: {{ukprn}})"
+            suggestion_html: "<strong>{{name}}</strong>, {{postcode}}<br />UID: {{uid}}, UKPRN: {{ukprn}}"
             selection_error: Select a multi-academy trust
       gas:
         index:

@@ -53,6 +53,23 @@ RSpec.describe "Register your interest in Energy for Schools" do
     expect(response.body).to include("Enter a telephone number, like 07155487611")
   end
 
+  it "returns postcode with MAT autocomplete results" do
+    mat_type = create(:support_establishment_group_type, code: Support::EstablishmentGroupType::MAT_CODE, name: "Multi-academy trust")
+    create(:support_establishment_group, :with_address, establishment_group_type: mat_type, uid: "MAT-123", name: "Example MAT", ukprn: "12345678")
+
+    get energy_register_your_interest_mat_search_path(format: :json), params: { q: "Example MAT" }
+
+    expect(response).to have_http_status(:ok)
+    expect(JSON.parse(response.body)).to include(
+      hash_including(
+        "uid" => "MAT-123",
+        "name" => "Example MAT",
+        "postcode" => "EC1M 6HR",
+        "ukprn" => "12345678",
+      ),
+    )
+  end
+
   it "shows errors when check your answers is opened directly and continued with incomplete answers" do
     get energy_register_your_interest_path
     get energy_register_your_interest_check_your_answers_path
