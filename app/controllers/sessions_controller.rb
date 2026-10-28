@@ -101,7 +101,7 @@ private
     if session[:energy_onboarding]
       session.delete(:energy_case_tasks_path)
       session.delete(:energy_onboarding)
-      return energy_start_path
+      return "/energy/start"
     end
 
     if session[:evaluator_signin_link]

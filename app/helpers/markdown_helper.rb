@@ -19,7 +19,6 @@ module MarkdownHelper
 
     doc = Nokogiri::HTML.fragment(html)
 
-
     doc = update_class(doc, "h1", "govuk-heading-l")
     doc = update_class(doc, "h2", "govuk-heading-m")
     doc = update_class(doc, "h3", "govuk-heading-s")

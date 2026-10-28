@@ -118,7 +118,7 @@ describe SessionsController do
     it "redirects to energy_start_path when energy_onboarding flag is present" do
       session[:energy_onboarding] = true
 
-      expect(get(:failure, session:)).to redirect_to(energy_start_path)
+      expect(get(:failure, session:)).to redirect_to("/energy/start")
     end
 
     it "redirects to evaluator_signin_link when evaluator_signin_link is present" do
