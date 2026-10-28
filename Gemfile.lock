@@ -493,9 +493,6 @@ GEM
       tzinfo
       validate_url
       webfinger (~> 2.0)
-    opensearch-ruby (3.4.0)
-      faraday (>= 1.0, < 3)
-      multi_json (>= 1.0)
     os (1.1.4)
     ostruct (0.6.1)
     pagy (9.4.0)
@@ -862,7 +859,6 @@ DEPENDENCIES
   notifications-ruby-client
   omniauth
   omniauth_openid_connect
-  opensearch-ruby
   pandoc-ruby
   paper_trail
   pdf-forms

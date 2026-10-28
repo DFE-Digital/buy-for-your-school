@@ -1,22 +1,19 @@
 # Solution search
 
-Buying solution search can use one of three backends:
+Buying solution search can use one of two backends:
 
 - Contentful API search
-- OpenSearch, for the existing Elasticsearch-style solution search
 - Azure AI Search, as the replacement path for solution search only
 
-Category search still uses the Contentful API directly and is not indexed in either OpenSearch or Azure AI Search.
+Category search still uses the Contentful API directly and is not indexed in Azure AI Search.
 
 ## Choosing the backend
 
 The current selection order is:
 
-1. If `azure_ai_search` is enabled, solution search uses Azure AI Search.
-2. Else if `USE_OPENSEARCH` is set to `true`, solution search uses OpenSearch.
-3. Otherwise solution search falls back to the Contentful API.
+1. Solution search uses Azure AI Search.
+2. Category search uses the Contentful API.
 
-The `azure_ai_search` feature flag is documented in [feature-flags.md](feature-flags.md). It should be enabled when you want to switch solution search to Azure AI Search for development, staging, or rollout testing.
 
 ## Azure AI Search
 
@@ -85,66 +82,17 @@ And a task to delete the index entirely:
 bundle exec rake azure_ai_search:delete_index
 ```
 
-## OpenSearch
-
-OpenSearch-backed solution search is enabled when:
-
-- `USE_OPENSEARCH` is set to `true`
-- either `OPENSEARCH_URL` or `BONSAI_URL` points to an OpenSearch instance
-
-The search client reads the OpenSearch URL from:
-
-```ruby
-ENV["OPENSEARCH_URL"] || ENV["BONSAI_URL"]
-```
-
-### Indexing solutions
-
-The OpenSearch index is populated by:
-
-```sh
-bundle exec rake search:index
-```
-
-The task:
-
-- creates the `solution-data` index if it does not already exist
-- fetches solutions from Contentful
-- bulk indexes each solution into OpenSearch
-
-### Local development
-
-To use OpenSearch locally:
-
-1. Set `USE_OPENSEARCH=true`.
-2. Set `OPENSEARCH_URL` or `BONSAI_URL` to a local or remote OpenSearch instance.
-3. Run `bundle exec rake search:index` to create and populate the index.
-
-After indexing, solution searches will query OpenSearch instead of Contentful.
-
-### Bonsai
-
-FABS historically used the Bonsai service running on Heroku for search. The migrated solution search still supports that service for now through `BONSAI_URL`.
-
-This is temporary. Once Azure AI Search is fully adopted, `BONSAI_URL` can be removed.
 
 ## Local development
 
 To use Azure AI Search locally:
 
-1. Enable the `azure_ai_search` feature flag.
-2. Set the Azure AI Search environment variables above.
-3. Run `bundle exec rake azure_ai_search:create_index`.
-4. Run `bundle exec rake azure_ai_search:index`.
+1. Set the Azure AI Search environment variables above.
+2. Run `bundle exec rake azure_ai_search:create_index`.
+3. Run `bundle exec rake azure_ai_search:index`.
 
 After indexing, solution searches will query Azure AI Search instead of Contentful.
 
 ## Production
 
-In production, solution search should be indexed regularly so the backend stays in sync with Contentful solution data.
-
-The exact backend depends on which search path is enabled:
-
-- Azure AI Search via `azure_ai_search`
-- OpenSearch via `USE_OPENSEARCH`
-- Contentful API search as the fallback
+In production, solution search should be indexed regularly so the backend stays in sync with Contentful solution data. This is handled by a scheduled background job `AzureAiSearch::ReindexJob` that runs at midnight.
