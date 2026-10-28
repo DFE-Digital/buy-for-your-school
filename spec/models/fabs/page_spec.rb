@@ -57,6 +57,25 @@ RSpec.describe FABS::Page, type: :model do
     end
   end
 
+  describe ".find_by_id!" do
+    it "fetches and returns the Contentful page by id" do
+      entry = page_entry
+      allow(ContentfulClient).to receive(:entries).and_return([entry])
+
+      page = described_class.find_by_id!(entry.id)
+
+      expect(page).to be_a(described_class)
+      expect(page.id).to eq(entry.id)
+      expect(ContentfulClient).to have_received(:entries).with(content_type: "page", 'sys.id': entry.id)
+    end
+
+    it "raises ContentfulRecordNotFoundError when the page does not exist" do
+      allow(ContentfulClient).to receive(:entries).and_return([])
+
+      expect { described_class.find_by_id!("missing-page") }.to raise_error(ContentfulRecordNotFoundError, "Page not found")
+    end
+  end
+
   def page_entry(id: "page-id", title: "Dynamic purchasing systems", body: "Page body", description: "Page description", slug: "dynamic-purchasing-systems", related_content: [related_content_entry], parent: nil, attachments: [attachment_entry])
     OpenStruct.new(
       id:,
