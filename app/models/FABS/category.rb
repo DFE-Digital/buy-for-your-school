@@ -44,6 +44,23 @@ module FABS
       ContentfulClient.entries(params).map { |entry| new(entry) }
     end
 
+    def self.find_by_id!(id)
+      unless Solution.unique_category_ids.include?(id)
+        raise ContentfulRecordNotFoundError.new("Category not found", id:)
+      end
+
+      entry = ContentfulClient.entries(
+        content_type: CONTENT_TYPE,
+        'sys.id': id,
+      ).first
+
+      raise ContentfulRecordNotFoundError.new("Category not found", id:) unless entry
+
+      new(entry)
+    rescue Contentful::NotFound
+      raise ContentfulRecordNotFoundError.new("Category not found", id:)
+    end
+
     def self.search(query: "")
       ContentfulClient.entries(
         content_type: CONTENT_TYPE,
