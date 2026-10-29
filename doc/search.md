@@ -95,4 +95,4 @@ After indexing, solution searches will query Azure AI Search instead of Contentf
 
 ## Production
 
-In production, solution search should be indexed regularly so the backend stays in sync with Contentful solution data. This is handled by a scheduled background job `AzureAiSearch::ReindexJob` that runs at midnight.
+In production, the Contentful index is refreshed regularly so it stays in sync with Contentful solutions, referenced categories, and pages. This is handled by the scheduled background job `AzureAiSearch::ReindexJob`, which runs at midnight.
