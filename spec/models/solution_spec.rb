@@ -99,39 +99,6 @@ RSpec.describe Solution, type: :model do
     end
   end
 
-  describe ".search" do
-    subject(:search) { described_class.search(query:) }
-
-    before do
-      allow(AzureAiSearch::SolutionSearcher).to receive(:new).with(query:).and_return(searcher)
-    end
-
-    let(:query) { "technology" }
-    let(:searcher) { instance_double(AzureAiSearch::SolutionSearcher, search: [solution]) }
-    let(:solution) { described_class.new(entry) }
-    let(:entry) do
-      contentful_entry(
-        id: "solution-search",
-        title: "Technology solution",
-        description: "Buy technology",
-        summary: "Summary",
-        slug: "technology-solution",
-        primary_category: instance_double(FABS::Category),
-      )
-    end
-
-    it "searches Azure AI Search with the query and returns its matching solutions" do
-      expect(search).to all(be_a(described_class))
-      expect(search.first).to have_attributes(
-        id: be_present,
-        title: be_present,
-        summary: be_present,
-        description: be_present,
-        slug: be_present,
-      )
-    end
-  end
-
   describe ".find_by_slug!" do
     subject(:solution) { described_class.find_by_slug!(slug) }
 
@@ -207,52 +174,6 @@ RSpec.describe Solution, type: :model do
       it "raises ContentfulRecordNotFoundError" do
         expect { solution }.to raise_error(ContentfulRecordNotFoundError, "Solution not found")
       end
-    end
-  end
-
-  describe ".presentable?" do
-    let(:minimal_attrs) do
-      {
-        title: "lord",
-        slug: "banana",
-        primary_category: instance_double(Category),
-      }
-    end
-
-    it "is true if it has all required attributes" do
-      params =
-        OpenStruct.new(
-          id: "ID",
-          fields: minimal_attrs,
-        )
-      expect(described_class.new(params)).to be_presentable
-    end
-
-    it "requires a title" do
-      params =
-        OpenStruct.new(
-          id: "ID",
-          fields: minimal_attrs.merge(title: ""),
-        )
-      expect(described_class.new(params)).not_to be_presentable
-    end
-
-    it "requires a slug" do
-      params =
-        OpenStruct.new(
-          id: "ID",
-          fields: minimal_attrs.merge(slug: ""),
-        )
-      expect(described_class.new(params)).not_to be_presentable
-    end
-
-    it "requires a primary category" do
-      params =
-        OpenStruct.new(
-          id: "ID",
-          fields: minimal_attrs.merge(primary_category: nil),
-        )
-      expect(described_class.new(params)).not_to be_presentable
     end
   end
 

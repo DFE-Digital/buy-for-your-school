@@ -1,5 +1,3 @@
-require "ostruct"
-
 module FABS
   class Page
     include ActiveModel::Model
