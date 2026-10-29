@@ -52,6 +52,8 @@ Rails.application.routes.draw do
 
   # Contentful
   namespace :api do
+    get "solutions", to: "solutions#index"
+
     namespace :user_journeys do
       post "step" => "step#create"
     end
