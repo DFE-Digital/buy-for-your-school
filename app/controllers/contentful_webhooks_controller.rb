@@ -43,8 +43,8 @@ private
 
   def process_upsert
     case content_type
-    when "solution"
-      process_solution_index_upsert
+    when "solution", "category", "page"
+      process_index_upsert
     when "redirect"
       invalidate_redirect_cache("processed")
     else
@@ -54,8 +54,8 @@ private
 
   def process_delete
     case content_type
-    when "solution"
-      process_solution_index_delete
+    when "solution", "category", "page"
+      process_index_delete
     when "redirect"
       invalidate_redirect_cache("deletion processed")
     else
@@ -63,8 +63,8 @@ private
     end
   end
 
-  def process_solution_index_upsert
-    result = AzureAiSearch::SolutionIndexer.new.index_document(id)
+  def process_index_upsert
+    result = AzureAiSearch::ContentfulIndexer.new.index_document(id, content_type:)
 
     if result
       render json: { message: "Webhook for entry #{id} processed successfully." }, status: :ok
@@ -73,8 +73,8 @@ private
     end
   end
 
-  def process_solution_index_delete
-    result = AzureAiSearch::SolutionIndexer.new.delete_document(id)
+  def process_index_delete
+    result = AzureAiSearch::ContentfulIndexer.new.delete_document(id, content_type:)
 
     if result
       render json: { message: "Webhook for entry #{id} deletion processed successfully." }, status: :ok
