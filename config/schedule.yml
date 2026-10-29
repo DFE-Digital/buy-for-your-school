@@ -31,4 +31,4 @@ sync_frameworks:
 azure_ai_search_reindex:
   cron: 0 0 * * * # every midnight
   class: AzureAiSearch::ReindexJob
-  description: Reindex Contentful solutions into Azure AI Search and remove stale documents
+  description: Reindex Contentful solutions, categories and pages into Azure AI Search and remove stale documents
