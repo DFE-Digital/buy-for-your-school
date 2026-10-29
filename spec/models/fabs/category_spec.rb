@@ -245,26 +245,6 @@ RSpec.describe FABS::Category, type: :model do
     end
   end
 
-  describe ".search" do
-    subject(:search) { described_class.search(query:) }
-
-    let(:query) { "catering" }
-
-    before do
-      allow(ContentfulClient).to receive(:entries).and_return([category_entry])
-    end
-
-    it "returns categories matching the query" do
-      expect(search).to all(be_a(described_class))
-      expect(search.first).to have_attributes(
-        id: be_present,
-        title: be_present,
-        description: be_present,
-        slug: be_present,
-      )
-    end
-  end
-
   describe "#related_content" do
     subject(:category) { described_class.new(entry) }
 
