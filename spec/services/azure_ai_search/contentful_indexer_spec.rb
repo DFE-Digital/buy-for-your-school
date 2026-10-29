@@ -32,13 +32,24 @@ RSpec.describe AzureAiSearch::ContentfulIndexer do
       )
     end
 
-    it "does not index a category that is excluded from the category collection" do
+    it "leaves an existing category document untouched when it no longer has a published solution" do
       allow(FABS::Category).to receive(:find_by_id!).with("category-1").and_raise(ContentfulRecordNotFoundError)
 
       expect {
         indexer.index_document("category-1", content_type: "category")
       }.to raise_error(ContentfulRecordNotFoundError)
       expect(client).not_to have_received(:index_documents)
+    end
+  end
+
+  describe "#delete_document" do
+    it "deletes the type-prefixed document id" do
+      expect(indexer.delete_document("page-1", content_type: "page")).to be(true)
+
+      expect(client).to have_received(:index_documents).with(
+        index_name: "contentful-data",
+        documents: [{ "@search.action": "delete", id: "page-page-1" }],
+      )
     end
   end
 
