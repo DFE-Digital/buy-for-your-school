@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
   include InsightsTrackable
   include ExceptionDataPrepareable
+  include FeatureFlagTracking
 
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
@@ -143,6 +144,8 @@ protected
       .with_request_details(request)
       .with_response_details(response)
       .with_data(text: params[:commit])
+
+    with_feature_flag_context(event)
 
     DfE::Analytics::SendEvents.do([event])
   end
