@@ -1,5 +1,3 @@
-require "ostruct"
-
 module FABS
   class Category
     include ActiveModel::Model
@@ -59,24 +57,6 @@ module FABS
       new(entry)
     rescue Contentful::NotFound
       raise ContentfulRecordNotFoundError.new("Category not found", id:)
-    end
-
-    def self.search(query: "")
-      ContentfulClient.entries(
-        content_type: CONTENT_TYPE,
-        query:,
-        select: SUMMARY_SELECT,
-        include: 1,
-      ).map { |entry| new(entry) }
-    end
-
-    def self.rehydrate_from_search(result)
-      return nil unless result
-
-      new(OpenStruct.new(
-            id: result["id"],
-            fields: { title: result["title"], slug: result["slug"] },
-          ))
     end
 
     def to_param
