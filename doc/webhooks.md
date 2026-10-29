@@ -13,6 +13,8 @@ This endpoint handles multiple Contentful entry types and actions by inspecting 
 The webhook currently handles these Contentful content types:
 
 - `solution`
+- `category`
+- `page`
 - `redirect`
 
 Any other content type is accepted but ignored.
@@ -30,14 +32,16 @@ Any other topic is accepted but ignored.
 
 ## Behaviour
 
-### Solution entries
+### Searchable Contentful entries
 
-For `solution` entries:
+For `solution`, `category` and `page` entries:
 
-- `ContentManagement.Entry.publish` updates the search index entry for the solution
-- `ContentManagement.Entry.unpublish` removes the solution from the search index
-- `ContentManagement.Entry.archive` removes the solution from the search index
-- `ContentManagement.Entry.delete` removes the solution from the search index
+- `ContentManagement.Entry.publish` updates the entry in Azure AI Search
+- `ContentManagement.Entry.unpublish` removes the entry from Azure AI Search
+- `ContentManagement.Entry.archive` removes the entry from Azure AI Search
+- `ContentManagement.Entry.delete` removes the entry from Azure AI Search
+
+Categories are only indexed when they are referenced by at least one published solution, matching the category list shown by the service.
 
 ### Redirect entries
 
