@@ -12,13 +12,13 @@ RSpec.describe AzureAiSearch::ReindexJob, type: :job do
   end
 
   describe "#perform" do
-    let(:indexer) { instance_double(AzureAiSearch::SolutionIndexer, sync_all: { deleted: [], indexed: [] }) }
+    let(:indexer) { instance_double(AzureAiSearch::ContentfulIndexer, sync_all: { deleted: [], indexed: [] }) }
 
     before do
-      allow(AzureAiSearch::SolutionIndexer).to receive(:new).and_return(indexer)
+      allow(AzureAiSearch::ContentfulIndexer).to receive(:new).and_return(indexer)
     end
 
-    it "reindexes solutions in Azure AI Search" do
+    it "reindexes Contentful records in Azure AI Search" do
       described_class.perform_now
 
       expect(indexer).to have_received(:sync_all).once
