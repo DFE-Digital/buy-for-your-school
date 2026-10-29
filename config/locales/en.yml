@@ -942,6 +942,28 @@ en:
       signed:
         signed_by_school: "Signed on behalf of %{school_name} by:"
         signed_by_dfe: "Signed on behalf of the Department for Education by:"
+    gas_price_update:
+      dfe_html: "Department<br>for Education"
+      table:
+        meter: Meter
+        cost_of_gas_html: "<strong>COG</strong><br>(p/kWh)"
+        total_html: "<strong>Total</strong><br>(p/kWh)"
+        meter_number_html: "<strong>Meter<br>number</strong>"
+        estimated_usage_html: "<strong>Estimated<br>annual usage</strong><br>(kWh)"
+        daily_charge_html: "<strong>Daily<br>charge</strong><br>(£/day)"
+        non_cost_of_gas_html: "<strong>Non-COG<br>unit rate</strong><br>(p/kWh)"
+        month_cost_of_gas_html: "<strong>%{month}<br>COG</strong><br>(p/kWh)"
+        month_unit_rate_html: "<strong>%{month} total<br>unit rate</strong><br>(p/kWh)"
+      single:
+        title_html: "Energy for Schools<br>Gas price change forecast"
+        forecast_title: Gas price change forecast
+        forecast_intro: The table shows the monthly forecast for cost of gas (COG) and total unit rate over the remainder of the financial year. Total unit rate includes the monthly COG and the non-COG unit rate. It does not include daily charge.
+      multi:
+        title_html: "Energy for Schools<br>Monthly breakdown and gas price forecast"
+        forecast_title: Gas price change forecast
+        forecast_intro: The table shows the monthly forecast for cost of gas (COG) and total unit rate for each meter over the remainder of the financial year. Total unit rate includes the monthly COG and the non-COG unit rate. It does not include daily charge.
+        breakdown_title: "Breakdown of gas prices in %{month}"
+        breakdown_intro: The table shows the cost of gas (COG) and non-COG rates per meter. Multiply the total unit rate to calculate the monthly cost. The daily charge is separate to the monthly cost.
   errors:
     contentful_entry_not_found:
       page_body: The service has had a problem trying to retrieve the required step. The team have been notified of this problem and you should be able to retry shortly.
