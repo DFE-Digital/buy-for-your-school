@@ -27,23 +27,20 @@ Azure AI Search uses:
 
 - `AZURE_AI_SEARCH_ENDPOINT`
 - `AZURE_AI_SEARCH_API_KEY`
-- `AZURE_AI_SEARCH_INDEX_NAME`
 - `AZURE_AI_SEARCH_QUERY_TYPE`
 - `AZURE_AI_SEARCH_TOP`
-- `AZURE_AI_SEARCH_SEMANTIC_CONFIGURATION`
 
 Typical local or staging values are:
 
 ```sh
 AZURE_AI_SEARCH_ENDPOINT=https://<your-search-service>.search.windows.net
 AZURE_AI_SEARCH_API_KEY=<your-api-key>
-AZURE_AI_SEARCH_INDEX_NAME=solution-data
 AZURE_AI_SEARCH_QUERY_TYPE=simple
 AZURE_AI_SEARCH_TOP=10
 ```
 
 If semantic search is enabled on the Azure service, `AZURE_AI_SEARCH_QUERY_TYPE` can be set to `semantic`.
-If `AZURE_AI_SEARCH_SEMANTIC_CONFIGURATION` is omitted, the application uses the default semantic configuration name defined in code.
+The index name (`contentful-data`) and semantic configuration (`contentful-v1`) are defined in code.
 
 ### Indexing solutions
 
