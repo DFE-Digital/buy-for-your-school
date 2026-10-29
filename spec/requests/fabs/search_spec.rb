@@ -1,49 +1,48 @@
 require "rails_helper"
 
 RSpec.describe "FABS search", type: :request do
-  let(:category) { instance_double(FABS::Category, title: "Catering", description: "Buy catering services", slug: "catering", to_param: "catering") }
-  let(:solution) do
-    instance_double(
-      Solution,
-      title: "Commercial catering equipment",
-      description: "Buy commercial catering equipment",
-      slug: "commercial-catering-equipment",
-      primary_category: category,
-    )
-  end
-
   def document
     Capybara.string(response.body)
   end
 
-  it "renders matching solutions and categories for a valid query" do
-    allow(Solution).to receive(:search).with(query: "catering").and_return([solution])
-    allow(FABS::Category).to receive(:search).with(query: "catering").and_return([category])
+  it "renders solution, category and page results from one Azure search" do
+    results = [
+      AzureAiSearch::ContentfulSearcher::SearchResult.new(
+        content_type: "solution",
+        title: "Commercial catering equipment",
+        description: "Buy commercial catering equipment",
+        slug: "commercial-catering-equipment",
+        primary_category: { "slug" => "catering" },
+      ),
+      AzureAiSearch::ContentfulSearcher::SearchResult.new(
+        content_type: "category",
+        title: "Catering",
+        description: "Buy catering services",
+        slug: "catering",
+      ),
+      AzureAiSearch::ContentfulSearcher::SearchResult.new(
+        content_type: "page",
+        title: "Buying guidance",
+        description: "Guidance for buying",
+        slug: "buying/guidance",
+      ),
+    ]
+    searcher = instance_double(AzureAiSearch::ContentfulSearcher, search: results)
+    allow(AzureAiSearch::ContentfulSearcher).to receive(:new).with(query: "catering").and_return(searcher)
 
     get search_path(query: "catering")
 
     expect(response).to be_successful
     expect(response.body).to include("<title>Search results - catering - #{I18n.t('service.name')}</title>")
-    expect(response.body).to include("Commercial catering equipment")
-    expect(response.body).to include("Catering")
-  end
-
-  it "uses azure search" do
-    azure_searcher = instance_double(AzureAiSearch::SolutionSearcher, search: [solution])
-
-    allow(AzureAiSearch::SolutionSearcher).to receive(:new).with(query: "catering").and_return(azure_searcher)
-    allow(FABS::Category).to receive(:search).with(query: "catering").and_return([category])
-
-    get search_path(query: "catering")
-
-    expect(response).to be_successful
-    expect(response.body).to include("Commercial catering equipment")
-    expect(AzureAiSearch::SolutionSearcher).to have_received(:new).with(query: "catering")
+    expect(document).to have_link("Commercial catering equipment", href: "/categories/catering/commercial-catering-equipment")
+    expect(document).to have_link("Catering", href: "/categories/catering")
+    expect(document).to have_link("Buying guidance", href: "/buying/guidance")
+    expect(AzureAiSearch::ContentfulSearcher).to have_received(:new).with(query: "catering")
   end
 
   it "escapes HTML in the page title" do
-    allow(Solution).to receive(:search).with(query: "<b>catering</b>").and_return([])
-    allow(FABS::Category).to receive(:search).with(query: "<b>catering</b>").and_return([])
+    searcher = instance_double(AzureAiSearch::ContentfulSearcher, search: [])
+    allow(AzureAiSearch::ContentfulSearcher).to receive(:new).with(query: "<b>catering</b>").and_return(searcher)
 
     get search_path(query: "<b>catering</b>")
 
@@ -52,8 +51,8 @@ RSpec.describe "FABS search", type: :request do
   end
 
   it "renders the no-results state when nothing matches" do
-    allow(Solution).to receive(:search).with(query: "nonexistent").and_return([])
-    allow(FABS::Category).to receive(:search).with(query: "nonexistent").and_return([])
+    searcher = instance_double(AzureAiSearch::ContentfulSearcher, search: [])
+    allow(AzureAiSearch::ContentfulSearcher).to receive(:new).with(query: "nonexistent").and_return(searcher)
 
     get search_path(query: "nonexistent")
 
