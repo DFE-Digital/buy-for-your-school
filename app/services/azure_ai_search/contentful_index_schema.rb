@@ -1,7 +1,7 @@
 module AzureAiSearch
   class ContentfulIndexSchema
-    INDEX = ENV.fetch("AZURE_AI_SEARCH_INDEX_NAME", "contentful-data")
-    SEMANTIC_CONFIGURATION = ENV.fetch("AZURE_AI_SEARCH_SEMANTIC_CONFIGURATION", "contentful-v1")
+    INDEX = "contentful-data".freeze
+    SEMANTIC_CONFIGURATION = "contentful-v1".freeze
     TITLE_SCORING_PROFILE = "title-weight-v1".freeze
     ENGLISH_ANALYZER = "en.microsoft".freeze
 
