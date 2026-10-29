@@ -34,8 +34,9 @@ module AzureAiSearch
       successful_response?(response)
     end
 
-    def delete_document(id)
-      response = client.index_documents(index_name: INDEX, documents: [ContentfulDocument.delete(id)])
+    def delete_document(id, content_type:)
+      document_id = ContentfulDocument.document_id(id, content_type)
+      response = client.index_documents(index_name: INDEX, documents: [ContentfulDocument.delete(document_id)])
       successful_response?(response)
     end
 

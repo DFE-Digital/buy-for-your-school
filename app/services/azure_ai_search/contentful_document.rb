@@ -10,7 +10,7 @@ module AzureAiSearch
 
       document = {
         "@search.action": action,
-        id: "#{content_type}-#{record.id}",
+        id: document_id(record.id, content_type),
         content_type:,
         title: string_value(title),
         description: string_value(description_for(record)),
@@ -26,6 +26,10 @@ module AzureAiSearch
 
     def self.delete(id)
       { "@search.action": "delete", id: }
+    end
+
+    def self.document_id(id, content_type)
+      "#{content_type}-#{id}"
     end
 
     def self.content_type_for(record)
