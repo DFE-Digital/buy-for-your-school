@@ -56,7 +56,7 @@ describe "User can provide feedback for different services" do
     before do
       allow(FABS::Page).to receive(:find_by_slug!).with("energy/start").and_return(energy_start_page)
 
-      visit "/energy/start"
+      visit energy_start_path
 
       within(".govuk-phase-banner") do
         click_link "feedback"
@@ -68,7 +68,7 @@ describe "User can provide feedback for different services" do
     it "links to a feedback form for Energy from the beta banner link" do
       expect(CustomerSatisfactionSurveyResponse.first.source).to eq("banner_link")
       expect(CustomerSatisfactionSurveyResponse.first.service).to eq("energy_for_schools")
-      expect(CustomerSatisfactionSurveyResponse.first.referer).to eq(URI.join(root_url, "/energy/start").to_s)
+      expect(CustomerSatisfactionSurveyResponse.first.referer).to eq(energy_start_url)
     end
   end
 end

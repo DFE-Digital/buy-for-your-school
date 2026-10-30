@@ -2,8 +2,8 @@
   <%= render "shared/dfe_header" %>
   <div>
     <div class="dfe-width-container">
-       <% if request.path.in?(%w[/energy/guidance /energy/before-you-start]) %>
-         <%= govuk_back_link(href: "/energy/start") %>
+       <% if @page&.back_link_url.present? %>
+         <%= govuk_back_link(href: @page.back_link_url) %>
        <% else %>
          <%= render partial: "shared/breadcrumbs", locals: { govuk_breadcrumb_builder: govuk_breadcrumb_builder} %>
        <% end %>

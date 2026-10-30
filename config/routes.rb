@@ -499,8 +499,10 @@ Rails.application.routes.draw do
   end
   mount flipper_app, at: "/flipper"
 
-  # Energy
-  # Pre-sign-in
+  # Static pages are served from Contentful via pages#show
+  get "/energy/start", to: "pages#show", as: :energy_start, defaults: { slug: "energy/start" }
+  get "/energy/guidance", to: "pages#show", as: :energy_guidance, defaults: { slug: "energy/guidance" }
+  get "/energy/before-you-start", to: "pages#show", as: :energy_before_you_start, defaults: { slug: "energy/before-you-start" }
   get "/energy/onboarding/guidance", to: redirect("/energy/guidance")
 
   scope "/energy/register-your-interest", module: "energy/register_your_interests", as: "energy_register_your_interest" do
