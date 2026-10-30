@@ -40,7 +40,22 @@ describe "User can provide feedback for different services" do
   end
 
   context "when in the energy form" do
+    let(:energy_start_page) do
+      OpenStruct.new(
+        title: "Energy for schools",
+        description: "Energy for schools description",
+        body: "Start page body",
+        related_content: [],
+        parent: nil,
+        slug: "energy/start",
+        attachments: [],
+        seo_description: nil,
+      )
+    end
+
     before do
+      allow(FABS::Page).to receive(:find_by_slug!).with("energy/start").and_return(energy_start_page)
+
       visit energy_start_path
 
       within(".govuk-phase-banner") do
