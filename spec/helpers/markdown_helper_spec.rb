@@ -46,8 +46,8 @@ RSpec.describe MarkdownHelper, type: :helper do
       expect(html).not_to include("==")
     end
 
-    it "renders links wrapped in == with a trailing post as GOV.UK buttons that submit a POST request" do
-      markdown = "[==Continue==post](/auth/dfe)"
+    it "renders links wrapped in == to /auth/dfe as GOV.UK buttons that submit a POST request" do
+      markdown = "[==Continue==](/auth/dfe)"
       html = helper.render_markdown_to_html(markdown)
       fragment = Nokogiri::HTML.fragment(html)
       form = fragment.at_css("form")
