@@ -34,6 +34,7 @@ RSpec.describe "FABS search", type: :request do
 
     expect(response).to be_successful
     expect(response.body).to include("<title>Search results - catering - #{I18n.t('service.name')}</title>")
+    expect(document).to have_css("h2", text: "3 results for 'catering'")
     expect(document).to have_link("Commercial catering equipment", href: "/categories/catering/commercial-catering-equipment")
     expect(document).to have_link("Catering", href: "/categories/catering")
     expect(document).to have_link("Buying guidance", href: "/buying/guidance")
@@ -57,8 +58,26 @@ RSpec.describe "FABS search", type: :request do
     get search_path(query: "nonexistent")
 
     expect(response).to be_successful
+    expect(document).to have_css("h2", text: "0 results for 'nonexistent'")
+    expect(document).to have_css("h3", text: I18n.t("search.no_results.title"))
     expect(response.body).to include(I18n.t("search.no_results.title"))
     expect(document).to have_link(I18n.t("search.no_results.cta"), href: "/")
+  end
+
+  it "uses singular wording for one result" do
+    result = AzureAiSearch::ContentfulSearcher::SearchResult.new(
+      content_type: "solution",
+      title: "Commercial catering equipment",
+      description: "Buy commercial catering equipment",
+      slug: "commercial-catering-equipment",
+      primary_category: { "slug" => "catering" },
+    )
+    searcher = instance_double(AzureAiSearch::ContentfulSearcher, search: [result])
+    allow(AzureAiSearch::ContentfulSearcher).to receive(:new).with(query: "catering").and_return(searcher)
+
+    get search_path(query: "catering")
+
+    expect(document).to have_css("h2", text: "1 result for 'catering'")
   end
 
   it "shows the empty validation error for a blank query" do

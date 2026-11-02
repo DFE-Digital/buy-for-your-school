@@ -6,11 +6,11 @@ class SearchController < Fabs::ApplicationController
   def index
     @results = []
     @results_count = 0
+    @query = params[:query].to_s.strip
     add_breadcrumb_on_rails home_breadcrumb_name, home_breadcrumb_path
     @page_title = "Search results - #{helpers.strip_tags(params[:query])}"
     unless invalid_query?(params[:query])
-      query = params[:query].strip
-      @results = AzureAiSearch::ContentfulSearcher.new(query:).search
+      @results = AzureAiSearch::ContentfulSearcher.new(query: @query).search
       @results_count = @results.count
     end
 
