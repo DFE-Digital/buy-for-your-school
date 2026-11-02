@@ -3091,6 +3091,9 @@ en:
       empty: Enter a search term.
       too_long: Your search query is too long. Use less than 2000 characters.
       too_many_words: Your search query has too many words. Use less than 25 words.
+    results_heading:
+      one: 1 result for '%{query}'
+      other: "%{count} results for '%{query}'"
     no_results:
       cta: Visit Get Help Buying Home page
       description: It looks like there are no results for your search keyword.
