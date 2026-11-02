@@ -7,9 +7,9 @@ FactoryBot.define do
     trait :with_energy_details do
       switching_energy_type { 2 }
       gas_current_supplier { :british_gas }
-      gas_current_contract_end_date { Date.new(2025, 10, 31) }
+      gas_current_contract_end_date { 2.years.from_now.to_date }
       electric_current_supplier { :edf_energy }
-      electric_current_contract_end_date { Date.new(2025, 11, 30) }
+      electric_current_contract_end_date { 2.years.from_now.to_date }
       gas_bill_consolidation { true }
       electricity_meter_type { 1 }
       is_electric_bill_consolidated { false }
