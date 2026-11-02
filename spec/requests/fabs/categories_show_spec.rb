@@ -79,6 +79,9 @@ RSpec.describe "FABS category pages", type: :request do
       subcategories: [software_subcategory, hardware_subcategory],
       ways_to_buy: dps_ways_to_buy,
       seo_description: "A DfE-approved ICT route seo description",
+      use_this_when: "you need a quick way to buy ICT",
+      includes: "laptops, desktops and peripherals",
+      how_to_buy: "framework - either direct award or further competition",
     )
   end
   let(:other_solution) do
@@ -93,6 +96,9 @@ RSpec.describe "FABS category pages", type: :request do
       subcategories: [software_subcategory],
       ways_to_buy: framework_ways_to_buy,
       seo_description: "Software buying route seo description",
+      use_this_when: nil,
+      includes: nil,
+      how_to_buy: nil,
     )
   end
   let(:another_solution) do
@@ -107,6 +113,9 @@ RSpec.describe "FABS category pages", type: :request do
       subcategories: [software_subcategory, cyber_subcategory],
       ways_to_buy: framework_ways_to_buy,
       seo_description: "Cyber route seo description",
+      use_this_when: nil,
+      includes: nil,
+      how_to_buy: nil,
     )
   end
   let(:category) do
@@ -141,6 +150,34 @@ RSpec.describe "FABS category pages", type: :request do
     expect(response.body).to include("IT seo description")
     expect(document).to have_link("Plan technology for your school", href: "http://localhost:3000/plan-technology")
     expect(document).to have_link("Home", href: "/")
+  end
+
+  context "when the category A/B test flag is enabled for the visitor (variant B)" do
+    before do
+      allow(Flipper).to receive(:enabled?).and_call_original
+      allow(Flipper).to receive(:enabled?).with(:"category-it", instance_of(Flipper::Actor)).and_return(true)
+    end
+
+    it "renders the solution cards instead of the description" do
+      get category_path("it")
+
+      card = document.find(".chevron-card", text: "Everything ICT")
+      expect(card).to have_text("Use this when: you need a quick way to buy ICT")
+      expect(card).to have_text("Includes: laptops, desktops and peripherals")
+      expect(card).to have_text("How to buy: framework - either direct award or further competition")
+      expect(card).to have_text("Provider: DfE")
+      expect(card).to have_no_text("A DfE-approved ICT route.")
+    end
+  end
+
+  context "when the category A/B test flag is disabled for the visitor (variant A)" do
+    it "renders the description, provider and expiry" do
+      get category_path("it")
+
+      card = document.find(".chevron-card", text: "Everything ICT")
+      expect(card).to have_text("A DfE-approved ICT route.")
+      expect(card).to have_no_text("Use this when:")
+    end
   end
 
   it "renders the category banner when present" do

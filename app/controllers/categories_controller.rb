@@ -38,6 +38,7 @@ class CategoriesController < Fabs::ApplicationController
     @seo_description = @category.seo_description
 
     @show_filter = @subcategories.present? || (@ways_to_buy.present? && @ways_to_buy.count > 1)
+    @show_solution_cards = ab_test_enabled?(:"category-#{@category.slug}")
 
     render layout: "fabs_application"
   end
