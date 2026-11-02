@@ -7,14 +7,14 @@
       </div>
 
       <div class="govuk-!-margin-top-6">
-        <div class="results-count">
-          <%= t("results.count", count: @results_count) %>
-        </div>
+        <% unless @validation_error %>
+          <h2 class="govuk-heading-m"><%= t("search.results_heading", count: @results_count, query: @query) %></h2>
+        <% end %>
       </div>
 
       <% if @results.empty? %>
         <div class="govuk-!-margin-top-6">
-          <h2 class="govuk-heading-m"><%= t("search.no_results.title") %></h2>
+          <h3 class="govuk-heading-s"><%= t("search.no_results.title") %></h3>
           <% if @validation_error %>
             <p class="govuk-body"><%= t("search.errors.#{@validation_error}") %></p>
           <% else %>
