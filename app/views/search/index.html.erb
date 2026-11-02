@@ -28,20 +28,18 @@
 
       <% if @results.any? %>
         <div class="search-results-section">
-          <div class="gem-c-cards__list gem-c-cards__list--one-column">
-            <ul class="govuk-list">
-              <% @results.each do |result| %>
-                <li class="gem-c-cards__list-item">
-                  <div class="gem-c-cards__list-item-wrapper">
-                    <h2 class="gem-c-cards__sub-heading govuk-heading-s">
-                      <%= govuk_link_to result.title, result.path %>
-                    </h2>
-                    <p class="govuk-body gem-c-cards__description"><%= result.description %></p>
-                  </div>
-                </li>
-              <% end %>
-            </ul>
-          </div>
+          <ul class="chevron-card-list">
+            <% @results.each do |result| %>
+              <li class="chevron-card">
+                <div class="chevron-card__wrapper">
+                  <h2 class="govuk-heading-s">
+                    <%= govuk_link_to result.title, result.path, class: "govuk-link chevron-card__link" %>
+                  </h2>
+                  <p class="govuk-body-m chevron-card__description"><%= result.description %></p>
+                </div>
+              </li>
+            <% end %>
+          </ul>
         </div>
       <% end %>
     </main>
