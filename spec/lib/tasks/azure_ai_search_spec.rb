@@ -2,7 +2,9 @@ require "rails_helper"
 
 RSpec.describe "Azure AI search tasks" do
   before do
-    Rake.application.rake_require("tasks/azure_ai_search")
+    unless Rake::Task.task_defined?("azure_ai_search:create_index")
+      Rake.application.rake_require("tasks/azure_ai_search")
+    end
     Rake::Task.define_task(:environment)
   end
 
