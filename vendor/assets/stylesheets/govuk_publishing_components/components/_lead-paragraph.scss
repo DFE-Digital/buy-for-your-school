@@ -1,0 +1,18 @@
+.gem-c-lead-paragraph {
+  margin-top: 0;
+  // Ensure the text has a line-length of around 60 characters
+  max-width: 30em;
+  @include govuk-text-colour;
+  @include responsive-bottom-margin;
+  @include govuk-font(24);
+}
+
+.gem-c-lead-paragraph--inverse {
+  color: govuk-colour("white");
+}
+
+@include govuk-media-query($media-type: print) {
+  .gem-c-lead-paragraph {
+    color: govuk-functional-colour(print-text);
+  }
+}
