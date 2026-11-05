@@ -2,8 +2,6 @@
 # "School Business Professional (SBP)" authenticated via "DfE Sign In"
 #
 class User < ApplicationRecord
-  has_many :journeys
-  has_many :support_requests, class_name: "SupportRequest"
   belongs_to :support_agent, class_name: "Support::Agent", foreign_key: "dfe_sign_in_uid", primary_key: "dsi_uid", optional: true
 
   # users belonging to supported organisations
