@@ -38,7 +38,6 @@ private
 
   def set_view_fields
     @no_of_users = User.count
-    @no_of_specs = Journey.count
     @last_registration_date = UserPresenter.new(User.order(created_at: :desc).first).created_at
   end
 
