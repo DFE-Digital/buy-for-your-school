@@ -308,16 +308,6 @@ en:
         special_requirements:
           missing: Enter your access needs
 
-  # Find a Framework support request form
-  download_specification:
-    rules:
-      finished: "" # Omitted
-
-    errors:
-      rules:
-        finished:
-          bool?: Select if you want your specification to be marked as 'finished'
-
   # Feedback form
   feedback:
     rules:
@@ -334,31 +324,6 @@ en:
         email:
           missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
           format?: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
-
-  # New journey form
-  new_journey:
-    rules:
-      category: "" # Omitted
-      name: "" # Omitted
-
-    errors:
-      rules:
-        category:
-          missing: Select what you are buying
-        name:
-          missing: Enter a name for your specification
-          max_size?: The name must be 30 characters or less
-
-  # Edit journey form
-  edit_journey:
-    rules:
-      name: "" # Omitted
-
-    errors:
-      rules:
-        name:
-          missing: Enter a name for your specification
-          max_size?: The name must be 30 characters or less
 
   # Exit survey form
   exit_survey:
