@@ -496,7 +496,6 @@ GEM
     os (1.1.4)
     ostruct (0.6.1)
     pagy (9.4.0)
-    pandoc-ruby (2.1.10)
     paper_trail (17.0.0)
       activerecord (>= 7.1)
       request_store (~> 1.4)
@@ -859,7 +858,6 @@ DEPENDENCIES
   notifications-ruby-client
   omniauth
   omniauth_openid_connect
-  pandoc-ruby
   paper_trail
   pdf-forms
   pg
