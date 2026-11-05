@@ -9,23 +9,6 @@ module ApplicationHelper
   ACCESSIBILITY_STATEMENT_URL = "https://accessibility-statements.education.gov.uk/s/29"
   PRIVACY_NOTICE_URL = "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-data-to-use-our-websites"
 
-  def banner_tag
-    I18n.t("banner.beta.tag")
-  end
-
-  def banner_message
-    I18n.t(
-      "banner.beta.message",
-      feedback_link: link_to(
-        "#{I18n.t('banner.beta.feedback_link')}<span class=\"govuk-visually-hidden\"> opens in new tab</span>".html_safe,
-        banner_feedback_link,
-        class: "govuk-link",
-        target: "_blank",
-        rel: :noopener,
-      ),
-    )
-  end
-
   def dsi_url(**args)
     ::Dsi::Uri.new(**args).call.to_s
   end
@@ -41,10 +24,6 @@ module ApplicationHelper
     on_cec_index = current_page?(cec_onboarding_cases_path) || current_page?("/cec")
 
     on_cases_index || on_frameworks || on_eando_index || on_cec_index
-  end
-
-  def banner_feedback_link
-    new_customer_satisfaction_survey_path(source: :banner_link, service: identify_service_for_feedback)
   end
 
   def sidebar_feedback_link
