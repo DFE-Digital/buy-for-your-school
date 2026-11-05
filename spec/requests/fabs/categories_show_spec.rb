@@ -226,6 +226,21 @@ RSpec.describe "FABS category pages", type: :request do
     expect(document).to have_no_css(".moj-filter__tag", text: "Cyber security")
   end
 
+  it "renders successfully and ignores filters when params are not in array form" do
+    get "#{category_path('it')}?subcategory_slugs[0]=software&subcategory_slugs[1]=computers-and-other-hardware"
+
+    expect(response).to be_successful
+    expect(response.body).to include("0 selected")
+    expect(response.body).to include("Cyber security services 4")
+  end
+
+  it "renders successfully when the query string is double-encoded" do
+    get "#{category_path('it')}?subcategory_slugs%5B0%5D%3D%26subcategory_slugs%5B1%5D%3Dsoftware%26ways_to_buy_slugs%5B0%5D%3D"
+
+    expect(response).to be_successful
+    expect(response.body).to include("0 selected")
+  end
+
   it "shows only matching solutions when ways_to_buy filters are selected" do
     get category_path("it"), params: { ways_to_buy_slugs: %w[dps] }
 
