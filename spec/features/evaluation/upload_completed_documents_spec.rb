@@ -17,6 +17,11 @@ RSpec.feature "Evaluator can can upload completed documents", :flaky, :js, :with
 
   before do
     Current.agent = agent
+    allow(FABS::Category).to receive(:all).and_return([])
+    allow(Offer).to receive(:featured_offers).and_return([])
+    allow(PopularLink).to receive(:all).and_return([])
+    allow(GetExpertHelp).to receive(:content).and_return(GetExpertHelp.new(nil))
+    allow(Banner).to receive(:find_by_slug).and_return(nil)
   end
 
   def visit_and_click_link(path, link_index)

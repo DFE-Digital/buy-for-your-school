@@ -29,10 +29,11 @@ describe "Agent can change case summary", :js do
       fill_in "Description of next key date", with: "Key event"
       click_button "Continue"
       click_button "Save"
-      sleep 0.5
     end
 
     it "persists the changes" do
+      expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
+      expect(page).to have_content("10/08/2023")
       expect(support_case.reload.support_level).to eq("L4")
       expect(support_case.reload.procurement_stage.key).to eq("tender_preparation")
       expect(support_case.reload.value).to eq(123.32)
@@ -105,10 +106,11 @@ describe "Agent can change case summary", :js do
       fill_in "Description of next key date", with: "Key event"
       click_button "Continue"
       click_button "Save"
-      sleep 0.5
     end
 
     it "persists the changes" do
+      expect(page).to have_current_path(support_case_path(support_case), ignore_query: true)
+      expect(page).to have_content("On Hold")
       expect(support_case.reload.support_level).to eq("L6")
       expect(support_case.reload.state).to eq("on_hold")
     end

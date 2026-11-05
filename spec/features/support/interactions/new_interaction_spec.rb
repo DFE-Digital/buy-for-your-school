@@ -26,6 +26,13 @@ RSpec.feature "New case event" do
 
   let(:support_case) { create(:support_case, state: "opened", ref: "987654") }
 
+  def visit_logged_contacts
+    page.driver.header("Turbo-Frame", "messages-frame")
+    visit logged_contacts_support_case_message_threads_path(support_case)
+  ensure
+    page.driver.header("Turbo-Frame", nil)
+  end
+
   before do
     visit "/support/cases/#{support_case.id}"
   end
@@ -73,7 +80,7 @@ RSpec.feature "New case event" do
       expect(find("h1.govuk-heading-l")).to have_text "Contact with school"
     end
 
-    context "when choosing phone call", :js do
+    context "when choosing phone call" do
       it "logs phone call in messages" do
         choose "Phone call"
         fill_in "interaction[body]", with: "this is an example phone call"
@@ -81,15 +88,12 @@ RSpec.feature "New case event" do
         click_on "Save"
         expect(find("h3.govuk-notification-banner__heading")).to have_text "Phone call added to case"
 
-        visit "/support/cases/#{support_case.id}#messages"
-        within "#messages-frame" do
-          click_link "View"
-          expect(page).to have_text "Phone call"
-        end
+        visit_logged_contacts
+        expect(page).to have_text "Phone call"
       end
     end
 
-    context "when choosing email from school", :js do
+    context "when choosing email from school" do
       it "logs email from school in messages" do
         choose "Email from school"
         fill_in "interaction[body]", with: "this is an example email from the school"
@@ -97,16 +101,13 @@ RSpec.feature "New case event" do
         click_on "Save"
         expect(find("h3.govuk-notification-banner__heading")).to have_text "Email from school added to case"
 
-        visit "/support/cases/#{support_case.id}#messages"
-        within "#messages-frame" do
-          click_link "View"
-          expect(page).to have_text "Email from school"
-          expect(page).to have_text "this is an example email from the school"
-        end
+        visit_logged_contacts
+        expect(page).to have_text "Email from school"
+        expect(page).to have_text "this is an example email from the school"
       end
     end
 
-    context "when choosing email to school", :js do
+    context "when choosing email to school" do
       it "logs email to school in messages" do
         choose "Email to school"
         fill_in "interaction[body]", with: "this is an example email to the school"
@@ -114,12 +115,9 @@ RSpec.feature "New case event" do
         click_on "Save"
         expect(find("h3.govuk-notification-banner__heading")).to have_text "Email to school added to case"
 
-        visit "/support/cases/#{support_case.id}#messages"
-        within "#messages-frame" do
-          click_link "View"
-          expect(page).to have_text "first_name last_name"
-          expect(page).to have_text "this is an example email to the school"
-        end
+        visit_logged_contacts
+        expect(page).to have_text "first_name last_name"
+        expect(page).to have_text "this is an example email to the school"
       end
     end
   end
