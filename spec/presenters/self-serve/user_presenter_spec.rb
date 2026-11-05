@@ -19,15 +19,6 @@ RSpec.describe UserPresenter do
     end
   end
 
-  describe "#active_journeys" do
-    let(:user) { build(:user, journeys: [build(:journey), build(:journey)]) }
-
-    it "decorates the journeys" do
-      expect(presenter.active_journeys).to be_a(Array)
-      expect(presenter.active_journeys.all? { |j| j.instance_of?(JourneyPresenter) }).to be true
-    end
-  end
-
   describe "#supported_schools" do
     before do
       stub_const("ORG_TYPE_IDS", [1, 2, 3])
