@@ -15,13 +15,4 @@ private
   def date_format
     I18n.t("date.formats.presenter")
   end
-
-  # @return [String] html from markdown
-  def format(content)
-    DocumentFormatter.new(
-      content:,
-      from: :markdown,
-      to: :html,
-    ).call
-  end
 end
