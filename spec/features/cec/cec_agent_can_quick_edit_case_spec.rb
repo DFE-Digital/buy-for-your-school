@@ -21,10 +21,10 @@ describe "Agent can quick edit a case", :js do
       fill_in "Description of next key date", with: "Key event"
       choose "Yes"
       click_button "Save"
-      expect(page).to have_content("Case updated")
     end
 
     it "persists the changes" do
+      expect(page).to have_content("Case updated")
       expect(support_case.reload.support_level).to eq("L6")
       expect(support_case.reload.next_key_date).to eq(Date.parse("2026-08-10"))
       expect(support_case.reload.next_key_date_description).to eq("Key event")

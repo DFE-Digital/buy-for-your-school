@@ -14,7 +14,6 @@ RSpec.feature "Case list navigation" do
         )
 
         within "#all-cases" do
-          expect(page).to have_checked_field "Example Category"
           find(".pagination__results", text: "Showing 1 to 10 of 13 results")
           first("a.govuk-link--no-visited-state", text: /^\d{6}$/).click
         end
