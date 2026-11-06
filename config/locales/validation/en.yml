@@ -193,7 +193,7 @@ en:
                 blank: Enter the estimated annual usage in kilowatt hours
                 not_a_number: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
                 greater_than_or_equal_to: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
-                less_than: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
+                less_than_or_equal_to: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
             maximum_mprn_per_organisation: Maximum number of MPRNs reached
             error_unique: This MPRN is already registered with Energy for Schools. Contact dfe-energy.services-team@education.gov.uk to resolve the matter
         energy/electricity_meter:
@@ -220,7 +220,7 @@ en:
                 blank: Enter the estimated annual usage in kilowatt hours
                 not_a_number: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
                 greater_than_or_equal_to: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
-                less_than: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
+                less_than_or_equal_to: Estimated annual usage in kilowatt hours must be a number between 1 and 1,000,000. For example, 93,800
             maximum_mpan_per_organisation: Maximum number of MPANs reached
             error_unique: This MPAN is already registered with Energy for Schools. Contact dfe-energy.services-team@education.gov.uk to resolve the matter
         energy/email_template_configuration:

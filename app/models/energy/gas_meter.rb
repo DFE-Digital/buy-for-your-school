@@ -14,13 +14,16 @@ class Energy::GasMeter < ApplicationRecord
             format: { with: Energy::MeterNumberFormat::VALID_METER_NUMBER_REGEX }
   validates :gas_usage,
             presence: true,
-            numericality: { greater_than_or_equal_to: 0, less_than: 1_000_000 }
+            numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 1_000_000 }
 
   validate :validate_mprn_format, on: %i[create update]
   validate :maximum_mprn_per_organisation, on: :create
   validate :mprn_uniqueness_with_active_cases, on: %i[create update]
 
   before_save :sanitize_mprn
+
+  # Allow users to enter numbers with thousands separators, e.g. "93,800"
+  normalizes :gas_usage, with: ->(value) { value.to_s.delete(", ") }
 
   def validate_mprn_format
     digits = mprn.to_s.gsub(/\D/, "")
