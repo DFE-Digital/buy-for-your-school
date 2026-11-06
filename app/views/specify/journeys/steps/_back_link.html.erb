@@ -1,7 +1,0 @@
-<% if @current_journey&.persisted? %>
-  <%= link_to I18n.t("generic.button.back"), journey_path(@current_journey), class: "govuk-back-link" %>
-<% elsif @form.position?(1) %>
-  <%= link_to I18n.t("generic.button.back"), dashboard_path, class: "govuk-back-link"  %>
-<% else %>
-  <%= link_to I18n.t("generic.button.back"), journeys_path(new_journey_form: @form.go_back), method: :post, class: "govuk-back-link" %>
-<% end %>

@@ -246,22 +246,6 @@ en:
             switch_electricity:
               inclusion: Choose whether you want to switch electricity or not
 
-  request:
-    rules:
-      procurement_amount: "" # Omitted
-      special_requirements_choice: "" # Omitted
-      special_requirements: "" # Omitted
-
-    errors:
-      rules:
-        procurement_amount:
-          invalid: Enter a valid number
-          too_large: The amount cannot be larger than 99,999,999.99
-        special_requirements_choice:
-          missing: Select whether you want to tell us about any special requirements
-        special_requirements:
-          missing: Enter what your requirements are
-
   # Find a Framework support request form
   framework_request:
     errors:
@@ -275,48 +259,6 @@ en:
         procurement_amount:
           invalid: Enter a valid number
           too_large: The amount entered exceeds the maximum procurement value. Enter a number less than 99,999,999
-
-  support_request:
-    rules:
-      phone_number: Your phone number
-      message_body: "" # Omitted
-      category_id: The type of procurement
-      school_urn: "" # Omitted
-      procurement_amount: "" # Omitted
-      special_requirements_choice: "" # Omitted
-      special_requirements: "" # Omitted
-
-    errors:
-      rules:
-        phone_number:
-          missing: is missing
-          # rules as follows; (i) permits empty string for no entry, (ii) 0 followed by 9 or 10 digits, OR +44 followed by 9 or 10 digits, with the digit immediately following one of [12378] (iii) no spaces at any point in the number
-          format?: must have no spaces and begin with a 0 or +44, with a minimum of 10 and maximum 12 digits
-          # value in schema set to 13 as includes the + in +44
-          max_size?: "can not have more than 12 digits"
-        message_body:
-          missing: You must tell us how we can help
-        category_id:
-          no_spec: is required if you do not select an existing specification
-        school_urn:
-          missing: You must select a school
-        procurement_amount:
-          invalid: Enter a valid number
-          too_large: The amount cannot be larger than 9,999,999.99
-        special_requirements_choice:
-          missing: Select yes if you have access needs
-        special_requirements:
-          missing: Enter your access needs
-
-  # Find a Framework support request form
-  download_specification:
-    rules:
-      finished: "" # Omitted
-
-    errors:
-      rules:
-        finished:
-          bool?: Select if you want your specification to be marked as 'finished'
 
   # Feedback form
   feedback:
@@ -334,31 +276,6 @@ en:
         email:
           missing: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
           format?: Enter an email in the correct format. For example, 'someone@school.sch.uk'.
-
-  # New journey form
-  new_journey:
-    rules:
-      category: "" # Omitted
-      name: "" # Omitted
-
-    errors:
-      rules:
-        category:
-          missing: Select what you are buying
-        name:
-          missing: Enter a name for your specification
-          max_size?: The name must be 30 characters or less
-
-  # Edit journey form
-  edit_journey:
-    rules:
-      name: "" # Omitted
-
-    errors:
-      rules:
-        name:
-          missing: Enter a name for your specification
-          max_size?: The name must be 30 characters or less
 
   # Exit survey form
   exit_survey:

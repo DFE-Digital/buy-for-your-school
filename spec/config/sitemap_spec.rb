@@ -47,6 +47,7 @@ RSpec.describe "sitemap:create", type: :task do
     allow(Solution).to receive(:all).and_return([solution])
     allow(FABS::Page).to receive(:all).and_return([page])
 
+    SitemapGenerator.verbose = false
     Rake::Task["sitemap:create"].invoke
 
     expect(File).to exist(sitemap_path)

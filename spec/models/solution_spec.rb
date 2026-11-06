@@ -215,7 +215,7 @@ RSpec.describe Solution, type: :model do
       {
         title: "lord",
         slug: "banana",
-        primary_category: instance_double(Category),
+        primary_category: instance_double(FABS::Category),
       }
     end
 
