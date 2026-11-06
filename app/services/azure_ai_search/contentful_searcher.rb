@@ -43,7 +43,7 @@ module AzureAiSearch
         semanticConfiguration: semantic_search? ? SEMANTIC_CONFIGURATION : nil,
         semanticErrorHandling: semantic_search? ? "partial" : nil,
         captions: semantic_search? ? "extractive|highlight-true" : nil,
-        top: ENV.fetch("AZURE_AI_SEARCH_TOP", "15").to_i,
+        top: ENV.fetch("AZURE_AI_SEARCH_TOP", "25").to_i,
         select: SELECT_FIELDS,
       }.compact
     end
