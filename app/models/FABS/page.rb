@@ -1,5 +1,3 @@
-require "ostruct"
-
 module FABS
   class Page
     include ActiveModel::Model
@@ -28,6 +26,19 @@ module FABS
       raise ContentfulRecordNotFoundError.new("Page not found", slug:) unless entry
 
       new(entry)
+    end
+
+    def self.find_by_id!(id)
+      entry = ContentfulClient.entries(
+        content_type: CONTENT_TYPE,
+        'sys.id': id,
+      ).first
+
+      raise ContentfulRecordNotFoundError.new("Page not found", id:) unless entry
+
+      new(entry)
+    rescue Contentful::NotFound
+      raise ContentfulRecordNotFoundError.new("Page not found", id:)
     end
 
     def self.all

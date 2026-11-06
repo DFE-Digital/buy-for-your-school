@@ -27,29 +27,29 @@ RSpec.describe "Azure AI search tasks" do
 
     context "when the index does not exist" do
       before do
-        allow(client).to receive(:index_exists?).with(index_name: "solution-data").and_return(false)
+        allow(client).to receive(:index_exists?).with(index_name: "contentful-data").and_return(false)
         allow(client).to receive(:create_index)
       end
 
-      it "creates the solution index" do
-        expect(client).to receive(:create_index).with(body: AzureAiSearch::SolutionIndexSchema.to_h)
+      it "creates the Contentful index" do
+        expect(client).to receive(:create_index).with(body: AzureAiSearch::ContentfulIndexSchema.to_h)
 
         expect { invoke_task }
-          .to output("Creating Azure AI Search index solution-data...\nCreated Azure AI Search index solution-data.\n")
+          .to output("Creating Azure AI Search index contentful-data...\nCreated Azure AI Search index contentful-data.\n")
           .to_stdout
       end
     end
 
     context "when the index already exists" do
       before do
-        allow(client).to receive(:index_exists?).with(index_name: "solution-data").and_return(true)
+        allow(client).to receive(:index_exists?).with(index_name: "contentful-data").and_return(true)
       end
 
       it "does not recreate the index" do
         expect(client).not_to receive(:create_index)
 
         expect { invoke_task }
-          .to output("Azure AI Search index solution-data already exists.\n")
+          .to output("Azure AI Search index contentful-data already exists.\n")
           .to_stdout
       end
     end
@@ -66,29 +66,29 @@ RSpec.describe "Azure AI search tasks" do
 
     context "when the index exists" do
       before do
-        allow(client).to receive(:index_exists?).with(index_name: "solution-data").and_return(true)
+        allow(client).to receive(:index_exists?).with(index_name: "contentful-data").and_return(true)
         allow(client).to receive(:delete_index)
       end
 
       it "deletes the index" do
-        expect(client).to receive(:delete_index).with(index_name: "solution-data")
+        expect(client).to receive(:delete_index).with(index_name: "contentful-data")
 
         expect { invoke_task }
-          .to output("Deleting Azure AI Search index solution-data...\nDeleted Azure AI Search index solution-data.\n")
+          .to output("Deleting Azure AI Search index contentful-data...\nDeleted Azure AI Search index contentful-data.\n")
           .to_stdout
       end
     end
 
     context "when the index does not exist" do
       before do
-        allow(client).to receive(:index_exists?).with(index_name: "solution-data").and_return(false)
+        allow(client).to receive(:index_exists?).with(index_name: "contentful-data").and_return(false)
       end
 
       it "does not attempt to delete the index" do
         expect(client).not_to receive(:delete_index)
 
         expect { invoke_task }
-          .to output("Azure AI Search index solution-data does not exist.\n")
+          .to output("Azure AI Search index contentful-data does not exist.\n")
           .to_stdout
       end
     end
@@ -98,32 +98,39 @@ RSpec.describe "Azure AI search tasks" do
     subject(:invoke_task) { Rake::Task["azure_ai_search:index"].invoke }
 
     let(:client) { instance_double(AzureAiSearch::Client) }
-    let(:indexer) { instance_double(AzureAiSearch::SolutionIndexer) }
-    let(:solution_1) { instance_double(Solution, presentable?: true) }
-    let(:solution_2) { instance_double(Solution, presentable?: true) }
+    let(:indexer) { instance_double(AzureAiSearch::ContentfulIndexer) }
+    let(:solution) { instance_double(Solution) }
+    let(:category) { instance_double(FABS::Category) }
+    let(:page) { instance_double(FABS::Page) }
+    let(:records) { [solution, category, page] }
 
     before do
       allow(AzureAiSearch::Client).to receive(:new).and_return(client)
-      allow(AzureAiSearch::SolutionIndexer).to receive(:new).with(client:).and_return(indexer)
-      allow(Solution).to receive(:all).and_return([solution_1, solution_2])
-      allow(indexer).to receive(:sync_all).with([solution_1, solution_2]).and_return(
+      allow(AzureAiSearch::ContentfulIndexer).to receive(:new).with(client:).and_return(indexer)
+      allow(Solution).to receive(:all).and_return([solution])
+      allow(FABS::Category).to receive(:all).and_return([category])
+      allow(FABS::Page).to receive(:all).and_return([page])
+      allow(AzureAiSearch::ContentfulDocument).to receive(:from_record).and_return({ id: "record" })
+      allow(indexer).to receive(:sync_all).with(records).and_return(
         {
           deleted: [{ "value" => [{ "status" => true }] }],
           indexed: [{ "value" => [{ "status" => true }, { "status" => false }] }],
         },
       )
-      allow(client).to receive(:document_count).with(index_name: "solution-data").and_return(1)
+      allow(client).to receive(:document_count).with(index_name: "contentful-data").and_return(1)
     end
 
-    it "indexes solutions and prints the API document count" do
+    it "indexes all Contentful content types and prints the API document count" do
       expect { invoke_task }
         .to output(
           "Starting Contentful to Azure AI Search sync...\n" \
-          "Successfully indexed 1 of 2 solutions into Azure AI Search.\n" \
+          "Successfully indexed 1 of 3 Contentful records into Azure AI Search.\n" \
           "Successfully deleted 1 stale documents from Azure AI Search.\n" \
-          "Azure AI Search document count for solution-data: 1\n",
+          "Azure AI Search document count for contentful-data: 1\n",
         )
         .to_stdout
+
+      expect(indexer).to have_received(:sync_all).with(records)
     end
   end
 
@@ -134,12 +141,12 @@ RSpec.describe "Azure AI search tasks" do
 
     before do
       allow(AzureAiSearch::Client).to receive(:new).and_return(client)
-      allow(client).to receive(:document_count).with(index_name: "solution-data").and_return(64)
+      allow(client).to receive(:document_count).with(index_name: "contentful-data").and_return(64)
     end
 
     it "prints the API document count" do
       expect { invoke_task }
-        .to output("Azure AI Search document count for solution-data: 64\n")
+        .to output("Azure AI Search document count for contentful-data: 64\n")
         .to_stdout
     end
   end
@@ -151,13 +158,13 @@ RSpec.describe "Azure AI search tasks" do
 
     before do
       allow(AzureAiSearch::Client).to receive(:new).and_return(client)
-      allow(client).to receive(:document_count).with(index_name: "solution-data").and_return(0)
+      allow(client).to receive(:document_count).with(index_name: "contentful-data").and_return(0)
     end
 
     context "when the index has documents" do
       before do
         allow(client).to receive(:search).with(
-          index_name: "solution-data",
+          index_name: "contentful-data",
           body: {
             search: "*",
             select: "id",
@@ -171,7 +178,7 @@ RSpec.describe "Azure AI search tasks" do
 
       it "deletes documents from the index" do
         expect(client).to receive(:index_documents).with(
-          index_name: "solution-data",
+          index_name: "contentful-data",
           documents: [
             { "@search.action": "delete", id: "solution-1" },
             { "@search.action": "delete", id: "solution-2" },
@@ -180,9 +187,9 @@ RSpec.describe "Azure AI search tasks" do
 
         expect { invoke_task }
           .to output(
-            "Clearing Azure AI Search index solution-data...\n" \
-            "Deleted 2 documents from Azure AI Search index solution-data.\n" \
-            "Azure AI Search document count for solution-data: 0\n",
+            "Clearing Azure AI Search index contentful-data...\n" \
+            "Deleted 2 documents from Azure AI Search index contentful-data.\n" \
+            "Azure AI Search document count for contentful-data: 0\n",
           )
           .to_stdout
       end
@@ -198,8 +205,8 @@ RSpec.describe "Azure AI search tasks" do
 
         expect { invoke_task }
           .to output(
-            "Clearing Azure AI Search index solution-data...\n" \
-            "Azure AI Search index solution-data is already empty.\n",
+            "Clearing Azure AI Search index contentful-data...\n" \
+            "Azure AI Search index contentful-data is already empty.\n",
           )
           .to_stdout
       end

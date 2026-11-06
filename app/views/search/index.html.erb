@@ -7,14 +7,14 @@
       </div>
 
       <div class="govuk-!-margin-top-6">
-        <div class="results-count">
-          <%= t("results.count", count: @results_count) %>
-        </div>
+        <% unless @validation_error %>
+          <h2 class="govuk-heading-m"><%= t("search.results_heading", count: @results_count, query: @query) %></h2>
+        <% end %>
       </div>
 
-      <% if !@solutions.any? && !@categories.any? %>
+      <% if @results.empty? %>
         <div class="govuk-!-margin-top-6">
-          <h2 class="govuk-heading-m"><%= t("search.no_results.title") %></h2>
+          <h3 class="govuk-heading-s"><%= t("search.no_results.title") %></h3>
           <% if @validation_error %>
             <p class="govuk-body"><%= t("search.errors.#{@validation_error}") %></p>
           <% else %>
@@ -26,53 +26,20 @@
         </div>
       <% end %>
 
-      <% if @solutions.any? %>
-        <div class="search-results-section" %>
-          <h2 class="govuk-heading-m">
-            <%= t("results.section.title.type.solution") %>
-          </h2>
-          <div class="gem-c-cards__list gem-c-cards__list--one-column">
-            <ul class="govuk-list">
-              <% @solutions.each do |solution| %>
-                <li class="gem-c-cards__list-item">
-                  <div class="gem-c-cards__list-item-wrapper">
-                    <h3 class="gem-c-cards__sub-heading govuk-heading-s">
-                        <%= govuk_link_to solution.title, category_solution_path(slug: solution.slug, category_slug: solution.primary_category&.slug) %>
-                    </h3>
-                    <p class="govuk-body gem-c-cards__description">
-                      <%= solution.description %>
-                    </p>
-                  </div>
-                </li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      <% end %>
-
-      <% if @categories.any? %>
-        <div class="search-results-section govuk-!-margin-top-6" %>
-          <h2 class="govuk-heading-m">
-            <%= t("results.section.title.type.category") %>
-          </h2>
-          <div class="gem-c-cards__list gem-c-cards__list--one-column">
-            <% @categories.each do |category| %>
-                <div class="gem-c-cards__list-item">
-                  <div class="gem-c-cards__list-item-wrapper">
-                  <ul class="govuk-list">
-                    <li class="category-search-result">
-                      <h3 class="gem-c-cards__sub-heading govuk-heading-s">
-                        <%= govuk_link_to category.title, category_path(category) %>
-                      </h3>
-                      <p class="govuk-body gem-c-cards__description">
-                        <%= category.description %>
-                      </p>
-                    </li>
-                  </ul>
+      <% if @results.any? %>
+        <div class="search-results-section">
+          <ul class="chevron-card-list">
+            <% @results.each do |result| %>
+              <li class="chevron-card">
+                <div class="chevron-card__wrapper">
+                  <h2 class="govuk-heading-s">
+                    <%= govuk_link_to result.title, result.path, class: "govuk-link chevron-card__link" %>
+                  </h2>
+                  <p class="govuk-body-m chevron-card__description"><%= result.description %></p>
                 </div>
-              </div>
+              </li>
             <% end %>
-          </div>
+          </ul>
         </div>
       <% end %>
     </main>

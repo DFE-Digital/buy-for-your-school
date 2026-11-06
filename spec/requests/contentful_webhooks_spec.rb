@@ -23,19 +23,19 @@ RSpec.describe "Contentful webhooks", type: :request do
     }
   end
   let(:content_type) { "solution" }
-  let(:azure_indexer) { instance_double(AzureAiSearch::SolutionIndexer) }
+  let(:azure_indexer) { instance_double(AzureAiSearch::ContentfulIndexer) }
 
   before do
     allow(ENV).to receive(:fetch).and_call_original
     allow(ENV).to receive(:fetch).with("CONTENTFUL_WEBHOOK_SECRET").and_return(secret)
-    allow(AzureAiSearch::SolutionIndexer).to receive(:new).and_return(azure_indexer)
+    allow(AzureAiSearch::ContentfulIndexer).to receive(:new).and_return(azure_indexer)
     allow(RedirectMatcher).to receive(:invalidate_cache!)
   end
 
   describe "POST /contentful_webhooks" do
     context "when publishing a solution" do
       it "returns success when indexing succeeds" do
-        allow(azure_indexer).to receive(:index_document).with(entity_id).and_return(true)
+        allow(azure_indexer).to receive(:index_document).with(entity_id, content_type: "solution").and_return(true)
 
         post(contentful_webhooks_path, params: payload, headers: headers.merge("Accept" => "application/json"))
 
@@ -44,7 +44,7 @@ RSpec.describe "Contentful webhooks", type: :request do
       end
 
       it "returns unprocessable_content when indexing fails" do
-        allow(azure_indexer).to receive(:index_document).with(entity_id).and_return(false)
+        allow(azure_indexer).to receive(:index_document).with(entity_id, content_type: "solution").and_return(false)
 
         post(contentful_webhooks_path, params: payload, headers:)
 
@@ -57,7 +57,7 @@ RSpec.describe "Contentful webhooks", type: :request do
       let(:topic) { "ContentManagement.Entry.delete" }
 
       it "returns success when deletion succeeds" do
-        allow(azure_indexer).to receive(:delete_document).with(entity_id).and_return(true)
+        allow(azure_indexer).to receive(:delete_document).with(entity_id, content_type: "solution").and_return(true)
 
         post(contentful_webhooks_path, params: payload, headers:)
 
@@ -66,7 +66,7 @@ RSpec.describe "Contentful webhooks", type: :request do
       end
 
       it "returns unprocessable_content when deletion fails" do
-        allow(azure_indexer).to receive(:delete_document).with(entity_id).and_return(false)
+        allow(azure_indexer).to receive(:delete_document).with(entity_id, content_type: "solution").and_return(false)
 
         post(contentful_webhooks_path, params: payload, headers:)
 
@@ -122,8 +122,37 @@ RSpec.describe "Contentful webhooks", type: :request do
       end
     end
 
+    %w[category page].each do |indexed_content_type|
+      context "when publishing a #{indexed_content_type}" do
+        let(:content_type) { indexed_content_type }
+
+        it "indexes it in Azure AI Search" do
+          allow(azure_indexer).to receive(:index_document).with(entity_id, content_type:).and_return(true)
+
+          post(contentful_webhooks_path, params: payload, headers:)
+
+          expect(response).to have_http_status(:ok)
+          expect(azure_indexer).to have_received(:index_document).with(entity_id, content_type:)
+        end
+      end
+
+      context "when deleting a #{indexed_content_type}" do
+        let(:content_type) { indexed_content_type }
+        let(:topic) { "ContentManagement.Entry.unpublish" }
+
+        it "removes it from Azure AI Search" do
+          allow(azure_indexer).to receive(:delete_document).with(entity_id, content_type:).and_return(true)
+
+          post(contentful_webhooks_path, params: payload, headers:)
+
+          expect(response).to have_http_status(:ok)
+          expect(azure_indexer).to have_received(:delete_document).with(entity_id, content_type:)
+        end
+      end
+    end
+
     context "when the content type is unsupported" do
-      let(:content_type) { "category" }
+      let(:content_type) { "article" }
 
       it "returns success and ignores the webhook" do
         post(contentful_webhooks_path, params: payload, headers:)

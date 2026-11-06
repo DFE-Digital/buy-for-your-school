@@ -1,5 +1,3 @@
-require "ostruct"
-
 class Solution
   include ActiveModel::Model
   include HasRelatedContent
@@ -130,10 +128,6 @@ class Solution
     ContentfulClient.entries(params).map { |entry| new(entry) }
   end
 
-  def self.search(query: "")
-    AzureAiSearch::SolutionSearcher.new(query:).search
-  end
-
   def self.find_by_slug!(slug)
     entry = ContentfulClient.entries(
       content_type: CONTENT_TYPE,
@@ -165,17 +159,6 @@ class Solution
       content_type: CONTENT_TYPE,
       select: "fields.categories",
     ).flat_map { |solution| solution.fields[:categories]&.map(&:id) }.compact.uniq
-  end
-
-  def self.rehydrate_from_search(result)
-    return nil unless result
-
-    category = FABS::Category.rehydrate_from_search(result["primary_category"])
-    fields = result
-      .transform_keys(&:to_sym)
-      .merge(primary_category: category)
-
-    new(OpenStruct.new(id: result["id"], fields:))
   end
 
   def ==(other)
@@ -213,9 +196,5 @@ class Solution
       },
       provider_reference:,
     }
-  end
-
-  def presentable?
-    title.present? && slug.present? && primary_category
   end
 end

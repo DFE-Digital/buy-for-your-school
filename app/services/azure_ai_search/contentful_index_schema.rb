@@ -1,7 +1,8 @@
 module AzureAiSearch
-  class SolutionIndexSchema
-    INDEX = ENV.fetch("AZURE_AI_SEARCH_INDEX_NAME", "solution-data")
-    SEMANTIC_CONFIGURATION = ENV.fetch("AZURE_AI_SEARCH_SEMANTIC_CONFIGURATION", "solutions-v1")
+  class ContentfulIndexSchema
+    INDEX = "contentful-data".freeze
+    SEMANTIC_CONFIGURATION = "contentful-v1".freeze
+    TITLE_SCORING_PROFILE = "title-weight-v1".freeze
     ENGLISH_ANALYZER = "en.microsoft".freeze
 
     def self.to_h
@@ -9,15 +10,23 @@ module AzureAiSearch
         name: INDEX,
         fields:,
         semantic: semantic_configuration,
+        scoringProfiles: [
+          {
+            name: TITLE_SCORING_PROFILE,
+            text: { weights: { title: 2 } },
+          },
+        ],
+        defaultScoringProfile: TITLE_SCORING_PROFILE,
       }
     end
 
     def self.fields
       [
         { name: "id", type: "Edm.String", key: true, searchable: false, filterable: true, retrievable: true },
+        { name: "content_type", type: "Edm.String", searchable: false, filterable: true, facetable: true, retrievable: true },
         { name: "title", type: "Edm.String", searchable: true, filterable: true, sortable: true, retrievable: true, analyzer: ENGLISH_ANALYZER },
         { name: "description", type: "Edm.String", searchable: true, retrievable: true, analyzer: ENGLISH_ANALYZER },
-        { name: "summary", type: "Edm.String", searchable: true, retrievable: true, analyzer: ENGLISH_ANALYZER },
+        { name: "body", type: "Edm.String", searchable: true, retrievable: true, analyzer: ENGLISH_ANALYZER },
         { name: "slug", type: "Edm.String", searchable: false, filterable: true, retrievable: true },
         { name: "provider_reference", type: "Edm.String", searchable: true, filterable: true, retrievable: true },
         {
@@ -42,7 +51,7 @@ module AzureAiSearch
               titleField: { fieldName: "title" },
               prioritizedContentFields: [
                 { fieldName: "description" },
-                { fieldName: "summary" },
+                { fieldName: "body" },
               ],
               prioritizedKeywordsFields: [
                 { fieldName: "provider_reference" },
