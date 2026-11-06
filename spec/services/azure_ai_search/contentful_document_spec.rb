@@ -40,7 +40,7 @@ RSpec.describe AzureAiSearch::ContentfulDocument do
       expect(described_class.from_record(category)).to include(
         id: "category-category-1",
         content_type: "category",
-        description: "Catering options",
+        description: "Catering body title",
         body: "Details about catering",
       )
       expect(described_class.from_record(page)).to include(
