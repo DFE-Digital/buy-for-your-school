@@ -18,8 +18,10 @@ class CategoriesController < Fabs::ApplicationController
     add_breadcrumb_on_rails :home_breadcrumb_name, :root_path
 
     @subcategories = category.subcategories.reject { _1.slug.downcase == DUMMY_SUBCATEGORY_SLUG }
-    @selected_subcategories = @subcategories.select { |subcategory| params[:subcategory_slugs]&.include?(subcategory.slug) }
-    @solutions = @category.filtered_solutions(subcategory_slugs: params[:subcategory_slugs]&.compact_blank, ways_to_buy_slugs: params[:ways_to_buy_slugs]&.compact_blank)
+    @selected_subcategory_slugs = filter_slugs(:subcategory_slugs)
+    @selected_ways_to_buy_slugs = filter_slugs(:ways_to_buy_slugs)
+    @selected_subcategories = @subcategories.select { |subcategory| @selected_subcategory_slugs.include?(subcategory.slug) }
+    @solutions = @category.filtered_solutions(subcategory_slugs: @selected_subcategory_slugs, ways_to_buy_slugs: @selected_ways_to_buy_slugs)
 
     @solutions_count_subcategory = solutions_count_by_subcategory(@solutions)
     @solutions_count_ways_to_buy = solutions_count_by_ways_to_buy(@solutions)
@@ -44,6 +46,13 @@ class CategoriesController < Fabs::ApplicationController
   end
 
 private
+
+  # Accepts only well-formed array params (e.g. `key[]=a&key[]=b`). Indexed or
+  # malformed keys parse to a hash and are ignored rather than raising.
+  def filter_slugs(key)
+    value = params[key]
+    value.is_a?(Array) ? value.grep(String).compact_blank : []
+  end
 
   def solutions_count_by_subcategory(solutions)
     solutions.each_with_object(Hash.new(0)) do |solution, counts|
