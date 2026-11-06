@@ -12,6 +12,8 @@ module Support
       all_cases_survey_resolved: "a56e5c50-78d1-4b5f-a2ff-73df78b7ad99",
       confirmation_energy: "a771c164-422a-4d70-8d2f-64f66c329dfa",
       customer_satisfaction_survey: "28058b34-4f7f-4685-a529-8365e91e12d6",
+      energy_gas_price_update_single_meter: "b663782d-730c-4f79-9e4c-7c287d89aafa",
+      energy_gas_price_update_multi_meter: "1dd97503-b749-4368-9910-024be6f5e6b6",
     }.freeze
 
     def self.label_for(id)
