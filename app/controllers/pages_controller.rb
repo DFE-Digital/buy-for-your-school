@@ -5,6 +5,7 @@ class PagesController < ApplicationController
   include Redirectable
 
   before_action :redirect_legacy_slugs
+  before_action :remember_energy_onboarding, if: :energy_page?
 
   def show
     if page.present?
@@ -29,6 +30,19 @@ private
 
   def page
     @page ||= FABS::Page.find_by_slug!(params[:slug])
+  end
+
+  def energy_page?
+    params[:slug].to_s.start_with?("energy/")
+  end
+
+  # Flags the session so SessionsController#entry_path sends the user
+  # into the energy journey after DfE Sign-in
+  def remember_energy_onboarding
+    session.delete(:email_evaluator_link)
+    session.delete(:email_school_buyer_link)
+    session.delete(:faf_referrer)
+    session[:energy_onboarding] = true
   end
 
   def build_page_breadcrumbs(page)
