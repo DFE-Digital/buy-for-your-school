@@ -6,7 +6,9 @@ module MarkdownHelper
   # Link text wrapped in "==" renders as a GOV.UK button:
   #   "[==Start now==>](/url)" - start button with an arrow icon
   #   "[==Contact us==](/url)" - standard button without an arrow icon
+  #   "[==Sign in==](/auth/dfe)" - standard button that submits a POST request to DfE Sign-in
   CTA_BUTTON_PATTERN = /\A==(.+?)==\s*(>)?\z/m
+  DFE_SIGN_IN_PATH = "/auth/dfe".freeze
 
   def render_markdown_to_html(markdown_content)
     return "" if markdown_content.blank?
@@ -24,6 +26,18 @@ module MarkdownHelper
     doc = update_class(doc, "p", "govuk-body")
     doc = update_class(doc, "ul", "govuk-list govuk-list--bullet")
     doc = update_class(doc, "ol", "govuk-list govuk-list--number")
+
+    # Lists whose items all start with "— " render with dashes instead of bullets
+    doc.css("ul").each do |ul|
+      items = ul.css("> li")
+      next unless items.any? && items.all? { |li| li.text.lstrip.start_with?("— ") }
+
+      ul["class"] = "govuk-list dash-list"
+      items.each do |li|
+        text_node = li.xpath(".//text()").find { |node| node.text.strip.present? }
+        text_node.content = text_node.text.sub(/\A\s*— /, "")
+      end
+    end
     doc = update_class(doc, "hr", "govuk-section-break govuk-section-break--m govuk-section-break--visible")
 
     doc.css("a[href]").each do |link|
@@ -36,13 +50,23 @@ module MarkdownHelper
 
       text = match[1].strip
       html_attributes = link.attributes.slice("target", "rel").transform_values(&:value)
-      button = if match[2]
+
+      post_button = link["href"] == DFE_SIGN_IN_PATH
+      button = if post_button
+                 govuk_button_to(text, link["href"])
+               elsif match[2] == ">"
                  govuk_start_button(text:, href: link["href"], html_attributes:)
                else
                  govuk_button_link_to(text, link["href"], **html_attributes.symbolize_keys)
                end
 
-      link.replace(button.to_s)
+      # A <form> can't be nested in a <p>, so replace the wrapping paragraph when the button is its only content
+      parent = link.parent
+      if post_button && parent&.name == "p" && parent.text.strip == link.text.strip
+        parent.replace(button.to_s)
+      else
+        link.replace(button.to_s)
+      end
     end
 
     doc = update_class(doc, "a[href]:not(.govuk-button)", "govuk-link")

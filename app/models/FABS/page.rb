@@ -8,7 +8,7 @@ module FABS
 
     CONTENT_TYPE = "page".freeze
 
-    attr_reader :id, :title, :body, :description, :slug, :parent, :seo_description, :updated_at
+    attr_reader :id, :title, :body, :description, :slug, :parent, :seo_description, :back_link_url, :updated_at
 
     def initialize(entry)
       @id = entry.id
@@ -19,6 +19,7 @@ module FABS
       parent_entry = entry.fields[:parent]
       @parent = build_parent_from_entry(parent_entry)
       @seo_description = entry.fields[:seo_description]
+      @back_link_url = entry.fields[:back_link_url]
       @updated_at = entry.updated_at
       super
     end
