@@ -42,7 +42,10 @@ module AzureAiSearch
     private_class_method :content_type_for
 
     def self.description_for(record)
-      record.description
+      case record
+      when FABS::Category then record.body_title
+      else record.description
+      end
     end
     private_class_method :description_for
 
