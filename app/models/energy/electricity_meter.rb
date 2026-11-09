@@ -28,13 +28,16 @@ class Energy::ElectricityMeter < ApplicationRecord
 
   validates :electricity_usage,
             presence: true,
-            numericality: { greater_than_or_equal_to: 0, less_than: 1_000_000 }
+            numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 1_000_000 }
 
   validate :validate_mpan_format, on: %i[create update]
   validate :maximum_mpan_per_organisation, on: :create
   validate :mpan_uniqueness_with_active_cases, on: %i[create update]
 
   before_save :sanitize_mpan
+
+  # Allow users to enter numbers with thousands separators, e.g. "93,800"
+  normalizes :electricity_usage, :supply_capacity, with: ->(value) { value.to_s.delete(", ") }
 
   def validate_mpan_format
     digits = mpan.to_s.gsub(/\D/, "")
