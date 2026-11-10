@@ -78,7 +78,7 @@ Rails.application.routes.draw do
 
   # Request for help
   scope module: "framework_requests" do
-    resources :framework_requests, only: %i[index show], path: "procurement-support" do
+    resources :framework_requests, only: %i[show], path: "procurement-support" do
       collection do
         post "/start", to: "start#create"
 
@@ -504,6 +504,7 @@ Rails.application.routes.draw do
   get "/energy/guidance", to: "pages#show", as: :energy_guidance, defaults: { slug: "energy/guidance" }
   get "/energy/before-you-start", to: "pages#show", as: :energy_before_you_start, defaults: { slug: "energy/before-you-start" }
   get "/energy/onboarding/guidance", to: redirect("/energy/guidance")
+  get "/procurement-support", to: "pages#show", as: :procurement_support, defaults: { slug: "procurement-support" }
 
   scope "/energy/register-your-interest", module: "energy/register_your_interests", as: "energy_register_your_interest" do
     get "/", to: "names#index", as: ""
