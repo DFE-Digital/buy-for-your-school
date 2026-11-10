@@ -1,6 +1,24 @@
 RSpec.feature "Starting a 'Find a Framework' request", :with_csrf_protection do
+  let(:start_page) do
+    OpenStruct.new(
+      title: "Request help buying for your school",
+      body: "Get help from our procurement specialists.\n\n[==Start now==>](/procurement-support/start)",
+      related_content: [],
+      attachments: [],
+      parent: nil,
+      slug: "procurement-support",
+    )
+  end
+
   before do
+    allow(FABS::Page).to receive(:find_by_slug!).with("procurement-support").and_return(start_page)
+
     visit "/procurement-support"
+  end
+
+  it "shows the start page content from Contentful" do
+    expect(page).to have_text "Get help from our procurement specialists."
+    expect(page).to have_button "Start now"
   end
 
   it "loads without requiring authentication" do
