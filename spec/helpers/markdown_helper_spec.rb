@@ -59,6 +59,17 @@ RSpec.describe MarkdownHelper, type: :helper do
       expect(html).not_to include("==")
     end
 
+    it "renders start buttons to /procurement-support/start as GOV.UK start buttons that submit a POST request" do
+      markdown = "Some intro\n\n[==Start now==>](/procurement-support/start)"
+      html = helper.render_markdown_to_html(markdown)
+      fragment = Nokogiri::HTML.fragment(html)
+      form = fragment.at_css("form")
+      expect(form["action"]).to eq("/procurement-support/start")
+      expect(form["method"]).to eq("post")
+      # button = form.at_css("button.govuk-button.govuk-button--start")
+      expect(form.at_css("button.govuk-button.govuk-button--start").text.strip).to eq("Start now")
+    end
+
     it "add the correct css class for h2 and paragraph tags" do
       markdown = "## This a heading\nThis is a random paragraph"
       html = helper.render_markdown_to_html(markdown)
