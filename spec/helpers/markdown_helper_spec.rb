@@ -66,7 +66,6 @@ RSpec.describe MarkdownHelper, type: :helper do
       form = fragment.at_css("form")
       expect(form["action"]).to eq("/procurement-support/start")
       expect(form["method"]).to eq("post")
-      # button = form.at_css("button.govuk-button.govuk-button--start")
       expect(form.at_css("button.govuk-button.govuk-button--start").text.strip).to eq("Start now")
     end
 
