@@ -1340,30 +1340,6 @@ en:
           p4: Private, voluntary-aided and independent early years providers, and institutions which only have pupils aged 16 years and above, are not eligible for this service.
         gias_link: Get information about schools
         summary: Can't find it?
-    start_page:
-      header: Request help and support for your procurement
-      our_specialists: 'Our specialists may also offer to help run more complex or high value procurements. Some of the reasons they may offer to do this are:'
-      our_specialists_points:
-      - when contracts are long term or multi-year
-      - you're buying for multiple schools
-      - the value is above the <a class="govuk-link" href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools/find-the-right-way-to-buy#when-to-run-a-pcr-compliant-buying-process">Procurement Act 2023 threshold</a>
-      - the procurement requires inclusion of transferring personnel contracts under the Transfer of Undertakings (Protection of Employment) regulations (TUPE)
-      - you're new or not experienced in running these types of procurements
-      - there are problems with supply or prices change regularly, for example energy costs
-      - it's challenging to find suppliers
-      overview_purpose: Use this service if you're a state-funded school in England and need free help with your school procurement.
-      tools_and_guidance: Tools and guidance
-      tools_and_guidance_also: 'You can also:'
-      tools_and_guidance_points:
-      - read information on <a href="https://www.gov.uk/guidance/buying-procedures-and-procurement-law-for-schools" class="govuk-link">finding the right route to buy what you need</a> for your school
-      - read about <a href="https://www.gov.uk/guidance/buying-for-schools-things-to-consider-before-you-start" class="govuk-link">what to consider for specific goods and services</a>
-      - read about <a href="https://www.gov.uk/guidance/find-a-dfe-approved-framework-for-your-school" class="govuk-link">framework agreements</a>
-      we_can_offer: 'Our team of procurement specialists can:'
-      we_can_offer_points:
-      - offer advice and guidance to make sure you're buying compliantly at any point, even if your procurement process is already in progress
-      - review your documents to make sure they're complete and compliant. This includes advice on specification documents, tender documents and evaluation criteria
-      - support you on choosing or using a framework agreement for your procurement
-      - advise when you need to seek legal advice
     user_organisation:
       header: Which school are you buying for? 
     user_query:
