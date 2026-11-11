@@ -3064,16 +3064,6 @@ en:
       - share files and contracts with school users
       contact_line_manager: Contact your line manager if you do not have access.
       sign_in: Sign in
-  offers:
-    index:
-      description: Browse time-limited offers negotiated by DfE for you, so you can
-        get best value.
-      expires_on: Expires on
-      section_title: ''
-      title: Offers
-    show:
-      cta: Link to the offer
-      section_title: Offers
   results:
     count:
       one: 1 result
@@ -3129,11 +3119,6 @@ en:
       header: Related reading
 
   solutions:
-    index:
-      all_buying_options_description: Use a DfE-approved buying option to make sure
-        your procurement is compliant
-      all_buying_options_section_title: DfE-approved
-      all_buying_options_title: All buying options
     show:
       cta: Visit the provider’s website
       section_title: Buying option
