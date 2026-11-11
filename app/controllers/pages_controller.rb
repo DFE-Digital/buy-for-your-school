@@ -3,10 +3,11 @@ class PagesController < ApplicationController
 
   include Breadcrumbs
   include Redirectable
+  include Referable
 
   before_action :redirect_legacy_slugs
-  before_action :remember_energy_onboarding, if: :energy_page?
-  before_action :remember_framework_request_referrer, if: :framework_request_start_page?
+  before_action :remember_energy_referrer, if: :energy_page?
+  before_action :remember_request_referrer, if: :referable_page?
 
   def show
     if page.present?
@@ -33,34 +34,12 @@ private
     @page ||= FABS::Page.find_by_slug!(params[:slug])
   end
 
-  def framework_request_start_page?
+  def referable_page?
     params[:slug].to_s == "procurement-support"
-  end
-
-  # Records where the user came from so SessionsController#entry_path sends
-  # them back into the request for help journey after DfE Sign-in, and so the
-  # referrer is stored against the submitted request
-  def remember_framework_request_referrer
-    session[:faf_referrer] = framework_request_referral_link
-    session.delete(:energy_case_tasks_path)
-    session.delete(:energy_onboarding)
-  end
-
-  def framework_request_referral_link
-    params[:referred_by] ? Base64.decode64(params[:referred_by]) : request.referer || "direct"
   end
 
   def energy_page?
     params[:slug].to_s.start_with?("energy/")
-  end
-
-  # Flags the session so SessionsController#entry_path sends the user
-  # into the energy journey after DfE Sign-in
-  def remember_energy_onboarding
-    session.delete(:email_evaluator_link)
-    session.delete(:email_school_buyer_link)
-    session.delete(:faf_referrer)
-    session[:energy_onboarding] = true
   end
 
   def build_page_breadcrumbs(page)
