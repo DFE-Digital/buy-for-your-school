@@ -33,21 +33,6 @@ RSpec.describe "FABS solutions", type: :request do
     Capybara.string(response.body)
   end
 
-  describe "GET /solutions" do
-    before do
-      allow(Solution).to receive(:all).and_return([solution])
-    end
-
-    it "renders the index page and links solutions to category-scoped URLs" do
-      get solutions_path
-
-      expect(response).to be_successful
-      expect(response.body).to include("<title>#{I18n.t('solutions.index.all_buying_options_title')} - #{I18n.t('service.name')}</title>")
-      expect(document).to have_link("Audit and financial services", href: "/categories/banking-finance/audit-and-financial-services")
-      expect(response.body).to include("Buy audit and financial services.")
-    end
-  end
-
   describe "GET /categories/:category_slug/:slug" do
     before do
       allow(RedirectMatcher).to receive(:call).with("/categories/banking-finance/audit-and-financial-services").and_return(nil)

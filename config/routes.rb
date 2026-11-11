@@ -657,9 +657,7 @@ Rails.application.routes.draw do
   resources :categories, only: %i[index show], param: :slug do
     resources :solutions, only: %i[show], param: :slug, path: ""
   end
-
-  resources :solutions, only: %i[show index], param: :slug
-  resources :offers, only: %i[index show], param: :slug
+  resources :solutions, only: %i[show], param: :slug
 
   resources :contentful_webhooks, only: %i[create]
 
