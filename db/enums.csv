@@ -212,11 +212,6 @@ frameworks_framework_data,status,dfe_approved,3
 frameworks_framework_data,status,cab_approved,4
 frameworks_framework_data,status,expired,5
 frameworks_framework_data,status,archived,6
-journeys,state,initial,0
-journeys,state,stale,1
-journeys,state,archive,2
-journeys,state,remove,3
-journeys,state,finished,4
 request_for_help_categories,flow,services,0
 request_for_help_categories,flow,goods,1
 request_for_help_categories,flow,energy,2
@@ -459,12 +454,6 @@ support_tower_cases,support_level,L5,4
 support_tower_cases,support_level,L6,5
 support_tower_cases,support_level,L7,6
 support_tower_cases,support_level,unspecified,99
-support_requests,confidence_level,not_applicable,0
-support_requests,confidence_level,not_at_all_confident,1
-support_requests,confidence_level,somewhat_confident,2
-support_requests,confidence_level,slightly_confident,3
-support_requests,confidence_level,confident,4
-support_requests,confidence_level,very_confident,5
 usability_survey_responses,service,find_a_buying_solution,0
 user_feedback,satisfaction,very_dissatisfied,0
 user_feedback,satisfaction,dissatisfied,1

@@ -1,9 +1,0 @@
-<%= content_for :title, I18n.t("journey.new.categories.header") %>
-
-<%= form.hidden_field :category, value: nil %>
-
-<%= form.govuk_radio_buttons_fieldset(:category, legend: { size: "l", text: I18n.t("journey.new.categories.header") }) do %>
-  <% @categories.each do |category| %>
-    <%= form.govuk_radio_button :category, category.slug, label: { text: category.title }, hint: { text: category.description } %>
-  <% end %>
-<% end %>

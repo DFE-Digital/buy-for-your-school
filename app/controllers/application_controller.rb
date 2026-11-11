@@ -47,25 +47,6 @@ protected
     redirect_to cms_signin_path, notice: I18n.t("banner.session.visitor")
   end
 
-  # @return [Journey]
-  #
-  def current_journey
-    journey_id = params[:journey_id].presence || params[:id]
-    @current_journey ||= JourneyPresenter.new(Journey.find(journey_id))
-  end
-
-  # `Before Action` on:
-  #   - steps_controller
-  #   - answers_controller
-  #   - journeys_controller
-  #   - specifications_controller
-  #
-  def check_user_belongs_to_journey?
-    return true if current_journey.user == current_user
-
-    render "errors/not_found", status: :not_found
-  end
-
   def support_portal?
     portal_namespace.to_s.inquiry.support?
   end
