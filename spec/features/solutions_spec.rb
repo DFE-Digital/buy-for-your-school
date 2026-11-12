@@ -115,6 +115,14 @@ RSpec.describe "Solutions pages", type: :feature do
     )
   end
 
+  describe "GET /solutions" do
+    it "redirects to the home page" do
+      visit "/solutions"
+
+      expect(page).to have_current_path(root_path)
+    end
+  end
+
   describe "GET /solutions/:slug" do
     before do
       visit solution_path("it-hardware")
