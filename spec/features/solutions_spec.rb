@@ -117,6 +117,10 @@ RSpec.describe "Solutions pages", type: :feature do
 
   describe "GET /solutions" do
     it "redirects to the home page" do
+      allow(FABS::Category).to receive(:all).and_return([])
+      allow(Offer).to receive(:featured_offers).and_return([])
+      allow(PopularLink).to receive(:all).and_return([])
+
       visit "/solutions"
 
       expect(page).to have_current_path(root_path)
