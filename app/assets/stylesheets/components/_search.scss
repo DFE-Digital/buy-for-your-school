@@ -19,3 +19,12 @@
   justify-content: end;
   color: #505a5f;
 }
+
+.search-results-section .chevron-card:first-child {
+  border-top: 1px solid $govuk-border-colour;
+  padding-top: 5px;
+}
+
+.search-results-section .chevron-card:first-child .chevron-card__wrapper {
+  padding-top: 19px;
+}

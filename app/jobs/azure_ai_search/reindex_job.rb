@@ -3,7 +3,7 @@ module AzureAiSearch
     queue_as :default
 
     def perform
-      AzureAiSearch::SolutionIndexer.new.sync_all
+      ContentfulIndexer.new.sync_all
     end
   end
 end

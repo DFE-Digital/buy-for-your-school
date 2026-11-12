@@ -186,6 +186,28 @@ RSpec.describe FABS::Category, type: :model do
     end
   end
 
+  describe ".find_by_id!" do
+    it "fetches one category when it has a published solution" do
+      entry = category_entry(id: "category-1")
+      allow(Solution).to receive(:unique_category_ids).and_return(%w[category-1])
+      allow(ContentfulClient).to receive(:entries).and_return([entry])
+
+      category = described_class.find_by_id!("category-1")
+
+      expect(category).to be_a(described_class)
+      expect(category.id).to eq("category-1")
+      expect(ContentfulClient).to have_received(:entries).with(content_type: "category", 'sys.id': "category-1")
+    end
+
+    it "does not fetch categories without a published solution" do
+      allow(Solution).to receive(:unique_category_ids).and_return([])
+      allow(ContentfulClient).to receive(:entries)
+
+      expect { described_class.find_by_id!("category-1") }.to raise_error(ContentfulRecordNotFoundError, "Category not found")
+      expect(ContentfulClient).not_to have_received(:entries)
+    end
+  end
+
   describe "#subcategories" do
     subject(:category) { described_class.new(entry) }
 
@@ -220,26 +242,6 @@ RSpec.describe FABS::Category, type: :model do
 
       expect(category.subcategories).to all(be_a(Subcategory))
       expect(category.subcategories.map(&:title)).to eq(expected_titles)
-    end
-  end
-
-  describe ".search" do
-    subject(:search) { described_class.search(query:) }
-
-    let(:query) { "catering" }
-
-    before do
-      allow(ContentfulClient).to receive(:entries).and_return([category_entry])
-    end
-
-    it "returns categories matching the query" do
-      expect(search).to all(be_a(described_class))
-      expect(search.first).to have_attributes(
-        id: be_present,
-        title: be_present,
-        description: be_present,
-        slug: be_present,
-      )
     end
   end
 

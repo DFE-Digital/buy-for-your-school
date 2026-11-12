@@ -1,24 +1,20 @@
 class SearchController < Fabs::ApplicationController
-  # These are the limits for the Contentful search API
+  # Keep searches bounded before sending them to Azure AI Search.
   MAX_QUERY_LENGTH = 150
   MAX_WORDS = 25
 
   def index
-    @solutions = []
-    @categories = []
+    @results = []
     @results_count = 0
+    @query = params[:query].to_s.strip
     add_breadcrumb_on_rails home_breadcrumb_name, home_breadcrumb_path
     @page_title = "Search results - #{helpers.strip_tags(params[:query])}"
     unless invalid_query?(params[:query])
-      query = params[:query].strip
-      @solutions = Solution.search(query:)
-      @categories = FABS::Category.search(query:)
-      @results_count = @solutions.count + @categories.count
+      @results = AzureAiSearch::ContentfulSearcher.new(query: @query).search
+      @results_count = @results.count
     end
 
     render layout: "search"
-  rescue Contentful::BadRequest
-    @validation_error = :contentful_error
   end
 
 private
