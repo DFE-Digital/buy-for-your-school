@@ -31,9 +31,6 @@ runs:
         echo '---'
         for template in \
           categories/index \
-          energy/onboarding/start \
-          energy/onboarding/before_you_start \
-          energy/onboarding/guidance \
           framework_requests/framework_requests/index \
         ; do
           timestamp=$(git log -1 --format=%ct -- "app/views/${template}.html.erb")
