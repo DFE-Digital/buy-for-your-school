@@ -654,6 +654,7 @@ Rails.application.routes.draw do
   end
 
   # FABS routes
+  get "/solutions", to: redirect("/", status: 301)
   resources :categories, only: %i[index show], param: :slug do
     resources :solutions, only: %i[show], param: :slug, path: ""
   end
