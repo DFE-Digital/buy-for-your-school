@@ -588,6 +588,14 @@ Rails.application.routes.draw do
   end
   # rubocop:enable Layout/SpaceInsideArrayPercentLiteral
 
+  # Temporary local gas price PDF previews using the sample pricing fixtures
+  if Rails.env.development?
+    get "/energy/gas-price-update-previews", to: "energy/gas_price_update_previews#index", as: :energy_gas_price_update_previews
+    get "/energy/gas-price-update-previews/single-meter", to: "energy/gas_price_update_previews#single_meter", as: :energy_gas_price_update_preview_single_meter
+    get "/energy/gas-price-update-previews/multi-meter", to: "energy/gas_price_update_previews#multi_meter", as: :energy_gas_price_update_preview_multi_meter
+    get "/energy/gas-price-update-previews/nine-meters", to: "energy/gas_price_update_previews#nine_meters", as: :energy_gas_price_update_preview_nine_meters
+  end
+
   # Cec
   namespace :cec do
     root to: "onboarding_cases#index"
