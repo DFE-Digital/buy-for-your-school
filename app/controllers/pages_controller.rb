@@ -13,6 +13,7 @@ class PagesController < ApplicationController
     if page.present?
       @page_title = @page.title
       @seo_description = @page.seo_description
+      @get_expert_help = GetExpertHelp.content if @page.show_request_help
       add_breadcrumb_on_rails(home_breadcrumb_name, home_breadcrumb_path)
       build_page_breadcrumbs(@page)
       render "fabs/pages/show", layout: "pages"

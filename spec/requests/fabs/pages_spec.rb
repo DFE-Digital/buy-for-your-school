@@ -99,6 +99,63 @@ RSpec.describe "FABS pages", type: :request do
     expect(response.body).not_to include("Related reading")
   end
 
+  describe "request help" do
+    let(:get_expert_help) do
+      GetExpertHelp.new(OpenStruct.new(id: "get-expert-help-id", fields: { title: "Request help", description: "Get help from our team" }))
+    end
+
+    def page_entry_with_request_help(show_request_help)
+      contentful_entry(
+        id: "page-request-help",
+        content_type: "page",
+        fields: {
+          title: "DfE-led offers and frameworks",
+          description: "Page description",
+          body: "Body",
+          slug: "dfe-offers-frameworks",
+          parent: category_entry,
+          related_content: [],
+          show_request_help:,
+        },
+      )
+    end
+
+    before do
+      allow(RedirectMatcher).to receive(:call).with("/dfe-offers-frameworks").and_return(nil)
+      allow(GetExpertHelp).to receive(:content).and_return(get_expert_help)
+    end
+
+    it "shows the get expert help section when show_request_help is true" do
+      allow(FABS::Page).to receive(:find_by_slug!).with("dfe-offers-frameworks").and_return(FABS::Page.new(page_entry_with_request_help(true)))
+
+      get page_path("dfe-offers-frameworks")
+
+      expect(response).to be_successful
+      expect(GetExpertHelp).to have_received(:content)
+      expect(document).to have_css("details.govuk-details", text: "Request help")
+    end
+
+    it "does not show the get expert help section when show_request_help is false" do
+      allow(FABS::Page).to receive(:find_by_slug!).with("dfe-offers-frameworks").and_return(FABS::Page.new(page_entry_with_request_help(false)))
+
+      get page_path("dfe-offers-frameworks")
+
+      expect(response).to be_successful
+      expect(GetExpertHelp).not_to have_received(:content)
+      expect(response.body).not_to include("Request help")
+    end
+
+    it "does not show the get expert help section when show_request_help is not set" do
+      allow(FABS::Page).to receive(:find_by_slug!).with("dfe-offers-frameworks").and_return(FABS::Page.new(page_entry_with_request_help(nil)))
+
+      get page_path("dfe-offers-frameworks")
+
+      expect(response).to be_successful
+      expect(GetExpertHelp).not_to have_received(:content)
+      expect(response.body).not_to include("Request help")
+    end
+  end
+
   it "returns not found when the FABS page does not exist" do
     allow(RedirectMatcher).to receive(:call).with("/missing-page").and_return(nil)
     allow(FABS::Page).to receive(:find_by_slug!).with("missing-page")
