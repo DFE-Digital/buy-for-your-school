@@ -3,9 +3,11 @@ class PagesController < ApplicationController
 
   include Breadcrumbs
   include Redirectable
+  include Referable
 
   before_action :redirect_legacy_slugs
-  before_action :remember_energy_onboarding, if: :energy_page?
+  before_action :remember_energy_referrer, if: :energy_page?
+  before_action :remember_request_referrer, if: :referable_page?
 
   def show
     if page.present?
@@ -32,17 +34,12 @@ private
     @page ||= FABS::Page.find_by_slug!(params[:slug])
   end
 
-  def energy_page?
-    params[:slug].to_s.start_with?("energy/")
+  def referable_page?
+    params[:slug].to_s == "procurement-support"
   end
 
-  # Flags the session so SessionsController#entry_path sends the user
-  # into the energy journey after DfE Sign-in
-  def remember_energy_onboarding
-    session.delete(:email_evaluator_link)
-    session.delete(:email_school_buyer_link)
-    session.delete(:faf_referrer)
-    session[:energy_onboarding] = true
+  def energy_page?
+    params[:slug].to_s.start_with?("energy/")
   end
 
   def build_page_breadcrumbs(page)

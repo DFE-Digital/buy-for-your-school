@@ -1,6 +1,11 @@
 require "rails_helper"
 
 describe "Request for support: user journey tracking" do
+  before do
+    start_page = OpenStruct.new(title: "Request help", slug: "procurement-support", parent: nil, related_content: [], attachments: [])
+    allow(FABS::Page).to receive(:find_by_slug!).with("procurement-support").and_return(start_page)
+  end
+
   context "when the session_id parameter is provided" do
     context "and a user journey exists for this session id" do
       before { create(:user_journey, session_id: "SESSION-ID") }

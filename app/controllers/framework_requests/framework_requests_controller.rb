@@ -3,12 +3,6 @@ class FrameworkRequests::FrameworkRequestsController < FrameworkRequests::Applic
 
   before_action :framework_request, only: %i[show]
 
-  def index
-    session[:faf_referrer] = referral_link
-    session.delete(:energy_case_tasks_path)
-    session.delete(:energy_onboarding)
-  end
-
   def show
     if framework_request.submitted?
       flash.clear
@@ -21,10 +15,6 @@ class FrameworkRequests::FrameworkRequestsController < FrameworkRequests::Applic
   end
 
 private
-
-  def referral_link
-    params[:referred_by] ? Base64.decode64(params[:referred_by]) : request.referer || "direct"
-  end
 
   def framework_request
     @framework_request ||= FrameworkRequestPresenter.new(FrameworkRequest.find(params[:id]))

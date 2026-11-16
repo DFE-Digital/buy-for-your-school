@@ -7,8 +7,12 @@ module MarkdownHelper
   #   "[==Start now==>](/url)" - start button with an arrow icon
   #   "[==Contact us==](/url)" - standard button without an arrow icon
   #   "[==Sign in==](/auth/dfe)" - standard button that submits a POST request to DfE Sign-in
+  #   "[==Start now==>](/procurement-support/start)" - start button with an arrow icon that submits a POST request
   CTA_BUTTON_PATTERN = /\A==(.+?)==\s*(>)?\z/m
   DFE_SIGN_IN_PATH = "/auth/dfe".freeze
+  PROCUREMENT_SUPPORT_START_PATH = "/procurement-support/start".freeze
+  # Buttons linking to these paths are rendered as forms that submit a POST request
+  POST_BUTTON_PATHS = [DFE_SIGN_IN_PATH, PROCUREMENT_SUPPORT_START_PATH].freeze
 
   def render_markdown_to_html(markdown_content)
     return "" if markdown_content.blank?
@@ -51,11 +55,13 @@ module MarkdownHelper
       text = match[1].strip
       html_attributes = link.attributes.slice("target", "rel").transform_values(&:value)
 
-      post_button = link["href"] == DFE_SIGN_IN_PATH
-      button = if post_button
+      start_button = match[2] == ">"
+      post_button = POST_BUTTON_PATHS.include?(link["href"])
+
+      button = if start_button
+                 govuk_start_button(text:, href: link["href"], as_button: post_button, html_attributes:)
+               elsif post_button
                  govuk_button_to(text, link["href"])
-               elsif match[2] == ">"
-                 govuk_start_button(text:, href: link["href"], html_attributes:)
                else
                  govuk_button_link_to(text, link["href"], **html_attributes.symbolize_keys)
                end
