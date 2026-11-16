@@ -10,9 +10,6 @@
 
   <div class="moj-filter__content">
     <%# Selected filters section — only shown when filters are active %>
-    <% selected_subcategory_slugs = params.fetch(:subcategory_slugs, []).compact_blank %>
-    <% selected_ways_to_buy_slugs = params.fetch(:ways_to_buy_slugs, []).compact_blank %>
-
     <div class="moj-filter__selected">
       <div class="moj-filter__selected-heading">
         <div class="moj-filter__heading-title">
@@ -64,12 +61,12 @@
                     <%= t(".subcategories") %> 
                   </span>
                   <br />
-                  <span class="selected-count"><%= selected_subcategory_slugs.count %> selected </span>   
+                  <span class="selected-count"><%= selected_subcategory_slugs.count %> selected </span>
                 </summary>
                 
                 <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
                   <%= f.collection_check_boxes :subcategory_slugs, subcategories, :slug, :title,
-                      checked: params[:subcategory_slugs] do |b| %>
+                      checked: selected_subcategory_slugs, include_hidden: false do |b| %>
 
                     <div class="govuk-checkboxes__item">
                       <%= b.check_box(class: "govuk-checkboxes__input") %>
@@ -99,7 +96,7 @@
 
                 <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
                   <%= f.collection_check_boxes :ways_to_buy_slugs, ways_to_buy, :slug, :title,
-                      checked: params[:ways_to_buy_slugs] do |b| %>
+                      checked: selected_ways_to_buy_slugs, include_hidden: false do |b| %>
                     <div class="govuk-checkboxes__item">
                       <%= b.check_box(class: "govuk-checkboxes__input") %>
                       <%= b.label(class: "govuk-label govuk-checkboxes__label") do %>
