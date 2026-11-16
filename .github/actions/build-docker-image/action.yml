@@ -31,7 +31,6 @@ runs:
         echo '---'
         for template in \
           categories/index \
-          framework_requests/framework_requests/index \
         ; do
           timestamp=$(git log -1 --format=%ct -- "app/views/${template}.html.erb")
           printf '%s: %s\n' "$template" "$timestamp"

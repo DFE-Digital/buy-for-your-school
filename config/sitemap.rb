@@ -7,7 +7,6 @@ SitemapGenerator::Sitemap.default_host = "https://get-help-buying-for-schools.ed
 # N.B. Ensure to update action.yml (build-docker-image) when adding new static pages
 STATIC_PAGES = {
   "" => "categories/index",
-  "procurement-support" => "framework_requests/framework_requests/index",
 }.freeze
 
 # rubocop:disable all
