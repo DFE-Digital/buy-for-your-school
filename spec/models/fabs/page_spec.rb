@@ -21,6 +21,28 @@ RSpec.describe FABS::Page, type: :model do
       expect(page.attachments).to contain_exactly(an_instance_of(ContentfulAttachment))
       expect(page.attachments.first.file_name).to eq("guide.pdf")
     end
+
+    context "when show_request_help is true" do
+      let(:entry) { page_entry(show_request_help: true) }
+
+      it "sets show_request_help to true" do
+        expect(page.show_request_help).to be(true)
+      end
+    end
+
+    context "when show_request_help is false" do
+      let(:entry) { page_entry(show_request_help: false) }
+
+      it "sets show_request_help to false" do
+        expect(page.show_request_help).to be(false)
+      end
+    end
+
+    context "when show_request_help is not set" do
+      it "defaults show_request_help to false" do
+        expect(page.show_request_help).to be(false)
+      end
+    end
   end
 
   describe ".find_by_slug!" do
@@ -76,7 +98,7 @@ RSpec.describe FABS::Page, type: :model do
     end
   end
 
-  def page_entry(id: "page-id", title: "Dynamic purchasing systems", body: "Page body", description: "Page description", slug: "dynamic-purchasing-systems", related_content: [related_content_entry], parent: nil, attachments: [attachment_entry])
+  def page_entry(id: "page-id", title: "Dynamic purchasing systems", body: "Page body", description: "Page description", slug: "dynamic-purchasing-systems", related_content: [related_content_entry], parent: nil, attachments: [attachment_entry], show_request_help: nil)
     OpenStruct.new(
       id:,
       fields: {
@@ -87,6 +109,7 @@ RSpec.describe FABS::Page, type: :model do
         related_content:,
         parent:,
         attachments:,
+        show_request_help:,
       },
     )
   end
