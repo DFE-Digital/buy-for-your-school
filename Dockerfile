@@ -16,6 +16,11 @@ RUN \
     nodejs \
     npm \
     pdftk-java \
+    libpng16-16t64 \
+    libxrender1 \
+    libfontconfig1 \
+    libfreetype6 \
+    libx11-6
     && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
