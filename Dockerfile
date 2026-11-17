@@ -20,7 +20,7 @@ RUN \
     libxrender1 \
     libfontconfig1 \
     libfreetype6 \
-    libx11-6
+    libx11-6 \
     && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
