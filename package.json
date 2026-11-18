@@ -52,7 +52,8 @@
     "websocket-driver": "0.7.5",
     "ws": "8.21.0",
     "yaml": "1.10.3",
-    "proxy-addr": "2.0.8"
+    "proxy-addr": "2.0.8",
+    "source-map-js": "1.2.2"
   },
   "babel": {
     "presets": [
