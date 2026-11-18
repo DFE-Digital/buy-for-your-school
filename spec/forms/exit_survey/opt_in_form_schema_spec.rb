@@ -1,5 +1,5 @@
 RSpec.describe ExitSurvey::OptInFormSchema do
-  subject(:schema) { described_class.new.call(nil) }
+  subject(:schema) { described_class.new.call({}) }
 
   describe "validates opt_in" do
     context "when the opt_in key is provided" do
