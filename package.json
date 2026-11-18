@@ -47,7 +47,7 @@
     "launch-editor": "2.14.2",
     "node-forge": "1.4.0",
     "on-headers": "1.1.0",
-    "qs": "6.16.0",
+    "qs": "6.17.1",
     "shell-quote": "1.12.0",
     "websocket-driver": "0.7.5",
     "ws": "8.21.0",
