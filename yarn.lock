@@ -2568,10 +2568,10 @@ accepts@~1.3.8:
     mime-types "~2.1.34"
     negotiator "0.6.3"
 
-accessible-autocomplete@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/accessible-autocomplete/-/accessible-autocomplete-3.0.0.tgz"
-  integrity sha512-Kpm6EX+jjD0AurWfzSP4EVLEKsLUWCazZwidjum+8FCRtSINeaPzVa3ElKVGWvSqVZN9zjeSBF8cirhYEZjW1A==
+accessible-autocomplete@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/accessible-autocomplete/-/accessible-autocomplete-3.0.2.tgz#1d6cdd4917ca83083c6af840f9f71b13b516231a"
+  integrity sha512-po7fS9YyTFFZjzaenYKtV4JUcb6xh2eFttTsspg5NIX5epQCbderffjW8evYOTuDh+FgJyYPwL9B7qTkhND3gA==
 
 acorn@^8.15.0:
   version "8.15.0"
