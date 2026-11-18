@@ -1,8 +1,0 @@
-<%= content_for :title, @step.title %>
-
-<%# TODO: A heading may be required here to satisfy accessibility assessment %>
-<%= form_for @answer, as: :answer, method: "put", url: journey_step_answer_path(@journey, @step, @answer) do |f| %>
-  <%= f.govuk_error_summary %>
-  <%= yield f %>
-  <%= f.submit I18n.t("generic.button.update"), class: "govuk-button" %>
-<% end %>

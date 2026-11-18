@@ -1,6 +1,8 @@
 RSpec.describe "Contentful tasks" do
   before do
-    Rake.application.rake_require("tasks/contentful")
+    unless Rake::Task.task_defined?("contentful:check_solution_urls")
+      Rake.application.rake_require("tasks/contentful")
+    end
     Rake::Task.define_task(:environment)
   end
 

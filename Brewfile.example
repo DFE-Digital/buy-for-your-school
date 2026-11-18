@@ -14,10 +14,6 @@ brew "libpq"
 # brew "postgresql"
 # brew "redis"
 
-# Install `pandoc` and `basictex` for converting Markdown documents into any format (required for specifications)
-# brew "pandoc"
-# brew "basictex"
-
 # Additional tools
 # ----------------------
 

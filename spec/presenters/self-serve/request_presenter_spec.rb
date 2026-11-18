@@ -1,11 +1,11 @@
 RSpec.describe RequestPresenter do
-  subject(:presenter) { described_class.new(support_request) }
+  subject(:presenter) { described_class.new(request) }
 
-  let(:support_request) { build(:support_request) }
+  let(:request) { build(:framework_request) }
 
   describe "#procurement_amount" do
     context "when there is a procurement_amount" do
-      let(:support_request) { build(:support_request, procurement_amount: 54.55) }
+      let(:request) { build(:framework_request, procurement_amount: 54.55) }
 
       it "returns a formatted amount" do
         expect(presenter.procurement_amount).to eq "£54.55"
@@ -13,7 +13,7 @@ RSpec.describe RequestPresenter do
     end
 
     context "when there is no procurement_amount" do
-      let(:support_request) { build(:support_request, procurement_amount: nil) }
+      let(:request) { build(:framework_request, procurement_amount: nil) }
 
       it "returns 'Not provided'" do
         expect(presenter.procurement_amount).to eq "Not provided"
@@ -23,7 +23,7 @@ RSpec.describe RequestPresenter do
 
   describe "#special_requirements" do
     context "when there are special_requirements" do
-      let(:support_request) { build(:support_request, special_requirements: "These are special requirements") }
+      let(:request) { build(:framework_request, special_requirements: "These are special requirements") }
 
       it "returns the string" do
         expect(presenter.special_requirements).to eq "These are special requirements"
@@ -31,7 +31,7 @@ RSpec.describe RequestPresenter do
     end
 
     context "when there are no special_requirements" do
-      let(:support_request) { build(:support_request, special_requirements: nil) }
+      let(:request) { build(:framework_request, special_requirements: nil) }
 
       it "returns no" do
         expect(presenter.special_requirements).to eq "No"

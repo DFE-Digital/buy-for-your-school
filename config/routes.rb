@@ -50,30 +50,9 @@ Rails.application.routes.draw do
     get "/faf/:referral_path", to: "referrals#faf"
   end
 
-  # Contentful
+  # Automated testing API
   namespace :api do
     get "solutions", to: "solutions#index"
-
-    namespace :user_journeys do
-      post "step" => "step#create"
-    end
-  end
-
-  # Create a specification (Specify) decommissioned → group all redirects to FABS
-  scope do
-    %w[
-      dashboard
-      create_a_specification
-      profile
-      submit
-    ].each do |path|
-      match "/#{path}(*rest)", to: redirect("/", status: 301), via: :all
-    end
-
-    match "/:prefix/*rest",
-          to: redirect("/", status: 301),
-          via: :all,
-          constraints: { prefix: /(journeys|support-requests|support-request-submissions|preview|feedback)/ }
   end
 
   # Request for help

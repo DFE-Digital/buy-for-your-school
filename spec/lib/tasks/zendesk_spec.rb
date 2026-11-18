@@ -2,7 +2,9 @@ require "rails_helper"
 
 RSpec.describe "Zendesk tasks" do
   before do
-    Rake.application.rake_require("tasks/zendesk")
+    unless Rake::Task.task_defined?("zendesk:ticket_forms")
+      Rake.application.rake_require("tasks/zendesk")
+    end
     Rake::Task.define_task(:environment)
   end
 

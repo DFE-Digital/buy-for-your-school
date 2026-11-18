@@ -9,23 +9,19 @@ RUN \
   apt-get update && \
   apt-get install -qq -y --fix-missing --no-install-recommends \
     build-essential \
-    curl \
     git \
     gnupg2 \
     libpq-dev \
     libyaml-dev \
-    lmodern \
     nodejs \
     npm \
-    texlive \
-    texlive-latex-recommended \
-    wget \
     pdftk-java \
+    libpng16-16t64 \
+    libxrender1 \
+    libfontconfig1 \
+    libfreetype6 \
+    libx11-6 \
     && \
-  curl --silent --location --output pandoc.deb \
-    https://github.com/jgm/pandoc/releases/download/2.14.2/pandoc-2.14.2-1-amd64.deb && \
-  apt-get install -qq -y --fix-missing --no-install-recommends ./pandoc.deb && \
-  rm pandoc.deb && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
   ln -s /usr/bin/pdftk-java /usr/local/bin/pdftk && \
