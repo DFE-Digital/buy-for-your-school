@@ -54,7 +54,9 @@
     "yaml": "1.10.3",
     "proxy-addr": "2.0.8",
     "source-map-js": "1.2.2",
-    "body-parser": "2.4.0"
+    "body-parser": "2.4.0",
+    "glob": "14.0.6",
+    "minimatch": "11.0.9"
   },
   "babel": {
     "presets": [
