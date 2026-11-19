@@ -1,5 +1,5 @@
 RSpec.describe ExitSurvey::HearAboutServiceFormSchema do
-  subject(:schema) { described_class.new.call(nil) }
+  subject(:schema) { described_class.new.call({}) }
 
   describe "validates hear_about_service" do
     context "when the hear_about_service key is provided" do

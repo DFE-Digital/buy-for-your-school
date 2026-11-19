@@ -1,5 +1,5 @@
 RSpec.describe ExitSurvey::FutureSupportFormSchema do
-  subject(:schema) { described_class.new.call(nil) }
+  subject(:schema) { described_class.new.call({}) }
 
   describe "validates future_support" do
     context "when the better_quality key is provided" do

@@ -1,5 +1,5 @@
 RSpec.describe ExitSurvey::SatisfactionReasonFormSchema do
-  subject(:schema) { described_class.new.call(nil) }
+  subject(:schema) { described_class.new.call({}) }
 
   describe "validates satisfaction_text" do
     context "when the satisfaction_text key is provided" do

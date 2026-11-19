@@ -1,5 +1,5 @@
 RSpec.describe ExitSurvey::SavedTimeFormSchema do
-  subject(:schema) { described_class.new.call(nil) }
+  subject(:schema) { described_class.new.call({}) }
 
   describe "validates saved_time" do
     context "when the saved_time key is provided" do

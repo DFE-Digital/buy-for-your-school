@@ -27,7 +27,7 @@ gem "govuk-components", "~> 6.5"
 gem "govuk_design_system_formbuilder", "~> 6"
 gem "httparty"
 gem "httpclient"
-gem "jbuilder", "~> 2.14"
+gem "jbuilder", "~> 2.15"
 gem "jsbundling-rails"
 gem "jwt"
 gem "kramdown"
@@ -82,7 +82,7 @@ end
 
 group :development do
   gem "foreman"
-  gem "listen", ">= 3.8", "< 3.10"
+  gem "listen", "~> 3.10"
   gem "web-console", ">= 3.3.0"
 end
 
