@@ -8,7 +8,10 @@ export default class extends Controller {
       if (this.hiddenTarget.value == "") {
         this.hideClearFrameworkLink();
       }
-      this.inputTarget.addEventListener("change", this.toggle.bind(this));
+    }
+
+    inputTargetConnected(element) {
+      element.querySelector("input").addEventListener("change", this.toggle.bind(this));
     }
 
     hideClearFrameworkLink() {
@@ -22,15 +25,17 @@ export default class extends Controller {
     }
   
     toggle() {
-      if (this.hiddenTarget.value != null) {
+      if (this.hiddenTarget.value !== "") {
         this.showClearFrameworkLink();
+      } else {
+        this.hideClearFrameworkLink();
       }
     }
 
     clearFramework(e) {
       e.preventDefault()
       this.inputTarget.querySelector("#framework-autocomplete").value = "";
-      this.hiddenTarget.value = null;
+      this.hiddenTarget.value = "";
       this.hideClearFrameworkLink();
     }
 }
