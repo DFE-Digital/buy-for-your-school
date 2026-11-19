@@ -1,8 +1,5 @@
-require "timeout"
-
 module AutocompleteHelpers
-  def select_autocomplete_option(option, wait: 10)
-    Timeout.timeout(wait, nil, "unable to find an autocomplete option with text #{option}") { sleep 1 until find(".autocomplete__option", text: option) }
-    find(".autocomplete__option", text: option).click
+  def select_autocomplete_option(option, wait: 2)
+    find(".autocomplete__option", text: option, wait: wait).click
   end
 end
