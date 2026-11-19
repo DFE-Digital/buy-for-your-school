@@ -9,25 +9,22 @@
   <p class="govuk-body-m"> <%= I18n.t("support.case_merge_emails.search.subtitle") %> </p>
   <span class="govuk-caption-m"> <%= I18n.t("support.case_merge_emails.search.hint") %> </span>
 
-  <%=
-    render "components/autocomplete",
-      container_id: "case-autocomplete-container",
-      label_class: "nil",
-      label_text: nil,
-      element_id: "case-autocomplete",
-      element_name: "case_email_mover[destination_ref]",
-      template_field: :source,
-      templates: {
-        "Support::Case" => "{{reference}}, <strong>{{organisation_name}}</strong>, {{organisation_urn}}/{{organisation_ukprn}}, {{agent_name}}",
-        "Frameworks::Evaluation" => "{{reference}}, <strong>{{framework_name}}</strong>, {{framework_provider}}, {{agent_name}}"
-      },
-      value_field: :reference,
-      hidden_fields: {
+  <%= form.govuk_autocomplete_field :destination_ref,
+        element_id: form.field_id(:destination_ref),
+        container_id: "case-autocomplete-container",
+        element_name: "case_email_mover[destination_ref]",
+        label: { text: I18n.t("support.case_merge_emails.search.header"), hidden: true },
+        template_field: :source,
+        templates: {
+          "Support::Case" => "{{reference}}, <strong>{{organisation_name}}</strong>, {{organisation_urn}}/{{organisation_ukprn}}, {{agent_name}}",
+          "Frameworks::Evaluation" => "{{reference}}, <strong>{{framework_name}}</strong>, {{framework_provider}}, {{agent_name}}"
+        },
+        value_field: :reference,
+        hidden_fields: {
           "case_email_mover[destination_id]" => :id,
           "case_email_mover[destination_type]" => :source
-      },
-      query_url: tickets_path(format: :json, q: "{{QUERY}}")
-  %>
+        },
+        query_url: tickets_path(format: :json, q: "{{QUERY}}") %>
 
   <%= form.submit I18n.t("support.generic.continue"), class: "govuk-button" %>
 <% end %>
