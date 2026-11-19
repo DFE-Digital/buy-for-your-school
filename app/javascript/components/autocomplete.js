@@ -17,6 +17,7 @@ import _ from "lodash";
         // id attribute for the autocomplete field
         autocompleteElementId: elementId,
         autocompleteContainerId: containerId,
+        autocompleteContainerData: containerData,
 
         // name attribute for the autocomplete field
         autocompleteElementName: elementName,
@@ -101,6 +102,10 @@ import _ from "lodash";
 
       const container = document.createElement("div");
       if (containerId) container.id = containerId;
+      Object.entries(JSON.parse(containerData || "{}")).forEach(([name, value]) => {
+        const datasetName = name.replace(/_([a-z])/g, (_match, character) => character.toUpperCase());
+        container.dataset[datasetName] = value;
+      });
       element.parentNode.replaceChild(container, element);
 
       const settings = {
