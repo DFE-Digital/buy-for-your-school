@@ -1,17 +1,16 @@
 <%= form_with model: @case_organisation_form, scope: :case_organisation_form, url: support_case_organisation_path(@current_case), method: :patch do |form| %>
   <%= form.govuk_error_summary %>
 
-  <%= render "components/autocomplete",
+  <%= form.govuk_autocomplete_field :organisation_id,
+        element_id: form.field_id(:organisation_id),
         container_id: "organisation-autocomplete-container",
-        label_text: I18n.t("support.case_organisation.label"),
-        label_class: "govuk-heading-l",
-        element_id: "organisation-autocomplete",
         element_name: "case_organisation_form[organisation_name]",
+        label: { text: I18n.t("support.case_organisation.label"), class: "govuk-heading-l" },
         template_suggestion: "{{autocomplete_template}}",
         value_field: :name,
         hidden_fields: {
-          'case_organisation_form[organisation_id]' => :id,
-          'case_organisation_form[organisation_type]' => :source
+          "case_organisation_form[organisation_id]" => :id,
+          "case_organisation_form[organisation_type]" => :source
         },
         query_url: support_establishments_path(format: :json, q: "{{QUERY}}") %>
 
