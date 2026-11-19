@@ -4,17 +4,14 @@
     <h1 class="govuk-heading-l">
         <%= I18n.t("support.case.label.school_details.non_participating_schools.add_school") %>
     </h1>
-    <%= render "components/autocomplete",
+    <%= form.govuk_autocomplete_field :organisation_name,
+            element_id: form.field_id(:organisation_name),
             container_id: "organisation-autocomplete-container",
-            label_text: I18n.t("support.case.label.school_details.non_participating_schools.add_school_hint"),
-            label_class: "govuk-hint",
-            element_id: "organisation-autocomplete",
             element_name: "case_organisation_form[organisation_name]",
+            label: { text: I18n.t("support.case.label.school_details.non_participating_schools.add_school_hint"), class: "govuk-hint" },
             template_suggestion: "{{autocomplete_template}}",
             value_field: :name,
-            hidden_fields: {
-            'case_organisation_form[school_id]' => :id,
-            },
+            hidden_fields: { "case_organisation_form[school_id]" => :id },
             query_url: support_list_for_non_participating_establishment_path(format: :json, q: "{{QUERY}}") %>
     <%= form.submit I18n.t("support.case.label.school_details.non_participating_schools.success.continue"), class: "govuk-button" %>
 <% end %>
