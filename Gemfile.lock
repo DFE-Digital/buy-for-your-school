@@ -130,7 +130,7 @@ GEM
     bindex (0.8.1)
     bootsnap (1.26.0)
       msgpack (~> 1.5)
-    brakeman (8.0.6)
+    brakeman (8.1.0)
       racc
     breadcrumbs_on_rails (4.1.0)
       railties (>= 5.0)
@@ -442,7 +442,6 @@ GEM
     matrix (0.4.2)
     method_source (1.1.0)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.9)
     mini_racer (0.19.1)
       libv8-node (~> 24.1.0.0)
     minitest (6.1.0)
@@ -466,9 +465,6 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.5)
-    nokogiri (1.19.7)
-      mini_portile2 (~> 2.8.2)
-      racc (~> 1.4)
     nokogiri (1.19.7-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.19.7-x86_64-darwin)
@@ -531,7 +527,7 @@ GEM
       method_source (~> 1.0)
     pstore (0.2.1)
     public_suffix (7.0.5)
-    puma (7.2.1)
+    puma (8.1.2)
       nio4r (~> 2.0)
     pundit (2.5.2)
       activesupport (>= 3.0.0)
@@ -871,7 +867,7 @@ DEPENDENCIES
   pdf-forms
   pg
   pg_search
-  puma (~> 7)
+  puma (~> 8)
   pundit
   rails (~> 8.0)
   rails-controller-testing
