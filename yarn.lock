@@ -2081,11 +2081,6 @@
   dependencies:
     "@sinonjs/commons" "^3.0.1"
 
-"@swc/helpers@^0.2.13":
-  version "0.2.14"
-  resolved "https://registry.npmjs.org/@swc/helpers/-/helpers-0.2.14.tgz"
-  integrity sha512-wpCQMhf5p5GhNg2MmGKXzUNwxe7zRiCsmqYsamez2beP7mKPCSiu+BjZcdN95yYSzO857kr0VfQewmGpS77nqA==
-
 "@testing-library/jest-dom@^6.9.1":
   version "6.9.1"
   resolved "https://registry.npmjs.org/@testing-library/jest-dom/-/jest-dom-6.9.1.tgz"
@@ -3264,13 +3259,10 @@ dom-accessibility-api@^0.6.3:
   resolved "https://registry.npmjs.org/dom-accessibility-api/-/dom-accessibility-api-0.6.3.tgz"
   integrity sha512-7ZgogeTnjuHbo+ct10G9Ffp0mif17idi0IyWNVA/wcwcm7NPOD/WEHVP3n7n3MhXqxoIYm8d6MuZohYWIZ4T3w==
 
-dropzone@^6.0.0-beta.2:
-  version "6.0.0-beta.2"
-  resolved "https://registry.npmjs.org/dropzone/-/dropzone-6.0.0-beta.2.tgz"
-  integrity sha512-k44yLuFFhRk53M8zP71FaaNzJYIzr99SKmpbO/oZKNslDjNXQsBTdfLs+iONd0U0L94zzlFzRnFdqbLcs7h9fQ==
-  dependencies:
-    "@swc/helpers" "^0.2.13"
-    just-extend "^5.0.0"
+dropzone@^6.3.5:
+  version "6.3.5"
+  resolved "https://registry.yarnpkg.com/dropzone/-/dropzone-6.3.5.tgz#9b60d2abf121b65da62651063a1bd537af06eeb9"
+  integrity sha512-voAoyVj3ZyFwoUVkKMmtfCrp7gbjqKJv3gNCsz0lW1lApcmKILBCbCgBU64hJF4LC4+cs6+peXhsn122fPQqsw==
 
 dunder-proto@^1.0.1:
   version "1.0.1"
@@ -4451,11 +4443,6 @@ json5@^2.2.3:
   version "2.2.3"
   resolved "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz"
   integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
-
-just-extend@^5.0.0:
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/just-extend/-/just-extend-5.1.1.tgz"
-  integrity sha512-b+z6yF1d4EOyDgylzQo5IminlUmzSeqR1hs/bzjBNjuGras4FXq/6TrzjxfN0j+TmI0ltJzTNlqXUMCniciwKQ==
 
 kind-of@^6.0.2:
   version "6.0.3"
