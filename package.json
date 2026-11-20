@@ -2,18 +2,16 @@
   "name": "sct-buy-for-your-school",
   "private": true,
   "dependencies": {
-    "@babel/core": "^7.29.6",
-    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.29.6",
-    "@babel/preset-env": "^7.29.6",
-    "@babel/preset-react": "^7.29.6",
-    "@babel/preset-typescript": "^7.29.6",
+    "@babel/core": "^8.1.2",
+    "@babel/preset-env": "^8.0.7",
+    "@babel/preset-react": "^8.0.1",
+    "@babel/preset-typescript": "^8.0.7",
     "@hods/timeline": "^0.5.2",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.21",
     "@rails/ujs": "^7.1.600",
     "accessible-autocomplete": "^3.0.2",
-    "babel-loader": "^10.0.0",
+    "babel-loader": "^10.1.1",
     "babel-plugin-macros": "^3.1.0",
     "core-js": "^3.50.0",
     "dfe-frontend": "^2.0.1",
@@ -27,7 +25,14 @@
     "tinymce": "^8.8.2",
     "webpack": "^5.112.2",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-middleware": "^8.6.1"
+    "webpack-dev-middleware": "^8.6.1",
+    "@babel/plugin-transform-class-properties": "^8.0.1",
+    "@babel/plugin-transform-destructuring": "^8.0.5",
+    "@babel/plugin-transform-object-rest-spread": "^8.0.1",
+    "@babel/plugin-transform-private-methods": "^8.0.1",
+    "@babel/plugin-transform-private-property-in-object": "^8.0.5",
+    "@babel/plugin-transform-regenerator": "^8.1.2",
+    "babel-plugin-polyfill-corejs3": "^1.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
@@ -36,7 +41,6 @@
     "webpack-dev-server": "^6.0.0"
   },
   "resolutions": {
-    "@babel/core": "7.29.7",
     "ajv": "8.18.0",
     "baseline-browser-mapping": "2.11.0",
     "browserslist": "4.28.7",
@@ -57,13 +61,6 @@
     "body-parser": "2.4.0",
     "glob": "14.0.6",
     "minimatch": "11.0.9"
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react",
-      "@babel/preset-typescript"
-    ]
   },
   "jest": {
     "testPathIgnorePatterns": [
