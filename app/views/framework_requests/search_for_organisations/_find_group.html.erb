@@ -10,7 +10,7 @@
 <%= form.govuk_autocomplete_field :org_id,
       default_value: form.object.org_id,
       element_id: "framework-support-form-org-id-field",
-      container_id: "framework-support-form-org-id-field",
+      container_id: "framework-support-form-org-id-container",
       element_name: "framework_support_form[org_id]",
       label: { text: I18n.t("faf.search_for_a_group.hint"), class: "govuk-hint" },
       template_suggestion: "UID: {{uid}}, <strong>{{name}}</strong>, UKPRN: {{ukprn}}",
