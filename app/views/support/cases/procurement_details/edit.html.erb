@@ -30,25 +30,24 @@
         </div>
       <% end %>
 
-      <div data-controller="framework-edit" class="govuk-form-group">    
-          <%= render "components/autocomplete",
-                element_html: { "data-framework-edit-target" => "input" },
-                element_hidden_html: { "data-framework-edit-target" => "hidden" },
-                container_id: "case-procurement-details-form-framework-field",
-                label_text: I18n.t("support.procurement_details.edit.framework_name.header"),
-                label_class: "govuk-fieldset__legend--m",
+      <div data-controller="framework-edit">
+          <%= form.govuk_autocomplete_field :framework_name,
                 element_id: "framework-autocomplete",
+                container_id: "case-procurement-details-form-framework-container",
+                container_data: { framework_edit_target: "input" },
                 element_name: "case_procurement_details_form[framework_name]",
+                after_input: link_to("Clear selected framework", "#",
+                  data: { framework_edit_target: "output", action: "mousedown->framework-edit#clearFramework click->framework-edit#clearFramework" },
+                  class: "govuk-link govuk-link--no-visited-state"),
+                label: { text: I18n.t("support.procurement_details.edit.framework_name.header"), class: "govuk-fieldset__legend--m" },
                 template_suggestion: "{{display_status}} <strong>{{reference_and_name}}</strong>, {{provider_name}}<br />{{category_names}}<br />Provider start: {{display_provider_start_date}}, Provider end: {{display_provider_end_date}}",
                 value_field: :reference_and_name,
                 default_value: form.object.framework_name,
                 hidden_fields: {
-                  'case_procurement_details_form[frameworks_framework_id]' => [:id, form.object.frameworks_framework_id]
+                  "case_procurement_details_form[frameworks_framework_id]" => [:id, form.object.frameworks_framework_id]
                 },
+                hidden_field_html: { data: { framework_edit_target: "hidden" } },
                 query_url: support_frameworks_path(format: :json, q: "{{QUERY}}") %>
-          <a data-framework-edit-target="output" class="govuk-link govuk-link--no-visited-state" href="#" data-action="click->framework-edit#clearFramework">
-            Clear selected framework
-          </a>
       </div>
 
       <%= form.govuk_date_field :started_at, legend: { text: I18n.t("support.procurement_details.edit.started_at.header") } %>

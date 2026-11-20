@@ -21,7 +21,6 @@
     "express": "^5.2.1",
     "govuk-frontend": "^6.6.0",
     "jest": "^30.5.1",
-    "lodash": "^4.18.0",
     "regenerator-runtime": "^0.14.1",
     "sass": "^1.97.0",
     "tinymce": "^8.8.2",

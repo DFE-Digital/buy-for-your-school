@@ -7,17 +7,15 @@
     <%= form_with model: @case_assignment_form, scope: :case_assignment_form, url: portal_case_assignments_path(@current_case) do |form| %>
       <%= form.govuk_error_summary %>
 
-      <%= render "components/autocomplete",
-            container_id: "case-assignment-form-agent-field",
-            label_text: I18n.t("support.case_assignment.agent_id.label"),
-            label_class: "govuk-hint",
-            element_id: "agent-autocomplete",
+      <%= form.govuk_autocomplete_field :agent_id,
+            element_id: form.field_id(:agent_id),
+            container_id: "case-assignment-form-agent-container",
             element_name: "case_assignment_form[agent_name]",
+            label: { text: I18n.t("support.case_assignment.agent_id.label"), class: "govuk-hint" },
             template_suggestion: "{{full_name}}",
             value_field: :full_name,
-            hidden_fields: {
-              'case_assignment_form[agent_id]' => [:id, form.object.agent_id]
-            },
+            default_value: form.object.agent_id.present? ? form.object.new_agent.full_name : nil,
+            hidden_fields: { "case_assignment_form[agent_id]" => [:id, form.object.agent_id] },
             query_url: support_case_assignments_path(format: :json, q: "{{QUERY}}") %>
 
       <%= form.submit I18n.t("support.case_assignment.submit"), class: "govuk-button" %>
