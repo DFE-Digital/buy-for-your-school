@@ -3,7 +3,7 @@
 </h1>
 <%= form.govuk_autocomplete_field :organisation_name,
       element_id: form.field_id(:organisation_name),
-      container_id: "case-request-school-urn-field",
+      container_id: "case-request-school-urn-container",
       element_name: "case_request[organisation_name]",
       label: { text: I18n.t("support.case_hub_migration.label.school_name"), class: "govuk-hint" },
       value_field: :name,
