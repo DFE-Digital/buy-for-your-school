@@ -33,7 +33,7 @@
       <div data-controller="framework-edit">
           <%= form.govuk_autocomplete_field :framework_name,
                 element_id: "framework-autocomplete",
-                container_id: "case-procurement-details-form-framework-field",
+                container_id: "case-procurement-details-form-framework-container",
                 container_data: { framework_edit_target: "input" },
                 element_name: "case_procurement_details_form[framework_name]",
                 after_input: link_to("Clear selected framework", "#",
