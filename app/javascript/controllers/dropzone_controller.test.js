@@ -1,4 +1,3 @@
-import { before } from 'lodash';
 import DropzoneController from './dropzone_controller';
 
 describe('DropzoneController', () => {

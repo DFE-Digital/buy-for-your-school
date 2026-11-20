@@ -1,5 +1,4 @@
 import accessibleAutocomplete from 'accessible-autocomplete';
-import _ from "lodash";
 
 (() => {
 
@@ -55,7 +54,7 @@ import _ from "lodash";
       // Format the autocomplete choice
       const formatSuggestion = (suggestion, template) => {
         // Allow defaultValue to display
-        if (_.isString(suggestion)) {
+        if (typeof suggestion === "string") {
           return suggestion;
         }
 
@@ -69,7 +68,7 @@ import _ from "lodash";
       }
 
       const determineTemplate = (suggestion, templateField, template) => {
-        if (_.isString(suggestion) || _.isEmpty(templateField)) {
+        if (typeof suggestion === "string" || !templateField) {
           return template;
         }
 
@@ -122,7 +121,7 @@ import _ from "lodash";
             return formatSuggestion(i, template);
           }
         },
-        source: _.throttle(doQueryLookup),
+        source: doQueryLookup,
         onConfirm: setHiddenFields,
         tStatusNoResults: () => "No results found"
       }
