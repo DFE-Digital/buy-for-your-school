@@ -7,6 +7,12 @@ module GOVUKDesignSystemFormBuilderAutocomplete
   def govuk_autocomplete_field(attribute_name, query_url:, value_field:, label:, element_id:, element_name: nil,
                                container_id: nil, container_data: {}, default_value: nil, hidden_fields: {}, template_suggestion: nil,
                                template_field: nil, templates: nil, hidden_field_html: {}, **options)
+    if @object.errors[attribute_name].present?
+      element_id = GOVUKDesignSystemFormBuilder::Proxy
+        .new(@object, @object_name, attribute_name)
+        .field_id(link_errors: true)
+    end
+
     data = (options.delete(:data) || {}).merge(
       component: "autocomplete",
       autocomplete_element_id: element_id,
