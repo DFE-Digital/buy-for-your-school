@@ -61,6 +61,7 @@ module Energy
         template: template_id,
         variables: personalisation,
         attachment: attachment_path.to_s,
+        reply_to_id: ENV["NOTIFY_EMAIL_GAS_PRICE_UPDATE_REPLY_TO_ID"] || ENV["NOTIFY_EMAIL_REPLY_TO_ID"],
         client: @client || Notifications::Client.new(ENV["NOTIFY_API_KEY"]),
       )
     end

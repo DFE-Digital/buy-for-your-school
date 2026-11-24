@@ -95,5 +95,20 @@ RSpec.describe Energy::Emails::GasPriceUpdate do
                                                           ),
                                                         ))
     end
+
+    it "uses the gas price update reply-to address when configured" do
+      allow(client).to receive(:send_email).and_return(notify_response)
+
+      ClimateControl.modify(
+        NOTIFY_EMAIL_GAS_PRICE_UPDATE_REPLY_TO_ID: "gas-price-update-reply-to-id",
+        NOTIFY_EMAIL_REPLY_TO_ID: "default-reply-to-id",
+      ) do
+        service.call
+      end
+
+      expect(client).to have_received(:send_email).with(hash_including(
+                                                          email_reply_to_id: "gas-price-update-reply-to-id",
+                                                        ))
+    end
   end
 end
