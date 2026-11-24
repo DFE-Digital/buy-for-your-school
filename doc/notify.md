@@ -7,12 +7,12 @@ Gov.uk Notification Service
 
 ## Monthly gas price update emails
 
-The `energy:send_gas_price_updates` rake task sends one email per school in a pricing JSON file. It selects the single-meter or multi-meter Notify template and generates the corresponding PDF forecast for each school. The email and PDF use the current calendar month; the PDF includes the full April-to-March forecast.
+The `energy:send_gas_price_updates` rake task sends one email per school in a pricing JSON file. It selects the single-meter or multi-meter Notify template and generates the corresponding PDF forecast for each school. Pass the month the pricing data applies to; the email and PDF use that month, and the PDF includes the full April-to-March forecast.
 
-Run it from the repository root, passing the JSON file path as the task argument:
+Run it from the repository root, passing the JSON file path and month as task arguments. Use a full English month name, for example `October`:
 
 ```sh
-bundle exec rake "energy:send_gas_price_updates[path/to/pricing.json]"
+bundle exec rake "energy:send_gas_price_updates[path/to/pricing.json,October]"
 ```
 
 The JSON must have a top-level `contacts` array. Each contact has a `Contact Email Address` and a `schools` array. Each school needs `School Name`, `School URN`, `School Postcode`, and a `meters` array containing between 1 and 9 meters. Each meter needs an `mprn`, `Non-COG Unit rate (p/kWh)`, `Daily Charge (£/day)`, and monthly COG and total unit-rate values for every month from April through March. The monthly value keys follow this pattern:
@@ -50,6 +50,6 @@ For example, the file structure is:
 }
 ```
 
-This example shows the shape only: include both rate fields for all 12 forecast months on every meter before running the task. If a school has multiple meters, their COG value for the current month must be the same. The generated rate values are rounded to three decimal places in the email and PDF.
+This example shows the shape only: include both rate fields for all 12 forecast months on every meter before running the task. If a school has multiple meters, their COG value for the specified month must be the same. The generated rate values are rounded to three decimal places in the email and PDF.
 
 The task sends real emails as it processes the file and has no dry-run mode. Check the recipient addresses, school and meter data, `NOTIFY_API_KEY`, and the configured gas price Notify template IDs before running it. If processing fails, the task stops and raises the error; schools processed earlier in the file may already have received their emails.

@@ -2,9 +2,13 @@
 
 namespace :energy do
   desc "Send monthly gas price update emails for each school in a pricing JSON file"
-  task :send_gas_price_updates, [:input_file] => :environment do |_task, args|
+  task :send_gas_price_updates, %i[input_file month] => :environment do |_task, args|
     input_file = args[:input_file]
-    raise ArgumentError, "Provide a pricing JSON file: rake energy:send_gas_price_updates[path/to/file.json]" if input_file.blank?
+    month = args[:month]
+    usage = 'rake "energy:send_gas_price_updates[path/to/file.json,Month]"'
+
+    raise ArgumentError, "Provide a pricing JSON file: #{usage}" if input_file.blank?
+    raise ArgumentError, "Provide a month (for example, October): #{usage}" if month.blank?
 
     pricing_data = JSON.parse(File.read(input_file))
     schools_count = 0
@@ -12,7 +16,7 @@ namespace :energy do
 
     pricing_data.fetch("contacts").each do |contact|
       contact.fetch("schools").each do |school|
-        result = Energy::Emails::GasPriceUpdate.new(contact:, school:).call
+        result = Energy::Emails::GasPriceUpdate.new(contact:, school:, month:).call
         raise "Notify failed: #{result}" if result.is_a?(String)
 
         schools_count += 1
