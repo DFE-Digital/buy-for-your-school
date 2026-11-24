@@ -5701,15 +5701,15 @@ webpack-cli@^6.0.1:
     rechoir "^0.8.0"
     webpack-merge "^6.0.1"
 
-webpack-dev-middleware@^8.4.0, webpack-dev-middleware@^8.6.1:
-  version "8.6.1"
-  resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-8.6.1.tgz#9d87e3947488c614ffdb7ea63d21590d32d9a742"
-  integrity sha512-XU+DA98yi8FpeI0zPEEki2t4cYKoFOf6PmXl+ocBZ/VXcxFfzeFGK48SZIuFy0o5opnRPVdDGTb71Gy102eiGg==
+webpack-dev-middleware@^8.4.0, webpack-dev-middleware@^8.6.2:
+  version "8.6.2"
+  resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-8.6.2.tgz#d5721ed253785f0080bf9d9e28a789f4cff79658"
+  integrity sha512-steMJ1dS33+DuX0I08QMKU1B1qdn7CT3BHYYY3XZa7IMe8r5SAUXXoQOaeqB7CsWQLGxsipAWwAE27q/2inl/Q==
   dependencies:
     memfs "^4.68.2"
     mime-db "^1.54.0"
     range-parser "^1.3.0"
-    schema-utils "^4.3.3"
+    schema-utils "^4.8.5"
   optionalDependencies:
     ws "^8.18.3"
 
