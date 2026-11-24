@@ -110,10 +110,10 @@ module MarkdownHelper
       summary.children.each { |child| summary_text.add_child(child) }
       summary.add_child(summary_text)
 
-      body = Nokogiri::XML::Node.new("div", doc.document)
-      body["class"] = "govuk-details__text"
-      details.children.each { |child| body.add_child(child) unless child == summary }
-      details.add_child(body)
+      summary_body = Nokogiri::XML::Node.new("div", doc.document)
+      summary_body["class"] = "govuk-details__text"
+      details.children.each { |child| summary_body.add_child(child) unless child == summary }
+      details.add_child(summary_body)
     end
 
     doc.css("blockquote").each do |blockquote|
