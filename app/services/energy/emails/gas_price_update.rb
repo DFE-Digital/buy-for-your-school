@@ -46,7 +46,8 @@ module Energy
           meter_number: meter.fetch("mprn"),
           monthly_total_amount: "#{GasPriceFormatting.format(meter.fetch("#{@month} Total Unit Rate (p/kWh)"))} p/kWh",
           fixed_unit_rate: "#{GasPriceFormatting.format(meter.fetch('Non-COG Unit rate (p/kWh)'))} p/kWh",
-          "£/day": "£#{GasPriceFormatting.format(meter.fetch('Daily Charge (£/day)'))}/day",
+          daily_charge: "£#{GasPriceFormatting.format(meter.fetch('Daily Charge (£/day)'))}/day",
+          site_aq: "#{meter.fetch('Site AQ (kWh)')} kWh",
         )
       end
 
