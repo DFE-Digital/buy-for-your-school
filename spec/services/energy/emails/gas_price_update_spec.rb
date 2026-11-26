@@ -30,10 +30,10 @@ RSpec.describe Energy::Emails::GasPriceUpdate do
         month: "October",
         price_per_kwh: "3.381",
         meter_number: "0000000001",
-        monthly_total_amount: "3.504 p/kWh",
-        fixed_unit_rate: "0.123 p/kWh",
-        daily_charge: "£3.113/day",
-        site_aq: "168218 kWh",
+        monthly_total_amount: "3.504",
+        fixed_unit_rate: "0.123",
+        daily_charge: "£3.113",
+        site_aq: "168,218",
         sender_name: "DfE Energy for Schools Team",
       )
     end

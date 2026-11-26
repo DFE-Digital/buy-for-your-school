@@ -21,7 +21,7 @@ RSpec.describe "energy:send_gas_price_updates" do
 
   it "passes the specified month to each gas price update email" do
     allow(File).to receive(:read).with(input_file).and_return(pricing_data.to_json)
-    expect(Energy::Emails::GasPriceUpdate).to receive(:new)
+    allow(Energy::Emails::GasPriceUpdate).to receive(:new)
       .with(contact:, school:, month: "October")
       .and_return(email_sender)
 

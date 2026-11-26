@@ -4,6 +4,8 @@ require "notify/email"
 
 module Energy
   class Emails::GasPriceUpdate
+    include ActionView::Helpers::NumberHelper
+
     SENDER_NAME = "DfE Energy for Schools Team"
     MONTHS = %w[January February March April May June July August September October November December].freeze
     RECIPIENT = Struct.new(:email, :first_name, :last_name)
@@ -44,10 +46,10 @@ module Energy
         meter = meters.first
         substitutions.merge!(
           meter_number: meter.fetch("mprn"),
-          monthly_total_amount: "#{GasPriceFormatting.format(meter.fetch("#{@month} Total Unit Rate (p/kWh)"))} p/kWh",
-          fixed_unit_rate: "#{GasPriceFormatting.format(meter.fetch('Non-COG Unit rate (p/kWh)'))} p/kWh",
-          daily_charge: "£#{GasPriceFormatting.format(meter.fetch('Daily Charge (£/day)'))}/day",
-          site_aq: "#{meter.fetch('Site AQ (kWh)')} kWh",
+          monthly_total_amount: GasPriceFormatting.format(meter.fetch("#{@month} Total Unit Rate (p/kWh)")),
+          fixed_unit_rate: GasPriceFormatting.format(meter.fetch("Non-COG Unit rate (p/kWh)")),
+          daily_charge: "£#{GasPriceFormatting.format(meter.fetch('Daily Charge (£/day)'))}",
+          site_aq: number_with_delimiter(meter.fetch("Site AQ (kWh)")),
         )
       end
 
