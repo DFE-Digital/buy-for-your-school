@@ -48,6 +48,10 @@ module Notify
     #   @return [String] Attachment by path to file
     option :attachment, Types::String, optional: true
 
+    # @!attribute [r] reply_to_id
+    #   @return [String] GOV.UK Notify reply-to email address ID
+    option :reply_to_id, default: proc { ENV["NOTIFY_EMAIL_REPLY_TO_ID"] }
+
     # Send message and rescue from errors
     #
     #   - [ArgumentError] attachment file size exceeding 2MB
@@ -92,8 +96,8 @@ module Notify
         personalisation:,
       }
 
-      if ENV["NOTIFY_EMAIL_REPLY_TO_ID"].present?
-        message_params[:email_reply_to_id] = ENV["NOTIFY_EMAIL_REPLY_TO_ID"]
+      if reply_to_id.present?
+        message_params[:email_reply_to_id] = reply_to_id
       end
 
       client.send_email(message_params)
