@@ -1,5 +1,5 @@
 module MarkdownHelper
-  ALLOWED_TAGS = %w[p h1 h2 h3 h4 h5 h6 a ul ol li strong em br img table thead tbody tr th td caption blockquote div hr].freeze
+  ALLOWED_TAGS = %w[p h1 h2 h3 h4 h5 h6 a ul ol li strong em br img table thead tbody tr th td caption blockquote div hr details summary].freeze
   ALLOWED_ATTRIBUTES = %w[href src alt target rel class id style start].freeze
   # Link text wrapped in "==" renders as a GOV.UK button:
   #   "[==Start now==>](/url)" - start button with an arrow icon
@@ -18,7 +18,7 @@ module MarkdownHelper
     html = Kramdown::Document.new(markdown_content).to_html
     html = sanitize(html, tags: ALLOWED_TAGS, attributes: ALLOWED_ATTRIBUTES)
 
-    return html.html_safe unless html.match?(/href|<p\b|<h1\b|<h2\b|<h3\b|<hr\b|<ol\b|<ul\b|<img\b|<table\b/)
+    return html.html_safe unless html.match?(/href|<p\b|<h1\b|<h2\b|<h3\b|<hr\b|<ol\b|<ul\b|<img\b|<table\b|<details\b/)
 
     doc = Nokogiri::HTML.fragment(html)
 
@@ -95,6 +95,25 @@ module MarkdownHelper
 
     doc.css("th").each do |th|
       th["scope"] ||= "col"
+    end
+
+    # <details> blocks render as the GOV.UK details component
+    doc.css("details").each do |details|
+      summary = details.at_css("> summary")
+      next unless summary
+
+      details["class"] = [details["class"], "govuk-details"].compact.join(" ")
+      summary["class"] = [summary["class"], "govuk-details__summary"].compact.join(" ")
+
+      summary_text = Nokogiri::XML::Node.new("span", doc.document)
+      summary_text["class"] = "govuk-details__summary-text"
+      summary.children.each { |child| summary_text.add_child(child) }
+      summary.add_child(summary_text)
+
+      summary_body = Nokogiri::XML::Node.new("div", doc.document)
+      summary_body["class"] = "govuk-details__text"
+      details.children.each { |child| summary_body.add_child(child) unless child == summary }
+      details.add_child(summary_body)
     end
 
     doc.css("blockquote").each do |blockquote|

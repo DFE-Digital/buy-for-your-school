@@ -178,6 +178,23 @@ RSpec.describe MarkdownHelper, type: :helper do
       expect(html).to include("Important buying information")
     end
 
+    it "renders <details> blocks as GOV.UK details components" do
+      markdown = <<~MD
+        <details>
+          <summary>More info</summary>
+          <p>Hidden text</p>
+          <ul><li>Point</li></ul>
+        </details>
+      MD
+      doc = Nokogiri::HTML.fragment(helper.render_markdown_to_html(markdown))
+      details = doc.at_css("details.govuk-details")
+      expect(details).to be_present
+      expect(details.at_css("> summary.govuk-details__summary > span.govuk-details__summary-text").text).to eq("More info")
+      body = details.at_css("> div.govuk-details__text")
+      expect(body.at_css("p.govuk-body").text).to eq("Hidden text")
+      expect(body.at_css("ul.govuk-list li").text).to eq("Point")
+    end
+
     describe "sanitization" do
       it "strips script tags" do
         markdown = "<script>alert('xss')</script>"
