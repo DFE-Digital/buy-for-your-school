@@ -849,7 +849,7 @@ DEPENDENCIES
   flipper-ui
   foreman
   govuk-components (~> 6.5)
-  govuk_design_system_formbuilder (~> 6)
+  govuk_design_system_formbuilder (~> 6.5)
   guard-rspec
   httparty
   httpclient

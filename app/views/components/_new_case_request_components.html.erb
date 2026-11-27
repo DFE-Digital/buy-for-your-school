@@ -1,20 +1,19 @@
 <h1 class="govuk-heading-l">
   <%= I18n.t("support.case.label.create") %>
 </h1>
-<%= render "components/autocomplete",
-            container_id: "case-request-school-urn-field",
-            label_text: I18n.t("support.case_hub_migration.label.school_name"),
-            label_class: "govuk-hint",
-            element_id: "school-urn-autocomplete",
-            element_name: "case_request[organisation_name]",
-            template_suggestion: "{{autocomplete_template}}",
-            value_field: :name,
-            default_value: form.object.organisation&.name,
-            hidden_fields: {
-              'case_request[organisation_id]' => [:id, form.object.organisation&.id],
-              'case_request[organisation_type]' => [:source, form.object.organisation.class&.name],
-            },
-            query_url: support_establishments_path(format: :json, q: "{{QUERY}}") %>
+<%= form.govuk_autocomplete_field :organisation_name,
+      element_id: form.field_id(:organisation_name),
+      container_id: "case-request-school-urn-container",
+      element_name: "case_request[organisation_name]",
+      label: { text: I18n.t("support.case_hub_migration.label.school_name"), class: "govuk-hint" },
+      value_field: :name,
+      default_value: form.object.organisation&.name,
+      template_suggestion: "{{autocomplete_template}}",
+      hidden_fields: {
+        "case_request[organisation_id]" => [:id, form.object.organisation&.id],
+        "case_request[organisation_type]" => [:source, form.object.organisation&.class&.name]
+      },
+      query_url: support_establishments_path(format: :json, q: "{{QUERY}}") %>
 
 
 
