@@ -8,7 +8,7 @@
       <%= form.govuk_error_summary %>
 
       <%= form.govuk_autocomplete_field :agent_id,
-            element_id: form.field_id(:agent_id),
+            element_id: "case-assignment-form-agent-input",
             container_id: "case-assignment-form-agent-container",
             element_name: "case_assignment_form[agent_name]",
             label: { text: I18n.t("support.case_assignment.agent_id.label"), class: "govuk-hint" },

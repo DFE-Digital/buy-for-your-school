@@ -4,7 +4,7 @@
   <%= form_with model: @registration, scope: :energy_register_your_interest, url: energy_register_your_interest_mat_path, method: :post do |form| %>
     <%= form.govuk_error_summary %>
     <%= form.govuk_autocomplete_field :mat_uid,
-          element_id: form.field_id(:mat_uid),
+          element_id: "mat-autocomplete-input",
           container_id: "mat-autocomplete-container",
           element_name: "mat_search",
           label: { text: t(".mat.search_label"), class: "govuk-hint" },
