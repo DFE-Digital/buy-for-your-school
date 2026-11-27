@@ -13,7 +13,7 @@ module Energy
 
           portal_access_data.each_with_index do |(_key, value), column_index|
             cell = worksheet[STARTING_ROW_NUMBER + row_index][column_index]
-            next if cell.nil?
+            next if cell.nil? || value.nil? || value == ""
 
             cell.change_contents(value)
           end

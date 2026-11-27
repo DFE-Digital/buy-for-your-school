@@ -57,23 +57,23 @@ RSpec.describe Energy::Documents::PortalAccessFormEdf, type: :model do
       end
 
       it "Matches portal access details" do
-        expect(worksheet[starting_row][0].value).to eq("")
+        expect(worksheet[starting_row][0].value).to be_nil
         expect(worksheet[starting_row][1].value).to eq("Y")
         expect(worksheet[starting_row][2].value).to eq("Y")
         expect(worksheet[starting_row][3].value).to eq("Y")
         expect(worksheet[starting_row][3].value).to eq("Y")
-        expect(worksheet[starting_row][4].value).to eq("")
+        expect(worksheet[starting_row][4].value).to be_nil
         expect(worksheet[starting_row][5].value).to eq(organisation.name)
         expect(worksheet[starting_row][6].value).to eq(organisation.address["postcode"])
         expect(worksheet[starting_row][7].value).to eq(energy_electricity_meter.mpan)
         expect(worksheet[starting_row][8].value).to eq((contract_end_date + 1.day).strftime("%d/%m/%Y"))
         expect(worksheet[starting_row][9].value).to eq("Site Addition")
         expect(worksheet[starting_row][10].value).to eq(current_user.email)
-        expect(worksheet[starting_row][11].value).to eq("")
+        expect(worksheet[starting_row][11].value).to be_nil
         expect(worksheet[starting_row][12].value).to eq(current_user.first_name)
         expect(worksheet[starting_row][13].value).to eq(current_user.last_name)
         expect(worksheet[starting_row][14].value).to eq(telephone_number)
-        expect(worksheet[starting_row][15].value).to eq("")
+        expect(worksheet[starting_row][15].value).to be_nil
       end
     end
 
@@ -113,7 +113,7 @@ RSpec.describe Energy::Documents::PortalAccessFormEdf, type: :model do
         end
 
         it "has multiple rows for portal access details" do
-          expect(worksheet[starting_row][0].value).to eq("")
+          expect(worksheet[starting_row][0].value).to be_nil
           expect(worksheet[starting_row][5].value).to eq(organisation.name)
           expect(worksheet[starting_row + 1][5].value).to eq(organisation.name)
 
