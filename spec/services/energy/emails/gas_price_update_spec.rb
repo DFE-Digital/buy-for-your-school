@@ -53,6 +53,32 @@ RSpec.describe Energy::Emails::GasPriceUpdate do
                                                           ),
                                                         ))
     end
+
+    it "sends the same notification to each semicolon-separated contact address" do
+      allow(client).to receive(:send_email).and_return(notify_response)
+      contact = single_contact.merge(
+        "Contact Email Address" => "first@example.test; second@example.test",
+      )
+      multi_recipient_service = described_class.new(
+        contact:,
+        school: single_contact.fetch("schools").first,
+        month: "October",
+        client:,
+      )
+
+      expect(multi_recipient_service.call).to eq(notify_response)
+      expect(client).to have_received(:send_email).twice
+      expect(client).to have_received(:send_email).with(hash_including(
+                                                          email_address: "first@example.test",
+                                                          template_id: multi_recipient_service.template_id,
+                                                          personalisation: hash_including(month: "October", meter_number: "0000000001"),
+                                                        )).once
+      expect(client).to have_received(:send_email).with(hash_including(
+                                                          email_address: "second@example.test",
+                                                          template_id: multi_recipient_service.template_id,
+                                                          personalisation: hash_including(month: "October", meter_number: "0000000001"),
+                                                        )).once
+    end
   end
 
   describe "multi-meter school" do

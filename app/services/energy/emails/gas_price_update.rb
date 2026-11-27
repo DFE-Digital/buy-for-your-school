@@ -22,7 +22,11 @@ module Energy
 
     def call
       attachment_path = Documents::GasPriceChangeForecast.new(school: @school, month: @month).call
-      notify_email(attachment_path:).call
+      results = recipient_emails.map do |email_address|
+        notify_email(attachment_path:, email_address:).call
+      end
+
+      results.find { |result| result.is_a?(String) } || results.last
     ensure
       File.delete(attachment_path) if attachment_path && File.exist?(attachment_path)
     end
@@ -58,15 +62,24 @@ module Energy
 
   private
 
-    def notify_email(attachment_path:)
+    def notify_email(attachment_path:, email_address:)
       Notify::Email.new(
-        recipient: RECIPIENT.new(@contact.fetch("Contact Email Address"), nil, nil),
+        recipient: RECIPIENT.new(email_address, nil, nil),
         template: template_id,
         variables: personalisation,
         attachment: attachment_path.to_s,
         reply_to_id: ENV["NOTIFY_EMAIL_GAS_PRICE_UPDATE_REPLY_TO_ID"] || ENV["NOTIFY_EMAIL_REPLY_TO_ID"],
         client: @client || Notifications::Client.new(ENV["NOTIFY_API_KEY"]),
       )
+    end
+
+    def recipient_emails
+      @recipient_emails ||= begin
+        emails = @contact.fetch("Contact Email Address").split(";").map(&:strip).reject(&:empty?)
+        raise ArgumentError, "A contact must have at least one email address" if emails.empty?
+
+        emails
+      end
     end
 
     def meters
@@ -78,6 +91,7 @@ module Energy
     end
 
     def validate_input!
+      recipient_emails
       raise ArgumentError, "Unknown gas price update month: #{@month}" unless MONTHS.include?(@month)
       raise ArgumentError, "A school must have at least one gas meter" if meters.empty?
 
