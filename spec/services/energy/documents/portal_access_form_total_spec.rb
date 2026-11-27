@@ -54,7 +54,7 @@ RSpec.describe Energy::Documents::PortalAccessFormTotal, type: :model do
       end
 
       it "Matches portal access details" do
-        expect(worksheet[starting_row][0].value).to eq("")
+        expect(worksheet[starting_row][0].value).to be_nil
         expect(worksheet[starting_row][1].value).to eq(organisation.name)
         expect(worksheet[starting_row][2].value).to eq(organisation.address["postcode"])
         expect(worksheet[starting_row][3].value).to eq(energy_gas_meter.mprn)
@@ -104,7 +104,7 @@ RSpec.describe Energy::Documents::PortalAccessFormTotal, type: :model do
         end
 
         it "has multiple rows for portal access details" do
-          expect(worksheet[starting_row][0].value).to eq("")
+          expect(worksheet[starting_row][0].value).to be_nil
           expect(worksheet[starting_row][1].value).to eq(organisation.name)
           expect(worksheet[starting_row + 1][1].value).to eq(organisation.name)
 
